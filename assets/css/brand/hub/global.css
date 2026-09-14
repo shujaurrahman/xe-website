@@ -1,0 +1,82 @@
+/* Hub · global scale — rollout matrix, acquisition before/after, governance rings. */
+.bdh-gl__matrix{padding:clamp(22px,3vw,36px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper)}
+.bdh-gl__top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin-bottom:20px}
+.bdh-gl__cap{display:inline-flex;align-items:center;gap:12px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+
+.bdh-gl__table{width:100%;min-width:700px;border-collapse:collapse}
+.bdh-gl__table th,.bdh-gl__table td{padding:12px 10px;text-align:center;border-bottom:1px solid var(--line-2)}
+.bdh-gl__table thead th{padding-top:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.bdh-gl__table thead th:first-child,.bdh-gl__table tbody th{text-align:left;padding-left:0}
+.bdh-gl__table tbody th{display:flex;align-items:baseline;gap:10px;font-weight:500;white-space:nowrap}
+.bdh-gl__table tbody th span{font-size:var(--t-sm);color:var(--ink)}
+.bdh-gl__table tbody th small{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;color:var(--faint)}
+.bdh-gl__table .bdh-gl__scr{text-align:right;padding-right:0}
+
+.bdh-gl__dot{position:relative;display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle;transition:background var(--d2) var(--e),box-shadow var(--d2) var(--e),transform var(--d2) var(--e)}
+.bdh-gl__dot.is-plan{box-shadow:inset 0 0 0 1.5px var(--line-3);background:transparent}
+.bdh-gl__dot.is-loc{box-shadow:inset 0 0 0 1.5px var(--blue);background:transparent;overflow:hidden}
+.bdh-gl__dot.is-loc::before{content:"";position:absolute;left:0;top:0;bottom:0;width:50%;background:var(--blue)}
+.bdh-gl__dot.is-live{background:var(--blue);box-shadow:0 0 0 3px var(--blue-wash)}
+.bdh-gl__matrix:not(.is-in) tbody .bdh-gl__dot{transform:scale(0)}
+.bdh-gl__matrix tbody .bdh-gl__dot{transition-delay:calc(var(--i,0) * 40ms)}
+
+.bdh-gl__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin-top:18px}
+.bdh-gl__legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.bdh-gl__legend span{display:inline-flex;align-items:center;gap:8px}
+.bdh-gl__legend .bdh-gl__dot{width:12px;height:12px}
+.bdh-gl__note{font-size:var(--t-xs);color:var(--muted)}
+.bdh-gl__chips{margin-top:18px;padding-top:18px;border-top:1px solid var(--line-2)}
+
+.bdh-gl__cards{margin-top:var(--bdh-block);align-items:stretch}
+.bdh-gl__cards .bdh-card{gap:12px}
+.bdh-gl__ch{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+
+/* acquisition map */
+.bdh-gl__map{position:relative;margin-top:14px;aspect-ratio:56/36;border-radius:var(--r);background:var(--paper-2);border:1px solid var(--line-2)}
+.bdh-gl__wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.bdh-gl__wires path{fill:none;stroke:var(--line-3);stroke-width:1.2;vector-effect:non-scaling-stroke;transition:opacity .5s var(--e)}
+.bdh-gl__wires .is-after path{stroke:var(--blue)}
+.bdh-gl__wires .is-dash{stroke-dasharray:4 4}
+.bdh-gl__acq[data-state="after"] .is-before,.bdh-gl__acq[data-state="before"] .is-after{opacity:0}
+.bdh-gl__wires g{transition:opacity .6s var(--e)}
+.bdh-gl__node{position:absolute;left:var(--bx);top:var(--by);translate:-50% -50%;display:grid;justify-items:center;gap:2px;padding:7px 11px;border-radius:9px;background:var(--paper);border:1px solid var(--line);box-shadow:var(--sh-1);
+  white-space:nowrap;transition:left .9s var(--e-io),top .9s var(--e-io),background .5s var(--e),border-color .5s var(--e),opacity .5s var(--e)}
+.bdh-gl__node b{font-size:var(--t-xs);font-weight:500;line-height:1.2;color:var(--ink)}
+.bdh-gl__node small{font-family:var(--f);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--blue-d);line-height:1.2;max-height:0;overflow:hidden;transition:max-height .5s var(--e)}
+.bdh-gl__acq[data-state="after"] .bdh-gl__node{left:var(--ax);top:var(--ay)}
+.bdh-gl__acq[data-state="after"] .bdh-gl__node small{max-height:14px}
+.bdh-gl__node.is-a .is-f{display:none}
+.bdh-gl__acq[data-state="after"] .bdh-gl__node.is-a{background:var(--ink);border-color:var(--ink)}
+.bdh-gl__acq[data-state="after"] .bdh-gl__node.is-a b{color:#fff}
+.bdh-gl__acq[data-state="after"] .bdh-gl__node.is-a .is-b{display:none}
+.bdh-gl__acq[data-state="after"] .bdh-gl__node.is-a .is-f{display:block}
+.bdh-gl__acq[data-state="after"] .bdh-gl__node.is-d{border-style:dashed;opacity:.72}
+
+/* governance rings */
+.bdh-gl__rings{position:relative;width:min(100%,340px);aspect-ratio:1;margin:18px auto 8px}
+.bdh-gl__ring{position:absolute;border-radius:50%;border:1px solid var(--line-3)}
+.bdh-gl__ring.is-3{inset:0}
+.bdh-gl__ring.is-2{inset:14%}
+.bdh-gl__ring.is-1{inset:28%;border-color:var(--blue-line)}
+.bdh-gl__ring em{position:absolute;left:50%;top:0;translate:-50% -50%;padding:2px 8px;border-radius:var(--r-pill);background:var(--paper);font-family:var(--f);font-style:normal;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.bdh-gl__ring.is-1 em{color:var(--blue-d)}
+.bdh-gl__core{position:absolute;inset:40%;display:grid;place-items:center;border-radius:50%;background:var(--ink);color:#fff;font-size:10px;font-weight:500;line-height:1.1;text-align:center;padding:4px}
+.bdh-gl__orbit{position:absolute;inset:14%;border-radius:50%}
+.bdh-gl__orbit i{position:absolute;left:50%;top:-4px;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px var(--blue-wash)}
+.is-live .bdh-gl__orbit{animation:bdh-gl-orbit 14s linear infinite}
+@keyframes bdh-gl-orbit{to{transform:rotate(360deg)}}
+.bdh-gl__rules{margin-top:auto;padding-top:14px;border-top:1px solid var(--line-2)}
+
+@media (max-width:860px){.bdh-gl__cards .bdh-card+.bdh-card{margin-top:0}}
+@media (max-width:600px){
+  .bdh-gl__table .bdh-gl__scr{display:none}
+  .bdh-gl__table{min-width:560px}
+  .bdh-gl__node{padding:5px 7px}
+  .bdh-gl__node b{font-size:10px}
+  .bdh-gl__node small{display:none}
+  .bdh-gl__ring em{font-size:8px}
+}
+@media (prefers-reduced-motion:reduce){
+  .bdh-gl__node,.bdh-gl__wires g,.bdh-gl__dot{transition:none}
+  .bdh-gl__matrix:not(.is-in) tbody .bdh-gl__dot{transform:none}
+}

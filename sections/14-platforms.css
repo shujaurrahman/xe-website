@@ -20,14 +20,15 @@
 .s14__panel{
   display:flex;flex-direction:column;gap:12px;
   padding:clamp(18px,2vw,24px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper-2);
-  font-family:var(--f);                /* a mock readout — display face throughout */
 }
+/* mock readout: label, model ids, badge and note in the display face; the task names read in Montserrat */
+.s14__plbl,.s14__rows i,.s14__pick,.s14__pnote{font-family:var(--f)}
 .s14__plbl{font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .s14__rows{display:flex;flex-direction:column;gap:8px}
 .s14__rows li{
   display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;
   padding:11px 13px;border-radius:var(--r-sm);background:var(--paper);border:1px solid var(--line-2);
-  font-size:var(--t-xs);color:var(--txt);
+  font-size:var(--t-xs);font-weight:500;color:var(--txt);
 }
 .s14__rows i{font-style:normal;color:var(--muted);font-size:var(--t-lbl);letter-spacing:.06em}
 .s14__pick{

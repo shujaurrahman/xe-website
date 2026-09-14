@@ -1,0 +1,34 @@
+/* Hub · FAQ — sticky head left, accordion right (behaviour from core [data-acc]). */
+.bdh-faq__grid{align-items:start}
+.bdh-faq__head{display:flex;flex-direction:column;align-items:flex-start;gap:18px}
+.bdh-faq__head .h2{max-width:12ch}
+.bdh-faq__more{margin-top:6px;max-width:32ch;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+
+.bdh-faq__list{border-top:1px solid var(--line)}
+.bdh-faq__row{border-bottom:1px solid var(--line)}
+.bdh-faq__hq{font:inherit;letter-spacing:0}
+.bdh-faq__q{display:grid;grid-template-columns:40px minmax(0,1fr) 24px;align-items:center;gap:12px;width:100%;min-height:72px;padding:20px 0;text-align:left;cursor:pointer}
+.bdh-faq__n{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;color:var(--faint)}
+.bdh-faq__t{font-family:var(--f-h);font-size:1.125rem;font-weight:500;line-height:1.35;letter-spacing:-.008em;color:var(--ink);transition:color var(--d1) var(--e-io)}
+.bdh-faq__q:hover .bdh-faq__t{color:var(--blue-d)}
+.bdh-faq__plus{position:relative;width:24px;height:24px;border-radius:50%;border:1px solid var(--line-3);transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io)}
+.bdh-faq__plus::before,.bdh-faq__plus::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:1.5px;margin:-.75px 0 0 -5px;background:var(--ink);transition:transform .32s var(--e)}
+.bdh-faq__plus::after{transform:rotate(90deg)}
+.bdh-faq__q[aria-expanded="true"] .bdh-faq__plus{border-color:var(--blue);background:var(--blue)}
+.bdh-faq__q[aria-expanded="true"] .bdh-faq__plus::before,.bdh-faq__q[aria-expanded="true"] .bdh-faq__plus::after{background:#fff}
+.bdh-faq__q[aria-expanded="true"] .bdh-faq__plus::after{transform:rotate(0deg)}
+.bdh-faq__q[aria-expanded="true"] .bdh-faq__n{color:var(--blue)}
+
+.bdh-faq__p{height:0;overflow:hidden;transition:height .45s var(--e)}
+.bdh-faq__p p{max-width:62ch;padding:0 36px 24px 52px;font-size:var(--t-body);line-height:1.7;color:var(--muted)}
+
+@media (max-width:860px){
+  .bdh-faq__side{margin-bottom:32px}
+  .bdh-faq__head .h2{max-width:none}
+}
+@media (max-width:600px){
+  .bdh-faq__q{grid-template-columns:28px minmax(0,1fr) 24px;min-height:64px;padding:16px 0}
+  .bdh-faq__t{font-size:1rem}
+  .bdh-faq__p p{padding:0 0 20px 40px;font-size:var(--t-sm)}
+}
+@media (prefers-reduced-motion:reduce){.bdh-faq__p{transition:none}}

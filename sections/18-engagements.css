@@ -1,6 +1,6 @@
 /* 18 — three engagement cards; the middle one wears an ink frame. */
 .s18__head{display:flex;flex-direction:column;gap:16px;margin-bottom:clamp(28px,3.2vw,46px)}
-.s18__count{font-size:var(--t-lbl);letter-spacing:-.02em;color:var(--faint);vertical-align:super;margin-left:.4em}
+.s18__count{font-family:var(--f);font-size:var(--t-lbl);font-weight:400;letter-spacing:.04em;color:var(--faint);vertical-align:super;margin-left:.4em}   /* a figure, so the label face */
 .s18__sub{max-width:54ch}
 
 .s18__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,22px);align-items:stretch}

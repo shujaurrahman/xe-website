@@ -92,9 +92,9 @@
             <span class="s21__plus" aria-hidden="true"></span>
           </button>
           <div class="s21__panel" id="s21-a6" data-acc-p>
-            <!-- PLACEHOLDER: offices carried over from the previous site — confirm before launch -->
-            <p class="s21__a">Two studios: New Delhi and Ludhiana. Both run the same delivery standard and the
-              same weekly review, so it makes no difference which one your work runs from.</p>
+            <!-- PLACEHOLDER: the New Delhi address is carried over from the previous site — confirm before launch -->
+            <p class="s21__a">Three offices: one in New Delhi and two in Ludhiana, on Ferozepur Road. All three run the
+              same delivery standard and the same weekly review, so it makes no difference which one your work runs from.</p>
           </div>
         </div>
 

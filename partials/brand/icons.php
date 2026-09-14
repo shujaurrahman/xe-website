@@ -7,6 +7,7 @@
  *   bd_icon('map')              24px line icon, stroke 1.5
  *   bd_glyph('brand-systems')   240×140 illustration keyed to a capability slug
  *   bd_badges('Figma · JSON')   format string → short file-type badges
+ *   bd_img($cap['img'])         a capability photograph, lazy by default
  */
 
 if (!function_exists('bd_icon')) {
@@ -98,11 +99,25 @@ function bd_glyph(string $slug): string {
           . '<path class="gl-scan" d="M30 80h112"/>'
           . '<circle class="gl-b" cx="176" cy="92" r="20"/><path class="gl-tick" d="m167 92 6 6 12-13"/>',
         'hub' =>
-            '<circle class="gl-orbit" cx="120" cy="70" r="54"/><circle class="gl-orbit" cx="120" cy="70" r="34" stroke-dasharray="2 5"/>'
-          . '<g class="gl-sat"><circle cx="120" cy="16" r="4"/><circle cx="167" cy="43" r="4"/><circle cx="167" cy="97" r="4"/><circle cx="120" cy="124" r="4"/><circle cx="73" cy="97" r="4"/><circle cx="73" cy="43" r="4"/></g>',
+            '<circle class="gl-orbit" cx="120" cy="70" r="54"/><circle class="gl-orbit" cx="120" cy="70" r="30" stroke-dasharray="2 5"/>'
+          . '<g class="gl-spin"><path class="gl-spoke" d="M120 70V16M120 70l47-27M120 70l47 27M120 70v54M120 70 73 97M120 70 73 43" stroke-dasharray="2 4"/>'
+          . '<g class="gl-sat"><circle cx="120" cy="16" r="5"/><circle cx="167" cy="43" r="5"/><circle cx="167" cy="97" r="5"/><circle cx="120" cy="124" r="5"/><circle cx="73" cy="97" r="5"/><circle class="gl-sat-b" cx="73" cy="43" r="5"/></g></g>'
+          . '<circle class="gl-core" cx="120" cy="70" r="15"/><circle class="gl-b" cx="120" cy="70" r="5"/>',
     ];
     $body = $G[$slug] ?? $G['hub'];
     return '<svg class="bd-glyph bd-glyph--' . htmlspecialchars($slug, ENT_QUOTES) . '" viewBox="0 0 240 140" fill="none" aria-hidden="true" focusable="false">' . $body . '</svg>';
+}
+
+/**
+ * A capability photograph — ['src', 'w', 'h', 'alt', 'pos'] as in data/brand-design.php.
+ * $eager is for the hero (LCP): no lazy loading, high fetch priority.
+ */
+function bd_img(array $img, string $class = '', bool $eager = false): string {
+    $h = function ($v) { return htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8'); };
+    $pos = !empty($img['pos']) ? ' style="object-position:' . $h($img['pos']) . '"' : '';
+    return '<img class="' . $h(trim('bd-img ' . $class)) . '" src="' . $h(xe_url($img['src'])) . '" width="' . (int) $img['w']
+         . '" height="' . (int) $img['h'] . '" alt="' . $h($img['alt'] ?? '') . '"'
+         . ($eager ? ' fetchpriority="high" decoding="async"' : ' loading="lazy" decoding="async"') . $pos . '>';
 }
 
 /** 'Figma · font files' → ['FIGMA', 'FONTS']. Words that are not formats are dropped. */

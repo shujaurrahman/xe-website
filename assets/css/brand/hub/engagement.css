@@ -1,0 +1,32 @@
+/* Hub · ways to work together — a drawn progression and four model cards (the programme on ink). */
+.bdh-eng__steps{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--bdh-gap);margin-bottom:24px}
+.bdh-eng__steps::before{content:"";position:absolute;left:6px;right:calc(25% - 6px);top:6px;height:1px;background:var(--line-3);transform:scaleX(0);transform-origin:left center;transition:transform 1.4s var(--e) .2s}
+.bdh-eng__steps.is-in::before{transform:none}
+.bdh-eng__steps li{position:relative;display:flex;flex-direction:column;gap:12px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.bdh-eng__steps i{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--blue);background:var(--paper-2);transform:scale(0);transition:transform .5s var(--e);transition-delay:calc(var(--i,0) * 300ms + 300ms)}
+.bdh-eng__steps.is-in i{transform:none}
+.bdh-eng__steps li:nth-child(2) i{background:var(--blue)}
+
+.bdh-eng__cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--bdh-gap);align-items:stretch}
+.bdh-eng__card{gap:10px}
+.bdh-eng__top{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:24px;margin-bottom:6px}
+.bdh-eng__card .bdh-t{margin-top:4px}
+.bdh-eng__dl{margin-top:14px}
+.bdh-eng__dl>div{padding-block:12px;border-top:1px solid var(--line-2)}
+.bdh-eng__dl dt{margin-bottom:6px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1}
+.bdh-eng__dl dd{font-size:var(--t-sm);line-height:1.5;color:var(--ink)}
+.bdh-eng__go{margin-top:auto;padding-top:18px}
+.bdh-card--ink .bdh-eng__dl>div{border-color:var(--on-ink-line)}
+.bdh-card--ink .bdh-eng__dl dt{color:var(--on-ink-3)}
+.bdh-card--ink .bdh-eng__dl dd{color:var(--on-ink)}
+.bdh-card--ink .bdh-eng__go{color:var(--on-ink)}
+.bdh-card--ink .bdh-tag--blue{background:var(--blue);color:#fff;box-shadow:none}
+
+@media (max-width:1279px){
+  .bdh-eng__cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bdh-eng__steps{display:none}
+}
+@media (max-width:600px){.bdh-eng__cards{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){
+  .bdh-eng__steps::before,.bdh-eng__steps i{transform:none;transition:none}
+}

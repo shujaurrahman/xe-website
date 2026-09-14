@@ -552,7 +552,7 @@
   var root = document.querySelector('[data-s20]');
   if (!root || !window.XE) return;
 
-  var EMAIL = 'hello@xterraedze.com';
+  var EMAIL = 'connect@xterraedze.com';
   var monthEl = XE.$('[data-s20-month]', root);
   var daysEl = XE.$('[data-s20-days]', root);
   var timesEl = XE.$('[data-s20-times]', root);

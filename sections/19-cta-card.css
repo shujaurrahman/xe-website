@@ -27,12 +27,11 @@
 @keyframes s19-a{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(8%,7%,0) scale(1.16)}}
 @keyframes s19-b{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-9%,6%,0) scale(1.2)}}
 
-/* the horizon, drawn as a rising arc of light */
+/* a soft rising glow at the foot of the card (no hard horizon line) */
 .s19__arc{
   position:absolute;left:50%;bottom:-118%;width:min(1500px,172%);aspect-ratio:2/1;
   transform:translateX(-50%);border-radius:50%;
   background:radial-gradient(closest-side,rgba(255,255,255,.30),rgba(255,255,255,0) 72%);
-  border-top:1px solid rgba(255,255,255,.5);
 }
 .s19__grain{
   position:absolute;inset:0;

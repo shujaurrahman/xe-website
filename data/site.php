@@ -10,11 +10,13 @@ return [
     'company' => [
         'name'    => 'Xterra Edze',
         'tagline' => 'An independent creative company for the intelligence age.',
-        'email'   => 'hello@xterraedze.com',
+        'email'   => 'connect@xterraedze.com',
+        /* Offices. One entry per address; 'units' lists the suites at that
+           address (Ludhiana has two offices in the same building). */
         'studios' => [
-            // PLACEHOLDER: confirm both addresses before launch.
-            ['city' => 'New Delhi', 'lines' => ['6 Worldmark, Aerocity', 'New Delhi 110037, India'], 'tz' => 'Asia/Kolkata'],
-            ['city' => 'Ludhiana',  'lines' => ['Punjab, India'],                                    'tz' => 'Asia/Kolkata'],
+            // PLACEHOLDER: the New Delhi address is carried over from the previous site — confirm before launch.
+            ['city' => 'New Delhi', 'units' => [],                              'lines' => ['6 Worldmark, Aerocity', 'New Delhi 110037, India']],
+            ['city' => 'Ludhiana',  'units' => ['SCO-2, LGF', 'SCO-1, 3rd Floor'], 'lines' => ['Noble Enclave, Opp. Hotel Park Plaza', 'Ferozepur Road, Ludhiana, Punjab 141001']],
         ],
     ],
 
@@ -136,28 +138,31 @@ return [
     ],
     ],
 
+    /* Footer link columns (the disciplines column is added automatically). */
     'footer' => [
         ['title' => 'Company', 'links' => [
-            ['About',           'approach.php'],
             ['Approach',        'approach.php'],
             ['Industries',      'industries.php'],
+            ['Work',            'work.php'],
             ['Careers',         'careers.php'],
-        ]],
-        ['title' => 'Work', 'links' => [
-            ['Selected work',   'work.php'],
-            ['Case studies',    'work.php'],
-            ['Clients',         'work.php'],
-        ]],
-        ['title' => 'Connect', 'links' => [
-            ['Book a call',     'contact.php'],
-            ['Email us',        'mailto:hello@xterraedze.com'],
-            ['LinkedIn',        '#'],
-            ['Instagram',       '#'],
-        ]],
-        ['title' => 'More', 'links' => [
+            ['Contact',         'contact.php'],
             ['FAQ',             'index.php#faq'],
-            ['Privacy',         '#'],
-            ['Terms',           '#'],
         ]],
+    ],
+
+    /* The legal line in the footer bar.
+       PLACEHOLDER: none of these pages exist yet — point each at its page before launch. */
+    'legal' => [
+        ['Privacy Notice',     '#'],
+        ['Terms of Use',       '#'],
+        ['Cookie Preferences', '#'],
+        ['Accessibility',      '#'],
+        ['Commercial Policy',  '#'],
+    ],
+
+    // PLACEHOLDER: add the real profile URLs.
+    'social' => [
+        ['LinkedIn',  '#'],
+        ['Instagram', '#'],
     ],
 ];

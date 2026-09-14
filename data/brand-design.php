@@ -8,6 +8,9 @@
  * over, the questions people ask. Timeframes are typical, not promised, and
  * are marked PLACEHOLDER so they can be confirmed before launch.
  *
+ * 'img' is the capability's card photograph (assets/imgs/brand/shared/, credits in
+ * CREDITS.md there), used by the shared pairs and next partials and free for pages.
+ *
  * Voice: precise, kinetic, unshowy. Short active sentences. No exclamation marks.
  */
 
@@ -63,6 +66,7 @@ return [
             ['What happens after the roadmap?', 'Either your team runs it, or we do. Brand Identity, Campaign and Marketing Technology all plug into the same moves.'],
         ],
         'pairs' => ['brand-foundation', 'brand-architecture'],
+        'img'   => ['src' => 'assets/imgs/brand/shared/growth-strategy.jpg', 'w' => 1200, 'h' => 675, 'alt' => 'A strategist walks two colleagues through sales charts in a glass-walled meeting room', 'pos' => '50% 45%'],   // PLACEHOLDER: reference photo (Unsplash) — confirm before launch
     ],
 
     'brand-identity' => [
@@ -118,6 +122,7 @@ return [
             ['Can this work with our existing product design system?', 'It should. We map identity tokens to your product tokens so the product team inherits the identity rather than re-drawing it.'],
         ],
         'pairs' => ['brand-foundation', 'brand-systems'],
+        'img'   => ['src' => 'assets/imgs/brand/shared/brand-identity.jpg', 'w' => 1200, 'h' => 800, 'alt' => 'Two stacks of blank business cards on a pale grey surface', 'pos' => '50% 50%'],   // PLACEHOLDER: reference photo (Unsplash) — confirm before launch
     ],
 
     'brand-foundation' => [
@@ -170,6 +175,7 @@ return [
             ['Can we start with foundation alone?', 'Yes. It is the most common starting point, and everything else we do plugs into it.'],
         ],
         'pairs' => ['brand-identity', 'growth-strategy'],
+        'img'   => ['src' => 'assets/imgs/brand/shared/brand-foundation.jpg', 'w' => 800, 'h' => 1200, 'alt' => 'A person reads a wall covered floor to ceiling in handwritten notes', 'pos' => '50% 38%'],   // PLACEHOLDER: reference photo (Unsplash) — confirm before launch
     ],
 
     'brand-systems' => [
@@ -224,6 +230,7 @@ return [
             ['Can we start with tokens only?', 'Yes. Tokens alone remove most of the drift. Components and templates follow when you are ready.'],
         ],
         'pairs' => ['brand-identity', 'brand-ai-tools'],
+        'img'   => ['src' => 'assets/imgs/brand/shared/brand-systems.jpg', 'w' => 800, 'h' => 1200, 'alt' => 'The repeating glass grid of an office facade at dusk', 'pos' => '50% 50%'],   // PLACEHOLDER: reference photo (Unsplash) — confirm before launch
     ],
 
     'brand-architecture' => [
@@ -276,6 +283,7 @@ return [
             ['Does this cover acquisitions?', 'Yes. Integrating an acquired brand is one of the most common triggers, and the migration plan covers it.'],
         ],
         'pairs' => ['growth-strategy', 'brand-systems'],
+        'img'   => ['src' => 'assets/imgs/brand/shared/brand-architecture.jpg', 'w' => 1200, 'h' => 800, 'alt' => 'Office towers seen from street level, looking straight up', 'pos' => '50% 50%'],   // PLACEHOLDER: reference photo (Unsplash) — confirm before launch
     ],
 
     'brand-ai-tools' => [
@@ -330,5 +338,6 @@ return [
             ['How do you keep it from going off brand?', 'Guardrails written as tests, a brand check on every output, and a human review step wherever the stakes are high. Every output is logged.'],
         ],
         'pairs' => ['brand-systems', 'brand-identity'],
+        'img'   => ['src' => 'assets/imgs/brand/shared/brand-ai-tools.jpg', 'w' => 1200, 'h' => 675, 'alt' => 'An abstract band of blue light bending across a pale field', 'pos' => '50% 50%'],   // PLACEHOLDER: reference photo (Unsplash) — confirm before launch
     ],
 ];

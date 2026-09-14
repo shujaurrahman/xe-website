@@ -1,22 +1,31 @@
 <?php
 /**
- * Questions people ask. Expects $faq = ['title' => html, 'items' => [[q, a], …]]
- * and $faqId, a short prefix that keeps ids unique when a page has more than one.
+ * Questions people ask: the heading and a contact card on the left (sticky),
+ * the accordion on the right. core.js drives [data-acc]; each button sits in
+ * an h3 and finds its panel through aria-controls.
+ *
+ *   $faq     required  ['title' => html, 'items' => [[question, answer], …]]
+ *   $faqId   optional  id prefix (default 'faq') — keeps ids unique when a page has two
+ *   $faqLbl  optional  eyebrow (default 'Questions')
+ *   $faqAsk  optional  [title, text, button label, href] for the side card, or false to hide it
  */
 $faqId = $faqId ?? 'faq';
+$fqLbl = $faqLbl ?? 'Questions';
+$fqAsk = isset($faqAsk) ? $faqAsk : ['Anything else?', 'Ask the team that would do the work. We answer straight.', 'Ask us directly', 'contact.php'];
 ?>
 <section class="band bd-faq" id="<?= e($faqId) ?>" aria-labelledby="<?= e($faqId) ?>-t">
   <div class="wrap bd-faq__grid">
     <div class="bd-faq__side" data-rv>
-      <p class="lbl lbl--blue"><span class="dot"></span>Questions</p>
+      <p class="lbl lbl--blue"><span class="dot"></span><?= e($fqLbl) ?></p>
       <h2 class="h2 bd-faq__h" id="<?= e($faqId) ?>-t"><?= $faq['title'] ?></h2>
       <p class="bd-faq__count"><b class="num"><?= str_pad((string) count($faq['items']), 2, '0', STR_PAD_LEFT) ?></b> answered here</p>
-      <div class="bd-faq__ask">
-        <span class="bd-faq__mark" aria-hidden="true"><?= xe_svg('xe-mark') ?></span>
-        <p class="bd-faq__askt">Anything else?</p>
-        <p class="bd-faq__askd">Ask the team that would do the work. We answer straight.</p>
-        <a class="btn btn--out bd-faq__btn2" href="<?= xe_url('contact.php') ?>">Ask us directly <span class="i" aria-hidden="true">›</span></a>
-      </div>
+      <?php if ($fqAsk): ?>
+        <div class="bd-faq__ask">
+          <p class="bd-faq__askt"><?= e($fqAsk[0]) ?></p>
+          <p class="bd-faq__askd"><?= e($fqAsk[1]) ?></p>
+          <a class="btn btn--out bd-faq__btn2" href="<?= e(xe_url($fqAsk[3])) ?>"><?= e($fqAsk[2]) ?> <span class="i" aria-hidden="true">›</span></a>
+        </div>
+      <?php endif; ?>
     </div>
 
     <div class="bd-faq__list" data-acc data-rv data-rv-d="80">

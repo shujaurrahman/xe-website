@@ -17,7 +17,7 @@
         </figure>
 
         <div class="s09__ink">
-          <p class="s09__say">Two studios&nbsp;— New Delhi and Ludhiana&nbsp;— running one delivery standard, one weekly
+          <p class="s09__say">Three offices&nbsp;— New Delhi and two in Ludhiana&nbsp;— running one delivery standard, one weekly
             review, and one team accountable for the outcome.</p>
           <span class="s09__mark" aria-hidden="true">›</span>
         </div>

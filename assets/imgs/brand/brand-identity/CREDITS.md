@@ -15,3 +15,7 @@ on top in CSS. Replace with Xterra Edze's own work before launch.
 | cup-hand.jpg | Identity, applied · takeaway cup | Kelly Sikkema | https://unsplash.com/photos/person-holding-white-disposable-cup-g6tqX-t73mg |
 
 Downloaded from images.unsplash.com as resized JPEGs (w=1100–1400, q=74).
+| glass-facade.jpg | Editorial band | joel-filipe | https://unsplash.com/photos/nEEa3_4AS10 |
+| people-architecture.jpg | Editorial band | yen-vu | https://unsplash.com/photos/22Y0GEqSdkk |
+| server-close.jpg | AI in the loop | kier-in-sight-archives | https://unsplash.com/photos/3Nwt6w-KU3E |
+| server-rack.jpg | AI in the loop | yuriy-vertikov | https://unsplash.com/photos/c-lSQecD9oI |

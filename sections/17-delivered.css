@@ -2,7 +2,7 @@
 .s17{position:relative;overflow:hidden}
 .s17__ghost{
   position:absolute;left:50%;top:clamp(24px,5vw,72px);transform:translateX(-50%);
-  font-family:var(--f);font-size:clamp(4rem,15vw,12rem);line-height:.82;letter-spacing:-.07em;font-weight:500;
+  font-family:var(--f-h);font-size:clamp(4.4rem,17vw,14rem);line-height:.82;letter-spacing:-.045em;font-weight:500;
   color:var(--paper-3);white-space:nowrap;pointer-events:none;user-select:none;z-index:0;
 }
 .s17__in{position:relative;z-index:1}
@@ -37,7 +37,7 @@
   background:linear-gradient(180deg,rgba(25,25,29,0),rgba(25,25,29,.82) 58%,rgba(25,25,29,.92));
 }
 .s17__sector{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.66)}
-.s17__line{font-family:var(--f);font-size:clamp(1rem,1.5vw,1.35rem);line-height:1.35;letter-spacing:-.035em;max-width:32ch}
+.s17__line{font-family:var(--f-h);font-size:clamp(1.08rem,1.6vw,1.45rem);line-height:1.26;letter-spacing:-.016em;font-weight:500;max-width:32ch}
 .s17__tags{display:flex;flex-wrap:wrap;gap:6px}
 .s17__tags .pill{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.86)}
 

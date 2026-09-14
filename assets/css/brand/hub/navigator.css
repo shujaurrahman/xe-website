@@ -1,0 +1,58 @@
+/* Hub · capability navigator — one six-up index, hairline cells, no box; plus the desktop dock. */
+.bdh-nav{position:relative;padding-block:clamp(28px,3vw,40px);border-block:1px solid var(--line-2);background:var(--paper)}
+.bdh-nav__cap{display:flex;justify-content:space-between;gap:16px;margin-bottom:20px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--ink);line-height:1}
+.bdh-nav__cap span:last-child{color:var(--faint)}
+
+.bdh-nav__list{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.bdh-nav__list>li{min-width:0;border-left:1px solid var(--line-2)}
+.bdh-nav__list>li:first-child{border-left:0}
+.bdh-nav__a{position:relative;display:flex;flex-direction:column;height:100%;padding:22px 20px 26px;transition:background var(--d2) var(--e)}
+.bdh-nav__list>li:first-child .bdh-nav__a{padding-left:0}
+.bdh-nav__a::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--blue);transform:scaleX(0);transform-origin:left center;transition:transform var(--d2) var(--e)}
+.bdh-nav__a:hover,.bdh-nav__a:focus-visible{background:var(--paper-2)}
+.bdh-nav__list>li:first-child .bdh-nav__a:hover,.bdh-nav__list>li:first-child .bdh-nav__a:focus-visible{padding-left:20px;margin-left:0}
+.bdh-nav__a:hover::before,.bdh-nav__a:focus-visible::before{transform:none}
+.bdh-nav__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;line-height:1;color:var(--blue);font-variant-numeric:tabular-nums}
+.bdh-nav__t{margin-top:14px;font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.008em;line-height:1.25;color:var(--ink)}
+.bdh-nav__d{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;min-height:4.5em;margin-top:8px;font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+.bdh-nav__go{margin-top:auto;padding-top:18px;font-family:var(--f);font-size:1rem;line-height:1;color:var(--blue);transition:transform var(--d2) var(--e)}
+.bdh-nav__a:hover .bdh-nav__go,.bdh-nav__a:focus-visible .bdh-nav__go{transform:translateX(4px)}
+
+@media (max-width:1279px){.bdh-nav__d{-webkit-line-clamp:2;min-height:3em}}
+@media (max-width:1023px){
+  .bdh-nav__list{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .bdh-nav__list>li:nth-child(3n+1){border-left:0}
+  .bdh-nav__list>li:nth-child(n+4){border-top:1px solid var(--line-2)}
+  .bdh-nav__list>li:nth-child(3n+1) .bdh-nav__a{padding-left:0}
+}
+@media (max-width:860px){
+  .bdh-nav__list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bdh-nav__list>li{border-left:1px solid var(--line-2);border-top:0}
+  .bdh-nav__list>li:nth-child(odd){border-left:0}
+  .bdh-nav__list>li:nth-child(n+3){border-top:1px solid var(--line-2)}
+  .bdh-nav__list>li .bdh-nav__a{padding-left:20px}
+  .bdh-nav__list>li:nth-child(odd) .bdh-nav__a{padding-left:0}
+}
+@media (max-width:600px){
+  .bdh-nav__cap span:last-child{display:none}
+  .bdh-nav__a{min-height:76px;padding:16px 12px 16px 16px}
+  .bdh-nav__t{margin-top:10px;font-size:.9375rem}
+  .bdh-nav__d{display:none}
+  .bdh-nav__go{display:none}
+}
+
+/* ---- dock (desktop, only while reading the capabilities) ---- */
+.bdh-dock{position:fixed;left:50%;bottom:24px;z-index:70;opacity:0;pointer-events:none;translate:-50% 16px;transition:opacity .45s var(--e),translate .45s var(--e)}
+.bdh-dock.is-on{opacity:1;pointer-events:auto;translate:-50% 0}
+.bdh-dock__in{position:relative;display:flex;align-items:center;gap:2px;height:48px;padding:6px;border-radius:16px;overflow:hidden;
+  background:rgba(24,24,28,.94);border:1px solid rgba(255,255,255,.08);box-shadow:var(--sh-nav);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.bdh-dock__a{display:inline-flex;align-items:center;gap:8px;height:100%;padding:0 12px;border-radius:10px;font-size:var(--t-xs);font-weight:500;color:rgba(255,255,255,.72);white-space:nowrap;
+  transition:background var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.bdh-dock__a b{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.08em;color:rgba(255,255,255,.42)}
+.bdh-dock__a:hover{color:#fff}
+.bdh-dock__a[aria-current="true"]{background:rgba(255,255,255,.1);color:#fff}
+.bdh-dock__a[aria-current="true"] b{color:var(--blue)}
+.bdh-dock__bar{position:absolute;left:12px;right:12px;bottom:0;height:2px;pointer-events:none}
+.bdh-dock__bar i{display:block;height:100%;background:var(--blue);transform:scaleX(0);transform-origin:left center}
+@media (max-width:1023px){.bdh-dock{display:none}}
+@media (prefers-reduced-motion:reduce){.bdh-dock{transition:none}}

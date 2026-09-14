@@ -193,7 +193,7 @@ Left: `XTERRA EDZE` · `30 min · Discovery call` · "Tell us what you're buildi
 you straight whether we're the right team for it." · duration · Google Meet · timezone (live).
 Centre: month calendar. Right: time slots + 12h/24h toggle.
 Confirm step collects name, work email, company, brief → composes an email to
-`hello@xterraedze.com`. NOTE IN CODE: this is a front-end widget; wire to the real calendar
+`connect@xterraedze.com`. NOTE IN CODE: this is a front-end widget; wire to the real calendar
 before launch — it must never claim a booking is confirmed.
 
 ## 22 — FAQ   (level FAQ)
@@ -227,7 +227,7 @@ Closing banner links ✅: See the work → · Explore our services → · Read o
 From the previous site build (`index.original.html`), NOT from the client docx. Keep, but flag:
 - Established 2012 · 380+ programmes shipped · 9 markets · 12 industries · 120 specialists
 - Offices: 6 Worldmark, Aerocity, New Delhi · New York · Singapore
-- `hello@xterraedze.com`
+- `connect@xterraedze.com`
 
 ## NEVER
 

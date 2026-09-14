@@ -136,7 +136,7 @@
   margin-top:clamp(30px,3.6vw,52px);padding-top:clamp(24px,2.6vw,34px);border-top:1px solid var(--line);
 }
 .s05__foot li{display:flex;flex-direction:column;gap:6px}
-.s05__foot b{font-family:var(--f);font-size:var(--t-sm);font-weight:500;color:var(--ink);letter-spacing:-.02em}
+.s05__foot b{font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;line-height:1.3;color:var(--ink);letter-spacing:-.008em}
 .s05__foot span{font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
 
 @media (max-width:1080px){

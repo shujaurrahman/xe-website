@@ -1,0 +1,42 @@
+/* Hub · agents and people — paired rows with a travelling hand-off dot, a sticky photo, governance cards. */
+.bdh-trust__grid{align-items:start}
+.bdh-trust__hdr{display:grid;grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr);padding-bottom:14px;border-bottom:1px solid var(--line);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.bdh-trust__hdr span:last-child{color:var(--blue-d)}
+.bdh-trust__row{padding:20px 0 22px;border-bottom:1px solid var(--line-2)}
+.bdh-trust__k{margin-bottom:10px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--blue);line-height:1}
+.bdh-trust__pair{display:grid;grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr);align-items:center}
+.bdh-trust__a{font-size:var(--t-sm);line-height:1.55;color:var(--txt)}
+.bdh-trust__p{font-size:var(--t-sm);line-height:1.55;font-weight:500;color:var(--ink)}
+.bdh-trust__spine{position:relative;display:block;height:1px;margin-inline:14px;background:var(--line-3)}
+.bdh-trust__spine::after{content:"";position:absolute;right:-1px;top:-3px;width:0;height:0;border-left:5px solid var(--line-3);border-top:3.5px solid transparent;border-bottom:3.5px solid transparent}
+.bdh-trust__spine i{position:absolute;left:0;top:-3px;width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px var(--blue-wash)}
+.is-live .bdh-trust__spine i{animation:bdh-trust-hand 2.4s var(--e-io) infinite;animation-delay:calc(var(--i,0) * 400ms)}
+.bdh-trust__row .bdh-trust__spine i{--i:inherit}
+@keyframes bdh-trust-hand{0%{transform:translateX(0);opacity:0}15%{opacity:1}70%{transform:translateX(26px);opacity:1}100%{transform:translateX(26px);opacity:0}}
+
+.bdh-trust__img{max-height:560px}
+.bdh-trust__chip{position:absolute;left:16px;right:16px;bottom:16px}
+
+.bdh-trust__gov{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--bdh-gap);margin-top:var(--bdh-block)}
+.bdh-trust__gov .bdh-card{gap:12px}
+.bdh-trust__icon{display:grid;place-items:center;width:40px;height:40px;margin-bottom:8px;border-radius:var(--r-sm);background:var(--blue-wash);color:var(--blue-d)}
+.bdh-trust__icon svg{width:22px;height:22px}
+
+@media (max-width:1279px){.bdh-trust__gov{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:1023px){
+  .bdh-trust__table{grid-column:1 / -1;grid-row:2}
+  .bdh-trust__side{grid-column:1 / -1;grid-row:1}
+  .bdh-trust__img{aspect-ratio:16/9}
+}
+@media (max-width:860px){.bdh-trust__side{margin-bottom:8px}}
+@media (max-width:600px){
+  .bdh-trust__hdr{display:none}
+  .bdh-trust__pair{grid-template-columns:minmax(0,1fr);gap:8px}
+  .bdh-trust__spine{width:1px;height:14px;margin:0 0 0 8px}
+  .bdh-trust__spine::after{right:auto;left:-3px;top:auto;bottom:-1px;border-left:3.5px solid transparent;border-right:3.5px solid transparent;border-top:5px solid var(--line-3);border-bottom:0}
+  .bdh-trust__spine i{display:none}
+  .bdh-trust__p{padding:10px 12px;border-radius:var(--r-sm);background:var(--paper-2)}
+  .bdh-trust__gov{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){.bdh-trust__spine i{left:auto;right:6px}}

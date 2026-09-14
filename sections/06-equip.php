@@ -38,7 +38,7 @@
           <span class="s06__flow">
             <i class="s06__node">Trigger</i><b aria-hidden="true"></b>
             <i class="s06__node">Enrich</i><b aria-hidden="true"></b>
-            <i class="s06__node is-done">Route ✓</i>
+            <i class="s06__node is-done">Route <span class="f-d" aria-hidden="true">✓</span></i>
           </span>
           <span class="s06__tag">4 steps · no handoffs</span>
         </div>

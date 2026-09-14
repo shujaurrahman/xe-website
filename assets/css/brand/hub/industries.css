@@ -1,0 +1,47 @@
+/* Hub · industries — expanding photo panels on desktop, an accordion below 861px. */
+.bdh-ind__rail{display:flex;gap:10px;height:clamp(480px,40vw,580px)}
+.bdh-ind__panel{position:relative;flex:1 1 0;min-width:0;overflow:hidden;border-radius:var(--r-lg);background:var(--paper-4);transition:flex-grow .7s var(--e)}
+.bdh-ind__panel.is-open{flex-grow:6}
+.bdh-ind__img{position:absolute;inset:0;border-radius:0;aspect-ratio:auto}
+.bdh-ind__img img{transform:scale(1.06);transition:transform 1s var(--e)}
+.bdh-ind__panel.is-open .bdh-ind__img img{transform:none}
+
+.bdh-ind__btn{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:20px 0;background:rgba(25,25,29,.5);color:#fff;text-align:left;
+  transition:background .5s var(--e)}
+.bdh-ind__btn:hover{background:rgba(25,25,29,.38)}
+.bdh-ind__idx{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;color:rgba(255,255,255,.8)}
+.bdh-ind__name{writing-mode:vertical-rl;transform:rotate(180deg);font-size:var(--t-sm);font-weight:500;letter-spacing:0;white-space:nowrap}
+.bdh-ind__plus{display:none}
+.bdh-ind__panel.is-open .bdh-ind__btn{background:transparent;cursor:default}
+.bdh-ind__panel.is-open .bdh-ind__idx,.bdh-ind__panel.is-open .bdh-ind__name{opacity:0}
+.bdh-ind__btn:focus-visible{outline-offset:-4px}
+
+.bdh-ind__card{position:absolute;left:20px;bottom:20px;z-index:3;display:grid;gap:10px;width:min(460px,calc(100% - 40px));padding:28px;border-radius:var(--r-lg);background:var(--paper);box-shadow:var(--sh-2);
+  opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .4s var(--e),transform .4s var(--e),visibility 0s linear .4s}
+.bdh-ind__panel.is-open .bdh-ind__card{opacity:1;visibility:visible;transform:none;transition:opacity .5s var(--e) .25s,transform .5s var(--e) .25s,visibility 0s}
+.bdh-ind__k{display:flex;align-items:center;gap:10px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.bdh-ind__line{font-size:var(--t-body);line-height:1.5;color:var(--ink);margin-bottom:4px}
+.bdh-ind__card .bdh-bullets{margin-bottom:8px}
+.bdh-ind__card .bdh-tag{justify-self:start;white-space:normal;height:auto;min-height:24px;padding-block:5px;line-height:1.3}
+
+@media (max-width:860px){
+  .bdh-ind__rail{flex-direction:column;gap:0;height:auto;border-top:1px solid var(--line)}
+  .bdh-ind__panel,.bdh-ind__panel.is-open{flex:none;overflow:visible;border-radius:0;background:none;border-bottom:1px solid var(--line)}
+  .bdh-ind__img{position:relative;inset:auto;display:none;aspect-ratio:16/9;border-radius:var(--r-lg)}
+  .bdh-ind__panel.is-open .bdh-ind__img{display:block}
+  .bdh-ind__btn,.bdh-ind__btn:hover,.bdh-ind__panel.is-open .bdh-ind__btn{position:relative;inset:auto;flex-direction:row;justify-content:flex-start;gap:14px;width:100%;min-height:60px;padding:14px 0;background:none;color:var(--ink);cursor:pointer}
+  .bdh-ind__idx,.bdh-ind__panel.is-open .bdh-ind__idx{opacity:1;color:var(--faint)}
+  .bdh-ind__name,.bdh-ind__panel.is-open .bdh-ind__name{opacity:1;writing-mode:horizontal-tb;transform:none;font-family:var(--f-h);font-size:1.0625rem;white-space:normal}
+  .bdh-ind__plus{position:relative;display:block;flex:none;width:20px;height:20px;margin-left:auto}
+  .bdh-ind__plus::before,.bdh-ind__plus::after{content:"";position:absolute;left:5px;top:9.5px;width:10px;height:1.5px;background:var(--ink);transition:transform .3s var(--e)}
+  .bdh-ind__plus::after{transform:rotate(90deg)}
+  .bdh-ind__panel.is-open .bdh-ind__plus::after{transform:none}
+  .bdh-ind__panel.is-open .bdh-ind__idx{color:var(--blue)}
+  .bdh-ind__card{position:relative;left:auto;bottom:auto;display:none;width:auto;margin:-32px 12px 20px;padding:20px}
+  .bdh-ind__panel.is-open .bdh-ind__card{display:grid}
+  .bdh-ind__panel{display:flex;flex-direction:column}
+  .bdh-ind__btn{order:-1}
+}
+@media (prefers-reduced-motion:reduce){
+  .bdh-ind__panel,.bdh-ind__img img,.bdh-ind__card{transition:none}
+}

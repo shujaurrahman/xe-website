@@ -12,3 +12,9 @@ Shown in monochrome on the page. Replace with Xterra Edze's own work before laun
 
 Downloaded from images.unsplash.com: `workshop-wall.jpg` at 2000px wide, the other three
 cropped to 900 × 675.
+| c-cross-a.jpg | cand | ryoji-iwata | https://unsplash.com/photos/dlBXwGlzfcs |
+| c-cross-b.jpg | cand | ryoji-iwata | https://unsplash.com/photos/TRJjPc0wss0 |
+| c-laptop-a.jpg | cand | apex-virtual-education | https://unsplash.com/photos/KNQUEQwTCY4 |
+| c-laptop-b.jpg | cand | luke-chesser | https://unsplash.com/photos/JKUTrJ4vK00 |
+| c-mic-a.jpg | cand | detail-co | https://unsplash.com/photos/d5Tifmm4ILk |
+| c-light-a.jpg | cand | compare-fibre | https://unsplash.com/photos/INNsF0Zz_kQ |

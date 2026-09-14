@@ -60,7 +60,7 @@
   font-size:var(--t-lbl);font-weight:500;letter-spacing:0;color:var(--txt);
   padding:6px 8px;border-radius:var(--r-xs);background:var(--paper-2);
 }
-.s06__list i{color:var(--blue);font-style:normal}
+.s06__list i{color:var(--blue);font-family:var(--f);font-style:normal;font-size:var(--t-sm);line-height:1}   /* ✓ is not in Montserrat */
 
 .s06__mock--ring{flex-direction:row;align-items:center;gap:16px}
 .s06__ring{width:78px;height:78px;flex:none;color:var(--blue)}

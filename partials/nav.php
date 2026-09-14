@@ -35,21 +35,20 @@ $disc    = $SITE['disciplines'];
 
     <div class="mega" id="mega">
       <div class="mega__grid">
-        <div class="mega__rail" role="tablist" aria-label="Disciplines">
+        <!-- each discipline opens its overview page; hover or focus previews its capabilities -->
+        <nav class="mega__rail" aria-label="Disciplines">
           <?php foreach ($disc as $i => $d): ?>
-            <button class="mega__tab<?= $i === 0 ? ' is-on' : '' ?>" type="button" role="tab"
-                    id="mt-<?= e($d['slug']) ?>" aria-selected="<?= $i === 0 ? 'true' : 'false' ?>"
-                    aria-controls="mp-<?= e($d['slug']) ?>">
+            <a class="mega__tab<?= $i === 0 ? ' is-on' : '' ?>" href="<?= xe_discipline_url($d) ?>"
+               id="mt-<?= e($d['slug']) ?>" aria-describedby="mp-<?= e($d['slug']) ?>-intro">
               <span class="n"><?= e($d['n']) ?></span><?= e($d['name']) ?>
               <span class="i" aria-hidden="true">›</span>
-            </button>
+            </a>
           <?php endforeach; ?>
-        </div>
+        </nav>
 
         <div class="mega__panes">
           <?php foreach ($disc as $i => $d): $url = xe_discipline_url($d); ?>
-            <div class="mega__pane<?= $i === 0 ? ' is-on' : '' ?>" id="mp-<?= e($d['slug']) ?>"
-                 role="tabpanel" aria-labelledby="mt-<?= e($d['slug']) ?>">
+            <div class="mega__pane<?= $i === 0 ? ' is-on' : '' ?>" id="mp-<?= e($d['slug']) ?>">
               <p class="mega__intro"><?= e($d['intro']) ?></p>
               <div class="mega__caps">
                 <?php foreach ($d['caps'] as $k => $c):
@@ -89,6 +88,7 @@ $disc    = $SITE['disciplines'];
           <?= e($d['name']) ?><span class="n"><?= e($d['n']) ?></span><span aria-hidden="true">+</span>
         </button>
         <div class="sheet__panel">
+          <a href="<?= xe_discipline_url($d) ?>">Overview — all of <?= e($d['short']) ?> ›</a>
           <?php foreach ($d['caps'] as $c): ?>
             <a href="<?= xe_cap_url($d, $c) ?>"><?= e($c[0]) ?></a>
           <?php endforeach; ?>

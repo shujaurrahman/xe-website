@@ -102,32 +102,48 @@
   }
 
   /* ---------- accordion ---------------------------------------------------- */
-  /* [data-acc] wrapper; each row: button[data-acc-b] + div[data-acc-p]        */
+  /* [data-acc] wrapper; each row (a direct child) holds a button[data-acc-b] —
+     on its own or inside a heading — and its div[data-acc-p]. The panel is
+     found through aria-controls first, then anywhere inside the button's row. */
   function accordions() {
     XE.$$('[data-acc]').forEach(function (acc) {
       var single = acc.getAttribute('data-acc') !== 'multi';
       var btns = XE.$$('[data-acc-b]', acc);
+      function panelOf(btn) {
+        var id = btn.getAttribute('aria-controls');
+        var p = id ? document.getElementById(id) : null;
+        if (p && p.hasAttribute('data-acc-p')) return p;
+        var row = btn.closest('[data-acc] > *');
+        return row ? row.querySelector('[data-acc-p]') : null;
+      }
+      function shut(p) {
+        if (!p) return;
+        p.style.height = p.scrollHeight + 'px'; p.offsetHeight; p.style.height = '0px';
+      }
       btns.forEach(function (btn) {
-        var panel = btn.parentElement.querySelector('[data-acc-p]');
+        var panel = panelOf(btn);
         if (!panel) return;
         if (btn.getAttribute('aria-expanded') === 'true') panel.style.height = 'auto';
         XE.on(btn, 'click', function () {
           var open = btn.getAttribute('aria-expanded') === 'true';
           if (single) {
             btns.forEach(function (b) {
-              if (b === btn) return;
-              var p = b.parentElement.querySelector('[data-acc-p]');
+              if (b === btn || b.getAttribute('aria-expanded') !== 'true') return;
               b.setAttribute('aria-expanded', 'false');
-              if (p) { p.style.height = p.scrollHeight + 'px'; p.offsetHeight; p.style.height = '0px'; }
+              shut(panelOf(b));
             });
           }
           btn.setAttribute('aria-expanded', String(!open));
           if (open) {
-            panel.style.height = panel.scrollHeight + 'px'; panel.offsetHeight; panel.style.height = '0px';
+            shut(panel);
           } else {
             panel.style.height = panel.scrollHeight + 'px';
-            var done = function () { panel.style.height = 'auto'; panel.removeEventListener('transitionend', done); };
+            var done = function (e) {
+              if (e && e.target !== panel) return;
+              panel.style.height = 'auto'; panel.removeEventListener('transitionend', done);
+            };
             panel.addEventListener('transitionend', done);
+            if (reduced) done();
           }
         });
       });
@@ -228,20 +244,17 @@
       XE.on(document, 'keydown', function (e) { if (e.key === 'Escape') close(); });
       XE.on(mega, 'click', function (e) { if (e.target.closest('a')) close(); });
 
-      /* rail ⇄ pane */
+      /* rail ⇄ pane — the rail items are links to each overview page; hover and
+         focus only preview, so a click always navigates */
       var tabs = XE.$$('.mega__tab', mega);
       var panes = XE.$$('.mega__pane', mega);
       function show(i) {
-        tabs.forEach(function (t, n) { t.classList.toggle('is-on', n === i); t.setAttribute('aria-selected', String(n === i)); });
+        tabs.forEach(function (t, n) { t.classList.toggle('is-on', n === i); });
         panes.forEach(function (p, n) { p.classList.toggle('is-on', n === i); });
       }
       tabs.forEach(function (t, i) {
         XE.on(t, 'mouseenter', function () { show(i); });
         XE.on(t, 'focus', function () { show(i); });
-        XE.on(t, 'click', function (e) {
-          if (t.dataset.href) { return; }
-          e.preventDefault(); show(i);
-        });
         XE.on(t, 'keydown', function (e) {
           var n = e.key === 'ArrowDown' ? i + 1 : e.key === 'ArrowUp' ? i - 1 : -1;
           if (n < 0 || n >= tabs.length) return;

@@ -1,6 +1,6 @@
 /* 15 — testimonial accordion. Collapsed rows read as a list; one opens at a time. */
 .s15__h{margin-bottom:clamp(26px,3vw,42px)}
-.s15__count{font-size:var(--t-lbl);letter-spacing:-.02em;color:var(--faint);vertical-align:super;margin-left:.4em}
+.s15__count{font-family:var(--f);font-size:var(--t-lbl);font-weight:400;letter-spacing:.04em;color:var(--faint);vertical-align:super;margin-left:.4em}   /* a figure, so the label face */
 
 .s15__list{display:flex;flex-direction:column;gap:10px}
 .s15__row{
@@ -29,7 +29,7 @@
 .s15__panel{height:0;overflow:hidden;transition:height .42s var(--e)}
 .s15__q{
   padding:20px clamp(16px,2vw,24px) 24px;
-  font-size:clamp(1rem,1.5vw,1.2rem);line-height:1.6;letter-spacing:-.005em;color:var(--ink);max-width:52ch;
+  font-size:clamp(1rem,1.5vw,1.2rem);line-height:1.6;letter-spacing:0;color:var(--ink);max-width:52ch;
 }
 
 @media (max-width:520px){

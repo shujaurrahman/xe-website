@@ -1,14 +1,16 @@
 /* ==========================================================================
    XTERRA EDZE — core design system
-   Two typefaces, one accent (#0082FB), white paper, ink #19191D.
-     --f    JetBrains Mono — DISPLAY: headings, section titles, eyebrows/labels,
+   Three typefaces, one accent (#0082FB), white paper, ink #19191D.
+     --f-h  Outfit         — HEADINGS: h1–h5, display/section titles, card and
+            panel titles, big statements. Weight 500, light negative tracking.
+     --f    JetBrains Mono — LABELS & FIGURES: eyebrows/uppercase labels,
             numerals & stats, index numbers, marks, technical/UI mock readouts.
      --f-b  Montserrat     — READING: body copy, leads, captions, descriptions,
             buttons, links, nav, form fields — Regular 400 for running text,
             Medium 500 for UI labels & emphasis, Semibold 600 sparingly.
-   Section stylesheets may ONLY use the tokens below. No new colours, no fonts
-   other than var(--f) / var(--f-b), no !important. Montserrat is never given
-   the negative tracking the mono headings use.
+   Section stylesheets may ONLY use the tokens below. No new colours, no fonts other than
+   var(--f-h) / var(--f) / var(--f-b), no !important. Montserrat is never given
+   the negative tracking the Outfit headings use; mono labels track positive.
    ========================================================================== */
 
 /* ---------- 1. Font face ------------------------------------------------- */
@@ -24,6 +26,9 @@
    shift the layout. */
 @font-face{font-family:'Montserrat';font-style:normal;font-weight:100 900;font-display:swap;src:url(../fonts/montserrat-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
 @font-face{font-family:'Montserrat';font-style:normal;font-weight:100 900;font-display:swap;src:url(../fonts/montserrat-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+/* Outfit, variable 100–900 — the heading face (free, SIL Open Font Licence). */
+@font-face{font-family:'Outfit';font-style:normal;font-weight:100 900;font-display:swap;src:url(../fonts/outfit-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Outfit';font-style:normal;font-weight:100 900;font-display:swap;src:url(../fonts/outfit-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
 @font-face{font-family:'Montserrat Fallback';src:local('Arial'),local('ArialMT');ascent-override:85.79%;descent-override:22.25%;line-gap-override:0%;size-adjust:112.83%}
 
 /* ---------- 2. Tokens ---------------------------------------------------- */
@@ -63,7 +68,8 @@
   --on-ink-card:rgba(255,255,255,.06);
 
   /* type */
-  --f:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;   /* display */
+  --f-h:'Outfit',system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; /* headings */
+  --f:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;   /* labels, figures, readouts */
   --f-b:'Montserrat','Montserrat Fallback',system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; /* reading */
   --t-d1:clamp(2.05rem,5.15vw,4.5rem);
   --t-d2:clamp(1.85rem,4.1vw,3.4rem);
@@ -123,7 +129,9 @@ ul,ol{list-style:none}
 :focus{outline:none}
 :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:2px}
 ::selection{background:var(--blue);color:#fff}
-h1,h2,h3,h4,h5{font-family:var(--f);font-weight:500;line-height:1.08;letter-spacing:-.04em;color:var(--ink);text-wrap:balance}
+b,strong{font-weight:600}             /* Montserrat tops out at Semibold */
+code,kbd,samp,pre{font-family:var(--f)}   /* technical readouts use the label face, not the UA monospace */
+h1,h2,h3,h4,h5{font-family:var(--f-h);font-weight:500;line-height:1.08;letter-spacing:-.025em;color:var(--ink);text-wrap:balance}
 p,li,dd,blockquote,figcaption{text-wrap:pretty}
 
 /* ---------- 4. Layout & the blueprint frame ------------------------------ */
@@ -155,12 +163,13 @@ p,li,dd,blockquote,figcaption{text-wrap:pretty}
 .band--ink .lbl{color:var(--on-ink-3)}
 .lbl .dot{width:6px;height:6px;border-radius:50%;background:var(--blue);flex:none}
 
-.d1,.d2,.h2,.h3,.h4,.num{font-family:var(--f)}
-.d1{font-size:var(--t-d1);letter-spacing:-.05em;line-height:1.02;font-weight:500}
-.d2{font-size:var(--t-d2);letter-spacing:-.045em;line-height:1.04;font-weight:500}
-.h2{font-size:var(--t-h2);letter-spacing:-.04em;line-height:1.08;font-weight:500}
-.h3{font-size:var(--t-h3);letter-spacing:-.025em;line-height:1.28;font-weight:500;color:var(--ink)}
-.h4{font-size:var(--t-h4);letter-spacing:-.02em;line-height:1.35;font-weight:500;color:var(--ink)}
+.d1,.d2,.h2,.h3,.h4{font-family:var(--f-h)}
+.num{font-family:var(--f)}
+.d1{font-size:var(--t-d1);letter-spacing:-.035em;line-height:1.02;font-weight:500}
+.d2{font-size:var(--t-d2);letter-spacing:-.03em;line-height:1.04;font-weight:500}
+.h2{font-size:var(--t-h2);letter-spacing:-.028em;line-height:1.08;font-weight:500}
+.h3{font-size:var(--t-h3);letter-spacing:-.012em;line-height:1.28;font-weight:500;color:var(--ink)}
+.h4{font-size:var(--t-h4);letter-spacing:-.008em;line-height:1.3;font-weight:500;color:var(--ink)}
 .g{color:var(--faint)}                 /* the grey half of a two-tone heading */
 .band--ink .g{color:var(--on-ink-3)}
 .ac{color:var(--blue)}
@@ -172,7 +181,7 @@ p,li,dd,blockquote,figcaption{text-wrap:pretty}
 .num{font-variant-numeric:tabular-nums;letter-spacing:-.04em}
 .band--ink .p,.band--ink .lead,.band--ink .sm{color:var(--on-ink-2)}
 
-.chev{color:var(--blue)}               /* the › motif borrowed from the mark */
+.chev{color:var(--blue);font-family:var(--f)}   /* the › motif borrowed from the mark — always the mono glyph */
 
 /* section head block: label → heading → lead */
 .head{display:flex;flex-direction:column;gap:18px;margin-bottom:clamp(32px,3.6vw,56px)}
@@ -199,7 +208,7 @@ p,li,dd,blockquote,figcaption{text-wrap:pretty}
 }
 .btn .i::before,.btn .i::after,.tl .i::before,.tl .i::after{
   content:"\203A";position:absolute;inset:0;display:grid;place-items:center;
-  font-size:.95rem;line-height:1;transition:transform .26s cubic-bezier(.33,1,.68,1);
+  font-family:var(--f);font-size:.95rem;line-height:1;transition:transform .26s cubic-bezier(.33,1,.68,1);
 }
 .btn .i::after,.tl .i::after{transform:translate(-11px,13px)}
 .btn:hover .i::before,.tl:hover .i::before{transform:translate(11px,-13px)}
@@ -347,7 +356,7 @@ p,li,dd,blockquote,figcaption{text-wrap:pretty}
 .mega__tab:hover{background:var(--paper)}
 .mega__tab.is-on{background:var(--paper);color:var(--ink);box-shadow:var(--sh-1)}
 .mega__tab.is-on .n{color:var(--blue)}
-.mega__tab .i{margin-left:auto;opacity:0;color:var(--blue);transition:opacity var(--d1),transform var(--d2) var(--e)}
+.mega__tab .i{font-family:var(--f);margin-left:auto;opacity:0;color:var(--blue);transition:opacity var(--d1),transform var(--d2) var(--e)}
 .mega__tab.is-on .i{opacity:1}
 .mega__panes{position:relative}
 .mega__more{margin-top:14px;padding-left:12px}
@@ -393,6 +402,7 @@ p,li,dd,blockquote,figcaption{text-wrap:pretty}
 .sheet__row{border-bottom:1px solid var(--line-2)}
 .sheet__btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:18px 0;font-size:1.05rem;font-weight:500;color:var(--ink);letter-spacing:0}
 .sheet__btn .n{font-family:var(--f);font-size:var(--t-lbl);color:var(--faint);margin-right:auto;margin-left:12px}
+.sheet__btn > span:last-child{font-family:var(--f)}   /* the + and › marks */
 .sheet__panel{display:none;padding-bottom:14px}
 .sheet__panel.is-open{display:block}
 .sheet__panel a{display:block;padding:9px 0 9px 14px;border-left:2px solid var(--blue-wash-2);font-size:var(--t-sm);color:var(--muted)}
@@ -410,81 +420,82 @@ p,li,dd,blockquote,figcaption{text-wrap:pretty}
 }
 
 /* ---------- 10. Footer --------------------------------------------------- */
+/* Compact and quiet: brand, links and offices on one row, then the legal bar.
+   No washes, no wordmark, no boxes. */
 .foot{
-  position:relative;overflow:hidden;background:var(--paper);isolation:isolate;
-  padding-block:clamp(56px,6vw,96px) 0;
+  position:relative;background:var(--paper-2);border-top:1px solid var(--line);
+  padding-block:clamp(52px,5vw,72px) clamp(20px,2vw,28px);
 }
-.foot__bg{position:absolute;inset:0;z-index:0;pointer-events:none}
-.foot .aurora i{opacity:.9}
-.foot .dither{opacity:.85}
-.foot__wrap{position:relative;z-index:1}
-.foot__card{
-  position:relative;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);
-  padding:clamp(28px,3.6vw,52px);
-  box-shadow:0 2px 8px rgba(25,25,29,.04),0 40px 90px -50px rgba(25,25,29,.35);
+.foot__top{
+  display:grid;grid-template-columns:minmax(230px,1.15fr) minmax(0,1.75fr) minmax(0,1.3fr);
+  gap:clamp(32px,4.4vw,80px);align-items:start;
 }
-.foot__top{display:grid;grid-template-columns:minmax(250px,1fr) 2.3fr;gap:clamp(28px,4vw,72px)}
+
 .foot__brand{display:flex;flex-direction:column;align-items:flex-start}
-.foot__logo svg{height:18px;width:auto;color:var(--ink)}
-.foot__tag{margin-top:18px;max-width:30ch;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
-.foot__cta{margin-top:24px}
-.foot__mail{margin-top:16px;font-size:var(--t-xs)}
-.foot__mail a{color:var(--blue-d);border-bottom:1px solid var(--blue-line);padding-bottom:2px}
-.foot__mail a:hover{border-color:var(--blue)}
+.foot__logo{display:inline-flex;color:var(--ink)}
+.foot__logo svg{height:18px;width:auto}
+.foot__tag{margin-top:14px;max-width:30ch;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+.foot__mail{
+  margin-top:20px;font-size:var(--t-body);font-weight:500;color:var(--ink);
+  padding-bottom:3px;border-bottom:1px solid var(--line-3);
+  transition:color var(--d1) var(--e-io),border-color var(--d1) var(--e-io);
+}
+.foot__mail:hover{color:var(--blue-d);border-color:var(--blue)}
+.foot__cta{margin-top:14px}
 
-.foot__cols{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px}
-.foot__col h3{font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:500;margin-bottom:16px}
+.foot__nav{display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(20px,2.4vw,40px)}
+.foot__h{
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;line-height:1;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--faint);margin-bottom:16px;text-wrap:nowrap;
+}
+.foot__col li + li{margin-top:1px}
 .foot__col a{
-  display:block;font-size:var(--t-sm);line-height:1.4;color:var(--txt);padding:7px 0;overflow-wrap:anywhere;
-  transition:color var(--d1) var(--e-io),transform var(--d1) var(--e-io);
+  display:inline-block;padding:4px 0;font-size:var(--t-sm);line-height:1.45;color:var(--txt);
+  transition:color var(--d1) var(--e-io);
 }
-.foot__col a:hover{color:var(--blue);transform:translateX(2px)}
+.foot__col a:hover{color:var(--blue)}
 
-.foot__studios{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,24px);
-  margin-top:clamp(30px,3.4vw,48px);
-}
-.foot__studio{
-  display:flex;flex-direction:column;gap:7px;padding:20px 22px;font-style:normal;
-  border:1px solid var(--line);border-radius:var(--r);background:var(--paper-2);
-  transition:border-color var(--d2) var(--e),background var(--d2) var(--e),transform var(--d2) var(--e);
-}
-.foot__studio:hover{transform:translateY(-2px)}
-.foot__saddr{font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
-.foot__saddr a{color:var(--blue-d);border-bottom:1px solid var(--blue-line);padding-bottom:1px}
-.foot__saddr a:hover{border-color:var(--blue)}
-.foot__studio:hover{border-color:var(--blue-line);background:var(--paper)}
-.foot__slbl{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
-.foot__scity{font-family:var(--f);font-size:var(--t-h3);letter-spacing:-.03em;color:var(--ink);line-height:1.2}
-.foot__stime{font-family:var(--f);margin-top:auto;padding-top:10px;font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
-.foot__studio--say .foot__scity{color:var(--blue-d)}
+.foot__olist{display:grid;gap:18px}
+.foot__office{display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+.foot__ocity{font-family:var(--f-h);font-size:var(--t-body);font-weight:500;letter-spacing:-.008em;line-height:1.3;color:var(--ink)}
+.foot__ounits{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--blue-d);line-height:1.5}
+.foot__col a.foot__oaddr{padding:0;line-height:1.6;color:var(--muted)}
+.foot__col a.foot__oaddr:hover{color:var(--ink);text-decoration:underline;text-decoration-color:var(--line-3);text-underline-offset:3px}
 
-.foot__line{height:3px;border-radius:3px;background:var(--blue);margin-top:clamp(28px,3vw,44px)}
 .foot__bar{
-  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  padding-top:20px;font-size:var(--t-xs);color:var(--faint);
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px clamp(20px,3vw,40px);
+  margin-top:clamp(40px,4.2vw,60px);padding-top:clamp(18px,1.8vw,24px);border-top:1px solid var(--line);
+  font-size:var(--t-xs);
 }
-.foot__links{display:flex;flex-wrap:wrap;gap:18px}
-.foot__links a{color:var(--muted);transition:color var(--d1) var(--e-io)}
-.foot__links a:hover{color:var(--blue)}
-
-/* the wordmark bleeding off the bottom edge */
-.foot__mark{
-  position:relative;z-index:1;display:block;margin-top:clamp(28px,3.4vw,52px);
-  padding-inline:var(--gutter);color:var(--line);
-  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 42%,transparent 92%);
-  mask-image:linear-gradient(180deg,#000 0%,#000 42%,transparent 92%);
+.foot__copy{color:var(--faint);white-space:nowrap}
+.foot__legal{display:flex;flex-wrap:wrap;justify-content:center;gap:6px clamp(16px,1.8vw,26px)}
+.foot__legal a{color:var(--muted);transition:color var(--d1) var(--e-io)}
+.foot__legal a:hover{color:var(--ink)}
+.foot__end{display:flex;align-items:center;gap:8px}
+.foot__icon{
+  display:grid;place-items:center;width:34px;height:34px;border-radius:50%;
+  border:1px solid var(--line);background:var(--paper);color:var(--muted);
+  transition:color var(--d1) var(--e-io),border-color var(--d1) var(--e-io),transform var(--d1) var(--e-io);
 }
-.foot__mark svg{width:100%;height:auto;display:block}
+.foot__icon svg{width:15px;height:15px}
+.foot__icon:hover{color:var(--blue);border-color:var(--blue-line)}
+.foot__up{margin-left:6px}
+.foot__up:hover{transform:translateY(-2px)}
 
-@media (max-width:1000px){
-  .foot__top{grid-template-columns:1fr}
-  .foot__cols{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+@media (max-width:1100px){
+  .foot__top{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)}
+  .foot__brand{grid-column:1 / -1}
+  .foot__bar{grid-template-columns:1fr auto}
+  .foot__legal{grid-column:1 / -1;grid-row:1;justify-content:flex-start}
 }
 @media (max-width:680px){
-  .foot__cols{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .foot__studios{grid-template-columns:1fr}
-  .foot__cta{width:100%}
+  .foot__top{grid-template-columns:1fr;gap:36px}
+  /* stacked: legal links, then the copyright line, then the icons */
+  .foot__bar{grid-template-columns:minmax(0,1fr);gap:16px}
+  .foot__copy{white-space:normal}
+  .foot__end{justify-content:flex-start}
+  .foot__legal{gap:10px 20px}
+  .foot__icon{width:42px;height:42px}
 }
 
 /* ---------- 11. Utilities ------------------------------------------------ */
@@ -496,7 +507,7 @@ p,li,dd,blockquote,figcaption{text-wrap:pretty}
 .grow{flex:1 1 auto}
 .nowrap{white-space:nowrap}
 .tab-nums{font-variant-numeric:tabular-nums}
-.f-d{font-family:var(--f);font-variant-ligatures:none}   /* force the display face */
+.f-d{font-family:var(--f);font-variant-ligatures:none}   /* force the mono label/figure face */
 .f-b{font-family:var(--f-b)}                             /* force the reading face */
 main{display:block}
 
@@ -581,8 +592,8 @@ html.pre-on{overflow:hidden}
 .phero__dither{opacity:.4}
 .phero__in{position:relative;z-index:1;display:flex;flex-direction:column;gap:18px;max-width:70ch}
 .phero__h{
-  font-family:var(--f);font-size:clamp(1.9rem,4.2vw,3.3rem);line-height:1.08;letter-spacing:-.05em;font-weight:500;
-  max-width:18ch;
+  font-family:var(--f-h);font-size:clamp(1.9rem,4.2vw,3.3rem);line-height:1.08;letter-spacing:-.035em;font-weight:500;
+  max-width:20ch;                      /* Outfit's ch is narrower than the mono it replaced — 18ch orphaned "in" on Industries */
 }
 .phero__h .g{color:var(--faint)}
 .phero__lead{max-width:56ch}
@@ -596,9 +607,10 @@ html.pre-on{overflow:hidden}
 .caps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(20px,3vw,56px);
   border-top:1px solid var(--line)}
 .caps__i{display:flex;flex-direction:column;gap:6px;padding:22px 0;border-bottom:1px solid var(--line-2)}
-.caps__n,.caps__t,.caps__group,.dlist__n,.dlist__t,.dlist__c{font-family:var(--f)}
+.caps__n,.caps__group,.dlist__n,.dlist__c{font-family:var(--f)}
+.caps__t,.dlist__t{font-family:var(--f-h)}
 .caps__n{font-size:var(--t-lbl);letter-spacing:.14em;color:var(--blue);font-variant-numeric:tabular-nums}
-.caps__t{font-size:var(--t-h3);letter-spacing:-.03em;color:var(--ink);line-height:1.25}
+.caps__t{font-size:var(--t-h3);font-weight:500;letter-spacing:-.015em;color:var(--ink);line-height:1.25}
 .caps__d{font-size:var(--t-sm);line-height:1.6;color:var(--muted);max-width:52ch}
 .caps__group{
   grid-column:1 / -1;margin:26px 0 4px;padding-bottom:10px;border-bottom:1px solid var(--line);
@@ -609,7 +621,7 @@ html.pre-on{overflow:hidden}
 /* a plain holding block for pages still to be built */
 .soon{display:flex;flex-direction:column;gap:14px;align-items:flex-start;
   padding:clamp(26px,3vw,40px);border:1px dashed var(--line-3);border-radius:var(--r-lg);background:var(--paper-2)}
-.soon p{font-size:var(--t-sm);line-height:1.6;color:var(--muted);max-width:56ch}
+.soon p:not(.lbl){font-size:var(--t-sm);line-height:1.6;color:var(--muted);max-width:56ch}   /* the eyebrow keeps its label size */
 
 /* nav: the page you are on */
 .nav__link.is-here{color:#fff;background:rgba(255,255,255,.12)}
@@ -624,12 +636,12 @@ html.pre-on{overflow:hidden}
 .dlist__i:hover{background:var(--paper-2);padding-inline:clamp(10px,1.4vw,20px)}
 .dlist__n{font-size:var(--t-lbl);letter-spacing:.12em;color:var(--blue);padding-top:6px}
 .dlist__b{display:flex;flex-direction:column;gap:8px}
-.dlist__t{font-size:clamp(1.15rem,2vw,1.6rem);letter-spacing:-.04em;color:var(--ink);line-height:1.15}
+.dlist__t{font-size:clamp(1.15rem,2vw,1.6rem);font-weight:500;letter-spacing:-.02em;color:var(--ink);line-height:1.15}
 .dlist__d{font-size:var(--t-sm);line-height:1.6;color:var(--muted);max-width:62ch}
 .dlist__c{font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
 .dlist__go{
   display:grid;place-items:center;width:28px;height:28px;border-radius:50%;
-  color:var(--blue);font-size:1rem;transition:transform var(--d2) var(--e),background var(--d2) var(--e);
+  color:var(--blue);font-family:var(--f);font-size:1rem;transition:transform var(--d2) var(--e),background var(--d2) var(--e);
 }
 .dlist__i:hover .dlist__go{background:var(--blue-wash);transform:translateX(4px)}
 @media (max-width:600px){.dlist__i{grid-template-columns:40px 1fr 20px}}

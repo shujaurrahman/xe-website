@@ -1,6 +1,6 @@
 <!--
   BOOKING — this is a front-end request form, not a live calendar. Selecting a slot and
-  submitting composes an email to hello@xterraedze.com; nothing is reserved. Wire the
+  submitting composes an email to connect@xterraedze.com; nothing is reserved. Wire the
   three marked hooks in 20-booking.js to the real calendar (Cal.com / Google) before launch.
 -->
 <section class="band band--alt band--rules s20" id="book" aria-labelledby="s20-t">
