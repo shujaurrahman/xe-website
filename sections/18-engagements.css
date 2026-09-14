@@ -14,7 +14,7 @@
   box-shadow:var(--sh-2);transform:translateY(-10px);
 }
 .s18__flag{
-  padding:11px 20px;font-size:var(--t-lbl);letter-spacing:.16em;text-transform:uppercase;
+  padding:11px 20px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.16em;text-transform:uppercase;
   color:#fff;text-align:center;
 }
 .s18__inner{
@@ -36,7 +36,7 @@
 .s18__rule{margin:20px 0}
 .s18__feats{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px}
 .s18__feats li{display:grid;grid-template-columns:12px 1fr;gap:7px;font-size:var(--t-lbl);line-height:1.45;color:var(--muted)}
-.s18__feats i{font-style:normal}
+.s18__feats i{font-style:normal;font-family:var(--f)}
 
 @media (max-width:940px){
   .s18__grid{grid-template-columns:1fr}

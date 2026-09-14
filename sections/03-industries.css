@@ -40,7 +40,7 @@
   padding:18px 8px;color:var(--on-ink);
 }
 .s03__spine{
-  font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
   writing-mode:vertical-rl;transform:rotate(180deg);
   transition:opacity .3s var(--e);
 }
@@ -51,9 +51,10 @@
   opacity:0;transform:translateY(10px);transition:opacity .45s var(--e) .12s,transform .45s var(--e) .12s;
 }
 .s03__card.is-on .s03__body{opacity:1;transform:none}
-.s03__sector{font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:10px}
-.s03__line{font-size:clamp(.95rem,1.25vw,1.15rem);line-height:1.4;letter-spacing:-.03em;color:var(--on-ink);max-width:30ch}
-.s03__credit{margin-top:12px;font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.s03__sector{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:10px}
+.s03__line{font-size:clamp(.95rem,1.25vw,1.15rem);line-height:1.5;letter-spacing:0;color:var(--on-ink);max-width:30ch}
+.s03__credit{margin-top:12px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.s03__credit span{white-space:nowrap}   /* a discipline never splits; the line breaks after the chevron */
 .s03__credit i{color:var(--blue);font-style:normal;padding:0 .25em}
 
 @media (max-width:860px){

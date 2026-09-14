@@ -45,7 +45,7 @@
         <div class="s12__scene" id="s12-p1" role="tabpanel" aria-labelledby="s12-t1">
           <p class="s12__chip">Brand system · v2.4</p>
           <ul class="s12__rows">
-            <li><span class="mono-tile">01</span><b>Identity</b><span class="s12__need">Type, colour, motion, tone — one set of rules.</span></li>
+            <li><span class="mono-tile">01</span><b>Identity</b><span class="s12__need">Type, colour, motion, tone&nbsp;— one set of rules.</span></li>
             <li><span class="mono-tile">02</span><b>Product</b><span class="s12__need">The same rules, expressed as components.</span></li>
             <li><span class="mono-tile">03</span><b>Campaign</b><span class="s12__need">Every market, on brief, without a rebuild.</span></li>
           </ul>

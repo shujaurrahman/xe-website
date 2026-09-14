@@ -143,7 +143,8 @@
     if (!b) return;
     picked = { date: new Date(selected), mins: +b.getAttribute('data-mins'), label: b.textContent };
     timesEl.hidden = true; doneEl.hidden = true; form.hidden = false;
-    XE.$('[data-s20-picked]', root).textContent = fmtDay(picked.date) + ' · ' + picked.label;
+    /* no-break before the dot, so a wrap never starts a line with it */
+    XE.$('[data-s20-picked]', root).textContent = fmtDay(picked.date) + '\u00a0· ' + picked.label;
     live.textContent = 'Time selected: ' + picked.label + '. Complete the form to send your request.';
     var first = XE.$('[data-book-first]', form);
     if (first) first.focus({ preventScroll: true });

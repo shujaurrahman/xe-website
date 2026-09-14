@@ -25,12 +25,12 @@
   width:min(100%,616px);height:48px;
 }
 
-/* built on core .pill — resized into a control, sentence case, no tracking */
+/* built on core .pill — resized into a control: sentence case, reading face, no tracking */
 .s02__pill{
   position:relative;z-index:1;justify-content:center;
   width:var(--s02-pw);height:100%;padding:0;
   border-color:var(--line-3);
-  font-size:var(--t-sm);font-weight:500;letter-spacing:-.01em;text-transform:none;
+  font-family:var(--f-b);font-size:var(--t-sm);font-weight:500;letter-spacing:0;text-transform:none;
   color:var(--muted);
   transition:background var(--d2) var(--e-io),color var(--d2) var(--e-io),
              border-color var(--d2) var(--e-io);
@@ -136,7 +136,7 @@
   display:inline-flex;align-items:center;gap:.5em;height:24px;padding:0 10px;
   border-radius:var(--r-pill);background:rgba(255,255,255,.93);
   -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
-  font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;
   line-height:1;color:var(--ink);box-shadow:0 1px 2px rgba(25,25,29,.12);
 }
 .s02__cap::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--blue);flex:none}
@@ -162,7 +162,8 @@
   .s02__stage{border-radius:var(--r-lg)}
   .s02__mosaic{grid-template-columns:repeat(2,minmax(0,1fr))}
   .s02__t--32{grid-column:span 2;aspect-ratio:16 / 9}
-  .s02__cap{height:22px;padding:0 8px;letter-spacing:.1em}
+  /* a two-word caption may wrap in a half-width tile: the chip grows with it */
+  .s02__cap{height:auto;min-height:22px;max-width:calc(100% - 18px);padding:4px 8px;border-radius:11px;line-height:1.25;letter-spacing:.1em}
   .s02__cta .btn{width:100%}
   .s02__cta{width:100%}
 }
@@ -225,10 +226,10 @@
 }
 .s02__brief:hover .s02__edge{transform:scaleY(1)}
 .s02__top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.s02__sector{font-size:var(--t-lbl);letter-spacing:.16em;text-transform:uppercase;color:var(--blue-d)}
-.s02__idx{font-size:var(--t-lbl);letter-spacing:.1em;color:var(--ghost);font-variant-numeric:tabular-nums}
+.s02__sector{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.16em;text-transform:uppercase;color:var(--blue-d)}
+.s02__idx{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;color:var(--ghost);font-variant-numeric:tabular-nums}
 .s02__quote{
-  font-size:clamp(1.05rem,1.55vw,1.3rem);line-height:1.42;letter-spacing:-.035em;color:var(--ink);
+  font-family:var(--f);font-size:clamp(1.05rem,1.55vw,1.3rem);line-height:1.42;letter-spacing:-.035em;color:var(--ink);
 }
 .s02__foot{
   display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
@@ -236,12 +237,12 @@
 }
 .s02__tags{display:flex;flex-wrap:wrap;gap:6px}
 .s02__tags i{
-  font-style:normal;font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;
+  font-style:normal;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;
   padding:4px 9px;border-radius:var(--r-pill);background:var(--paper-3);color:var(--muted);
   transition:background .3s var(--e),color .3s var(--e);
 }
 .s02__brief:hover .s02__tags i:first-child{background:var(--blue-wash);color:var(--blue-d)}
-.s02__wks{font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.s02__wks{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
 
 /* they deal themselves in when the pane opens */
 .s02__pane.is-on .s02__brief{animation:s02-deal .62s var(--e) both}

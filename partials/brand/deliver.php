@@ -24,7 +24,7 @@ $pad     = function ($x) { return str_pad((string) $x, 2, '0', STR_PAD_LEFT); };
         <ul class="bd-deliver__facts">
           <li><b class="num"><?= $pad($dvN) ?></b> deliverables</li>
           <li><b class="num"><?= $pad(count($dvFmts)) ?></b> formats</li>
-          <li><b>100%</b> yours</li>
+          <li><b class="num">100%</b> yours</li>
         </ul>
       </div>
     </div>

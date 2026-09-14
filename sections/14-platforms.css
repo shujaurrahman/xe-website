@@ -20,6 +20,7 @@
 .s14__panel{
   display:flex;flex-direction:column;gap:12px;
   padding:clamp(18px,2vw,24px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper-2);
+  font-family:var(--f);                /* a mock readout — display face throughout */
 }
 .s14__plbl{font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .s14__rows{display:flex;flex-direction:column;gap:8px}
@@ -49,7 +50,7 @@
   display:grid;place-items:center;width:38px;height:38px;border-radius:11px;
   border:1px solid transparent;background:var(--blue-wash);color:var(--blue-d);margin-bottom:6px;
 }
-.s14__mono{font-size:var(--t-lbl);letter-spacing:.04em;font-weight:500}
+.s14__mono{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;font-weight:500}
 .s14__p{font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
 
 /* marks, masked so they inherit our ink */

@@ -39,7 +39,7 @@
     </div>
 
     <p class="s01__sub">
-      We architect intelligent brand systems that give businesses an edge — the kind that
+      We architect intelligent brand systems that give businesses an edge&nbsp;— the kind that
       compounds as the market keeps moving.
     </p>
   </div>

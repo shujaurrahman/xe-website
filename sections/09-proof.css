@@ -20,14 +20,14 @@
   .s09__plate{background:rgba(25,25,29,.62)}
 }
 .s09__num{font-size:clamp(2.1rem,3.6vw,3.1rem);line-height:1;color:var(--on-ink);font-weight:500}
-.s09__cap{font-size:var(--t-lbl);letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.78)}
+.s09__cap{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.78)}
 
 .s09__ink{
   position:relative;display:flex;flex-direction:column;justify-content:space-between;
   background:var(--ink);border-radius:var(--r-lg);padding:clamp(20px,2.4vw,30px);min-height:300px;
 }
-.s09__say{font-size:clamp(.95rem,1.2vw,1.1rem);line-height:1.55;letter-spacing:-.02em;color:var(--on-ink)}
-.s09__mark{font-size:1.4rem;color:var(--blue);line-height:1}
+.s09__say{font-size:clamp(.95rem,1.2vw,1.1rem);line-height:1.6;letter-spacing:0;color:var(--on-ink)}
+.s09__mark{font-family:var(--f);font-size:1.4rem;color:var(--blue);line-height:1}
 
 .s09__strip{
   display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
@@ -44,8 +44,8 @@
   background:var(--blue-wash);color:var(--blue-d)}
 .s09__ico svg{width:19px;height:19px}
 .s09__ico svg{width:100%;height:100%}
-.s09__label{font-size:var(--t-xs);color:var(--txt);letter-spacing:-.01em}
-.s09__tick{font-style:normal;font-size:var(--t-sm);color:var(--blue)}
+.s09__label{font-size:var(--t-xs);font-weight:500;color:var(--txt);letter-spacing:0}
+.s09__tick{font-family:var(--f);font-style:normal;font-size:var(--t-sm);color:var(--blue)}
 
 @media (max-width:1040px){
   .s09__top{grid-template-columns:1fr}

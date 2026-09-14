@@ -17,7 +17,7 @@
         <p class="lbl lbl--blue"><span class="dot"></span>How we operate</p>
         <h2 class="h2 s13__h" id="s13-t">AI runs the operation.<br><span class="g">People run the strategy.</span></h2>
         <p class="p s13__p">We've rebuilt how we work around AI. What hasn't changed is what we stand
-          for. Layering AI onto an old process only makes the old process faster — so we rebuild the
+          for. Layering AI onto an old process only makes the old process faster&nbsp;— so we rebuild the
           process itself, and the intelligence it produces stays yours.</p>
         <ul class="s13__list">
           <li><i class="chev" aria-hidden="true">›</i>One accountable team, not four vendors pointing at each other.</li>

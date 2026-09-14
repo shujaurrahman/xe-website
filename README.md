@@ -77,9 +77,18 @@ so it inherits `currentColor`), `e($string)` (escapes), `xe_section($name)`,
 | `--txt` / `--muted` / `--faint` | `#4A4A52` / `#75757E` / `#8A8A93` | body, secondary, meta |
 | `--line` / `--line-2` | `#E7E7EA` / `#F0F0F1` | borders and dividers |
 
-JetBrains Mono throughout, embedded in `core.css` so it renders identically anywhere.
-Headings are weight 500 with tight negative tracking; every section title is the same
-size, above an eyebrow label. Blue never appears inside a heading — headings are ink
+Two typefaces, split by role:
+
+| Token | Face | Used for |
+|---|---|---|
+| `--f` | JetBrains Mono (embedded in `core.css`) | **display** — headings, section titles, eyebrows and uppercase labels, index numbers, stats and figures, mock-UI readouts |
+| `--f-b` | Montserrat (`assets/fonts/`, preloaded) | **reading** — body copy, leads, captions, descriptions, buttons, links, nav, form fields |
+
+`body` is Montserrat, so text inherits the reading face; a rule opts into the display
+face with `font-family:var(--f)` (or the `.f-d` utility). Montserrat is Regular 400 for
+running text, Medium 500 for UI labels and emphasis, Semibold 600 sparingly — and never
+takes the negative tracking the mono headings use. Headings are weight 500 with tight
+negative tracking; every section title is the same size, above an eyebrow label. Blue never appears inside a heading — headings are ink
 with a grey first phrase. `.aurora` + `.dither` give the animated blue wash used in the
 hero, the brief section and the footer.
 

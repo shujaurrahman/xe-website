@@ -17,7 +17,7 @@ include __DIR__ . '/../../partials/nav.php';
 
 /* ---- the hero stage: drag the range, the components re-skin, the check holds the floor ---- */
 ob_start(); ?>
-<div class="bd-stage bs-flex" data-bd-live data-bd-flex style="--f:0">
+<div class="bd-stage bs-flex" data-bd-live data-bd-flex style="--fx:0">
   <div class="bd-stage__bar">
     <span class="bd-stage__dots" aria-hidden="true"><i></i><i></i><i></i></span>
     <span class="bd-stage__title">Flex range <i aria-hidden="true">›</i> core to expressive</span>

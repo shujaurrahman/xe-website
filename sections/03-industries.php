@@ -24,7 +24,7 @@
         <div class="s03__body" id="s03-p0" role="tabpanel" aria-labelledby="s03-t0">
           <p class="s03__sector">Consumer Health</p>
           <p class="s03__line">One brand system that holds across nine markets, from pack to pharmacy shelf to search result.</p>
-          <p class="s03__credit">Brand Design <i aria-hidden="true">›</i> Campaign &amp; Content</p>
+          <p class="s03__credit"><span>Brand Design&nbsp;<i aria-hidden="true">›</i></span> <span>Campaign &amp; Content</span></p>
         </div>
       </article>
 
@@ -37,7 +37,7 @@
         <div class="s03__body" id="s03-p1" role="tabpanel" aria-labelledby="s03-t1">
           <p class="s03__sector">Financial Services</p>
           <p class="s03__line">A CRM rebuilt around the customer journey, so every message knows what happened last.</p>
-          <p class="s03__credit">Marketing Technology <i aria-hidden="true">›</i> Technology &amp; Intelligence</p>
+          <p class="s03__credit"><span>Marketing Technology&nbsp;<i aria-hidden="true">›</i></span> <span>Technology &amp; Intelligence</span></p>
         </div>
       </article>
 
@@ -50,7 +50,7 @@
         <div class="s03__body" id="s03-p2" role="tabpanel" aria-labelledby="s03-t2">
           <p class="s03__sector">Retail &amp; Commerce</p>
           <p class="s03__line">A campaign system that ships a season in days instead of weeks, without losing the brand.</p>
-          <p class="s03__credit">Campaign &amp; Content <i aria-hidden="true">›</i> AI Design</p>
+          <p class="s03__credit"><span>Campaign &amp; Content&nbsp;<i aria-hidden="true">›</i></span> <span>AI Design</span></p>
         </div>
       </article>
 
@@ -63,7 +63,7 @@
         <div class="s03__body" id="s03-p3" role="tabpanel" aria-labelledby="s03-t3">
           <p class="s03__sector">B2B Technology</p>
           <p class="s03__line">Positioning, product experience and an assistant that answers the questions sales kept repeating.</p>
-          <p class="s03__credit">Product &amp; Experience <i aria-hidden="true">›</i> AI Design</p>
+          <p class="s03__credit"><span>Product &amp; Experience&nbsp;<i aria-hidden="true">›</i></span> <span>AI Design</span></p>
         </div>
       </article>
 
@@ -76,7 +76,7 @@
         <div class="s03__body" id="s03-p4" role="tabpanel" aria-labelledby="s03-t4">
           <p class="s03__sector">Hospitality</p>
           <p class="s03__line">Direct booking treated as a product, not a discount — from first search to the day after checkout.</p>
-          <p class="s03__credit">Product &amp; Experience <i aria-hidden="true">›</i> Marketing Technology</p>
+          <p class="s03__credit"><span>Product &amp; Experience&nbsp;<i aria-hidden="true">›</i></span> <span>Marketing Technology</span></p>
         </div>
       </article>
 
@@ -89,7 +89,7 @@
         <div class="s03__body" id="s03-p5" role="tabpanel" aria-labelledby="s03-t5">
           <p class="s03__sector">Telecom &amp; Media</p>
           <p class="s03__line">Coverage, content and care rebuilt on one intelligence layer the network teams actually use.</p>
-          <p class="s03__credit">Technology &amp; Intelligence <i aria-hidden="true">›</i> Brand Design</p>
+          <p class="s03__credit"><span>Technology &amp; Intelligence&nbsp;<i aria-hidden="true">›</i></span> <span>Brand Design</span></p>
         </div>
       </article>
 

@@ -23,7 +23,7 @@
   display:inline-flex;align-items:center;gap:.65em;
   padding:7px 14px;border-radius:var(--r-pill);
   background:var(--paper);border:1px solid var(--line);box-shadow:var(--sh-1);
-  font-size:var(--t-lbl);letter-spacing:.13em;text-transform:uppercase;color:var(--muted);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.13em;text-transform:uppercase;color:var(--muted);
   margin-bottom:clamp(24px,3vw,34px);
 }
 .s01__dot{width:7px;height:7px;border-radius:50%;background:var(--blue);flex:none;box-shadow:0 0 0 3px var(--blue-wash)}
@@ -39,7 +39,7 @@
 /* the client's word stack, one word lit at a time */
 .s01__words{
   display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.55em;
-  font-size:var(--t-lbl);letter-spacing:.17em;text-transform:uppercase;
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.17em;text-transform:uppercase;
   margin-bottom:clamp(26px,3.2vw,40px);
 }
 .s01__words span{

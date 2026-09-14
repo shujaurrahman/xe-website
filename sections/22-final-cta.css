@@ -81,7 +81,7 @@
   position:relative;display:flex;align-items:center;gap:.7em;min-height:56px;
   padding-right:clamp(12px,2vw,28px);
   border-top:1px solid var(--on-ink-line);
-  font-size:var(--t-xs);letter-spacing:-.01em;color:var(--on-ink-3);
+  font-size:var(--t-xs);font-weight:500;letter-spacing:0;color:var(--on-ink-3);
   transition:color var(--d2) var(--e);
 }
 .s22__links a::after{
@@ -91,7 +91,7 @@
 }
 .s22__links a:hover,.s22__links a:focus-visible{color:var(--on-ink)}
 .s22__links a:hover::after,.s22__links a:focus-visible::after{transform:scaleX(1)}
-.s22__links i{font-style:normal;color:var(--blue);transition:transform var(--d2) var(--e)}
+.s22__links i{font-family:var(--f);font-style:normal;color:var(--blue);transition:transform var(--d2) var(--e)}
 .s22__links a:hover i,.s22__links a:focus-visible i{transform:translateX(3px)}
 
 @media (min-width:1200px){

@@ -47,7 +47,7 @@
 .s19__sub{max-width:46ch;font-size:var(--t-lead);line-height:1.55;color:rgba(255,255,255,.86)}
 .s19__go{margin-top:10px}
 .s19__meta{
-  margin-top:8px;font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;
+  margin-top:8px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;
   color:rgba(255,255,255,.7);display:flex;flex-wrap:wrap;justify-content:center;gap:.7em;
 }
 .s19__meta i{color:rgba(255,255,255,.4);font-style:normal}
@@ -55,5 +55,8 @@
 @media (max-width:600px){
   .s19__card{border-radius:var(--r-lg)}
   .s19__go{width:100%}
+  /* two clean lines, no separator left hanging at a wrap */
+  .s19__meta{flex-direction:column;align-items:center;gap:.4em}
+  .s19__meta > i{display:none}
 }
 @media (prefers-reduced-motion:reduce){.s19__wash i{animation:none}}

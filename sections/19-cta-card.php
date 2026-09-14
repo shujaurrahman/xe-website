@@ -12,9 +12,9 @@
         <p class="s19__sub">Brand, product, campaign, or the intelligence underneath it.</p>
         <a class="btn btn--dark btn--lg s19__go" href="#book">Start a brief <span class="i" aria-hidden="true">›</span></a>
         <p class="s19__meta">
-          Reply within one working day
-          <i aria-hidden="true">·</i> New Delhi
-          <i aria-hidden="true">·</i> Ludhiana
+          <span>Reply within one working day</span>
+          <i aria-hidden="true">·</i>
+          <span>New Delhi <i aria-hidden="true">·</i> Ludhiana</span>
         </p>
       </div>
     </div>

@@ -26,6 +26,7 @@ $full  = ($page['key'] ?? '') === 'home'
 <link rel="icon" href="<?= xe_url('assets/brand/favicon-32.png') ?>" sizes="32x32">
 <link rel="apple-touch-icon" href="<?= xe_url('assets/brand/apple-touch-icon.png') ?>">
 
+<link rel="preload" href="<?= xe_url('assets/fonts/montserrat-latin.woff2') ?>" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="<?= xe_url('assets/css/core.css') ?>">
 <link rel="stylesheet" href="<?= xe_url('assets/css/sections.css') ?>">
 <?php foreach ($page['css'] ?? [] as $css): ?>

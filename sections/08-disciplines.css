@@ -33,11 +33,11 @@
   display:flex;align-items:center;gap:12px;width:100%;min-height:54px;
   padding:12px 18px;border-radius:var(--r-pill);
   border:1px solid var(--on-ink-line);background:var(--on-ink-card);
-  color:var(--on-ink-3);font-size:var(--t-sm);letter-spacing:-.02em;text-align:left;
+  color:var(--on-ink-3);font-size:var(--t-sm);font-weight:500;letter-spacing:0;text-align:left;   /* 500 at rest too: the label never changes width */
   transition:background var(--d2) var(--e),color var(--d2) var(--e),
              border-color var(--d2) var(--e),opacity var(--d2) var(--e);
 }
-.s08__pn{font-size:var(--t-lbl);letter-spacing:.08em;opacity:.6;flex:none}
+.s08__pn{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;opacity:.6;flex:none}
 .s08__pill:hover{color:var(--on-ink);border-color:rgba(255,255,255,.28)}
 .s08__pill.is-on{background:var(--paper);border-color:var(--paper);color:var(--ink);font-weight:500;box-shadow:0 10px 26px -12px rgba(0,130,251,.55)}
 .s08__pill.is-on .s08__pn{color:var(--blue);opacity:1}
@@ -51,7 +51,7 @@
   transition:opacity .38s var(--e),transform .38s var(--e),visibility .38s;
 }
 .s08__pane.is-on{position:relative;opacity:1;visibility:visible;transform:none}
-.s08__n{font-size:var(--t-lbl);letter-spacing:.16em;color:var(--blue);margin-bottom:10px}
+.s08__n{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.16em;color:var(--blue);margin-bottom:10px}
 .s08__name{font-size:clamp(1.3rem,2vw,1.7rem);letter-spacing:-.04em;line-height:1.1;margin-bottom:12px}
 .s08__intro{font-size:var(--t-body);line-height:1.6;color:var(--muted);max-width:60ch;margin-bottom:22px}
 .s08__caps{
@@ -61,13 +61,14 @@
 .s08__cap{
   display:flex;align-items:center;gap:.7em;padding:12px 0;
   border-bottom:1px solid var(--line-2);
-  font-size:var(--t-sm);color:var(--txt);letter-spacing:-.02em;
+  font-size:var(--t-sm);color:var(--txt);letter-spacing:0;
 }
 .s08__cap::before{
   content:"";width:4px;height:4px;border-radius:50%;background:var(--line-3);flex:none;
 }
 .s08__cta{margin-top:22px}
 
+@media (max-width:860px){.s08__head{grid-template-columns:1fr}}   /* let .head--row stack as core intends */
 @media (max-width:900px){
   .s08__panel{grid-template-columns:1fr}
   .s08__left{min-height:0;padding:16px 0}

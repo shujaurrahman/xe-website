@@ -23,7 +23,7 @@
 .s11__cell:hover img{filter:none;opacity:1}
 .s11__badge{
   position:absolute;top:8px;right:8px;display:grid;place-items:center;width:20px;height:20px;
-  border-radius:50%;border:1px solid var(--line);color:var(--faint);font-size:.6rem;
+  border-radius:50%;border:1px solid var(--line);color:var(--faint);font-family:var(--f);font-size:.6rem;
   transition:color var(--d1) var(--e-io),border-color var(--d1) var(--e-io);
 }
 .s11__cell--go:hover .s11__badge{color:var(--blue);border-color:var(--blue-line)}
@@ -35,7 +35,7 @@
   padding:18px;color:var(--on-ink);
   background:linear-gradient(180deg,rgba(25,25,29,0),rgba(25,25,29,.88));
 }
-.s11__capl{font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.s11__capl{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7)}
 .s11__capv{font-size:var(--t-xs);line-height:1.5}
 
 @media (max-width:1040px){

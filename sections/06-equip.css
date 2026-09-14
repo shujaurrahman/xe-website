@@ -44,11 +44,11 @@
   background:var(--paper-3);font-size:var(--t-lbl);line-height:1.45;color:var(--txt);letter-spacing:0;
 }
 .s06__bub--a{align-self:flex-end;border-radius:10px 10px 3px 10px;background:var(--ink);color:var(--on-ink)}
-.s06__tag{margin-top:auto;font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.s06__tag{margin-top:auto;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
 
 .s06__flow{display:flex;flex-direction:column;gap:0}
 .s06__node{
-  font-style:normal;font-size:var(--t-lbl);letter-spacing:.04em;color:var(--txt);
+  font-style:normal;font-size:var(--t-lbl);font-weight:500;letter-spacing:0;color:var(--txt);
   padding:8px 10px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--paper);
 }
 .s06__node.is-done{border-color:var(--blue-line);color:var(--blue-d)}
@@ -57,7 +57,7 @@
 .s06__list{display:flex;flex-direction:column;gap:6px}
 .s06__list li{
   display:flex;align-items:center;justify-content:space-between;
-  font-size:var(--t-lbl);letter-spacing:.04em;color:var(--txt);
+  font-size:var(--t-lbl);font-weight:500;letter-spacing:0;color:var(--txt);
   padding:6px 8px;border-radius:var(--r-xs);background:var(--paper-2);
 }
 .s06__list i{color:var(--blue);font-style:normal}
@@ -67,8 +67,8 @@
 .s06__card:hover{border-color:var(--blue-line)}
 .s06__ringv{transition:stroke-dashoffset 1.2s var(--e)}
 .s06__scores{display:flex;flex-direction:column;gap:7px;flex:1}
-.s06__scores li{display:flex;justify-content:space-between;font-size:var(--t-lbl);letter-spacing:.04em;color:var(--muted)}
-.s06__scores i{font-style:normal;color:var(--ink);font-variant-numeric:tabular-nums}
+.s06__scores li{display:flex;align-items:baseline;justify-content:space-between;font-size:var(--t-lbl);letter-spacing:0;color:var(--muted)}
+.s06__scores i{font-family:var(--f);font-style:normal;color:var(--ink);font-variant-numeric:tabular-nums}
 
 .s06__team{display:flex;gap:8px}
 .s06__team .mono-tile{width:44px;height:44px;font-style:normal}

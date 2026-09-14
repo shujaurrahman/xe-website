@@ -5,7 +5,7 @@
       <div class="s11__lead" data-rv>
         <p class="lbl lbl--blue"><span class="dot"></span>Clients</p>
         <h2 class="h2" id="s11-t">Brands that build with us</h2>
-        <p class="lead s11__sub">One team across brand, product and growth — so the system that ships
+        <p class="lead s11__sub">One team across brand, product and growth&nbsp;— so the system that ships
           on Monday is the same one that learns by Friday.</p>
         <a class="tl" href="#delivered">See the work <span class="i" aria-hidden="true">›</span></a>
       </div>
