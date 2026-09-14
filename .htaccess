@@ -1,0 +1,43 @@
+# Clean URLs — no .php or index.php anywhere.
+#   /contact                 serves contact.php
+#   /services/               serves services/index.php
+#   /services/brand-design   serves services/brand-design.php (a folder of that name exists too)
+# Old .php / index URLs and a stray trailing slash on a page 301 to the clean form.
+#
+# File checks use REQUEST_FILENAME and redirect targets come from THE_REQUEST, so the
+# same file works at the domain root (xe.shujaurrahman.com) and in a sub-folder
+# (localhost/xewebsite/). Its own RewriteEngine also stops the parent
+# shujaurrahman.com/.htaccess rules applying on the server.
+# php -S ignores this file; router.php does the same job there.
+
+Options -MultiViews -Indexes
+DirectoryIndex index.php
+# Apache's automatic folder slash would send /services/brand-design into the folder; rule 4 adds it only where it belongs.
+DirectorySlash Off
+
+RewriteEngine On
+
+# 1. /index, /index.php, /services/index.php  →  /  and  /services/
+RewriteCond %{THE_REQUEST} \s/((?:[^?\s]*/)?)index(?:\.php)?[?\s] [NC]
+RewriteRule ^ /%1 [R=301,L,NE]
+
+# 2. /contact.php  →  /contact   (THE_REQUEST is the browser's request line, so rule 5's internal rewrite never trips it)
+RewriteCond %{THE_REQUEST} \s/([^?\s]+?)\.php[?\s] [NC]
+RewriteRule ^ /%1 [R=301,L,NE]
+
+# 3. /contact/  →  /contact
+RewriteCond %{REQUEST_FILENAME} ^(.+?)/*$
+RewriteCond %1.php -f
+RewriteCond %{THE_REQUEST} \s(/[^?\s]*?)/+[?\s]
+RewriteRule /$ %1 [R=301,L,NE]
+
+# 4. /services  →  /services/   (a real folder with no page of the same name)
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME}.php !-f
+RewriteCond %{THE_REQUEST} \s(/[^?\s]*[^/?\s])[?\s]
+RewriteRule ^ %1/ [R=301,L,NE]
+
+# 5. /contact  →  contact.php   (the path must name the file exactly, so /contact/anything stays a 404)
+RewriteCond $1#%{REQUEST_FILENAME} ^([^#]+)#.*/\1$
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L]

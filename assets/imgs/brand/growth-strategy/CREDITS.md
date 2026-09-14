@@ -18,3 +18,8 @@ cropped to 900 × 675.
 | c-laptop-b.jpg | cand | luke-chesser | https://unsplash.com/photos/JKUTrJ4vK00 |
 | c-mic-a.jpg | cand | detail-co | https://unsplash.com/photos/d5Tifmm4ILk |
 | c-light-a.jpg | cand | compare-fibre | https://unsplash.com/photos/INNsF0Zz_kQ |
+| hero-crossing.jpg | Hero · segment radar | ryoji-iwata | https://unsplash.com/photos/TRJjPc0wss0 |
+| boardroom.jpg | When enterprises call us | benjamin-child | https://unsplash.com/photos/GWe0dlVD9e0 |
+| interview-setup.jpg | How it runs · Discover; showcase interview source | detail-co | https://unsplash.com/photos/d5Tifmm4ILk |
+| research-notes.jpg | How it runs · Define | dan-dimmock | https://unsplash.com/photos/3mt71MKGjQ0 |
+| whiteboard-decide.jpg | How it runs · Sequence | thisisengineering | https://unsplash.com/photos/uOhBxB23Wao |

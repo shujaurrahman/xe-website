@@ -7,11 +7,15 @@
 #   ./deploy.sh --delete   also remove server files that no longer exist locally
 #
 # Target without editing this file:  REMOTE_DIR=domains/example.com/public_html ./deploy.sh
+# (subdomain folders need the public URL too: DOMAIN=sub.example.com)
 set -euo pipefail
 
 HOST="${DEPLOY_HOST:-xterra}"
-REMOTE_DIR="${REMOTE_DIR:-domains/xterraedze.com/public_html}"   # relative to the account's home
-DOMAIN="$(printf '%s' "$REMOTE_DIR" | sed -nE 's#^(.*/)?domains/([^/]+)/.*#\2#p')"
+if [ -z "${REMOTE_DIR:-}" ]; then
+  REMOTE_DIR=domains/shujaurrahman.com/public_html/xe   # relative to the account's home — docroot of the xe subdomain
+  DOMAIN="${DOMAIN:-xe.shujaurrahman.com}"
+fi
+DOMAIN="${DOMAIN:-$(printf '%s' "$REMOTE_DIR" | sed -nE 's#^(.*/)?domains/([^/]+)/.*#\2#p')}"
 
 cd "$(dirname "$0")"
 
@@ -21,7 +25,7 @@ for a in "$@"; do
     --dry|-n)  DRY=1 ;;
     --yes|-y)  YES=1 ;;
     --delete)  DELETE=1 ;;
-    -h|--help) sed -n '2,9p' "$0" | sed -E 's/^# ?//'; exit 0 ;;
+    -h|--help) sed -n '2,10p' "$0" | sed -E 's/^# ?//'; exit 0 ;;
     *) echo "unknown option: $a  (see ./deploy.sh --help)" >&2; exit 2 ;;
   esac
 done
@@ -34,7 +38,7 @@ die()  { printf '\033[31m✗ %s\033[0m\n' "$*" >&2; exit 1; }
 # (pages load the bundles build.php writes into assets/).
 EXCLUDES=(
   .git/ .gitignore .DS_Store Thumbs.db .vscode/ .claude/ node_modules/
-  '*.md' /docs/ /tools/ /build.php /deploy.sh
+  '*.md' /docs/ /tools/ /build.php /deploy.sh /router.php
   '/sections/*.css' '/sections/*.js'
   # files Hostinger manages on the server — excluded, so --delete leaves them alone
   /.well-known/ /.user.ini /error_log /cgi-bin/

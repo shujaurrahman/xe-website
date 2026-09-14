@@ -4,7 +4,7 @@ A PHP site with no framework and no dependencies. Every page shares one head, on
 navigation and one footer, so the chrome can never drift between pages.
 
 ```bash
-php -S localhost:8000        # run it
+php -S localhost:8000 router.php   # run it (router.php gives the clean URLs .htaccess gives Apache)
 php build.php                # bundle the section css/js after editing a section
 ```
 

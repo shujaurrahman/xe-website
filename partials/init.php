@@ -14,11 +14,19 @@ if (!isset($BASE)) { $BASE = ''; }
 
 $SITE = require __DIR__ . '/../data/site.php';
 
-/** Root-relative URL for the page currently being rendered. */
+/**
+ * Root-relative URL for the page currently being rendered.
+ * Page links are written clean — 'contact.php' → 'contact', 'services/index.php' → 'services/' —
+ * and .htaccess maps them back to the files, so no URL on the site shows .php.
+ */
 function xe_url(string $path): string {
     global $BASE;
     if (preg_match('~^(https?:|mailto:|tel:|#)~', $path)) return $path;
-    return $BASE . $path;
+    $path = preg_replace('~(^|/)index\.php(?=$|[?#])~', '$1', $path);
+    $path = preg_replace('~\.php(?=$|[?#])~', '', $path);
+    $url  = $BASE . $path;
+    // The home link from a root page would otherwise be '' (or '#faq'), which stays on the current page.
+    return ($url === '' || $url[0] === '#' || $url[0] === '?') ? './' . $url : $url;
 }
 
 /** Inline an SVG from assets/brand so it can inherit currentColor. */
