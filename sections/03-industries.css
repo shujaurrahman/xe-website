@@ -1,0 +1,70 @@
+/* 03 — industries. The reference's expanding image-card accordion, re-cut:
+   collapsed cards show their sector on a vertical spine, the open one carries
+   the outcome line. */
+.s03__head{
+  display:flex;align-items:end;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  margin-bottom:clamp(26px,3vw,40px);
+}
+.s03__intro{display:flex;flex-direction:column;gap:14px}
+.s03__h{max-width:22ch}
+.s03__swap{display:inline-block;vertical-align:baseline}
+.s03__word{
+  display:inline-block;padding:.06em .3em .12em;border-radius:.28em;
+  background:var(--paper-3);color:var(--ink);
+  transition:opacity .28s var(--e-io),transform .28s var(--e-io);
+}
+.s03__word.is-out{opacity:0;transform:translateY(-.18em)}
+.s03__more{flex:none}
+
+.s03__rail{
+  display:flex;gap:10px;height:clamp(340px,38vw,460px);
+}
+.s03__card{
+  position:relative;flex:0 1 92px;min-width:72px;overflow:hidden;
+  border-radius:var(--r);border:1px solid var(--line);background:var(--ink);
+  transition:flex-grow .7s var(--e),flex-basis .7s var(--e);
+}
+.s03__card.is-on{flex:1 1 44%}
+.s03__img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:grayscale(.35) contrast(1.02);
+  transition:transform .9s var(--e),filter .5s var(--e);
+}
+.s03__card.is-on .s03__img{filter:none;transform:scale(1.02)}
+.s03__scrim{
+  position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(25,25,29,.10) 0%,rgba(25,25,29,.12) 42%,rgba(25,25,29,.86) 100%);
+}
+.s03__hit{
+  position:absolute;inset:0;z-index:2;display:flex;align-items:end;justify-content:center;
+  padding:18px 8px;color:var(--on-ink);
+}
+.s03__spine{
+  font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  transition:opacity .3s var(--e);
+}
+.s03__card.is-on .s03__spine{opacity:0}
+.s03__body{
+  position:absolute;left:0;right:0;bottom:0;z-index:3;pointer-events:none;
+  padding:clamp(18px,2vw,26px);color:var(--on-ink);
+  opacity:0;transform:translateY(10px);transition:opacity .45s var(--e) .12s,transform .45s var(--e) .12s;
+}
+.s03__card.is-on .s03__body{opacity:1;transform:none}
+.s03__sector{font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:10px}
+.s03__line{font-size:clamp(.95rem,1.25vw,1.15rem);line-height:1.4;letter-spacing:-.03em;color:var(--on-ink);max-width:30ch}
+.s03__credit{margin-top:12px;font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.s03__credit i{color:var(--blue);font-style:normal;padding:0 .25em}
+
+@media (max-width:860px){
+  .s03__rail{
+    height:auto;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding-bottom:8px;scrollbar-width:none;
+  }
+  .s03__rail::-webkit-scrollbar{display:none}
+  .s03__card{flex:0 0 78%;height:380px;scroll-snap-align:center}
+  .s03__card.is-on{flex:0 0 78%}
+  .s03__spine{writing-mode:horizontal-tb;transform:none;opacity:0}
+  .s03__body{opacity:1;transform:none}
+  .s03__img{filter:none}
+}

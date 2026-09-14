@@ -1,0 +1,267 @@
+/* ==========================================================================
+   02 — SHOWCASE · "From a brief to a system that runs."
+   modulify §3 re-cut. Their toggle is a static diagram with a peach→lilac
+   gradient pill; ours is a real two-state control — ink fills the live pill,
+   a single blue dot walks the dashed rule between them. The marquee mosaic
+   becomes a still, ruled mosaic so the page reads calm under the motion of
+   the switch.
+   Two panes are grid-stacked in one cell so the stage never changes height.
+   ========================================================================== */
+
+.s02{
+  --s02-pw:156px;                   /* pill width — the wire is inset off it   */
+  --s02-gap:clamp(8px,.95vw,14px);  /* mosaic gutter                           */
+  --s02-row:clamp(120px,16vw,232px);/* mosaic row height, per the reference's 300px */
+}
+.s02__in{display:flex;flex-direction:column;align-items:center}
+
+.s02__head{margin-bottom:clamp(24px,2.7vw,36px)}
+.s02__h{max-width:24ch}
+
+/* ---------- the switch --------------------------------------------------- */
+.s02__switch{width:100%;display:flex;justify-content:center;margin-top:clamp(30px,3.4vw,46px);position:relative;z-index:1}
+.s02__toggle{
+  position:relative;display:flex;align-items:center;justify-content:space-between;
+  width:min(100%,616px);height:48px;
+}
+
+/* built on core .pill — resized into a control, sentence case, no tracking */
+.s02__pill{
+  position:relative;z-index:1;justify-content:center;
+  width:var(--s02-pw);height:100%;padding:0;
+  border-color:var(--line-3);
+  font-size:var(--t-sm);font-weight:500;letter-spacing:-.01em;text-transform:none;
+  color:var(--muted);
+  transition:background var(--d2) var(--e-io),color var(--d2) var(--e-io),
+             border-color var(--d2) var(--e-io);
+}
+.s02__pill:hover{color:var(--blue-d);border-color:var(--blue-line)}
+.s02__pill[aria-selected="true"]{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 8px 22px -10px rgba(0,130,251,.6)}
+
+/* the connecting rule: dashed like a blueprint dimension line */
+.s02__wire{
+  position:absolute;top:50%;left:calc(var(--s02-pw) + 12px);right:calc(var(--s02-pw) + 12px);
+  height:1px;margin-top:-.5px;pointer-events:none;
+  background:repeating-linear-gradient(90deg,var(--line-3) 0 5px,transparent 5px 11px);
+}
+.s02__fill{
+  position:absolute;inset:0;background:var(--blue);opacity:.5;
+  transform:scaleX(0);transform-origin:left center;
+  transition:transform .6s var(--e);
+}
+.s02__dot{
+  position:absolute;top:50%;left:0;width:7px;height:7px;border-radius:50%;
+  background:var(--blue);box-shadow:0 0 0 4px var(--blue-wash);
+  transform:translate(-50%,-50%);
+  transition:left .6s var(--e);
+}
+.s02__toggle.is-far .s02__fill{transform:scaleX(1)}
+.s02__toggle.is-far .s02__dot{left:100%}
+
+/* ---------- the stage ---------------------------------------------------- */
+.s02__stage{
+  position:relative;width:100%;
+  margin-top:clamp(22px,2.4vw,32px);
+  padding:clamp(14px,1.9vw,26px);
+  border:1px solid var(--line);border-radius:var(--r-xl);
+  background:var(--paper-2);overflow:hidden;
+}
+.s02__stage::before{                 /* faint dot grid, faded out at the edges */
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(var(--dot) 1px,transparent 1px);
+  background-size:22px 22px;opacity:.75;
+  -webkit-mask-image:radial-gradient(118% 92% at 50% 0%,#000 0%,rgba(0,0,0,.5) 58%,transparent 94%);
+  mask-image:radial-gradient(118% 92% at 50% 0%,#000 0%,rgba(0,0,0,.5) 58%,transparent 94%);
+}
+
+/* both panes live in one grid cell → the stage is as tall as the taller pane */
+.s02__panes{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr)}
+.s02__pane{
+  grid-area:1 / 1;min-width:0;
+  opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity .38s var(--e) .1s,transform .5s var(--e) .1s,visibility .5s;
+}
+.s02__pane.is-on{opacity:1;visibility:visible;transform:none}
+
+/* ---------- pane 1 · briefs ---------------------------------------------- */
+.s02__briefs{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-rows:repeat(2,minmax(0,1fr));
+  gap:var(--s02-gap);height:100%;
+}
+
+.s02__brief::before{                 /* the hero's blue hairline, echoed */
+  content:"";position:absolute;top:-1px;left:34%;right:34%;height:1px;
+  background:var(--blue);opacity:0;
+  transition:opacity var(--d2) var(--e),left var(--d3) var(--e),right var(--d3) var(--e);
+}
+.s02__brief:hover{border-color:var(--line-3)}
+.s02__brief:hover::before{opacity:.6;left:12%;right:12%}
+
+.s02__top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.s02__sector{color:var(--muted)}
+.s02__idx{font-size:var(--t-lbl);letter-spacing:.06em;color:var(--ghost)}
+
+.s02__quote{letter-spacing:-.035em;line-height:1.34;text-wrap:balance}
+
+.s02__meta{
+  display:flex;align-items:center;gap:.6em;flex-wrap:wrap;
+  font-size:var(--t-xs);color:var(--muted);
+  padding-top:13px;border-top:1px solid var(--line-2);
+}
+.s02__disc{color:var(--ink)}
+.s02__meta .chev{font-style:normal;line-height:1}
+
+/* ---------- pane 2 · mosaic ---------------------------------------------- */
+/* Fixed-height rows, tiles flexed in proportion to the aspect we want, so the
+   row always fills exactly and the tile mix stays varied at every width. */
+.s02__mosaic{display:flex;flex-direction:column;gap:var(--s02-gap)}
+.s02__row{display:flex;gap:var(--s02-gap);height:var(--s02-row)}
+
+.s02__t{
+  position:relative;flex:1 1 0%;min-width:0;margin:0;
+  border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+  background:var(--paper-3);
+}
+.s02__t img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.s02__t--16{flex-grow:1.60}          /* ≈16:10 */
+.s02__t--32{flex-grow:1.47}          /* ≈3:2   */
+.s02__t--43{flex-grow:1.33}          /* 4:3    */
+.s02__t--1 {flex-grow:1}             /* square */
+.s02__t--34{flex-grow:.72}           /* tall   */
+.s02__t--34 img,.s02__t--1 img{object-position:center}
+
+.s02__cap{
+  position:absolute;left:9px;bottom:9px;
+  display:inline-flex;align-items:center;gap:.5em;height:24px;padding:0 10px;
+  border-radius:var(--r-pill);background:rgba(255,255,255,.93);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  line-height:1;color:var(--ink);box-shadow:0 1px 2px rgba(25,25,29,.12);
+}
+.s02__cap::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--blue);flex:none}
+
+/* ---------- cta ---------------------------------------------------------- */
+.s02__cta{margin-top:clamp(24px,2.8vw,36px)}
+
+/* ---------- responsive --------------------------------------------------- */
+@media (max-width:900px){
+  /* the flex rows dissolve; every tile becomes a cell of one mosaic grid */
+  .s02__mosaic{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s02-gap)}
+  .s02__row{display:contents}
+  .s02__t{height:auto;aspect-ratio:4 / 3}
+  .s02__t--16{grid-column:span 2;aspect-ratio:16 / 9}
+}
+@media (max-width:760px){
+  .s02__briefs{grid-template-columns:minmax(0,1fr);grid-template-rows:none}
+  
+}
+@media (max-width:600px){
+  .s02{--s02-pw:126px}
+  .s02__toggle{height:44px}
+  .s02__stage{border-radius:var(--r-lg)}
+  .s02__mosaic{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .s02__t--32{grid-column:span 2;aspect-ratio:16 / 9}
+  .s02__cap{height:22px;padding:0 8px;letter-spacing:.1em}
+  .s02__cta .btn{width:100%}
+  .s02__cta{width:100%}
+}
+@media (max-width:380px){
+  .s02{--s02-pw:114px}
+}
+
+/* no travelling dot, no filling rule — the pills alone carry the state */
+@media (prefers-reduced-motion:reduce){
+  .s02__dot,.s02__fill{display:none}
+}
+
+/* ---------- the brief card (moved here from the hero) -------------------- */
+
+
+/* the blue lands on the border itself, with a soft ring outside it */
+
+
+
+.is-live 
+50%{opacity:.3}}
+
+
+
+
+
+
+
+@media (max-width:600px){
+  
+  
+  
+}
+
+/* the animated wash behind this section */
+.s02{position:relative;overflow:hidden}
+.s02__bg{position:absolute;inset:0;pointer-events:none;z-index:0}
+.s02__dither{opacity:.38}
+.s02__in{position:relative;z-index:1}
+
+/* panes travel as they swap, rather than crossfading in place */
+.s02__pane{transition:opacity .5s var(--e),visibility .5s,transform .5s var(--e)}
+.s02__pane:not(.is-on){transform:translateX(-26px) scale(.985)}
+.s02__panes[data-dir="back"] .s02__pane:not(.is-on){transform:translateX(26px) scale(.985)}
+.s02__pane.is-on{transform:none}
+
+/* ---------- the brief pane, rebuilt ------------------------------------- */
+.s02__briefs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
+.s02__brief{
+  position:relative;display:flex;flex-direction:column;gap:16px;overflow:hidden;
+  padding:clamp(20px,2.2vw,28px);border-radius:var(--r-lg);
+  background:var(--paper);border:1px solid var(--line);
+  box-shadow:0 1px 2px rgba(25,25,29,.03);
+  transition:border-color .3s var(--e),box-shadow .3s var(--e),transform .3s var(--e);
+}
+.s02__brief:hover{border-color:var(--blue-line);box-shadow:0 22px 46px -30px rgba(0,130,251,.45);transform:translateY(-3px)}
+.s02__edge{
+  position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--blue);
+  transform:scaleY(0);transform-origin:top center;transition:transform .5s var(--e);
+}
+.s02__brief:hover .s02__edge{transform:scaleY(1)}
+.s02__top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.s02__sector{font-size:var(--t-lbl);letter-spacing:.16em;text-transform:uppercase;color:var(--blue-d)}
+.s02__idx{font-size:var(--t-lbl);letter-spacing:.1em;color:var(--ghost);font-variant-numeric:tabular-nums}
+.s02__quote{
+  font-size:clamp(1.05rem,1.55vw,1.3rem);line-height:1.42;letter-spacing:-.035em;color:var(--ink);
+}
+.s02__foot{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  margin-top:auto;padding-top:16px;border-top:1px solid var(--line-2);
+}
+.s02__tags{display:flex;flex-wrap:wrap;gap:6px}
+.s02__tags i{
+  font-style:normal;font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 9px;border-radius:var(--r-pill);background:var(--paper-3);color:var(--muted);
+  transition:background .3s var(--e),color .3s var(--e);
+}
+.s02__brief:hover .s02__tags i:first-child{background:var(--blue-wash);color:var(--blue-d)}
+.s02__wks{font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+
+/* they deal themselves in when the pane opens */
+.s02__pane.is-on .s02__brief{animation:s02-deal .62s var(--e) both}
+.s02__pane.is-on .s02__brief:nth-child(1){animation-delay:.05s}
+.s02__pane.is-on .s02__brief:nth-child(2){animation-delay:.14s}
+.s02__pane.is-on .s02__brief:nth-child(3){animation-delay:.23s}
+.s02__pane.is-on .s02__brief:nth-child(4){animation-delay:.32s}
+@keyframes s02-deal{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+
+/* the switch drives itself: the rule fills, then the pane turns over */
+.s02__fill{transition:transform 1.5s var(--e-io)}
+.s02__toggle.is-travel .s02__fill{transform:scaleX(1)}
+.s02__toggle.is-travel .s02__dot{left:100%}
+.s02__toggle.is-back .s02__fill{transform:scaleX(0);transform-origin:right center}
+.s02__toggle.is-back .s02__dot{left:0}
+.s02__dot{transition:left 1.5s var(--e-io)}
+
+@media (max-width:760px){
+  .s02__briefs{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  .s02__pane.is-on .s02__brief{animation:none}
+}

@@ -1,0 +1,17 @@
+/* 10 — two rows of 9:16 creative drifting in opposite directions. */
+.s10{overflow:hidden}
+.s10__head{display:flex;flex-direction:column;gap:16px;margin-bottom:clamp(28px,3.2vw,44px);max-width:62ch}
+.s10__head .h2{max-width:20ch}
+.s10__lead{max-width:52ch}
+
+.s10__rows{display:flex;flex-direction:column;gap:14px;padding-block:4px;border-block:1px dashed var(--line-3)}
+.s10__row{overflow:hidden;padding-block:10px}
+.s10__row + .s10__row{border-top:1px dashed var(--line-3)}
+.s10__c{
+  flex:none;width:clamp(150px,15vw,226px);aspect-ratio:9/16;margin-right:14px;
+  overflow:hidden;border-radius:var(--r);border:1px solid var(--line);background:var(--paper-3);
+}
+.s10__c img,.s10__c video{width:100%;height:100%;object-fit:cover;display:block}
+.s10__c--v video{filter:grayscale(1) contrast(1.04)}
+/* UI cards from the reference carry a foreign accent colour — neutralise them */
+.s10__c--ui img{filter:grayscale(1) contrast(1.02)}

@@ -1,0 +1,140 @@
+/* 06 — capability carousel. The card crossing the centre lifts. */
+.s06{overflow:hidden}
+.s06__head{position:relative;display:flex;flex-direction:column;align-items:center;gap:22px}
+.s06__headin{margin-bottom:0}
+.s06__nav{display:flex;gap:8px}
+.s06__arrow{
+  display:grid;place-items:center;width:42px;height:42px;border-radius:50%;
+  border:1px solid var(--line);color:var(--ink);background:var(--paper);
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io);
+}
+.s06__arrow svg{width:16px;height:16px}
+.s06__arrow:hover{border-color:var(--blue);color:var(--blue-d);background:var(--paper)}
+
+.s06__railwrap{
+  margin-top:clamp(28px,3.4vw,46px);overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+}
+.s06__rail{padding:22px 0 30px}
+.s06__track{animation-play-state:running}
+.s06__track{display:flex;width:max-content;gap:16px}
+.s06__card{
+  flex:0 0 328px;
+  display:flex;flex-direction:column;
+  padding:18px;border-radius:var(--r-lg);
+  background:var(--paper-3);border:1px solid transparent;
+  transition:background .45s var(--e),box-shadow .45s var(--e),transform .45s var(--e),border-color .45s var(--e);
+  transform:scale(.955);
+}
+.s06__card:hover{
+  background:var(--paper);border-color:var(--blue-line);box-shadow:var(--sh-2);transform:scale(1);
+}
+.s06__pill{align-self:flex-start;margin-bottom:14px}
+.s06__pill{background:var(--blue-wash);border-color:transparent;color:var(--blue-d)}
+
+.s06__mock{
+  display:flex;flex-direction:column;gap:8px;justify-content:center;
+  min-height:184px;padding:14px;margin-bottom:16px;
+  background:var(--paper);border:1px solid var(--line-2);border-radius:var(--r);
+}
+.s06__card:hover .s06__mock{background:var(--paper-2)}
+.s06__bub{
+  align-self:flex-start;max-width:88%;padding:7px 10px;border-radius:10px 10px 10px 3px;
+  background:var(--paper-3);font-size:var(--t-lbl);line-height:1.45;color:var(--txt);letter-spacing:0;
+}
+.s06__bub--a{align-self:flex-end;border-radius:10px 10px 3px 10px;background:var(--ink);color:var(--on-ink)}
+.s06__tag{margin-top:auto;font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+
+.s06__flow{display:flex;flex-direction:column;gap:0}
+.s06__node{
+  font-style:normal;font-size:var(--t-lbl);letter-spacing:.04em;color:var(--txt);
+  padding:8px 10px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--paper);
+}
+.s06__node.is-done{border-color:var(--blue-line);color:var(--blue-d)}
+.s06__flow b{display:block;width:1px;height:12px;margin-left:16px;background:var(--line-3)}
+
+.s06__list{display:flex;flex-direction:column;gap:6px}
+.s06__list li{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:var(--t-lbl);letter-spacing:.04em;color:var(--txt);
+  padding:6px 8px;border-radius:var(--r-xs);background:var(--paper-2);
+}
+.s06__list i{color:var(--blue);font-style:normal}
+
+.s06__mock--ring{flex-direction:row;align-items:center;gap:16px}
+.s06__ring{width:78px;height:78px;flex:none;color:var(--blue)}
+.s06__card:hover{border-color:var(--blue-line)}
+.s06__ringv{transition:stroke-dashoffset 1.2s var(--e)}
+.s06__scores{display:flex;flex-direction:column;gap:7px;flex:1}
+.s06__scores li{display:flex;justify-content:space-between;font-size:var(--t-lbl);letter-spacing:.04em;color:var(--muted)}
+.s06__scores i{font-style:normal;color:var(--ink);font-variant-numeric:tabular-nums}
+
+.s06__team{display:flex;gap:8px}
+.s06__team .mono-tile{width:44px;height:44px;font-style:normal}
+
+.s06__t{margin-bottom:8px}
+.s06__p{font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+
+@media (max-width:600px){
+  .s06__card{flex:0 0 272px}
+}
+
+/* ---------- each card's mock plays its own little loop ------------------- */
+/* They run continuously because the rail is an endless marquee — the card you
+   are looking at is always somewhere mid-cycle. */
+.s06__bub{animation:s06-say 8s var(--e-io) infinite both}
+.s06__bub:nth-of-type(2){animation-delay:.9s}
+.s06__tag{animation:s06-fade 8s var(--e-io) infinite both;animation-delay:1.8s}
+@keyframes s06-say{
+  0%{opacity:0;transform:translateY(8px)}
+  6%,86%{opacity:1;transform:none}
+  94%,100%{opacity:0;transform:translateY(-4px)}
+}
+@keyframes s06-fade{0%{opacity:0}8%,88%{opacity:1}96%,100%{opacity:0}}
+
+.s06__node{animation:s06-step 8s var(--e-io) infinite both}
+.s06__node:nth-of-type(2){animation-delay:.5s}
+.s06__node:nth-of-type(3){animation-delay:1s}
+@keyframes s06-step{
+  0%{opacity:.25;transform:translateX(-6px)}
+  8%,88%{opacity:1;transform:none}
+  96%,100%{opacity:.25;transform:translateX(-6px)}
+}
+.s06__flow b{transform-origin:top center;animation:s06-grow 8s var(--e-io) infinite both}
+.s06__flow b:nth-of-type(2){animation-delay:.5s}
+@keyframes s06-grow{0%{transform:scaleY(0)}8%,88%{transform:scaleY(1)}96%,100%{transform:scaleY(0)}}
+
+.s06__list li{animation:s06-step 8s var(--e-io) infinite both}
+.s06__list li:nth-child(2){animation-delay:.35s}
+.s06__list li:nth-child(3){animation-delay:.7s}
+.s06__list li:nth-child(4){animation-delay:1.05s}
+.s06__list i{animation:s06-tick 8s var(--e-io) infinite both}
+.s06__list li:nth-child(1) i{animation-delay:.5s}
+.s06__list li:nth-child(2) i{animation-delay:.85s}
+.s06__list li:nth-child(3) i{animation-delay:1.2s}
+.s06__list li:nth-child(4) i{animation-delay:1.55s}
+@keyframes s06-tick{0%{opacity:0;transform:scale(.5)}6%,88%{opacity:1;transform:none}96%,100%{opacity:0}}
+
+.s06__ringv{animation:s06-ring 8s var(--e-io) infinite both}
+@keyframes s06-ring{0%{stroke-dashoffset:201}14%,88%{stroke-dashoffset:30}96%,100%{stroke-dashoffset:201}}
+.s06__scores li{animation:s06-step 8s var(--e-io) infinite both}
+.s06__scores li:nth-child(2){animation-delay:.3s}
+.s06__scores li:nth-child(3){animation-delay:.6s}
+
+.s06__team .mono-tile{animation:s06-pop 8s var(--e-io) infinite both}
+.s06__team .mono-tile:nth-child(2){animation-delay:.18s}
+.s06__team .mono-tile:nth-child(3){animation-delay:.36s}
+.s06__team .mono-tile:nth-child(4){animation-delay:.54s}
+@keyframes s06-pop{
+  0%{opacity:0;transform:scale(.7)}
+  7%,88%{opacity:1;transform:none}
+  96%,100%{opacity:0;transform:scale(.7)}
+}
+
+/* everything inside holds together with the rail */
+.s06__track.is-held .s06__mock *{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){
+  .s06__mock *,.s06__bub,.s06__tag,.s06__node,.s06__flow b,.s06__list li,.s06__list i,
+  .s06__ringv,.s06__scores li,.s06__team .mono-tile{animation:none}
+}

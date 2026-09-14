@@ -1,0 +1,108 @@
+/* 20 — booking. Three columns: who / when / slots, divided by hairlines. */
+.s20__head{display:flex;flex-direction:column;gap:14px;margin-bottom:clamp(24px,3vw,40px)}
+.s20__box{
+  display:grid;grid-template-columns:minmax(240px,300px) minmax(0,1fr) minmax(230px,266px);
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);
+  box-shadow:var(--sh-1);overflow:hidden;
+}
+
+/* who */
+.s20__who{display:flex;flex-direction:column;gap:12px;padding:clamp(22px,2.6vw,30px);border-right:1px solid var(--line-2)}
+.s20__mark{display:grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);background:var(--blue-wash);color:var(--ink);margin-bottom:4px}
+.s20__org{font-size:var(--t-lbl);letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.s20__title{margin-bottom:2px}
+.s20__blurb{font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+.s20__meta{display:flex;flex-direction:column;gap:9px;margin-top:6px}
+.s20__meta li{display:flex;align-items:center;gap:9px;font-size:var(--t-xs);color:var(--txt)}
+.s20__meta svg{width:16px;height:16px;flex:none;color:var(--muted)}
+.s20__note{margin-top:auto;padding-top:14px;font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+
+/* calendar */
+.s20__cal{padding:clamp(22px,2.6vw,30px);border-right:1px solid var(--line-2)}
+.s20__calhead{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.s20__month{font-size:var(--t-sm);letter-spacing:-.02em;color:var(--ink)}
+.s20__navs{display:flex;gap:6px}
+.s20__nav{
+  display:grid;place-items:center;width:32px;height:32px;border-radius:50%;
+  border:1px solid var(--line);color:var(--ink);
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io),opacity var(--d1);
+}
+.s20__nav svg{width:14px;height:14px}
+.s20__nav:hover{border-color:var(--ink);background:var(--paper-2)}
+.s20__nav[disabled]{opacity:.3;pointer-events:none}
+
+.s20__dow,.s20__days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.s20__dow{margin-bottom:8px}
+.s20__dow span{text-align:center;font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.s20__cell{position:relative;aspect-ratio:1;min-height:38px}
+.s20__d{
+  display:grid;place-items:center;width:100%;height:100%;border-radius:var(--r-sm);
+  background:var(--paper-3);color:var(--ink);font-size:var(--t-xs);font-variant-numeric:tabular-nums;
+  border:1px solid transparent;
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io),color var(--d1) var(--e-io);
+}
+.s20__d:hover{border-color:var(--blue)}
+.s20__d[disabled]{background:transparent;color:var(--ghost);pointer-events:none}
+.s20__d.is-sel{background:var(--blue);color:#fff;border-color:var(--blue)}
+.s20__d.is-today::after{
+  content:"";position:absolute;left:50%;bottom:5px;width:4px;height:4px;margin-left:-2px;
+  border-radius:50%;background:var(--blue);
+}
+.s20__d.is-sel.is-today::after{background:var(--on-ink)}
+
+/* slots */
+.s20__slots{display:flex;flex-direction:column;padding:clamp(22px,2.6vw,30px);min-height:420px}
+.s20__slotshead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.s20__day{font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.s20__fmt{display:flex;padding:2px;border:1px solid var(--line);border-radius:var(--r-pill)}
+.s20__fmtb{
+  padding:4px 10px;border-radius:var(--r-pill);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--muted);
+  transition:background var(--d1) var(--e-io),color var(--d1) var(--e-io);
+}
+.s20__fmtb.is-on{background:var(--blue);color:#fff}
+
+.s20__times{display:flex;flex-direction:column;gap:8px;overflow-y:auto;max-height:330px;padding-right:2px}
+.s20__time{
+  width:100%;height:42px;border-radius:var(--r-sm);border:1px solid var(--line);
+  font-size:var(--t-xs);color:var(--ink);font-variant-numeric:tabular-nums;
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io);
+}
+.s20__time:hover{border-color:var(--blue);background:var(--blue-wash)}
+.s20__empty{font-size:var(--t-xs);color:var(--muted);line-height:1.6}
+
+/* confirm */
+.s20__form{display:flex;flex-direction:column;gap:10px}
+.s20__picked{
+  font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--blue-d);
+  background:var(--blue-wash);padding:8px 10px;border-radius:var(--r-sm);
+}
+.s20__field{display:flex;flex-direction:column;gap:4px}
+.s20__field span{font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.s20__field input,.s20__field textarea{
+  width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:var(--r-sm);
+  font-size:var(--t-xs);color:var(--ink);background:var(--paper);resize:vertical;
+  transition:border-color var(--d1) var(--e-io);
+}
+.s20__field input:focus,.s20__field textarea:focus{border-color:var(--blue-line)}
+.s20__err{font-size:var(--t-lbl);color:var(--ink);background:var(--paper-3);padding:8px 10px;border-radius:var(--r-sm);line-height:1.5}
+.s20__actions{display:flex;align-items:center;gap:10px;margin-top:4px}
+.s20__back{font-size:var(--t-xs);color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.s20__actions .btn{flex:1}
+
+.s20__done{display:flex;flex-direction:column;gap:8px;margin:auto 0}
+.s20__tick{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--blue-wash);color:var(--blue-d)}
+.s20__tick svg{width:18px;height:18px}
+.s20__donet{font-size:var(--t-h3);letter-spacing:-.03em;color:var(--ink)}
+.s20__donep{font-size:var(--t-xs);color:var(--txt);line-height:1.6}
+.s20__donen{font-size:var(--t-lbl);line-height:1.6;color:var(--faint)}
+
+@media (max-width:1040px){
+  .s20__box{grid-template-columns:1fr}
+  .s20__who,.s20__cal{border-right:0;border-bottom:1px solid var(--line-2)}
+  .s20__cal{max-width:460px;width:100%;margin-inline:auto}
+  .s20__slots{min-height:0}
+  .s20__times{max-height:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
+}
+
+/* hidden states must beat the display rules above */
+.s20__form[hidden],.s20__done[hidden],.s20__times[hidden],.s20__err[hidden]{display:none}

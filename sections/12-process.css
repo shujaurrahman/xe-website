@@ -1,0 +1,114 @@
+/* 12 — how we work. Steps on the left, a scene that changes with them on the right. */
+.s12__head{max-width:46ch;margin-inline:auto}
+.s12__panel{
+  position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);
+  gap:clamp(16px,2.4vw,34px);align-items:stretch;
+  padding:clamp(16px,2.2vw,28px);
+  border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper-2);overflow:hidden;
+}
+.s12__dots{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:20px 20px;
+  -webkit-mask-image:radial-gradient(80% 70% at 70% 40%,#000,transparent 82%);
+  mask-image:radial-gradient(80% 70% at 70% 40%,#000,transparent 82%);
+  opacity:.8;
+}
+
+.s12__steps{position:relative;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.s12__step{
+  display:flex;flex-direction:column;gap:6px;text-align:left;
+  padding:16px 18px;border-radius:var(--r);border:1px solid transparent;background:transparent;
+  transition:background var(--d2) var(--e),border-color var(--d2) var(--e),box-shadow var(--d2) var(--e);
+}
+.s12__step.is-on{background:var(--paper);border-color:var(--line);box-shadow:var(--sh-1)}
+.s12__lbl{font-size:var(--t-lbl);letter-spacing:.16em;text-transform:uppercase;color:var(--faint);transition:color var(--d2) var(--e)}
+.s12__step.is-on .s12__lbl{color:var(--blue)}
+.s12__t{font-size:var(--t-h3);line-height:1.28;letter-spacing:-.03em;color:var(--muted);transition:color var(--d2) var(--e)}
+.s12__step.is-on .s12__t{color:var(--ink)}
+.s12__d{font-size:var(--t-xs);line-height:1.55;color:var(--muted);max-height:0;opacity:0;overflow:hidden;
+  transition:max-height .45s var(--e),opacity .3s var(--e)}
+.s12__step.is-on .s12__d{max-height:80px;opacity:1}
+.s12__bar{display:block;height:2px;border-radius:2px;background:var(--line);overflow:hidden;opacity:0;transition:opacity .3s var(--e)}
+.s12__step.is-on .s12__bar{opacity:1}
+.s12__bar i{display:block;height:100%;width:0;background:var(--blue);border-radius:2px}
+.s12__step.is-on.is-running .s12__bar i{animation:s12-fill 6s linear forwards}
+@keyframes s12-fill{from{width:0}to{width:100%}}
+
+/* the stage */
+.s12__stage{position:relative;min-height:340px;border-radius:var(--r-lg);background:var(--paper);border:1px solid var(--line);overflow:hidden}
+.s12__scene{
+  position:absolute;inset:0;display:flex;flex-direction:column;gap:14px;
+  padding:clamp(18px,2.2vw,26px);
+  opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity .4s var(--e),transform .4s var(--e),visibility .4s;
+}
+.s12__scene.is-on{opacity:1;visibility:visible;transform:none}
+.s12__chip{
+  align-self:flex-start;display:inline-flex;align-items:center;gap:8px;
+  padding:6px 12px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--paper-2);
+  font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+}
+.s12__ping{width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.is-live .s12__ping{animation:s12-ping 1.8s var(--e-io) infinite}
+@keyframes s12-ping{0%,100%{opacity:1}50%{opacity:.25}}
+
+.s12__signals{display:flex;flex-direction:column;gap:10px}
+.s12__signals li{display:grid;grid-template-columns:1fr 96px;align-items:center;gap:12px;font-size:var(--t-xs);color:var(--txt)}
+.s12__signals i{display:block;height:5px;border-radius:3px;background:var(--paper-3);overflow:hidden}
+.s12__signals b{display:block;height:100%;background:var(--ink);border-radius:3px}
+.s12__signals li:nth-child(3) b{background:var(--blue)}
+
+.s12__rows{display:flex;flex-direction:column;gap:10px}
+.s12__rows li{
+  display:grid;grid-template-columns:34px 88px 1fr;align-items:center;gap:12px;
+  padding:10px;border:1px solid var(--line-2);border-radius:var(--r-sm);background:var(--paper-2);
+}
+.s12__rows .mono-tile{width:34px;height:34px;border-radius:8px;font-size:var(--t-lbl)}
+.s12__rows b{font-size:var(--t-xs);font-weight:500;color:var(--ink)}
+.s12__need{font-size:var(--t-lbl);line-height:1.45;color:var(--muted)}
+
+.s12__out{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.s12__tile{
+  display:grid;place-items:center;height:56px;border-radius:var(--r-sm);
+  background:var(--paper-3);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+}
+.s12__tile--on{background:var(--blue-wash);color:var(--blue-d)}
+.s12__spark{width:100%;height:44px;color:var(--ink)}
+.s12__note{margin-top:auto;font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+
+@media (max-width:900px){
+  .s12__panel{grid-template-columns:1fr}
+  .s12__stage{min-height:300px}
+}
+@media (max-width:520px){
+  .s12__rows li{grid-template-columns:30px 1fr;row-gap:4px}
+  .s12__rows .s12__need{grid-column:1 / -1}
+}
+
+/* each scene assembles itself when its step opens */
+.s12__scene.is-on .s12__chip{animation:s12-rise .45s var(--e) both}
+.s12__scene.is-on .s12__signals li{animation:s12-rise .5s var(--e) both}
+.s12__scene.is-on .s12__signals li:nth-child(1){animation-delay:.06s}
+.s12__scene.is-on .s12__signals li:nth-child(2){animation-delay:.14s}
+.s12__scene.is-on .s12__signals li:nth-child(3){animation-delay:.22s}
+.s12__scene.is-on .s12__signals li:nth-child(4){animation-delay:.3s}
+.s12__scene.is-on .s12__signals b{animation:s12-fill .9s var(--e) both;animation-delay:.35s}
+.s12__scene.is-on .s12__rows li{animation:s12-rise .5s var(--e) both}
+.s12__scene.is-on .s12__rows li:nth-child(1){animation-delay:.06s}
+.s12__scene.is-on .s12__rows li:nth-child(2){animation-delay:.16s}
+.s12__scene.is-on .s12__rows li:nth-child(3){animation-delay:.26s}
+.s12__scene.is-on .s12__tile{animation:s12-pop .45s var(--e) both}
+.s12__scene.is-on .s12__tile:nth-child(1){animation-delay:.06s}
+.s12__scene.is-on .s12__tile:nth-child(2){animation-delay:.14s}
+.s12__scene.is-on .s12__tile:nth-child(3){animation-delay:.22s}
+.s12__scene.is-on .s12__tile:nth-child(4){animation-delay:.3s}
+.s12__scene.is-on .s12__spark path{
+  stroke-dasharray:260;stroke-dashoffset:260;animation:s12-draw 1.4s var(--e) both;animation-delay:.35s;
+}
+@keyframes s12-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes s12-pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+@keyframes s12-fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes s12-draw{to{stroke-dashoffset:0}}
+.s12__signals b{transform-origin:left center}
+.s12__spark{color:var(--blue)}
+@media (prefers-reduced-motion:reduce){.s12__scene.is-on *{animation:none !important}}
