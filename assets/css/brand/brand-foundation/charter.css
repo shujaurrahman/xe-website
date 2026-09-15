@@ -1,0 +1,51 @@
+/* §2 charter — clauses 1.1–1.6 set as a governing document on a paper sheet */
+.cbf-charter__sheet{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-1);padding:clamp(28px,4.4vw,72px) clamp(20px,4.4vw,72px) clamp(24px,3.2vw,48px)}
+.cbf-charter__top{display:grid;grid-template-columns:var(--cbf-margin) minmax(0,1fr);column-gap:var(--bdh-gap);row-gap:12px;padding-bottom:clamp(22px,2.6vw,34px);border-bottom:1px solid var(--ink)}
+.cbf-charter__art{grid-column:2;margin:0;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+.cbf-charter__pre{grid-column:2;margin:0;font-size:var(--t-body);line-height:1.7;color:var(--muted);max-width:66ch;font-style:italic}
+
+.cbf-charter__list{list-style:none;margin:0;padding:0;counter-reset:none}
+.cbf-charter__cl{position:relative;display:grid;grid-template-columns:var(--cbf-margin) minmax(0,1fr) minmax(170px,.32fr) 40px;column-gap:var(--bdh-gap);align-items:start;padding:clamp(22px,2.6vw,34px) 0;border-bottom:1px solid var(--line)}
+.cbf-charter__no{font-family:var(--f);font-size:clamp(.95rem,1.3vw,1.15rem);color:var(--ink);letter-spacing:-.01em;padding-top:.15em}
+.cbf-charter__main{display:flex;flex-direction:column;gap:10px;min-width:0}
+.cbf-charter__t{margin:0;font-family:var(--f-h);font-weight:500;font-size:clamp(1.2rem,1.7vw,1.5rem);letter-spacing:-.018em;line-height:1.2;color:var(--ink)}
+.cbf-charter__x{margin:0;font-size:var(--t-body);line-height:1.72;color:var(--txt);max-width:60ch}
+.cbf-charter__x{background-image:linear-gradient(var(--blue-wash-2),var(--blue-wash-2));background-repeat:no-repeat;background-size:0 100%;transition:background-size .9s var(--e)}
+.cbf-charter__cl:hover .cbf-charter__x,.cbf-charter__cl:focus-within .cbf-charter__x{background-size:100% 100%}
+.cbf-charter__x{-webkit-box-decoration-break:clone;box-decoration-break:clone;display:inline}
+.cbf-charter__main>.cbf-charter__x{display:block}
+
+.cbf-charter__side{margin:0;display:flex;flex-direction:column;gap:12px;padding-top:.3em}
+.cbf-charter__side div{display:flex;flex-direction:column;gap:4px}
+.cbf-charter__side dt{font-family:var(--f);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.cbf-charter__side dd{margin:0;font-size:var(--t-sm);color:var(--ink);font-weight:500;line-height:1.4}
+.cbf-charter__side a{color:var(--blue-d);text-decoration:none;border-bottom:1px solid var(--blue-line);transition:border-color var(--d1)}
+.cbf-charter__side a:hover{border-color:var(--blue)}
+
+.cbf-charter__init{width:40px;height:40px;border:1px dashed var(--line-3);border-radius:var(--r-xs);display:grid;place-items:center;margin-top:.1em;transition:border-color .5s var(--e),background-color .5s var(--e)}
+.cbf-charter__init svg{width:20px;height:20px;fill:none;stroke:var(--blue);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .6s var(--e) .35s}
+.cbf-charter__cl.is-in .cbf-charter__init{border-style:solid;border-color:var(--blue-line);background:var(--blue-wash)}
+.cbf-charter__cl.is-in .cbf-charter__init svg{stroke-dashoffset:0}
+
+.cbf-charter__sign{display:flex;flex-wrap:wrap;gap:16px clamp(28px,5vw,80px);padding-top:clamp(22px,2.6vw,34px);padding-left:calc(var(--cbf-margin) + var(--bdh-gap))}
+.cbf-charter__sign p{margin:0;display:flex;flex-direction:column;gap:6px}
+.cbf-charter__sign span{font-family:var(--f);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.cbf-charter__sign b{font-weight:500;font-size:var(--t-sm);color:var(--ink);padding-bottom:6px;border-bottom:1px solid var(--line-3);min-width:180px}
+
+@media (max-width:1024px){
+  .cbf-charter__top{grid-template-columns:minmax(0,1fr)}
+  .cbf-charter__art,.cbf-charter__pre{grid-column:1}
+  .cbf-charter__cl{grid-template-columns:56px minmax(0,1fr) 40px;row-gap:16px}
+  .cbf-charter__side{grid-column:2;flex-direction:row;flex-wrap:wrap;gap:12px 32px;padding-top:0}
+  .cbf-charter__init{grid-column:3;grid-row:1}
+  .cbf-charter__sign{padding-left:0}
+}
+@media (max-width:600px){
+  .cbf-charter__sheet{border-radius:var(--r)}
+  .cbf-charter__cl{grid-template-columns:minmax(0,1fr) 36px}
+  .cbf-charter__no{grid-column:1;grid-row:1}
+  .cbf-charter__main,.cbf-charter__side{grid-column:1 / -1}
+  .cbf-charter__init{grid-column:2;grid-row:1;width:36px;height:36px}
+  .cbf-charter__sign b{min-width:0}
+}
+@media (prefers-reduced-motion:reduce){.cbf-charter__x,.cbf-charter__init,.cbf-charter__init svg{transition:none}}

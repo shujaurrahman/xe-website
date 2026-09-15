@@ -1,0 +1,65 @@
+/* 9 · Process — floor plan: rooms sized by weeks, artefacts as furniture, detail below */
+.cba-proc__planwrap{padding:18px 20px 14px;box-shadow:var(--sh-1);min-width:0}
+.cba-proc__ruler{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));margin:0 0 10px;border-bottom:1px solid var(--ink)}
+.cba-proc__ruler span{position:relative;padding:0 0 8px 6px;font-family:var(--f);font-size:9px;letter-spacing:.1em;color:var(--faint);white-space:nowrap;overflow:hidden}
+.cba-proc__ruler span::before{content:"";position:absolute;left:0;bottom:-1px;width:1px;height:9px;background:var(--ink)}
+
+/* walls: 3px ink outer, 1.5px inner; each room a real button */
+.cba-proc__plan{display:grid;grid-template-columns:var(--cols);border:3px solid var(--ink);background:var(--paper)}
+.cba-proc__room{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-height:clamp(240px,24vw,300px);padding:clamp(16px,2vw,24px);border:0;border-left:1.5px solid var(--ink);background:var(--paper);text-align:left;cursor:pointer;min-width:0;transition:background .45s var(--e)}
+.cba-proc__room:first-child{border-left:0}
+.cba-proc__room::after{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--blue-wash-2) 1px,transparent 1px),linear-gradient(90deg,var(--blue-wash-2) 1px,transparent 1px);background-size:16px 16px;opacity:0;transition:opacity .45s var(--e);pointer-events:none}
+.cba-proc__room:hover{background:var(--paper-2)}
+.cba-proc__room.is-on{background:var(--blue-wash)}
+.cba-proc__room.is-on::after{opacity:1}
+.cba-proc__room:focus-visible{outline-offset:-6px}
+.cba-proc__rn{position:relative;z-index:1;font-family:var(--f);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.cba-proc__room.is-on .cba-proc__rn{color:var(--blue-d)}
+.cba-proc__rt{position:relative;z-index:1;font-family:var(--f-h);font-size:clamp(1.25rem,2.1vw,1.85rem);font-weight:500;letter-spacing:-.022em;color:var(--ink);line-height:1.1}
+/* room dimension: a tick-ended line across the room with its length in weeks */
+.cba-proc__dim{position:relative;z-index:1;display:flex;align-items:center;gap:8px;width:100%;height:11px;margin-top:4px;border-left:1px solid var(--line-3);border-right:1px solid var(--line-3);transition:border-color .45s var(--e)}
+.cba-proc__dim::before,.cba-proc__dim::after{content:"";flex:1;height:1px;background:var(--line-3);transition:background .45s var(--e)}
+.cba-proc__dim b{font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1;white-space:nowrap;transition:color .45s var(--e)}
+.cba-proc__room.is-on .cba-proc__dim{border-color:var(--blue)}
+.cba-proc__room.is-on .cba-proc__dim::before,.cba-proc__room.is-on .cba-proc__dim::after{background:var(--blue)}
+.cba-proc__room.is-on .cba-proc__dim b{color:var(--blue-d)}
+.cba-proc__furn{position:relative;z-index:1;display:flex;flex-wrap:wrap;align-content:flex-end;gap:8px;margin-top:auto;width:100%}
+.cba-proc__furn i{display:inline-flex;align-items:center;min-height:30px;padding:4px 10px;border:1px solid var(--ink);background:var(--paper);font-family:var(--f-b);font-style:normal;font-size:var(--t-xs);font-weight:500;color:var(--ink);line-height:1.25;transform:translateY(8px);opacity:.35;transition:transform .5s var(--e),opacity .5s var(--e),border-color .5s var(--e)}
+.cba-proc__room.is-on .cba-proc__furn i{transform:none;opacity:1;border-color:var(--blue)}
+.cba-proc__room.is-on .cba-proc__furn i:nth-child(2){transition-delay:.08s}.cba-proc__room.is-on .cba-proc__furn i:nth-child(3){transition-delay:.16s}
+/* door swing between rooms: a gap in the wall with a quarter arc */
+.cba-proc__door{position:absolute;left:-1.5px;top:34%;width:30px;height:30px;border-top:1.5px solid var(--ink);border-radius:0 30px 0 0;border-right:1px dashed var(--line-3);background:var(--paper);transform:translateX(-1px)}
+.cba-proc__room:first-child .cba-proc__door{display:none}
+.cba-proc__room.is-on .cba-proc__door{background:transparent}
+.cba-proc__corr{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:12px}
+
+.cba-proc__detail{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:var(--bdh-gap);margin-top:var(--bdh-gap);align-items:start}
+.cba-proc__pane{grid-column:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--bdh-gap);padding:clamp(20px,2.4vw,30px);border:var(--cba-ink-hair);background:var(--paper);min-width:0}
+.cba-proc__pane[hidden]{display:none}
+.cba-proc__pane:not([hidden]){animation:cba-proc-in .5s var(--e) both}
+@keyframes cba-proc-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.cba-proc__h{margin:10px 0 10px;font-family:var(--f-h);font-size:clamp(1.3rem,1.9vw,1.65rem);font-weight:500;letter-spacing:-.02em;color:var(--ink)}
+.cba-proc__desc{font-size:var(--t-body);line-height:1.65;color:var(--txt)}
+.cba-proc__al{margin:18px 0 8px}
+.cba-proc__arts{list-style:none;margin:0;padding:0;border-top:var(--cba-hair)}
+.cba-proc__arts li{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:var(--cba-hair);font-size:var(--t-sm);font-weight:500;color:var(--ink)}
+.cba-proc__arts li::before{content:"";width:10px;height:10px;border:1.5px solid var(--blue);flex:none}
+.cba-proc__who{display:grid;gap:14px;align-content:start}
+.cba-proc__who>div{padding:14px 16px;border-left:2px solid var(--blue);background:var(--blue-wash)}
+.cba-proc__who>div+div{border-left-color:var(--ink);background:var(--paper-3)}
+.cba-proc__who dd{margin-top:6px;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.cba-proc__photo{grid-column:2;grid-row:1;align-self:stretch;min-height:260px}
+
+@media (max-width:1024px){.cba-proc__detail{grid-template-columns:minmax(0,1fr)}.cba-proc__photo{grid-column:1;grid-row:auto;aspect-ratio:16/9;min-height:0}}
+@media (max-width:760px){
+  .cba-proc__ruler{display:none}
+  .cba-proc__plan{grid-template-columns:minmax(0,1fr)}
+  .cba-proc__plan[style]{grid-template-columns:minmax(0,1fr)}
+  .cba-proc__room{min-height:0;border-left:0;border-top:1.5px solid var(--ink)}
+  .cba-proc__room:first-child{border-top:0}
+  .cba-proc__door{left:auto;right:28px;top:-1.5px;transform:none;border-radius:0 0 0 30px;border-top:0;border-right:1.5px solid var(--ink);border-bottom:1px dashed var(--line-3);border-left:0}
+  .cba-proc__furn{margin-top:6px}
+  .cba-proc__pane{grid-template-columns:minmax(0,1fr)}
+  .cba-proc__planwrap{padding:14px 12px 10px}
+}
+@media (prefers-reduced-motion:reduce){.cba-proc__room,.cba-proc__room::after,.cba-proc__furn i{transition:none}.cba-proc__pane:not([hidden]){animation:none}}

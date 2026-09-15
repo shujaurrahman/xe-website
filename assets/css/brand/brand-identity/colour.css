@@ -1,0 +1,74 @@
+/* Brand Identity · colour — paint chips, a live contrast lab and the proportion bar. */
+.cbi-col__chips{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:clamp(8px,1vw,14px);margin-bottom:clamp(64px,7vw,104px)}
+.cbi-col__chip{min-width:0;display:flex;flex-direction:column;gap:4px;padding:8px 8px 14px;background:var(--paper);border:1px solid var(--line);box-shadow:var(--sh-1)}
+.cbi-col__patch{display:block;aspect-ratio:3/4;background:var(--c);margin-bottom:10px;box-shadow:inset 0 0 0 1px rgba(25,25,29,.06)}
+.cbi-col__name{font-family:var(--f-h);font-size:1rem;font-weight:500;letter-spacing:-.01em;line-height:1.2;color:var(--ink)}
+.cbi-col__tok{font-family:var(--f);font-size:10px;letter-spacing:.04em;color:var(--muted);line-height:1.4;overflow-wrap:anywhere}
+.cbi-col__role{font-size:var(--t-xs);line-height:1.4;color:var(--faint)}
+
+.cbi-col__lab{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--cbi-gap-l);align-items:stretch}
+.cbi-col__view{position:relative;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;min-height:clamp(420px,42vw,560px);padding:clamp(24px,3vw,44px);background:var(--bg);color:var(--fg);
+  border:1px solid var(--line);transition:background-color .5s var(--e-io),color .5s var(--e-io)}
+.cbi-col__vtop{position:absolute;left:clamp(24px,3vw,44px);right:clamp(24px,3vw,44px);top:clamp(20px,2.4vw,32px);display:flex;justify-content:space-between;gap:12px;
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;line-height:1.3;color:inherit;opacity:.8}
+.cbi-col__aa{font-family:var(--f-h);font-size:clamp(6rem,13vw,11rem);font-weight:500;line-height:.9;letter-spacing:-.05em;color:inherit}
+.cbi-col__big{margin-top:18px;font-family:var(--f-h);font-size:clamp(1.5rem,2.4vw,2.1rem);font-weight:500;letter-spacing:-.02em;line-height:1.1;color:inherit}
+.cbi-col__small{margin-top:12px;font-size:var(--t-sm);line-height:1.6;color:inherit;max-width:48ch}
+.cbi-col__btnmock{align-self:flex-start;margin-top:22px;display:inline-flex;align-items:center;height:40px;padding:0 18px;border:1.5px solid currentColor;border-radius:var(--r-xs);font-size:var(--t-sm);font-weight:600;color:inherit}
+
+.cbi-col__ctl{min-width:0;display:flex;flex-direction:column;gap:22px}
+.cbi-col__set{border:0;padding:0;margin:0;min-width:0}
+.cbi-col__set legend{margin-bottom:12px;padding:0}
+.cbi-col__opts{display:flex;flex-wrap:wrap;gap:8px}
+.cbi-col__opt{position:relative;display:grid;place-items:center;width:44px;height:44px;cursor:pointer}
+.cbi-col__in{position:absolute;inset:0;margin:0;opacity:0;cursor:pointer}
+.cbi-col__dot{width:34px;height:34px;border-radius:50%;background:var(--c);box-shadow:inset 0 0 0 1px rgba(25,25,29,.14);transition:transform var(--d2) var(--e),box-shadow var(--d2) var(--e)}
+.cbi-col__in:checked+.cbi-col__dot{box-shadow:inset 0 0 0 1px rgba(25,25,29,.14),0 0 0 3px var(--paper),0 0 0 4.5px var(--ink);transform:scale(.9)}
+.cbi-col__in:focus-visible+.cbi-col__dot{outline:2px solid var(--blue);outline-offset:6px}
+.cbi-col__opt:hover .cbi-col__dot{transform:scale(1.06)}
+
+.cbi-col__read{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px;padding-top:18px;border-top:1px solid var(--ink)}
+.cbi-col__ratio{display:flex;align-items:baseline;gap:8px;font-family:var(--f);color:var(--ink);line-height:1}
+.cbi-col__ratio b{font-size:clamp(2.6rem,4.4vw,3.6rem);font-weight:500;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.cbi-col__ratio span{font-size:var(--t-xs);letter-spacing:.06em;color:var(--muted)}
+.cbi-col__rules li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:11px;border-bottom:1px solid var(--line);font-size:var(--t-sm);color:var(--ink)}
+.cbi-col__rules small{margin-left:6px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--faint)}
+.cbi-col__rules b{display:inline-flex;align-items:center;gap:8px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.cbi-col__rules b::before{content:"";width:9px;height:9px;border-radius:50%}
+.cbi-col__rules .is-ok b{color:var(--ink)}
+.cbi-col__rules .is-ok b::before{background:var(--blue)}
+.cbi-col__rules .is-no{color:var(--faint)}
+.cbi-col__rules .is-no b{color:var(--faint)}
+.cbi-col__rules .is-no b::before{box-shadow:inset 0 0 0 1.5px var(--faint)}
+.cbi-col__agent{display:flex;flex-direction:column;gap:8px;padding:16px 18px;border-left:2px solid var(--blue);background:var(--paper-2);font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+
+.cbi-col__mix{margin-top:clamp(64px,7vw,104px)}
+.cbi-col__mixh{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
+.cbi-col__bar{display:flex;height:clamp(96px,10vw,132px);border:1px solid var(--line);opacity:1;transform:none}
+.cbi-col__seg{position:relative;flex:var(--w) 1 0;min-width:0;display:flex;flex-direction:column;justify-content:space-between;padding:12px;background:var(--c);color:var(--paper);
+  clip-path:inset(0 100% 0 0);transition:clip-path 1s var(--e) calc(var(--i) * 120ms)}
+.cbi-col__bar.is-in .cbi-col__seg{clip-path:inset(0 0 0 0)}
+.cbi-col__seg b{font-family:var(--f);font-size:var(--t-sm);font-weight:500;line-height:1}
+.cbi-col__seg em{font-style:normal;font-size:var(--t-xs);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cbi-col__seg--paper,.cbi-col__seg--line{color:var(--ink)}
+.cbi-col__seg--paper{box-shadow:inset -1px 0 0 var(--line)}
+.cbi-col__seg--line em,.cbi-col__seg--blue-d em{display:none}   /* too narrow to name; the % and the chips above carry it */
+.cbi-col__seg--line b,.cbi-col__seg--blue-d b{font-size:var(--t-lbl)}
+
+@media (max-width:1023px){
+  .cbi-col__chips{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .cbi-col__lab{grid-template-columns:minmax(0,1fr)}
+  .cbi-col__seg--blue em{display:none}
+}
+@media (max-width:600px){
+  .cbi-col__chips{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+  .cbi-col__chip{padding:5px 5px 9px;gap:2px}
+  .cbi-col__patch{aspect-ratio:1;margin-bottom:6px}
+  .cbi-col__name{font-size:.8125rem;overflow-wrap:anywhere}
+  .cbi-col__tok{font-size:9px}
+  .cbi-col__role{display:none}
+  .cbi-col__seg{padding:8px 6px}
+  .cbi-col__seg em{display:none}
+  .cbi-col__seg b{font-size:var(--t-lbl)}
+}
+@media (prefers-reduced-motion:reduce){.cbi-col__seg{clip-path:none;transition:none}}

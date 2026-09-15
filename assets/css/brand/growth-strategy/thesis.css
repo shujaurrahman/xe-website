@@ -1,0 +1,63 @@
+/* Growth Strategy · 06 growth thesis — one-page memo with margin annotations and highlight marks */
+.cgs-thesis{background:var(--paper);position:relative}
+.cgs-th{position:relative;padding-block:clamp(8px,2vw,24px);background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:22px 22px;border-radius:var(--r-xl)}
+.cgs-memo{position:relative;width:min(100% - 32px,1040px);margin-inline:auto;padding:clamp(28px,4vw,56px) 0;background:var(--paper);border:1px solid var(--line);box-shadow:var(--sh-2);border-radius:4px}
+.cgs-memo::before{content:"";position:absolute;top:0;bottom:0;left:25%;border-left:1px solid var(--line-2)}
+.cgs-memo::after{content:"";position:absolute;top:0;bottom:0;right:25%;border-left:1px solid var(--line-2)}
+
+.cgs-memo__head,.cgs-memo__block,.cgs-memo__foot{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr) minmax(0,1fr)}
+.cgs-memo__head>*,.cgs-memo__body{grid-column:2;min-width:0;padding-inline:clamp(18px,2.4vw,36px)}
+.cgs-memo__k{display:flex;justify-content:space-between;gap:12px;margin:0;padding-bottom:14px;border-bottom:2px solid var(--ink);font-family:var(--f);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+.cgs-memo__k span+span{color:var(--muted)}
+.cgs-memo__meta{margin:0;padding-block:12px}
+.cgs-memo__meta div{display:grid;grid-template-columns:70px minmax(0,1fr);gap:12px;padding:5px 0;border-bottom:1px dotted var(--line-3)}
+.cgs-memo__meta dt{font-family:var(--f);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.cgs-memo__meta dd{margin:0;font-size:var(--t-sm);color:var(--txt)}
+.cgs-memo__title{margin:18px 0 10px;font-family:var(--f-h);font-weight:500;font-size:clamp(1.4rem,2.2vw,1.95rem);letter-spacing:-.022em;line-height:1.14;color:var(--ink)}
+
+.cgs-memo__block{padding-top:clamp(20px,2.4vw,30px)}
+.cgs-memo__h{display:flex;gap:12px;align-items:baseline;margin:0 0 8px;font-family:var(--f-h);font-weight:500;font-size:var(--t-h3);letter-spacing:-.012em;color:var(--ink)}
+.cgs-memo__h span{font-family:var(--f);font-size:var(--t-xs);color:var(--blue);letter-spacing:0}
+.cgs-memo__p{margin:0;font-size:var(--t-body);line-height:1.8;color:var(--txt)}
+.cgs-memo__p mark{color:var(--ink);background:linear-gradient(var(--blue-wash-2),var(--blue-wash-2)) 0 88% / 0 42% no-repeat;transition:background-size 1s var(--e);padding:0 1px}
+.is-in .cgs-memo__p mark,.cgs-memo__block.is-in mark{background-size:100% 42%}
+
+/* margin notes */
+.cgs-memo__note{grid-row:1;min-width:0;align-self:start;margin-top:4px;padding-inline:clamp(14px,1.8vw,26px);display:flex;flex-direction:column;gap:6px}
+.cgs-memo__note--l{grid-column:1;text-align:right;align-items:flex-end}
+.cgs-memo__note--r{grid-column:3}
+.cgs-memo__note b{display:inline-flex;align-items:center;gap:7px;font-family:var(--f);font-size:9.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-d);line-height:1.2}
+.cgs-memo__note b::before{content:"";width:9px;height:9px;border-radius:2px;border:1.5px solid var(--blue)}
+.cgs-memo__note.is-person b{color:var(--ink)}
+.cgs-memo__note.is-person b::before{border-radius:50%;border-color:var(--ink)}
+.cgs-memo__nt{font-family:var(--f);font-size:11px;line-height:1.6;color:var(--txt);min-height:3.2em}
+.cgs-memo__note.is-person .cgs-memo__nt{font-family:var(--f-b);font-style:italic;font-size:var(--t-sm);color:var(--ink)}
+.cgs-memo__note--l+.cgs-memo__note--r,.cgs-memo__note--r+.cgs-memo__note--r{grid-row:1}
+.cgs-memo__block .cgs-memo__note--r+.cgs-memo__note--r{margin-top:90px}
+.cgs-memo__nt.is-typing::after{content:"";display:inline-block;width:6px;height:1em;margin-left:2px;vertical-align:-2px;background:var(--blue)}
+
+.cgs-memo__foot{margin-top:clamp(28px,3vw,40px)}
+.cgs-memo__foot>*{min-width:0}
+.cgs-memo__foot{grid-template-columns:minmax(0,1fr) minmax(0,2fr) minmax(0,1fr);align-items:center}
+.cgs-memo__foot span:not(.cgs-illus){font-family:var(--f);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);padding-inline:clamp(14px,1.8vw,26px)}
+.cgs-memo__foot span:first-child{text-align:right}
+.cgs-memo__foot span:nth-child(2){padding-inline:clamp(18px,2.4vw,36px);border-top:1px solid var(--line);padding-top:12px}
+.cgs-memo__foot .cgs-illus{justify-self:start;margin-left:clamp(14px,1.8vw,26px)}
+
+@media (max-width:900px){
+  .cgs-memo::before,.cgs-memo::after{display:none}
+  .cgs-memo__head,.cgs-memo__block,.cgs-memo__foot{grid-template-columns:minmax(0,1fr)}
+  .cgs-memo__head>*,.cgs-memo__body,.cgs-memo__note,.cgs-memo__foot>*,.cgs-memo__note--l+.cgs-memo__note--r,.cgs-memo__note--r+.cgs-memo__note--r{grid-column:1;grid-row:auto}
+  .cgs-memo__note,.cgs-memo__block .cgs-memo__note--r+.cgs-memo__note--r{margin:12px clamp(18px,2.4vw,36px) 0;padding:10px 12px;border-left:2px solid var(--blue);background:var(--paper-2);text-align:left;align-items:flex-start}
+  .cgs-memo__note.is-person{border-left-color:var(--ink)}
+  .cgs-memo__nt{min-height:0}
+  .cgs-memo__foot{gap:10px;justify-items:start}
+  .cgs-memo__foot span:first-child{text-align:left}
+  .cgs-memo__foot span:not(.cgs-illus),.cgs-memo__foot span:nth-child(2){padding-inline:clamp(18px,2.4vw,36px);border-top:0;padding-top:0}
+  .cgs-memo__foot .cgs-illus{margin-left:clamp(18px,2.4vw,36px)}
+}
+@media (max-width:600px){
+  .cgs-th{background:none;padding:0}
+  .cgs-memo{width:100%}
+  .cgs-memo__k{flex-direction:column;gap:6px}
+}

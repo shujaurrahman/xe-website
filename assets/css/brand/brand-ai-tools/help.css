@@ -1,0 +1,50 @@
+/* 02 The six tools — `brandctl --help`: printed help on paper, the manual + run in ink */
+.cat-help__ui{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);border:1px solid var(--line);border-radius:var(--r-xl);overflow:hidden;background:var(--paper);box-shadow:var(--sh-1)}
+.cat-help__list{min-width:0;padding:clamp(24px,3.2vw,44px)}
+.cat-help__usage{font-family:var(--f);font-size:var(--t-xs);color:var(--txt);overflow-wrap:anywhere}
+.cat-help__usage span,.cat-help__cap{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;color:var(--faint);margin-right:10px}
+.cat-help__cap{margin:30px 0 10px}
+.cat-help__cmd{position:relative;width:100%;display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:4px 16px;align-items:center;padding:15px 16px 15px 22px;border-radius:var(--r-sm);text-align:left;transition:background var(--d2) var(--e)}
+.cat-help__cmd+.cat-help__cmd{margin-top:2px}
+.cat-help__cmd::before{content:"›";position:absolute;left:8px;top:50%;transform:translate(-4px,-52%);opacity:0;font-family:var(--f);color:var(--blue);transition:transform var(--d2) var(--e),opacity var(--d2)}
+.cat-help__cmd:hover{background:var(--paper-3)}
+.cat-help__cmd.is-on{background:var(--blue-wash)}
+.cat-help__cmd.is-on::before{opacity:1;transform:translate(0,-52%)}
+.cat-help__name{font-family:var(--f);font-size:13px;font-weight:500;color:var(--ink)}
+.cat-help__cmd.is-on .cat-help__name{color:var(--blue)}
+.cat-help__title{font-size:var(--t-sm);font-weight:500;color:var(--txt)}
+.cat-help__tag{font-family:var(--f);font-size:10.5px;letter-spacing:.02em;color:var(--faint);text-align:right}
+.cat-help__keys{display:flex;align-items:center;gap:6px;margin-top:24px;font-size:var(--t-xs);color:var(--muted)}
+.cat-help__keys .cat-kbd+span:not(.cat-kbd){margin-left:4px}
+
+.cat-help__panes{position:relative;min-width:0;min-height:520px;display:flex;flex-direction:column;padding:clamp(28px,3.6vw,52px);background:var(--ink);color:var(--on-ink-2)}
+.cat-help__pane{display:flex;flex-direction:column;flex:1}
+.cat-help__pane[hidden]{display:none}
+.cat-help__syn{font-family:var(--f);font-size:var(--t-xs);color:var(--on-ink-3);overflow-wrap:anywhere}
+.cat-help__syn b{font-weight:500;color:var(--on-ink)}
+.cat-help__syn i{font-style:normal;color:var(--on-ink-2)}
+.cat-help__h{margin:22px 0 12px;font-size:clamp(1.5rem,2.3vw,2rem);letter-spacing:-.028em;line-height:1.1;color:var(--on-ink)}
+.cat-help__desc{max-width:46ch;color:var(--on-ink-2)}
+.cat-help__people{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px;margin-top:22px;padding-top:18px;border-top:1px solid var(--on-ink-line);font-size:var(--t-sm);color:var(--on-ink)}
+.cat-help__people span{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
+.cat-help__run{margin-top:auto;padding:18px 20px;border-radius:var(--r);background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.06);font-family:var(--f);font-size:12px;line-height:1.85;color:var(--on-ink-2)}
+.cat-help__people{margin-bottom:28px}
+.cat-help__run li{position:relative;padding-left:22px;overflow-wrap:anywhere}
+.cat-help__run li::before{position:absolute;left:0;color:var(--on-ink-3)}
+.cat-help__run .is-in{color:var(--on-ink)}
+.cat-help__run .is-in::before{content:"$";color:var(--blue)}
+.cat-help__run .is-ok::before{content:"✓";color:var(--blue)}
+.cat-help__run .is-err{color:var(--on-ink)}
+.cat-help__run .is-err::before{content:"✕";color:var(--on-ink)}
+.cat-help__pane.is-play .cat-help__run li:not(:first-child){animation:cat-line .45s var(--e) both;animation-delay:calc(var(--i,1) * 420ms + 500ms)}
+.cat-help__foot{display:flex;justify-content:flex-end;margin-top:16px}
+
+@media (max-width:860px){
+  .cat-help__ui{grid-template-columns:minmax(0,1fr)}
+  .cat-help__panes{min-height:0}
+}
+@media (max-width:600px){
+  .cat-help__cmd{grid-template-columns:minmax(0,1fr);padding:12px 14px 12px 22px}
+  .cat-help__tag{text-align:left}
+  .cat-help__name{font-size:12.5px}
+}

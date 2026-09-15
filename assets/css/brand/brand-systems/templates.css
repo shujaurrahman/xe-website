@@ -1,0 +1,93 @@
+/* Brand Systems · 06 templates — one content set re-laid for four channel formats */
+.cbs-tp{background:var(--paper-2);border-top:1px solid var(--line-2)}
+.cbs-tp__box{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(20px,3vw,40px)}
+@media (min-width:1024px){.cbs-tp__box{grid-template-columns:minmax(0,340px) minmax(0,1fr);align-items:start}}
+
+/* content panel */
+.cbs-tp__content{border-radius:var(--r-lg);background:var(--paper);box-shadow:0 0 0 1px var(--line);padding:22px}
+.cbs-tp__lbl{font-family:var(--f);font-size:.75rem;color:var(--ink);padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+.cbs-tp__field label{display:flex;justify-content:space-between;gap:8px;font-family:var(--f);font-size:.6875rem;color:var(--muted);margin-bottom:8px}
+.cbs-tp__field code{color:var(--ink)}
+.cbs-tp__field textarea{display:block;width:100%;min-height:68px;padding:12px 14px;resize:none;line-height:1.45;border:0;border-radius:var(--r-sm);background:var(--paper-2);box-shadow:inset 0 0 0 1px var(--line-3);font-family:var(--f-b);font-size:.875rem;font-weight:500;color:var(--ink);transition:box-shadow var(--d1)}
+.cbs-tp__field textarea:focus{outline:none;box-shadow:inset 0 0 0 1.5px var(--blue),0 0 0 4px var(--blue-wash)}
+.cbs-tp__box.is-over .cbs-tp__field textarea{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.cbs-tp__field input{width:100%;height:46px;padding:0 14px;border-radius:var(--r-sm);background:var(--paper-2);box-shadow:inset 0 0 0 1px var(--line-3);font-family:var(--f-b);font-size:.875rem;font-weight:500;color:var(--ink);transition:box-shadow var(--d1)}
+.cbs-tp__field input:focus{outline:none;box-shadow:inset 0 0 0 1.5px var(--blue),0 0 0 4px var(--blue-wash)}
+.cbs-tp__box.is-over .cbs-tp__field input{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.cbs-tp__fixed{margin-top:18px;display:grid;gap:0}
+.cbs-tp__fixed div{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;padding:10px 0;border-top:1px dashed var(--line-3)}
+.cbs-tp__fixed dt{font-family:var(--f);font-size:.6875rem;color:var(--muted)}
+.cbs-tp__fixed dd{font-size:.8125rem;color:var(--ink);line-height:1.45}
+.cbs-tp__check{margin-top:14px;padding:12px 14px;border-radius:var(--r-sm);background:var(--blue-wash);font-size:.75rem;line-height:1.55;color:var(--txt)}
+.cbs-tp__check b{display:block;font-family:var(--f);font-size:.625rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-d);margin-bottom:4px}
+.cbs-tp__box.is-over .cbs-tp__check{background:var(--paper-3)}
+.cbs-tp__box.is-over .cbs-tp__check b{color:var(--ink)}
+.cbs-tp__check button{margin-top:8px;font-size:.75rem;font-weight:600;color:var(--blue-d);text-decoration:underline;text-underline-offset:3px}
+
+/* tabs */
+.cbs-tp__right{min-width:0}
+.cbs-tp__tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;border-radius:var(--r);background:var(--line);box-shadow:0 0 0 1px var(--line);overflow:hidden}
+@media (min-width:700px){.cbs-tp__tabs{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.cbs-tp__tabs [role="tab"]{display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:12px 14px;background:var(--paper);text-align:left;font-family:var(--f-b);font-size:.8125rem;font-weight:500;color:var(--muted);transition:background var(--d1),color var(--d1)}
+.cbs-tp__tabs [role="tab"] small{font-family:var(--f);font-size:.625rem;font-weight:400;color:var(--faint)}
+.cbs-tp__tabs [role="tab"]:hover{color:var(--ink)}
+.cbs-tp__tabs [aria-selected="true"]{background:var(--ink);color:var(--on-ink)}
+.cbs-tp__tabs [aria-selected="true"] small{color:var(--on-ink-3)}
+.cbs-tp__tabs [role="tab"]:focus-visible{outline-offset:-4px}
+
+/* stage + frame */
+.cbs-tp__stage{position:relative;display:grid;place-items:center;min-height:clamp(340px,40vw,480px);margin-top:14px;padding:clamp(18px,3vw,40px);border-radius:var(--r-lg);background-color:var(--paper-3);background-image:linear-gradient(var(--line-2) 1px,transparent 1px),linear-gradient(90deg,var(--line-2) 1px,transparent 1px);background-size:24px 24px;overflow:hidden}
+.cbs-tp__frame{--p:var(--blue);position:relative;display:grid;width:100%;background:var(--paper);box-shadow:0 0 0 1px var(--line),var(--sh-2);border-radius:6px;overflow:hidden}
+.cbs-tp__el{display:block;min-width:0}
+.cbs-tp__logo{font-family:var(--f-h);font-weight:500;font-size:.8125rem;color:var(--ink);letter-spacing:-.01em;white-space:nowrap}
+.cbs-tp__img{position:relative;background-color:var(--blue);background-image:radial-gradient(rgba(255,255,255,.18) 1px,transparent 1px);background-size:12px 12px;overflow:hidden}
+.cbs-tp__img i{position:absolute;right:12%;bottom:-22%;width:58%;aspect-ratio:1;border-radius:50%;box-shadow:0 0 0 1.5px rgba(255,255,255,.55),0 0 0 22px rgba(255,255,255,.08)}
+.cbs-tp__eye{font-family:var(--f);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-d)}
+.cbs-tp__head{font-family:var(--f-h);font-weight:500;color:var(--ink);letter-spacing:-.025em;line-height:1.08;overflow-wrap:anywhere}
+.cbs-tp__body{font-size:.75rem;line-height:1.5;color:var(--muted)}
+.cbs-tp__cta{justify-self:start;align-self:start;padding:8px 14px;border-radius:999px;background:var(--ink);color:#fff;font-size:.6875rem;font-weight:500;white-space:nowrap}
+.cbs-tp__legal{font-family:var(--f);font-size:.5625rem;color:var(--faint)}
+.cbs-tp__el.is-off{position:absolute;opacity:0;pointer-events:none;visibility:hidden}
+
+.cbs-tp__frame.is-email{max-width:380px;grid-template-columns:minmax(0,1fr);gap:10px;padding:0 0 18px}
+.is-email .cbs-tp__logo{padding:14px 20px 4px}
+.is-email .cbs-tp__img{height:130px;margin:0 20px;border-radius:4px}
+.is-email .cbs-tp__eye,.is-email .cbs-tp__head,.is-email .cbs-tp__body,.is-email .cbs-tp__cta,.is-email .cbs-tp__legal{margin:0 20px}
+.is-email .cbs-tp__head{font-size:1.375rem}
+.is-email .cbs-tp__legal{margin-top:8px;padding-top:10px;border-top:1px solid var(--line-2)}
+
+.cbs-tp__frame.is-social{max-width:340px;aspect-ratio:1;grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr auto auto;gap:12px;padding:22px}
+.is-social .cbs-tp__img{position:absolute;inset:0;border-radius:0}
+.is-social .cbs-tp__logo,.is-social .cbs-tp__head,.is-social .cbs-tp__cta{position:relative;z-index:1;color:#fff}
+.is-social .cbs-tp__logo{grid-row:1}
+.is-social .cbs-tp__head{grid-row:3;font-size:1.75rem}
+.is-social .cbs-tp__cta{grid-row:4;background:#fff;color:var(--ink)}
+
+.cbs-tp__frame.is-slide{max-width:620px;aspect-ratio:16 / 9;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto 1fr auto auto auto auto;column-gap:22px;row-gap:8px;padding:22px 0 18px 26px}
+.is-slide .cbs-tp__img{grid-column:2;grid-row:1 / -1;margin:-22px 0 -18px}
+.is-slide .cbs-tp__logo{grid-row:1}.is-slide .cbs-tp__eye{grid-row:3}.is-slide .cbs-tp__head{grid-row:4;font-size:1.625rem}
+.is-slide .cbs-tp__body{grid-row:5}.is-slide .cbs-tp__legal{grid-row:6;margin-top:6px}
+
+.cbs-tp__frame.is-banner{max-width:660px;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:18px;padding:0 14px 0 0;height:82px;border-radius:2px}
+.is-banner .cbs-tp__img{align-self:stretch;width:82px;border-radius:0}
+.is-banner .cbs-tp__logo{display:none}
+.is-banner .cbs-tp__head{font-size:1rem;line-height:1.15;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.is-banner .cbs-tp__cta{align-self:center}
+
+.cbs-tp__pane{margin-top:16px}
+.cbs-tp__pl{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.cbs-tp__rules{display:grid;grid-template-columns:minmax(0,1fr);gap:8px 20px;counter-reset:cbs-tp}
+@media (min-width:700px){.cbs-tp__rules{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cbs-tp__rules li{counter-increment:cbs-tp;display:flex;gap:10px;font-size:var(--t-sm);color:var(--txt);line-height:1.5}
+.cbs-tp__rules li::before{content:"R" counter(cbs-tp);font-family:var(--f);font-size:.6875rem;color:var(--blue);padding-top:.1em}
+@media (max-width:599px){
+  .cbs-tp__frame.is-banner{height:72px;gap:10px}
+  .is-banner .cbs-tp__img{width:56px}
+  .is-banner .cbs-tp__head{font-size:.8125rem}
+  .is-banner .cbs-tp__cta{padding:7px 10px;font-size:.625rem}
+  .cbs-tp__frame.is-slide{padding:14px 0 12px 16px;column-gap:14px;row-gap:4px}
+  .is-slide .cbs-tp__img{margin:-14px 0 -12px}
+  .is-slide .cbs-tp__head{font-size:1rem}
+  .is-slide .cbs-tp__body{display:none}
+  .is-social .cbs-tp__head{font-size:1.375rem}
+}

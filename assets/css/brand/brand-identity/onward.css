@@ -1,0 +1,48 @@
+/* Brand Identity · onward — a shelf of spines (this one pulled out, pairs bookmarked) and a bookend to the hub. */
+.cbi-ow__shelf{position:relative;padding-top:40px}
+.cbi-ow__spines{display:grid;grid-template-columns:repeat(6,minmax(0,1fr)) minmax(0,1.6fr);gap:10px;align-items:end;padding-bottom:0;border-bottom:3px solid var(--ink)}
+.cbi-ow__item{min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end}
+.cbi-ow__spine,.cbi-ow__bookend{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:18px;height:clamp(340px,34vw,440px);padding:18px 14px 16px;background:var(--paper);
+  border:1px solid var(--line-3);border-bottom:0;color:var(--ink);text-decoration:none;transition:transform .55s var(--e),background var(--d2) var(--e-io),border-color var(--d2) var(--e-io)}
+.cbi-ow__item:nth-child(2) .cbi-ow__spine{height:clamp(320px,32vw,410px)}
+.cbi-ow__item:nth-child(3) .cbi-ow__spine{height:clamp(356px,36vw,460px)}
+.cbi-ow__item:nth-child(5) .cbi-ow__spine{height:clamp(330px,33vw,425px)}
+.cbi-ow__no{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1}
+.cbi-ow__name{writing-mode:vertical-rl;transform:rotate(180deg);align-self:flex-start;font-family:var(--f-h);font-size:clamp(1.3rem,2vw,1.9rem);font-weight:500;letter-spacing:-.02em;line-height:1;color:inherit;white-space:nowrap}
+.cbi-ow__line{display:none}
+.cbi-ow__tag{font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.3}
+.cbi-ow__ribbon{position:absolute;right:12px;top:-1px;width:14px;height:44px;background:var(--blue);clip-path:polygon(0 0,100% 0,100% 100%,50% 76%,0 100%)}
+.cbi-ow__spine.is-pair .cbi-ow__tag{color:var(--blue-d)}
+a.cbi-ow__spine:hover,a.cbi-ow__spine:focus-visible{transform:translateY(-18px);border-color:var(--ink)}
+.cbi-ow__spine.is-here{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.cbi-ow__item .cbi-ow__spine.is-here{height:clamp(380px,38vw,490px)}
+.cbi-ow__spine.is-here .cbi-ow__no,.cbi-ow__spine.is-here .cbi-ow__tag{color:var(--on-ink-3)}
+.cbi-ow__spine.is-here .cbi-ow__tag{color:var(--blue)}
+
+.cbi-ow__bookend{height:clamp(300px,30vw,380px);justify-content:flex-end;background:var(--blue);border-color:var(--blue);color:#fff}
+.cbi-ow__bookend .cbi-ow__no{margin-bottom:auto;color:rgba(255,255,255,.72)}
+.cbi-ow__bookend .cbi-ow__name{writing-mode:horizontal-tb;transform:none;white-space:normal;font-size:clamp(1.3rem,1.9vw,1.8rem);line-height:1.1}
+.cbi-ow__bookend .cbi-ow__line{display:block;font-size:var(--t-sm);line-height:1.5;color:rgba(255,255,255,.86)}
+.cbi-ow__bookend .cbi-ow__tag{color:#fff;font-size:var(--t-lbl)}
+.cbi-ow__bookend:hover{background:var(--blue-d);border-color:var(--blue-d)}
+
+.cbi-ow__read{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 18px;margin-top:22px;min-height:3em}
+.cbi-ow__readt{font-size:var(--t-lead);line-height:1.5;color:var(--ink);max-width:60ch}
+
+@media (max-width:1023px){
+  .cbi-ow__spines{grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;border-bottom:0;gap:10px}
+  .cbi-ow__item--end{grid-column:1 / -1}
+  .cbi-ow__spine,.cbi-ow__item:nth-child(n) .cbi-ow__spine,.cbi-ow__bookend{height:auto;min-height:200px;border-bottom:3px solid var(--ink)}
+  .cbi-ow__name{writing-mode:horizontal-tb;transform:none;white-space:normal}
+  .cbi-ow__line{display:block;font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+  .cbi-ow__spine.is-here{transform:none}
+  .cbi-ow__spine.is-here .cbi-ow__line{color:var(--on-ink-2)}
+  a.cbi-ow__spine:hover,a.cbi-ow__spine:focus-visible{transform:none}
+  .cbi-ow__bookend{min-height:160px;border-bottom-color:var(--blue-d)}
+  .cbi-ow__read{display:none}
+}
+@media (max-width:600px){
+  .cbi-ow__shelf{padding-top:0}
+  .cbi-ow__spines{grid-template-columns:minmax(0,1fr)}
+  .cbi-ow__spine,.cbi-ow__item:nth-child(n) .cbi-ow__spine{min-height:0;gap:10px}
+}

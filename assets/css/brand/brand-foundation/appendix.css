@@ -1,0 +1,40 @@
+/* §9 Deliverables — appendix drawer: filing folders with staggered tabs */
+.cbf-app__drawer{min-width:0}
+.cbf-app__label{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 18px;padding-bottom:12px;border-bottom:1px solid var(--ink)}
+.cbf-app__files{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:52px clamp(16px,2vw,28px);margin:0;padding:34px 0 0;list-style:none}
+.cbf-app__file{position:relative;min-width:0;display:flex}
+
+/* the tab: sits on the folder's top edge, stepping across the drawer A → F */
+.cbf-app__tab{position:absolute;top:-30px;left:calc(var(--t) * 12%);height:31px;display:inline-flex;align-items:center;padding:0 16px;background:var(--paper);border:1px solid var(--line-3);border-bottom:0;border-radius:var(--r-xs) var(--r-xs) 0 0;font-family:var(--f);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);line-height:1;z-index:1;transition:background var(--d2) var(--e),color var(--d2) var(--e),border-color var(--d2) var(--e)}
+
+/* the folder */
+.cbf-app__body{position:relative;display:flex;flex-direction:column;gap:12px;width:100%;padding:24px clamp(18px,2vw,26px) 22px;background:var(--paper);border:1px solid var(--line-3);border-radius:0 var(--r-sm) var(--r-sm) var(--r-sm);transition:transform var(--d2) var(--e),box-shadow var(--d2) var(--e),border-color var(--d2) var(--e)}
+.cbf-app__file:first-child .cbf-app__body,.cbf-app__file:nth-child(3n+1) .cbf-app__body{border-top-left-radius:0}
+/* paper edges peeking out behind the folder */
+.cbf-app__body::before,.cbf-app__body::after{content:"";position:absolute;left:10px;right:10px;height:6px;bottom:-7px;border:1px solid var(--line-3);border-top:0;border-radius:0 0 var(--r-xs) var(--r-xs);background:var(--paper-2)}
+.cbf-app__body::after{left:20px;right:20px;bottom:-13px;background:var(--paper-3)}
+.cbf-app__file:hover .cbf-app__body{transform:translateY(-4px);box-shadow:var(--sh-1);border-color:var(--ink)}
+.cbf-app__file:hover .cbf-app__tab{background:var(--ink);border-color:var(--ink);color:var(--on-ink);transform:translateY(-4px)}
+.cbf-app__tab{transition:background var(--d2) var(--e),color var(--d2) var(--e),border-color var(--d2) var(--e),transform var(--d2) var(--e)}
+
+.cbf-app__ref{margin:0;font-family:var(--f);font-size:11px;letter-spacing:.06em;color:var(--blue-d);line-height:1.3}
+.cbf-app__ref .cbf-mono{margin-right:6px;color:var(--faint)}
+.cbf-app__h{margin:0;font-family:var(--f-h);font-size:clamp(1.12rem,1.45vw,1.3rem);font-weight:500;letter-spacing:-.012em;line-height:1.22;color:var(--ink)}
+.cbf-app__in{margin:0;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+.cbf-app__fmt{display:flex;flex-wrap:wrap;gap:8px;margin:auto 0 0;padding-top:14px;border-top:1px dashed var(--line-3)}
+.cbf-app__fmt span:not(.bdh-sr){padding:4px 9px;border:1.5px solid var(--ink);border-radius:2px;font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);line-height:1}
+.cbf-app__foot{margin:44px 0 0;max-width:62ch;font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+
+@media (max-width:1024px){
+  .cbf-app__files{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cbf-app__tab{left:calc(var(--t) * 8%)}
+  .cbf-app__file:nth-child(3n+1) .cbf-app__body{border-top-left-radius:var(--r-sm)}
+}
+@media (max-width:640px){
+  .cbf-app__files{grid-template-columns:minmax(0,1fr);gap:48px}
+  .cbf-app__tab{left:calc(var(--t) * 9%)}
+}
+@media (prefers-reduced-motion:reduce){
+  .cbf-app__body,.cbf-app__tab{transition:none}
+  .cbf-app__file:hover .cbf-app__body,.cbf-app__file:hover .cbf-app__tab{transform:none}
+}

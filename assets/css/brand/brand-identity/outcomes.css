@@ -1,0 +1,53 @@
+/* Brand Identity · outcomes — a specimen statement with margin notes; the FAQ as an A–D specimen index. */
+.cbi-oc__spread{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,6fr) minmax(0,3fr);column-gap:var(--cbi-gap);row-gap:40px;align-items:start}
+.cbi-oc__state{grid-column:2;grid-row:1 / span 3;font-family:var(--f-h);font-size:clamp(2rem,4.2vw,3.7rem);font-weight:500;letter-spacing:-.035em;line-height:1.08;color:var(--faint)}
+.cbi-oc__ph{color:var(--ink);background-color:transparent;transition:background-color .5s var(--e-io);-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.cbi-oc__ph sup{margin-left:.08em;font-family:var(--f);font-size:.28em;font-weight:500;letter-spacing:0;vertical-align:1.9em;line-height:0;color:var(--blue)}
+.cbi-oc__ph.is-hi{background-color:var(--blue-wash-2)}
+.cbi-oc__notes{display:contents}
+.cbi-oc__note{position:relative;padding-top:14px;border-top:1px solid var(--ink);transition:border-color var(--d2) var(--e-io)}
+.cbi-oc__note--0{grid-column:1;grid-row:1}
+.cbi-oc__note--1{grid-column:3;grid-row:1;margin-top:clamp(40px,6vw,96px)}
+.cbi-oc__note--2{grid-column:3;grid-row:2}
+.cbi-oc__nn{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--blue);font-family:var(--f);font-size:var(--t-lbl);font-weight:500;color:var(--blue);transition:background var(--d2) var(--e-io),color var(--d2) var(--e-io)}
+.cbi-oc__nt{margin-top:12px;font-family:var(--f-h);font-size:1.15rem;font-weight:500;letter-spacing:-.012em;line-height:1.25;color:var(--ink)}
+.cbi-oc__nd{margin-top:8px;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+.cbi-oc__note.is-hi{border-color:var(--blue)}
+.cbi-oc__note.is-hi .cbi-oc__nn{background:var(--blue);color:var(--paper)}
+
+/* FAQ */
+.cbi-faq{margin-top:clamp(88px,10vw,150px)}
+.cbi-faq__h{display:flex;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--ink)}
+.cbi-faq__item{border-bottom:1px solid var(--line)}
+.cbi-faq__q{margin:0;font:inherit}
+.cbi-faq__btn{display:grid;grid-template-columns:clamp(64px,8vw,120px) minmax(0,1fr) 44px;align-items:center;column-gap:clamp(12px,2vw,32px);width:100%;min-height:44px;padding-block:clamp(14px,1.8vw,24px);text-align:left}
+.cbi-faq__idx{font-family:var(--f-h);font-size:clamp(3rem,6vw,5.4rem);font-weight:200;line-height:.9;letter-spacing:-.04em;color:var(--ghost);transition:font-weight .6s var(--e),color .4s var(--e-io)}
+.cbi-faq__qt{font-family:var(--f-h);font-size:clamp(1.2rem,1.9vw,1.65rem);font-weight:500;letter-spacing:-.018em;line-height:1.2;color:var(--ink)}
+.cbi-faq__pm{position:relative;width:44px;height:44px;border:1px solid var(--line-3);border-radius:50%;transition:border-color var(--d2) var(--e-io),background var(--d2) var(--e-io)}
+.cbi-faq__pm::before,.cbi-faq__pm::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:1.5px;background:var(--ink);transform:translate(-50%,-50%);transition:transform .45s var(--e),background var(--d2) var(--e-io)}
+.cbi-faq__pm::after{transform:translate(-50%,-50%) rotate(90deg)}
+.cbi-faq__btn:hover .cbi-faq__idx{color:var(--faint)}
+.cbi-faq__btn:hover .cbi-faq__pm{border-color:var(--ink)}
+.cbi-faq__btn[aria-expanded="true"] .cbi-faq__idx{font-weight:600;color:var(--blue)}
+.cbi-faq__btn[aria-expanded="true"] .cbi-faq__pm{background:var(--ink);border-color:var(--ink)}
+.cbi-faq__btn[aria-expanded="true"] .cbi-faq__pm::before,.cbi-faq__btn[aria-expanded="true"] .cbi-faq__pm::after{background:var(--paper)}
+.cbi-faq__btn[aria-expanded="true"] .cbi-faq__pm::after{transform:translate(-50%,-50%) rotate(0deg)}
+.cbi-faq__a{padding:0 calc(44px + clamp(12px,2vw,32px)) clamp(22px,2.4vw,32px) calc(clamp(64px,8vw,120px) + clamp(12px,2vw,32px))}
+.cbi-faq__a:not([hidden]){animation:cbi-faq-in .5s var(--e)}
+.cbi-faq__a p{font-size:var(--t-lead);line-height:1.65;color:var(--txt);max-width:62ch}
+@keyframes cbi-faq-in{from{opacity:0;transform:translateY(-8px)}}
+
+@media (max-width:1023px){
+  .cbi-oc__spread{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)}
+  .cbi-oc__state{grid-column:1 / -1;grid-row:1}
+  .cbi-oc__note--0,.cbi-oc__note--1,.cbi-oc__note--2{grid-row:2;margin-top:0}
+  .cbi-oc__note--0{grid-column:1}.cbi-oc__note--1{grid-column:2}.cbi-oc__note--2{grid-column:3}
+}
+@media (max-width:600px){
+  .cbi-oc__spread{grid-template-columns:minmax(0,1fr);row-gap:28px}
+  .cbi-oc__note--0,.cbi-oc__note--1,.cbi-oc__note--2{grid-column:1;grid-row:auto}
+  .cbi-faq__btn{grid-template-columns:44px minmax(0,1fr) 44px}
+  .cbi-faq__idx{font-size:2.4rem}
+  .cbi-faq__a{padding-inline:0}
+}
+@media (prefers-reduced-motion:reduce){.cbi-faq__a:not([hidden]){animation:none}.cbi-oc__ph{transition:none}}

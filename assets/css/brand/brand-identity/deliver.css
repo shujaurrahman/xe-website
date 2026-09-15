@@ -1,0 +1,42 @@
+/* Brand Identity · deliver — an open guidelines book: contents with dotted leaders | chapter opener. */
+.cbi-dl__book{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--paper);border:1px solid var(--line);box-shadow:var(--sh-2)}
+.cbi-dl__book::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line-3);box-shadow:-10px 0 18px -6px rgba(25,25,29,.08),10px 0 18px -6px rgba(25,25,29,.08)}
+.cbi-dl__page{position:relative;min-width:0;display:flex;flex-direction:column;padding:clamp(24px,3.4vw,56px) clamp(22px,3.4vw,56px) clamp(20px,2.4vw,32px)}
+.cbi-dl__run,.cbi-dl__folio{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);line-height:1.3}
+.cbi-dl__folio{margin-top:auto;padding-top:28px}
+.cbi-dl__contents{margin-top:clamp(36px,4vw,56px);font-family:var(--f-h);font-size:clamp(2.6rem,5vw,4.4rem);font-weight:500;letter-spacing:-.04em;line-height:1;color:var(--ink)}
+.cbi-dl__toc{margin-top:clamp(24px,2.6vw,36px);border-top:1px solid var(--ink)}
+.cbi-dl__ch{display:grid;grid-template-columns:34px auto minmax(24px,1fr) 3ch;align-items:end;column-gap:10px;width:100%;padding:13px 0 11px;border-bottom:1px solid var(--line-2);text-align:left}
+.cbi-dl__n{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;color:var(--faint);line-height:1.9}
+.cbi-dl__name{display:flex;flex-direction:column;gap:3px;min-width:0;font-size:var(--t-body);font-weight:500;color:var(--txt);line-height:1.3;transition:color var(--d1) var(--e-io)}
+.cbi-dl__name small{font-family:var(--f);font-size:var(--t-lbl);font-weight:400;letter-spacing:.06em;color:var(--faint)}
+.cbi-dl__dots{align-self:end;margin-bottom:.45em;height:1px;background-image:radial-gradient(circle,var(--ghost) 1px,transparent 1.2px);background-size:6px 3px;background-repeat:repeat-x;min-height:3px}
+.cbi-dl__pg{font-family:var(--f);font-size:var(--t-sm);font-weight:500;color:var(--muted);text-align:right;line-height:1.3;font-variant-numeric:tabular-nums}
+.cbi-dl__ch:hover .cbi-dl__name,.cbi-dl__ch[aria-pressed="true"] .cbi-dl__name{color:var(--ink)}
+.cbi-dl__ch[aria-pressed="true"] .cbi-dl__n,.cbi-dl__ch[aria-pressed="true"] .cbi-dl__pg{color:var(--blue)}
+.cbi-dl__ch[aria-pressed="true"] .cbi-dl__dots{background-image:radial-gradient(circle,var(--blue) 1px,transparent 1.2px)}
+
+.cbi-dl__page--r{display:grid;background:var(--paper-2)}
+.cbi-dl__open{grid-area:1 / 1;min-width:0;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .5s var(--e),visibility 0s linear .5s}
+.cbi-dl__open.is-on{opacity:1;visibility:visible;transition:opacity .5s var(--e),visibility 0s}
+.cbi-dl__big{display:block;margin-top:clamp(24px,3vw,44px);font-family:var(--f-h);font-size:clamp(7rem,15vw,13rem);font-weight:300;letter-spacing:-.06em;line-height:.8;color:var(--ink);
+  clip-path:inset(0 0 100% 0);transform:translateY(12%);transition:clip-path .8s var(--e),transform .8s var(--e)}
+.cbi-dl__open.is-on .cbi-dl__big{clip-path:inset(0 0 0 0);transform:none}
+.cbi-dl__title{margin-top:clamp(20px,2.4vw,32px);font-family:var(--f-h);font-size:clamp(1.5rem,2.3vw,2.1rem);font-weight:500;letter-spacing:-.025em;line-height:1.12;color:var(--ink);max-width:16ch}
+.cbi-dl__inside{margin-top:20px;border-top:1px solid var(--line-3)}
+.cbi-dl__inside li{position:relative;padding:11px 0 11px 22px;border-bottom:1px solid var(--line);font-size:var(--t-sm);line-height:1.5;color:var(--txt)}
+.cbi-dl__inside li::before{content:"§";position:absolute;left:0;top:11px;font-family:var(--f);color:var(--blue)}
+.cbi-dl__fmts{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:22px}
+.cbi-dl__fmts .cbi-lbl{margin-right:6px}
+.cbi-dl__fmts b{padding:5px 10px;border:1px solid var(--ink);font-family:var(--f);font-size:var(--t-xs);font-weight:500;color:var(--ink);line-height:1.2}
+
+@media (max-width:860px){
+  .cbi-dl__book{grid-template-columns:minmax(0,1fr)}
+  .cbi-dl__book::after{display:none}
+  .cbi-dl__page--r{border-top:1px solid var(--line-3)}
+}
+@media (max-width:600px){
+  .cbi-dl__ch{grid-template-columns:28px minmax(0,1fr) 3ch}
+  .cbi-dl__dots{display:none}
+}
+@media (prefers-reduced-motion:reduce){.cbi-dl__big{clip-path:none;transform:none;transition:none}}

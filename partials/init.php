@@ -29,6 +29,16 @@ function xe_url(string $path): string {
     return ($url === '' || $url[0] === '#' || $url[0] === '?') ? './' . $url : $url;
 }
 
+/**
+ * URL for a stylesheet or script, stamped with its modification time ('?v=…').
+ * The host's CDN caches assets for a week, so without the stamp a deploy stays invisible
+ * until that expires. Paths that already carry a query are left as they are.
+ */
+function xe_asset(string $path): string {
+    $file = __DIR__ . '/../' . $path;
+    return xe_url($path) . (strpos($path, '?') === false && is_file($file) ? '?v=' . filemtime($file) : '');
+}
+
 /** Inline an SVG from assets/brand so it can inherit currentColor. */
 function xe_svg(string $name): string {
     $file = __DIR__ . '/../assets/brand/' . basename($name) . '.svg';

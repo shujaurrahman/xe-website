@@ -1,0 +1,77 @@
+/* Growth Strategy · 02 where growth hides — scrollytelling treemap */
+.cgs-hides{background:var(--paper)}
+.cgs-hd{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(20px,2.4vw,32px)}
+.cgs-hd__steps{grid-column:1 / span 4;min-width:0;padding-block:8vh 26vh}
+.cgs-hd__stage{grid-column:6 / 13;min-width:0}
+.cgs-hd__fig{position:sticky;top:calc(50vh - min(290px,36vw));margin:0}
+
+.cgs-hd__step{min-height:62vh;display:flex;flex-direction:column;justify-content:center;gap:14px;opacity:.32;transition:opacity .5s var(--e)}
+.cgs-hd__step:first-child{min-height:48vh;justify-content:flex-start}
+.cgs-hd__step.is-on{opacity:1}
+.cgs-hd__n{display:flex;align-items:center;gap:12px;margin:0;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);line-height:1.2}
+.cgs-hd__n span:first-child{color:var(--blue)}
+.cgs-hd__n span+span::before{content:"";display:inline-block;width:22px;height:1px;background:var(--line-3);vertical-align:middle;margin-right:12px}
+.cgs-hd__h{margin:0;font-family:var(--f-h);font-weight:500;font-size:clamp(1.35rem,2.1vw,1.85rem);letter-spacing:-.022em;line-height:1.16;color:var(--ink)}
+.cgs-hd__p{margin:0;font-size:var(--t-body);line-height:1.7;color:var(--txt);max-width:40ch}
+
+.cgs-hd__cap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:0 2px 16px;border-bottom:1px solid var(--ink);margin-bottom:18px}
+.cgs-hd__title{display:grid;min-width:0}
+.cgs-hd__title b{grid-area:1 / 1;font-family:var(--f-h);font-weight:500;font-size:clamp(1rem,1.3vw,1.18rem);letter-spacing:-.012em;color:var(--ink);opacity:0;transform:translateY(8px);transition:opacity .4s var(--e),transform .4s var(--e)}
+.cgs-hd__pips{display:flex;gap:6px;flex:none}
+.cgs-hd__pips i{width:22px;height:3px;border-radius:2px;background:var(--line);transition:background .4s var(--e)}
+
+/* treemap */
+.cgs-tm{position:relative;aspect-ratio:7/6;max-width:100%;background:var(--paper)}
+.cgs-tm__tile{position:absolute;box-sizing:border-box;border:3px solid var(--paper);background-color:var(--paper-3);background-image:radial-gradient(var(--line-3) 1px,transparent 1.3px);background-size:12px 12px;box-shadow:inset 0 0 0 1px var(--line-2);overflow:hidden;transition:opacity .6s var(--e)}
+.cgs-tm__fill{position:absolute;left:0;right:0;bottom:0;height:100%;background:var(--blue);transform-origin:bottom;transform:scaleY(0);transition:transform .9s var(--e) calc(var(--i) * 60ms)}
+.cgs-tm__hatch{position:absolute;inset:0;background-image:repeating-linear-gradient(135deg,var(--blue-line) 0 1px,transparent 1px 8px);opacity:0;transition:opacity .6s var(--e)}
+.cgs-tm__bar{position:absolute;left:14px;right:14px;top:14px;height:3px;background:var(--ink);transform-origin:left;transform:scaleX(0);transition:transform .9s var(--e) calc(var(--i) * 60ms)}
+.cgs-tm__lbl{position:absolute;left:14px;bottom:42px;font-family:var(--f);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);line-height:1.2;transition:color .4s}
+.cgs-tm__val{position:absolute;left:14px;right:10px;bottom:12px;display:grid}
+.cgs-tm__val b{grid-area:1 / 1;font-family:var(--f);font-weight:500;font-size:clamp(.9rem,1.4vw,1.32rem);letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;opacity:0;transform:translateY(6px);transition:opacity .35s var(--e),transform .35s var(--e);line-height:1.2}
+.cgs-tm__tile.is-thin .cgs-tm__lbl{bottom:auto;top:12px}
+.cgs-tm__tile.is-thin .cgs-tm__val{bottom:auto;top:30px}
+.cgs-tm__tile.is-thin .cgs-tm__bar{top:auto;bottom:10px}
+.cgs-tm__tile.is-ws::after{content:"";position:absolute;inset:0;border:2px solid var(--blue);opacity:0;transition:opacity .5s var(--e)}
+
+.cgs-hd__foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:16px}
+
+/* states */
+.cgs-hd__fig[data-state="1"] [data-s="1"],.cgs-hd__fig[data-state="2"] [data-s="2"],.cgs-hd__fig[data-state="3"] [data-s="3"],.cgs-hd__fig[data-state="4"] [data-s="4"]{opacity:1;transform:none}
+.cgs-hd__fig[data-state="1"] .cgs-hd__pips i[data-s="1"],.cgs-hd__fig[data-state="2"] .cgs-hd__pips i:is([data-s="1"],[data-s="2"]),.cgs-hd__fig[data-state="3"] .cgs-hd__pips i:not([data-s="4"]),.cgs-hd__fig[data-state="4"] .cgs-hd__pips i{background:var(--blue)}
+.cgs-hd__fig[data-state="2"] .cgs-tm__fill{transform:scaleY(var(--share))}
+.cgs-hd__fig[data-state="3"] .cgs-tm__bar{transform:scaleX(var(--grow))}
+.cgs-hd__fig[data-state="3"] .cgs-tm__fill{transform:scaleY(var(--share));opacity:.18}
+.cgs-hd__fig[data-state="4"] .cgs-tm__tile:not(.is-ws){opacity:.38}
+.cgs-hd__fig[data-state="4"] .cgs-tm__tile.is-ws{background:var(--paper)}
+.cgs-hd__fig[data-state="4"] .is-ws .cgs-tm__hatch,.cgs-hd__fig[data-state="4"] .is-ws::after{opacity:1}
+.cgs-hd__fig[data-state="4"] .is-ws .cgs-tm__lbl{color:var(--blue-d)}
+.cgs-hd__fig[data-state="4"] .cgs-tm__bar{transform:scaleX(var(--grow))}
+.cgs-hd__fig[data-state="4"] .is-ws .cgs-tm__bar{background:var(--blue)}
+.cgs-hd__fig[data-state="4"] .cgs-tm__fill{transform:scaleY(var(--share));opacity:.18}
+.cgs-tm__fill{transition:transform .9s var(--e) calc(var(--i) * 60ms),opacity .5s var(--e)}
+
+/* narrow: the chart sticks under the nav and the steps scroll beneath it */
+@media (max-width:1023px){
+  .cgs-hd{grid-template-columns:minmax(0,1fr)}
+  .cgs-hd__stage{grid-column:1;grid-row:1;position:sticky;top:84px;z-index:1;background:var(--paper);padding:12px 0 10px;border-bottom:1px solid var(--line)}
+  .cgs-hd__stage::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:84px;background:var(--paper);pointer-events:none}
+  .cgs-hd__fig{position:static}
+  .cgs-hd__steps{grid-column:1;grid-row:2;padding-block:24px 10vh}
+  .cgs-hd__step,.cgs-hd__step:first-child{min-height:52vh;justify-content:center}
+  .cgs-tm{aspect-ratio:16/9}
+  .cgs-hd__foot{display:none}
+}
+@media (max-width:600px){
+  .cgs-tm{aspect-ratio:4/3}
+  .cgs-tm__lbl{left:8px;bottom:26px;font-size:9px;letter-spacing:.08em}
+  .cgs-tm__val{left:8px;bottom:8px}
+  .cgs-tm__val b{font-size:.72rem;white-space:normal}
+  .cgs-tm__bar{left:8px;right:8px;top:8px}
+  .cgs-tm__tile{border-width:2px}
+  .cgs-tm__tile.is-thin .cgs-tm__lbl{display:none}
+  .cgs-tm__tile.is-thin .cgs-tm__val{top:auto;bottom:6px}
+  .cgs-tm__tile.is-thin .cgs-tm__bar{bottom:auto;top:6px}
+  .cgs-hd__title b{font-size:.92rem}
+  .cgs-hd__cap{margin-bottom:10px;padding-bottom:10px}
+}

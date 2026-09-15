@@ -63,9 +63,17 @@ work at any depth.
 nav, the mega menu, the mobile sheet, the footer columns and the six service pages all
 read from it.
 
-Helpers from `partials/init.php`: `xe_url($path)`, `xe_svg($name)` (inlines a brand SVG
-so it inherits `currentColor`), `e($string)` (escapes), `xe_section($name)`,
+Helpers from `partials/init.php`: `xe_url($path)`, `xe_asset($path)` (a stylesheet or
+script URL stamped `?v=<file time>` — Hostinger's CDN caches assets for a week, so every
+CSS/JS link must go through it or a deploy won't show), `xe_svg($name)` (inlines a brand
+SVG so it inherits `currentColor`), `e($string)` (escapes), `xe_section($name)`,
 `xe_discipline_url($d)`.
+
+## Deploying
+
+`./deploy.sh --dry` previews, `./deploy.sh` uploads only what changed (see the header of
+the script). Don't upload through hPanel's File Manager — it copies `.git`, `docs/`,
+`tools/`, `build.php` and this README onto the public site, which `deploy.sh` never does.
 
 ## The design system
 
@@ -121,6 +129,30 @@ Capability names, one-liners and links come from `data/site.php`; kickers, leads
 deliverables and timings from `data/brand-design.php`. Photos sit in
 `assets/imgs/brand/hub/<id>/`, each folder with its own `CREDITS.md`.
 
+## Brand capability pages (`services/brand-design/<slug>.php`)
+
+Six pages, one per Brand Design capability, reached from the hub's capabilities section,
+the mega menu and the mobile sheet. Each is a shell like the hub: an array lists the
+sections in order, each section is `partials/brand/<slug>/<id>.php` with
+`assets/css/brand/<slug>/<id>.css` and `assets/js/brand/<slug>/<id>.js` (loaded when
+non-empty), plus a page base `assets/css/brand/<slug>.css`. A page may use the hub's
+layout utilities (`hub.css`) and `window.BDH` helpers (`hub.js`), but every visible
+component is its own. Copy comes from `data/brand-design.php` (`$BD[slug]`) and
+`data/site.php`; new copy sits in DRAFT COPY arrays at the top of a partial. Photos are in
+`assets/imgs/brand/<slug>/`, each with a `CREDITS.md`.
+
+| Page · prefix | Concept | Signature demo | Sections |
+|---|---|---|---|
+| Growth Strategy · `cgs-` | The terrain: the market as ground to be read | Next-best-customer scorer: weighting sliders re-rank Segments A–F, with an agent note | hero · hides · ledger · scorer · whitespace · thesis · route · moves · kpi · pack · outcomes · faq · onward |
+| Brand Identity · `cbi-` | The specimen book, set plate by plate | Voice and tone tuner: a context and two dials rewrite a line | hero · anatomy · offer · construct · colour · type · voice · motion · touchpoints · process · deliver · outcomes · onward |
+| Brand Foundation · `cbf-` | The decision document: clauses, redlines, appendix | Positioning composer: an agent stress-tests the statement, a person signs it off | hero · essay · charter · tensions · composer · rules · narrative · revisions · onepage · appendix · room · transcript · seealso |
+| Brand Systems · `cbs-` | The living system, run like a product | Live token editor: controls rewrite tokens, components re-render, export in three formats | hero · editor · manifest · flex · inventory · templates · governance · docs · process · bundle · adoption · faq · onward |
+| Brand Architecture · `cba-` | The portfolio as structure, drawn as a drawing set | Model spectrum: a slider walks branded house → house of brands | hero · audit · offer · spectrum · lockup · naming · wayfinding · migration · process · register · outcomes · faq · onward |
+| Brand AI Tools · `cat-` | The machine room: tooling with people in charge | Generation playground: brand-locked prompt → variants → automated brand check → review | hero · help · curate · playground · guardrails · eval · provenance · vault · deploy · registry · reports · man · onward |
+
+Every page opens with a breadcrumb back to Brand Design and ends with its own onward
+section (the other five capabilities, its two `$BD` pairs marked), then `partials/cta.php`.
+
 ## PLACEHOLDERS — before this goes live
 
 1. **The eight client logos** on the home page came from a reference site. **They are
@@ -144,6 +176,19 @@ deliverables and timings from `data/brand-design.php`. Photos sit in
 8. **Brand Design page** — all copy is marked DRAFT; every photo is free Unsplash
    reference imagery (credited per folder); timings, the rollout matrix, the weight
    budget and the brand-health dashboard are illustrative and carry PLACEHOLDER comments.
+9. **Brand capability pages** (the six under `services/brand-design/`) — all new copy is
+   DRAFT; every photo is free Unsplash reference imagery credited in
+   `assets/imgs/brand/<slug>/CREDITS.md`. Everything marked "Illustrative" on the page is
+   invented and carries a PLACEHOLDER comment in its partial (`grep -rn PLACEHOLDER
+   partials/brand/<slug>`): Growth Strategy's segment scores, weights, share figures, KPI
+   tree, competitor positions, memo and route weeks; Brand Identity's mark proportions and
+   values, motion timings and guideline page numbers; Brand Foundation's remarks (not
+   client quotations), positioning statement and options, value rulings, narrative and
+   version diffs; Brand Systems' flex ranges and presets, versions, changelog and content
+   hashes; Brand Architecture's portfolio audit data, model scoring, navigation figures,
+   migration timings and issue weeks; Brand AI Tools' command output, dataset and pipeline
+   counts, guardrail policy thresholds, evaluation figures, provenance manifest, versions
+   and outcome figures. Agent notes and rewrites are pre-authored, not live model output.
 
 Nothing on the site claims a certification, or a partnership with OpenAI, Anthropic,
 Google or Adobe — the platforms section only describes how the tools are used.

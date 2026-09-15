@@ -1,0 +1,22 @@
+/* 11 Outcomes — run-summary cards styled as job reports */
+.cat-rp__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--cat-gap)}
+.cat-rp__job{min-width:0;display:flex;flex-direction:column;padding:clamp(20px,2.4vw,30px);border:1px solid var(--on-ink-line);border-radius:var(--r-xl);background:rgba(255,255,255,.03)}
+.cat-rp__top{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-family:var(--f);font-size:10.5px;color:var(--on-ink-3)}
+.cat-rp__id{min-width:0;overflow-wrap:anywhere;color:var(--on-ink-2)}
+.cat-rp__exit{margin-left:auto;padding:2px 9px;border-radius:var(--r-pill);background:var(--blue-wash-2);color:var(--on-ink)}
+.cat-rp__h{margin-top:26px;font-size:clamp(1.35rem,2.1vw,1.75rem);letter-spacing:-.028em;line-height:1.12}
+.cat-rp__p{margin-top:10px;color:var(--on-ink-2)}
+.cat-rp__out{margin-top:22px;padding:12px 14px;border-radius:var(--r-sm);background:rgba(0,0,0,.28);font-family:var(--f);font-size:11px;line-height:1.8;color:var(--on-ink-2)}
+.cat-rp__out li{position:relative;padding-left:16px;overflow-wrap:anywhere}
+.cat-rp__out li::before{content:"›";position:absolute;left:0;color:var(--blue)}
+.cat-rp__fig{margin-top:auto;padding-top:26px}
+.cat-rp__fig p{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px}
+.cat-rp__fig b{font-family:var(--f);font-size:clamp(2rem,3.2vw,2.8rem);font-weight:500;letter-spacing:-.02em;line-height:1;color:var(--on-ink);font-variant-numeric:tabular-nums}
+.cat-rp__fig span{font-size:var(--t-xs);color:var(--on-ink-3)}
+.cat-rp__bar{display:block;height:3px;margin-top:14px;border-radius:2px;background:var(--on-ink-line);overflow:hidden}
+.cat-rp__bar i{display:block;height:100%;background:var(--blue);transform-origin:left;transform:scaleX(0);transition:transform 1.2s var(--e-io) .2s}
+.cat-rp__job.is-in .cat-rp__bar i{transform:scaleX(var(--v,1))}
+.cat-rp__foot{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin-top:18px;padding-top:14px;border-top:1px solid var(--on-ink-line);font-family:var(--f);font-size:10px;color:var(--on-ink-3)}
+.cat-rp__foot .cat-illus{margin-left:auto}
+@media (max-width:980px){.cat-rp__grid{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){.cat-rp__bar i{transform:scaleX(var(--v,1));transition:none}}

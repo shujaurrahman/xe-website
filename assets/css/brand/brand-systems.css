@@ -1,1 +1,53 @@
-/* Brand Design · brand-systems — services/brand-design/brand-systems.php. Loaded after assets/css/brand.css. Core tokens only. */
+/* ==========================================================================
+   Brand Systems — page base (.cbs-*). "The Living System": technical, product-like,
+   precise grids, mono token names, light pages with a few ink code panels.
+   Section styles live in assets/css/brand/brand-systems/<id>.css.
+   ========================================================================== */
+.cbs{--cbs-gap:clamp(16px,2vw,28px);--cbs-grid:rgba(25,25,29,.045);--cbs-mono-s:.75rem}
+
+/* section head: a mono "path" eyebrow, title, lead — left aligned, split on wide screens */
+.cbs-head{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;margin-bottom:clamp(36px,4.2vw,64px)}
+.cbs-head__path{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;color:var(--muted);display:flex;flex-wrap:wrap;align-items:center;gap:.5em;line-height:1.4}
+.cbs-head__path b{font-weight:500;color:var(--blue)}
+.cbs-head__path i{font-style:normal;color:var(--ghost)}
+.cbs-head__h{font-size:var(--t-h2);letter-spacing:-.028em;line-height:1.08;max-width:22ch}
+.cbs-head__lead{max-width:60ch}
+@media (min-width:1024px){
+  .cbs-head--split{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);column-gap:clamp(40px,6vw,110px);align-items:end}
+  .cbs-head--split .cbs-head__path{grid-column:1 / -1}
+  .cbs-head--split .cbs-head__lead{padding-bottom:.35em}
+}
+.band--ink .cbs-head__path{color:var(--on-ink-3)}
+.band--ink .cbs-head__path i{color:var(--on-ink-line)}
+
+/* fine engineering grid behind light sections */
+.cbs-gridbg{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(var(--cbs-grid) 1px,transparent 1px),linear-gradient(90deg,var(--cbs-grid) 1px,transparent 1px);background-size:32px 32px;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 30%,transparent 80%);mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 30%,transparent 80%)}
+
+/* shared small parts */
+.cbs-tag{display:inline-flex;align-items:center;gap:.45em;font-family:var(--f);font-size:.6875rem;letter-spacing:.02em;line-height:1;padding:5px 8px;border-radius:var(--r-xs);background:var(--paper-3);color:var(--txt);white-space:nowrap}
+.cbs-tag--blue{background:var(--blue-wash);color:var(--blue-d)}
+.cbs-tag--ink{background:var(--ink);color:var(--on-ink)}
+.cbs-tag--line{background:none;box-shadow:inset 0 0 0 1px var(--line-3)}
+.cbs-note{font-family:var(--f);font-size:.6875rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);display:inline-flex;align-items:center;gap:.5em}
+.cbs-note::before{content:"";width:6px;height:6px;border-radius:2px;box-shadow:inset 0 0 0 1px var(--faint)}
+.cbs-mono{font-family:var(--f);font-size:var(--cbs-mono-s);letter-spacing:0}
+.cbs-btn{display:inline-flex;align-items:center;gap:.5em;height:34px;padding:0 14px;border-radius:var(--r-pill);font-family:var(--f-b);font-size:var(--t-xs);font-weight:500;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line-3);background:var(--paper);transition:box-shadow var(--d1),background var(--d1),color var(--d1)}
+.cbs-btn:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.cbs-btn[aria-pressed="true"],.cbs-btn.is-on{background:var(--ink);color:var(--on-ink);box-shadow:none}
+.band--ink .cbs-btn{background:none;color:var(--on-ink);box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+.band--ink .cbs-btn:hover{box-shadow:inset 0 0 0 1px var(--on-ink-3)}
+.band--ink .cbs-btn[aria-pressed="true"],.band--ink .cbs-btn.is-on{background:var(--paper);color:var(--ink)}
+
+/* photo frame with a mono caption strip */
+.cbs-photo{position:relative;margin:0;border-radius:var(--r-lg);overflow:hidden;background:var(--paper-3)}
+.cbs-photo img{width:100%;height:100%;object-fit:cover}
+.cbs-photo figcaption{position:absolute;left:12px;bottom:12px;right:12px;display:flex;flex-wrap:wrap;gap:6px;font-family:var(--f);font-size:.6875rem;color:var(--ink)}
+.cbs-photo figcaption span{background:rgba(255,255,255,.92);padding:5px 8px;border-radius:var(--r-xs);line-height:1.2}
+
+/* pulse dot for live status */
+.cbs-live{width:7px;height:7px;border-radius:50%;background:var(--blue);flex:none;position:relative}
+.cbs-live::after{content:"";position:absolute;inset:-4px;border-radius:50%;box-shadow:0 0 0 1px var(--blue-line);opacity:0}
+.is-live .cbs-live::after{animation:cbs-ping 1.8s var(--e) infinite}
+@keyframes cbs-ping{0%{transform:scale(.5);opacity:1}100%{transform:scale(1.6);opacity:0}}
+
+@media (prefers-reduced-motion:reduce){.is-live .cbs-live::after{animation:none}}

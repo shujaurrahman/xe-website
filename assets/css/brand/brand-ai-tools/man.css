@@ -1,0 +1,39 @@
+/* 12 FAQ — man page layout; one section open at a time */
+.cat-man__in{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.5fr);gap:var(--cat-gap-l);align-items:start}
+.cat-man__side{position:sticky;top:120px;min-width:0}
+.cat-man__side .h2{max-width:14ch}
+.cat-man__side .lead{margin-top:20px}
+.cat-man__cta{margin-top:28px}
+.cat-man__page{min-width:0;padding:clamp(20px,3vw,44px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);box-shadow:var(--sh-1)}
+.cat-man__rh{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 16px;padding-bottom:18px;border-bottom:1px solid var(--line-2);font-family:var(--f);font-size:11px;letter-spacing:.04em;color:var(--faint)}
+.cat-man__rf{padding:18px 0 0;border-top:1px solid var(--line-2);border-bottom:0;margin-top:8px}
+.cat-man__sec{display:block;font-family:var(--f);font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--ink)}
+.cat-man__body{margin-top:8px;padding-left:clamp(0px,3.4vw,44px);max-width:64ch;color:var(--txt)}
+.cat-man__body b{font-family:var(--f);font-weight:600;color:var(--ink)}
+.cat-man__mono{font-family:var(--f);font-size:12px;line-height:1.7;overflow-wrap:anywhere}
+.cat-man__mono a{color:var(--blue);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.cat-man__mono a:hover{color:var(--blue-d)}
+.cat-man__fixed{padding:22px 0 6px}
+.cat-man__fixed .cat-man__body+.cat-man__sec{margin-top:20px}
+.cat-man__see{padding-bottom:22px}
+.cat-man__qs{border-top:1px solid var(--line-2)}
+.cat-man__item{border-bottom:1px solid var(--line-2)}
+.cat-man__h{font-size:inherit;letter-spacing:0}
+.cat-man__btn{width:100%;display:grid;grid-template-columns:minmax(0,1fr) 22px;grid-template-areas:"s t" "q t";gap:6px 16px;align-items:center;padding:20px 0;text-align:left}
+.cat-man__btn .cat-man__sec{grid-area:s;color:var(--muted);transition:color var(--d2)}
+.cat-man__q{grid-area:q;padding-left:clamp(0px,3.4vw,44px);font-family:var(--f-h);font-size:clamp(1.12rem,1.6vw,1.35rem);font-weight:500;letter-spacing:-.012em;line-height:1.25;color:var(--ink)}
+.cat-man__btn:hover .cat-man__q{color:var(--blue-d)}
+.cat-man__item.is-open .cat-man__sec{color:var(--blue)}
+.cat-man__tog{grid-area:t;position:relative;width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--line-3);transition:background var(--d2),box-shadow var(--d2)}
+.cat-man__tog::before,.cat-man__tog::after{content:"";position:absolute;left:50%;top:50%;width:9px;height:1.5px;background:var(--ink);transform:translate(-50%,-50%);transition:transform var(--d2) var(--e),background var(--d2)}
+.cat-man__tog::after{transform:translate(-50%,-50%) rotate(90deg)}
+.cat-man__item.is-open .cat-man__tog{background:var(--ink);box-shadow:none}
+.cat-man__item.is-open .cat-man__tog::before{background:#fff}
+.cat-man__item.is-open .cat-man__tog::after{background:#fff;transform:translate(-50%,-50%) rotate(0deg)}
+.cat-man__panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--d3) var(--e)}
+.cat-man__item.is-open .cat-man__panel{grid-template-rows:1fr}
+.cat-man__clip{min-height:0;overflow:hidden}
+.cat-man__clip .cat-man__body{margin:0;padding-bottom:22px}
+.cat-man__panel[hidden]{display:grid}
+
+@media (max-width:980px){.cat-man__in{grid-template-columns:minmax(0,1fr)}.cat-man__side{position:static}}

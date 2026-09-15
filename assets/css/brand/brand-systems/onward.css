@@ -1,0 +1,56 @@
+/* Brand Systems · 13 onward — the capabilities as a dependency graph */
+.cbs-ow{background:var(--paper)}
+.cbs-ow__graph{position:relative;border-radius:var(--r-xl);box-shadow:inset 0 0 0 1px var(--line);padding:clamp(16px,2.4vw,32px);background-color:var(--paper);background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:22px 22px}
+.cbs-ow__ws{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px 20px;padding-bottom:18px;margin-bottom:clamp(20px,2.6vw,36px);border-bottom:1px dashed var(--line-3)}
+.cbs-ow__ws p{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:.8125rem;color:var(--ink)}
+.cbs-ow__wsl{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.cbs-ow__back{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:var(--r-pill);background:var(--ink);color:#fff;font-size:.8125rem;font-weight:500;transition:background var(--d1)}
+.cbs-ow__back:hover{background:var(--ink-2)}
+.cbs-ow__back span{font-family:var(--f);color:var(--blue)}
+
+.cbs-ow__edges{display:none}
+.cbs-ow__cols{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.cbs-ow__col{min-width:0;display:flex;flex-direction:column;gap:12px}
+.cbs-ow__col--4{order:0}
+@media (max-width:1099px){
+  .cbs-ow__cols{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cbs-ow__col{display:contents}
+  .cbs-ow__node--self{grid-column:1 / -1;order:-1}
+}
+@media (max-width:599px){.cbs-ow__cols{grid-template-columns:minmax(0,1fr)}}
+
+.cbs-ow__node{position:relative;display:flex;flex-direction:column;gap:6px;padding:18px 18px 16px;border-radius:var(--r-lg);background:var(--paper);box-shadow:0 0 0 1px var(--line),var(--sh-1);transition:box-shadow var(--d2) var(--e),transform var(--d2) var(--e)}
+a.cbs-ow__node:hover,a.cbs-ow__node.is-hot{box-shadow:0 0 0 1.5px var(--ink),var(--sh-2);transform:translateY(-2px)}
+a.cbs-ow__node:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:var(--r-lg)}
+.cbs-ow__node.is-pair{box-shadow:0 0 0 1.5px var(--blue),var(--sh-1)}
+.cbs-ow__pkg{font-family:var(--f);font-size:.6875rem;color:var(--muted)}
+.cbs-ow__h{font-family:var(--f-h);font-weight:500;font-size:var(--t-h3);letter-spacing:-.012em;line-height:1.2;color:var(--ink);padding-right:22px}
+.cbs-ow__why{font-size:.8125rem;line-height:1.55;color:var(--muted)}
+.cbs-ow__rel{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:6px;font-family:var(--f);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.cbs-ow__rel b{font-weight:500;letter-spacing:.04em;text-transform:none;padding:3px 7px;border-radius:var(--r-xs);background:var(--blue);color:#fff}
+.cbs-ow__go{position:absolute;top:16px;right:16px;font-family:var(--f);font-size:1rem;color:var(--ink);transition:transform var(--d2) var(--e)}
+a.cbs-ow__node:hover .cbs-ow__go{transform:translateX(3px)}
+
+.cbs-ow__node--self{justify-content:center;min-height:160px;background:var(--ink);box-shadow:var(--sh-2)}
+.cbs-ow__node--self .cbs-ow__pkg{color:var(--on-ink-3)}
+.cbs-ow__node--self .cbs-ow__h{color:var(--on-ink);font-size:clamp(1.4rem,2vw,1.8rem);letter-spacing:-.022em}
+.cbs-ow__node--self .cbs-ow__rel{color:var(--blue)}
+
+@media (min-width:1100px){
+  .cbs-ow__cols{grid-template-columns:repeat(5,minmax(0,1fr));column-gap:clamp(36px,3.6vw,60px);align-items:center}
+  .cbs-ow__col{justify-content:center;gap:28px}
+  .cbs-ow__edges{display:block;position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:0}
+  .cbs-ow__edges path{fill:none;stroke:var(--line-3);stroke-width:1.5;transition:stroke .3s,opacity .3s}
+  .cbs-ow__edges path.is-flow{stroke:var(--blue);stroke-width:2;stroke-dasharray:5 95;stroke-dashoffset:100;opacity:0}
+  .cbs-ow__graph.is-live .cbs-ow__edges path.is-flow{opacity:1;animation:cbs-ow-flow 2.4s linear infinite;animation-delay:calc(var(--d, 0) * 1s)}
+  .cbs-ow__edges path.is-hot{stroke:var(--ink)}
+  .cbs-ow__graph.has-hot .cbs-ow__edges path:not(.is-hot):not(.is-flow){opacity:.35}
+  .cbs-ow__edges{clip-path:inset(0 100% 0 0);transition:clip-path 1.6s var(--e-io)}
+  .cbs-ow__graph.is-drawn .cbs-ow__edges{clip-path:inset(0 0 0 0)}
+}
+@keyframes cbs-ow-flow{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){
+  .cbs-ow__edges{clip-path:none;transition:none}
+  .cbs-ow__graph.is-live .cbs-ow__edges path.is-flow{animation:none;opacity:0}
+  .cbs-ow__node,.cbs-ow__go{transition:none}
+}

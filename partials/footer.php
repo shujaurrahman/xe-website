@@ -77,10 +77,10 @@ $foot_href = function ($h) { return preg_match('~^(#|mailto:|tel:|https?://)~', 
   </div>
 </footer>
 
-<script src="<?= xe_url('assets/js/core.js') ?>"></script>
-<script src="<?= xe_url('assets/js/sections.js') ?>"></script>
+<script src="<?= xe_asset('assets/js/core.js') ?>"></script>
+<script src="<?= xe_asset('assets/js/sections.js') ?>"></script>
 <?php foreach ($page['js'] ?? [] as $js): ?>
-<script src="<?= xe_url($js) ?>"></script>
+<script src="<?= xe_asset($js) ?>"></script>
 <?php endforeach; ?>
 </body>
 </html>

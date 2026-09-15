@@ -28,10 +28,10 @@ $full  = ($page['key'] ?? '') === 'home'
 
 <link rel="preload" href="<?= xe_url('assets/fonts/outfit-latin.woff2') ?>" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="<?= xe_url('assets/fonts/montserrat-latin.woff2') ?>" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="<?= xe_url('assets/css/core.css') ?>">
-<link rel="stylesheet" href="<?= xe_url('assets/css/sections.css') ?>">
+<link rel="stylesheet" href="<?= xe_asset('assets/css/core.css') ?>">
+<link rel="stylesheet" href="<?= xe_asset('assets/css/sections.css') ?>">
 <?php foreach ($page['css'] ?? [] as $css): ?>
-<link rel="stylesheet" href="<?= xe_url($css) ?>">
+<link rel="stylesheet" href="<?= xe_asset($css) ?>">
 <?php endforeach; ?>
 
 <script type="application/ld+json">

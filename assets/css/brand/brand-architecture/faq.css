@@ -1,0 +1,52 @@
+/* 12 · FAQ — a plan grid; questions pinned to grid references, opening in place */
+.cba-faq__plan{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(132px,auto);border-top:3px solid var(--ink);border-left:1px solid var(--line-3);background:var(--paper)}
+.cba-faq__plan>*{grid-column:var(--c,auto) / span var(--s,1);grid-row:var(--r,auto);border-right:1px solid var(--line-3);border-bottom:1px solid var(--line-3);min-width:0}
+
+/* empty cells: grid ref and a centre cross, like an unoccupied bay */
+.cba-faq__cell{position:relative}
+.cba-faq__cell span{position:absolute;left:12px;top:10px;font-family:var(--f);font-size:10px;letter-spacing:.1em;color:var(--ghost)}
+.cba-faq__cell::before,.cba-faq__cell::after{content:"";position:absolute;left:50%;top:50%;background:var(--line-3)}
+.cba-faq__cell::before{width:13px;height:1px;margin-left:-6px}
+.cba-faq__cell::after{width:1px;height:13px;margin-top:-6px}
+
+/* question bays */
+.cba-faq__q{position:relative;background:var(--paper);transition:background .35s var(--e)}
+.cba-faq__q:has([aria-expanded="true"]){background:var(--blue-wash)}
+.cba-faq__h{margin:0}
+.cba-faq__b{display:grid;grid-template-columns:minmax(0,1fr) 28px;grid-template-areas:"pin ic" "qt qt";gap:14px;width:100%;padding:18px 20px 20px;border:0;background:none;text-align:left;cursor:pointer}
+.cba-faq__b:focus-visible{outline-offset:-4px}
+.cba-faq__pin{grid-area:pin;display:inline-flex;align-items:center;gap:8px;font-family:var(--f);font-size:var(--t-xs);font-weight:500;letter-spacing:.08em;color:var(--blue-d)}
+.cba-faq__pin i{position:relative;width:14px;height:14px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--blue)}
+.cba-faq__pin i::after{content:"";position:absolute;left:4px;top:4px;width:6px;height:6px;border-radius:50%;background:var(--paper)}
+.cba-faq__qt{grid-area:qt;font-family:var(--f-h);font-size:clamp(1.1rem,1.6vw,1.4rem);font-weight:500;letter-spacing:-.018em;line-height:1.22;color:var(--ink)}
+.cba-faq__ic{grid-area:ic;position:relative;justify-self:end;width:28px;height:28px;border:1px solid var(--ink);border-radius:var(--r-xs);transition:background var(--d2) var(--e)}
+.cba-faq__ic::before,.cba-faq__ic::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:1.5px;margin:-.75px 0 0 -5px;background:var(--ink);transition:transform var(--d2) var(--e)}
+.cba-faq__ic::after{transform:rotate(90deg)}
+.cba-faq__b[aria-expanded="true"] .cba-faq__ic{background:var(--ink)}
+.cba-faq__b[aria-expanded="true"] .cba-faq__ic::before,.cba-faq__b[aria-expanded="true"] .cba-faq__ic::after{background:var(--paper)}
+.cba-faq__b[aria-expanded="true"] .cba-faq__ic::after{transform:rotate(0deg)}
+.cba-faq__b:hover .cba-faq__qt{color:var(--blue-d)}
+
+/* panel: core accordion animates height; closed panels start at 0 */
+.cba-faq__p{height:0;overflow:hidden;transition:height .45s var(--e)}
+.cba-faq__b[aria-expanded="true"]+.cba-faq__p,.cba-faq__h:has([aria-expanded="true"])+.cba-faq__p{height:auto}
+.cba-faq__a{display:grid;gap:14px;padding:0 20px 22px}
+.cba-faq__a p:first-child{font-size:var(--t-body);line-height:1.65;color:var(--txt);max-width:56ch}
+.cba-faq__a .cba-mono b{font-weight:500;color:var(--ink)}
+
+/* ask cell */
+.cba-faq__ask{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:18px 20px;background:var(--ink)}
+.cba-faq__ask .cba-faq__pin{color:var(--on-ink-3)}
+.cba-faq__ask .cba-faq__pin i::after{background:var(--ink)}
+.cba-faq__askt{font-family:var(--f-h);font-size:1.05rem;font-weight:500;letter-spacing:-.012em;line-height:1.25;color:var(--on-ink)}
+.cba-faq__link{margin-top:auto;font-size:var(--t-sm);font-weight:500;color:var(--on-ink);text-decoration:none;border-bottom:1px solid var(--blue);padding-bottom:2px}
+.cba-faq__link:hover{color:#fff;border-color:#fff}
+.cba-faq__link:focus-visible{outline-color:#fff}
+
+@media (max-width:900px){
+  .cba-faq__plan{grid-template-columns:minmax(0,1fr);grid-auto-rows:auto}
+  .cba-faq__plan>*{grid-column:1 / -1;grid-row:auto}
+  .cba-faq__cell{display:none}
+  .cba-faq__ask{min-height:140px}
+}
+@media (prefers-reduced-motion:reduce){.cba-faq__p,.cba-faq__q,.cba-faq__ic,.cba-faq__ic::before,.cba-faq__ic::after{transition:none}}

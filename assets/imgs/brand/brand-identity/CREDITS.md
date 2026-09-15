@@ -1,21 +1,17 @@
 # Brand Identity — image credits
 
-PLACEHOLDER: stock photography from Unsplash (Unsplash Licence, free to use). Every
-photo is a blank, unbranded mockup; the Xterra Edze mark and lockup are composited
-on top in CSS. Replace with Xterra Edze's own work before launch.
+PLACEHOLDER: reference photography from Unsplash (Unsplash Licence, free to use). Every photo is a
+blank, unbranded surface or printed matter; the generic "Your brand" identity is set on top in HTML/CSS
+(partials/brand/brand-identity/touchpoints.php). Replace with commissioned or own photography before launch.
+Downloaded from images.unsplash.com as resized JPEGs (longest side 1200–1400, q72).
 
 | File | Used for | Photographer | Unsplash page |
 |---|---|---|---|
-| business-cards.jpg | Identity, applied · business cards | Mediamodifier | https://unsplash.com/photos/two-blank-business-cards-sitting-on-top-of-each-other-XdlhXRH_UJw |
-| phone-hand.jpg | Identity, applied · app launch screen | Jakub Żerdzicki | https://unsplash.com/photos/a-hand-holding-an-iphone-with-a-blank-screen-aE_MMfeRKvs |
-| letterhead.jpg | Identity, applied · letterhead | MJH SHIKDER | https://unsplash.com/photos/two-white-sheets-of-paper-on-a-gray-background-qNMsA7ucvqo |
-| signage-lightbox.jpg | Identity, applied · wayfinding | Thanongsak kongtong | https://unsplash.com/photos/a-large-white-sign-hanging-from-the-side-of-a-building-2a9IpjX5Kek |
-| tote-carried.jpg | Identity, applied · tote | Mediamodifier | https://unsplash.com/photos/person-in-blue-denim-jeans-holding-white-tote-bag-PENodSVsL1s |
-| mailer-box.jpg | Identity, applied · packaging | mockupbee | https://unsplash.com/photos/a-white-rectangular-object-hDn3V_DPka4 |
-| cup-hand.jpg | Identity, applied · takeaway cup | Kelly Sikkema | https://unsplash.com/photos/person-holding-white-disposable-cup-g6tqX-t73mg |
-
-Downloaded from images.unsplash.com as resized JPEGs (w=1100–1400, q=74).
-| glass-facade.jpg | Editorial band | joel-filipe | https://unsplash.com/photos/nEEa3_4AS10 |
-| people-architecture.jpg | Editorial band | yen-vu | https://unsplash.com/photos/22Y0GEqSdkk |
-| server-close.jpg | AI in the loop | kier-in-sight-archives | https://unsplash.com/photos/3Nwt6w-KU3E |
-| server-rack.jpg | AI in the loop | yuriy-vertikov | https://unsplash.com/photos/c-lSQecD9oI |
+| tp-sign.jpg | Brand Identity page · touchpoints · wayfinding sign | shubham-dhage | https://unsplash.com/photos/gjo9-as7Fdg |
+| tp-box.jpg | Brand Identity page · touchpoints · packaging | kelli-mcclintock | https://unsplash.com/photos/GopRYASfsOc |
+| tp-phone.jpg | Brand Identity page · touchpoints · screen | personalgraphic-com | https://unsplash.com/photos/1E3YI6WS2kI |
+| tp-apron.jpg | Brand Identity page · touchpoints · uniform | johnny-ho | https://unsplash.com/photos/aJVgf0nj_TY |
+| tp-van.jpg | Brand Identity page · touchpoints · vehicle | mathias-reding | https://unsplash.com/photos/OL84QWu3Ong |
+| tp-billboard.jpg | Brand Identity page · touchpoints · out of home | personalgraphic-com | https://unsplash.com/photos/t0lLGHhnh8w |
+| letterpress.jpg | Brand Identity page · offer specimens | bret-lama | https://unsplash.com/photos/ZieTVo0mbzM |
+| press-sheet.jpg | Brand Identity page · process print run | ernesto-samaniego | https://unsplash.com/photos/2MVFWvxVzDs |

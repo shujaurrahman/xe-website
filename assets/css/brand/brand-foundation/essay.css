@@ -1,0 +1,48 @@
+/* §1 essay — long-read measure with numbered sidenotes in the gutter (inline notes on phones) */
+.cbf-essay__read{margin:0;max-width:none}
+.cbf-essay__body{display:flex;flex-direction:column;gap:clamp(22px,2.4vw,30px)}
+.cbf-essay__row{display:grid;grid-template-columns:var(--cbf-margin) minmax(0,var(--cbf-measure)) minmax(0,1fr);column-gap:var(--bdh-gap);align-items:start}
+.cbf-essay__p{grid-column:2;margin:0;font-size:clamp(1rem,1.18vw,1.125rem);line-height:1.85;color:var(--txt)}
+.cbf-essay__p--first::first-letter{font-family:var(--f-h);font-weight:500;float:left;font-size:4.1em;line-height:.8;margin:.08em .06em 0 -.02em;color:var(--ink);letter-spacing:-.04em}
+.cbf-essay__call{line-height:0;vertical-align:super;font-size:.7em}
+.cbf-essay__ref{appearance:none;border:0;background:none;cursor:pointer;font-family:var(--f);font-size:11px;font-weight:500;color:var(--blue);min-width:0;height:19px;padding:0 3px;margin-left:0;border-radius:var(--r-xs);position:relative;top:-2px;transition:background-color var(--d1),color var(--d1)}
+.cbf-essay__ref::before{content:"";position:absolute;inset:-8px -4px}
+.cbf-essay__ref:hover{background:var(--blue-wash)}
+.cbf-essay__ref[aria-expanded="true"]{background:var(--blue);color:var(--on-ink)}
+
+.cbf-essay__notes{grid-column:3;display:flex;flex-direction:column;gap:18px;padding-top:.3em;padding-left:clamp(0px,2vw,28px)}
+.cbf-essay__note{position:relative;padding-left:16px;border-left:1px solid var(--line);transition:border-color .4s var(--e)}
+.cbf-essay__nh{margin:0;display:flex;align-items:baseline;gap:10px;font-size:var(--t-sm);font-weight:500;color:var(--muted);line-height:1.4;transition:color .4s var(--e)}
+.cbf-essay__nn{font-family:var(--f);font-size:10px;color:var(--faint);min-width:1.4em}
+.cbf-essay__nt{margin:0;font-size:var(--t-sm);line-height:1.6;color:var(--txt);display:grid;grid-template-rows:0fr;opacity:0;transform:translateX(12px);transition:grid-template-rows .5s var(--e),opacity .45s var(--e),transform .5s var(--e),margin .5s var(--e)}
+.cbf-essay__nt{overflow:hidden}
+.cbf-essay__note.is-open{border-left-color:var(--blue)}
+.cbf-essay__note.is-open .cbf-essay__nh{color:var(--ink)}
+.cbf-essay__note.is-open .cbf-essay__nn{color:var(--blue)}
+.cbf-essay__note.is-open .cbf-essay__nt{grid-template-rows:1fr;opacity:1;transform:none;margin-top:8px}
+.cbf-essay__nt>span{min-height:0}
+
+.cbf-essay__plate{margin-top:clamp(28px,4vw,56px);display:grid;grid-template-columns:var(--cbf-margin) minmax(0,1fr);column-gap:var(--bdh-gap)}
+.cbf-essay__plate .cbf-plate__img{grid-column:2;aspect-ratio:5 / 2}
+.cbf-essay__plate img{object-position:50% 62%}
+.cbf-essay__plate figcaption{grid-column:2;margin-top:12px;max-width:72ch}
+
+@media (max-width:1024px){
+  .cbf-essay__row{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)}
+  .cbf-essay__p{grid-column:1}
+  .cbf-essay__notes{grid-column:2}
+  .cbf-essay__plate{grid-template-columns:minmax(0,1fr)}
+  .cbf-essay__plate .cbf-plate__img,.cbf-essay__plate figcaption{grid-column:1}
+}
+@media (max-width:720px){
+  .cbf-essay__row{grid-template-columns:minmax(0,1fr)}
+  .cbf-essay__notes{grid-column:1;padding-left:0;gap:0}
+  .cbf-essay__note{display:none;margin-top:14px;padding:14px 16px;background:var(--paper-2);border-left:2px solid var(--blue);border-radius:0 var(--r-sm) var(--r-sm) 0}
+  .cbf-essay__note.is-open{display:block;animation:cbfNoteIn .45s var(--e)}
+  .cbf-essay__plate .cbf-plate__img{aspect-ratio:4 / 3}
+}
+@keyframes cbfNoteIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .cbf-essay__nt,.cbf-essay__note{transition:none}
+  .cbf-essay__note.is-open{animation:none}
+}

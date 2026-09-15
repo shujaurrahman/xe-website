@@ -1,0 +1,72 @@
+/* §7 revision history — the process as a document's version table; rows open to desc, roles and a diff */
+.cbf-rev__doc{border-top:1px solid var(--ink)}
+.cbf-rev__cols,.cbf-rev__btn{display:grid;grid-template-columns:120px minmax(0,1.4fr) minmax(0,.8fr) minmax(0,.8fr) 32px;column-gap:var(--bdh-gap);align-items:center}
+.cbf-rev__cols{padding:14px 0;border-bottom:1px solid var(--line)}
+.cbf-rev__cols span{font-family:var(--f);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.cbf-rev__list{list-style:none;margin:0;padding:0}
+.cbf-rev__row{border-bottom:1px solid var(--line)}
+.cbf-rev__h{margin:0}
+.cbf-rev__btn{width:100%;appearance:none;background:none;border:0;padding:clamp(20px,2.4vw,30px) 0;cursor:pointer;text-align:left;font:inherit;color:inherit;transition:background-color var(--d2)}
+.cbf-rev__btn:hover .cbf-rev__name{color:var(--blue-d)}
+.cbf-rev__ver{font-family:var(--f);font-size:clamp(1.1rem,1.6vw,1.4rem);font-weight:500;letter-spacing:-.02em;color:var(--ink)}
+.cbf-rev__name{font-family:var(--f-h);font-weight:500;font-size:clamp(1.3rem,2.2vw,1.9rem);letter-spacing:-.022em;line-height:1.1;color:var(--ink);transition:color var(--d2)}
+.cbf-rev__wk{font-family:var(--f);font-size:var(--t-sm);color:var(--muted)}
+.cbf-rev__st{justify-self:start;font-family:var(--f);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:5px 9px;border-radius:4px;border:1px solid var(--line-3);color:var(--muted);white-space:nowrap}
+.cbf-rev__st.is-final{background:var(--blue);border-color:var(--blue);color:#fff}
+.cbf-rev__tog{position:relative;width:32px;height:32px;border-radius:50%;border:1px solid var(--line-3);transition:transform .45s var(--e),background-color .3s,border-color .3s}
+.cbf-rev__tog::before,.cbf-rev__tog::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:1.5px;margin:-.75px 0 0 -5.5px;background:var(--ink);transition:transform .45s var(--e)}
+.cbf-rev__tog::after{transform:rotate(90deg)}
+.cbf-rev__btn[aria-expanded="true"] .cbf-rev__tog{background:var(--ink);border-color:var(--ink)}
+.cbf-rev__btn[aria-expanded="true"] .cbf-rev__tog::before,.cbf-rev__btn[aria-expanded="true"] .cbf-rev__tog::after{background:#fff}
+.cbf-rev__btn[aria-expanded="true"] .cbf-rev__tog::after{transform:rotate(0)}
+
+.cbf-rev__panel{overflow:hidden;transition:height .55s var(--e)}
+.cbf-rev__in{display:grid;grid-template-columns:120px minmax(0,1.25fr) minmax(0,1fr) minmax(0,1.1fr);column-gap:var(--bdh-gap);row-gap:28px;padding:0 0 clamp(28px,3.4vw,44px)}
+.cbf-rev__desc{grid-column:2;display:flex;flex-direction:column;gap:12px}
+.cbf-rev__p{margin:0 0 8px;font-size:var(--t-body);line-height:1.72;color:var(--txt);max-width:50ch}
+.cbf-rev__al{margin:0;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:10px}
+.cbf-rev__arts{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.cbf-rev__arts li{font-size:var(--t-xs);font-weight:500;color:var(--ink);padding:6px 11px;border:1px solid var(--line-3);border-radius:var(--r-xs);background:var(--paper)}
+.cbf-rev__roles{margin:0;display:flex;flex-direction:column;gap:16px}
+.cbf-rev__roles div{padding-left:14px;border-left:1px solid var(--line-3)}
+.cbf-rev__roles div+div{border-left-color:var(--ink)}
+.cbf-rev__roles dt{font-family:var(--f);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+.cbf-rev__roles div+div dt{color:var(--ink)}
+.cbf-rev__roles dd{margin:0;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.cbf-rev__diff{display:flex;flex-direction:column;gap:12px;min-width:0}
+.cbf-rev__diff ul{list-style:none;margin:0;padding:0;border-radius:var(--r-sm);border:1px solid var(--line);overflow:hidden;background:var(--paper-2)}
+.cbf-rev__diff li{display:grid;grid-template-columns:28px minmax(0,1fr);font-family:var(--f-b);font-size:var(--t-sm);line-height:1.5;color:var(--txt);padding:9px 12px 9px 0;border-top:1px solid var(--line-2)}
+.cbf-rev__diff li:first-child{border-top:0}
+.cbf-rev__diff li>span:first-child{text-align:center;color:var(--faint);font-family:var(--f);font-size:12px}
+.cbf-rev__diff li.is-add{background:var(--blue-wash);color:var(--ink);box-shadow:inset 2px 0 0 var(--blue)}
+.cbf-rev__diff li.is-add>span:first-child{color:var(--blue)}
+.cbf-rev__diff li.is-del del{color:var(--faint);text-decoration-color:var(--ink)}
+.cbf-rev__diff li{opacity:0;transform:translateX(10px);transition:opacity .5s var(--e),transform .5s var(--e)}
+.cbf-rev__btn[aria-expanded="true"]~* .cbf-rev__diff li,.cbf-rev__row:has(.cbf-rev__btn[aria-expanded="true"]) .cbf-rev__diff li{opacity:1;transform:none}
+.cbf-rev__diff li:nth-child(2){transition-delay:.12s}.cbf-rev__diff li:nth-child(3){transition-delay:.24s}
+
+.cbf-rev__plate{margin-top:clamp(40px,5vw,72px);display:grid;grid-template-columns:120px minmax(0,1.25fr) minmax(0,2.1fr);column-gap:var(--bdh-gap);align-items:end}
+.cbf-rev__plate .cbf-plate__img{grid-column:3;grid-row:1;aspect-ratio:21 / 9}
+.cbf-rev__plate figcaption{grid-column:2;grid-row:1;max-width:40ch;align-self:end}
+@media (max-width:1024px){
+  .cbf-rev__plate{grid-template-columns:minmax(0,1fr);row-gap:12px}
+  .cbf-rev__plate .cbf-plate__img,.cbf-rev__plate figcaption{grid-column:1;grid-row:auto}
+  .cbf-rev__cols{display:none}
+  .cbf-rev__btn{grid-template-columns:72px minmax(0,1fr) auto 32px;row-gap:8px}
+  .cbf-rev__wk{grid-column:2;grid-row:2}
+  .cbf-rev__st{grid-column:3;grid-row:1}
+  .cbf-rev__tog{grid-column:4;grid-row:1}
+  .cbf-rev__in{grid-template-columns:72px minmax(0,1fr)}
+  .cbf-rev__desc,.cbf-rev__roles,.cbf-rev__diff{grid-column:2}
+}
+@media (max-width:600px){
+  .cbf-rev__btn{grid-template-columns:minmax(0,1fr) 32px}
+  .cbf-rev__ver{grid-column:1;grid-row:1}
+  .cbf-rev__name{grid-column:1;grid-row:2}
+  .cbf-rev__wk{grid-column:1;grid-row:3}
+  .cbf-rev__st{grid-column:1;grid-row:4}
+  .cbf-rev__tog{grid-column:2;grid-row:1}
+  .cbf-rev__in{grid-template-columns:minmax(0,1fr)}
+  .cbf-rev__desc,.cbf-rev__roles,.cbf-rev__diff{grid-column:1}
+}
+@media (prefers-reduced-motion:reduce){.cbf-rev__panel,.cbf-rev__diff li,.cbf-rev__tog,.cbf-rev__tog::after{transition:none}}

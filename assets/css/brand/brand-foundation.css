@@ -1,1 +1,41 @@
-/* Brand Design · brand-foundation — services/brand-design/brand-foundation.php. Loaded after assets/css/brand.css. Core tokens only. */
+/* ==========================================================================
+   Brand Foundation — "The Decision Document" · page base (.cbf-*)
+   services/brand-design/brand-foundation.php. Loaded after hub.css (layout utilities only).
+   Section styles: assets/css/brand/brand-foundation/<id>.css. Core tokens only; no new colours.
+   Art direction: an editorial long-read set as a governing document — hairline rules,
+   mono document metadata, § numbering, sidenotes, redline (blue insert, struck grey).
+   ========================================================================== */
+.cbf{--cbf-measure:64ch;--cbf-rule:1px solid var(--line);--cbf-rule-2:1px solid var(--line-3);--cbf-margin:clamp(88px,11vw,168px)}
+.cbf ::selection{background:var(--blue-wash-2)}
+
+/* ---- section head: § marker in the margin, heading + lead in the text column ---- */
+.cbf-head{display:grid;grid-template-columns:var(--cbf-margin) minmax(0,1fr);column-gap:var(--bdh-gap);row-gap:14px;margin-bottom:var(--bdh-head-mb);padding-top:22px;border-top:var(--cbf-rule-2)}
+.cbf-head__sec{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);line-height:1.5;padding-top:.35em;display:flex;flex-direction:column;gap:6px}
+.cbf-head__sec b{font-weight:500;color:var(--ink);font-size:.8125rem;letter-spacing:.04em}
+.cbf-head__body{display:flex;flex-direction:column;gap:18px;min-width:0}
+.cbf-head__body .h2{max-width:22ch}
+.cbf-head__body .lead{max-width:60ch}
+.cbf-head--split .cbf-head__body{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);column-gap:var(--bdh-gap-l);align-items:end}
+.band--ink .cbf-head{border-top-color:var(--on-ink-line)}
+.band--ink .cbf-head__sec b{color:var(--on-ink)}
+@media (max-width:860px){
+  .cbf-head{grid-template-columns:minmax(0,1fr)}
+  .cbf-head__sec{flex-direction:row;gap:12px;padding-top:0}
+  .cbf-head--split .cbf-head__body{grid-template-columns:minmax(0,1fr);row-gap:18px}
+}
+
+/* ---- shared document furniture ---- */
+.cbf-mono{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.5}
+.cbf-ill{font-family:var(--f);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);border:1px dashed var(--line-3);border-radius:var(--r-xs);padding:3px 7px;line-height:1.2;display:inline-block;white-space:nowrap}
+.cbf-del{color:var(--faint);text-decoration:line-through;text-decoration-color:var(--blue);text-decoration-thickness:1.5px}
+.cbf-ins{color:var(--ink);box-shadow:inset 0 -.14em 0 var(--blue-wash-2)}
+.cbf :focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* ---- plates: documentary photographs, captioned like a report ---- */
+.cbf-plate{margin:0;display:flex;flex-direction:column;gap:12px}
+.cbf-plate__img{position:relative;overflow:hidden;border-radius:var(--r-sm);background:var(--paper-3)}
+.cbf-plate__img img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.04);transition:filter .8s var(--e),transform 1.2s var(--e)}
+.cbf-plate:hover .cbf-plate__img img{filter:grayscale(.35) contrast(1.02)}
+.cbf-plate figcaption{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+.cbf-plate figcaption b{font-family:var(--f);font-weight:500;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);padding-top:.2em;white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.cbf-plate__img img{transition:none}}

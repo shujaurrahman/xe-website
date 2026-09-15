@@ -1,1 +1,73 @@
-/* Brand Design · brand-architecture — services/brand-design/brand-architecture.php. Loaded after assets/css/brand.css. Core tokens only. */
+/* ==========================================================================
+   Brand Architecture — page base (.cba-*). "The Portfolio as Structure".
+   Architectural drawing on paper: hairlines in ink and blue, dimension ticks,
+   sheet labels and title blocks. Section styles: assets/css/brand/brand-architecture/<id>.css.
+   Tokens from core.css only. No new colours, no gradients except fine grid patterns.
+   ========================================================================== */
+.cba{--cba-hair:1px solid var(--line-3);--cba-ink-hair:1px solid var(--ink);--cba-grid:rgba(0,130,251,.06);--cba-sheet-pad:clamp(20px,3vw,40px)}
+.cba .band{overflow-x:clip}
+
+/* drawing-paper ground: fine blue grid with a heavier module every 5th line */
+.cba-paper{background-color:var(--paper);background-image:linear-gradient(var(--cba-grid) 1px,transparent 1px),linear-gradient(90deg,var(--cba-grid) 1px,transparent 1px);background-size:24px 24px}
+.cba-paper--alt{background-color:var(--paper-2)}
+
+/* section head: drawing-number eyebrow + h2 + lead */
+.cba-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--bdh-gap);row-gap:20px;align-items:end;margin-bottom:var(--bdh-head-mb)}
+.cba-head__t{grid-column:1 / span 7;display:flex;flex-direction:column;gap:18px;min-width:0}
+.cba-head__l{grid-column:8 / 13;display:flex;flex-direction:column;align-items:flex-start;gap:18px;min-width:0}
+.cba-head .h2{max-width:19ch}
+.cba-head .lead{max-width:52ch}
+.cba-head--stack{grid-template-columns:minmax(0,1fr)}
+.cba-head--stack .cba-head__t,.cba-head--stack .cba-head__l{grid-column:1 / -1}
+@media (max-width:900px){.cba-head{grid-template-columns:minmax(0,1fr)}.cba-head__t,.cba-head__l{grid-column:1 / -1}}
+
+/* eyebrow as a drawing reference: "A-104 · Section" with a tick rule */
+.cba-eb{display:inline-flex;align-items:center;gap:12px;flex-wrap:wrap;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);line-height:1.3}
+.cba-eb b{font-weight:500;color:var(--blue)}
+.cba-eb i{display:block;width:32px;height:7px;border-left:1px solid var(--blue);border-right:1px solid var(--blue);background:linear-gradient(var(--blue),var(--blue)) 0 50%/100% 1px no-repeat}
+
+/* mono readouts */
+.cba-mono{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.4}
+.cba-mono--ink{color:var(--ink)}
+.cba-mono--blue{color:var(--blue)}
+
+/* the Illustrative stamp */
+.cba-illus{display:inline-flex;align-items:center;gap:8px;padding:5px 10px;border:1px dashed var(--line-3);border-radius:var(--r-xs);background:var(--paper);font-family:var(--f);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);line-height:1;white-space:nowrap}
+.cba-illus::before{content:"";width:6px;height:6px;border:1px solid var(--muted);transform:rotate(45deg)}
+
+/* a drawing sheet: hairline frame with corner crosses */
+.cba-sheet{position:relative;border:var(--cba-hair);border-radius:var(--r-sm);background:var(--paper)}
+.cba-sheet__x{position:absolute;width:11px;height:11px;pointer-events:none}
+.cba-sheet__x::before,.cba-sheet__x::after{content:"";position:absolute;background:var(--ink)}
+.cba-sheet__x::before{left:5px;top:0;width:1px;height:11px}
+.cba-sheet__x::after{left:0;top:5px;width:11px;height:1px}
+.cba-sheet__x--tl{left:-6px;top:-6px}.cba-sheet__x--tr{right:-6px;top:-6px}.cba-sheet__x--bl{left:-6px;bottom:-6px}.cba-sheet__x--br{right:-6px;bottom:-6px}
+
+/* title block (sheet no., scale, rev) */
+.cba-tb{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:var(--cba-ink-hair);background:var(--paper);font-family:var(--f);text-transform:uppercase}
+.cba-tb>div{padding:9px 12px;border-left:var(--cba-hair);min-width:0}
+.cba-tb>div:first-child{border-left:0}
+.cba-tb dt{font-size:9px;letter-spacing:.16em;color:var(--faint);line-height:1}
+.cba-tb dd{margin-top:6px;font-size:var(--t-xs);letter-spacing:.06em;color:var(--ink);line-height:1.1;font-weight:500}
+.cba-tb__wide{grid-column:1 / -1;border-left:0;border-top:var(--cba-hair)}
+
+/* buttons designed for this page: square-cornered drafting controls */
+.cba-ctl{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 16px;border:1px solid var(--line-3);border-radius:var(--r-xs);background:var(--paper);color:var(--ink);font-family:var(--f-b);font-size:var(--t-sm);font-weight:500;line-height:1.2;cursor:pointer;transition:border-color var(--d2) var(--e),background var(--d2) var(--e),color var(--d2) var(--e)}
+.cba-ctl:hover{border-color:var(--ink)}
+.cba-ctl[aria-pressed="true"],.cba-ctl[aria-checked="true"],.cba-ctl.is-on{border-color:var(--ink);background:var(--ink);color:var(--on-ink)}
+.cba-ctl--blue{border-color:var(--blue);background:var(--blue);color:#fff}
+.cba-ctl--blue:hover{border-color:var(--blue-d);background:var(--blue-d)}
+.cba-ctl:disabled{opacity:.45;cursor:default}
+.cba :focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* photos: square-cornered plates with a caption rule */
+.cba-plate{position:relative;margin:0;overflow:hidden;background:var(--paper-3)}
+.cba-plate img{display:block;width:100%;height:100%;object-fit:cover}
+.cba-plate figcaption{position:absolute;left:0;bottom:0;display:flex;gap:10px;padding:8px 12px;background:var(--paper);font-family:var(--f);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);line-height:1.2}
+.cba-plate figcaption b{font-weight:500;color:var(--blue)}
+
+/* clip-path line reveal used across the page (never dash-drawing with non-scaling strokes) */
+.cba-wipe{clip-path:inset(0 100% 0 0);transition:clip-path 1.1s var(--e-io)}
+.cba-wipe--y{clip-path:inset(0 0 100% 0)}
+.is-in .cba-wipe,.cba-wipe.is-in{clip-path:inset(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){.cba-wipe,.cba-wipe--y{clip-path:none;transition:none}}

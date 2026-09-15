@@ -1,0 +1,42 @@
+/* Brand Systems · 12 FAQ — docs-style reference list with search and topic chips */
+.cbs-fq{background:var(--paper-2);border-top:1px solid var(--line-2)}
+.cbs-fq__bar{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding-bottom:18px;border-bottom:1px solid var(--ink)}
+.cbs-fq__search{flex:1 1 280px;max-width:420px}
+.cbs-fq__search input{width:100%;height:44px;padding:0 16px 0 40px;border-radius:var(--r-sm);background:var(--paper);box-shadow:inset 0 0 0 1px var(--line-3);font-family:var(--f-b);font-size:.875rem;color:var(--ink);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='7' cy='7' r='4.5' fill='none' stroke='%2375757E' stroke-width='1.5'/%3E%3Cpath d='M10.5 10.5l3 3' stroke='%2375757E' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:14px 50%;background-size:15px;transition:box-shadow var(--d1)}
+.cbs-fq__search input::placeholder{color:var(--faint)}
+.cbs-fq__search input:focus{outline:none;box-shadow:inset 0 0 0 1.5px var(--blue),0 0 0 4px var(--blue-wash)}
+.cbs-fq__chips{display:flex;flex-wrap:wrap;gap:6px}
+.cbs-fq__chip{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 12px;border-radius:var(--r-xs);font-size:.8125rem;font-weight:500;color:var(--txt);background:var(--paper);box-shadow:inset 0 0 0 1px var(--line-3);transition:background var(--d1),color var(--d1),box-shadow var(--d1)}
+.cbs-fq__chip span{font-family:var(--f);font-size:.625rem;font-weight:400;color:var(--faint)}
+.cbs-fq__chip:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.cbs-fq__chip[aria-pressed="true"]{background:var(--ink);color:#fff;box-shadow:none}
+.cbs-fq__chip[aria-pressed="true"] span{color:var(--on-ink-3)}
+.cbs-fq__count{margin-left:auto;font-family:var(--f);font-size:.6875rem;color:var(--muted)}
+
+.cbs-fq__row{display:grid;grid-template-columns:minmax(0,1fr);border-bottom:1px solid var(--line)}
+.cbs-fq__row[hidden]{display:none}
+.cbs-fq__cat{display:none}
+.cbs-fq__q{font-size:inherit;line-height:inherit;letter-spacing:0}
+.cbs-fq__q button{display:grid;grid-template-columns:auto minmax(0,1fr) 24px;align-items:baseline;gap:14px;width:100%;padding:22px 0;text-align:left}
+.cbs-fq__id{font-family:var(--f);font-size:.6875rem;color:var(--faint)}
+.cbs-fq__qt{font-family:var(--f-h);font-weight:500;font-size:clamp(1.05rem,1.5vw,1.3rem);letter-spacing:-.012em;line-height:1.3;color:var(--ink);transition:color var(--d1)}
+.cbs-fq__q button:hover .cbs-fq__qt{color:var(--blue-d)}
+.cbs-fq__q button:focus-visible{outline-offset:-2px;border-radius:var(--r-xs)}
+.cbs-fq__pm{position:relative;align-self:center;width:24px;height:24px;border-radius:6px;box-shadow:inset 0 0 0 1px var(--line-3);transition:background var(--d2),box-shadow var(--d2)}
+.cbs-fq__pm::before,.cbs-fq__pm::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:1.5px;margin:-.75px 0 0 -5px;background:var(--ink);transition:transform var(--d2) var(--e),background var(--d2)}
+.cbs-fq__pm::after{transform:rotate(90deg)}
+[aria-expanded="true"] .cbs-fq__pm{background:var(--ink);box-shadow:none}
+[aria-expanded="true"] .cbs-fq__pm::before,[aria-expanded="true"] .cbs-fq__pm::after{background:#fff}
+[aria-expanded="true"] .cbs-fq__pm::after{transform:rotate(0)}
+.cbs-fq__a{height:0;overflow:hidden;transition:height .45s var(--e)}
+.cbs-fq__a p{padding:0 38px 24px;font-size:var(--t-body);line-height:1.7;color:var(--txt);max-width:70ch}
+.cbs-fq__q mark,.cbs-fq__a mark{background:var(--blue-wash-2);color:inherit;border-radius:2px;padding:0 1px}
+.cbs-fq__none{padding:28px 0;font-size:var(--t-sm);color:var(--muted)}
+
+@media (min-width:900px){
+  .cbs-fq__row{grid-template-columns:150px minmax(0,1fr);column-gap:24px}
+  .cbs-fq__cat{display:block;padding-top:27px;font-family:var(--f);font-size:.6875rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .cbs-fq__a{grid-column:2}
+}
+@media (max-width:599px){.cbs-fq__count{margin-left:0}.cbs-fq__a p{padding-left:0;padding-right:0}}
+@media (prefers-reduced-motion:reduce){.cbs-fq__a{transition:none}}

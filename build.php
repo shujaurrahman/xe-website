@@ -23,7 +23,8 @@ foreach ([['css', 'assets/css/sections.css'], ['js', 'assets/js/sections.js']] a
         $parts[] = ($ext === 'css' ? "/* ===== $name ===== */" : "/* ===== $name ===== */") . "\n" . $body . "\n";
     }
     $bundle = implode("\n", $parts);
-    file_put_contents("$root/$out", $bundle);
+    // Rewrite only on a real change: the file time is the ?v= cache stamp and what deploy.sh compares.
+    if (!is_file("$root/$out") || file_get_contents("$root/$out") !== $bundle) file_put_contents("$root/$out", $bundle);
     printf("%-24s %2d files  %7s bytes\n", $out, count($parts), number_format(strlen($bundle)));
 }
 

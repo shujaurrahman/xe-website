@@ -1,0 +1,53 @@
+/* Brand Systems · 09 process — the programme as a CI pipeline */
+.cbs-pr{background:var(--paper)}
+.cbs-pr__run{border-radius:var(--r-xl);background:var(--paper-2);box-shadow:inset 0 0 0 1px var(--line);padding:clamp(14px,2vw,24px)}
+.cbs-pr__bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;padding:4px 6px 18px}
+.cbs-pr__id{display:inline-flex;align-items:center;gap:10px;font-family:var(--f);font-size:.75rem;color:var(--muted)}
+.cbs-pr__id b{font-weight:500;color:var(--ink)}
+.cbs-pr__dot{width:10px;height:10px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px var(--blue-wash-2)}
+.cbs-pr__run.is-running .cbs-pr__dot{background:var(--paper);box-shadow:inset 0 0 0 2px var(--blue)}
+.cbs-pr__state{font-family:var(--f);font-size:.75rem;color:var(--ink)}
+.cbs-pr__again{margin-left:auto}
+
+.cbs-pr__stages{position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+@media (min-width:700px){.cbs-pr__stages{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1100px){.cbs-pr__stages{grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}}
+.cbs-pr__stage{position:relative;min-width:0;display:flex;flex-direction:column;padding:20px 18px 16px;border-radius:var(--r-lg);background:var(--paper);box-shadow:0 0 0 1px var(--line);transition:box-shadow .4s var(--e)}
+.cbs-pr__stage.is-running{box-shadow:0 0 0 1.5px var(--blue),0 14px 32px -20px rgba(0,130,251,.55)}
+@media (min-width:1100px){
+  .cbs-pr__stage:not(:last-child)::after{content:"";position:absolute;top:34px;right:-29px;width:30px;height:1.5px;background:var(--line-3);transform-origin:left;transition:background .4s}
+  .cbs-pr__stage.is-passed:not(:last-child)::after{background:var(--blue)}
+}
+.cbs-pr__sh{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px}
+.cbs-pr__sn{font-family:var(--f);font-size:.6875rem;color:var(--faint)}
+.cbs-pr__pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--f);font-size:.625rem;letter-spacing:.06em;text-transform:uppercase;padding:4px 8px 4px 6px;border-radius:var(--r-pill);background:var(--paper-3);color:var(--muted)}
+.cbs-pr__pill::before{content:"";width:10px;height:10px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--ghost);flex:none}
+.cbs-pr__stage.is-running .cbs-pr__pill{background:var(--blue-wash);color:var(--blue-d)}
+.cbs-pr__stage.is-running .cbs-pr__pill::before{box-shadow:inset 0 0 0 1.5px var(--blue-line);border-top:1.5px solid var(--blue);box-sizing:border-box;animation:cbs-pr-spin .8s linear infinite}
+.cbs-pr__stage.is-passed .cbs-pr__pill{background:var(--blue);color:#fff}
+.cbs-pr__stage.is-passed .cbs-pr__pill::before{box-shadow:none;background:#fff center/7px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1.2 4.2l1.8 1.7L6.8 2' fill='none' stroke='%230082FB' stroke-width='1.6'/%3E%3C/svg%3E")}
+@keyframes cbs-pr-spin{to{transform:rotate(360deg)}}
+.cbs-pr__h{font-size:clamp(1.3rem,1.8vw,1.6rem);letter-spacing:-.022em;line-height:1.1}
+.cbs-pr__wk{font-family:var(--f);font-size:.75rem;color:var(--blue-d);margin:6px 0 10px}
+.cbs-pr__d{font-size:var(--t-sm);line-height:1.6;color:var(--muted);margin-bottom:16px}
+.cbs-pr__jobs{margin-top:auto;display:flex;flex-direction:column;border-top:1px solid var(--line-2)}
+.cbs-pr__jobs li{display:grid;grid-template-columns:14px minmax(0,1fr) auto;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line-2);font-size:.8125rem;color:var(--ink)}
+.cbs-pr__jobs i{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--ghost);transition:background .3s,box-shadow .3s}
+.cbs-pr__jobs em{font-style:normal;font-family:var(--f);font-size:.625rem;color:var(--faint)}
+.cbs-pr__jobs li.is-running i{box-shadow:inset 0 0 0 1.5px var(--blue-line);border-top:1.5px solid var(--blue);animation:cbs-pr-spin .8s linear infinite}
+.cbs-pr__jobs li.is-running em{color:var(--blue-d)}
+.cbs-pr__jobs li.is-passed i{background:var(--blue) center/8px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1.2 4.2l1.8 1.7L6.8 2' fill='none' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E");box-shadow:none}
+.cbs-pr__jobs li.is-passed em{color:var(--ink)}
+.cbs-pr__jobs li.is-queued{color:var(--faint)}
+.cbs-pr__gate{margin-top:12px;font-family:var(--f);font-size:.625rem;color:var(--muted);line-height:1.4}
+
+.cbs-pr__log{margin-top:14px;padding:16px 20px 18px;border-radius:var(--r-lg);background:var(--ink);color:var(--on-ink-2)}
+.cbs-pr__lh{display:flex;justify-content:space-between;gap:10px;margin-bottom:10px;font-family:var(--f);font-size:.6875rem;color:var(--on-ink-3)}
+.cbs-pr__lh .cbs-note{color:var(--on-ink-3)}
+.cbs-pr__lh .cbs-note::before{box-shadow:inset 0 0 0 1px var(--on-ink-3)}
+.cbs-pr__log ol{display:flex;flex-direction:column;gap:4px;min-height:6.4em;font-family:var(--f);font-size:.75rem;line-height:1.5}
+.cbs-pr__log li b{font-weight:400;color:var(--blue);margin-right:6px}
+.cbs-pr__log li.is-new{animation:cbs-pr-line .4s var(--e)}
+@keyframes cbs-pr-line{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
+@media (max-width:599px){.cbs-pr__again{margin-left:0}}
+@media (prefers-reduced-motion:reduce){.cbs-pr__stage.is-running .cbs-pr__pill::before,.cbs-pr__jobs li.is-running i{animation:none}.cbs-pr__log li.is-new{animation:none}}

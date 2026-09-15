@@ -1,0 +1,62 @@
+/* 13 · Onward — site plan: buildings on a plot, pairs joined to "You are here", gatehouse back to the hub */
+.cba-on__site{padding:18px 20px 20px;border:3px solid var(--ink);background:var(--paper)}
+.cba-on__cap{display:flex;justify-content:space-between;align-items:center;gap:10px 18px;flex-wrap:wrap;padding-bottom:14px;margin-bottom:18px;border-bottom:var(--cba-hair)}
+.cba-on__key{display:inline-flex;align-items:center;gap:8px;color:var(--ink)}
+.cba-on__key i{display:inline-block;width:26px;border-top:2px dashed var(--blue)}
+
+.cba-on__plot{position:relative;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:repeat(8,minmax(56px,auto));gap:14px;padding:14px;border:1px dashed var(--ink);background-color:var(--paper-3);background-image:radial-gradient(var(--line-3) 1px,transparent 1px);background-size:14px 14px}
+.cba-on__plot>[style]{grid-column:var(--c1) / var(--c2);grid-row:var(--r1) / var(--r2)}
+.cba-on__links{position:absolute;inset:14px;width:calc(100% - 28px);height:calc(100% - 28px);overflow:visible;pointer-events:none;z-index:0;clip-path:inset(0 100% 0 0);transition:clip-path 1.4s var(--e-io) .3s}
+.cba-on__site.is-in .cba-on__links{clip-path:inset(-20px -20px -20px -20px)}
+.cba-on__links path{fill:none;stroke:var(--blue);stroke-width:2;stroke-dasharray:7 6;vector-effect:non-scaling-stroke}
+
+/* buildings */
+.cba-on__b{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:16px 18px;border:1.5px solid var(--ink);background:var(--paper);color:var(--ink);text-decoration:none;min-width:0;transition:transform .35s var(--e),box-shadow .35s var(--e),border-color .35s var(--e)}
+.cba-on__b::before{content:"";position:absolute;right:0;top:0;width:34%;height:100%;background-image:repeating-linear-gradient(135deg,var(--line-2) 0 1px,transparent 1px 8px);pointer-events:none}
+a.cba-on__b:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--ink)}
+a.cba-on__b:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.cba-on__no{position:relative;font-family:var(--f);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.cba-on__name{position:relative;margin:0;font-family:var(--f-h);font-size:clamp(1.02rem,1.5vw,1.3rem);font-weight:500;letter-spacing:-.012em;line-height:1.15;color:var(--ink)}
+.cba-on__line{position:relative;font-size:var(--t-sm);line-height:1.5;color:var(--txt);max-width:34ch}
+.cba-on__go{position:relative;margin-top:auto;align-self:flex-end;display:grid;place-items:center;width:30px;height:30px;border:1px solid var(--ink);font-family:var(--f-b);font-size:1rem;line-height:1;transition:background var(--d2) var(--e),color var(--d2) var(--e)}
+a.cba-on__b:hover .cba-on__go{background:var(--ink);color:var(--paper)}
+.cba-on__b.is-pair{border-color:var(--blue);border-width:2px}
+.cba-on__b.is-pair .cba-on__no{color:var(--blue-d)}
+.cba-on__b.is-pair .cba-on__go{border-color:var(--blue);color:var(--blue-d)}
+a.cba-on__b.is-pair:hover{box-shadow:6px 6px 0 var(--blue)}
+a.cba-on__b.is-pair:hover .cba-on__go{background:var(--blue);color:#fff}
+
+.cba-on__b--here{justify-content:center;align-items:center;text-align:center;border:2px solid var(--blue);background:var(--blue)}
+.cba-on__b--here::before{background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.14) 0 1px,transparent 1px 8px);width:100%}
+.cba-on__b--here .cba-on__no{color:rgba(255,255,255,.8)}
+.cba-on__b--here .cba-on__name{color:#fff;font-size:clamp(1.2rem,2vw,1.7rem)}
+.cba-on__dot{position:relative;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 0 6px rgba(255,255,255,.25)}
+.cba-on__b--gate{background:var(--ink);border-color:var(--ink)}
+.cba-on__b--gate::before{display:none}
+.cba-on__b--gate .cba-on__no{color:var(--on-ink-3)}
+.cba-on__b--gate .cba-on__name{color:var(--on-ink)}
+.cba-on__b--gate .cba-on__go{border-color:var(--on-ink-line);color:var(--on-ink)}
+a.cba-on__b--gate:hover{box-shadow:6px 6px 0 var(--blue)}
+a.cba-on__b--gate:hover .cba-on__go{background:var(--blue);border-color:var(--blue)}
+.cba-on__entry{position:absolute;left:calc(100% / 12 * 1.5);bottom:-11px;transform:translateX(-50%);padding:2px 8px;background:var(--paper);border:1px solid var(--ink);font-family:var(--f);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);z-index:2}
+
+.cba-on__photo{margin-top:var(--bdh-gap);aspect-ratio:21/7}
+.cba-on__photo img{object-position:50% 55%}
+
+/* footprints settle onto the plot */
+.cba-on__b{opacity:0;transform:translateY(12px)}
+.cba-on__site.is-in .cba-on__b{opacity:1;transform:none;transition:opacity .6s var(--e),transform .6s var(--e),box-shadow .35s var(--e),border-color .35s var(--e)}
+.cba-on__site.is-in a.cba-on__b:hover{transform:translate(-3px,-3px)}
+
+@media (max-width:1024px){.cba-on__plot{grid-template-rows:repeat(8,minmax(64px,auto))}.cba-on__line{display:none}}
+@media (max-width:760px){
+  .cba-on__site{padding:14px 12px 14px}
+  .cba-on__plot{grid-template-columns:minmax(0,1fr);grid-template-rows:none;gap:10px;padding:10px}
+  .cba-on__plot>[style]{grid-column:1 / -1;grid-row:auto}
+  .cba-on__b--here{order:-1}.cba-on__b--gate{order:10}
+  .cba-on__links,.cba-on__entry{display:none}
+  .cba-on__line{display:block}
+  .cba-on__b{padding:14px}
+  .cba-on__photo{aspect-ratio:16/9}
+}
+@media (prefers-reduced-motion:reduce){.cba-on__links{clip-path:none;transition:none}.cba-on__b{opacity:1;transform:none;transition:none}}

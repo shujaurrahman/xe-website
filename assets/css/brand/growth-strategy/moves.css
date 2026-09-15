@@ -1,0 +1,43 @@
+/* Growth Strategy · 08 now / next / later — move board with owner filter chips */
+.cgs-moves{background:var(--paper-2)}
+.cgs-mv__bar{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-bottom:28px}
+.cgs-mv__chips{display:flex;flex-wrap:wrap;gap:8px}
+.cgs-mv__chip{display:inline-flex;align-items:center;gap:10px;height:40px;padding:0 8px 0 16px;border:1px solid var(--line-3);border-radius:var(--r-pill);background:var(--paper);font-family:var(--f-b);font-size:var(--t-sm);font-weight:500;color:var(--txt);cursor:pointer;transition:border-color var(--d1),background var(--d1),color var(--d1)}
+.cgs-mv__chip span{min-width:24px;height:24px;padding:0 6px;display:grid;place-items:center;border-radius:var(--r-pill);background:var(--paper-3);font-family:var(--f);font-size:var(--t-lbl);color:var(--muted)}
+.cgs-mv__chip:hover{border-color:var(--ink);color:var(--ink)}
+.cgs-mv__chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.cgs-mv__chip[aria-pressed="true"] span{background:var(--blue);color:#fff}
+.cgs-mv__status{margin:0 0 0 auto;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+.cgs-mv__board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.6vw,22px);align-items:stretch}
+.cgs-mv__col{min-width:0;padding:16px 16px 22px;border-radius:var(--r);background:var(--paper-4);background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:14px 14px}
+.cgs-mv__ch{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;column-gap:12px;padding:6px 6px 16px}
+.cgs-mv__ct{grid-row:1 / 3;margin:0;font-family:var(--f-h);font-weight:500;font-size:clamp(1.7rem,2.6vw,2.3rem);letter-spacing:-.03em;line-height:1;color:var(--ink)}
+.cgs-mv__col:first-child .cgs-mv__ct::after{content:"";display:inline-block;width:8px;height:8px;margin-left:10px;border-radius:50%;background:var(--blue);vertical-align:.35em}
+.cgs-mv__hz{grid-column:2;font-family:var(--f);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:right}
+.cgs-mv__count{grid-column:2;justify-self:end;margin-top:4px;font-family:var(--f);font-size:var(--t-sm);color:var(--ink);font-variant-numeric:tabular-nums}
+.cgs-mv__count b{font-weight:500}
+.cgs-mv__count i{font-style:normal;color:var(--faint);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+
+.cgs-mv__list{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.cgs-mv__card{position:relative;padding:16px 16px 14px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-sm);box-shadow:var(--sh-1);transition:opacity .35s var(--e),transform .35s var(--e),border-color var(--d2)}
+.cgs-mv__card:hover{border-color:var(--line-3)}
+.cgs-mv__card.is-out{display:none}
+.cgs-mv__card.is-leaving{opacity:0;transform:scale(.96)}
+.cgs-mv__own{display:flex;align-items:center;gap:8px;margin:0;font-family:var(--f);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.cgs-mv__own i{width:8px;height:8px;border-radius:2px;background:var(--ink)}
+.cgs-mv__own i.is-marketing{background:var(--blue)}
+.cgs-mv__own i.is-product{background:var(--paper);border:1.5px solid var(--ink);border-radius:50%}
+.cgs-mv__own i.is-sales{background:var(--ink)}
+.cgs-mv__move{margin:10px 0 14px;font-family:var(--f-h);font-weight:500;font-size:1.06rem;letter-spacing:-.012em;line-height:1.3;color:var(--ink)}
+.cgs-mv__meta{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:10px;margin:0;padding-top:12px;border-top:1px dashed var(--line-3)}
+.cgs-mv__meta div{min-width:0}
+.cgs-mv__meta dt{font-family:var(--f);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.cgs-mv__meta dd{margin:4px 0 0;font-size:var(--t-xs);line-height:1.45;color:var(--txt)}
+.cgs-mv__meta div+div dd{font-family:var(--f);font-size:11px;color:var(--ink)}
+
+@media (max-width:900px){
+  .cgs-mv__board{grid-template-columns:minmax(0,1fr)}
+  .cgs-mv__col{min-height:0}
+  .cgs-mv__status{margin-left:0;flex-basis:100%}
+}

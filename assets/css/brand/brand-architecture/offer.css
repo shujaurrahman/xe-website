@@ -1,0 +1,58 @@
+/* 3 · Offer — building section: six floors, callout leaders, descriptions */
+.cba-offer__draw{position:relative;padding-left:clamp(0px,4vw,56px)}
+.cba-offer__dim{position:absolute;left:0;top:0;bottom:56px;width:1px;background:var(--ink)}
+.cba-offer__dim::before,.cba-offer__dim::after{content:"";position:absolute;left:-5px;width:11px;height:1px;background:var(--ink)}
+.cba-offer__dim::before{top:0}.cba-offer__dim::after{bottom:0}
+.cba-offer__dim span{position:absolute;left:-10px;top:50%;transform:translate(-50%,-50%) rotate(-90deg);padding:0 8px;background:var(--paper-2);font-family:var(--f);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
+
+.cba-offer__floors{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.cba-offer__floor{display:grid;grid-template-columns:minmax(0,5fr) minmax(40px,1.4fr) minmax(0,5fr);align-items:center;min-height:clamp(96px,9vw,124px)}
+.cba-offer__slab{position:relative;display:flex;align-items:center;gap:18px;height:100%;padding:18px clamp(16px,2vw,24px);border:1px solid var(--ink);border-bottom:0;background:var(--paper);overflow:hidden}
+.cba-offer__floor:first-child .cba-offer__slab{border-radius:var(--r-sm) var(--r-sm) 0 0;border-top-width:3px}
+.cba-offer__floor:last-child .cba-offer__slab{border-bottom:1px solid var(--ink)}
+/* window rhythm drawn in fine lines at the far end of each floor */
+.cba-offer__slab::after{content:"";position:absolute;right:0;top:0;bottom:0;width:30%;background-image:linear-gradient(90deg,var(--line-3) 1px,transparent 1px);background-size:18px 100%;opacity:.7;pointer-events:none}
+.cba-offer__lv{flex:none;width:44px;font-family:var(--f);font-size:10px;letter-spacing:.1em;color:var(--faint)}
+.cba-offer__room{position:relative;z-index:1;display:flex;align-items:baseline;gap:12px;min-width:0;flex:1;padding-right:8px}
+.cba-offer__n{font-family:var(--f);font-size:var(--t-xs);color:var(--blue);font-weight:500}
+.cba-offer__h{font-family:var(--f-h);font-size:clamp(1.05rem,1.7vw,1.5rem);font-weight:500;letter-spacing:-.02em;color:var(--ink);line-height:1.15}
+.cba-offer__tag{position:relative;z-index:1;flex:none;padding:4px 8px;border:1px solid var(--line-3);background:var(--paper);font-family:var(--f);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+
+.cba-offer__lead{position:relative;display:block;height:100%}
+.cba-offer__lead i{position:absolute;left:0;right:0;top:50%;height:1px;background:var(--blue)}
+.cba-offer__lead i::before{content:"";position:absolute;left:-4px;top:-4px;width:9px;height:9px;border-radius:50%;background:var(--blue)}
+.cba-offer__lead i::after{content:"";position:absolute;right:0;top:-6px;width:1px;height:13px;background:var(--blue)}
+.cba-offer__note{padding:14px 0 14px clamp(14px,2vw,24px);border-bottom:1px dashed var(--line-3)}
+.cba-offer__floor:last-child .cba-offer__note{border-bottom:0}
+.cba-offer__note .cba-mono{color:var(--blue-d);margin-bottom:6px}
+.cba-offer__desc{font-size:var(--t-body);line-height:1.6;color:var(--txt);max-width:48ch}
+
+.cba-offer__ground{height:56px;margin-right:calc(52% + 0px);border-top:3px solid var(--ink);background-image:repeating-linear-gradient(135deg,var(--line-3) 0 1px,transparent 1px 9px)}
+.cba-offer__ground{width:calc(5 / 11.4 * 100% + 24px);margin-left:-12px;position:relative}
+.cba-offer__ground span{position:absolute;left:12px;top:12px;padding:2px 6px;background:var(--paper-2);font-family:var(--f);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+
+/* assembly: floors rise from the ground, leaders wipe out, notes follow */
+.cba-offer__slab{transform:translateY(24px);opacity:0;transition:transform .8s var(--e),opacity .6s var(--e);transition-delay:calc(var(--i) * 110ms)}
+.cba-offer__lead i{clip-path:inset(0 100% 0 0);transition:clip-path .7s var(--e-io);transition-delay:calc(var(--i) * 110ms + 380ms)}
+.cba-offer__note{opacity:0;transition:opacity .6s var(--e);transition-delay:calc(var(--i) * 110ms + 620ms)}
+.cba-offer__draw.is-in .cba-offer__slab{transform:none;opacity:1}
+.cba-offer__draw.is-in .cba-offer__lead i{clip-path:inset(-8px -8px -8px -8px)}
+.cba-offer__draw.is-in .cba-offer__note{opacity:1}
+
+@media (max-width:860px){
+  .cba-offer__draw{padding-left:0}
+  .cba-offer__dim{display:none}
+  .cba-offer__floor{grid-template-columns:minmax(0,1fr);min-height:0}
+  .cba-offer__lead{height:22px;width:1px;margin-left:34px}
+  .cba-offer__lead i{left:0;right:auto;top:0;bottom:0;width:1px;height:auto}
+  .cba-offer__lead i::before{left:-4px;top:-4px}.cba-offer__lead i::after{display:none}
+  .cba-offer__note{padding:0 0 22px 22px;border-bottom:0;margin-left:12px;border-left:1px solid var(--line-3)}
+  .cba-offer__slab{border-bottom:1px solid var(--ink);border-radius:var(--r-sm)}
+  .cba-offer__floor:first-child .cba-offer__slab{border-top-width:1px}
+  .cba-offer__floors{gap:12px}
+  .cba-offer__ground{display:none}
+  .cba-offer__draw .cba-offer__lead i{clip-path:inset(0 0 100% 0)}
+  .cba-offer__draw.is-in .cba-offer__lead i{clip-path:inset(-8px -8px -8px -8px)}
+}
+@media (max-width:520px){.cba-offer__slab{flex-wrap:wrap;gap:8px 12px}.cba-offer__lv{width:auto}.cba-offer__room{flex-basis:100%;order:3}.cba-offer__tag{white-space:normal;margin-left:auto}.cba-offer__slab::after{display:none}}
+@media (prefers-reduced-motion:reduce){.cba-offer__slab,.cba-offer__note{transform:none;opacity:1;transition:none}.cba-offer__lead i,.cba-offer__draw .cba-offer__lead i{clip-path:none;transition:none}}

@@ -1,0 +1,45 @@
+/* Growth Strategy · 10 evidence pack — a pile of document spines; the active one slides out and opens */
+.cgs-pack{background:var(--paper-2)}
+.cgs-pk{max-width:980px;margin-inline:auto}
+.cgs-pk__box{position:relative;padding:clamp(18px,2.4vw,30px) clamp(14px,2.4vw,30px) clamp(22px,2.6vw,34px);border:1px solid var(--line-3);border-radius:var(--r);background:var(--paper-3);background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:16px 16px}
+.cgs-pk__label{display:flex;justify-content:space-between;gap:12px;margin:0 0 18px;padding:0 4px;font-family:var(--f);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);line-height:1.3}
+.cgs-pk__label span+span{color:var(--muted)}
+.cgs-pk__shelf{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+
+.cgs-pk__doc{--off:calc(var(--i) * 7px);position:relative;transform:translateX(var(--off));transition:transform .55s var(--e)}
+.cgs-pk__doc:nth-child(3n+2){--off:calc(var(--i) * -4px + 14px)}
+.cgs-pk__doc.is-out{transform:translateX(clamp(10px,3vw,36px))}
+.cgs-pk__spine{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;column-gap:16px;width:100%;min-height:62px;padding:12px 20px 12px 16px;text-align:left;border:1px solid var(--line-3);border-radius:6px;background:var(--paper);box-shadow:0 1px 0 var(--line-3),0 8px 18px -14px rgba(25,25,29,.3);cursor:pointer;transition:background var(--d2),border-color var(--d2),box-shadow var(--d2)}
+.cgs-pk__spine::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;border-radius:6px 0 0 6px;background:var(--line-3);transition:background var(--d2)}
+.cgs-pk__doc:nth-child(odd) .cgs-pk__spine{background:var(--paper-2)}
+.cgs-pk__doc:nth-child(4) .cgs-pk__spine{min-height:52px}
+.cgs-pk__doc:nth-child(2) .cgs-pk__spine,.cgs-pk__doc:nth-child(5) .cgs-pk__spine{min-height:72px}
+.cgs-pk__no{font-family:var(--f);font-size:var(--t-sm);color:var(--faint);font-variant-numeric:tabular-nums}
+.cgs-pk__name{font-family:var(--f-h);font-weight:500;font-size:clamp(1.02rem,1.5vw,1.28rem);letter-spacing:-.012em;line-height:1.25;color:var(--ink)}
+.cgs-pk__fmt{font-family:var(--f);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right}
+.cgs-pk__doc.is-out .cgs-pk__spine{background:var(--ink);border-color:var(--ink);box-shadow:var(--sh-2)}
+.cgs-pk__doc.is-out .cgs-pk__spine::before{background:var(--blue)}
+.cgs-pk__doc.is-out .cgs-pk__no{color:var(--blue)}
+.cgs-pk__doc.is-out .cgs-pk__name{color:var(--on-ink)}
+.cgs-pk__doc.is-out .cgs-pk__fmt{color:var(--on-ink-2)}
+
+.cgs-pk__sheet{margin:0 clamp(8px,2vw,24px);max-height:0;overflow:hidden;background:var(--paper);border:1px solid transparent;border-top:0;border-radius:0 0 8px 8px;transition:max-height .55s var(--e),border-color var(--d2)}
+.cgs-pk__doc.is-out .cgs-pk__sheet{max-height:260px;border-color:var(--line-3)}
+.cgs-pk__sheet>*{padding-inline:clamp(16px,2vw,24px)}
+.cgs-pk__h{margin:0;padding-top:18px;font-family:var(--f);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-d)}
+.cgs-pk__p{margin:8px 0 0;font-size:var(--t-body);line-height:1.65;color:var(--txt);max-width:62ch}
+.cgs-pk__formats{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0;padding-bottom:20px}
+.cgs-pk__formats span{padding:5px 9px;border:1px solid var(--blue-line);border-radius:var(--r-xs);background:var(--blue-wash);font-family:var(--f);font-size:10.5px;color:var(--blue-d)}
+.cgs-pk__foot{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;margin:22px 4px 0;font-size:var(--t-sm);color:var(--muted);line-height:1.6}
+
+@media (max-width:600px){
+  .cgs-pk__doc,.cgs-pk__doc:nth-child(3n+2){--off:0px}
+  .cgs-pk__doc.is-out{transform:translateX(6px)}
+  .cgs-pk__spine{grid-template-columns:30px minmax(0,1fr);row-gap:4px;padding:12px 14px 12px 14px}
+  .cgs-pk__fmt{grid-column:2;text-align:left}
+  .cgs-pk__label{flex-direction:column;gap:6px}
+  .cgs-pk__doc.is-out .cgs-pk__sheet{max-height:340px}
+}
+@media (prefers-reduced-motion:reduce){
+  .cgs-pk__doc,.cgs-pk__sheet{transition:none}
+}

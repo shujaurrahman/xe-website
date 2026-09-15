@@ -1,0 +1,28 @@
+/* Growth Strategy · 11 outcomes — editorial before / after split statements */
+.cgs-out{background:var(--paper)}
+.cgs-oc{margin:0;padding:0;list-style:none;border-top:2px solid var(--ink)}
+.cgs-oc__pair{display:grid;grid-template-columns:72px minmax(0,5fr) 90px minmax(0,6fr);align-items:start;padding-block:clamp(36px,4.4vw,64px);border-bottom:1px solid var(--line-3)}
+.cgs-oc__n{margin:0;font-family:var(--f);font-size:var(--t-sm);color:var(--blue);font-variant-numeric:tabular-nums;padding-top:4px}
+.cgs-oc__k{margin:0 0 14px;font-family:var(--f);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.cgs-oc__side--after .cgs-oc__k{color:var(--blue-d)}
+.cgs-oc__was{margin:0;font-family:var(--f-h);font-weight:500;font-size:clamp(1.15rem,1.7vw,1.5rem);letter-spacing:-.018em;line-height:1.3;color:var(--faint)}
+.cgs-oc__h{margin:0;font-family:var(--f-h);font-weight:500;font-size:clamp(1.7rem,3vw,2.6rem);letter-spacing:-.03em;line-height:1.06;color:var(--ink)}
+.cgs-oc__p{margin:16px 0 0;font-size:var(--t-lead);line-height:1.65;color:var(--txt);max-width:46ch}
+
+/* the rule between the two sides: an arrow that draws across when the pair enters */
+.cgs-oc__rule{position:relative;align-self:center;height:14px;margin-inline:18px}
+.cgs-oc__rule i{position:absolute;left:0;right:0;top:6px;height:1.5px;background:var(--ink);clip-path:inset(0 100% 0 0);transition:clip-path .9s var(--e-io) .2s}
+.cgs-oc__rule::after{content:"";position:absolute;right:0;top:2px;width:9px;height:9px;border-top:1.5px solid var(--ink);border-right:1.5px solid var(--ink);transform:rotate(45deg);opacity:0;transition:opacity .3s var(--e) 1s}
+.cgs-oc__pair.is-in .cgs-oc__rule i{clip-path:inset(0 0 0 0)}
+.cgs-oc__pair.is-in .cgs-oc__rule::after{opacity:1}
+
+@media (max-width:900px){
+  .cgs-oc__pair{grid-template-columns:44px minmax(0,1fr);row-gap:18px}
+  .cgs-oc__side{grid-column:2}
+  .cgs-oc__rule{grid-column:2;align-self:start;width:40px;margin:0;transform:rotate(90deg);transform-origin:left center;height:14px;margin-left:6px}
+  .cgs-oc__n{grid-row:1}
+}
+@media (prefers-reduced-motion:reduce){
+  .cgs-oc__rule i{clip-path:none;transition:none}
+  .cgs-oc__rule::after{opacity:1;transition:none}
+}
