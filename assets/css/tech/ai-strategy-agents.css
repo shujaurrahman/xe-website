@@ -1,0 +1,110 @@
+/* ==========================================================================
+   AI Strategy & Agents — "The Mission Board". Page base layer (.tas-*).
+   Loaded after assets/css/brand/hub.css and assets/css/tech/kit.css. Tokens from core.css only;
+   no new colours, no gradients except mask fades, no !important.
+   Section styles: assets/css/tech/ai-strategy-agents/<id>.css.
+   Primitives: page spacing, the lane head (ref chip + eyebrow, title, lead), the autonomy level tag
+   (four rising pips), window chrome for mock software, status LED, "Illustrative" stamp, page
+   buttons and chips, mono readouts, the armed-motion hook.
+   ========================================================================== */
+.tas{
+  --tas-gap:clamp(20px,2.4vw,32px);
+  --tas-gap-l:clamp(40px,6vw,96px);
+  --tas-head-mb:clamp(48px,5.4vw,80px);
+  --tas-hero-t:clamp(132px,15vh,184px);
+  overflow-x:clip;
+}
+.tas :focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* ---------- lane head: ref chip + eyebrow, title left, lead right ---------- */
+.tas-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--tas-gap);row-gap:22px;align-items:end;margin-bottom:var(--tas-head-mb)}
+.tas-head__t{grid-column:1 / span 7;display:flex;flex-direction:column;align-items:flex-start;gap:22px;min-width:0}
+.tas-head__l{grid-column:9 / -1;display:flex;flex-direction:column;align-items:flex-start;gap:18px;min-width:0}
+.tas-head .h2{max-width:19ch;font-size:clamp(1.9rem,3.5vw,3rem);letter-spacing:-.03em;line-height:1.05}
+.tas-head .lead{max-width:50ch}
+.tas-head--wide .tas-head__t{grid-column:1 / span 8}
+.tas-head--wide .h2{max-width:22ch}
+@media (max-width:1023px){
+  .tas-head__t,.tas-head--wide .tas-head__t{grid-column:1 / span 11}
+  .tas-head__l{grid-column:1 / span 9}
+}
+@media (max-width:760px){.tas-head__t,.tas-head--wide .tas-head__t,.tas-head__l{grid-column:1 / -1}}
+
+.tas-kick{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);line-height:1.3}
+.tas-kick__ref{display:inline-flex;align-items:center;gap:7px;height:22px;padding:0 8px;border:1px solid var(--line-3);border-radius:var(--r-xs);background:var(--paper);color:var(--ink);letter-spacing:.06em}
+.tas-kick__ref::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.band--ink .tas-kick__ref{border-color:var(--on-ink-line);background:transparent;color:var(--on-ink)}
+
+/* ---------- autonomy level tag, rendered by tas_lvl(n) in the shell ---------- */
+.tas-lvl{display:inline-flex;align-items:center;gap:7px;height:22px;padding:0 8px 0 7px;border-radius:var(--r-xs);background:var(--paper-3);
+  font-family:var(--f);font-size:10.5px;font-weight:500;letter-spacing:.03em;line-height:1;color:var(--ink);white-space:nowrap}
+.tas-lvl__p{display:inline-flex;align-items:flex-end;gap:2px;height:11px}
+.tas-lvl__p i{width:3px;border-radius:1px;background:var(--line-3);transition:background var(--d2) var(--e-io)}
+.tas-lvl__p i:nth-child(1){height:5px}.tas-lvl__p i:nth-child(2){height:7px}.tas-lvl__p i:nth-child(3){height:9px}.tas-lvl__p i:nth-child(4){height:11px}
+.tas-lvl[data-l="1"] .tas-lvl__p i:nth-child(-n+1),.tas-lvl[data-l="2"] .tas-lvl__p i:nth-child(-n+2),
+.tas-lvl[data-l="3"] .tas-lvl__p i:nth-child(-n+3),.tas-lvl[data-l="4"] .tas-lvl__p i{background:var(--blue)}
+:is(.band--ink,.tas-on-ink) .tas-lvl{background:var(--on-ink-card);color:var(--on-ink);box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+:is(.band--ink,.tas-on-ink) .tas-lvl__p i{background:var(--on-ink-line)}
+:is(.band--ink,.tas-on-ink) .tas-lvl[data-l="1"] .tas-lvl__p i:nth-child(-n+1),:is(.band--ink,.tas-on-ink) .tas-lvl[data-l="2"] .tas-lvl__p i:nth-child(-n+2),
+:is(.band--ink,.tas-on-ink) .tas-lvl[data-l="3"] .tas-lvl__p i:nth-child(-n+3),:is(.band--ink,.tas-on-ink) .tas-lvl[data-l="4"] .tas-lvl__p i{background:var(--blue)}
+
+/* ---------- window chrome for mock software ---------- */
+.tas-win{position:relative;min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh-2);overflow:hidden}
+.tas-win__bar{display:flex;align-items:center;gap:12px;min-height:46px;padding:0 18px;border-bottom:1px solid var(--line-2);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.05em;color:var(--muted);white-space:nowrap;min-width:0}
+.tas-win__dots{display:inline-flex;gap:6px;flex:none}
+.tas-win__dots i{width:8px;height:8px;border-radius:50%;background:var(--line-3)}
+.tas-win__path{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.tas-win__path b{font-weight:500;color:var(--ink)}
+.tas-win__end{display:inline-flex;align-items:center;gap:8px;margin-left:auto;flex:none}
+.tas-win--ink{background:var(--on-ink-card);border-color:var(--on-ink-line);box-shadow:none;color:var(--on-ink-2)}
+.tas-win--ink .tas-win__bar{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+.tas-win--ink .tas-win__dots i{background:var(--on-ink-line)}
+.tas-win--ink .tas-win__path b{color:var(--on-ink)}
+
+/* ---------- status LED, stamp, readouts ---------- */
+.tas-led{display:inline-block;flex:none;width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px var(--blue-wash-2)}
+.tas-led--off{background:var(--line-3);box-shadow:none}
+.is-live .tas-led--pulse{animation:tas-led 2.2s var(--e-io) infinite}
+@keyframes tas-led{0%,100%{box-shadow:0 0 0 3px var(--blue-wash-2)}50%{box-shadow:0 0 0 7px transparent}}
+
+.tas-ill{display:inline-flex;align-items:center;gap:6px;min-height:22px;padding:2px 8px;border:1px dashed var(--line-3);border-radius:var(--r-xs);
+  font-family:var(--f);font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.2;white-space:nowrap}
+:is(.band--ink,.tas-on-ink) .tas-ill{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+
+.tas-ro{font-family:var(--f);font-size:var(--t-xs);line-height:1.5;letter-spacing:0;font-variant-numeric:tabular-nums}
+.tas-lbl{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.35}
+:is(.band--ink,.tas-on-ink) .tas-lbl{color:var(--on-ink-3)}
+
+/* ---------- page buttons and chips ---------- */
+.tas-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 16px;border:1px solid var(--line-3);border-radius:var(--r-sm);background:var(--paper);
+  font-family:var(--f-b);font-size:var(--t-sm);font-weight:500;line-height:1.2;color:var(--ink);white-space:nowrap;
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io),color var(--d1) var(--e-io),box-shadow var(--d2) var(--e)}
+.tas-btn:hover{border-color:var(--ink)}
+.tas-btn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.tas-btn--blue{background:var(--blue);border-color:var(--blue);color:var(--on-ink)}
+.tas-btn--blue:hover{background:var(--blue-d);border-color:var(--blue-d)}
+.tas-btn:disabled{opacity:.45;cursor:not-allowed}
+.tas-btn__k{font-family:var(--f);font-size:var(--t-lbl);font-weight:400;letter-spacing:.04em;opacity:.7}
+:is(.band--ink,.tas-on-ink) .tas-btn{background:transparent;border-color:var(--on-ink-line);color:var(--on-ink)}
+:is(.band--ink,.tas-on-ink) .tas-btn:hover{border-color:var(--on-ink-2)}
+:is(.band--ink,.tas-on-ink) .tas-btn[aria-pressed="true"]{background:var(--paper);border-color:var(--paper);color:var(--ink)}
+:is(.band--ink,.tas-on-ink) .tas-btn--blue{background:var(--blue);border-color:var(--blue);color:var(--on-ink)}
+:is(.band--ink,.tas-on-ink) .tas-btn--blue:hover{background:var(--blue-d);border-color:var(--blue-d)}
+
+.tas-chip{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 13px;border-radius:var(--r-pill);background:var(--paper);box-shadow:inset 0 0 0 1px var(--line-3);
+  font-family:var(--f-b);font-size:var(--t-xs);font-weight:500;color:var(--txt);white-space:nowrap;transition:background var(--d1) var(--e-io),color var(--d1) var(--e-io),box-shadow var(--d1) var(--e-io)}
+.tas-chip small{font-family:var(--f);font-size:10px;font-weight:400;color:var(--faint)}
+.tas-chip:hover{box-shadow:inset 0 0 0 1px var(--ink);color:var(--ink)}
+.tas-chip[aria-pressed="true"]{background:var(--ink);color:var(--on-ink);box-shadow:none}
+.tas-chip[aria-pressed="true"] small{color:var(--on-ink-3)}
+:is(.band--ink,.tas-on-ink) .tas-chip{background:transparent;box-shadow:inset 0 0 0 1px var(--on-ink-line);color:var(--on-ink-2)}
+:is(.band--ink,.tas-on-ink) .tas-chip:hover{box-shadow:inset 0 0 0 1px var(--on-ink-3);color:var(--on-ink)}
+:is(.band--ink,.tas-on-ink) .tas-chip[aria-pressed="true"]{background:var(--paper);color:var(--ink)}
+:is(.band--ink,.tas-on-ink) .tas-chip[aria-pressed="true"] small{color:var(--muted)}
+
+/* ---------- motion hook ----------
+   Components ship in their finished state. A section script adds .is-armed (never under reduced
+   motion) to move them to the start pose, then .is-in on entry to play into the finished state. */
+@media (prefers-reduced-motion:reduce){
+  .tas *,.tas *::before,.tas *::after{animation:none;transition-duration:.01ms}
+}

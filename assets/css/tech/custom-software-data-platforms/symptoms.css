@@ -1,0 +1,68 @@
+/* Custom Software & Data Platforms · symptoms — photo + spreadsheet mock, four symptom rows with a weekly cost. */
+.tcs-sym{align-items:start;row-gap:clamp(48px,6vw,72px)}
+.tcs-sym__vis{position:relative}
+.tcs-sym__sticky{position:sticky;top:var(--bdh-sticky);padding-bottom:64px}
+.tcs-sym__img{box-shadow:var(--sh-1)}
+
+/* ---- the spreadsheet ---- */
+.tcs-sheet{position:absolute;right:-36px;bottom:0;z-index:2;width:min(330px,86%);background:var(--paper);border:1px solid var(--line-3);border-radius:var(--r);box-shadow:var(--sh-2);overflow:hidden}
+.tcs-sheet__bar{display:flex;align-items:center;justify-content:space-between;gap:10px;height:34px;padding:0 12px;border-bottom:1px solid var(--line);font-family:var(--f);font-size:10px;color:var(--muted)}
+.tcs-sheet__file{font-weight:500;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tcs-sheet__ed{flex:none;color:var(--faint)}
+.tcs-sheet__tabs{display:flex;gap:2px;padding:6px 8px 0;background:var(--paper-3);border-bottom:1px solid var(--line)}
+.tcs-sheet__tab{padding:5px 9px 6px;border-radius:6px 6px 0 0;font-size:10.5px;font-weight:500;color:var(--muted);white-space:nowrap;transition:background var(--d2) var(--e),color var(--d2) var(--e)}
+.tcs-sheet[data-tab="0"] .tcs-sheet__tab[data-t="0"],.tcs-sheet[data-tab="1"] .tcs-sheet__tab[data-t="1"],.tcs-sheet[data-tab="2"] .tcs-sheet__tab[data-t="2"]{background:var(--paper);color:var(--ink);box-shadow:inset 0 2px 0 var(--blue)}
+.tcs-sheet__panes{position:relative;display:grid}
+.tcs-sheet__pane{grid-area:1 / 1;display:grid;grid-template-columns:22px minmax(0,1.15fr) minmax(0,.9fr) minmax(0,.95fr);opacity:0;visibility:hidden;transition:opacity .3s var(--e),visibility 0s linear .3s}
+.tcs-sheet[data-tab="0"] [data-p="0"],.tcs-sheet[data-tab="1"] [data-p="1"],.tcs-sheet[data-tab="2"] [data-p="2"]{opacity:1;visibility:visible;transition:opacity .3s var(--e),visibility 0s}
+.tcs-sheet__pane>span{height:27px;padding:0 7px;display:flex;align-items:center;border-right:1px solid var(--line-2);border-bottom:1px solid var(--line-2);font-family:var(--f);font-size:10px;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tcs-sheet__pane>span:nth-child(4n){border-right:0}
+.tcs-sheet__rh{justify-content:center;padding:0;background:var(--paper-3);color:var(--faint)}
+.tcs-sheet__ch{background:var(--paper-3);color:var(--muted);font-size:9.5px}
+.tcs-sheet__c.is-err{color:var(--ink);font-weight:600;background:var(--paper-4)}
+.tcs-sheet__c.is-paste{transition:background .5s var(--e)}
+.tcs-sheet.is-flash .tcs-sheet__c.is-paste{background:var(--blue-wash-2)}
+.tcs-sheet__sel{position:absolute;left:calc(22px + (100% - 22px) * .383);top:27px;width:calc((100% - 22px) * .3);height:81px;overflow:visible;pointer-events:none;opacity:0;transition:opacity .25s var(--e)}
+.tcs-sheet__sel rect{fill:var(--blue-wash);stroke:var(--blue);stroke-width:1.5;stroke-dasharray:5 4}
+.tcs-sheet.is-copy .tcs-sheet__sel{opacity:1}
+.is-live.tcs-sheet.is-copy .tcs-sheet__sel rect{animation:tcs-ants .7s linear infinite}
+@keyframes tcs-ants{to{stroke-dashoffset:-18}}
+.tcs-sheet__st{display:flex;align-items:center;gap:8px;min-height:34px;padding:6px 10px;border-top:1px solid var(--line);font-family:var(--f);font-size:10px;line-height:1.4;color:var(--txt)}
+.tcs-sheet__fx{flex:none;font-style:italic;color:var(--faint)}
+
+/* ---- the symptom rows ---- */
+.tcs-sym__head{margin-bottom:clamp(36px,4vw,56px)}
+.tcs-sym__list{border-top:1px solid var(--line-3)}
+.tcs-sym__row{display:grid;grid-template-columns:44px minmax(0,1fr) 150px;column-gap:clamp(16px,2.4vw,32px);align-items:start;padding-block:clamp(22px,2.4vw,30px);border-bottom:1px solid var(--line)}
+.tcs-sym__n{padding-top:5px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;color:var(--blue)}
+.tcs-sym__t{font-size:var(--t-h3);letter-spacing:-.012em;line-height:1.28}
+.tcs-sym__d{margin-top:8px;font-size:var(--t-sm);line-height:1.62;color:var(--muted);max-width:52ch}
+.tcs-sym__fig{display:grid;justify-items:end;gap:2px;text-align:right}
+.tcs-sym__fv{display:inline-flex;align-items:baseline;gap:6px;white-space:nowrap}   /* the figure and its unit stay together */
+.tcs-sym__fig b{font-family:var(--f);font-size:clamp(1.5rem,2.2vw,1.9rem);font-weight:500;line-height:1;letter-spacing:-.04em;color:var(--ink);font-variant-numeric:tabular-nums}
+.tcs-sym__fv>span{font-family:var(--f);font-size:var(--t-xs);color:var(--txt)}
+.tcs-sym__fig small{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.tcs-sym__total{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px 24px;margin-top:28px;padding:20px 22px;border-radius:var(--r);background:var(--ink);color:var(--on-ink-2)}
+.tcs-sym__tk{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink-3)}
+.tcs-sym__tv{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;font-family:var(--f);font-size:var(--t-sm);color:var(--on-ink)}
+.tcs-sym__tv b{font-size:1.9rem;font-weight:500;letter-spacing:-.04em;line-height:1}
+.tcs-sym__tv span{font-family:var(--f-b);font-size:var(--t-xs);color:var(--on-ink-3)}
+
+@media (max-width:1023px){.tcs-sheet{right:-16px}}
+@media (max-width:860px){
+  /* one column: the heading first, then the photograph and sheet, then the symptoms */
+  .tcs-sym{row-gap:0}
+  .tcs-sym__body{display:contents}
+  .tcs-sym__body>*{grid-column:1 / -1}
+  .tcs-sym__head{order:-1;margin-bottom:clamp(36px,6vw,48px)}
+  .tcs-sym__vis{margin-bottom:clamp(40px,8vw,56px)}
+  .tcs-sym__sticky{position:relative;top:0;max-width:520px;padding-bottom:0}
+  .tcs-sheet{position:relative;right:auto;bottom:auto;width:min(340px,92%);margin:-72px 0 0 auto;margin-right:-8px}
+}
+@media (max-width:600px){
+  .tcs-sym__row{grid-template-columns:minmax(0,1fr);row-gap:10px}
+  .tcs-sym__n{padding-top:0}
+  .tcs-sym__fig{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;text-align:left}
+  .tcs-sheet{margin-right:0}
+}
+@media (prefers-reduced-motion:reduce){.tcs-sheet__pane,.tcs-sheet__tab,.tcs-sheet__sel,.tcs-sheet__c.is-paste{transition:none}}

@@ -1,0 +1,68 @@
+/* Audits & Assessments · instruments — six dial tiles, then the full instrument strip.
+   The dial renders at its final angle by default; .is-in (added by [data-bdh-in]) replays the
+   settle as an animation with a `backwards` fill, so no-JS and reduced-motion both land complete. */
+.taa-in__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line-2);border:1px solid var(--line-2);border-radius:var(--r-xl);overflow:hidden}
+.taa-in__dial{display:flex;flex-direction:column;gap:16px;padding:clamp(20px,2.2vw,28px);background:var(--paper);min-width:0}
+
+/* ---------- dial ---------------------------------------------------------- */
+.taa-in__top{display:flex;align-items:flex-start;gap:18px}
+.taa-in__gauge{flex:none;width:112px}
+.taa-in__gauge svg{display:block;width:100%;height:auto}
+.taa-in__track{stroke:var(--paper-4);stroke-width:5;stroke-linecap:round}
+.taa-in__arc{stroke:var(--blue);stroke-width:5;stroke-linecap:round;stroke-dasharray:var(--a,100) 100}
+.taa-in__needle{transform-box:view-box;transform-origin:50px 50px;transform:rotate(calc(-90deg + var(--a,50) * 1.8deg))}
+.taa-in__needle line{stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+.taa-in__pivot{fill:var(--ink)}
+/* The needle sweeps 180° about the gauge centre and its tip reaches the rim, so the readout cannot
+   sit inside the dial — at every value on this page the line would cross the digits. It sits under
+   the arc instead, on the baseline the needle pivots on. */
+.taa-in__read{display:flex;align-items:baseline;justify-content:center;gap:1px;margin-top:8px;padding-top:9px;
+  border-top:1px solid var(--line-2);font-family:var(--f);font-size:var(--t-xs);color:var(--muted);line-height:1}
+.taa-in__read .taa-num{font-size:1.375rem;letter-spacing:-.02em}
+
+.is-in .taa-in__arc{animation:taa-in-fill .9s var(--e) backwards;animation-delay:calc(var(--i,0) * 90ms)}
+.is-in .taa-in__needle{animation:taa-in-settle 1s var(--e) backwards;animation-delay:calc(var(--i,0) * 90ms)}
+@keyframes taa-in-fill{from{stroke-dasharray:0 100}}
+@keyframes taa-in-settle{from{transform:rotate(-90deg)}60%{transform:rotate(calc(-90deg + var(--a,50) * 1.92deg))}}
+
+.taa-in__id{display:flex;flex-direction:column;gap:7px;min-width:0;padding-top:2px}
+.taa-in__ico{display:flex;margin:0;color:var(--blue-d)}
+.taa-in__n{margin:0;font-family:var(--f-h);font-size:1.125rem;font-weight:500;letter-spacing:-.015em;line-height:1.2;color:var(--ink)}
+.taa-in__split{margin:0;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--muted);font-variant-numeric:tabular-nums}
+.taa-in__lead{margin:0;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+
+/* ---------- measured / estimated ------------------------------------------ */
+.taa-in__split2{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;padding-top:4px}
+.taa-in__col{display:flex;flex-direction:column;gap:9px;min-width:0}
+.taa-in__col .taa-lbl{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.taa-in__col .taa-est{height:18px;padding:0 7px;font-size:9.5px}
+.taa-in__list{display:flex;flex-direction:column;gap:7px;list-style:none;margin:0;padding:0}
+.taa-in__list li{position:relative;padding-left:16px;font-size:var(--t-xs);line-height:1.6;color:var(--txt)}
+.taa-in__list li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:1px;background:var(--blue)}
+.taa-in__col--est .taa-in__list li::before{width:6px;border-top:1px dashed var(--line-3);background:transparent;top:.6em}
+.taa-in__col--est .taa-in__list li{color:var(--muted)}
+
+/* ---------- kit ----------------------------------------------------------- */
+.taa-in__kit{display:flex;flex-direction:column;gap:12px;margin-top:auto;padding-top:16px;border-top:1px solid var(--line-2)}
+.taa-in__kit .xt-stack--logos{gap:14px 20px}
+.taa-in__also{display:flex;flex-wrap:wrap;gap:4px 9px;margin:0;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;line-height:1.6;color:var(--faint)}
+.taa-in__also>span{color:var(--blue-d);letter-spacing:.14em;text-transform:uppercase}
+
+/* ---------- instrument strip ---------------------------------------------- */
+.taa-in__strip{margin-top:clamp(32px,3.6vw,52px);padding-top:clamp(24px,2.6vw,34px);border-top:1px solid var(--line)}
+.taa-in__stript{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 20px;margin:0 0 18px}
+.taa-in__stript>span:last-child{flex:1 1 34ch;max-width:86ch;font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+
+/* ---------- responsive ---------------------------------------------------- */
+@media (max-width:1100px){
+  .taa-in__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .taa-in__split2{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .taa-in__grid{grid-template-columns:minmax(0,1fr)}
+  .taa-in__split2{grid-template-columns:minmax(0,1fr)}
+  .taa-in__gauge{width:92px}
+}
+@media (prefers-reduced-motion:reduce){
+  .is-in .taa-in__arc,.is-in .taa-in__needle{animation:none}
+}

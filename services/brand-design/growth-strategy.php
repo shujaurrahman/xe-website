@@ -23,12 +23,12 @@ foreach ($SITE['disciplines'] as $cgs_disc) { if ($cgs_disc['slug'] === 'brand-d
 unset($cgs_disc);
 
 /* Running order: read the ground → score it → decide → route → measure → hand over. */
-$CGS = ['hero', 'hides', 'ledger', 'scorer', 'whitespace', 'thesis', 'route', 'moves', 'kpi', 'pack', 'outcomes', 'faq', 'onward'];
+$CGS = ['hero', 'hides', 'ledger', 'scorer', 'whitespace', 'thesis', 'route', 'moves', 'kpi', 'pack', 'outcomes', 'services', 'faq', 'onward'];
 
 $cgs_root = __DIR__ . '/../../';
 $cgs_has  = fn (string $p): bool => is_file($cgs_root . $p) && filesize($cgs_root . $p) > 0;
-$cgs_css  = ['assets/css/brand/hub.css', 'assets/css/brand/growth-strategy.css'];
-$cgs_js   = ['assets/js/brand/hub.js'];
+$cgs_css  = ['assets/css/brand/hub.css', 'assets/css/services.css', 'assets/css/brand/growth-strategy.css'];
+$cgs_js   = ['assets/js/brand/hub.js', 'assets/js/services.js'];
 foreach ($CGS as $cgs_id) {
     if ($cgs_has('assets/css/brand/growth-strategy/' . $cgs_id . '.css')) $cgs_css[] = 'assets/css/brand/growth-strategy/' . $cgs_id . '.css';
     if ($cgs_has('assets/js/brand/growth-strategy/' . $cgs_id . '.js'))   $cgs_js[]  = 'assets/js/brand/growth-strategy/' . $cgs_id . '.js';

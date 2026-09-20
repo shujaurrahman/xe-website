@@ -1,0 +1,54 @@
+/* ==========================================================================
+   Tech Workforce · models — four engagement models on a scale from one engineer to a team you own.
+   A thin rule fills left to right when the block enters; four cards sit under it.
+   ========================================================================== */
+.ttw-models__scale{margin-bottom:clamp(20px,2.2vw,30px)}
+.ttw-models__line{position:relative;display:block;height:1px;background:var(--line)}
+.ttw-models__line i{position:absolute;inset:0 auto 0 0;display:block;width:100%;background:var(--blue);transform-origin:0 50%}
+.ttw-models__ends{display:flex;justify-content:space-between;gap:16px;margin:12px 0 0;
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+
+.ttw-models__list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--ttw-gap);margin:0;padding:0;list-style:none}
+.ttw-models__it{min-width:0}
+.ttw-models__c{display:flex;flex-direction:column;gap:14px;height:100%}
+.ttw-models__c::before{content:"";position:absolute;inset:-1px -1px auto;height:2px;border-radius:var(--r-lg) var(--r-lg) 0 0;background:var(--blue-line)}
+.ttw-models__n{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0}
+.ttw-models__ix{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;color:var(--blue)}
+.ttw-models__ico{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid var(--line-2);border-radius:var(--r-sm);background:var(--paper-2);color:var(--ink)}
+.ttw-models__h{margin:0;font-size:clamp(1.12rem,1.5vw,1.3rem);letter-spacing:-.02em;line-height:1.2}
+.ttw-models__sz{margin:-8px 0 0;font-family:var(--f);font-size:var(--t-xs);color:var(--blue-d)}
+.ttw-models__d{margin:0;font-size:var(--t-sm);line-height:1.62}
+/* The commercial facts are the point of the row of cards, so they line up across all four: the
+   tag list pins to the bottom at a fixed two-row height, and each fact row is tall enough for a
+   two-line value. Where subgrid is supported the four cards share their tracks outright (below). */
+.ttw-models__facts{display:grid;gap:0;margin:auto 0 0;padding-top:14px;border-top:1px solid var(--line-2)}
+.ttw-models__facts>div{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid var(--line-2);
+  font-size:var(--t-xs);min-height:calc(2 * 1.45em + 14px)}
+.ttw-models__facts>div:last-child{border-bottom:0;padding-bottom:0}
+.ttw-models__facts dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);flex:none}
+.ttw-models__facts dd{margin:0;font-size:var(--t-xs);line-height:1.45;color:var(--ink);text-align:right;min-width:0}
+.ttw-models__tags{display:flex;flex-wrap:wrap;align-content:flex-end;gap:7px;margin:0;padding:0;list-style:none;min-height:55px}
+
+.ttw-models__note{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:clamp(24px,2.6vw,34px) 0 0;font-size:var(--t-sm);color:var(--muted)}
+
+/* Motion: armed only (see the contract in tech-workforce.css). Unarmed, the rule is already full. */
+@media (prefers-reduced-motion:no-preference){
+  .ttw-models__scale.is-armed .ttw-models__line i{transform:scaleX(0);transition:transform 1.1s var(--e-io)}
+  .ttw-models__scale.is-armed.is-in .ttw-models__line i{transform:scaleX(1)}
+}
+/* One row of four: every card shares the same six track lines, so the head, the description, the
+   four facts and the tags start at the same height in all of them. */
+@supports (grid-template-rows:subgrid){
+  @media (min-width:1101px){
+    .ttw-models__list{grid-template-rows:repeat(6,auto)}
+    .ttw-models__it{grid-row:1 / span 6;display:grid;grid-template-rows:subgrid;row-gap:0}
+    .ttw-models__c{grid-row:1 / span 6;display:grid;grid-template-rows:subgrid;row-gap:14px}
+    .ttw-models__facts{margin-top:0}
+    .ttw-models__tags{min-height:0}
+  }
+}
+@media (max-width:1100px){.ttw-models__list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){
+  .ttw-models__list{grid-template-columns:minmax(0,1fr)}
+  .ttw-models__ends span:last-child{text-align:right}
+}

@@ -1,0 +1,139 @@
+/* Custom Software & Data Platforms · lakehouse — the running data platform board, three detail panels, logo row. */
+.tcs-lh__board{border-radius:var(--r-xl)}
+.tcs-lh__bar{gap:14px}
+.tcs-lh__path{min-width:0;overflow:hidden;text-overflow:ellipsis;color:var(--txt)}
+.tcs-lh__path i{font-style:normal;color:var(--ghost)}
+.tcs-lh__path b{font-weight:500;color:var(--ink)}
+.tcs-lh__slo{display:inline-flex;align-items:center;gap:8px;margin-left:auto;color:var(--txt);white-space:nowrap}
+.tcs-lh__ctl{display:flex;gap:6px;flex:none}
+.tcs-lh__ctl .tcs-btn{min-height:32px;padding:0 12px;font-size:var(--t-xs)}
+
+/* ---- the flow ---- */
+.tcs-lh__flow{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr) minmax(0,1.15fr) minmax(0,1.05fr) minmax(0,1fr);column-gap:clamp(30px,3.4vw,54px);padding:clamp(22px,2.6vw,36px);background:var(--paper-2)}
+.tcs-lh__svg{position:absolute;inset:0;z-index:0;width:100%;height:100%;overflow:visible;pointer-events:none;opacity:0;transition:opacity .3s var(--e)}
+.tcs-lh.is-routed .tcs-lh__svg{opacity:1}
+.tcs-lh__pipe{fill:none;stroke:var(--ghost);stroke-width:1.5;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.1s var(--e) .2s,stroke var(--d2) var(--e)}   /* pathLength="1": one dash the length of the pipe */
+.tcs-lh__arrow path{fill:none;stroke:var(--faint);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.tcs-lh.is-in .tcs-lh__pipe{stroke-dashoffset:0}
+.tcs-lh__pipe.is-hot{stroke:var(--blue)}
+.tcs-lh__pipe.is-bad{stroke:var(--ink)}
+.tcs-lh__stage{position:relative;z-index:1;display:flex;flex-direction:column;gap:12px;min-width:0}
+.tcs-lh__sh{display:flex;flex-direction:column;gap:3px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.tcs-lh__sh b{font-family:var(--f-h);font-size:1rem;font-weight:500;letter-spacing:-.01em;line-height:1.2;color:var(--ink)}
+.tcs-lh__sh span{font-family:var(--f);font-size:10px;letter-spacing:.04em;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tcs-lh__items{display:flex;flex-direction:column;justify-content:space-around;flex:1;gap:12px}
+.tcs-lh__it{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 9px;align-items:center;padding:10px 12px;border:1px solid var(--line-3);border-radius:12px;background:var(--paper);box-shadow:var(--sh-1);
+  transition:border-color var(--d2) var(--e),box-shadow var(--d2) var(--e),transform var(--d2) var(--e)}
+.tcs-lh__ii{grid-row:1 / span 2;display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--paper-3);color:var(--ink)}
+.tcs-lh__in{font-size:var(--t-xs);font-weight:600;line-height:1.25;color:var(--ink)}
+.tcs-lh__id{font-family:var(--f);font-size:10px;line-height:1.4;color:var(--muted);overflow-wrap:anywhere}
+.tcs-lh__it.is-hit{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-wash-2),var(--sh-1)}
+.tcs-lh__it.is-hit .tcs-lh__ii{background:var(--blue-wash);color:var(--blue)}
+
+/* the lakehouse column: medallion tiers */
+.tcs-lh__stage--lake .tcs-lh__it{padding:12px 14px}
+.tcs-lh__it--bronze .tcs-lh__ii,.tcs-lh__it--silver .tcs-lh__ii,.tcs-lh__it--gold .tcs-lh__ii{border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--line-3)}
+.tcs-lh__it--gold .tcs-lh__ii{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.tcs-lh__it--silver .tcs-lh__id{white-space:normal}
+.tcs-lh__stamp{grid-column:2;justify-self:start;display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:3px 8px 3px 6px;border-radius:var(--r-pill);background:var(--blue-wash);font-family:var(--f);font-size:9.5px;font-weight:600;letter-spacing:.04em;color:var(--blue-d);transform-origin:left center}
+.tcs-lh__stamp .xt-ico{color:var(--blue)}
+.tcs-lh__stamp.is-pop{animation:tcs-lh-stamp .55s var(--e)}
+@keyframes tcs-lh-stamp{0%{transform:scale(.6);opacity:.4}60%{transform:scale(1.12)}100%{transform:none;opacity:1}}
+.tcs-lh__it--silver.is-bad{border-color:var(--ink)}
+.tcs-lh__it--silver.is-bad .tcs-lh__stamp{background:var(--paper-4);color:var(--ink)}
+.tcs-lh__it--silver.is-bad .tcs-lh__stamp .xt-ico{color:var(--ink)}
+/* quarantine: a side branch off the Bronze → Silver pipe, which runs down the free strip on its left */
+.tcs-lh__it--quar{width:74%;margin-left:auto;border-style:dashed;background:var(--paper-2);box-shadow:none}
+.tcs-lh__it--quar .tcs-lh__ii{background:var(--paper-4)}
+.tcs-lh__it--quar .tcs-lh__in{font-weight:500;color:var(--txt)}
+.tcs-lh__qn{grid-column:1 / -1;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line-3);font-family:var(--f);font-size:9.5px;line-height:1.45;color:var(--txt)}
+.tcs-lh__it--quar.is-hit{border-color:var(--ink);box-shadow:none;background:var(--paper)}
+.tcs-lh__it--quar.is-hit .tcs-lh__ii{background:var(--ink);color:var(--on-ink)}
+
+/* particles */
+.tcs-lh__pk{position:absolute;left:-5px;top:-5px;z-index:2;width:10px;height:10px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px var(--blue-wash-2);opacity:0;pointer-events:none;will-change:transform}
+.tcs-lh__pk.is-on{opacity:1}
+.tcs-lh__pk.is-bad{background:var(--ink);box-shadow:0 0 0 3px var(--paper-4)}
+
+/* mobile spine: one vertical pipe with packets running down it (shown at 860 px and below) */
+.tcs-lh__spine{display:none}
+
+/* meter */
+.tcs-lh__meter{display:flex;flex-wrap:wrap;align-items:center;gap:12px 0;padding:16px 20px;border-top:1px solid var(--line);background:var(--paper)}
+.tcs-lh__meter>div{display:flex;flex-direction:column;gap:5px;padding-right:26px;margin-right:26px;border-right:1px solid var(--line)}
+.tcs-lh__meter dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1.2;white-space:nowrap}
+.tcs-lh__meter dd{font-family:var(--f);font-size:var(--t-sm);font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tcs-lh__meter dd.is-new{color:var(--blue-d)}
+.tcs-lh__meter .tcs-lh__ill{margin-left:auto;margin-right:0;padding-right:0;border-right:0}
+
+/* ---- panels ---- */
+.tcs-lh__panels{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:var(--bdh-gap);margin-top:var(--bdh-gap)}
+.tcs-lh__panel{display:flex;flex-direction:column;gap:14px;min-width:0;padding:clamp(20px,2.2vw,28px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.tcs-lh__ph{display:flex;align-items:center;gap:8px;font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.01em;color:var(--ink)}
+.tcs-lh__ph em{margin-left:auto;font-family:var(--f);font-size:10px;font-style:normal;letter-spacing:.04em;color:var(--faint);text-align:right}
+.tcs-lh__pn{margin-top:auto;font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+.tcs-lh__tbl{width:100%;border-collapse:collapse;font-family:var(--f);font-size:10.5px;line-height:1.35}
+.tcs-lh__tbl th,.tcs-lh__tbl td{padding:8px 6px;text-align:left;border-bottom:1px solid var(--line-2);white-space:nowrap}
+.tcs-lh__tbl thead th{font-weight:500;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.tcs-lh__tbl tbody th{font-weight:500;color:var(--ink)}
+.tcs-lh__tbl td{color:var(--txt)}
+.tcs-lh__tbl td:last-child{text-align:right}
+.tcs-lh__code{margin:0;padding:14px 16px;border-radius:12px;background:var(--ink);font-family:var(--f);font-size:10.5px;line-height:1.6;color:var(--on-ink-2);overflow-x:auto;white-space:pre;scrollbar-width:thin}
+.tcs-lh__code .c{color:var(--on-ink-3)}
+.tcs-lh__code .k{color:var(--on-ink)}
+
+/* ---- logos ---- */
+.tcs-lh__stack{display:flex;flex-direction:column;gap:14px;margin-top:var(--bdh-gap);padding-top:var(--bdh-gap);border-top:1px solid var(--line)}
+.tcs-lh__sk{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tcs-lh__sk2{font-size:var(--t-xs);line-height:1.55;color:var(--faint)}
+
+@media (max-width:1100px){
+  .tcs-lh__flow{column-gap:20px}
+  .tcs-lh__id{font-size:9.5px}
+  .tcs-lh__meter>div{padding-right:18px;margin-right:18px}
+  .tcs-lh__it--quar{width:84%}
+  .tcs-lh__qn{font-size:9px}
+}
+@media (max-width:860px){
+  .tcs-lh__panels{grid-template-columns:minmax(0,1fr)}
+  .tcs-lh__svg,.tcs-lh__pk{display:none}
+  .tcs-lh__bar{height:auto;min-height:44px;flex-wrap:wrap;row-gap:8px;padding-block:8px}
+  .tcs-lh__ctl{margin-left:auto}
+  .tcs-lh__slo{display:none}
+  .tcs-lh__flow{grid-template-columns:minmax(0,1fr);row-gap:26px;padding:20px 18px 20px 48px}
+  .tcs-lh__spine{display:block;position:absolute;left:16px;top:26px;bottom:30px;width:18px;overflow:hidden;pointer-events:none}
+  .tcs-lh__spine::before{content:"";position:absolute;left:8px;top:0;bottom:0;width:2px;border-radius:2px;background:var(--line-3)}
+  .tcs-lh__spine i{position:absolute;left:0;top:0;width:100%;height:100%;opacity:0}
+  .tcs-lh__spine i::before{content:"";position:absolute;left:4px;top:-12px;width:10px;height:10px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px var(--blue-wash-2)}
+  .tcs-lh__board.is-live .tcs-lh__spine i{opacity:1;animation:tcs-lh-drop 7s linear infinite}
+  .tcs-lh__board.is-live .tcs-lh__spine i:nth-child(2){animation-delay:-1.75s}
+  .tcs-lh__board.is-live .tcs-lh__spine i:nth-child(3){animation-delay:-3.5s}
+  .tcs-lh__board.is-live .tcs-lh__spine i:nth-child(4){animation-delay:-5.25s}
+  .tcs-lh.is-paused .tcs-lh__spine i{animation-play-state:paused}
+  .tcs-lh__stage{padding-bottom:26px;border-bottom:1px dashed var(--line-3)}
+  .tcs-lh__stage:last-child{padding-bottom:0;border-bottom:0}
+  .tcs-lh__stage::before{content:"";position:absolute;left:-30px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 2px var(--ink)}
+  .tcs-lh__items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .tcs-lh__it--quar{width:auto;margin-left:0;order:4}   /* phones: after Gold, as the held-back branch */
+  .tcs-lh__meter{gap:12px 0}
+  .tcs-lh__meter>div{flex:1 1 40%;padding-right:12px;margin-right:12px}
+  .tcs-lh__meter .tcs-lh__ill{flex:1 1 100%;margin-left:0}
+}
+@keyframes tcs-lh-drop{from{transform:translateY(0)}to{transform:translateY(calc(100% + 12px))}}
+@media (max-width:520px){
+  .tcs-lh__items{grid-template-columns:minmax(0,1fr)}
+  .tcs-lh__ctl{width:100%}
+  .tcs-lh__ctl .tcs-btn{flex:1 1 auto}
+  .tcs-lh__tbl th:nth-child(3),.tcs-lh__tbl td:nth-child(3){display:none}
+  /* meter: two columns, no dividers, so nothing is left hanging at the end of a wrapped row */
+  .tcs-lh__meter{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px}
+  .tcs-lh__meter>div{justify-content:flex-end;padding-right:0;margin-right:0;border-right:0}   /* values line up when a label wraps */
+  .tcs-lh__meter dt{white-space:normal}
+  .tcs-lh__meter .tcs-lh__ill{grid-column:1 / -1}
+}
+@media (prefers-reduced-motion:reduce){
+  .tcs-lh__pipe,.tcs-lh__it,.tcs-lh__svg{transition:none}
+  .tcs-lh__pipe{stroke-dashoffset:0}
+  .tcs-lh__stamp.is-pop{animation:none}
+  .tcs-lh__spine i{animation:none}
+}

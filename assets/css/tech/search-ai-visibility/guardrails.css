@@ -1,0 +1,98 @@
+/* ==========================================================================
+   Search & AI Visibility — 09 · Guardrails (paper)
+   Left: the quality gate as two panels — six checks that must pass, five things we will not do.
+   Right: the published rulebooks and the kit badge wall. Below: the sustainability line.
+   The marks are drawn in the HTML; guardrails.js adds .is-anim only when motion is allowed, which
+   is what makes them draw in sequence under .is-live. Only layout is set on .xt-* here.
+   ========================================================================== */
+
+.tsv-rules__g{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--tsv-gap-l);row-gap:var(--tsv-gap);
+  margin-bottom:var(--tsv-block)}
+.tsv-rules__gate{grid-column:1 / span 7;display:flex;flex-direction:column;gap:var(--tsv-gap);min-width:0}
+.tsv-rules__side{grid-column:8 / -1;display:flex;flex-direction:column;gap:var(--tsv-gap);min-width:0}
+
+/* ---------- the two gate panels ------------------------------------------ */
+.tsv-gates{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper-2);overflow:hidden}
+.tsv-gates__hd{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px 14px;
+  padding:14px 18px;border-bottom:1px solid var(--line-2);background:var(--paper)}
+.tsv-gates__t{margin:0;font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;letter-spacing:-.018em;line-height:1.25;color:var(--ink)}
+
+.tsv-gate{margin:0;padding:0;list-style:none}
+.tsv-gate__i{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:14px;
+  padding:14px 18px;border-bottom:1px solid var(--line-2)}
+.tsv-gate__i:last-child{border-bottom:0}
+
+.tsv-gate__m{display:grid;place-items:center;width:26px;height:26px;flex:none;border-radius:var(--r-xs);
+  background:var(--paper);box-shadow:inset 0 0 0 1px var(--line-3);transition:box-shadow var(--d2) var(--e-io)}
+.tsv-gate__m svg{width:18px;height:18px;display:block}
+.tsv-gate__m path{stroke:var(--blue);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tsv-gates--no .tsv-gate__m{background:var(--paper-3)}
+.tsv-gates--no .tsv-gate__m path{stroke:var(--ink)}
+
+.tsv-gate__x{min-width:0}
+.tsv-gate__x b{display:block;font-family:var(--f-h);font-size:var(--t-sm);font-weight:500;letter-spacing:-.012em;line-height:1.35;color:var(--ink)}
+.tsv-gate__x small{display:block;margin-top:5px;font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+
+/* ---------- rulebooks ----------------------------------------------------- */
+.tsv-rules__st{margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line-2);
+  font-family:var(--f-h);font-size:var(--t-sm);font-weight:500;letter-spacing:-.01em;line-height:1.3;color:var(--ink)}
+
+.tsv-books__l{display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none}
+.tsv-book{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"i t" ". g" ". d";
+  align-items:center;gap:4px 12px;padding:16px 18px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.tsv-book__i{grid-area:i;display:grid;place-items:center;width:28px;height:28px;border-radius:var(--r-xs);
+  background:var(--blue-wash-2);color:var(--blue-d)}
+.tsv-book__t{grid-area:t;margin:0;font-family:var(--f-h);font-size:var(--t-sm);font-weight:500;letter-spacing:-.012em;line-height:1.3;color:var(--ink)}
+.tsv-book__g{grid-area:g;margin:8px 0 0;font-family:var(--f);font-size:var(--t-xs);line-height:1.55;color:var(--txt)}
+.tsv-book__d{grid-area:d;margin:8px 0 0;font-size:var(--t-xs);line-height:1.65;color:var(--muted)}
+
+/* ---------- badge wall (layout only; the kit owns the marks) ------------- */
+.tsv-frames__l{--xt-badge:50px;gap:14px}
+.tsv-frames__n{margin:14px 0 0;color:var(--muted)}
+
+/* ---------- lean pages --------------------------------------------------- */
+.tsv-lean{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--tsv-gap-l);row-gap:var(--tsv-gap);
+  padding-top:clamp(24px,3vw,38px);border-top:1px solid var(--ink)}
+.tsv-lean__hd{grid-column:1 / span 5;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"i t" ". l";
+  align-items:center;gap:6px 12px;min-width:0}
+.tsv-lean__i{grid-area:i;display:grid;place-items:center;width:32px;height:32px;border-radius:var(--r-xs);
+  background:var(--blue-wash-2);color:var(--blue-d)}
+.tsv-lean__t{grid-area:t;margin:0;font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;letter-spacing:-.018em;line-height:1.2;color:var(--ink)}
+.tsv-lean__l{grid-area:l;margin:12px 0 0;font-size:var(--t-sm);line-height:1.7;color:var(--muted)}
+
+.tsv-lean__l3{grid-column:6 / -1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--tsv-gap);
+  margin:0;padding:0;list-style:none;min-width:0}
+.tsv-lean__c{display:flex;flex-direction:column;gap:9px;min-width:0;padding-top:16px;border-top:1px solid var(--line-3)}
+.tsv-lean__ci{color:var(--muted)}
+.tsv-lean__ct{margin:0;font-family:var(--f-h);font-size:var(--t-sm);font-weight:500;letter-spacing:-.012em;line-height:1.35;color:var(--ink)}
+.tsv-lean__cd{margin:0;font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+.tsv-lean__n{grid-column:1 / -1}
+
+/* ---------- motion, armed by guardrails.js ------------------------------- */
+.tsv-rules__gate.is-anim .tsv-gate__m path{stroke-dasharray:1;stroke-dashoffset:1}
+.tsv-rules__gate.is-anim .tsv-gate__m{box-shadow:inset 0 0 0 1px var(--line-2)}
+.tsv-rules__gate.is-anim.is-live .tsv-gate__m{box-shadow:inset 0 0 0 1px var(--line-3);
+  transition:box-shadow var(--d2) var(--e-io);transition-delay:calc(var(--i,0) * 70ms)}
+.tsv-rules__gate.is-anim.is-live .tsv-gate__m path{stroke-dashoffset:0;
+  transition:stroke-dashoffset 420ms var(--e-io);transition-delay:calc(var(--i,0) * 70ms + 60ms)}
+.tsv-rules__gate.is-anim.is-live .tsv-gate__m path:nth-child(2){transition-delay:calc(var(--i,0) * 70ms + 180ms)}
+
+/* ---------- responsive ---------------------------------------------------- */
+@media (max-width:1023px){
+  .tsv-rules__g,.tsv-lean{grid-template-columns:minmax(0,1fr)}
+  .tsv-rules__gate,.tsv-rules__side{grid-column:1 / -1}
+  .tsv-lean__hd,.tsv-lean__l3{grid-column:1 / -1}
+}
+@media (max-width:760px){
+  .tsv-lean__l3{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:520px){
+  .tsv-gate__i{padding:14px}
+  .tsv-gates__hd{padding:12px 14px}
+  .tsv-book{padding:14px}
+  .tsv-frames__l{--xt-badge:44px;gap:12px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .tsv-gate__m{transition:none}
+}

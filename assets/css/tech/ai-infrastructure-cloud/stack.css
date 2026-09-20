@@ -1,0 +1,97 @@
+/* AI Infrastructure & Cloud · stack — the rack cross-section: an ink rack of eight units (a vertical tablist)
+   beside the open tray; the chosen unit slides out of the rack like a server tray. Below: the fabric
+   photograph and the India regions used for data residency. LEDs blink only under .is-live. */
+.tic-rk{display:grid;grid-template-columns:minmax(0,11fr) minmax(0,13fr);align-items:stretch;gap:0}
+
+/* ---- the rack ---- */
+.tic-rk__rack{position:relative;z-index:1;display:flex;flex-direction:column;gap:14px;min-width:0;padding:18px 30px 18px;border-radius:var(--r-xl);background:var(--ink);color:var(--on-ink-2);box-shadow:var(--sh-2)}
+.tic-rk__rack::before,.tic-rk__rack::after{content:"";position:absolute;top:58px;bottom:52px;width:0;border-left:2px dotted var(--on-ink-line);pointer-events:none}
+.tic-rk__rack::before{left:13px}
+.tic-rk__rack::after{right:13px}
+.tic-rk__top,.tic-rk__base{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 18px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--on-ink-3);line-height:1.4}
+.tic-rk__top span:first-child{display:inline-flex;align-items:center;gap:9px;color:var(--on-ink-2)}
+.tic-rk__top{padding:4px 2px 10px;border-bottom:1px solid var(--on-ink-line)}
+.tic-rk__base{padding:12px 2px 2px;border-top:1px solid var(--on-ink-line)}
+.tic-rk__base span:not(.bdh-ill){white-space:nowrap}
+.tic-rk__base .bdh-ill{margin-left:auto}
+
+.tic-rk__units{display:flex;flex-direction:column;gap:6px}
+.tic-rk__unit{position:relative;display:grid;grid-template-columns:34px 20px minmax(0,1fr) auto auto;align-items:center;gap:12px;width:100%;min-height:52px;padding:0 14px 0 12px;border:1px solid var(--on-ink-line);border-radius:6px;background:var(--ink-2);color:var(--on-ink);text-align:left;
+  transition:transform .55s var(--e),background var(--d2) var(--e),border-color var(--d2) var(--e),box-shadow var(--d2) var(--e),color var(--d2) var(--e)}
+.tic-rk__unit:hover{border-color:var(--on-ink-3)}
+.tic-rk__unit[aria-selected="true"]{z-index:2;transform:translateX(48px);background:var(--paper);border-color:var(--paper);color:var(--ink);box-shadow:var(--sh-2)}
+.tic-rk__unit:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.tic-rk__u{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.06em;color:var(--on-ink-3);font-variant-numeric:tabular-nums}
+.tic-rk__leds{display:inline-flex;flex-direction:column;gap:4px}
+.tic-rk__leds .tic-led{width:6px;height:6px}
+.tic-rk__leds .tic-led:last-child{background:var(--on-ink-2)}
+.tic-rk__sprite{position:absolute;width:0;height:0;overflow:hidden}
+.tic-rk__name{min-width:0;font-family:var(--f-h);font-size:1rem;font-weight:500;letter-spacing:-.005em;line-height:1.25;text-wrap:balance}
+.tic-rk__marks{display:inline-flex;align-items:center;gap:8px;color:var(--on-ink-3);transition:color var(--d2) var(--e)}
+.tic-rk__ro{min-width:0;font-family:var(--f);font-size:10.5px;letter-spacing:.02em;color:var(--on-ink-3);white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
+.tic-rk__unit[aria-selected="true"] .tic-rk__u,.tic-rk__unit[aria-selected="true"] .tic-rk__ro{color:var(--muted)}
+.tic-rk__unit[aria-selected="true"] .tic-rk__marks{color:var(--ink)}
+.tic-rk__unit[aria-selected="true"] .tic-rk__leds .tic-led:last-child{background:var(--ink)}
+/* the tray handle, visible on the pulled-out unit */
+.tic-rk__unit::after{content:"";position:absolute;right:-1px;top:50%;width:4px;height:22px;margin-top:-11px;border-radius:2px 0 0 2px;background:var(--blue);opacity:0;transition:opacity var(--d2) var(--e)}
+.tic-rk__unit[aria-selected="true"]::after{opacity:1}
+
+/* ---- the open tray ---- */
+.tic-rk__trays{position:relative;min-width:0;margin:34px 0;padding:clamp(28px,3vw,44px) clamp(24px,3vw,44px) clamp(28px,3vw,40px) clamp(56px,5.4vw,80px);border:1px solid var(--line);border-left:0;border-radius:0 var(--r-xl) var(--r-xl) 0;background:var(--paper);box-shadow:var(--sh-1)}
+.tic-rk__tray{display:flex;flex-direction:column;gap:14px;min-width:0}
+.tic-rk__tray:focus-visible{outline-offset:8px;border-radius:var(--r-sm)}
+.tic-rk__slot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tic-rk__slotro{margin-left:auto;padding:3px 10px;border-radius:var(--r-pill);background:var(--ink);color:var(--on-ink);letter-spacing:.04em;text-transform:none;font-variant-numeric:tabular-nums}
+.tic-rk__tray .bdh-t--l{font-size:clamp(1.35rem,1.9vw,1.7rem);letter-spacing:-.018em}
+.tic-rk__why{font-size:var(--t-body);line-height:1.7;color:var(--txt);max-width:62ch}
+.tic-rk__kk{margin-top:10px}
+.tic-rk__chips{display:flex;flex-wrap:wrap;gap:8px}
+.tic-rk__chips .tic-chip{min-height:32px;padding:4px 12px;font-size:var(--t-xs);letter-spacing:.02em;color:var(--ink)}
+.tic-rk__tray .bdh-bullets{display:grid;gap:0}
+.tic-rk__tray .bdh-bullets>li+li{margin-top:8px}
+.tic-rk__tray .bdh-bullets>li{color:var(--ink)}
+
+/* ---- photo + residency ---- */
+.tic-rk__foot{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--tic-gap-l);align-items:start;margin-top:var(--bdh-block)}
+.tic-rk__photo{position:relative;min-width:0}
+.tic-rk__photo .bdh-img img{object-position:50% 40%}
+.tic-rk__photo .bdh-cap-chip{position:absolute;left:16px;right:16px;bottom:16px;max-width:360px}
+.tic-rk__res{display:flex;flex-direction:column;gap:14px;min-width:0}
+.tic-rk__res>.tic-k{display:inline-flex;align-items:center;gap:8px;color:var(--ink)}
+.tic-rk__res .bdh-d{max-width:60ch}
+.tic-rk__tw{overflow-x:auto;max-width:100%;margin-top:6px}
+.tic-rk__table{width:100%;min-width:520px;border-collapse:collapse;font-size:var(--t-sm);color:var(--txt)}
+.tic-rk__table th,.tic-rk__table td{padding:12px 14px 12px 0;border-top:1px solid var(--line);text-align:left;font-weight:400;vertical-align:middle}
+.tic-rk__table thead th{padding-top:0;border-top:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.tic-rk__table tbody tr:last-child>*{border-bottom:1px solid var(--line)}
+.tic-rk__table tbody th{color:var(--ink);font-weight:500;white-space:nowrap}
+.tic-rk__table td{color:var(--ink)}
+.tic-rk__table td:nth-child(3){color:var(--muted)}
+.tic-rk__table code{display:inline-block;padding:2px 8px;border-radius:var(--r-xs);background:var(--paper-3);font-family:var(--f);font-size:var(--t-xs);color:var(--ink);white-space:nowrap}
+.tic-rk__table td:last-child{padding-right:0}
+.tic-rk__cl{display:inline-flex;align-items:center;gap:10px;color:var(--ink)}
+
+@media (max-width:1179px){.tic-rk__marks{display:none}.tic-rk__unit{grid-template-columns:34px 20px minmax(0,1fr) auto}}
+@media (max-width:1023px){
+  .tic-rk{grid-template-columns:minmax(0,1fr)}
+  .tic-rk__rack{margin-right:34px}
+  .tic-rk__trays{margin:-20px 0 0;padding:44px clamp(22px,4vw,36px) 32px;border-left:1px solid var(--line);border-top:0;border-radius:0 0 var(--r-xl) var(--r-xl)}
+  .tic-rk__foot{grid-template-columns:minmax(0,1fr);gap:40px}
+  .tic-rk__photo{max-width:720px}
+}
+@media (max-width:600px){
+  .tic-rk__rack{margin-right:16px;padding:14px 20px;border-radius:var(--r-lg)}
+  .tic-rk__rack::before{left:8px}.tic-rk__rack::after{right:8px}
+  .tic-rk__unit{grid-template-columns:30px minmax(0,1fr) auto;gap:10px;min-height:48px;padding:0 10px}
+  .tic-rk__leds{display:none}
+  .tic-rk__name{font-size:.9375rem}
+  .tic-rk__ro{font-size:10px}
+  .tic-rk__unit[aria-selected="true"]{transform:translateX(16px)}
+  .tic-rk__top span:last-child{display:none}
+  .tic-rk__base .bdh-ill{margin-left:0}
+  .tic-rk__trays{padding:40px 20px 26px;border-radius:0 0 var(--r-lg) var(--r-lg)}
+  .tic-rk__slotro{margin-left:0}
+  .tic-rk__photo .bdh-cap-chip{position:relative;left:auto;right:auto;bottom:auto;margin-top:12px;max-width:none;box-shadow:none;border:1px solid var(--line)}
+}
+@media (max-width:420px){.tic-rk__ro{display:none}.tic-rk__unit{grid-template-columns:30px minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){.tic-rk__unit{transition:none}}

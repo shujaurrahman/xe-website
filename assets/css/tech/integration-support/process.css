@@ -1,0 +1,132 @@
+/* ==========================================================================
+   Integration & Support · #process — the four phases as one transit line.
+   The line runs above four station cards: the marker of every card sits on it, the segment behind
+   the service car is drawn in blue, and the car moves to the selected station. --tis-train holds
+   the current station index (0–3), set by process.js; the shipped HTML rests at station 01.
+
+   Geometry. The cards are a four-column grid with gap --tis-g. Each card's marker is pinned
+   --tis-m0 from its left edge, so marker i sits at --tis-m0 + i × (25% + 0.25 × --tis-g) across
+   the rail, and the last one is (25% − --tis-m0 − 0.75 × --tis-g) in from the right.
+   Tokens from core.css only; no new colours; no !important.
+   ========================================================================== */
+
+.tis-pr__line{--tis-stns:4;--tis-g:14px;--tis-m0:29px}
+
+/* ---- the rail ----------------------------------------------------------- */
+.tis-pr__rail{position:relative;padding-top:80px;margin-bottom:var(--bdh-block)}
+.tis-pr__track{position:absolute;left:0;right:0;top:60px;height:0;pointer-events:none}
+
+.tis-pr__wire,.tis-pr__done{position:absolute;top:-2px;height:4px;border-radius:2px;
+  left:var(--tis-m0);right:calc(25% - var(--tis-m0) - 0.75 * var(--tis-g))}
+.tis-pr__wire{background:var(--line-2)}
+.tis-pr__done{background:var(--blue);transform-origin:left center;
+  transform:scaleX(calc(var(--tis-train) / (var(--tis-stns) - 1)));
+  transition:transform .55s var(--e)}
+
+/* the service car rides above the line with a short stem down to it */
+.tis-pr__car{position:absolute;top:-48px;left:calc(var(--tis-m0) + var(--tis-train) * (25% + 0.25 * var(--tis-g)));
+  display:grid;place-items:center;width:30px;height:26px;margin-left:-15px;border-radius:var(--r-pill);
+  background:var(--blue);color:var(--on-ink);transition:left .55s var(--e)}
+.tis-pr__car::after{content:"";position:absolute;top:100%;left:50%;width:2px;height:22px;margin-left:-1px;background:var(--blue)}
+.tis-pr__car .xt-ico{display:block;width:14px;height:14px}
+
+/* ---- station cards ------------------------------------------------------ */
+.tis-pr__stns{display:grid;grid-template-columns:repeat(var(--tis-stns),minmax(0,1fr));gap:var(--tis-g)}
+.tis-pr__stns .tis-pr__stn{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;
+  gap:12px;min-height:0;padding:20px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);
+  text-align:left;color:var(--muted);
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.tis-pr__stns .tis-pr__stn:hover{border-color:var(--line-3);background:var(--paper-2);color:var(--ink)}
+.tis-pr__stns .tis-pr__stn.is-done{border-color:var(--blue-line)}
+.tis-pr__stns .tis-pr__stn[aria-selected="true"]{border-color:var(--ink);background:var(--paper-2);color:var(--ink);
+  box-shadow:inset 0 0 0 1px var(--ink)}
+
+/* the marker is pinned above the card so the line passes over the cards, not through them */
+.tis-pr__mark{position:absolute;top:-29px;left:20px;display:grid;place-items:center;width:18px;height:18px}
+.tis-pr__stn .tis-stn{width:14px;height:14px;background:var(--paper-2);box-shadow:inset 0 0 0 3px var(--line-3);
+  transition:box-shadow var(--d2) var(--e)}
+.tis-pr__stn:hover .tis-stn{box-shadow:inset 0 0 0 3px var(--muted)}
+.tis-pr__stn.is-done .tis-stn{box-shadow:inset 0 0 0 3px var(--blue)}
+.tis-pr__stn[aria-selected="true"] .tis-stn{width:18px;height:18px;
+  box-shadow:inset 0 0 0 4px var(--blue),0 0 0 3px var(--paper-2),0 0 0 4.5px var(--blue)}
+
+.tis-pr__stnt{display:flex;flex-direction:column;gap:6px;min-width:0}
+.tis-pr__stni{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;line-height:1;color:var(--blue);font-variant-numeric:tabular-nums}
+.tis-pr__stnn{font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;letter-spacing:-.012em;line-height:1.2;color:inherit}
+.tis-pr__stnw{font-family:var(--f);font-size:var(--t-xs);line-height:1.4;color:var(--faint)}
+.tis-pr__stnc{margin-top:auto;padding-top:10px;font-family:var(--f);font-size:.625rem;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;line-height:1.3;color:var(--faint)}
+
+/* ---- panes -------------------------------------------------------------- */
+.tis-pr__grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:var(--bdh-gap-l);align-items:stretch}
+.tis-pr__main{display:flex;flex-direction:column;min-width:0}
+.tis-pr__ph{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin:0 0 16px}
+.tis-pr__pw{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.tis-pr__pt{margin:0 0 16px}
+.tis-pr__pd{margin:0;font-size:var(--t-lead);line-height:1.65;color:var(--txt);max-width:56ch}
+.tis-pr__qs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--bdh-gap);margin:32px 0 0}
+.tis-pr__qs>div{padding-top:16px;border-top:1px solid var(--line)}
+.tis-pr__qs dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tis-pr__qs dd{margin:10px 0 0;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+
+/* what clears the station: the sign-off gate for the phase */
+.tis-pr__gate{display:grid;grid-template-columns:20px minmax(0,1fr);gap:16px;margin-top:auto;
+  padding:20px 22px;border:1px solid var(--blue-line);border-radius:var(--r-lg);background:var(--blue-wash)}
+.tis-pr__gate>div{min-width:0}
+.tis-pr__gatei{display:block;margin-top:1px;color:var(--blue-d)}
+.tis-pr__gatei .xt-ico{display:block}
+.tis-pr__gatek{margin:0 0 6px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-d)}
+.tis-pr__gatev{margin:0;font-size:var(--t-sm);line-height:1.6;color:var(--ink)}
+/* the gate needs air above it when the copy above is short */
+.tis-pr__qs+.tis-pr__gate{margin-top:32px}
+
+/* ---- the board beside each phase ---------------------------------------- */
+.tis-pr__out{display:flex;flex-direction:column;padding:24px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.tis-pr__outh{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-bottom:6px;padding-bottom:14px;border-bottom:1px solid var(--line-2)}
+.tis-pr__outk{margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tis-pr__outn{display:grid;place-items:center;min-width:26px;height:22px;padding:0 7px;border-radius:var(--r-xs);
+  background:var(--ink);font-family:var(--f);font-size:var(--t-xs);font-weight:500;color:var(--on-ink);font-variant-numeric:tabular-nums}
+.tis-pr__out .bdh-list small{color:var(--blue)}
+.tis-pr__out .bdh-list .xt-ico{display:block}
+
+.tis-pr__seg{margin-top:22px;padding-top:20px;border-top:1px solid var(--line-2)}
+.tis-pr__seg:last-child{margin-top:auto;padding-top:22px}
+.tis-pr__segk{margin:0 0 12px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tis-pr__who{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.tis-pr__who li{display:flex;align-items:center;gap:12px;font-size:var(--t-sm);line-height:1.45;color:var(--txt)}
+.tis-pr__who .tis-stn{width:10px;height:10px;background:var(--paper);box-shadow:inset 0 0 0 2px var(--blue)}
+.tis-pr__risk{margin:0;font-size:var(--t-sm);line-height:1.65;color:var(--txt)}
+
+/* ---- nav ---------------------------------------------------------------- */
+.tis-pr__nav{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;margin-top:var(--bdh-block);
+  padding-top:22px;border-top:1px solid var(--line)}
+.tis-pr__navn{flex:1 1 340px;min-width:0;margin:0;font-size:var(--t-sm);line-height:1.6;color:var(--muted);max-width:62ch}
+
+@media (max-width:1023px){
+  .tis-pr__grid{grid-template-columns:minmax(0,1fr)}
+  .tis-pr__gate{margin-top:32px}
+  .tis-pr__line{--tis-g:10px;--tis-m0:23px}
+  .tis-pr__stns .tis-pr__stn{padding:14px}
+  .tis-pr__mark{left:14px}
+}
+@media (max-width:860px){
+  .tis-pr__track{display:none}
+  .tis-pr__rail{padding-top:0}
+  .tis-pr__stns{grid-template-columns:minmax(0,1fr);gap:8px}
+  .tis-pr__stns .tis-pr__stn{flex-direction:row;align-items:center;gap:16px;padding:16px 18px}
+  .tis-pr__mark{position:static;flex:none}
+  .tis-pr__stn[aria-selected="true"] .tis-stn{width:14px;height:14px;box-shadow:inset 0 0 0 3px var(--blue)}
+  .tis-pr__stnt{flex:1 1 auto;flex-direction:row;align-items:baseline;flex-wrap:wrap;gap:4px 12px}
+  .tis-pr__stnc{margin:0;padding:0}
+}
+@media (max-width:600px){
+  .tis-pr__qs{grid-template-columns:minmax(0,1fr);gap:20px}
+  .tis-pr__out{padding:20px}
+  .tis-pr__gate{padding:18px}
+  .tis-pr__stnc{display:none}
+  .tis-pr__nav .tis-btn{flex:1 1 160px}
+}
+@media (prefers-reduced-motion:reduce){
+  .tis-pr__done,.tis-pr__car,.tis-pr__stns .tis-pr__stn,.tis-pr__stn .tis-stn{transition:none}
+}

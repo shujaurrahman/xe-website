@@ -1,0 +1,89 @@
+/* Tiers — severity cards and the plan comparison table. Highlight state comes from
+   [data-plan] on the table wrapper (tiers.js); with no JS every column reads equally. */
+
+.tis-ti__sev{margin-bottom:var(--bdh-block)}
+.tis-ti__sh{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 18px}
+.tis-ti__sevs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--bdh-gap);list-style:none}
+.tis-ti__sv{min-width:0;padding-top:16px;border-top:2px solid var(--line-3)}
+.tis-ti__sv:first-child{border-top-color:var(--blue)}
+.tis-ti__svc{display:flex;align-items:baseline;gap:10px;margin:0 0 10px}
+.tis-ti__svp{font-family:var(--f);font-size:var(--t-h4);font-weight:500;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.tis-ti__sv:first-child .tis-ti__svp{color:var(--blue)}
+.tis-ti__svn{font-family:var(--f-h);font-size:var(--t-body);font-weight:500;line-height:1.2;color:var(--ink)}
+.tis-ti__svd{margin:0;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.tis-ti__sve{margin:10px 0 0;font-family:var(--f);font-size:var(--t-xs);line-height:1.6;color:var(--faint)}
+
+/* ---- control row ---- */
+.tis-ti__ctl{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-bottom:20px}
+.tis-ti__ctlk{margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tis-ti__ctl .bdh-ill{margin-left:auto}
+
+/* ---- table ----
+   The table fits inside the wrapper above 860px, so no edge fade is applied there: a mask with
+   nothing to signal only erases the first and last word of every row. Below 860px the table
+   scrolls (min-width 760px) and the fade returns as the scroll cue. */
+.tis-ti__wrap{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);
+  -webkit-mask-image:none;mask-image:none}
+.tis-ti__t{width:100%;min-width:760px;border-collapse:collapse;text-align:left}
+.tis-ti__t th,.tis-ti__t td{padding:14px 18px;vertical-align:top}
+.tis-ti__th0{width:38%;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line-2)}
+.tis-ti__thp{width:20.6%;border-bottom:1px solid var(--line-2);border-left:1px solid var(--line-2);transition:background var(--d2) var(--e)}
+.tis-ti__pn{display:block;font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;letter-spacing:-.012em;line-height:1.2;color:var(--ink)}
+.tis-ti__pl{display:block;margin-top:6px;font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+.tis-ti__gh{position:relative;padding-top:22px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);background:var(--paper-2);
+  box-shadow:inset 3px 0 0 var(--blue)}
+.tis-ti__t tbody+tbody .tis-ti__gh{border-top:1px solid var(--line-2)}
+.tis-ti__rh{font-weight:400;border-top:1px solid var(--line-2)}
+.tis-ti__rn{display:block;font-size:var(--t-sm);font-weight:500;line-height:1.4;color:var(--ink)}
+.tis-ti__rd{display:block;margin-top:5px;font-size:var(--t-xs);line-height:1.55;color:var(--muted);max-width:46ch}
+.tis-ti__t td{border-top:1px solid var(--line-2);border-left:1px solid var(--line-2);transition:background var(--d2) var(--e)}
+.tis-ti__v{display:inline-flex;align-items:center;gap:8px;font-family:var(--f);font-size:var(--t-sm);line-height:1.45;color:var(--ink);font-variant-numeric:tabular-nums}
+.tis-ti__mk{display:grid;place-items:center;flex:none;width:18px;height:18px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--blue);color:var(--blue)}
+.tis-ti__mk .xt-ico{display:block}
+.tis-ti__mk--no{position:relative;box-shadow:inset 0 0 0 1px var(--line-3)}
+.tis-ti__mk--no::before{content:"";width:7px;height:1px;background:var(--line-3)}
+.tis-ti__v--no{color:var(--faint)}
+/* row hover: the whole commitment reads as one line */
+.tis-ti__t tbody tr:not(.tis-ti__gr):hover .tis-ti__rd{color:var(--txt)}
+
+/* highlighted column */
+.tis-ti__tbl[data-plan] .tis-ti__t td,.tis-ti__tbl[data-plan] .tis-ti__thp{color:var(--muted)}
+.tis-ti__tbl[data-plan] .tis-ti__t td .tis-ti__v{color:var(--muted)}
+.tis-ti__tbl[data-plan="essential"] [data-col="essential"],
+.tis-ti__tbl[data-plan="business"] [data-col="business"],
+.tis-ti__tbl[data-plan="critical"] [data-col="critical"]{background:var(--blue-wash)}
+.tis-ti__tbl[data-plan="essential"] td[data-col="essential"] .tis-ti__v,
+.tis-ti__tbl[data-plan="business"] td[data-col="business"] .tis-ti__v,
+.tis-ti__tbl[data-plan="critical"] td[data-col="critical"] .tis-ti__v{color:var(--ink);font-weight:500}
+.tis-ti__tbl[data-plan="essential"] th[data-col="essential"] .tis-ti__pn,
+.tis-ti__tbl[data-plan="business"] th[data-col="business"] .tis-ti__pn,
+.tis-ti__tbl[data-plan="critical"] th[data-col="critical"] .tis-ti__pn{color:var(--ink)}
+
+/* ---- foot ---- */
+.tis-ti__foot{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--bdh-gap-l);margin-top:var(--bdh-block)}
+.tis-ti__note .bdh-t{margin:0 0 16px}
+.tis-ti__std{padding:24px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.tis-ti__stdk{margin:0 0 12px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tis-ti__stdl{margin:0 0 20px;font-size:var(--t-sm);line-height:1.65;color:var(--txt)}
+.tis-ti__std .xt-badges{margin:0}
+.tis-ti__stdn{margin:16px 0 0;font-family:var(--f);font-size:var(--t-xs);line-height:1.5;color:var(--faint)}
+
+@media (max-width:1023px){
+  .tis-ti__sevs{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px var(--bdh-gap)}
+  .tis-ti__foot{grid-template-columns:minmax(0,1fr);gap:var(--bdh-block)}
+}
+/* below the table's 760px min-width the wrapper really does scroll, so the edge fade earns its place */
+@media (max-width:860px){
+  .tis-ti__wrap{-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+  .tis-ti__t th:first-child{padding-left:26px}
+  .tis-ti__t td:last-child{padding-right:26px}
+}
+@media (max-width:600px){
+  .tis-ti__sevs{grid-template-columns:minmax(0,1fr)}
+  .tis-ti__ctl .bdh-ill{margin-left:0}
+  .tis-ti__t th,.tis-ti__t td{padding:12px 14px}
+  .tis-ti__t th:first-child{padding-left:22px}
+  .tis-ti__t td:last-child{padding-right:22px}
+  .tis-ti__std{padding:20px}
+}

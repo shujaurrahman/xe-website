@@ -1,0 +1,46 @@
+/* TM-12 FAQ — a sticky aside and a numbered accordion. core.js animates the panel height, so the
+   panel itself is height:0/overflow:hidden here. Tokens only; no new colours; no !important. */
+
+.tsc-fq{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:var(--bdh-gap-l);align-items:start}
+@media (max-width:980px){.tsc-fq{grid-template-columns:minmax(0,1fr);gap:var(--bdh-block)}}
+
+/* ---------- aside --------------------------------------------------------- */
+.tsc-fq__side{position:sticky;top:var(--bdh-sticky);display:grid;gap:18px;align-content:start}
+@media (max-width:980px){.tsc-fq__side{position:static}}
+.tsc-fq__h{margin:4px 0 0;max-width:16ch}
+.tsc-fq__lead{margin:0;max-width:44ch}
+.tsc-fq__cta{display:grid;gap:12px;justify-items:start;margin-top:6px;padding-top:22px;border-top:1px solid var(--line)}
+.tsc-fq__cw{margin:0;max-width:40ch;font-size:var(--t-xs);line-height:1.65;color:var(--muted)}
+.tsc-fq__badges{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:4px 0 0;padding:0}
+
+/* ---------- accordion ------------------------------------------------------ */
+.tsc-fq__list{list-style:none;margin:0;padding:0;min-width:0;border-top:1px solid var(--line)}
+.tsc-fq__row{border-bottom:1px solid var(--line)}
+.tsc-fq__q{margin:0}
+.tsc-fq__q button{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:start;gap:16px;width:100%;padding:22px 4px;text-align:left;
+  transition:color var(--d1) var(--e-io)}
+.tsc-fq__n{margin-top:5px;color:var(--faint);letter-spacing:.1em;transition:color var(--d1) var(--e-io)}
+.tsc-fq__q button[aria-expanded="true"] .tsc-fq__n{color:var(--blue)}
+.tsc-fq__qt{font-family:var(--f-h);font-size:clamp(1.05rem,1.5vw,1.28rem);font-weight:400;letter-spacing:-.02em;line-height:1.35;color:var(--ink)}
+.tsc-fq__q button:hover .tsc-fq__qt{color:var(--blue-d)}
+
+.tsc-fq__pm{position:relative;width:22px;height:22px;margin-top:4px;border:1px solid var(--line-3);border-radius:50%;flex:none;
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io)}
+.tsc-fq__pm::before,.tsc-fq__pm::after{content:"";position:absolute;left:50%;top:50%;width:9px;height:1px;background:var(--ink);transform:translate(-50%,-50%);
+  transition:transform .35s var(--e),background var(--d1) var(--e-io)}
+.tsc-fq__pm::after{transform:translate(-50%,-50%) rotate(90deg)}
+.tsc-fq__q button:hover .tsc-fq__pm{border-color:var(--ink)}
+.tsc-fq__q button[aria-expanded="true"] .tsc-fq__pm{background:var(--ink);border-color:var(--ink)}
+.tsc-fq__q button[aria-expanded="true"] .tsc-fq__pm::before,.tsc-fq__q button[aria-expanded="true"] .tsc-fq__pm::after{background:var(--on-ink)}
+.tsc-fq__q button[aria-expanded="true"] .tsc-fq__pm::after{transform:translate(-50%,-50%) rotate(0deg)}
+
+.tsc-fq__p{height:0;overflow:hidden;transition:height .45s var(--e)}
+.tsc-fq__a{margin:0;padding:0 46px 26px 44px;max-width:72ch;font-size:var(--t-sm);line-height:1.75;color:var(--txt)}
+
+@media (max-width:560px){
+  .tsc-fq__q button{gap:12px;padding:18px 2px}
+  .tsc-fq__a{padding:0 0 22px}
+}
+@media (prefers-reduced-motion:reduce){
+  .tsc-fq__p,.tsc-fq__pm,.tsc-fq__pm::before,.tsc-fq__pm::after{transition:none}
+}

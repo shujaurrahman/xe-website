@@ -1,0 +1,149 @@
+/* ==========================================================================
+   Search & AI Visibility — 06 · Authority (band--ink)
+   The citation network, its timeline scrubber and readouts, the source-family filter, the
+   source ledger under the graph, the four programme cards and the link-scheme note.
+   Family (press / review / comm / docs) decides the stroke and dash of every edge, the outline
+   of every node and the swatch on every ledger row, so the legend matches the drawing exactly.
+   authority.js sets --w and .is-on per edge and node, and data-focus on .tsv-net when a family
+   is isolated.
+   ========================================================================== */
+
+.tsv-net{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--tsv-gap-l);row-gap:var(--tsv-gap);
+  align-items:start;margin-bottom:var(--tsv-block)}
+.tsv-net__side{grid-column:1 / span 4;display:flex;flex-direction:column;gap:28px;min-width:0}
+.tsv-net__graph{grid-column:5 / -1;display:flex;flex-direction:column;gap:clamp(18px,2vw,26px);min-width:0}
+
+/* ---------- readouts ------------------------------------------------------ */
+.tsv-net__read{display:flex;flex-direction:column;gap:18px}
+.tsv-net__mk{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3);line-height:1.4}
+.tsv-net__mk b{font-weight:600;color:var(--on-ink);font-variant-numeric:tabular-nums}
+
+.tsv-net__stats{display:flex;flex-direction:column;gap:0;margin:0}
+.tsv-net__stats>div{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 0;border-top:1px solid var(--on-ink-line)}
+.tsv-net__stats>div:last-child{border-bottom:1px solid var(--on-ink-line)}
+.tsv-net__stats dt{display:flex;flex-direction:column;gap:3px;font-size:var(--t-xs);line-height:1.4;color:var(--on-ink-3)}
+.tsv-net__stats dt small{font-family:var(--f);font-size:10px;letter-spacing:.04em;line-height:1.4;color:var(--on-ink-3);opacity:.72}
+.tsv-net__stats dd{margin:0;font-family:var(--f-h);font-size:clamp(1.3rem,2vw,1.7rem);font-weight:500;letter-spacing:-.025em;line-height:1;
+  color:var(--on-ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ---------- the scrubber -------------------------------------------------- */
+.tsv-net__ctrl{display:flex;flex-direction:column;gap:10px}
+.tsv-net__lab{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-3);line-height:1.4}
+.tsv-net__range{-webkit-appearance:none;appearance:none;width:100%;height:24px;background:transparent;cursor:pointer}
+.tsv-net__range::-webkit-slider-runnable-track{height:3px;border-radius:2px;background:var(--on-ink-line)}
+.tsv-net__range::-moz-range-track{height:3px;border-radius:2px;background:var(--on-ink-line)}
+.tsv-net__range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;margin-top:-7.5px;border:0;border-radius:50%;
+  background:var(--blue);box-shadow:0 0 0 4px var(--on-ink-card)}
+.tsv-net__range::-moz-range-thumb{width:18px;height:18px;border:0;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px var(--on-ink-card)}
+.tsv-net__range:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.tsv-net__ticks{display:flex;justify-content:space-between;margin:0;font-family:var(--f);font-size:10px;letter-spacing:.08em;color:var(--on-ink-3);line-height:1.4}
+
+/* ---------- source families ----------------------------------------------- */
+.tsv-net__famw{display:flex;flex-direction:column;gap:10px}
+.tsv-net__faml{margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-3);line-height:1.4}
+.tsv-net__fam{display:flex;flex-direction:column;gap:0;margin:0;padding:0;list-style:none}
+.tsv-net__fam li{border-top:1px solid var(--on-ink-line)}
+.tsv-net__fam li:last-child{border-bottom:1px solid var(--on-ink-line)}
+.tsv-net__famb{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:12px;row-gap:3px;width:100%;padding:13px 4px 13px 0;
+  border:0;background:none;text-align:left;cursor:pointer;transition:opacity var(--d1) var(--e-io)}
+.tsv-net__fam i{grid-row:1 / span 2;width:9px;height:9px;margin-top:5px;border-radius:2px;background:var(--on-ink-3);transition:box-shadow var(--d1) var(--e-io)}
+.tsv-net__fam li[data-fam="press"] i{background:var(--blue)}
+.tsv-net__fam li[data-fam="review"] i{background:var(--on-ink)}
+.tsv-net__fam li[data-fam="comm"] i{background:var(--on-ink-2);border-radius:50%}
+.tsv-net__fam li[data-fam="docs"] i{background:transparent;box-shadow:inset 0 0 0 1.5px var(--on-ink-3)}
+.tsv-net__fam b{font-size:var(--t-sm);font-weight:600;line-height:1.35;color:var(--on-ink);transition:color var(--d1) var(--e-io)}
+.tsv-net__fam small{font-size:var(--t-xs);line-height:1.55;color:var(--on-ink-3)}
+.tsv-net__famb:hover b{color:var(--on-ink)}
+.tsv-net__famb[aria-pressed="true"] i{box-shadow:0 0 0 4px var(--on-ink-card)}
+/* an unselected family dims while another is isolated */
+.tsv-net[data-focus] .tsv-net__famb[aria-pressed="false"]{opacity:.42}
+
+/* ---------- the network --------------------------------------------------- */
+.tsv-net__scroll{border-radius:var(--r-lg)}
+/* the graph only scrolls below 620px, so the edge fade is off above it */
+@media (min-width:621px){.tsv-net__scroll{-webkit-mask-image:none;mask-image:none}}
+.tsv-net__svg{display:block;width:100%;height:auto}
+
+.tsv-net__e{stroke:var(--on-ink-line);stroke-width:calc(1px + var(--w,1) * 0.9px);stroke-linecap:round;opacity:0;
+  transition:opacity 420ms var(--e-io),stroke-width 420ms var(--e-io),stroke 420ms var(--e-io)}
+/* the family decides the stroke, exactly as the legend swatch beside it shows */
+.tsv-net__e.is-on{opacity:.9}
+.tsv-net__e.is-on[data-fam="press"]{stroke:var(--blue)}
+.tsv-net__e.is-on[data-fam="review"]{stroke:var(--on-ink)}
+.tsv-net__e.is-on[data-fam="comm"]{stroke:var(--on-ink-2)}
+.tsv-net__e.is-on[data-fam="docs"]{stroke:var(--on-ink-3);stroke-dasharray:4 4}
+
+.tsv-net__n rect{fill:var(--on-ink-card);stroke:var(--on-ink-line);stroke-width:1;transition:stroke 420ms var(--e-io)}
+.tsv-net__n text{font-family:var(--f);font-size:11px;font-weight:500;letter-spacing:.01em;fill:var(--on-ink-3);transition:fill 420ms var(--e-io)}
+.tsv-net__n{opacity:.38;transition:opacity 420ms var(--e-io)}
+.tsv-net__n.is-on{opacity:1}
+.tsv-net__n.is-on[data-fam="press"] rect{stroke:var(--blue)}
+.tsv-net__n.is-on[data-fam="review"] rect{stroke:var(--on-ink-2)}
+.tsv-net__n.is-on[data-fam="comm"] rect{stroke:var(--on-ink-3)}
+.tsv-net__n.is-on[data-fam="docs"] rect{stroke:var(--on-ink-line);stroke-dasharray:4 4}
+.tsv-net__n.is-on text{fill:var(--on-ink)}
+
+.tsv-net__c circle{fill:var(--on-ink-card);stroke:var(--blue);stroke-width:1.5}
+.tsv-net__c text{font-family:var(--f-h);font-size:14px;font-weight:500;letter-spacing:-.01em;fill:var(--on-ink)}
+
+/* isolating a family from the legend */
+.tsv-net[data-focus="press"] :is(.tsv-net__e,.tsv-net__n):not([data-fam="press"]),
+.tsv-net[data-focus="review"] :is(.tsv-net__e,.tsv-net__n):not([data-fam="review"]),
+.tsv-net[data-focus="comm"] :is(.tsv-net__e,.tsv-net__n):not([data-fam="comm"]),
+.tsv-net[data-focus="docs"] :is(.tsv-net__e,.tsv-net__n):not([data-fam="docs"]){opacity:.12}
+.tsv-net[data-focus="press"] .tsv-net__led:not([data-fam="press"]),
+.tsv-net[data-focus="review"] .tsv-net__led:not([data-fam="review"]),
+.tsv-net[data-focus="comm"] .tsv-net__led:not([data-fam="comm"]),
+.tsv-net[data-focus="docs"] .tsv-net__led:not([data-fam="docs"]){opacity:.3}
+
+/* ---------- the source ledger under the graph ----------------------------- */
+.tsv-net__ledger{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px 26px;margin:0;padding:0;list-style:none}
+.tsv-net__led{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:11px;row-gap:2px;padding:11px 0;
+  border-top:1px solid var(--on-ink-line);opacity:.34;transition:opacity 420ms var(--e-io)}
+.tsv-net__led.is-on{opacity:1}
+.tsv-net__led i{grid-row:1 / span 2;width:9px;height:9px;margin-top:4px;border-radius:2px;background:var(--on-ink-3)}
+.tsv-net__led[data-fam="press"] i{background:var(--blue)}
+.tsv-net__led[data-fam="review"] i{background:var(--on-ink)}
+.tsv-net__led[data-fam="comm"] i{background:var(--on-ink-2);border-radius:50%}
+.tsv-net__led[data-fam="docs"] i{background:transparent;box-shadow:inset 0 0 0 1.5px var(--on-ink-3)}
+.tsv-net__led b{font-family:var(--f);font-size:var(--t-xs);font-weight:600;letter-spacing:.01em;line-height:1.4;color:var(--on-ink)}
+.tsv-net__led span{font-family:var(--f);font-size:10px;letter-spacing:.04em;line-height:1.45;color:var(--on-ink-3)}
+
+/* ---------- the foot ------------------------------------------------------ */
+.tsv-auth__foot{display:flex;flex-direction:column;gap:var(--tsv-gap)}
+.tsv-work{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--tsv-gap);margin:0;padding:0;list-style:none}
+.tsv-work__c{display:flex;flex-direction:column;gap:14px}
+.tsv-work__i{display:inline-flex;color:var(--on-ink)}
+/* in place by default — the animation starts from hidden, not the card */
+.is-in .tsv-work__c{animation:tsv-auth-in 500ms var(--e-io) backwards;animation-delay:calc(var(--i,0) * 90ms)}
+@keyframes tsv-auth-in{from{opacity:0;transform:translateY(10px)}}
+.tsv-auth__note{max-width:none}
+
+@media (max-width:1100px){
+  .tsv-net__side{grid-column:1 / span 5}
+  .tsv-net__graph{grid-column:6 / -1}
+  .tsv-work{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:900px){
+  .tsv-net{grid-template-columns:minmax(0,1fr)}
+  .tsv-net__side,.tsv-net__graph{grid-column:1 / -1}
+  .tsv-net{row-gap:var(--tsv-block)}
+}
+@media (max-width:760px){
+  .tsv-net__ledger{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px}
+}
+@media (max-width:640px){
+  /* the labels keep their 11px: the graph scrolls sideways instead of shrinking */
+  .tsv-net__svg{width:560px;min-width:560px;height:400px}
+}
+@media (max-width:560px){
+  .tsv-work{grid-template-columns:minmax(0,1fr)}
+  .tsv-net__stats>div{flex-direction:column;align-items:flex-start;gap:6px}
+  .tsv-net__ledger{grid-template-columns:minmax(0,1fr)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .tsv-work__c{opacity:1;transform:none;animation:none}
+  .tsv-net__e,.tsv-net__n,.tsv-net__n rect,.tsv-net__n text,.tsv-net__led{transition:none}
+}

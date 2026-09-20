@@ -1,0 +1,119 @@
+/* Integration & Support · catalogue — connector directory: search bar, category filter, compact connector
+   tiles (FLIP reflow) and the connector sheet for the selected system, with a live wire between
+   "Your platform" and the system. */
+.tis-ca{min-width:0;border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);box-shadow:var(--sh-1)}
+
+/* ---- search bar ---- */
+.tis-ca__bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding:clamp(16px,2vw,22px) clamp(16px,2.2vw,28px);border-bottom:1px solid var(--line-2)}
+.tis-ca__search{position:relative;flex:1 1 320px;max-width:560px;display:flex;align-items:center;min-width:0}
+.tis-ca__search>svg{position:absolute;left:14px;color:var(--muted);pointer-events:none}
+.tis-ca__search input{width:100%;min-height:48px;padding:0 44px 0 44px;border:1px solid var(--line-3);border-radius:var(--r-sm);background:var(--paper);font-family:var(--f-b);font-size:var(--t-sm);color:var(--ink);
+  transition:border-color var(--d1) var(--e-io),box-shadow var(--d2) var(--e)}
+.tis-ca__search input::placeholder{color:var(--faint)}
+.tis-ca__search input:hover{border-color:var(--muted)}
+.tis-ca__search input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-wash-2)}
+.tis-ca__search input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+.tis-ca__clear{position:absolute;right:8px;display:grid;place-items:center;width:32px;height:32px;border-radius:var(--r-xs);font-size:1.1rem;line-height:1;color:var(--muted)}
+.tis-ca__clear:hover{background:var(--paper-3);color:var(--ink)}
+.tis-ca__clear[hidden]{display:none}
+.tis-ca__count{font-family:var(--f);font-size:var(--t-xs);letter-spacing:.04em;color:var(--muted);white-space:nowrap}
+.tis-ca__count b{font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* ---- category filter ---- */
+.tis-ca__cats{display:flex;flex-wrap:wrap;gap:6px;padding:14px clamp(16px,2.2vw,28px);border-bottom:1px solid var(--line-2);background:var(--paper-2)}
+.tis-ca__cat{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 12px 0 14px;border:1px solid var(--line-3);border-radius:var(--r-pill);background:var(--paper);font-size:var(--t-xs);font-weight:500;color:var(--txt);white-space:nowrap;
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.tis-ca__cat span{font-family:var(--f);font-size:.625rem;color:var(--faint);font-variant-numeric:tabular-nums}
+.tis-ca__cat:hover{border-color:var(--ink);color:var(--ink)}
+.tis-ca__cat[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.tis-ca__cat[aria-pressed="true"] span{color:var(--on-ink-2)}
+
+/* ---- body: tiles + sheet ---- */
+.tis-ca__body{display:grid;grid-template-columns:minmax(0,1fr) clamp(320px,30vw,400px);align-items:start}
+.tis-ca__list{min-width:0;padding:clamp(16px,2vw,22px) clamp(16px,2.2vw,28px) clamp(20px,2.4vw,28px)}
+.tis-ca__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+.tis-ca__item{min-width:0}
+.tis-ca__item.is-hide{display:none}
+.tis-ca__item.is-new{animation:tis-ca-in .5s var(--e)}
+@keyframes tis-ca-in{from{opacity:0;transform:translateY(8px)}}
+.tis-ca__tile{display:grid;grid-template-columns:36px minmax(0,1fr);align-items:center;column-gap:12px;width:100%;min-height:72px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--paper);text-align:left;
+  transition:transform .55s var(--e),border-color var(--d1) var(--e-io),background var(--d1) var(--e-io),box-shadow var(--d2) var(--e)}
+.tis-ca__tile:hover{border-color:var(--line-3);box-shadow:var(--sh-1)}
+.tis-ca__tile[aria-pressed="true"]{border-color:var(--ink);background:var(--blue-wash);box-shadow:inset 0 0 0 1px var(--ink)}
+.tis-ca__mark{display:grid;place-items:center;width:36px;height:36px;border-radius:9px;background:var(--paper-3);color:var(--ink)}
+.tis-ca__tile[aria-pressed="true"] .tis-ca__mark{background:var(--paper)}
+.tis-ca__ico{display:grid;place-items:center;color:var(--muted)}
+.tis-ca__tt{display:flex;flex-direction:column;gap:3px;min-width:0}
+/* names wrap to a second line rather than ellipsing: "Microsoft Dynamics 365" is a name, not a hint */
+.tis-ca__n{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;font-family:var(--f-h);font-size:.98rem;font-weight:500;letter-spacing:-.008em;line-height:1.2;color:var(--ink);overflow:hidden;white-space:normal;overflow-wrap:break-word}
+.tis-ca__m{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;font-family:var(--f);font-size:.625rem;letter-spacing:.03em;line-height:1.35;color:var(--faint);overflow:hidden;white-space:normal;overflow-wrap:break-word}
+
+.tis-ca__empty{display:flex;gap:12px;align-items:flex-start;margin-top:14px;padding:18px 20px;border:1px dashed var(--line-3);border-radius:var(--r-sm);font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.tis-ca__empty[hidden]{display:none}
+.tis-ca__empty svg{flex:none;margin-top:2px}
+.tis-ca__empty b{font-family:var(--f);font-weight:500;color:var(--ink)}
+.tis-ca__empty a{color:var(--blue-d);text-decoration:underline;text-underline-offset:3px}
+
+/* ---- connector sheet ---- */
+.tis-ca__sheet{position:sticky;top:var(--bdh-sticky);align-self:start;min-width:0;padding:clamp(18px,2vw,26px) clamp(18px,2.2vw,28px) clamp(20px,2.4vw,28px);border-left:1px solid var(--line-2);background:var(--paper-2);border-radius:0 var(--r-xl) var(--r-xl) 0}
+.tis-ca__sheet.is-swap .tis-ca__sh,.tis-ca__sheet.is-swap .tis-ca__facts,.tis-ca__sheet.is-swap .tis-ca__chips,.tis-ca__sheet.is-swap .tis-ca__watch{animation:tis-ca-swap .4s var(--e)}
+@keyframes tis-ca-swap{from{opacity:0;transform:translateY(6px)}}
+.tis-ca__sh{display:flex;align-items:center;gap:14px;min-width:0}
+.tis-ca__big{display:grid;place-items:center;flex:none;width:52px;height:52px;border-radius:12px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+.tis-ca__cat2{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);line-height:1.3}
+.tis-ca__st{margin-top:4px;font-family:var(--f-h);font-size:1.35rem;font-weight:500;letter-spacing:-.015em;line-height:1.15;color:var(--ink)}
+
+/* the wire */
+.tis-ca__flow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;margin-top:18px;padding:12px 12px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--paper)}
+.tis-ca__node{display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border-radius:var(--r-xs);background:var(--ink);font-family:var(--f);font-size:.625rem;font-weight:500;letter-spacing:.04em;color:var(--on-ink);white-space:nowrap}
+.tis-ca__node--sys{background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);max-width:132px;overflow:hidden;text-overflow:ellipsis}
+.tis-ca__wire{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.tis-ca__wire i{position:relative;display:block;width:100%;height:2px;border-radius:1px;background:var(--line-3);overflow:visible}
+.tis-ca__wire i::before,.tis-ca__wire i::after{content:"";position:absolute;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--blue);opacity:0}
+.tis-ca__wire i::before{left:0}
+.tis-ca__wire i::after{left:0}
+.tis-ca__wire b{font-family:var(--f);font-size:.5625rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.is-live .tis-ca__wire[data-ca-dirc="in"] i::before,.is-live .tis-ca__wire[data-ca-dirc="two"] i::before{animation:tis-ca-fwd 2.4s linear infinite}
+.is-live .tis-ca__wire[data-ca-dirc="out"] i::after,.is-live .tis-ca__wire[data-ca-dirc="two"] i::after{animation:tis-ca-back 2.4s linear infinite;animation-delay:-1.2s}
+@keyframes tis-ca-fwd{0%{opacity:0;transform:translateX(0)}10%{opacity:1}90%{opacity:1}100%{opacity:0;transform:translateX(calc(var(--w,200px) - 8px))}}
+@keyframes tis-ca-back{0%{opacity:0;transform:translateX(calc(var(--w,200px) - 8px))}10%{opacity:1}90%{opacity:1}100%{opacity:0;transform:translateX(0)}}
+
+/* flex, not a fixed three-up: a narrow sheet drops a cell to the next row instead of splitting
+   "Webhooks" across two lines */
+.tis-ca__facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.tis-ca__facts>div{flex:1 1 94px;min-width:0;padding:10px 12px;border-radius:var(--r-xs);background:var(--paper)}
+.tis-ca__facts dt{font-family:var(--f);font-size:.5625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.3}
+.tis-ca__facts dd{margin-top:5px;font-size:var(--t-xs);font-weight:500;line-height:1.35;color:var(--ink);overflow-wrap:break-word;word-break:normal;hyphens:none}
+.tis-ca__k{display:flex;align-items:center;gap:8px;margin-top:18px;margin-bottom:8px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.3}
+.tis-ca__chips{display:flex;flex-wrap:wrap;gap:6px}
+.tis-ca__chips li{display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border-radius:var(--r-pill);background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);font-size:var(--t-xs);font-weight:500;color:var(--ink);white-space:nowrap}
+.tis-ca__chips--how li{font-family:var(--f);font-size:.6875rem;font-weight:500;letter-spacing:.02em;color:var(--blue-d);background:var(--blue-wash);box-shadow:none}
+.tis-ca__watch{margin-top:18px;padding:14px 16px;border-radius:var(--r-sm);background:var(--paper);border:1px solid var(--line)}
+.tis-ca__watch .tis-ca__k{margin-top:0;color:var(--ink)}
+.tis-ca__watch p:last-child{font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+
+.tis-ca__note{margin-top:20px;max-width:100ch;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;line-height:1.6;color:var(--faint)}
+
+@media (max-width:1023px){
+  .tis-ca__body{grid-template-columns:minmax(0,1fr)}
+  .tis-ca__sheet{position:static;border-left:0;border-top:1px solid var(--line-2);border-radius:0 0 var(--r-xl) var(--r-xl)}
+}
+@media (max-width:600px){
+  .tis-ca__bar{padding:14px 16px}
+  .tis-ca__search{flex-basis:100%;max-width:none}
+  .tis-ca__cats{padding:12px 16px}
+  .tis-ca__cat{min-height:40px}
+  .tis-ca__list{padding:14px 16px 18px}
+  .tis-ca__grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+  .tis-ca__tile{grid-template-columns:30px minmax(0,1fr);column-gap:10px;min-height:64px;padding:10px}
+  .tis-ca__mark{width:30px;height:30px}
+  .tis-ca__n{font-size:.9rem}
+  .tis-ca__sheet{padding:18px 16px 20px}
+  .tis-ca__facts>div{flex:1 1 110px}
+  .tis-ca__node--sys{max-width:100px}
+}
+@media (prefers-reduced-motion:reduce){
+  .tis-ca__tile{transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io)}
+  .tis-ca__item.is-new,.tis-ca__sheet.is-swap *{animation:none}
+  .tis-ca__wire i::before{opacity:1;left:calc(50% - 4px)}
+}

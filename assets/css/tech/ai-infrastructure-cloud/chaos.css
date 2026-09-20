@@ -1,0 +1,181 @@
+/* AI Infrastructure & Cloud · chaos — the Failure Drill: controls, timeline, four linked charts, the
+   architecture mini-map and the incident log on an ink console. Loops (flowing routes, blinking LEDs)
+   run only under .is-live; every state is readable without motion. */
+.tic-dr{position:relative;padding:clamp(18px,2.2vw,30px);border:1px solid var(--on-ink-line);border-radius:var(--r-xl);background:var(--on-ink-card)}
+.tic-dr__data{display:none}
+
+/* ---- controls ---- */
+.tic-dr__bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 28px}
+.tic-dr__inject{display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-width:0}
+.tic-dr__lab{margin-right:6px;color:var(--on-ink-3)}
+.tic-dr__scn{gap:10px;padding-inline:14px 16px}
+.tic-dr__scn .tic-btn__k{color:var(--blue)}
+.tic-dr__scn[aria-pressed="true"] .tic-btn__k{color:var(--blue-d)}
+.tic-dr__sw{flex:none;gap:14px;font-family:var(--f-b);font-size:var(--t-sm)}
+.tic-dr__swv{margin-left:-6px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-3);min-width:3ch}
+.tic-dr__sw[aria-pressed="true"] .tic-dr__swv{color:var(--blue)}
+
+/* ---- timeline ---- */
+.tic-dr__time{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:18px clamp(16px,2vw,28px);margin-top:clamp(18px,2vw,26px);padding:14px clamp(14px,1.6vw,20px);border:1px solid var(--on-ink-line);border-radius:var(--r);background:var(--ink)}
+.tic-dr__play{min-width:112px;padding-inline:14px 18px}
+.tic-dr__pi{position:relative;flex:none;width:12px;height:12px}
+.tic-dr__pi::before{content:"";position:absolute;inset:0;background:currentColor;clip-path:polygon(0 0,100% 50%,0 100%);transition:clip-path var(--d2) var(--e)}
+.is-playing .tic-dr__pi::before{clip-path:polygon(0 0,35% 0,35% 100%,0 100%);box-shadow:none}
+.is-playing .tic-dr__pi::after{content:"";position:absolute;inset:0 0 0 65%;background:currentColor}
+.tic-dr__scrub{position:relative;min-width:0;padding:18px 0 22px}
+.tic-dr__scrub::before,.tic-dr__scrub::after{content:"";position:absolute;left:0;right:0;top:24px;height:3px;border-radius:2px;pointer-events:none}
+.tic-dr__scrub::before{background:var(--on-ink-line)}
+.tic-dr__scrub::after{background:var(--blue);transform-origin:left center;transform:scaleX(var(--p,1))}
+.tic-dr__range{position:relative;z-index:2;display:block;width:100%;height:16px;margin:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+.tic-dr__range::-webkit-slider-runnable-track{height:3px;background:transparent}
+.tic-dr__range::-moz-range-track{height:3px;background:transparent}
+.tic-dr__range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;margin-top:-6.5px;border-radius:50%;background:var(--paper);border:3px solid var(--blue);box-shadow:0 0 0 4px var(--ink)}
+.tic-dr__range::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--paper);border:3px solid var(--blue);box-shadow:0 0 0 4px var(--ink)}
+.tic-dr__range:focus-visible{outline:none}
+.tic-dr__range:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px var(--ink),0 0 0 6px var(--blue)}
+.tic-dr__hitmark{position:absolute;left:calc(var(--x) * 100%);top:6px;transform:translateX(-50%);font-family:var(--f);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-2);line-height:1;pointer-events:none}
+.tic-dr__hitmark::after{content:"";position:absolute;left:50%;top:12px;width:1px;height:12px;background:var(--on-ink-2)}
+.tic-dr__ticks{position:absolute;left:0;right:0;bottom:0;height:12px;pointer-events:none}
+.tic-dr__ticks i{position:absolute;left:calc(var(--x) * 100%);transform:translateX(-50%);font-family:var(--f);font-size:9.5px;letter-spacing:.04em;color:var(--on-ink-3);font-style:normal;line-height:1}
+.tic-dr__ticks i:first-child{transform:none}
+.tic-dr__ticks i:last-child{transform:translateX(-100%)}
+.tic-dr__clock{display:flex;align-items:baseline;gap:6px;font-family:var(--f);font-size:var(--t-sm);color:var(--on-ink-3);white-space:nowrap;font-variant-numeric:tabular-nums}
+.tic-dr__clock b{font-size:1.125rem;font-weight:500;color:var(--on-ink)}
+
+/* ---- main: charts + side ---- */
+.tic-dr__main{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(16px,2vw,28px);margin-top:clamp(16px,2vw,28px)}
+.tic-dr__charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:1fr 1fr auto;gap:12px}
+.tic-dr__chart{display:flex;flex-direction:column;gap:12px;min-width:0;padding:16px 16px 14px;border:1px solid var(--on-ink-line);border-radius:var(--r);background:var(--ink)}
+.tic-dr__ch{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.tic-dr__ch .tic-k span{color:var(--on-ink-3);text-transform:none;letter-spacing:.04em;margin-left:4px}
+.tic-dr__val{font-size:clamp(1.1rem,1.4vw,1.35rem);white-space:nowrap}
+.tic-dr__plot{position:relative;flex:1;min-height:118px;padding-right:60px}
+.tic-dr__svg{position:absolute;inset:0 60px 0 0;width:calc(100% - 60px);height:100%;overflow:visible}
+.tic-dr__gl{stroke:var(--on-ink-line);stroke-width:1;vector-effect:non-scaling-stroke}
+.tic-dr__inj{stroke:var(--on-ink-3);stroke-width:1;stroke-dasharray:2 4;vector-effect:non-scaling-stroke}
+.tic-dr__th{stroke:var(--on-ink-2);stroke-width:1;stroke-dasharray:5 4;vector-effect:non-scaling-stroke}
+.tic-dr__ghost{fill:none;stroke:var(--on-ink-3);stroke-width:1.25;stroke-dasharray:3 3;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.tic-dr__future{fill:none;stroke:var(--on-ink-line);stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.tic-dr__line{fill:none;stroke:var(--blue);stroke-width:2.25;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.tic-dr__ph{stroke:var(--on-ink);stroke-width:1;vector-effect:non-scaling-stroke;opacity:.7}
+.tic-dr__thl,.tic-dr__ax{position:absolute;right:0;font-family:var(--f);font-size:9.5px;letter-spacing:.03em;color:var(--on-ink-3);line-height:1;white-space:nowrap}
+.tic-dr__ax--t{top:0}
+.tic-dr__ax--b{bottom:0}
+.tic-dr__thl{top:calc(var(--y) * 100%);transform:translateY(-50%);color:var(--on-ink-2)}
+.tic-dr__legend{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:8px 22px;padding:4px 4px 0;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--on-ink-3)}
+.tic-dr__legend span{display:inline-flex;align-items:center;gap:8px}
+.tic-dr__legend span::before{content:"";width:16px;height:0;border-top:2px solid var(--blue)}
+.tic-dr__legend .is-ghost::before{border-top:1.5px dashed var(--on-ink-3)}
+.tic-dr__legend .is-inj::before{width:0;height:12px;border-top:0;border-left:1px dashed var(--on-ink-3)}
+.tic-dr__legend b{font-weight:500;color:var(--on-ink-2)}
+
+/* ---- side: map + log ---- */
+.tic-dr__side{display:flex;flex-direction:column;gap:12px;min-width:0}
+.tic-dr__map,.tic-dr__log{display:flex;flex-direction:column;gap:10px;min-width:0;padding:16px;border:1px solid var(--on-ink-line);border-radius:var(--r);background:var(--ink)}
+.tic-dr__mk{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.tic-dr__mk span:last-child{text-transform:none;letter-spacing:.03em;color:var(--on-ink-2);text-align:right;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tic-dr__msvg{display:block;width:100%;height:auto;overflow:visible}
+.tic-dr__msvg text{font-family:var(--f);font-size:10px;letter-spacing:.02em;fill:var(--on-ink-2)}
+.tic-dr__fl{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;fill:var(--on-ink-3)}
+.tic-dr__frame{fill:none;stroke:var(--on-ink-line);stroke-width:1;transition:stroke var(--d3) var(--e),stroke-dasharray var(--d3) var(--e)}
+.tic-dr__lk{fill:none;stroke:var(--on-ink-line);stroke-width:1.5;transition:stroke var(--d3) var(--e),opacity var(--d3) var(--e)}
+.tic-dr__lk--in,.tic-dr__lk--gr,.tic-dr__lk--a,.tic-dr__lk--pool{stroke:var(--blue);stroke-dasharray:4 7;stroke-linecap:round}
+.is-live .tic-dr__lk--in,.is-live .tic-dr__lk--gr,.is-live .tic-dr__lk--a,.is-live .tic-dr__lk--pool,.is-live .is-b-on .tic-dr__lk--b,.is-live .is-sb-up .tic-dr__lk--sb{animation:tic-dr-flow 1.1s linear infinite}
+@keyframes tic-dr-flow{to{stroke-dashoffset:-22}}
+.tic-dr__node{fill:var(--on-ink-card);stroke:var(--on-ink-line);stroke-width:1;transition:stroke var(--d3) var(--e),fill var(--d3) var(--e)}
+.tic-dr__node--c{fill:var(--paper);stroke:var(--paper)}
+.tic-dr__node--r{stroke:var(--blue)}
+.tic-dr__nt--r{fill:var(--on-ink)}
+.tic-dr__node--c+.tic-dr__nt{fill:var(--ink)}
+.tic-dr__chip{fill:none;stroke:var(--on-ink-line);stroke-width:1;stroke-dasharray:2 3;transition:stroke var(--d3) var(--e)}
+.tic-dr__ct{font-size:9px;fill:var(--on-ink-3)}
+.tic-dr__x{font-size:11px;font-weight:600;letter-spacing:.06em;fill:var(--on-ink);opacity:0;transition:opacity var(--d2) var(--e)}
+.tic-dr__gpu rect{fill:var(--blue);stroke:var(--blue);stroke-width:1;transition:fill var(--d3) var(--e),stroke var(--d3) var(--e),opacity var(--d3) var(--e)}
+.tic-dr__gpu text{font-size:8.5px;fill:var(--on-ink-3)}
+.tic-dr__gn{font-size:9px;font-weight:500;fill:var(--on-ink)}
+.tic-dr__gpu--w0 .tic-dr__gn,.tic-dr__gpu--w1 .tic-dr__gn{fill:var(--on-ink-3)}
+.is-w0-up .tic-dr__gpu--w0 .tic-dr__gn,.is-w1-up .tic-dr__gpu--w1 .tic-dr__gn{fill:var(--on-ink)}
+.tic-dr__gpu--w0 rect,.tic-dr__gpu--w1 rect{fill:transparent;stroke:var(--on-ink-3);stroke-dasharray:3 2}
+.tic-dr__sbn{fill:transparent;stroke:var(--on-ink-3);stroke-width:1;stroke-dasharray:3 2;transition:fill var(--d3) var(--e),stroke var(--d3) var(--e)}
+.tic-dr__lk--sb,.tic-dr__lk--b{stroke-dasharray:4 7;stroke-linecap:round}
+
+/* map states (set by chaos.js on the svg) */
+.is-n3-down .tic-dr__gpu--n3 rect{fill:transparent;stroke:var(--on-ink-3);stroke-dasharray:2 2}
+.is-n3-down .tic-dr__gpu--n3 text{fill:var(--on-ink)}
+.is-n3-ejected .tic-dr__gpu--n3{opacity:.35}
+.is-w0-warming .tic-dr__gpu--w0 rect{stroke:var(--blue)}
+.is-w0-up .tic-dr__gpu--w0 rect,.is-w1-up .tic-dr__gpu--w1 rect{fill:var(--blue);stroke:var(--blue);stroke-dasharray:0}
+.is-a-429 .tic-dr__x{opacity:1}
+.is-a-429 .tic-dr__prov--a .tic-dr__node{stroke:var(--on-ink-2)}
+.is-a-429 .tic-dr__lk--a{stroke:var(--on-ink-3);animation:none}
+.is-a-jam .tic-dr__lk--a{stroke:var(--on-ink-2);stroke-dasharray:1 3}
+.is-b-on .tic-dr__lk--b{stroke:var(--blue)}
+.is-b-on .tic-dr__prov--b .tic-dr__node{stroke:var(--blue)}
+.is-a-open .tic-dr__lk--a{opacity:.35}
+.is-a-half .tic-dr__lk--a{stroke:var(--blue);opacity:.6;stroke-dasharray:2 9}
+.is-cache-hot .tic-dr__chip--c{stroke:var(--blue);stroke-dasharray:0}
+.is-queue-hot .tic-dr__chip--q{stroke:var(--on-ink-2);stroke-dasharray:0}
+.is-p-down .tic-dr__frame--p{stroke:var(--on-ink-3);stroke-dasharray:4 4}
+.is-p-down .tic-dr__fl--p{fill:var(--on-ink)}
+.is-p-down .tic-dr__lk--gr,.is-p-down .tic-dr__lk--a,.is-p-down .tic-dr__lk--pool,.is-p-down .tic-dr__lk--b{stroke:var(--on-ink-line);animation:none;opacity:.5}
+.is-p-down .tic-dr__gpu rect{fill:transparent;stroke:var(--on-ink-line);stroke-dasharray:2 2}
+.is-p-down .tic-dr__node:not(.tic-dr__node--c){stroke:var(--on-ink-line);opacity:.5}
+.is-p-down .tic-dr__nt--r{fill:var(--on-ink-3)}
+.is-p-down .tic-dr__lk--in{stroke:var(--on-ink-3);animation:none;stroke-dasharray:1 3}
+.is-sb-up .tic-dr__lk--sb{stroke:var(--blue)}
+.is-sb-up .tic-dr__frame--s{stroke:var(--blue)}
+.is-sb-up .tic-dr__sbn{fill:var(--blue);stroke:var(--blue);stroke-dasharray:0}
+.is-sb-up .tic-dr__lk--in{opacity:0}
+
+/* log */
+.tic-dr__lines{display:flex;flex-direction:column;gap:0;min-height:236px;font-family:var(--f);font-size:var(--t-xs);line-height:1.45}
+.tic-dr__lines li{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;padding:6px 0;border-top:1px solid var(--on-ink-line);color:var(--on-ink-2)}
+.tic-dr__lines li:first-child{border-top:0}
+.tic-dr__lines li.is-fut{opacity:.26}
+.tic-dr__lines li{transition:opacity .35s var(--e)}
+.tic-dr__lines time{color:var(--on-ink-3);font-variant-numeric:tabular-nums}
+.tic-dr__lines span{overflow-wrap:anywhere}
+.tic-dr__lines .is-crit span{color:var(--on-ink);font-weight:500}
+.tic-dr__lines .is-crit time{color:var(--on-ink)}
+.tic-dr__lines .is-warn span{color:var(--on-ink-2)}
+.tic-dr__lines .is-ok span{color:var(--blue)}
+.tic-dr__lines .is-info span{color:var(--on-ink-3)}
+.tic-dr__lines .is-new{animation:tic-dr-line .5s var(--e)}
+@keyframes tic-dr-line{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* summary */
+.tic-dr__sum{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:clamp(16px,2vw,24px);padding-top:clamp(16px,2vw,22px);border-top:1px solid var(--on-ink-line)}
+.tic-dr__sum>div{display:flex;flex-direction:column;gap:8px;min-width:0}
+.tic-dr__sum dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3);line-height:1.3}
+.tic-dr__sum dd{font-family:var(--f);font-size:var(--t-sm);font-weight:500;color:var(--on-ink);font-variant-numeric:tabular-nums;line-height:1.35}
+
+/* notes */
+.tic-dr__notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--tic-gap);margin-top:var(--bdh-block)}
+.tic-dr__notes>li{display:flex;flex-direction:column;gap:12px;padding:clamp(22px,2.4vw,30px);border:1px solid var(--on-ink-line);border-radius:var(--r-lg);background:var(--on-ink-card)}
+.tic-dr__notes .bdh-d{max-width:none}
+.tic-dr__notes .bdh-bullets>li{font-size:var(--t-sm)}
+
+@media (max-width:1100px){
+  .tic-dr__main{grid-template-columns:minmax(0,1fr)}
+  .tic-dr__charts{grid-template-rows:auto}
+  .tic-dr__plot{flex:none;height:130px}
+  .tic-dr__side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:1023px){.tic-dr__notes{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:760px){
+  .tic-dr__side{grid-template-columns:minmax(0,1fr)}
+  .tic-dr__sum{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tic-dr__time{grid-template-columns:auto minmax(0,1fr);row-gap:8px}
+  .tic-dr__clock{grid-column:1 / -1;justify-content:flex-end}
+  .tic-dr__lines{min-height:0}
+}
+@media (max-width:600px){
+  .tic-dr{padding:14px;border-radius:var(--r-lg)}
+  .tic-dr__charts{grid-template-columns:minmax(0,1fr)}
+  .tic-dr__inject{width:100%}
+  .tic-dr__scn{flex:1 1 100%;justify-content:flex-start}
+  .tic-dr__lab{flex-basis:100%;margin:0 0 2px}
+  .tic-dr__sum{grid-template-columns:minmax(0,1fr)}
+  .tic-dr__mk{flex-direction:column;align-items:flex-start;gap:4px}
+  .tic-dr__mk span:last-child{white-space:normal;text-align:left}
+}

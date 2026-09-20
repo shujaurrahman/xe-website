@@ -1,0 +1,101 @@
+/* Hub · industries — a sector list-detail. Left: a sticky vertical tablist with an auto-advance progress line.
+   Right: the sector pane — a 21:9 photograph with a framed readout, the four constraints that shape the build,
+   the capabilities most used, the frameworks that apply and a typical first project. */
+.tih-ind{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--bdh-gap-l);align-items:start}
+
+/* ---- list ---- */
+.tih-ind__side{position:sticky;top:var(--bdh-sticky);display:flex;flex-direction:column;gap:14px;min-width:0}
+.tih-ind__lk{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.tih-ind__lk b{font-weight:500;color:var(--ink)}
+.tih-ind__list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.tih-ind__tab{position:relative;display:grid;grid-template-columns:34px minmax(0,1fr) 14px;align-items:center;column-gap:12px;width:100%;min-height:70px;padding:14px 8px 14px 14px;
+  border-bottom:1px solid var(--line);text-align:left;transition:background var(--d2) var(--e)}
+.tih-ind__tab::before{content:"";position:absolute;left:0;top:-1px;bottom:-1px;width:2px;background:var(--blue);transform:scaleY(0);transform-origin:center top;transition:transform var(--d2) var(--e)}
+.tih-ind__tab:hover{background:var(--paper)}
+.tih-ind__tab[aria-selected="true"]{background:var(--paper)}
+.tih-ind__tab[aria-selected="true"]::before{transform:none}
+.tih-ind__tab:focus-visible{outline-offset:-2px}
+.tih-ind__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;color:var(--faint);transition:color var(--d2) var(--e)}
+.tih-ind__tn{display:flex;flex-direction:column;gap:5px;min-width:0;font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.008em;line-height:1.2;color:var(--muted);transition:color var(--d2) var(--e)}
+.tih-ind__tn small{font-family:var(--f);font-size:var(--tih-mono-s);font-weight:400;letter-spacing:.06em;text-transform:uppercase;line-height:1.3;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tih-ind__tab i{font-family:var(--f);font-style:normal;color:var(--line-3);transition:color var(--d2) var(--e),transform var(--d2) var(--e)}
+.tih-ind__tab:hover .tih-ind__tn,.tih-ind__tab[aria-selected="true"] .tih-ind__tn{color:var(--ink)}
+.tih-ind__tab[aria-selected="true"] .tih-ind__n{color:var(--blue)}
+.tih-ind__tab[aria-selected="true"] i{color:var(--blue);transform:translateX(3px)}
+/* auto-advance progress: runs only while the demo is cycling and the section is on screen */
+.tih-ind__prog{position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--blue);transform:scaleX(0);transform-origin:left center;pointer-events:none}
+.tih-ind.is-auto.is-live .tih-ind__tab[aria-selected="true"] .tih-ind__prog{animation:tih-ind-prog var(--ind-ms,7000ms) linear both}
+@keyframes tih-ind-prog{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.tih-ind__legal{margin-top:4px}
+
+/* ---- pane ---- */
+.tih-ind__panes{min-width:0}
+.tih-ind__pane{display:flex;flex-direction:column;gap:clamp(24px,2.6vw,34px)}
+.tih-ind__img{box-shadow:var(--sh-1)}
+.tih-ind__ro{position:absolute;left:clamp(16px,2vw,24px);bottom:clamp(16px,2vw,24px);z-index:3;display:inline-flex;align-items:center;gap:9px;height:30px;padding:0 12px;border-radius:var(--r-xs);
+  background:rgba(25,25,29,.78);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--on-ink);white-space:nowrap}
+.tih-ind__frame{position:absolute;inset:clamp(12px,1.4vw,18px);z-index:2;pointer-events:none}
+.tih-ind__frame i{position:absolute;width:16px;height:16px;border:0 solid var(--on-ink);opacity:.8}
+.tih-ind__frame i:nth-child(1){left:0;top:0;border-left-width:1.5px;border-top-width:1.5px}
+.tih-ind__frame i:nth-child(2){right:0;top:0;border-right-width:1.5px;border-top-width:1.5px}
+.tih-ind__frame i:nth-child(3){right:0;bottom:0;border-right-width:1.5px;border-bottom-width:1.5px}
+.tih-ind__frame i:nth-child(4){left:0;bottom:0;border-left-width:1.5px;border-bottom-width:1.5px}
+
+.tih-ind__info{display:flex;flex-direction:column;gap:clamp(22px,2.4vw,30px)}
+.tih-ind__head{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:var(--bdh-gap);row-gap:10px;align-items:end}
+.tih-ind__head .tih-k{grid-column:1 / -1}
+.tih-ind__h{font-family:var(--f-h);font-size:clamp(1.5rem,2.3vw,2rem);font-weight:500;letter-spacing:-.022em;line-height:1.1;color:var(--ink)}
+.tih-ind__lead{font-size:var(--t-body);line-height:1.6;color:var(--txt);max-width:52ch}
+
+.tih-ind__cons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tih-ind__cons>div{display:flex;flex-direction:column;gap:8px;min-width:0;padding:18px 20px 20px;border-radius:var(--r);background:var(--paper);box-shadow:inset 0 0 0 1px var(--line)}
+.tih-ind__cons dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-d)}
+.tih-ind__cons dd{font-size:var(--t-sm);line-height:1.55;color:var(--txt)}
+
+.tih-ind__foot{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px var(--bdh-gap);padding-top:22px;border-top:1px solid var(--line)}
+.tih-ind__caps,.tih-ind__std{display:flex;flex-direction:column;gap:10px;min-width:0}
+.tih-ind__chips{display:flex;flex-wrap:wrap;gap:6px}
+.tih-ind__badges{display:flex;flex-wrap:wrap;gap:6px}
+.tih-ind__first{grid-column:1 / -1;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;padding:14px 16px;border-radius:var(--r-sm);background:var(--paper-3);
+  font-size:var(--t-sm);line-height:1.5;color:var(--ink)}
+
+/* ---- motion on each switch (the pane's content arrives; transform/opacity only) ---- */
+@media (prefers-reduced-motion:no-preference){
+  .tih-ind.is-in .tih-ind__pane.is-on .tih-ind__img img{animation:tih-ind-img 1s var(--e) both}
+  .tih-ind.is-in .tih-ind__pane.is-on .tih-ind__ro{animation:tih-ind-up .6s var(--e) .25s both}
+  .tih-ind.is-in .tih-ind__pane.is-on .tih-ind__cons>div{animation:tih-ind-up .55s var(--e) both;animation-delay:calc(var(--i,0) * 70ms + 120ms)}
+  .tih-ind.is-in .tih-ind__pane.is-on .tih-ind__chips .tih-capl{animation:tih-ind-up .45s var(--e) both;animation-delay:calc(var(--i,0) * 50ms + 360ms)}
+}
+@keyframes tih-ind-img{from{opacity:.4;transform:scale(1.05)}to{opacity:1;transform:none}}
+@keyframes tih-ind-up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ---- responsive ---- */
+@media (max-width:1279px){
+  .tih-ind{grid-template-columns:minmax(0,4.5fr) minmax(0,7.5fr);gap:var(--bdh-gap)}
+  .tih-ind__head{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:1023px){
+  .tih-ind{grid-template-columns:minmax(0,1fr)}
+  .tih-ind__side{position:static}
+  .tih-ind__list{flex-direction:row;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;border-top:0;border-bottom:1px solid var(--line);
+    margin-inline:calc(var(--gutter) * -1);padding-inline:var(--gutter)}
+  .tih-ind__list::-webkit-scrollbar{display:none}
+  .tih-ind__tab{flex:none;width:auto;min-height:56px;grid-template-columns:auto auto;column-gap:8px;padding:10px 14px;border-bottom:0}
+  .tih-ind__tab::before{left:0;right:0;top:auto;bottom:0;width:auto;height:2px;transform:scaleX(0);transform-origin:left center}
+  .tih-ind__tab[aria-selected="true"]::before{transform:none}
+  .tih-ind__tab i,.tih-ind__tn small{display:none}
+  .tih-ind__tn{font-size:var(--t-sm);white-space:nowrap}
+  .tih-ind__prog{bottom:0;height:2px;opacity:.35}
+  .tih-ind__legal{order:3}
+}
+@media (max-width:600px){
+  .tih-ind__img{aspect-ratio:4/3}
+  .tih-ind__cons{grid-template-columns:minmax(0,1fr)}
+  .tih-ind__cons>div{padding:16px}
+  .tih-ind__foot{grid-template-columns:minmax(0,1fr)}
+  .tih-ind__ro{left:12px;right:12px;bottom:12px;justify-content:flex-start;overflow:hidden;text-overflow:ellipsis}
+  .tih-ind__frame{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .tih-ind__tab,.tih-ind__tab::before,.tih-ind__tab i,.tih-ind__n,.tih-ind__tn{transition:none}
+}

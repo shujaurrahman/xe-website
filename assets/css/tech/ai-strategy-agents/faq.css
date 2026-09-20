@@ -1,0 +1,51 @@
+/* AI Strategy & Agents · faq — sticky side (heading, what to bring, the session CTA) beside a
+   numbered accordion with a topic tag per question. Core [data-acc] animates the panel height. */
+.tas-fq{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--tas-gap);row-gap:clamp(36px,5vw,56px);align-items:start}
+.tas-fq__side{grid-column:1 / span 5;min-width:0;align-self:stretch;padding-right:clamp(0px,2vw,32px)}
+.tas-fq__sticky{position:sticky;top:var(--bdh-sticky,120px);display:flex;flex-direction:column;align-items:flex-start;gap:20px}
+.tas-fq__sticky .h2{font-size:clamp(1.9rem,2.9vw,2.6rem);letter-spacing:-.03em;line-height:1.08}
+.tas-fq__sticky .lead{max-width:40ch}
+.tas-fq__bring{align-self:stretch;max-width:440px;margin-top:clamp(8px,1.4vw,20px);padding:clamp(20px,2.2vw,28px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper)}
+.tas-fq__bring ul{margin:14px 0 22px;border-top:1px solid var(--ink)}
+.tas-fq__bring li{display:flex;align-items:flex-start;gap:12px;padding-block:11px;border-bottom:1px solid var(--line);font-size:var(--t-sm);line-height:1.45;color:var(--ink)}
+.tas-fq__bring .xt-ico{flex:none;margin-top:1px}
+.tas-fq__cta{width:100%}
+
+.tas-fq__list{grid-column:6 / -1;min-width:0;border-top:1px solid var(--ink)}
+.tas-fq__item{border-bottom:1px solid var(--line-3)}
+.tas-fq__q{margin:0}
+.tas-fq__btn{display:grid;grid-template-columns:44px minmax(0,1fr) auto 36px;align-items:center;column-gap:clamp(12px,1.6vw,20px);width:100%;padding:clamp(20px,2.2vw,28px) 0;text-align:left;color:inherit}
+.tas-fq__n{font-family:var(--f);font-size:var(--t-xs);font-weight:500;color:var(--faint);font-variant-numeric:tabular-nums;transition:color var(--d2) var(--e-io)}
+.tas-fq__t{font-family:var(--f-h);font-size:clamp(1.1rem,1.6vw,1.4rem);font-weight:500;letter-spacing:-.018em;line-height:1.25;color:var(--ink);transition:color var(--d2) var(--e-io)}
+.tas-fq__tag{padding:3px 8px;border-radius:var(--r-xs);background:var(--paper);box-shadow:inset 0 0 0 1px var(--line-3);font-family:var(--f);font-size:9.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.tas-fq__ic{position:relative;justify-self:end;width:34px;height:34px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--line-3);transition:background var(--d2) var(--e-io),box-shadow var(--d2) var(--e-io),transform .5s var(--e)}
+.tas-fq__ic i{position:absolute;left:50%;top:50%;width:11px;height:1.5px;margin:-.75px 0 0 -5.5px;background:var(--ink);transition:transform .45s var(--e),background var(--d2) var(--e-io)}
+.tas-fq__ic i+i{transform:rotate(90deg)}
+.tas-fq__btn:hover .tas-fq__t{color:var(--blue-d)}
+.tas-fq__btn[aria-expanded="true"] .tas-fq__n{color:var(--blue)}
+.tas-fq__btn[aria-expanded="true"] .tas-fq__tag{background:var(--blue-wash);box-shadow:none;color:var(--blue-d)}
+.tas-fq__btn[aria-expanded="true"] .tas-fq__ic{background:var(--ink);box-shadow:none;transform:rotate(180deg)}
+.tas-fq__btn[aria-expanded="true"] .tas-fq__ic i{background:var(--on-ink)}
+.tas-fq__btn[aria-expanded="true"] .tas-fq__ic i+i{transform:rotate(0)}
+.tas-fq__btn:focus-visible{outline-offset:2px;border-radius:4px}
+
+.tas-fq__a{height:0;overflow:hidden;transition:height .5s var(--e)}
+.tas-fq__q:has([aria-expanded="true"])+.tas-fq__a{height:auto}
+.tas-fq__in{padding:0 calc(36px + clamp(12px,1.6vw,20px)) clamp(22px,2.4vw,30px) calc(44px + clamp(12px,1.6vw,20px))}
+.tas-fq__in p{padding-left:18px;border-left:2px solid var(--blue);font-size:var(--t-body);line-height:1.7;color:var(--txt);max-width:66ch}
+
+@media (max-width:1023px){
+  .tas-fq__side,.tas-fq__list{grid-column:1 / -1}
+  .tas-fq__sticky{position:static}
+  .tas-fq__bring{max-width:560px}
+}
+@media (max-width:600px){
+  .tas-fq__btn{grid-template-columns:minmax(0,1fr) 34px;row-gap:8px}
+  .tas-fq__n{display:none}
+  .tas-fq__t{grid-column:1;grid-row:2}
+  .tas-fq__tag{grid-column:1;grid-row:1;justify-self:start}
+  .tas-fq__ic{grid-column:2;grid-row:1 / span 2}
+  .tas-fq__in{padding:0 0 22px}
+  .tas-fq__in p{padding-left:14px}
+}
+@media (prefers-reduced-motion:reduce){.tas-fq__a,.tas-fq__ic,.tas-fq__ic i{transition:none}}

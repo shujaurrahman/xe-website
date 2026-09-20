@@ -1,0 +1,75 @@
+/* Consolidate — before/after estate panel, the SCI card and the four moves. */
+
+.tis-co__body{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--bdh-gap-l);align-items:start}
+
+/* ---- panel ---- */
+.tis-co__ctl{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;padding:18px 20px;border-bottom:1px solid var(--line-2)}
+.tis-co__ctln{margin:0;flex:1 1 240px;min-width:0;font-family:var(--f);font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+
+.tis-co__rows{list-style:none;margin:0;padding:0}
+.tis-co__row{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:24px;row-gap:4px;align-items:baseline;padding:18px 20px}
+.tis-co__row+.tis-co__row{border-top:1px solid var(--line-2)}
+.tis-co__rt{min-width:0;grid-row:span 2}
+.tis-co__rl{margin:0;font-size:var(--t-sm);font-weight:500;line-height:1.4;color:var(--ink)}
+.tis-co__rn{margin:6px 0 0;font-size:var(--t-xs);line-height:1.6;color:var(--muted);max-width:48ch}
+.tis-co__rv{display:flex;align-items:baseline;gap:8px;margin:0;justify-self:end;text-align:right}
+.tis-co__num{font-family:var(--f);font-size:var(--t-h3);font-weight:500;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.tis-co__ru{font-family:var(--f);font-size:var(--t-xs);line-height:1.2;color:var(--faint);white-space:nowrap}
+.tis-co__rb{margin:0;justify-self:end}
+.tis-co__was{font-family:var(--f);font-size:var(--t-xs);line-height:1.4;color:var(--faint);text-decoration:line-through;text-decoration-color:var(--line-3)}
+/* in the "before" state the current figure IS the was-figure, so drop the strike-through line */
+[data-tis-co][data-state="before"] .tis-co__rb{visibility:hidden}
+[data-tis-co][data-state="before"] .tis-co__num{color:var(--muted)}
+
+/* ---- SCI card ---- */
+.tis-co__sci{padding:clamp(24px,2.4vw,32px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper-2)}
+.tis-co__sci .xt-ico{display:block;margin-bottom:16px;color:var(--ink)}
+.tis-co__sci .bdh-t{margin:0 0 12px}
+.tis-co__scil{margin:0 0 16px;font-size:var(--t-sm);line-height:1.65;color:var(--txt)}
+.tis-co__f{margin:0 0 18px;padding:14px 16px;border:1px solid var(--line-2);border-radius:var(--r-sm);background:var(--paper)}
+.tis-co__fx{font-family:var(--f);font-size:var(--t-sm);font-weight:500;line-height:1.4;color:var(--ink);white-space:nowrap}
+.tis-co__key{list-style:none;margin:0 0 20px;padding:0}
+.tis-co__key li{display:flex;gap:12px;font-size:var(--t-xs);line-height:1.6;color:var(--txt)}
+.tis-co__key li+li{margin-top:8px}
+.tis-co__key b{flex:none;width:14px;font-family:var(--f);font-weight:500;color:var(--blue)}
+.tis-co__sci .xt-badges{margin:0}
+.tis-co__scin{margin:16px 0 0;font-family:var(--f);font-size:var(--t-xs);line-height:1.55;color:var(--faint)}
+
+/* ---- moves ----
+   Each move is a card that ends on the move itself: the readout the estate report would print
+   before, and the one it prints after. */
+.tis-co__mh{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:var(--bdh-gap-l);
+  align-items:baseline;margin-top:var(--bdh-block);padding-top:var(--bdh-gap);border-top:1px solid var(--line)}
+.tis-co__mhk{margin:0;font-family:var(--f-h);font-size:var(--t-h3);font-weight:500;letter-spacing:-.018em;line-height:1.2;color:var(--ink)}
+.tis-co__mhl{margin:0;font-size:var(--t-sm);line-height:1.7;color:var(--muted);max-width:62ch}
+
+.tis-co__moves{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--bdh-gap);margin:var(--bdh-gap) 0 0;list-style:none;padding:0}
+.tis-co__move{display:flex;flex-direction:column;min-width:0;padding:22px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io)}
+.tis-co__move:hover{border-color:var(--line-3);background:var(--paper-2)}
+.tis-co__mtop{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 18px}
+.tis-co__mi{display:grid;place-items:center;width:40px;height:40px;border:1px solid var(--line-2);border-radius:var(--r-sm);background:var(--paper-2);color:var(--ink)}
+.tis-co__mi .xt-ico{display:block}
+.tis-co__mtop .bdh-idx{margin:0}
+.tis-co__mt{margin:0 0 10px;font-size:var(--t-body)}
+.tis-co__move .bdh-d{margin:0;max-width:none}
+.tis-co__mr{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;margin:18px 0 0;padding-top:14px;
+  border-top:1px solid var(--line-2);font-family:var(--f);font-size:.6875rem;line-height:1.5}
+.tis-co__mrb{color:var(--faint);text-decoration:line-through;text-decoration-color:var(--line-3)}
+.tis-co__mra{color:var(--line-3)}
+.tis-co__mrf{color:var(--blue-d);font-weight:500}
+
+@media (max-width:1023px){
+  .tis-co__body{grid-template-columns:minmax(0,1fr);gap:var(--bdh-block)}
+  .tis-co__mh{grid-template-columns:minmax(0,1fr);gap:14px}
+  .tis-co__moves{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:600px){
+  .tis-co__row{grid-template-columns:minmax(0,1fr);row-gap:10px}
+  .tis-co__rt{grid-row:auto}
+  .tis-co__rv,.tis-co__rb{justify-self:start;text-align:left}
+  .tis-co__moves{grid-template-columns:minmax(0,1fr)}
+  .tis-co__move{padding:20px}
+  .tis-co__sci{padding:22px}
+}
+@media (prefers-reduced-motion:reduce){.tis-co__move{transition:none}}

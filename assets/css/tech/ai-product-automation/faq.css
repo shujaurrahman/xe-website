@@ -1,0 +1,47 @@
+/* AI Product & Automation · FAQ — a sticky side column (heading, lead, ask box) beside an accordion (core
+   [data-acc]: height is animated by core.js). Each answer ends with "Sources on this page": § chips that link
+   to the section where the answer is shown working. */
+.tap-fq{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--tap-gap-l);align-items:start}
+.tap-fq__side{position:sticky;top:var(--bdh-sticky,120px);display:flex;flex-direction:column;align-items:flex-start;gap:22px;min-width:0}
+.tap-fq__h{max-width:14ch}
+.tap-fq__lead{max-width:40ch}
+.tap-fq__ask{align-self:stretch;margin-top:8px;padding:20px 22px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.tap-fq__askt{display:flex;align-items:center;gap:10px;font-family:var(--f-h);font-size:1.05rem;font-weight:500;letter-spacing:-.01em;color:var(--ink)}
+.tap-fq__askd{margin:8px 0 14px;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+
+.tap-fq__list{min-width:0;border-top:1px solid var(--ink)}
+.tap-fq__item{border-bottom:1px solid var(--line-3)}
+.tap-fq__q{font:inherit;letter-spacing:0;line-height:inherit}
+.tap-fq__q button{display:grid;grid-template-columns:52px minmax(0,1fr) 28px;align-items:center;gap:12px;width:100%;padding:24px 4px 24px 0;text-align:left;color:var(--ink)}
+.tap-fq__q button:focus-visible{outline-offset:-2px;border-radius:var(--r-xs)}
+.tap-fq__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.08em;color:var(--faint);transition:color var(--d1) var(--e-io)}
+.tap-fq__qt{font-family:var(--f-h);font-size:clamp(1.05rem,1.45vw,1.28rem);font-weight:500;letter-spacing:-.012em;line-height:1.3;transition:color var(--d1) var(--e-io)}
+.tap-fq__q button:hover .tap-fq__qt{color:var(--blue-d)}
+.tap-fq__q button[aria-expanded="true"] .tap-fq__n{color:var(--blue)}
+.tap-fq__pm{position:relative;justify-self:end;width:28px;height:28px;border-radius:var(--r-xs);box-shadow:inset 0 0 0 1px var(--line-3);transition:background var(--d2) var(--e-io),box-shadow var(--d2) var(--e-io)}
+.tap-fq__pm::before,.tap-fq__pm::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:1.5px;margin:-.75px 0 0 -5px;background:var(--ink);transition:transform var(--d2) var(--e),background var(--d2) var(--e-io)}
+.tap-fq__pm::after{transform:rotate(90deg)}
+[aria-expanded="true"] .tap-fq__pm{background:var(--ink);box-shadow:none}
+[aria-expanded="true"] .tap-fq__pm::before,[aria-expanded="true"] .tap-fq__pm::after{background:var(--on-ink)}
+[aria-expanded="true"] .tap-fq__pm::after{transform:rotate(0)}
+
+.tap-fq__a{height:0;overflow:hidden;transition:height .45s var(--e)}
+.tap-fq__ai{padding:0 44px 28px 64px}
+.tap-fq__ai>p:first-child{max-width:66ch;font-size:var(--t-body);line-height:1.75;color:var(--txt)}
+.tap-fq__src{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:16px}
+.tap-fq__sk{margin-right:4px;font-family:var(--f);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.tap-fq__chip{display:inline-flex;align-items:center;gap:7px;min-height:30px;padding:0 11px 0 5px;border-radius:var(--r-pill);background:var(--paper);box-shadow:inset 0 0 0 1px var(--line-3);font-size:var(--t-xs);font-weight:500;color:var(--ink);
+  transition:box-shadow var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.tap-fq__chip b{padding:3px 7px;border-radius:var(--r-pill);background:var(--blue-wash-2);font-family:var(--f);font-size:10px;font-weight:600;color:var(--blue-d);line-height:1.2}
+.tap-fq__chip:hover{box-shadow:inset 0 0 0 1px var(--blue);color:var(--blue-d)}
+
+@media (max-width:1023px){
+  .tap-fq{grid-template-columns:minmax(0,1fr);gap:clamp(36px,5vw,56px)}
+  .tap-fq__side{position:static}
+  .tap-fq__h{max-width:18ch}
+}
+@media (max-width:600px){
+  .tap-fq__q button{grid-template-columns:36px minmax(0,1fr) 28px;gap:10px;padding-block:20px}
+  .tap-fq__ai{padding:0 0 24px 46px}
+}
+@media (prefers-reduced-motion:reduce){.tap-fq__a,.tap-fq__pm::before,.tap-fq__pm::after{transition:none}}

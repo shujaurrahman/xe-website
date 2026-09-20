@@ -1,0 +1,51 @@
+/* Audits & Assessments · deliver — the handover manifest.
+   Each deliverable is a row in a file listing: index, icon, artefact and file name, what it is used
+   for, then the format chip and the reader it is written for. Motion is the core stagger only. */
+.taa-dl__list{display:flex;flex-direction:column}
+.taa-dl__row{display:grid;grid-template-columns:auto auto minmax(190px,1.15fr) minmax(0,1.9fr) minmax(150px,.75fr);
+  align-items:start;gap:6px 18px;padding:clamp(18px,2vw,24px) clamp(18px,2.2vw,26px);border-bottom:1px solid var(--line-2);
+  transition:background var(--d2) var(--e-io)}
+.taa-dl__row:last-child{border-bottom:0}
+.taa-dl__row:hover{background:var(--paper-2)}
+.taa-dl__ix{align-self:center;padding-top:2px}
+.taa-dl__ic{align-self:center;display:inline-grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);
+  background:var(--paper-3);color:var(--ink);transition:background var(--d2) var(--e-io)}
+.taa-dl__row:hover .taa-dl__ic{background:var(--blue-wash-2)}
+.taa-dl__m{display:flex;flex-direction:column;gap:6px;min-width:0}
+.taa-dl__n{font-size:1.0625rem}
+.taa-dl__f{font-family:var(--f);font-size:var(--t-xs);letter-spacing:.02em;color:var(--muted);word-break:break-word}
+.taa-dl__d{margin:0;align-self:center;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+.taa-dl__meta{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0}
+.taa-dl__for{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.4}
+.taa-dl__foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:14px 18px;border-top:1px solid var(--line-2);
+  background:var(--paper-2);font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+.taa-dl__foot>span:last-child{max-width:84ch}
+
+/* ---- the parts that are not files ---- */
+.taa-dl__also{margin-top:var(--taa-block)}
+.taa-dl__ah{margin-bottom:18px}
+.taa-dl__also ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--taa-gap)}
+.taa-dl__card{gap:14px}
+.taa-dl__ci{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--ink)}
+.taa-dl__also .taa-cap{margin-top:16px}
+
+/* ---- handover terms ---- */
+.taa-dl__terms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--taa-gap);margin:var(--taa-gap) 0 0;
+  padding-top:24px;border-top:1px solid var(--line)}
+.taa-dl__terms dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);line-height:1.3}
+.taa-dl__terms dd{margin:8px 0 0;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+
+@media (max-width:1100px){
+  .taa-dl__row{grid-template-columns:auto auto minmax(0,1fr) minmax(140px,.6fr)}
+  .taa-dl__d{grid-column:3 / -1;align-self:start;margin-top:4px}
+}
+@media (max-width:860px){
+  .taa-dl__also ul{grid-template-columns:minmax(0,1fr)}
+  .taa-dl__terms{grid-template-columns:minmax(0,1fr);gap:20px}
+}
+@media (max-width:620px){
+  .taa-dl__row{grid-template-columns:auto minmax(0,1fr);gap:10px 14px}
+  .taa-dl__ic{display:none}
+  .taa-dl__d,.taa-dl__meta{grid-column:2 / -1}
+  .taa-dl__meta{flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px 12px}
+}

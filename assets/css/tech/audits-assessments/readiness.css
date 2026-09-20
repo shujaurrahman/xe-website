@@ -1,0 +1,162 @@
+/* Audits & Assessments · readiness — the gap chart: a segmented strip carrying the total
+   prerequisite effort, then one track per dimension with the score today as a solid run, the
+   shortfall as a pale run and the target as a dashed mark. Under it, the agent profiling run.
+   readiness.js adds .is-anim (which arms the hidden start state) and .is-in (which plays it), so
+   without JS every run, mark and bar ships at its finished width. */
+.taa-rd__top{display:flex;flex-direction:column;gap:clamp(26px,3vw,40px);margin-top:clamp(30px,3.4vw,48px)}
+.taa-rd__gh{display:flex;flex-direction:column;gap:11px;max-width:80ch}
+
+/* ---- total prerequisite effort, split by dimension ---- */
+.taa-rd__load{display:flex;flex-direction:column;gap:16px;margin:0;padding:clamp(18px,2vw,26px);
+  border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper)}
+.taa-rd__loadh{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 22px}
+.taa-rd__loadt{display:inline-flex;align-items:baseline;gap:8px;font-family:var(--f);font-size:var(--t-sm);color:var(--muted)}
+.taa-rd__loadt .taa-num{font-size:1.625rem;line-height:1;letter-spacing:-.02em}
+.taa-rd__loadbar{display:flex;gap:3px;height:36px;width:100%}
+.taa-rd__loadbar i{position:relative;display:flex;align-items:center;justify-content:center;flex:var(--w,1) 1 0;min-width:0;
+  border-radius:var(--r-xs);background:var(--blue-wash-2);box-shadow:inset 0 0 0 1px var(--blue-line);overflow:hidden;
+  transform:scaleX(0);transform-origin:left center;transition:transform .65s var(--e) calc(var(--i,0) * 90ms)}
+.taa-rd__loadbar i:first-child{background:var(--blue);box-shadow:none}
+.taa-rd__loadbar b{font-family:var(--f);font-size:var(--t-lbl);font-weight:600;letter-spacing:.06em;color:var(--blue-d)}
+.taa-rd__loadbar i:first-child b{color:var(--on-ink)}
+.taa-rd__top.is-in .taa-rd__loadbar i{transform:none}
+.taa-rd__loadk{display:flex;flex-wrap:wrap;gap:9px 22px;margin:0;padding:0;list-style:none;
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.taa-rd__loadk li{display:inline-flex;align-items:center;gap:8px}
+.taa-rd__loadk li i{width:10px;height:10px;flex:none;border-radius:2px;background:var(--blue-wash-2);box-shadow:inset 0 0 0 1px var(--blue-line)}
+.taa-rd__loadk li:first-child i{background:var(--blue);box-shadow:none}
+.taa-rd__loadk span{color:var(--ink);font-weight:600}
+
+/* ---- chart key ---- */
+.taa-rd__key{display:flex;flex-wrap:wrap;gap:10px 24px;margin:0;
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--muted)}
+.taa-rd__k{display:inline-flex;align-items:center;gap:8px}
+.taa-rd__k::before{content:"";width:20px;height:9px;flex:none;border-radius:2px;background:var(--blue)}
+.taa-rd__k--short::before{background:var(--blue-wash);box-shadow:inset 0 0 0 1px var(--blue-line)}
+.taa-rd__k--tgt::before{width:0;height:16px;border-radius:0;background:none;border-left:1.5px dashed var(--ink-2)}
+
+/* ---- the gap rows ---- */
+.taa-rd__gaps{display:flex;flex-direction:column;gap:0;margin:0;padding:0;list-style:none;border-top:1px solid var(--ink)}
+.taa-rd__gap{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,34%);
+  grid-template-areas:"head act" "track act" "ev own";
+  column-gap:clamp(26px,3.4vw,64px);row-gap:14px;align-items:start;
+  padding:clamp(20px,2.2vw,28px) 0;border-bottom:1px solid var(--line);
+  opacity:0;transform:translateY(10px);transition:opacity .5s var(--e) calc(var(--i,0) * 80ms),transform .5s var(--e) calc(var(--i,0) * 80ms)}
+.taa-rd__top.is-in .taa-rd__gap{opacity:1;transform:none}
+.taa-rd__gap.is-at{opacity:.9}
+.taa-rd__top.is-in .taa-rd__gap.is-at{opacity:1}
+
+.taa-rd__gh2{grid-area:head;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.taa-rd__ix{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--faint)}
+.taa-rd__gn{margin:0;font-family:var(--f-h);font-size:1.125rem;font-weight:500;letter-spacing:-.015em;line-height:1.2;color:var(--ink)}
+.taa-rd__sc{display:inline-flex;align-items:center;gap:7px;font-family:var(--f);font-size:var(--t-sm);color:var(--faint);font-variant-numeric:tabular-nums}
+.taa-rd__sc b{font-weight:600;color:var(--ink)}
+.taa-rd__sc b:last-of-type{color:var(--blue-d)}
+.taa-rd__sc i{font-style:normal;color:var(--blue)}
+.taa-rd__ef{margin-left:auto;display:inline-flex;align-items:center;height:26px;padding:0 11px;border-radius:var(--r-pill);
+  background:var(--blue-wash-2);font-family:var(--f);font-size:var(--t-lbl);font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--blue-d);white-space:nowrap}
+.taa-rd__ef.is-none{background:var(--paper-3);color:var(--faint);font-weight:500}
+
+/* the track: 0–5 of the rubric, left to right */
+.taa-rd__track{grid-area:track;position:relative;display:block;height:30px;border-radius:var(--r-xs);background:var(--paper-3)}
+.taa-rd__ticks{position:absolute;inset:0;display:block}
+.taa-rd__ticks b{position:absolute;top:6px;bottom:6px;width:1px;background:var(--line-3)}
+.taa-rd__ticks b:nth-child(1){left:20%}
+.taa-rd__ticks b:nth-child(2){left:40%}
+.taa-rd__ticks b:nth-child(3){left:60%}
+.taa-rd__ticks b:nth-child(4){left:80%}
+.taa-rd__ticks b:nth-child(5){left:auto;right:0}
+.taa-rd__short{position:absolute;top:0;bottom:0;left:calc(var(--a,0) * 1%);width:calc((var(--b,0) - var(--a,0)) * 1%);
+  border-radius:var(--r-xs);background:var(--blue-wash);box-shadow:inset 0 0 0 1px var(--blue-line);
+  transform:scaleX(0);transform-origin:left center;transition:transform .7s var(--e) calc(200ms + var(--i,0) * 80ms)}
+.taa-rd__now{position:absolute;top:0;bottom:0;left:0;width:calc(var(--a,0) * 1%);border-radius:var(--r-xs);background:var(--blue);
+  transform:scaleX(0);transform-origin:left center;transition:transform .6s var(--e) calc(var(--i,0) * 80ms)}
+.taa-rd__mark{position:absolute;top:-5px;bottom:-5px;left:calc(var(--b,0) * 1%);width:0;margin-left:-1px;
+  border-left:1.5px dashed var(--ink-2)}
+.taa-rd__top.is-in .taa-rd__now,.taa-rd__top.is-in .taa-rd__short{transform:none}
+
+.taa-rd__ev{grid-area:ev;margin:0;font-size:var(--t-xs);line-height:1.6;color:var(--muted);max-width:74ch}
+.taa-rd__ga{grid-area:act;margin:0;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.taa-rd__ev .taa-lbl,.taa-rd__ga .taa-lbl{display:block;margin-bottom:6px}
+.taa-rd__ga .taa-lbl{color:var(--blue-d)}
+.taa-rd__gm{grid-area:own;display:flex;flex-wrap:wrap;align-items:center;gap:6px;align-self:end}
+.taa-rd__ow{display:inline-flex;align-items:center;height:26px;padding:0 11px;border-radius:var(--r-pill);
+  background:var(--paper-3);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+
+.taa-rd__sum{display:flex;flex-wrap:wrap;align-items:flex-start;gap:10px 14px;margin:0}
+.taa-rd__sum>span:last-child{flex:1 1 34ch;max-width:92ch;font-size:var(--t-sm);line-height:1.65;color:var(--muted)}
+.taa-rd__sum b{font-weight:600;color:var(--ink)}
+
+/* ---- profiling run ---- */
+.taa-rd__bot{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--taa-gap-l,44px);row-gap:clamp(26px,3vw,36px);
+  align-items:start;margin-top:clamp(34px,3.8vw,54px)}
+.taa-rd__prof{grid-column:1 / span 8;min-width:0;overflow:hidden}
+.taa-rd__side{grid-column:9 / -1;display:flex;flex-direction:column;gap:16px;min-width:0}
+
+.taa-rd__cmd{display:flex;gap:10px;margin:0;padding:13px 18px;border-bottom:1px solid var(--line-2);background:var(--paper-2);
+  font-family:var(--f);font-size:var(--t-xs);line-height:1.5;color:var(--txt);overflow-wrap:anywhere}
+.taa-rd__cmd span{color:var(--blue-d)}
+.taa-rd__tbl{min-width:640px}
+.taa-rd__tbl thead th{background:var(--paper-2)}
+.taa-rd__pv{display:block;font-weight:500;color:var(--ink)}
+.taa-rd__bar{display:block;width:72px;max-width:100%;height:4px;margin-top:6px;border-radius:var(--r-pill);background:var(--paper-4);overflow:hidden}
+.taa-rd__bar em{display:block;height:100%;border-radius:inherit;background:var(--line-3);transform:scaleX(0);transform-origin:left center;
+  transition:transform .8s var(--e) calc(var(--i,0) * 110ms)}
+.taa-rd__bar.is-hot em{background:var(--blue)}
+.taa-rd__prof.is-prof .taa-rd__bar em{transform:scaleX(var(--p,0))}
+.taa-rd__flag,.taa-rd__ok{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:var(--r-pill);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.taa-rd__flag{background:var(--blue-wash-2);color:var(--blue-d)}
+.taa-rd__ok{background:var(--paper-3);color:var(--faint)}
+.taa-rd__pf{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:0;padding:14px 18px;border-top:1px solid var(--line-2);
+  background:var(--paper-2);font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+.taa-rd__pf>span:last-child{max-width:80ch}
+.taa-rd__pf b{font-weight:600;color:var(--ink)}
+
+/* ---- side ---- */
+.taa-rd__photo{margin:0}
+.taa-rd__side .taa-cap{margin-top:0}
+.taa-rd__go{display:flex;flex-direction:column;gap:6px;padding:clamp(16px,1.8vw,22px);border:1px solid var(--line);border-radius:var(--r-xl);
+  background:var(--paper);text-decoration:none;transition:border-color var(--d2) var(--e-io),background var(--d2) var(--e-io)}
+.taa-rd__go:hover{border-color:var(--line-3);background:var(--paper-2)}
+.taa-rd__gon{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.015em;color:var(--ink)}
+.taa-rd__go:hover .i{color:var(--blue-d)}
+.taa-rd__god{font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+
+@media (max-width:1100px){
+  .taa-rd__bot{column-gap:var(--taa-gap,26px)}
+  .taa-rd__prof{grid-column:1 / -1}
+  /* a two-up grid rather than a wrapping flex row: the photograph shares the width with the onward
+     card instead of stretching to the full band, and a flex basis can never be read as a height */
+  .taa-rd__side{grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:14px var(--taa-gap,26px);align-items:start}
+  .taa-rd__photo{grid-column:1;grid-row:1}
+  .taa-rd__side .taa-cap{grid-column:1;grid-row:2}
+  .taa-rd__go{grid-column:2;grid-row:1 / span 2;align-self:start}
+}
+@media (max-width:860px){
+  .taa-rd__gap{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "track" "ev" "act" "own";row-gap:13px}
+  .taa-rd__gm{align-self:start}
+  .taa-rd__loadbar{height:30px}
+  .taa-rd__loadbar b{font-size:9.5px}
+}
+@media (max-width:640px){
+  .taa-rd__gh2{gap:6px 10px}
+  .taa-rd__ef{margin-left:0}
+  .taa-rd__side{grid-template-columns:minmax(0,1fr)}
+  .taa-rd__photo,.taa-rd__side .taa-cap,.taa-rd__go{grid-column:1;grid-row:auto}
+}
+@media (prefers-reduced-motion:reduce){
+  .taa-rd__loadbar i,.taa-rd__top.is-in .taa-rd__loadbar i{transform:none;transition:none}
+  .taa-rd__now,.taa-rd__short,.taa-rd__top.is-in .taa-rd__now,.taa-rd__top.is-in .taa-rd__short{transform:none;transition:none}
+  .taa-rd__gap,.taa-rd__top.is-in .taa-rd__gap{opacity:1;transform:none;transition:none}
+  .taa-rd__bar em,.taa-rd__prof.is-prof .taa-rd__bar em{transform:scaleX(var(--p,0));transition:none}
+}
+
+/* Without JS the strip, the tracks, the gap rows and the profiling bars ship complete: the hidden
+   start state applies only once readiness.js arms it. */
+.taa-rd__top:not(.is-anim) .taa-rd__loadbar i{transform:none}
+.taa-rd__top:not(.is-anim) .taa-rd__now,.taa-rd__top:not(.is-anim) .taa-rd__short{transform:none}
+.taa-rd__top:not(.is-anim) .taa-rd__gap{opacity:1;transform:none}
+.taa-rd__prof:not(.is-anim) .taa-rd__bar em{transform:scaleX(var(--p,0))}

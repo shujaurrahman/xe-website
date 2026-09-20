@@ -1,0 +1,106 @@
+/* ==========================================================================
+   09 Reliability (.tic-reliability, ink band) — the SLO panel.
+   Tabbed indicators over an error-budget burn-down, then the operating practice cards
+   and the framework rail. Tokens from core.css only.
+   ========================================================================== */
+.tic-rl{display:flex;flex-direction:column;gap:var(--tic-gap-l)}
+
+/* ---- panel ---------------------------------------------------------------- */
+.tic-rl__panel{overflow:hidden}
+.tic-rl__bar{flex-wrap:wrap;gap:12px 18px;padding-block:10px;min-height:56px}
+.tic-rl__id{flex:none;overflow:hidden;text-overflow:ellipsis}
+.tic-rl__tabs{margin-left:auto}
+.tic-rl__tabs button{gap:7px;min-height:38px;padding:0 12px;font-family:var(--f-b);font-size:var(--t-xs)}
+.tic-rl__tabs .xt-ico{flex:none}
+@media (max-width:640px){.tic-rl__id{width:100%}.tic-rl__tabs{margin-left:0;width:100%}.tic-rl__tabs button{flex:1 1 auto;justify-content:center}}
+
+.tic-rl__panes{padding:clamp(22px,2.6vw,34px)}
+.tic-rl__pane{display:flex;flex-direction:column;gap:clamp(22px,2.4vw,32px)}
+
+/* ---- top: definition + readouts -------------------------------------------- */
+.tic-rl__top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(20px,2.4vw,40px);align-items:start}
+.tic-rl__def{display:flex;flex-direction:column;gap:10px;min-width:0}
+.tic-rl__h{color:var(--on-ink)}
+.tic-rl__sli{font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-2);max-width:42ch}
+.tic-rl__kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;min-width:0}
+.tic-rl__kpis>div{display:flex;flex-direction:column;gap:6px;min-width:0;padding-left:14px;border-left:1px solid var(--on-ink-line)}
+.tic-rl__kpis>div.is-key{border-left-color:var(--blue)}
+.tic-rl__kpis .tic-v{font-size:clamp(19px,1.9vw,26px)}
+.tic-rl__kpis>div.is-key .tic-v{color:var(--blue)}
+.tic-rl__sub{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;line-height:1.4;color:var(--on-ink-3)}
+@media (max-width:1023px){.tic-rl__top{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:560px){.tic-rl__kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ---- burn-down chart -------------------------------------------------------- */
+.tic-rl__fig{display:flex;flex-direction:column;gap:12px;margin:0;min-width:0}
+.tic-rl__cap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 18px;
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3)}
+.tic-rl__legend{display:inline-flex;align-items:center;gap:8px;letter-spacing:.08em;text-transform:none}
+.tic-rl__lg{display:inline-block;flex:none;width:18px;height:0;border-top:2px solid var(--on-ink);margin-left:8px}
+.tic-rl__lg:first-child{margin-left:0}
+.tic-rl__lg--i{border-top:1px dotted var(--on-ink-3)}
+.tic-rl__lg--f{width:20px;border-top:1.5px dashed var(--on-ink-2)}
+
+.tic-rl__svg .s3{stroke-dasharray:1.5 5;stroke-linecap:round}
+.tic-rl__freeze{stroke-width:1.5;stroke-dasharray:9 5}
+.tic-rl__plot{position:relative;padding-left:40px;padding-right:8px}
+.tic-rl__svg{height:clamp(170px,20vw,230px)}
+.tic-rl__yl{position:absolute;left:0;top:calc(var(--y) * 100%);transform:translateY(-50%);width:34px;text-align:right;
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--on-ink-3);font-variant-numeric:tabular-nums}
+.tic-rl__dep{position:absolute;bottom:-4px;left:calc(40px + (100% - 48px) * var(--x));width:1px;height:12px;background:var(--on-ink-line)}
+.tic-rl__dep::after{content:"";position:absolute;left:-2px;bottom:-3px;width:5px;height:5px;border-radius:50%;background:var(--on-ink-2)}
+
+/* the callout drops clear of the plotted line — --ey is where the line sits at that day — on the band's
+   own colour so it is opaque over the guide lines, with a leader back up to the day it marks */
+.tic-rl__ev{position:absolute;top:calc(var(--ey,.25) * 100% + 18px);left:calc(40px + (100% - 48px) * var(--x));
+  display:flex;flex-direction:column;gap:5px;width:222px;max-width:46%;padding:10px 12px 11px 13px;
+  background:var(--ink);border:1px solid var(--on-ink-line);border-radius:var(--r-xs);
+  font-family:var(--f);font-size:var(--t-lbl);line-height:1.5;letter-spacing:.03em;color:var(--on-ink-2)}
+.tic-rl__ev--l{padding:10px 13px 11px 12px;text-align:right;transform:translateX(-100%)}
+.tic-rl__ev b{font-weight:500;color:var(--blue);letter-spacing:.06em}
+.tic-rl__ev i{position:absolute;top:auto;bottom:100%;left:-1px;width:1px;height:18px;background:var(--blue)}
+.tic-rl__ev--l i{left:auto;right:-1px}
+@media (max-width:860px){.tic-rl__ev{width:150px}.tic-rl__evd{display:none}}
+
+.tic-rl__days{position:relative;height:16px;margin-left:40px;margin-right:8px;
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--on-ink-3)}
+.tic-rl__days span{position:absolute;top:0;left:calc(var(--x) * 100%);transform:translateX(-50%);white-space:nowrap}
+.tic-rl__days span:first-child{transform:none}
+.tic-rl__days span:last-child{left:100%;transform:translateX(-100%)}
+
+/* the actual line draws when the pane enters; the tab script replays it */
+.tic-rl__line{transition:stroke-dashoffset .9s var(--e)}
+.is-in .tic-rl__line{stroke-dashoffset:0}
+
+.tic-rl__note{display:flex;align-items:flex-start;gap:10px;padding-top:16px;border-top:1px solid var(--on-ink-line);
+  font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-2)}
+.tic-rl__note .xt-ico{flex:none;margin-top:2px;color:var(--on-ink-3)}
+
+/* ---- rules strip -------------------------------------------------------------- */
+.tic-rl__rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,2.4vw,36px);
+  padding:clamp(20px,2.4vw,30px) clamp(22px,2.6vw,34px);border-top:1px solid var(--on-ink-line);background:var(--ink)}
+.tic-rl__rule{display:flex;flex-direction:column;gap:8px;min-width:0}
+.tic-rl__rule p:last-child{font-size:var(--t-xs);line-height:1.65;color:var(--on-ink-2)}
+.tic-rl__rule .bdh-ill{margin-top:6px}
+@media (max-width:860px){.tic-rl__rules{grid-template-columns:minmax(0,1fr)}}
+
+/* ---- operating practice ------------------------------------------------------- */
+.tic-rl__ops{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:var(--tic-gap-l);align-items:start}
+.tic-rl__practice{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--tic-gap)}
+.tic-rl__pc{gap:12px}
+.tic-rl__pi{display:grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);background:var(--on-ink-card);box-shadow:inset 0 0 0 1px var(--on-ink-line);color:var(--on-ink)}
+.tic-rl__pt{font-size:var(--t-h4,17px);color:var(--on-ink)}
+.tic-rl__pc p:last-child{font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-2)}
+
+.tic-rl__left{display:flex;flex-direction:column;gap:var(--tic-gap);min-width:0}
+.tic-rl__photo{position:relative;margin:0;min-width:0}
+.tic-rl__photo .bdh-img{border-radius:var(--r-lg)}
+.tic-rl__photo img{object-position:50% 55%}
+.tic-rl__photo .bdh-cap-chip{position:absolute;left:14px;right:14px;bottom:14px;max-width:none}
+.tic-rl__std{display:flex;flex-direction:column;gap:20px;padding:clamp(24px,2.6vw,34px);border:1px solid var(--on-ink-line);border-radius:var(--r-lg);background:var(--ink-2)}
+.tic-rl__stdh{display:flex;flex-direction:column;gap:8px}
+.tic-rl__badges{gap:14px}
+.tic-rl__hours{display:flex;align-items:flex-start;gap:9px;padding-top:16px;border-top:1px solid var(--on-ink-line)}
+.tic-rl__hours .xt-ico{flex:none;margin-top:1px}
+@media (max-width:1023px){.tic-rl__ops{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:640px){.tic-rl__practice{grid-template-columns:minmax(0,1fr)}}

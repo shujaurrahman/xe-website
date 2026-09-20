@@ -1,0 +1,127 @@
+/* Audits & Assessments · cost — the monthly waterfall on the ink band.
+   Six bars in a tablist (five loss lines plus the total), each one anchored at its cumulative
+   offset, with dashed connectors between them. The pane beneath carries the formula, the
+   substituted arithmetic and the inputs. cost.js adds .is-in (bars drop in sequence). */
+.taa-cost{--taa-wf-h:clamp(216px,24vw,320px)}
+
+/* ---- baseline strip ---- */
+.taa-cost__base{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--taa-gap,26px);
+  margin:clamp(30px,3.2vw,46px) 0 clamp(30px,3.4vw,48px);padding-top:24px;border-top:1px solid var(--on-ink-line)}
+.taa-cost__base dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink-3);line-height:1.3}
+.taa-cost__base dd{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:9px 0 0}
+.taa-cost__base dd b{font-family:var(--f-h);font-size:1.375rem;font-weight:500;letter-spacing:-.02em;line-height:1.1;color:var(--on-ink)}
+.taa-cost__base dd span{font-size:var(--t-xs);line-height:1.5;color:var(--on-ink-3)}
+
+/* ---- chart + panes ---- */
+.taa-cost__wf{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--taa-gap-l,44px);row-gap:clamp(26px,3vw,38px);align-items:start}
+.taa-wf{grid-column:1 / span 7;margin:0;min-width:0}
+.taa-cost__panes{grid-column:8 / -1;min-width:0}
+
+.taa-wf__scroll{padding-top:10px;padding-bottom:2px}
+.taa-wf__plot{position:relative;padding-left:60px;min-width:640px}
+.taa-wf__grid{position:absolute;left:60px;right:0;top:0;height:var(--taa-wf-h);pointer-events:none}
+.taa-wf__gl{position:absolute;left:0;right:0;bottom:calc(var(--p) * 1%);display:block;border-top:1px dashed var(--on-ink-line)}
+.taa-wf__ax{position:absolute;right:100%;bottom:calc(var(--p) * 1%);margin-right:12px;transform:translateY(50%);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--on-ink-3);white-space:nowrap}
+
+/* ---- bars ---- */
+.taa-wf__bars{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(6px,1vw,14px);align-items:end}
+/* the tab is a <button>, which cannot be a grid container in every engine — the track and the label
+   are block level with an explicit track height instead, so the bars stand up everywhere. */
+.taa-wf__b{display:block;padding:0;border:0;background:none;
+  text-align:left;cursor:pointer;color:inherit;font:inherit;border-radius:var(--r-xs)}
+.taa-wf__track{position:relative;display:block;width:100%;height:var(--taa-wf-h)}
+/* Unselected steps have to read as solid mass against the --ink band, or the waterfall collapses
+   into "two blue bars floating in the dark". --ink-2 lifts them off the band and a --on-ink-2 inset
+   draws the edge; the modelled risk step keeps its dashed outline but gains the same body. */
+.taa-wf__bar{position:absolute;left:0;right:0;bottom:calc(var(--o) * 1%);height:calc(var(--h) * 1%);min-height:6px;
+  display:block;border-radius:var(--r-xs);background:var(--ink-2);box-shadow:inset 0 0 0 1px var(--on-ink-2);
+  transition:background var(--d2) var(--e-io),box-shadow var(--d2) var(--e-io),transform var(--d2) var(--e-io),opacity var(--d2) var(--e-io)}
+.taa-wf__b.is-model .taa-wf__bar{background:var(--ink-2);box-shadow:none;border:1px dashed var(--on-ink-2)}
+.taa-wf__b.is-total .taa-wf__bar{background:var(--blue);box-shadow:none}
+.taa-wf__b[aria-selected="true"] .taa-wf__bar{background:var(--blue);box-shadow:none;border-color:transparent}
+.taa-wf__b:hover .taa-wf__bar{box-shadow:inset 0 0 0 1px var(--on-ink)}
+.taa-wf__b.is-model:hover .taa-wf__bar{box-shadow:none;border-color:var(--on-ink)}
+.taa-wf__b:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+
+/* dashed connector from the top of one bar to the foot of the next */
+.taa-wf__link{position:absolute;left:50%;width:calc(100% + clamp(6px,1vw,14px));bottom:calc((var(--o) + var(--h)) * 1%);
+  display:block;border-top:1px dashed var(--on-ink-line);opacity:0;transition:opacity var(--d2) var(--e-io)}
+.taa-cost__wf.is-in .taa-wf__link{opacity:1;transition-delay:calc(360ms + var(--i,0) * 110ms)}
+
+.taa-wf__lb{display:flex;flex-direction:column;gap:5px;width:100%;min-width:0;margin-top:14px}
+.taa-wf__v{font-family:var(--f);font-size:var(--t-sm);font-weight:600;letter-spacing:-.01em;color:var(--on-ink);line-height:1.2}
+.taa-wf__n{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-3);line-height:1.35}
+.taa-wf__b[aria-selected="true"] .taa-wf__n{color:var(--on-ink-2)}
+.taa-wf__b.is-total .taa-wf__v{font-size:var(--t-body)}
+
+/* bars drop into place in sequence */
+.taa-cost__wf .taa-wf__bar{opacity:0;transform:translateY(-18px)}
+.taa-cost__wf.is-in .taa-wf__bar{opacity:1;transform:none;transition:opacity .5s var(--e) calc(var(--i,0) * 110ms),transform .58s var(--e) calc(var(--i,0) * 110ms),background var(--d2) var(--e-io),box-shadow var(--d2) var(--e-io)}
+
+.taa-wf__cap{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:18px 0 0;
+  font-size:var(--t-xs);line-height:1.55;color:var(--on-ink-3)}
+
+/* ---- pane ---- */
+.taa-cost__pane{display:flex;flex-direction:column;gap:clamp(18px,2vw,24px);padding:clamp(22px,2.4vw,30px);
+  border-radius:var(--r-xl);background:var(--on-ink-card);box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+.taa-cost__ph{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:14px}
+.taa-cost__pane .bdh-t{color:var(--on-ink)}
+.taa-cost__sub{margin:6px 0 0;font-size:var(--t-sm);line-height:1.5;color:var(--on-ink-3)}
+.taa-cost__fig{display:flex;flex-direction:column;align-items:flex-end;gap:3px;margin:0;text-align:right}
+.taa-cost__fig b{font-family:var(--f-h);font-size:1.75rem;font-weight:500;letter-spacing:-.025em;line-height:1;color:var(--on-ink)}
+.taa-cost__fig span{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-3)}
+
+.taa-cost__f{display:flex;flex-direction:column;gap:8px}
+.taa-cost__f .taa-lbl{color:var(--on-ink-3)}
+.taa-cost__code{display:block;padding:11px 14px;border-radius:var(--r-sm);background:var(--ink-2);
+  box-shadow:inset 0 0 0 1px var(--on-ink-line);font-family:var(--f);font-size:var(--t-xs);line-height:1.6;color:var(--on-ink-2);overflow-wrap:anywhere}
+.taa-cost__code--calc{color:var(--on-ink)}
+
+.taa-cost__in{width:100%}
+.taa-cost__in th,.taa-cost__in td{padding:10px 12px 10px 0;border-bottom:1px solid var(--on-ink-line);
+  font-size:var(--t-xs);line-height:1.5;text-align:left;vertical-align:top}
+.taa-cost__in thead th{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3)}
+.taa-cost__in tbody th{font-weight:500;color:var(--on-ink-2)}
+.taa-cost__in tbody td{color:var(--on-ink)}
+.taa-cost__in tbody td.taa-cost__src{color:var(--on-ink-3)}
+.taa-cost__in tbody tr:last-child th,.taa-cost__in tbody tr:last-child td{border-bottom:0}
+
+.taa-cost__pf{display:flex;flex-direction:column;gap:14px;padding-top:clamp(14px,1.6vw,18px);border-top:1px solid var(--on-ink-line)}
+.taa-cost__note{margin:0;font-size:var(--t-xs);line-height:1.65;color:var(--on-ink-3)}
+.taa-cost__tags{display:flex;flex-wrap:wrap;gap:6px}
+.taa-cost__tags>li{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:var(--r-pill);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.taa-cost__conf{background:var(--ink-2);box-shadow:inset 0 0 0 1px var(--on-ink-line);color:var(--on-ink-2)}
+.taa-cost__ref{background:var(--blue);color:var(--on-ink)}
+
+.taa-cost__foot{max-width:92ch;margin:clamp(30px,3.4vw,46px) 0 0;padding-top:24px;border-top:1px solid var(--on-ink-line);
+  font-size:var(--t-sm);line-height:1.65;color:var(--on-ink-3)}
+.taa-cost__foot b{font-weight:600;color:var(--on-ink-2)}
+
+@media (max-width:1100px){
+  .taa-cost__wf{column-gap:var(--taa-gap,26px)}
+  .taa-wf{grid-column:1 / -1}
+  .taa-cost__panes{grid-column:1 / -1}
+}
+@media (max-width:760px){
+  .taa-cost__base{grid-template-columns:minmax(0,1fr);gap:18px}
+  .taa-cost__fig{align-items:flex-start;text-align:left}
+  .taa-cost__in thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .taa-cost__in tbody tr{display:grid;grid-template-columns:minmax(0,1fr);gap:2px;padding:12px 0;border-bottom:1px solid var(--on-ink-line)}
+  .taa-cost__in th,.taa-cost__in td{padding:0;border-bottom:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .taa-cost__wf .taa-wf__bar,.taa-cost__wf.is-in .taa-wf__bar{opacity:1;transform:none;transition:none}
+  .taa-wf__link,.taa-cost__wf.is-in .taa-wf__link{opacity:1;transition:none}
+}
+
+/* The bars are also .bdh-tabs tabs, and the core tab chrome (.bdh-tabs [role="tab"]) would make each
+   one a 44px inline-flex pill with the track and the label side by side. These carry enough weight to
+   restore the full-height column the waterfall needs. */
+.taa-cost .taa-wf__bars .taa-wf__b[role="tab"]{display:block;min-height:0;padding:0;gap:0;background:none;color:inherit}
+.taa-cost .taa-wf__bars .taa-wf__b[role="tab"][aria-selected="true"]{background:none;color:inherit}
+
+/* Without JS the chart ships drawn: the hidden start state applies only once cost.js arms it. */
+.taa-cost__wf:not(.is-anim) .taa-wf__bar{opacity:1;transform:none}
+.taa-cost__wf:not(.is-anim) .taa-wf__link{opacity:1}

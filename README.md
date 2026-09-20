@@ -28,8 +28,11 @@ partials/
   page-hero.php           the top of every inner page
   cta.php                 the closing band, reused at the foot of inner pages
   footer.php              the footer and the closing scripts
+  services/               the shared "Services & packages" catalogue (lib.php + catalogue.php)
+  contact/handler.php     the contact page's query, POST and lead email
 
 data/site.php             SINGLE SOURCE OF TRUTH — company, nav, disciplines, footer
+data/services/            what each page sells: packages.php + one file per discipline
 sections/                 the home page, one .php + .css + .js per section
 assets/css|js|brand|fonts|imgs|animation
 build.php                 bundles sections/*.css|js → assets/css|js/sections.*
@@ -116,8 +119,12 @@ A shell that includes one partial per section, in the order set by `$HUB`:
 
 hero · capability navigator · why now · the six capabilities · inception → delivery
 (programme map) · AI brand OS (live demo) · agents and people · the handover kit ·
-touchpoints · industries · global scale · sustainability · measurement · ways to work
-together · how we work with enterprises · FAQ · closing band
+touchpoints · industries · global scale · sustainability · measurement · how we work
+with enterprises · services & packages · FAQ · closing band
+
+(The old "ways to work together" section, `partials/brand/hub/engagement.php`, is out of
+the running order: the catalogue's packages row replaced it. Its four models became
+offers in the hub's "Programmes & operations" category.)
 
 Each section is `partials/brand/hub/<id>.php` with its own
 `assets/css/brand/hub/<id>.css` and `assets/js/brand/hub/<id>.js` (loaded automatically
@@ -143,15 +150,58 @@ component is its own. Copy comes from `data/brand-design.php` (`$BD[slug]`) and
 
 | Page · prefix | Concept | Signature demo | Sections |
 |---|---|---|---|
-| Growth Strategy · `cgs-` | The terrain: the market as ground to be read | Next-best-customer scorer: weighting sliders re-rank Segments A–F, with an agent note | hero · hides · ledger · scorer · whitespace · thesis · route · moves · kpi · pack · outcomes · faq · onward |
-| Brand Identity · `cbi-` | The specimen book, set plate by plate | Voice and tone tuner: a context and two dials rewrite a line | hero · anatomy · offer · construct · colour · type · voice · motion · touchpoints · process · deliver · outcomes · onward |
-| Brand Foundation · `cbf-` | The decision document: clauses, redlines, appendix | Positioning composer: an agent stress-tests the statement, a person signs it off | hero · essay · charter · tensions · composer · rules · narrative · revisions · onepage · appendix · room · transcript · seealso |
-| Brand Systems · `cbs-` | The living system, run like a product | Live token editor: controls rewrite tokens, components re-render, export in three formats | hero · editor · manifest · flex · inventory · templates · governance · docs · process · bundle · adoption · faq · onward |
-| Brand Architecture · `cba-` | The portfolio as structure, drawn as a drawing set | Model spectrum: a slider walks branded house → house of brands | hero · audit · offer · spectrum · lockup · naming · wayfinding · migration · process · register · outcomes · faq · onward |
-| Brand AI Tools · `cat-` | The machine room: tooling with people in charge | Generation playground: brand-locked prompt → variants → automated brand check → review | hero · help · curate · playground · guardrails · eval · provenance · vault · deploy · registry · reports · man · onward |
+| Growth Strategy · `cgs-` | The terrain: the market as ground to be read | Next-best-customer scorer: weighting sliders re-rank Segments A–F, with an agent note | hero · hides · ledger · scorer · whitespace · thesis · route · moves · kpi · pack · outcomes · services · faq · onward |
+| Brand Identity · `cbi-` | The specimen book, set plate by plate | Voice and tone tuner: a context and two dials rewrite a line | hero · anatomy · offer · construct · colour · type · voice · motion · touchpoints · process · deliver · outcomes · services · onward |
+| Brand Foundation · `cbf-` | The decision document: clauses, redlines, appendix | Positioning composer: an agent stress-tests the statement, a person signs it off | hero · essay · charter · tensions · composer · rules · narrative · revisions · onepage · appendix · room · services · transcript · seealso |
+| Brand Systems · `cbs-` | The living system, run like a product | Live token editor: controls rewrite tokens, components re-render, export in three formats | hero · editor · manifest · flex · inventory · templates · governance · docs · process · bundle · adoption · services · faq · onward |
+| Brand Architecture · `cba-` | The portfolio as structure, drawn as a drawing set | Model spectrum: a slider walks branded house → house of brands | hero · audit · offer · spectrum · lockup · naming · wayfinding · migration · process · register · outcomes · services · faq · onward |
+| Brand AI Tools · `cat-` | The machine room: tooling with people in charge | Generation playground: brand-locked prompt → variants → automated brand check → review | hero · help · curate · playground · guardrails · eval · provenance · vault · deploy · registry · reports · services · man · onward |
 
 Every page opens with a breadcrumb back to Brand Design and ends with its own onward
 section (the other five capabilities, its two `$BD` pairs marked), then `partials/cta.php`.
+
+## Services & packages (the shared catalogue)
+
+The one component that is deliberately identical on every discipline hub and capability
+page: what we sell there, grouped by category, plus the engagement packages, each leading
+to the contact page with the selection already made.
+
+**Add it to a page** — one line, placed immediately before the page's FAQ (or before its
+closing onward section when it has no FAQ):
+
+```php
+<?php $svc_key = 'growth-strategy'; include __DIR__ . '/../../services/catalogue.php'; ?>
+```
+
+On the Brand pages that line lives in `partials/brand/<slug>/services.php` (hub:
+`partials/brand/hub/services.php`) and `'services'` sits in the shell's running order. Also
+add `assets/css/services.css` and `assets/js/services.js` to the page's css/js lists. The
+component needs nothing else (no BDH); on pages that load `partials/tech/kit.php` the tools
+row shows real logos through `xt_logo()`, elsewhere their names.
+
+**Where the data lives** — `data/services/packages.php` (sprint · project · milestone ·
+retainer · enterprise · squad: name, tagline, typical duration, pricing model, includes,
+best for, icon) and `data/services/<discipline>.php`, keyed by page key (the discipline slug
+for its hub, the capability slug for each page). Every file in `data/services/` is loaded
+automatically; the schema and helpers (`svc_find()`, `svc_contact_url()` …) are documented
+at the top of `partials/services/lib.php`. A service id is `<page-key>:<offer-key>`.
+
+**How it behaves** — without JS it is a GET form: every category stacked, "Add to brief"
+checkboxes, a package select and "Continue to contact". With `services.js`: category tabs
+(arrows, Home/End), a brief tray that docks to the bottom of the screen, a brief that
+persists across pages for the visit (sessionStorage), and "Choose <package>" links that
+carry the services already picked. Styles are `.svc-*` in `assets/css/services.css`.
+
+## Contact (`contact.php`)
+
+Arrives pre-filled from any catalogue: `contact?service[]=<id>&package=<key>&from=<page>`
+(a comma list in `?service=` works too). Ids are checked against the data, the brief card
+lists each with its discipline and page, and the form offers every discipline's services
+(those without a data file show their capabilities from `data/site.php`). The POST is
+handled in `partials/contact/handler.php`: validation, a honeypot, a minimum fill time, one
+plain-text email to `company.email` (Reply-To the visitor, subject `[Lead] …`), then a
+redirect to `?sent=1`. When `mail()` fails, as on local XAMPP, the page says so and offers
+a `mailto:` link holding the same brief. Nothing is stored on disk.
 
 ## PLACEHOLDERS — before this goes live
 
@@ -189,6 +239,14 @@ section (the other five capabilities, its two `$BD` pairs marked), then `partial
    migration timings and issue weeks; Brand AI Tools' command output, dataset and pipeline
    counts, guardrail policy thresholds, evaluation figures, provenance manifest, versions
    and outcome figures. Agent notes and rewrites are pre-authored, not live model output.
+
+10. **Services & packages** — every offer is DRAFT copy; every typical timeline in
+    `data/services/*.php` and every package duration in `packages.php` is marked
+    PLACEHOLDER. No prices are shown anywhere, by design.
+11. **Contact** — confirm where leads should go (email or a CRM) and the sending address
+    (`partials/contact/handler.php`, marked PLACEHOLDER); the budget bands are in US dollars
+    until the currency is confirmed; link the consent line to the Privacy Notice once it
+    exists.
 
 Nothing on the site claims a certification, or a partnership with OpenAI, Anthropic,
 Google or Adobe — the platforms section only describes how the tools are used.

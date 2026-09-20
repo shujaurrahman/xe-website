@@ -1,0 +1,89 @@
+/* TM-08 Privacy — the personal-data map. Side column (photo + law), main column (four-stage flow and
+   the erasure console). The HTML ships the finished state: every system already confirmed. privacy.js
+   replays the propagation. Tokens only; no new colours; no !important. */
+
+.tsc-pv{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:var(--bdh-gap-l);align-items:start}
+@media (max-width:1060px){.tsc-pv{grid-template-columns:minmax(0,1fr);gap:var(--bdh-block)}}
+
+/* ---------- side --------------------------------------------------------- */
+.tsc-pv__side{display:grid;gap:clamp(22px,2.4vw,30px)}
+.tsc-pv__img{position:relative;margin:0}
+.tsc-pv__frame{position:absolute;inset:12px;pointer-events:none}
+.tsc-pv__frame i{position:absolute;width:16px;height:16px;border:1px solid var(--on-ink-2);opacity:.75}
+.tsc-pv__frame i:nth-child(1){left:0;top:0;border-right:0;border-bottom:0}
+.tsc-pv__frame i:nth-child(2){right:0;top:0;border-left:0;border-bottom:0}
+.tsc-pv__frame i:nth-child(3){left:0;bottom:0;border-right:0;border-top:0}
+.tsc-pv__frame i:nth-child(4){right:0;bottom:0;border-left:0;border-top:0}
+.tsc-pv__cap{position:absolute;left:14px;bottom:14px;max-width:calc(100% - 28px)}
+
+.tsc-pv__lt{margin:0 0 14px;font-family:var(--f-h);font-size:var(--t-body);font-weight:500;letter-spacing:-.01em;line-height:1.3;color:var(--ink)}
+.tsc-pv__ll>li{font-size:var(--t-xs);line-height:1.65}
+.tsc-pv__ll b{font-weight:600;color:var(--ink)}
+.tsc-pv__badges{margin:18px 0 0;display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0}
+.tsc-pv__dis{margin:14px 0 0;font-size:var(--t-xs);line-height:1.6;color:var(--faint)}
+
+/* ---------- main --------------------------------------------------------- */
+.tsc-pv__main{min-width:0}
+
+/* four-stage flow */
+.tsc-pv__flow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,1.8vw,22px);list-style:none;margin:0;padding:0}
+.tsc-pv__st{position:relative;display:grid;gap:12px;align-content:start;padding:20px;border:1px solid var(--line);border-radius:var(--r);background:var(--paper-2)}
+.tsc-pv__sth{display:grid;grid-template-columns:auto auto minmax(0,1fr);align-items:center;gap:10px}
+.tsc-pv__sico{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:var(--blue-wash);color:var(--blue-d)}
+.tsc-pv__sn{margin:0;color:var(--faint);letter-spacing:.1em}
+.tsc-pv__st3{grid-column:1 / -1;margin:2px 0 0;font-family:var(--f-h);font-size:clamp(1.05rem,1.4vw,1.25rem);font-weight:400;letter-spacing:-.02em;line-height:1.2;color:var(--ink)}
+.tsc-pv__sw{margin:0;font-size:var(--t-xs);line-height:1.65;color:var(--txt)}
+.tsc-pv__sd{margin:0;display:grid;gap:10px}
+.tsc-pv__sd div{display:grid;gap:4px;padding-top:12px;border-top:1px solid var(--line-2)}
+.tsc-pv__sd dt{font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-d)}
+.tsc-pv__sd dd{margin:0;font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+
+/* connector between stages */
+.tsc-pv__wire{position:absolute;top:36px;right:calc(clamp(14px,1.8vw,22px) * -1);width:clamp(14px,1.8vw,22px);height:1px;background:var(--line);overflow:hidden}
+.tsc-pv__st:nth-child(even) .tsc-pv__wire,.tsc-pv__st:last-child .tsc-pv__wire{display:none}
+.tsc-pv__wire i{position:absolute;inset:0;background:var(--blue);transform:scaleX(0);transform-origin:left center;transition:transform .6s var(--e) calc(var(--i,0) * 90ms + 200ms)}
+.tsc-pv__flow.is-in .tsc-pv__wire i{transform:scaleX(1)}
+@media (max-width:620px){.tsc-pv__flow{grid-template-columns:minmax(0,1fr)}.tsc-pv__wire{display:none}}
+
+/* ---------- erasure console ---------------------------------------------- */
+.tsc-pv__console{min-width:0;margin-top:var(--bdh-block)}
+.tsc-pv__bar{justify-content:flex-start}
+.tsc-pv__bt{font-family:var(--f);color:var(--muted)}
+.tsc-pv__bs{margin-left:auto;display:inline-flex;align-items:center;gap:7px;color:var(--blue-d)}
+.tsc-pv__bs::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.tsc-pv__cbody{padding:clamp(18px,2.2vw,26px)}
+.tsc-pv__ctop{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px 24px;align-items:start;padding-bottom:18px;border-bottom:1px solid var(--line-2)}
+@media (max-width:720px){.tsc-pv__ctop{grid-template-columns:minmax(0,1fr)}}
+.tsc-pv__ct{margin:0;font-family:var(--f-h);font-size:var(--t-body);font-weight:500;letter-spacing:-.01em;line-height:1.3;color:var(--ink)}
+.tsc-pv__cw{margin:8px 0 0;max-width:56ch;font-size:var(--t-xs);line-height:1.65;color:var(--muted)}
+.tsc-pv__cctl{display:grid;gap:10px;justify-items:start}
+@media (min-width:721px){.tsc-pv__cctl{justify-items:end}}
+.tsc-pv__cn{margin:0;color:var(--muted)}
+.tsc-pv__cn b{color:var(--ink);font-weight:500}
+
+.tsc-pv__sys{list-style:none;margin:0;padding:0}
+.tsc-pv__row{display:grid;grid-template-columns:auto minmax(0,220px) minmax(0,1fr) auto;align-items:center;gap:6px 16px;padding:14px 0;border-bottom:1px solid var(--line-2)}
+.tsc-pv__row:last-child{border-bottom:0;padding-bottom:0}
+.tsc-pv__tick{transition:transform .35s var(--e),background var(--d1) var(--e-io),box-shadow var(--d1) var(--e-io)}
+.tsc-pv__row:not(.is-done) .tsc-pv__tick{background:transparent;box-shadow:inset 0 0 0 1px var(--line-3);transform:scale(.8)}
+.tsc-pv__row:not(.is-done) .tsc-pv__tick::after{opacity:0}
+.tsc-pv__row.is-queued .tsc-pv__tick{background:var(--blue-wash-2);box-shadow:inset 0 0 0 1px var(--blue-line)}
+.tsc-pv__row.is-queued .tsc-pv__tick::after{border-color:var(--blue-d)}
+.tsc-pv__row.is-now .tsc-pv__tick{transform:scale(1.15)}
+.tsc-pv__rn{margin:0;font-family:var(--f-h);font-size:var(--t-sm);font-weight:500;line-height:1.3;color:var(--ink)}
+.tsc-pv__rn span{display:block;margin-top:2px;font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.tsc-pv__rw{margin:0;font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+.tsc-pv__rt{margin:0;justify-self:end;color:var(--faint);white-space:nowrap}
+.tsc-pv__row.is-now .tsc-pv__rt{color:var(--blue-d)}
+@media (max-width:720px){
+  .tsc-pv__row{grid-template-columns:auto minmax(0,1fr) auto}
+  .tsc-pv__rw{grid-column:2 / -1}
+}
+
+.tsc-pv__cfoot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:20px 0 0;padding-top:16px;border-top:1px solid var(--line-2);
+  font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+
+@media (prefers-reduced-motion:reduce){
+  .tsc-pv__wire i{transform:scaleX(1)}
+  .tsc-pv__tick{transition:none}
+}

@@ -1,0 +1,83 @@
+/* Integration & Support · sprawl — 6 × 5 tool board: manual copy hand-offs (today) vs one line (connected). */
+.tis-sprawl__seg{flex-wrap:wrap}
+.tis-sprawl__grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--bdh-gap-l);align-items:start}
+
+.tis-sprawl__boardwrap{min-width:0;padding:clamp(16px,2vw,28px);background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh-1)}
+.tis-sprawl__bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding-bottom:14px;margin-bottom:10px;border-bottom:1px solid var(--line-2);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--muted)}
+.tis-sprawl__mode{display:inline-flex;align-items:center;gap:10px}
+.tis-sprawl__mode b{font-weight:500;color:var(--ink);letter-spacing:.1em;text-transform:uppercase}
+
+.tis-sprawl__board{position:relative;aspect-ratio:6 / 5;min-width:0}
+.tis-sprawl__svg{position:absolute;inset:0;width:100%;height:100%;max-width:none;overflow:visible;pointer-events:none;z-index:2}
+.tis-sprawl__copies path{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:4 4;stroke-linecap:round;opacity:0;transition:opacity .5s var(--e)}
+.tis-sprawl__copies circle{fill:var(--paper);stroke:var(--ink);stroke-width:1.2;opacity:0;transition:opacity .5s var(--e)}
+.tis-sprawl__head{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.tis-sprawl__bus{fill:none;stroke:var(--blue);stroke-width:3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset 1.6s var(--e-io)}
+.tis-sprawl__svg{z-index:0}
+
+.tis-sprawl__tiles{position:relative;z-index:1;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:repeat(5,minmax(0,1fr));height:100%}
+.tis-sprawl__tile{position:relative;min-width:0;padding:5px 5px 22px}
+.tis-sprawl__card{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:6px;height:100%;padding:9px 10px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--paper);color:var(--ink);
+  transition:opacity .5s var(--e),border-color .4s var(--e-io),transform .5s var(--e)}
+.tis-sprawl__lbl{max-width:100%;font-size:var(--t-xs);font-weight:500;line-height:1.2;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tis-sprawl__tag{position:absolute;top:8px;right:8px;font-family:var(--f);font-size:.5625rem;font-style:normal;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);opacity:0;transition:opacity .4s var(--e)}
+.tis-sprawl__stop{position:absolute;left:50%;bottom:9px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 2.5px var(--blue);transform:scale(1);transition:transform .45s var(--e) calc(var(--i) * 25ms),opacity .3s var(--e)}
+
+/* connected (the markup state) */
+[data-sp="connected"] .tis-sprawl__tile.is-ret .tis-sprawl__card{opacity:.4;border-style:dashed;border-color:var(--line-3)}
+[data-sp="connected"] .tis-sprawl__tile.is-ret .tis-sprawl__lbl{text-decoration:line-through;text-decoration-color:var(--muted)}
+[data-sp="connected"] .tis-sprawl__tile.is-ret .tis-sprawl__tag{opacity:1}
+[data-sp="connected"] .tis-sprawl__tile.is-ret .tis-sprawl__stop{box-shadow:inset 0 0 0 2px var(--line-3)}
+
+/* today */
+[data-sp="today"] .tis-sprawl__bus{stroke-dashoffset:1;transition-duration:.5s}
+[data-sp="today"] .tis-sprawl__stop{transform:scale(0);opacity:0;transition-delay:0s}
+[data-sp="today"] .tis-sprawl__copies path{opacity:.62}
+[data-sp="today"] .tis-sprawl__copies circle{opacity:.8}
+[data-sp="today"] .tis-sprawl__tile.is-ret .tis-sprawl__card{border-color:var(--ink)}
+[data-sp="today"] .tis-sprawl__svg{z-index:2}
+.is-live[data-sp="today"] .tis-sprawl__copies path{animation:tis-sp-copy 3.2s linear infinite;animation-delay:calc(var(--d) * -290ms)}
+.is-live[data-sp="today"] .tis-sprawl__tile.is-ret .tis-sprawl__card{animation:tis-sp-nudge 3.2s var(--e-io) infinite;animation-delay:calc(var(--i) * -170ms)}
+@keyframes tis-sp-copy{0%{opacity:.18;stroke-dashoffset:0}20%{opacity:.8}45%{opacity:.3}65%{opacity:.75}100%{opacity:.18;stroke-dashoffset:-48}}
+@keyframes tis-sp-nudge{0%,100%{transform:none}50%{transform:translateY(-2px)}}
+
+.tis-sprawl__legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line-2);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--muted)}
+.tis-sprawl__lg{display:inline-flex;align-items:center;gap:8px}
+.tis-sprawl__lg::before{content:"";display:inline-block;width:22px;height:0}
+.tis-sprawl__lg--copy::before{border-top:1.5px dashed var(--ink)}
+.tis-sprawl__lg--bus::before{border-top:3px solid var(--blue);border-radius:2px}
+.tis-sprawl__lg--ret::before{width:14px;height:10px;border:1px dashed var(--line-3);border-radius:3px}
+/* the key only describes what the current state actually draws: today has no integration line,
+   and connected has no copy-and-paste arcs. The retired swatch follows the board's own treatment. */
+.tis-sprawl__lg{transition:opacity var(--d2) var(--e)}
+[data-sp="today"] .tis-sprawl__lg--bus{opacity:.3}
+[data-sp="connected"] .tis-sprawl__lg--copy{opacity:.3}
+[data-sp="today"] .tis-sprawl__lg--ret::before{border-style:solid;border-color:var(--ink)}
+
+/* side */
+.tis-sprawl__side{min-width:0;display:flex;flex-direction:column;gap:clamp(24px,2.6vw,36px)}
+.tis-sprawl__cap{position:absolute;left:16px;bottom:16px;z-index:2;margin:0}
+.tis-sprawl__figs{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.tis-sprawl__fig{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px;padding-block:18px;border-bottom:1px solid var(--line)}
+.tis-sprawl__fig dt{font-size:var(--t-sm);line-height:1.5;color:var(--txt);max-width:34ch}
+.tis-sprawl__fig dd{display:flex;flex-direction:column;align-items:flex-end;gap:2px;text-align:right}
+.tis-sprawl__v{display:inline-flex;align-items:baseline;gap:2px;line-height:1}
+.tis-sprawl__fig b{font-family:var(--f);font-size:clamp(1.6rem,2.4vw,2.1rem);font-weight:500;letter-spacing:-.04em;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.tis-sprawl__v i{font-family:var(--f);font-size:var(--t-sm);font-style:normal;font-weight:500;color:var(--muted)}
+.tis-sprawl__was{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--faint);text-decoration-color:var(--muted)}
+[data-sp="today"] .tis-sprawl__was{visibility:hidden}
+.tis-sprawl__note{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+
+@media (max-width:1023px){.tis-sprawl__grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:600px){
+  .tis-sprawl__boardwrap{padding:12px}
+  .tis-sprawl__board{aspect-ratio:6 / 5.6}
+  .tis-sprawl__tile{padding:3px 3px 18px}
+  .tis-sprawl__card{align-items:center;justify-content:center;padding:6px 2px}
+  .tis-sprawl__lbl,.tis-sprawl__tag{display:none}
+  .tis-sprawl__stop{bottom:6px;width:8px;height:8px;margin-left:-4px}
+}
+@media (prefers-reduced-motion:reduce){
+  .tis-sprawl__lg{transition:none}
+  .tis-sprawl__bus,.tis-sprawl__card,.tis-sprawl__stop,.tis-sprawl__copies path{transition:none}
+}

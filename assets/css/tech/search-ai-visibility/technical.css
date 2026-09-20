@@ -1,0 +1,144 @@
+/* ==========================================================================
+   Search & AI Visibility — 03 · Technical (band--alt)
+   The crawl-to-index pipeline, the crawl log, the robots.txt bot switchboard and the
+   Core Web Vitals rail. Loops only under .is-live; the markup is already the finished state.
+   ========================================================================== */
+
+/* ---------- the pipeline -------------------------------------------------- */
+.tsv-pipe{position:relative;margin-bottom:var(--tsv-block)}
+
+.tsv-pipe__stages{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--tsv-gap);list-style:none;margin:0 0 26px;padding:0}
+.tsv-stage{position:relative;display:flex;flex-direction:column;gap:10px;min-width:0;padding-top:34px}
+.tsv-stage__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;color:var(--faint);line-height:1;font-variant-numeric:tabular-nums;
+  transition:color var(--d2) var(--e-io)}
+.tsv-stage.is-at .tsv-stage__n{color:var(--blue)}
+
+/* the rail each stage sits on: a track, a fill that grows when the section enters, and a node */
+.tsv-stage__line{position:absolute;top:12px;left:0;right:calc(var(--tsv-gap) * -1);height:1px;background:var(--line-3)}
+.tsv-stage:last-child .tsv-stage__line{right:0}
+.tsv-stage__line i{position:absolute;top:50%;left:0;width:11px;height:11px;margin-top:-5.5px;border-radius:50%;
+  background:var(--paper);box-shadow:inset 0 0 0 1.5px var(--line-3);
+  transition:box-shadow var(--d2) var(--e-io),background var(--d2) var(--e-io),transform var(--d2) var(--e-io)}
+.tsv-stage.is-at .tsv-stage__line i{background:var(--blue);box-shadow:inset 0 0 0 1.5px var(--blue),0 0 0 5px var(--blue-wash-2);transform:scale(1.12)}
+.tsv-stage.is-done .tsv-stage__line i{background:var(--blue-wash);box-shadow:inset 0 0 0 1.5px var(--blue-line)}
+
+.tsv-stage__t{font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;letter-spacing:-.015em;line-height:1.2;color:var(--ink);margin:0}
+.tsv-stage__s{margin:0;font-family:var(--f);font-size:var(--t-xs);letter-spacing:.01em;line-height:1.5;color:var(--muted)}
+.tsv-stage__c{display:flex;flex-direction:column;gap:9px;margin:6px 0 0;padding:0;list-style:none}
+.tsv-stage__c li{position:relative;padding-left:18px;font-size:var(--t-xs);line-height:1.55;color:var(--txt)}
+.tsv-stage__c li::before{content:"";position:absolute;top:.52em;left:0;width:9px;height:1px;background:var(--line-3)}
+.tsv-stage.is-at .tsv-stage__c li::before{background:var(--blue-line)}
+
+/* the crawler token that walks the rail while the pipeline is on screen */
+.tsv-pipe__stages::after{content:"";position:absolute;top:7px;left:0;width:11px;height:11px;border-radius:50%;
+  background:var(--blue);opacity:0;pointer-events:none;
+  transform:translateX(var(--tsv-crawl,0px));
+  transition:transform 620ms var(--e-io),opacity var(--d2) var(--e-io)}
+.tsv-pipe.is-live .tsv-pipe__stages::after{opacity:.28}
+
+/* ---------- the crawl log ------------------------------------------------- */
+.tsv-log{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);overflow:hidden}
+.tsv-log__bar{display:flex;align-items:center;gap:10px;min-height:42px;margin:0;padding:0 16px;border-bottom:1px solid var(--line-2);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);flex-wrap:wrap}
+.tsv-log__bar b{font-weight:600;color:var(--ink)}
+.tsv-log__bar span{text-transform:none;letter-spacing:.02em;color:var(--faint)}
+.tsv-log__list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0;padding:0;list-style:none}
+.tsv-log__row{display:flex;align-items:center;gap:12px;min-width:0;padding:11px 16px;border-bottom:1px solid var(--line-2);
+  font-family:var(--f);font-size:var(--t-xs);line-height:1.45}
+.tsv-log__list>li:nth-child(odd){border-right:1px solid var(--line-2)}
+.tsv-log__list>li:nth-last-child(-n+2){border-bottom:0}
+.tsv-log__u{min-width:0;flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
+.tsv-log__s{flex:none;display:inline-flex;align-items:center;gap:7px;color:var(--muted);white-space:nowrap}
+.tsv-log__s::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--faint);flex:none}
+.tsv-log__row[data-st="ok"] .tsv-log__s::before{background:var(--blue)}
+.tsv-log__row[data-st="warn"] .tsv-log__s::before{background:var(--line-3);box-shadow:inset 0 0 0 1px var(--muted)}
+.tsv-log__row[data-st="bad"] .tsv-log__s::before{background:var(--ink)}
+.tsv-log__row[data-st="bad"] .tsv-log__u{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line-3)}
+/* the sampled row lights briefly as the crawler passes it */
+.tsv-log__row.is-hit{background:var(--blue-wash-2)}
+.tsv-log__row{transition:background var(--d2) var(--e-io)}
+
+@media (max-width:1023px){
+  .tsv-pipe__stages{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:32px}
+  .tsv-stage__line{right:calc(var(--tsv-gap) * -1)}
+  .tsv-stage:nth-child(2n) .tsv-stage__line{right:0}
+  .tsv-pipe__stages::after{display:none}
+}
+@media (max-width:640px){
+  .tsv-pipe__stages{grid-template-columns:minmax(0,1fr)}
+  .tsv-stage__line{right:0}
+  .tsv-log__list{grid-template-columns:minmax(0,1fr)}
+  .tsv-log__list>li:nth-child(odd){border-right:0}
+  .tsv-log__list>li:nth-last-child(2){border-bottom:1px solid var(--line-2)}
+  .tsv-log__row{flex-wrap:wrap;gap:6px 12px}
+}
+
+/* ---------- the bot switchboard ------------------------------------------ */
+.tsv-bots{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--tsv-gap);row-gap:var(--tsv-gap);margin-bottom:var(--tsv-block)}
+.tsv-bots__panel{grid-column:1 / span 6;grid-row:1;min-width:0;align-self:start;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);overflow:hidden}
+.tsv-bots__side{grid-column:7 / -1;grid-row:1 / span 2;display:flex;flex-direction:column;gap:18px;min-width:0}
+.tsv-bots__note{grid-column:1 / span 6;grid-row:2;align-self:start;max-width:none}
+
+.tsv-bots__k{display:flex;align-items:center;gap:9px;min-height:42px;margin:0;padding:0 16px;border-bottom:1px solid var(--line-2);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.tsv-bots__k .xt-ico{color:var(--muted)}
+
+.tsv-bots__list{margin:0;padding:0;list-style:none}
+.tsv-bot{display:flex;align-items:center;gap:16px;padding:12px 16px;border-bottom:1px solid var(--line-2)}
+.tsv-bot__n{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1 1 auto}
+.tsv-bot__n b{font-family:var(--f);font-size:var(--t-xs);font-weight:600;letter-spacing:.01em;color:var(--ink);line-height:1.35}
+.tsv-bot__n small{font-size:var(--t-xs);line-height:1.45;color:var(--muted)}
+
+.tsv-bot__sw{display:inline-flex;align-items:center;gap:10px;flex:none;padding:0;border:0;background:none;cursor:pointer;color:var(--muted);
+  font-family:var(--f);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;line-height:1}
+.tsv-bot__st{width:62px;text-align:left;transition:color var(--d1) var(--e-io)}
+.tsv-bot__track{position:relative;width:40px;height:22px;flex:none;border-radius:var(--r-pill);background:var(--paper-4);box-shadow:inset 0 0 0 1px var(--line-3);
+  transition:background var(--d2) var(--e-io),box-shadow var(--d2) var(--e-io)}
+.tsv-bot__track::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--paper);box-shadow:var(--sh-1);
+  transition:transform var(--d2) var(--e-io)}
+.tsv-bot__sw[aria-pressed="true"] .tsv-bot__track{background:var(--blue);box-shadow:inset 0 0 0 1px var(--blue)}
+.tsv-bot__sw[aria-pressed="true"] .tsv-bot__track::after{transform:translateX(18px)}
+.tsv-bot__sw[aria-pressed="true"] .tsv-bot__st{color:var(--blue-d)}
+.tsv-bot__sw:hover .tsv-bot__track{box-shadow:inset 0 0 0 1px var(--blue-line)}
+.tsv-bot__sw[aria-pressed="true"]:hover .tsv-bot__track{box-shadow:inset 0 0 0 1px var(--blue-d)}
+.tsv-bot.is-touched{background:var(--paper-2)}
+.tsv-bot{transition:background var(--d2) var(--e-io)}
+
+.tsv-bots__out{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);overflow:hidden}
+.tsv-bots__ok{display:flex;align-items:center;gap:9px;min-height:42px;margin:0;padding:0 16px;border-bottom:1px solid var(--line-2);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.tsv-bots__ok .xt-ico{color:var(--muted)}
+.tsv-bots__code{margin:0;padding:15px 16px;background:var(--paper-2);overflow-x:auto;
+  font-family:var(--f);font-size:var(--t-xs);line-height:1.62;color:var(--txt);white-space:pre;-webkit-overflow-scrolling:touch}
+.tsv-bots__code code{font:inherit;color:inherit}
+
+.tsv-bots__explain{display:flex;flex-direction:column;gap:12px;padding:20px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.tsv-bots__ek{margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);line-height:1.4}
+.tsv-bots__et{margin:0;font-size:var(--t-sm);line-height:1.65;color:var(--ink)}
+.tsv-bots__en{margin:0;padding-top:12px;border-top:1px solid var(--line-2);font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+
+@media (max-width:1023px){
+  .tsv-bots{grid-template-columns:minmax(0,1fr)}
+  .tsv-bots__panel,.tsv-bots__side,.tsv-bots__note{grid-column:1 / -1;grid-row:auto}
+}
+@media (max-width:520px){
+  .tsv-bot{flex-wrap:wrap;gap:12px}
+  .tsv-bot__sw{margin-left:auto}
+}
+
+/* ---------- Core Web Vitals rail ----------------------------------------- */
+.tsv-cwv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--tsv-gap);margin:0;padding:0;list-style:none;border-top:1px solid var(--ink)}
+.tsv-cwv>li{display:flex;flex-direction:column;gap:7px;padding-top:18px;min-width:0}
+.tsv-cwv__k b{font-family:var(--f);font-size:var(--t-lbl);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);line-height:1.5}
+.tsv-cwv__k small{font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+.tsv-cwv__a{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;color:var(--blue);line-height:1.4}
+.tsv-cwv__v{font-family:var(--f-h);font-size:clamp(1.4rem,2.2vw,1.9rem);font-weight:500;letter-spacing:-.025em;line-height:1.05;color:var(--ink);font-variant-numeric:tabular-nums}
+.tsv-cwv__n{font-size:var(--t-xs);font-weight:500;line-height:1.4;color:var(--ink)}
+.tsv-cwv__d{font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+@media (max-width:860px){.tsv-cwv{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:28px}}
+@media (max-width:480px){.tsv-cwv{grid-template-columns:minmax(0,1fr);row-gap:24px}}
+
+@media (prefers-reduced-motion:reduce){
+  .tsv-pipe__stages::after{display:none}
+  .tsv-log__row.is-hit{background:transparent}
+}

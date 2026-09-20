@@ -1,0 +1,85 @@
+/* AI Strategy & Agents · reality — pilot funnel with a reason at each drop-off, photograph, reason cards */
+.tas-re__grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--tas-gap);row-gap:var(--tas-gap);align-items:start}
+.tas-re__chart{grid-column:1 / span 7;min-width:0;padding:clamp(22px,2.6vw,36px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper)}
+.tas-re__ch{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;padding-bottom:18px;margin-bottom:10px;border-bottom:1px solid var(--line)}
+
+.tas-re__st{display:grid;grid-template-columns:minmax(0,11rem) minmax(0,1fr) 3rem;align-items:center;column-gap:18px;padding-block:10px}
+.tas-re__sl{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tas-re__sl b{font-family:var(--f-h);font-size:1rem;font-weight:500;letter-spacing:-.01em;line-height:1.25;color:var(--ink)}
+.tas-re__sl small{font-size:var(--t-xs);line-height:1.4;color:var(--muted)}
+.tas-re__track{position:relative;display:block;height:34px;border-radius:var(--r-xs);background:var(--paper-3);overflow:hidden}
+.tas-re__fill{position:absolute;inset:0;border-radius:var(--r-xs);background:var(--ink);transform:scaleX(var(--w));transform-origin:center;transition:transform 1.1s var(--e) calc(var(--i) * 160ms),background var(--d2) var(--e-io)}
+.tas-re__st.is-last .tas-re__fill{background:var(--blue)}
+.tas-re__v{font-family:var(--f);font-size:1.0625rem;font-weight:500;text-align:right;color:var(--ink);font-variant-numeric:tabular-nums}
+
+.tas-re__drop{display:grid;grid-template-columns:minmax(0,11rem) auto minmax(0,1fr) 3rem;align-items:center;column-gap:10px;padding-block:2px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.02em;color:var(--muted);line-height:1.35;
+  transition:opacity .6s var(--e) calc(var(--i) * 160ms + 500ms),transform .6s var(--e) calc(var(--i) * 160ms + 500ms)}
+.tas-re__drop::before{content:"";grid-column:1;justify-self:end;width:1px;height:22px;background:var(--line-3)}
+.tas-re__dn{display:inline-grid;place-items:center;min-width:26px;height:20px;padding:0 6px;border-radius:var(--r-xs);background:var(--paper);box-shadow:inset 0 0 0 1px var(--line-3);font-family:var(--f);font-size:10px;font-weight:600;letter-spacing:.04em;color:var(--ink);transition:background var(--d2) var(--e-io),color var(--d2) var(--e-io),box-shadow var(--d2) var(--e-io)}
+.tas-re__dt{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tas-re__dv{text-align:right;color:var(--faint);font-variant-numeric:tabular-nums}
+.tas-re__stages{transition:none}
+[data-hi] .tas-re__drop{opacity:.4}
+[data-hi="0"] .tas-re__drop[data-r="0"],[data-hi="1"] .tas-re__drop[data-r="1"],[data-hi="2"] .tas-re__drop[data-r="2"],[data-hi="3"] .tas-re__drop[data-r="3"]{opacity:1;color:var(--ink)}
+[data-hi="0"] .tas-re__drop[data-r="0"] .tas-re__dn,[data-hi="1"] .tas-re__drop[data-r="1"] .tas-re__dn,[data-hi="2"] .tas-re__drop[data-r="2"] .tas-re__dn,[data-hi="3"] .tas-re__drop[data-r="3"] .tas-re__dn{background:var(--blue);color:var(--on-ink);box-shadow:none}
+
+/* armed start pose: bars full width, reasons hidden */
+.tas-re__chart.is-armed .tas-re__fill{transform:scaleX(1);background:var(--line-3)}
+.tas-re__chart.is-armed .tas-re__drop{opacity:0;transform:translateX(-10px)}
+.tas-re__chart.is-armed.is-in .tas-re__fill{transform:scaleX(var(--w));background:var(--ink)}
+.tas-re__chart.is-armed.is-in .tas-re__st.is-last .tas-re__fill{background:var(--blue)}
+.tas-re__chart.is-armed.is-in .tas-re__drop{opacity:1;transform:none}
+.tas-re__chart.is-armed.is-in[data-hi] .tas-re__drop{opacity:.4}
+.tas-re__chart.is-armed.is-in[data-hi="0"] .tas-re__drop[data-r="0"],.tas-re__chart.is-armed.is-in[data-hi="1"] .tas-re__drop[data-r="1"],
+.tas-re__chart.is-armed.is-in[data-hi="2"] .tas-re__drop[data-r="2"],.tas-re__chart.is-armed.is-in[data-hi="3"] .tas-re__drop[data-r="3"]{opacity:1}
+
+/* side: photo + decisions */
+.tas-re__side{grid-column:8 / -1;min-width:0;display:flex;flex-direction:column;gap:var(--tas-gap)}
+.tas-re__fig{position:relative}
+.tas-re__cap{position:absolute;left:16px;bottom:16px;right:16px;z-index:2;display:flex}
+.tas-re__decide{padding:clamp(22px,2.4vw,30px);border-radius:var(--r-lg);background:var(--ink);color:var(--on-ink-2)}
+.tas-re__decide .tas-lbl{color:var(--on-ink-3)}
+.tas-re__decide ul{margin-top:14px}
+.tas-re__decide li{display:flex;align-items:center;gap:12px;padding-block:10px;border-top:1px solid var(--on-ink-line);font-size:var(--t-sm);line-height:1.45;color:var(--on-ink)}
+.tas-re__tick{position:relative;flex:none;width:16px;height:16px;border-radius:50%;background:var(--blue)}
+.tas-re__tick::after{content:"";position:absolute;left:5.5px;top:3.5px;width:4px;height:7px;border:solid var(--on-ink);border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+
+/* reason cards */
+.tas-re__reasons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--tas-gap);margin-top:var(--bdh-block)}
+.tas-re__card{display:grid;grid-row:span 5;grid-template-rows:subgrid;row-gap:0;align-content:start;justify-items:start;min-width:0;padding:clamp(22px,2.2vw,30px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);transition:border-color var(--d2) var(--e-io),box-shadow var(--d2) var(--e),transform var(--d2) var(--e)}
+.tas-re__card:hover,.tas-re__card:focus-within{border-color:var(--blue-line);box-shadow:var(--sh-1)}
+.tas-re__rtop{display:flex;align-items:center;justify-content:space-between;align-self:stretch;margin-bottom:26px}
+.tas-re__rt{font-family:var(--f-h);font-size:1.1875rem;font-weight:500;letter-spacing:-.012em;line-height:1.25;color:var(--ink)}
+.tas-re__rs{margin-top:10px;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+.tas-re__rf{align-self:start;justify-self:stretch;margin-top:18px;padding-top:16px;border-top:1px solid var(--line-2);font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.tas-re__rf b{display:block;margin-bottom:6px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-d)}
+.tas-re__go{align-self:end;padding-top:20px}
+@supports not (grid-template-rows:subgrid){.tas-re__card{display:flex;flex-direction:column;align-items:flex-start}.tas-re__go{margin-top:auto}}
+
+@media (max-width:1100px){
+  .tas-re__chart,.tas-re__side{grid-column:1 / -1}
+  .tas-re__side{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:stretch}
+  .tas-re__reasons{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .tas-re__side{grid-template-columns:minmax(0,1fr)}
+  .tas-re__st{grid-template-columns:minmax(0,1fr) 2.5rem;row-gap:8px}
+  .tas-re__sl{grid-column:1 / -1}
+  .tas-re__track{grid-column:1}
+  .tas-re__drop{grid-template-columns:auto minmax(0,1fr) auto}
+  .tas-re__drop::before{display:none}
+  .tas-re__dt{white-space:normal}
+}
+@media (max-width:600px){.tas-re__reasons{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){.tas-re__fill,.tas-re__drop{transition:none}}
+/* phones: the funnel already names each drop-off, so the checklist steps aside and the reason cards
+   lead with how each one is closed */
+@media (max-width:600px){
+  .tas-re__decide{display:none}
+  .tas-re__rs{display:none}
+  .tas-re__reasons{gap:12px}
+  .tas-re__card{padding:18px 18px 16px}
+  .tas-re__rtop{margin-bottom:12px}
+  .tas-re__rf{margin-top:12px;padding-top:12px}
+  .tas-re__go{padding-top:12px}
+}

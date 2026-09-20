@@ -1,0 +1,136 @@
+/* AI Infrastructure & Cloud · carbon — the carbon-aware scheduler: a day of grid intensity for two regions,
+   three workload lanes (the embedding refresh is movable), the slider and buttons, and the SCI readout.
+   Beside it: two photographs, the levers and the SCI badge. The job block glides along its lane; LEDs and the
+   draw run only while on screen. Every figure is illustrative. */
+.tic-cb{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:clamp(24px,3vw,44px);align-items:start}
+
+/* ---- the scheduler panel ---- */
+/* --cb-gut is the one gutter the chart and the lanes both reserve on the right, so a given hour lands at the
+   same x in the intensity chart, in the three workload tracks and on the hour axis. */
+.tic-cb__panel{position:relative;display:flex;flex-direction:column;gap:clamp(18px,2vw,26px);padding:clamp(20px,2.4vw,32px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);box-shadow:var(--sh-1);
+  --cb-gut:52px;--jw:calc(4 / 24 * 100%)}
+.tic-cb__data{display:none}
+.tic-cb__bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px}
+.tic-cb__title{display:inline-flex;align-items:center;gap:10px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;color:var(--muted)}
+.tic-cb__seg>button{min-width:96px}
+
+/* chart */
+.tic-cb__chart{display:flex;flex-direction:column;gap:8px}
+.tic-cb__unit{font-family:var(--f);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.tic-cb__plot{position:relative;height:clamp(150px,16vw,200px);padding-right:var(--cb-gut);border-bottom:1px solid var(--line-3)}
+.tic-cb__svg{position:absolute;inset:0 var(--cb-gut) 0 0;width:calc(100% - var(--cb-gut));height:100%;overflow:visible}
+.tic-cb__gl{stroke:var(--line-2);stroke-width:1;vector-effect:non-scaling-stroke}
+.tic-cb__line{fill:none;stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke;transition:stroke .4s var(--e),stroke-width .4s var(--e),opacity .4s var(--e)}
+.tic-cb__line--mumbai{stroke:var(--ink)}
+.tic-cb__line--chennai{stroke:var(--blue)}
+[data-region="mumbai"] .tic-cb__line--chennai,[data-region="chennai"] .tic-cb__line--mumbai{opacity:.38;stroke-width:1.25}
+[data-region="mumbai"] .tic-cb__line--mumbai,[data-region="chennai"] .tic-cb__line--chennai{stroke-width:2.25}
+.tic-cb__win{position:absolute;top:0;bottom:0;left:calc(var(--s) / 24 * (100% - var(--cb-gut)));width:calc(4 / 24 * (100% - var(--cb-gut)));pointer-events:none;transition:left .7s var(--e)}
+.tic-cb__win i{position:absolute;inset:0;background:var(--blue-wash);border-inline:1px dashed var(--blue-line)}
+.tic-cb__yl{position:absolute;right:0;top:calc(var(--y) * 100%);transform:translateY(-50%);font-family:var(--f);font-size:10px;letter-spacing:.02em;color:var(--faint);line-height:1}
+.tic-cb__tag{position:absolute;right:0;top:calc(var(--y) * 100%);transform:translate(0,-160%);font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.04em;line-height:1;padding:2px 6px;border-radius:var(--r-xs)}
+.tic-cb__tag--mumbai{color:var(--ink);background:var(--paper-3)}
+.tic-cb__tag--chennai{color:var(--blue-d);background:var(--blue-wash);transform:translate(0,60%)}
+.tic-cb__sun{position:absolute;left:calc(var(--x) * (100% - var(--cb-gut)));top:6px;transform:translateX(-50%);padding-left:12px;font-family:var(--f);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.tic-cb__sun::before{content:"";position:absolute;left:0;top:2px;width:7px;height:7px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--faint)}
+
+/* lanes */
+.tic-cb__lanes{position:relative;display:flex;flex-direction:column;gap:clamp(14px,1.6vw,20px);padding-right:var(--cb-gut);padding-bottom:20px}
+.tic-cb__lane{display:flex;flex-direction:column;gap:8px;min-width:0}
+.tic-cb__ln{display:flex;align-items:baseline;gap:10px;min-width:0;font-size:var(--t-sm);font-weight:500;line-height:1.25;color:var(--ink)}
+.tic-cb__ln .xt-ico{flex:none;align-self:flex-start;margin-top:1px;color:var(--ink)}
+.tic-cb__ln span{display:flex;flex-direction:column;gap:3px;min-width:0}
+.tic-cb__ln small{font-family:var(--f);font-size:10px;font-weight:400;letter-spacing:.02em;line-height:1.45;color:var(--faint)}
+.tic-cb__when{flex:none;margin-left:auto;min-height:22px;padding:2px 9px;border-radius:var(--r-pill);background:var(--blue-wash);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.06em;line-height:16px;color:var(--blue-d);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tic-cb__when--f{background:var(--paper-3);color:var(--muted)}
+.tic-cb__track{position:relative;height:34px;border-radius:6px;background:var(--paper-3);overflow:hidden}
+.tic-cb__track--drag{overflow:visible;cursor:grab}
+.tic-cb__track--drag.is-drag{cursor:grabbing}
+.tic-cb__inf{position:absolute;inset:6px 0;border-radius:4px;background:var(--ink);opacity:.9}
+.tic-cb__inf::after{content:"always on · near users";position:absolute;left:10px;top:50%;transform:translateY(-50%);font-family:var(--f);font-size:9.5px;letter-spacing:.06em;color:var(--on-ink-2);white-space:nowrap}
+.tic-cb__bk{position:absolute;top:6px;bottom:6px;left:calc(var(--b) / 24 * 100%);width:calc(1 / 24 * 100%);min-width:8px;border-radius:3px;background:var(--faint)}
+.tic-cb__job{position:absolute;top:2px;bottom:2px;left:calc(var(--s) / 24 * 100%);width:var(--jw);min-width:22px;display:flex;align-items:center;justify-content:center;gap:3px;border-radius:5px;background:var(--blue);box-shadow:var(--sh-1);
+  transition:left .7s var(--e),box-shadow var(--d2) var(--e),transform var(--d2) var(--e);user-select:none;touch-action:none}
+.tic-cb__job i{width:3px;height:3px;border-radius:50%;background:var(--on-ink-3)}
+.is-drag .tic-cb__job{transition:none;box-shadow:var(--sh-2);transform:scale(1.02)}
+.tic-cb__ghost{position:absolute;top:2px;bottom:2px;left:calc(var(--g) / 24 * 100%);width:var(--jw);border:1.5px dashed var(--line-3);border-radius:5px;pointer-events:none}
+.tic-cb__ghost::after{content:"cron as shipped";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:var(--f);font-size:9px;letter-spacing:.06em;color:var(--faint);white-space:nowrap;transition:opacity var(--d2) var(--e)}
+/* when the job sits on the shipped cron the two overlap exactly, so the caption would print under the block */
+.tic-cb__panel.is-default .tic-cb__ghost::after{opacity:0}
+.tic-cb__hours{position:absolute;left:0;right:var(--cb-gut);bottom:0;height:12px}
+.tic-cb__hours span{position:absolute;left:calc(var(--x) * 100%);transform:translateX(-50%);font-family:var(--f);font-size:9.5px;letter-spacing:.04em;color:var(--faint);line-height:1}
+.tic-cb__hours span:first-child{transform:none}
+.tic-cb__hours span:last-child{transform:translateX(-100%)}
+
+/* controls */
+.tic-cb__ctl{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:14px 24px;padding:16px 18px;border:1px solid var(--line);border-radius:var(--r);background:var(--paper-2)}
+.tic-cb__rl{grid-column:1;font-size:var(--t-sm);font-weight:500;color:var(--ink)}
+.tic-cb__rl b{font-family:var(--f);font-weight:500;color:var(--blue-d);font-variant-numeric:tabular-nums}
+.tic-cb__range{grid-column:1;position:relative;display:block;width:100%;height:20px;margin:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+.tic-cb__range::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:var(--line-3)}
+.tic-cb__range::-moz-range-track{height:4px;border-radius:2px;background:var(--line-3)}
+.tic-cb__range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;margin-top:-7px;border-radius:50%;background:var(--paper);border:3px solid var(--blue);box-shadow:var(--sh-1)}
+.tic-cb__range::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--paper);border:3px solid var(--blue)}
+.tic-cb__range:focus-visible{outline:none}
+.tic-cb__range:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--blue)}
+.tic-cb__btns{grid-column:2;grid-row:1 / span 2;display:flex;flex-direction:column;gap:8px}
+.tic-cb__btns .tic-btn{justify-content:flex-start}
+.tic-cb__btns .xt-ico{flex:none}
+
+/* readout */
+.tic-cb__out{display:flex;flex-direction:column;gap:16px;padding-top:6px}
+.tic-cb__kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1px solid var(--line)}
+.tic-cb__kpis>div{display:flex;flex-direction:column;gap:8px;min-width:0;padding:16px 16px 16px 0}
+.tic-cb__kpis>div+div{padding-left:18px;border-left:1px solid var(--line)}
+.tic-cb__kpis dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;line-height:1.35;color:var(--muted)}
+.tic-cb__kpis .tic-v{font-size:clamp(1.45rem,2.2vw,2rem)}
+.tic-cb__kpis .is-key .tic-v{color:var(--blue-d)}
+.tic-cb__d{align-self:flex-start;min-height:22px;padding:3px 9px;border-radius:var(--r-pill);background:var(--blue-wash);font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.04em;line-height:16px;color:var(--blue-d);transition:background var(--d2) var(--e),color var(--d2) var(--e)}
+.tic-cb__d.is-worse{background:var(--paper-3);color:var(--muted)}
+.tic-cb__f{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-family:var(--f);font-size:var(--t-sm);color:var(--ink);font-variant-numeric:tabular-nums}
+.tic-cb__f b{font-weight:600;color:var(--blue-d)}
+.tic-cb__fk{display:inline-grid;place-items:center;min-height:26px;padding:0 10px;border-radius:var(--r-pill);background:var(--ink);color:var(--on-ink);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em}
+.tic-cb__fv{margin-left:auto;font-size:var(--t-xs);color:var(--muted)}
+.tic-cb__note{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+
+/* ---- aside ---- */
+.tic-cb__side{display:flex;flex-direction:column;gap:clamp(18px,2vw,26px);min-width:0}
+.tic-cb__photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tic-cb__ph{border-radius:var(--r)}
+.tic-cb__ph img{object-position:50% 50%}
+.tic-cb__levers{display:flex;flex-direction:column}
+.tic-cb__levers li{display:flex;flex-direction:column;gap:6px;padding:16px 0;border-top:1px solid var(--line)}
+.tic-cb__levers li:last-child{border-bottom:1px solid var(--line)}
+.tic-cb__levers b{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.008em;color:var(--ink)}
+.tic-cb__levers span{font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+.tic-cb__badge{display:flex;flex-direction:column;gap:14px;padding:clamp(18px,2vw,24px);border-radius:var(--r-lg);background:var(--paper)}
+.tic-cb__badge .xt-badge{--xt-badge:64px}
+
+@media (max-width:1100px){
+  .tic-cb{grid-template-columns:minmax(0,1fr)}
+  .tic-cb__side{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}
+  .tic-cb__photos{grid-column:1 / -1}
+}
+@media (max-width:760px){
+  .tic-cb__side{grid-template-columns:minmax(0,1fr)}
+  .tic-cb__ctl{grid-template-columns:minmax(0,1fr)}
+  .tic-cb__btns{grid-column:1;grid-row:auto}
+  .tic-cb__kpis{grid-template-columns:minmax(0,1fr)}
+  .tic-cb__kpis>div{padding:14px 0}
+  .tic-cb__kpis>div+div{padding-left:0;border-left:0;border-top:1px solid var(--line)}
+  .tic-cb__fv{margin-left:0;flex-basis:100%}
+  .tic-cb__ghost::after{display:none}
+}
+@media (max-width:600px){
+  .tic-cb__panel{padding:18px;border-radius:var(--r-lg)}
+  .tic-cb__bar{flex-direction:column;align-items:flex-start}
+  .tic-cb__seg{width:100%}
+  .tic-cb__seg>button{flex:1;min-width:0}
+  .tic-cb__inf::after{content:"always on"}
+  .tic-cb__panel{--cb-gut:38px}
+  .tic-cb__photos{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  .tic-cb__job,.tic-cb__win,.tic-cb__line{transition:none}
+}

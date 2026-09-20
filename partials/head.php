@@ -30,9 +30,19 @@ $full  = ($page['key'] ?? '') === 'home'
 <link rel="preload" href="<?= xe_url('assets/fonts/montserrat-latin.woff2') ?>" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="<?= xe_asset('assets/css/core.css') ?>">
 <link rel="stylesheet" href="<?= xe_asset('assets/css/sections.css') ?>">
+<noscript><style>.pre{display:none}</style></noscript><!-- the intro mark is dismissed by core.js; without JS it must never cover the page -->
 <?php foreach ($page['css'] ?? [] as $css): ?>
 <link rel="stylesheet" href="<?= xe_asset($css) ?>">
 <?php endforeach; ?>
+
+<noscript><style>
+  /* Scroll reveals start hidden and are opened by a class core.js/hub.js add. Without JS that class
+     never arrives, so every revealed element on the site would stay invisible. Restore the finished
+     state here — after the page stylesheets, since brand/hub.css also declares .bdh-up{opacity:0}. */
+  [data-rv],[data-rv-s]>*,.bdh-up{opacity:1;transform:none}
+  .bdh-grow,.bdh-growY{transform:none}
+  .bdh-draw :is(path,line,rect,circle,ellipse,polyline,polygon),:is(path,line,rect,circle,ellipse,polyline,polygon).bdh-draw{stroke-dashoffset:0}
+</style></noscript>
 
 <script type="application/ld+json">
 <?= json_encode([

@@ -1,0 +1,97 @@
+/* ==========================================================================
+   Custom Software & Data Platforms — "The Schema". Page base layer (.tcs-*).
+   services/technology-intelligence/custom-software-data-platforms.php
+   Loads after assets/css/brand/hub.css and assets/css/tech/kit.css. Section styles live in
+   assets/css/tech/custom-software-data-platforms/<id>.css.
+   Tokens from core.css only; no new colours; no gradients except core mask fades; no !important.
+
+   Primitives
+   • .tcs-eb        section eyebrow: mono label with a small table glyph (the page's motif)
+   • .tcs-k         key chip for schema fields: PK · FK · IDX
+   • .tcs-mono      mono readout text; .tcs-mono--s smaller
+   • .tcs-btn       square-cornered app control (toolbar button); --pri solid, works on ink
+   • .tcs-st        status chip with a dot: --ok (blue), --wait (outline), --off (muted), --block (struck)
+   • .tcs-note      footnote line under a mock or chart
+   • .tcs-ent       entity card (header + field rows), used by the hero canvas and lineage mocks
+   ========================================================================== */
+.tcs{overflow-x:clip}
+.tcs [hidden]{display:none}   /* keeps [hidden] controls hidden even when a component sets display */
+.tcs .bdh-head .h2{max-width:21ch}
+
+/* ---- eyebrow ------------------------------------------------------------- */
+.tcs-eb{display:inline-flex;align-items:center;gap:10px;margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.16em;text-transform:uppercase;line-height:1.3;color:var(--blue)}
+.tcs-eb__g{position:relative;flex:none;width:14px;height:12px;border:1px solid currentColor;border-radius:2px}
+.tcs-eb__g::before,.tcs-eb__g::after{content:"";position:absolute;left:0;right:0;height:1px;background:currentColor}
+.tcs-eb__g::before{top:3px}
+.tcs-eb__g::after{top:6.5px;opacity:.45}
+.tcs-eb em{font-style:normal;letter-spacing:.06em;text-transform:none;color:var(--faint)}
+.band--ink .tcs-eb em{color:var(--on-ink-3)}
+
+/* ---- schema key chip ------------------------------------------------------ */
+.tcs-k{display:inline-grid;place-items:center;flex:none;min-width:22px;height:15px;padding:0 4px;border-radius:3px;background:var(--blue-wash-2);color:var(--blue-d);
+  font-family:var(--f);font-size:9px;font-weight:600;font-style:normal;letter-spacing:.04em;line-height:1}
+.tcs-k--fk{background:var(--paper-3);color:var(--muted)}
+.band--ink .tcs-k,.xt-on-ink .tcs-k{background:var(--blue-wash-2);color:var(--on-ink)}
+.band--ink .tcs-k--fk,.xt-on-ink .tcs-k--fk{background:var(--on-ink-card);color:var(--on-ink-2);box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+
+/* ---- mono readouts --------------------------------------------------------- */
+.tcs-mono{font-family:var(--f);font-size:var(--t-xs);line-height:1.5;letter-spacing:0;font-variant-numeric:tabular-nums}
+.tcs-mono--s{font-size:var(--t-lbl)}
+
+/* ---- app controls ---------------------------------------------------------- */
+.tcs-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 14px;border:1px solid var(--line-3);border-radius:var(--r-sm);background:var(--paper);
+  font-family:var(--f-b);font-size:var(--t-xs);font-weight:500;line-height:1.2;color:var(--ink);white-space:nowrap;
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.tcs-btn:hover{border-color:var(--ink)}
+.tcs-btn:disabled{opacity:.4;cursor:not-allowed}
+.tcs-btn--pri{background:var(--blue);border-color:var(--blue);color:var(--on-ink)}
+.tcs-btn--pri:hover{background:var(--blue-d);border-color:var(--blue-d)}
+.tcs-btn .xt-ico{width:16px;height:16px}
+.band--ink .tcs-btn{background:transparent;border-color:var(--on-ink-line);color:var(--on-ink)}
+.band--ink .tcs-btn:hover{border-color:var(--on-ink-2)}
+.band--ink .tcs-btn--pri{background:var(--blue);border-color:var(--blue);color:var(--on-ink)}
+.band--ink .tcs-btn--pri:hover{background:var(--blue-d);border-color:var(--blue-d)}
+@media (max-width:600px){.tcs-btn{min-height:44px}}
+
+/* ---- status chips ---------------------------------------------------------- */
+.tcs-st{display:inline-flex;align-items:center;gap:6px;flex:none;height:22px;padding:0 9px;border-radius:var(--r-pill);background:var(--paper-3);
+  font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.04em;line-height:1;color:var(--txt);white-space:nowrap}
+.tcs-st::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--faint);flex:none}
+.tcs-st--ok{background:var(--blue-wash);color:var(--blue-d)}
+.tcs-st--ok::before{background:var(--blue)}
+.tcs-st--wait{background:transparent;box-shadow:inset 0 0 0 1px var(--line-3)}
+.tcs-st--wait::before{background:transparent;box-shadow:inset 0 0 0 1.5px var(--blue)}
+.tcs-st--block{background:var(--paper-4);color:var(--ink)}
+.tcs-st--block::before{border-radius:1px;width:8px;height:2px;background:var(--ink)}
+.band--ink .tcs-st,.xt-on-ink .tcs-st{background:var(--on-ink-card);color:var(--on-ink-2)}
+.band--ink .tcs-st--ok,.xt-on-ink .tcs-st--ok{background:var(--blue-wash-2);color:var(--on-ink)}
+.band--ink .tcs-st--wait,.xt-on-ink .tcs-st--wait{background:transparent;box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+.band--ink .tcs-st--block,.xt-on-ink .tcs-st--block{background:transparent;box-shadow:inset 0 0 0 1px var(--on-ink-3);color:var(--on-ink)}
+.band--ink .tcs-st--block::before,.xt-on-ink .tcs-st--block::before{background:var(--on-ink)}
+
+/* ---- footnote -------------------------------------------------------------- */
+.tcs-note{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:18px;font-size:var(--t-xs);line-height:1.55;color:var(--faint)}
+.band--ink .tcs-note{color:var(--on-ink-3)}
+
+/* ---- entity card ----------------------------------------------------------- */
+.tcs-ent{position:relative;min-width:0;background:var(--paper);border:1px solid var(--line-3);border-radius:var(--r-sm);box-shadow:var(--sh-1);overflow:hidden}
+.tcs-ent__h{display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border-bottom:1px solid var(--line)}
+.tcs-ent__h .xt-ico{width:16px;height:16px;color:var(--ink)}
+.tcs-ent__t{font-family:var(--f-h);font-size:.9375rem;font-weight:500;letter-spacing:-.01em;line-height:1;color:var(--ink)}
+.tcs-ent__tb{margin-left:auto;font-family:var(--f);font-size:10px;letter-spacing:.02em;color:var(--faint)}
+.tcs-ent__f{padding:4px 0}
+.tcs-ent__f li{display:grid;grid-template-columns:26px minmax(0,1fr) auto;align-items:center;gap:6px;height:25px;padding:0 12px;font-family:var(--f);font-size:11px;line-height:1;color:var(--txt);
+  transition:background var(--d2) var(--e)}
+.tcs-ent__f li>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tcs-ent__f em{font-style:normal;font-size:10px;color:var(--faint)}
+.tcs-ent__f li.is-hot{background:var(--blue-wash)}
+
+/* ---- name-only technology chips ------------------------------------------------ */
+/* The kit marks technologies without a licence-clean logo with a grey placeholder square. Beside real marks it
+   reads as a missing image, so on this page those chips show the name alone (layout only; kit colours untouched). */
+.tcs .xt-chip--word .xt-chip__dot{display:none}
+.tcs .xt-chip--word{padding-left:16px}
+
+@media (prefers-reduced-motion:reduce){
+  .tcs-btn,.tcs-ent__f li{transition:none}
+}

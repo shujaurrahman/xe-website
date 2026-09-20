@@ -1,0 +1,61 @@
+/* ==========================================================================
+   Tech Workforce · ai-native — a mock editor with an assistant suggestion, an agent-drafted
+   pull request with checks, and beside them the AI policy card and the DORA targets.
+   ========================================================================== */
+.ttw-ai__grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:var(--ttw-gap-l)}
+.ttw-ai__work{display:flex;flex-direction:column;gap:var(--ttw-gap);min-width:0}
+.ttw-ai__side{display:flex;flex-direction:column;gap:var(--ttw-gap);min-width:0}
+
+/* ---------- editor -------------------------------------------------------- */
+.ttw-ai__asst{display:inline-flex;align-items:center;gap:8px;font-family:var(--f);font-size:var(--t-xs);color:var(--on-ink-2)}
+.ttw-ai__code{padding:clamp(14px,1.6vw,20px) 0;overflow-x:auto}
+.ttw-ai__l{display:flex;align-items:flex-start;gap:14px;margin:0;padding:2px clamp(14px,1.6vw,20px);
+  font-family:var(--f);font-size:var(--t-xs);line-height:1.75;color:var(--on-ink-2);white-space:pre}
+.ttw-ai__no{flex:none;width:18px;text-align:right;color:var(--on-ink-3);opacity:.7;-webkit-user-select:none;user-select:none}
+.ttw-ai__l code{font:inherit;color:inherit;white-space:pre}
+.ttw-ai__l--g{background:var(--blue-wash-2)}
+.ttw-ai__l--g code{color:var(--on-ink-3)}
+.ttw-ai__l--g.is-done code{color:var(--on-ink)}
+.ttw-ai__sug{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin:0;
+  padding:12px clamp(14px,1.6vw,20px);border-top:1px solid var(--on-ink-line)}
+.ttw-ai__sl{display:inline-flex;align-items:center;gap:8px;font-family:var(--f);font-size:var(--t-xs);color:var(--blue)}
+.ttw-ai__sl::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--blue);flex:none}
+.ttw-ai__sug .ttw-ro{color:var(--on-ink-3)}
+
+/* ---------- pull request -------------------------------------------------- */
+.ttw-ai__prb{padding:clamp(16px,1.8vw,22px)}
+.ttw-ai__prt{margin:0 0 10px;font-family:var(--f);font-size:var(--t-sm);line-height:1.5;color:var(--on-ink)}
+.ttw-ai__prd{margin:0 0 16px;max-width:66ch;font-size:var(--t-sm);line-height:1.62;color:var(--on-ink-2)}
+.ttw-ai__checks{display:flex;flex-direction:column;gap:0;margin:0;padding:0;list-style:none;border-top:1px solid var(--on-ink-line)}
+.ttw-ai__chk{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--on-ink-line);min-width:0}
+.ttw-ai__chk:last-child{border-bottom:0;padding-bottom:0}
+.ttw-ai__cn{min-width:0;font-size:var(--t-sm);line-height:1.4;color:var(--on-ink-2);overflow:hidden;text-overflow:ellipsis}
+.ttw-ai__cs{margin-left:auto;flex:none;color:var(--on-ink-3);white-space:nowrap}
+.ttw-ai__chk:last-child .ttw-ai__cs{color:var(--blue)}
+
+/* ---------- policy -------------------------------------------------------- */
+.ttw-ai__pol,.ttw-ai__dora{display:flex;flex-direction:column;gap:16px}
+.ttw-ai__pl{display:flex;flex-direction:column;gap:14px;margin:0;padding:0;list-style:none}
+.ttw-ai__pl li{display:flex;align-items:flex-start;gap:13px}
+.ttw-ai__pi{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;flex:none;border:1px solid var(--on-ink-line);border-radius:var(--r-sm);color:var(--on-ink)}
+.ttw-ai__pt{display:flex;flex-direction:column;gap:3px;min-width:0;font-size:var(--t-xs);line-height:1.58;color:var(--on-ink-3)}
+.ttw-ai__pt b{font-size:var(--t-sm);font-weight:600;line-height:1.35;color:var(--on-ink)}
+.ttw-ai__tools{display:flex;flex-direction:column;gap:14px;margin:4px 0 0;padding-top:16px;border-top:1px solid var(--on-ink-line)}
+.ttw-ai__tools .xt-stack--logos{color:var(--on-ink-2)}
+
+/* ---------- DORA ---------------------------------------------------------- */
+.ttw-ai__dt{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin:0;padding:1px;list-style:none;background:var(--on-ink-line);border-radius:var(--r-sm);overflow:hidden}
+.ttw-ai__dt li{display:flex;flex-direction:column;gap:6px;padding:14px;background:var(--ink);min-width:0}
+.ttw-ai__dt .ttw-fig{font-size:clamp(1.15rem,1.7vw,1.45rem)}
+.ttw-ai__dt .ttw-ro{color:var(--on-ink-3);line-height:1.45}
+
+@media (max-width:1023px){
+  .ttw-ai__grid{grid-template-columns:minmax(0,1fr)}
+  .ttw-ai__side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+}
+@media (max-width:760px){
+  .ttw-ai__side{grid-template-columns:minmax(0,1fr)}
+  .ttw-ai__dt{grid-template-columns:minmax(0,1fr)}
+  .ttw-ai__cs{margin-left:0;width:100%}
+  .ttw-ai__chk{flex-wrap:wrap}
+}

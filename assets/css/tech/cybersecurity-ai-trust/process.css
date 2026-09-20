@@ -1,0 +1,106 @@
+/* TM-09 Process — the lap dial and the stage sheet. Left: a ring with four numbered nodes at the
+   compass points; the blue quadrant arc runs from the selected stage round to the one it hands to.
+   --i on .tsc-cy__dial (0-3) drives the arc, so the shipped HTML already points
+   at stage 01 and the section is complete with no JavaScript. Right: the sheet, whose four panes all
+   carry the same number of rows so the tallest one does not leave a void under the others.
+   Tokens only; no new colours; no !important. */
+
+.tsc-cy{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,4vw,64px);align-items:stretch}
+.tsc-cy__left{display:flex;flex-direction:column;gap:clamp(20px,2.4vw,28px);min-width:0}
+
+/* ---------- the dial ------------------------------------------------------ */
+.tsc-cy__dial{position:relative;width:100%;max-width:360px;margin-inline:auto;aspect-ratio:1}
+.tsc-cy__ring{position:absolute;inset:0;width:100%;height:100%}
+.tsc-cy__base{stroke:var(--line-3);stroke-width:1;stroke-dasharray:2 5}
+.tsc-cy__arc{stroke:var(--blue);stroke-width:2;stroke-linecap:round;stroke-dasharray:25 75;
+  stroke-dashoffset:calc(var(--i,0) * -25);transition:stroke-dashoffset .6s var(--e)}
+
+.tsc-cy__nodes{position:absolute;inset:0}
+.tsc-cy__node{position:absolute;display:grid;place-items:center;width:46px;height:46px;transform:translate(-50%,-50%);
+  border:1px solid var(--line-3);border-radius:50%;background:var(--paper);color:var(--muted);
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.tsc-cy__node--top{left:50%;top:17.5%}
+.tsc-cy__node--right{left:82.5%;top:50%}
+.tsc-cy__node--bottom{left:50%;top:82.5%}
+.tsc-cy__node--left{left:17.5%;top:50%}
+.tsc-cy__node:hover{border-color:var(--ink);color:var(--ink)}
+.tsc-cy__nn{font-family:var(--f);font-size:12px;font-weight:500;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.tsc-cy__node[aria-selected="true"]{border-color:var(--ink);background:var(--ink);color:var(--on-ink);box-shadow:0 0 0 5px var(--blue-wash-2)}
+
+.tsc-cy__core{position:absolute;inset:26%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  margin:0;text-align:center;pointer-events:none}
+.tsc-cy__ck{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1.3}
+.tsc-cy__ck b{font-weight:500;color:var(--blue-d)}
+.tsc-cy__cn{font-family:var(--f-h);font-size:clamp(1.45rem,2.4vw,1.85rem);font-weight:500;letter-spacing:-.025em;line-height:1.1;color:var(--ink)}
+.tsc-cy__cw{color:var(--muted)}
+
+/* legend — the dial carries numbers, this line carries the names */
+.tsc-cy__legend{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 8px;margin:0}
+.tsc-cy__lg{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:var(--r-pill);
+  font-family:var(--f);font-size:10.5px;letter-spacing:.06em;color:var(--muted);transition:color var(--d1) var(--e-io),background var(--d1) var(--e-io)}
+.tsc-cy__lg i{font-style:normal;color:var(--ghost)}
+.tsc-cy__lg.is-on{background:var(--blue-wash);color:var(--blue-d)}
+.tsc-cy__lg.is-on i{color:var(--blue)}
+
+.tsc-cy__cad{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:10px;margin:auto 0 0;
+  padding-top:clamp(16px,1.8vw,22px);border-top:1px solid var(--line);font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+.tsc-cy__cad .tsc-led{margin-top:6px}
+
+/* ---------- the sheet ----------------------------------------------------- */
+.tsc-cy__panes{min-width:0}
+.tsc-cy__pane{padding:clamp(24px,2.8vw,40px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);box-shadow:var(--sh-1)}
+.tsc-cy__pk{margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);line-height:1.3}
+.tsc-cy__pk i{font-style:normal;color:var(--ghost)}
+.tsc-cy__pt{margin:8px 0 0;font-family:var(--f-h);font-size:clamp(1.5rem,2.2vw,2rem);font-weight:500;letter-spacing:-.025em;line-height:1.1;color:var(--ink)}
+.tsc-cy__pq{margin:10px 0 0;max-width:46ch;font-family:var(--f-h);font-size:var(--t-body);font-weight:400;letter-spacing:-.01em;line-height:1.45;color:var(--muted)}
+.tsc-cy__pd{margin:18px 0 0;max-width:62ch;font-size:var(--t-sm);line-height:1.65;color:var(--txt)}
+
+.tsc-cy__relay{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(18px,2.2vw,30px) clamp(20px,2.6vw,36px);
+  margin-top:clamp(22px,2.4vw,30px);padding-top:clamp(20px,2.2vw,26px);border-top:1px solid var(--line-2)}
+.tsc-cy__rb:nth-child(3){grid-column:1 / -1;padding-top:clamp(16px,1.8vw,22px);border-top:1px solid var(--line-2)}
+.tsc-cy__rk{margin:0 0 12px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1.3}
+.tsc-cy__rl{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.tsc-cy__rl li{position:relative;padding-left:18px;font-size:var(--t-sm);line-height:1.55;color:var(--muted)}
+.tsc-cy__rl li::before{content:"\203A";position:absolute;left:1px;top:0;font-family:var(--f);color:var(--ghost)}
+.tsc-cy__rl--do li{display:grid;grid-template-columns:16px minmax(0,1fr);align-items:start;gap:10px;padding-left:0;color:var(--txt)}
+.tsc-cy__rl--do li::before{display:none}
+.tsc-cy__rl--do .tsc-tick{margin-top:2px}
+.tsc-cy__ro{margin:0}
+.tsc-cy__pane.is-on .tsc-cy__rl li{animation:tsc-cy-in .5s var(--e) both;animation-delay:calc(var(--i,0) * 70ms + 100ms)}
+@keyframes tsc-cy-in{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+
+.tsc-cy__hand{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:clamp(20px,2.2vw,26px) 0 0;
+  padding:14px 16px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--paper-2);font-size:var(--t-sm);line-height:1.5;color:var(--muted)}
+.tsc-cy__hk{position:relative;padding-right:14px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.tsc-cy__hk::after{content:"\2192";position:absolute;right:0;top:50%;transform:translateY(-50%);color:var(--blue)}
+.tsc-cy__hand b{font-family:var(--f-h);font-size:var(--t-body);font-weight:500;letter-spacing:-.015em;color:var(--ink)}
+.tsc-cy__hw{flex:1 1 20ch;min-width:0}
+.tsc-cy__hw::before{content:"\00B7";margin-right:8px;color:var(--ghost)}
+
+/* ---------- responsive ---------------------------------------------------- */
+@media (max-width:1023px){
+  .tsc-cy{grid-template-columns:minmax(0,1fr);gap:32px}
+  .tsc-cy__left{max-width:640px;margin-inline:auto;width:100%}
+  .tsc-cy__cad{max-width:56ch;margin:0 auto}
+}
+@media (max-width:620px){
+  .tsc-cy__dial{max-width:300px}
+  .tsc-cy__node{width:40px;height:40px}
+  .tsc-cy__relay{grid-template-columns:minmax(0,1fr)}
+  .tsc-cy__rb:nth-child(3){padding-top:0;border-top:0}
+  .tsc-cy__hand{flex-direction:column;align-items:flex-start;gap:8px}
+  .tsc-cy__hw{flex:none}
+}
+
+/* ---------- foot ---------------------------------------------------------- */
+.tsc-cy__foot{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,3vw,48px);margin-top:var(--bdh-block);padding-top:clamp(22px,2.4vw,30px);border-top:1px solid var(--line)}
+@media (max-width:860px){.tsc-cy__foot{grid-template-columns:minmax(0,1fr);gap:22px}}
+.tsc-cy__ft{display:flex;flex-wrap:wrap;align-items:flex-start;gap:10px 14px;margin:0;max-width:56ch;font-size:var(--t-xs);line-height:1.65;color:var(--muted)}
+.tsc-cy__trig{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.tsc-cy__trig li{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:10px;font-size:var(--t-sm);line-height:1.5;color:var(--txt)}
+.tsc-cy__trig .tsc-tick{margin-top:2px}
+
+@media (prefers-reduced-motion:reduce){
+  .tsc-cy__arc{transition:none}
+  .tsc-cy__pane.is-on .tsc-cy__rl li{animation:none}
+}

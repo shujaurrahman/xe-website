@@ -1,0 +1,82 @@
+/* AI Product & Automation · efficiency — the cost lab: a design radiogroup and a volume slider, two segmented
+   bars whose segments move by transform (--o offset, --w width as fractions of design A), KPI readouts, the
+   techniques and the SCI framing. Values are swapped by efficiency.js; markup holds design C. */
+.tap-eff{border-radius:var(--r-xl)}
+.tap-eff__ctl{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:20px var(--tap-gap);align-items:end;padding:clamp(18px,2vw,26px) clamp(18px,2vw,28px) 0}
+.tap-eff__designs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tap-eff__dz{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:10px;min-height:64px;padding:12px 14px;border-radius:var(--r-sm);box-shadow:inset 0 0 0 1px var(--line);text-align:left;color:var(--ink);
+  transition:box-shadow var(--d2) var(--e-io),background var(--d2) var(--e-io)}
+.tap-eff__dz:hover{box-shadow:inset 0 0 0 1px var(--line-3)}
+.tap-eff__dz[aria-checked="true"]{background:var(--paper-2);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.tap-eff__dl{display:grid;place-items:center;width:24px;height:24px;border-radius:6px;box-shadow:inset 0 0 0 1px var(--line-3);font-family:var(--f);font-size:var(--t-lbl);font-weight:600;color:var(--muted);transition:background var(--d2) var(--e-io),color var(--d2) var(--e-io),box-shadow var(--d2) var(--e-io)}
+.tap-eff__dz[aria-checked="true"] .tap-eff__dl{background:var(--blue);box-shadow:none;color:var(--on-ink)}
+.tap-eff__dn{display:flex;flex-direction:column;gap:3px;min-width:0;font-size:var(--t-sm);font-weight:600;line-height:1.3}
+.tap-eff__dn small{font-family:var(--f);font-size:10px;font-weight:400;letter-spacing:.02em;color:var(--muted)}
+.tap-eff__vol{display:flex;flex-direction:column;gap:8px;min-width:0}
+.tap-eff__vol label{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tap-eff__vol output{font-size:var(--t-xs);letter-spacing:.02em;text-transform:none;color:var(--ink);font-variant-numeric:tabular-nums}
+.tap-eff__vol input{width:100%;height:28px;margin:0;-webkit-appearance:none;appearance:none;background:transparent;cursor:pointer}
+.tap-eff__vol input::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:var(--line-3)}
+.tap-eff__vol input::-moz-range-track{height:4px;border-radius:2px;background:var(--line-3)}
+.tap-eff__vol input::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;margin-top:-8px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 2px var(--ink),var(--sh-1)}
+.tap-eff__vol input::-moz-range-thumb{width:20px;height:20px;border:0;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 2px var(--ink),var(--sh-1)}
+.tap-eff__vol input:focus-visible{outline:none}
+.tap-eff__vol input:focus-visible::-webkit-slider-thumb{box-shadow:inset 0 0 0 2px var(--ink),0 0 0 3px var(--blue)}
+.tap-eff__vol input:focus-visible::-moz-range-thumb{box-shadow:inset 0 0 0 2px var(--ink),0 0 0 3px var(--blue)}
+.tap-eff__volk{display:flex;justify-content:space-between;margin-top:-6px;font-family:var(--f);font-size:10px;color:var(--faint)}
+
+.tap-eff__body{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,3vw,44px) var(--tap-gap);padding:clamp(22px,2.6vw,34px) clamp(18px,2vw,28px) clamp(22px,2.4vw,30px)}
+.tap-eff__row+.tap-eff__row{margin-top:clamp(22px,2.4vw,30px)}
+.tap-eff__rk{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tap-eff__rk b{font-size:1.15rem;font-weight:500;letter-spacing:-.02em;text-transform:none;color:var(--ink);font-variant-numeric:tabular-nums}
+.tap-eff__track{position:relative;height:22px;margin-top:12px;border-radius:5px;background:var(--paper-3);overflow:hidden}
+.tap-eff__seg{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:left;transform:translateX(calc(var(--o) * 100%)) scaleX(var(--w));transition:transform .8s var(--e)}
+.tap-eff__seg--0,.tap-eff__sw--0{background:var(--ink-2)}
+.tap-eff__seg--1,.tap-eff__sw--1{background:var(--blue)}
+.tap-eff__seg--2,.tap-eff__sw--2{background:var(--faint)}
+.tap-eff__seg--3,.tap-eff__sw--3{background:var(--blue-wash-2)}
+.tap-eff__ref{position:absolute;right:0;top:0;bottom:0;display:flex;align-items:center;padding-right:8px;font-family:var(--f);font-size:9px;letter-spacing:.08em;color:var(--faint);pointer-events:none}
+[data-design="a"] .tap-eff__ref{display:none}
+.tap-eff__legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:10px;font-size:var(--t-xs);color:var(--txt)}
+.tap-eff__legend li{display:inline-flex;align-items:center;gap:7px}
+.tap-eff__sw{width:10px;height:10px;border-radius:3px}
+.tap-eff__legend b{font-family:var(--f);font-size:10.5px;font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.tap-eff__how{margin-top:clamp(18px,2vw,24px);padding-top:16px;border-top:1px solid var(--line-2);font-size:var(--t-sm);line-height:1.65;color:var(--txt)}
+
+.tap-eff__kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-content:start}
+.tap-eff__kpis>div{padding:14px 16px;border-radius:var(--r-sm);background:var(--paper-2);box-shadow:inset 0 0 0 1px var(--line-2)}
+.tap-eff__kpis dt{font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.4}
+.tap-eff__kpis dd{margin-top:8px;font-family:var(--f);font-size:1.3rem;font-weight:500;letter-spacing:-.02em;line-height:1.1;color:var(--ink);font-variant-numeric:tabular-nums}
+.tap-eff__kpis dd span:not([data-eff-faith]){display:block;margin-top:4px;font-size:10.5px;font-weight:400;letter-spacing:0;color:var(--muted)}
+.tap-eff__kpis>.tap-eff__same{grid-column:1 / -1;background:var(--blue-wash);box-shadow:inset 0 0 0 1px var(--blue-line)}
+.tap-eff__kpis>.tap-eff__delta{grid-column:1 / -1;background:var(--ink);box-shadow:none}
+.tap-eff__delta dt{color:var(--on-ink-3)}
+.tap-eff__delta dd{font-size:1.05rem;color:var(--on-ink)}
+[data-design="a"] .tap-eff__delta{display:none}
+
+/* ---- techniques ---- */
+.tap-eff__tech{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--tap-gap);margin-top:clamp(40px,4.4vw,64px)}
+.tap-eff__t{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;padding-top:20px;border-top:1px solid var(--line)}
+.tap-eff__ti{display:grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);background:var(--paper-3);color:var(--ink)}
+.tap-eff__tt{font-family:var(--f-h);font-size:1.08rem;font-weight:500;letter-spacing:-.012em;line-height:1.25;color:var(--ink)}
+.tap-eff__td{margin-top:6px;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.tap-eff__tm{margin-top:10px;font-family:var(--f);font-size:10.5px;letter-spacing:.02em;color:var(--blue-d)}
+.tap-eff__t--sci{grid-template-columns:minmax(0,1fr);gap:14px;padding:20px;border:1px solid var(--line);border-top-color:var(--line);border-radius:var(--r-lg);background:var(--paper-2)}
+.tap-eff__t--sci .xt-badge{--xt-badge:56px}
+.tap-eff__sci{font-size:var(--t-xs);line-height:1.6;color:var(--txt)}
+.tap-eff__sci code{display:block;margin-bottom:8px;font-size:11.5px;font-weight:500;color:var(--ink)}
+
+@media (max-width:1100px){
+  .tap-eff__ctl,.tap-eff__body{grid-template-columns:minmax(0,1fr)}
+  .tap-eff__tech{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .tap-eff__designs{grid-template-columns:minmax(0,1fr)}
+  .tap-eff__dz{min-height:52px}
+  .tap-eff__kpis{grid-template-columns:minmax(0,1fr)}
+  .tap-eff__tech{display:flex;gap:16px;margin-inline:calc(var(--gutter) * -1);padding:0 var(--gutter) 12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);scrollbar-width:none}
+  .tap-eff__tech::-webkit-scrollbar{display:none}
+  .tap-eff__t{flex:0 0 84%;scroll-snap-align:start}
+  .tap-eff__bar .tap-win__path{white-space:normal}
+}
+@media (prefers-reduced-motion:reduce){.tap-eff__seg,.tap-eff__dz,.tap-eff__dl{transition:none}}

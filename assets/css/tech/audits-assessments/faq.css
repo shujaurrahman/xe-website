@@ -1,0 +1,62 @@
+/* Audits & Assessments · faq — native disclosure list on the left (cols 1–7), the direct route to a
+   person on the right (cols 9–12, sticky). The marker is two rules that cross into a plus and settle
+   into a minus when the answer opens. No script: <details> carries the behaviour. */
+.taa-fq{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--taa-gap-l);row-gap:var(--taa-gap)}
+.taa-fq__list{grid-column:1 / span 7;min-width:0;border-top:1px solid var(--line-3)}
+.taa-fq__side{grid-column:9 / -1;display:flex;flex-direction:column;gap:var(--taa-gap);min-width:0;position:sticky;top:calc(var(--nav-h) + 28px);align-self:start}
+
+.taa-fq__i{border-bottom:1px solid var(--line-2)}
+.taa-fq__i details{overflow:hidden}
+.taa-fq__i summary{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:8px 16px;
+  padding:clamp(18px,2vw,22px) 4px;cursor:pointer;list-style:none;
+  transition:background var(--d1) var(--e-io)}
+.taa-fq__i summary::-webkit-details-marker{display:none}
+.taa-fq__i summary:hover .taa-fq__q{color:var(--blue-d)}
+.taa-fq__i summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:var(--r-xs)}
+.taa-fq__ix{font-family:var(--f);font-size:var(--t-lbl);font-weight:600;letter-spacing:.06em;color:var(--faint);
+  transition:color var(--d1) var(--e-io)}
+.taa-fq__i details[open] .taa-fq__ix{color:var(--blue-d)}
+.taa-fq__q{margin:0;font-family:var(--f-h);font-size:clamp(1.0625rem,1.5vw,1.1875rem);font-weight:500;letter-spacing:-.012em;
+  line-height:1.35;color:var(--ink);transition:color var(--d1) var(--e-io)}
+.taa-fq__tag{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+
+/* marker: plus → minus */
+.taa-fq__mk{position:relative;display:inline-block;width:24px;height:24px;flex:none}
+.taa-fq__mk i{position:absolute;top:50%;left:50%;width:13px;height:1.5px;margin:-.75px 0 0 -6.5px;background:var(--ink);border-radius:1px;
+  transition:transform var(--d2) var(--e-io),background var(--d2) var(--e-io)}
+.taa-fq__mk i:last-child{transform:rotate(90deg)}
+.taa-fq__i details[open] .taa-fq__mk i{background:var(--blue-d)}
+.taa-fq__i details[open] .taa-fq__mk i:last-child{transform:rotate(180deg)}
+
+.taa-fq__a{padding:0 4px clamp(20px,2.2vw,26px) 0;max-width:72ch}
+.taa-fq__a p{margin:0;padding-left:18px;border-left:2px solid var(--blue-line);font-size:var(--t-body);line-height:1.7;color:var(--txt)}
+.taa-fq__i details[open] .taa-fq__a{animation:taa-fq-in .42s var(--e) both}
+@keyframes taa-fq-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* ---- aside ---- */
+.taa-fq__card{display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:clamp(24px,2.6vw,32px);
+  border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper-2)}
+.taa-fq__ci{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:var(--r-sm);background:var(--paper);color:var(--ink);
+  box-shadow:inset 0 0 0 1px var(--line-2)}
+.taa-fq__cl{margin:0;font-size:var(--t-sm);line-height:1.65;color:var(--txt)}
+.taa-fq__card .btn{margin-top:4px}
+.taa-fq__cr{margin:0}
+.taa-fq__topics{display:flex;flex-direction:column;gap:12px}
+.taa-fq__topics ul{display:flex;flex-wrap:wrap;gap:6px}
+
+@media (max-width:1023px){
+  .taa-fq{column-gap:var(--taa-gap)}
+  .taa-fq__list{grid-column:1 / span 12}
+  .taa-fq__side{grid-column:1 / -1;position:static;flex-direction:row;flex-wrap:wrap;align-items:flex-start}
+  .taa-fq__card{flex:1 1 320px}
+  .taa-fq__topics{flex:1 1 240px}
+}
+@media (max-width:620px){
+  .taa-fq__i summary{grid-template-columns:auto minmax(0,1fr) auto}
+  .taa-fq__tag{grid-column:2 / -1;order:3}
+  .taa-fq__card .btn{width:100%;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  .taa-fq__i details[open] .taa-fq__a{animation:none}
+  .taa-fq__mk i{transition:none}
+}

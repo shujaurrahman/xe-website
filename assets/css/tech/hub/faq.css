@@ -1,0 +1,57 @@
+/* Hub · FAQ — sticky head with two ways forward; questions as cards in the core [data-acc] accordion, each answer
+   ending with links to the capability pages it touches. */
+.tih-faq__grid{align-items:start}
+.tih-faq__head{display:flex;flex-direction:column;align-items:flex-start;gap:18px}
+.tih-faq__head .h2{max-width:13ch}
+.tih-faq__more{margin-top:4px;max-width:34ch;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+.tih-faq__act{display:flex;flex-direction:column;align-items:flex-start;gap:16px;margin-top:6px}
+/* the rail carries the commercial facts too, so the column is not a button over a void */
+.tih-faq__facts{display:grid;width:100%;margin-top:14px;border-top:1px solid var(--line)}
+.tih-faq__facts>div{display:grid;grid-template-columns:minmax(0,11ch) minmax(0,1fr);align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid var(--line-2)}
+.tih-faq__facts dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.4}
+.tih-faq__facts dd{font-size:var(--t-sm);line-height:1.5;color:var(--ink)}
+
+.tih-faq__list{display:flex;flex-direction:column;gap:10px}
+.tih-faq__row{position:relative;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);transition:border-color var(--d2) var(--e),box-shadow var(--d2) var(--e)}
+.tih-faq__row::before{content:"";position:absolute;left:-1px;top:18px;bottom:18px;width:2px;border-radius:2px;background:var(--blue);transform:scaleY(0);transition:transform .35s var(--e)}
+.tih-faq__row:has([aria-expanded="true"]){border-color:var(--line-3);box-shadow:var(--sh-1)}
+.tih-faq__row:has([aria-expanded="true"])::before{transform:none}
+.tih-faq__hq{font:inherit;letter-spacing:0}
+.tih-faq__q{display:grid;grid-template-columns:44px minmax(0,1fr) 28px;align-items:center;gap:14px;width:100%;min-height:72px;padding:18px 20px 18px 22px;text-align:left;cursor:pointer;border-radius:inherit}
+.tih-faq__q:focus-visible{outline-offset:-2px}
+.tih-faq__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.08em;color:var(--faint);transition:color var(--d1) var(--e-io)}
+.tih-faq__t{font-family:var(--f-h);font-size:1.125rem;font-weight:500;line-height:1.35;letter-spacing:-.008em;color:var(--ink)}
+.tih-faq__plus{position:relative;width:28px;height:28px;border-radius:50%;background:var(--paper-3);transition:background var(--d2) var(--e),transform .35s var(--e)}
+.tih-faq__plus::before,.tih-faq__plus::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:1.5px;margin:-.75px 0 0 -5px;background:var(--ink);transition:background var(--d2) var(--e)}
+.tih-faq__plus::after{transform:rotate(90deg)}
+.tih-faq__q:hover .tih-faq__plus{background:var(--paper-4)}
+.tih-faq__q[aria-expanded="true"] .tih-faq__n{color:var(--ink)}
+.tih-faq__q[aria-expanded="true"] .tih-faq__plus{background:var(--ink);transform:rotate(45deg)}
+.tih-faq__q[aria-expanded="true"] .tih-faq__plus::before,.tih-faq__q[aria-expanded="true"] .tih-faq__plus::after{background:var(--on-ink)}
+
+/* the first answer ships open, so the column reads as answers rather than eight shut bars; core.js
+   picks the open row up from aria-expanded="true" and takes the height over from there */
+.tih-faq__p{height:0;overflow:hidden;transition:height .45s var(--e)}
+.tih-faq__p.is-open{height:auto}
+.tih-faq__a{display:flex;flex-direction:column;gap:16px;padding:0 64px 24px 80px}
+.tih-faq__a>p:first-child{max-width:62ch;font-size:var(--t-body);line-height:1.7;color:var(--txt)}
+.tih-faq__rel{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding-top:14px;border-top:1px dashed var(--line)}
+.tih-faq__rel .tih-k{margin-right:6px}
+
+@media (max-width:860px){
+  .tih-faq__side{margin-bottom:28px}
+  .tih-faq__facts{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--bdh-gap)}
+  .tih-faq__head .h2{max-width:none}
+  .tih-faq__act{flex-direction:row;flex-wrap:wrap;align-items:center;gap:14px 22px}
+}
+@media (max-width:600px){
+  .tih-faq__q{grid-template-columns:minmax(0,1fr) 28px;row-gap:6px;padding:16px 16px 16px 18px;min-height:64px}
+  .tih-faq__n{grid-column:1 / -1}
+  .tih-faq__plus{grid-column:2;grid-row:2}
+  .tih-faq__t{font-size:1rem}
+  .tih-faq__a{padding:0 18px 20px}
+  .tih-faq__a>p:first-child{font-size:var(--t-sm)}
+}
+@media (prefers-reduced-motion:reduce){
+  .tih-faq__p,.tih-faq__plus,.tih-faq__row,.tih-faq__row::before{transition:none}
+}

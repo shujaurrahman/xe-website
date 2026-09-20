@@ -1,0 +1,170 @@
+/* AI Strategy & Agents · hero — the mission board. The breadcrumb runs along the top on one line.
+   Below it, the board holds cols 5–12 with the autonomy legend beside it (cols 1–4); the headline
+   card (cols 1–6) rises over the board's lower-left edge, starting where the Queued column's second
+   slot begins; the meta sits lower right, under the board.
+   The board never changes size: every card row has a fixed height, each list holds exactly two card
+   slots, and on wide screens the Queued column holds one card (hero.js), so the headline card only
+   ever covers an empty slot. The live event line is the board's footer, set from column 2 so the
+   headline card never hides it. */
+.tas-hero{--tas-mc-h:148px;--tas-mc-gap:8px;--tas-ov:calc(var(--tas-mc-h) + 69px);position:relative;isolation:isolate;padding-block:clamp(108px,13vh,150px) var(--band);background:var(--paper)}
+.tas-hero__wall{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  -webkit-mask-image:radial-gradient(60% 70% at 72% 40%,#000 0%,transparent 75%);mask-image:radial-gradient(60% 70% at 72% 40%,#000 0%,transparent 75%)}
+.tas-hero__in{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--tas-gap);align-items:start}
+
+/* ---- breadcrumb: its own row, one line ---- */
+.tas-crumb{margin-bottom:clamp(18px,1.6vw,22px)}
+.tas-crumb ol{display:flex;flex-wrap:wrap;align-items:center;gap:6px 0;font-size:var(--t-sm);line-height:1.5;color:var(--muted)}
+.tas-crumb li{white-space:nowrap}
+.tas-crumb li:not(:last-child)::after{content:"\203A";margin-inline:10px;font-family:var(--f);color:var(--blue)}
+.tas-crumb a{color:var(--muted);text-decoration:underline;text-decoration-color:var(--line-3);text-underline-offset:4px;transition:color var(--d1) var(--e-io),text-decoration-color var(--d1) var(--e-io)}
+.tas-crumb a:hover{color:var(--ink);text-decoration-color:var(--blue)}
+.tas-crumb [aria-current]{color:var(--ink);font-weight:500}
+
+/* ---- legend (cols 1–4, beside the board's top) ---- */
+.tas-hero__legend{grid-column:1 / span 4;grid-row:1;display:flex;flex-direction:column;gap:12px;min-width:0;padding:6px clamp(0px,1vw,14px) 0 0}
+.tas-hero__levels{border-top:1px solid var(--ink)}
+.tas-hero__levels li{display:flex;align-items:center;gap:12px;min-width:0;padding-block:9px;border-bottom:1px solid var(--line)}
+.tas-hero__levels .tas-lvl{flex:none;min-width:52px}
+.tas-hero__levels b{flex:none;font-family:var(--f-h);font-size:.9375rem;font-weight:500;letter-spacing:-.01em;line-height:1.25;color:var(--ink);white-space:nowrap}
+.tas-hero__levels small{min-width:0;margin-left:auto;overflow:hidden;text-overflow:ellipsis;font-size:var(--t-xs);line-height:1.4;color:var(--muted);white-space:nowrap}
+
+/* ---- the board (cols 5–12) ---- */
+.tas-hero__board{grid-column:5 / -1;grid-row:1;min-width:0;position:relative}
+.tas-board{position:relative;overflow:clip;padding:12px;border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper-3);box-shadow:var(--sh-2)}
+.tas-board__bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;min-height:34px;padding:2px 8px 12px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--muted);line-height:1.3}
+.tas-board__title{margin-right:auto;white-space:nowrap}
+.tas-board__title b{font-weight:600;color:var(--ink)}
+.tas-board__stat{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.tas-board__stat b{font-weight:600;color:var(--ink)}
+.tas-board__cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.tas-board__col{min-width:0;display:flex;flex-direction:column;gap:8px;padding:8px 6px;border-radius:var(--r);background:var(--paper-4)}
+.tas-board__col[data-col="approval"]{background:var(--blue-wash)}
+.tas-board__ch{display:flex;align-items:center;gap:8px;height:20px;padding:0 4px;font-family:var(--f);font-size:10.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);line-height:1.2;white-space:nowrap;min-width:0}
+.tas-board__ch>span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.tas-board__cs{display:none}
+.tas-board__ch b{display:inline-grid;place-items:center;flex:none;min-width:18px;height:18px;padding:0 5px;border-radius:var(--r-pill);background:var(--paper);font-weight:600;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line-3)}
+.tas-board__ch small{margin-left:auto;font-size:9.5px;letter-spacing:.04em;color:var(--muted)}
+.tas-board__col[data-col="approval"] .tas-board__ch b{background:var(--blue);color:var(--on-ink);box-shadow:none}
+.tas-board__list{position:relative;display:flex;flex-direction:column;gap:var(--tas-mc-gap);height:calc(2 * var(--tas-mc-h) + var(--tas-mc-gap))}
+
+/* mission card: fixed rows, fixed height */
+.tas-mc{position:relative;flex:none;display:flex;flex-direction:column;height:var(--tas-mc-h);min-width:0;overflow:hidden;padding:10px 12px 9px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--paper);box-shadow:var(--sh-1);will-change:transform}
+.tas-mc>span{flex:none;min-width:0}
+.tas-mc.is-moving{z-index:3;box-shadow:var(--sh-2)}
+.tas-mc__top{display:flex;align-items:center;justify-content:space-between;gap:6px;height:18px}
+.tas-mc__agent,.tas-mc__id{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.02em}
+.tas-mc__agent{color:var(--blue-d)}
+.tas-mc__id{display:none;letter-spacing:.06em;color:var(--muted)}
+.tas-mc .tas-lvl{flex:none;height:18px;padding:0 6px 0 5px;font-size:9.5px;gap:5px}
+.tas-mc .tas-lvl__p{height:9px}
+.tas-mc .tas-lvl__p i:nth-child(1){height:3px}.tas-mc .tas-lvl__p i:nth-child(2){height:5px}.tas-mc .tas-lvl__p i:nth-child(3){height:7px}.tas-mc .tas-lvl__p i:nth-child(4){height:9px}
+.tas-mc__t{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;height:2.44em;margin-top:7px;overflow:hidden;font-family:var(--f-h);font-size:.9375rem;font-weight:500;letter-spacing:-.01em;line-height:1.22;color:var(--ink)}
+/* owner role: never truncated; on wide cards the mission id sits before it and gives way first */
+.tas-mc__who{display:flex;height:14px;margin-top:4px;font-family:var(--f);font-size:10px;line-height:14px;color:var(--muted);white-space:nowrap}
+.tas-mc__idw{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:clip;color:var(--faint)}
+.tas-mc__idw::after{content:"·";margin-inline:5px}
+.tas-mc__role{flex:none}
+.tas-mc__ro{display:flex;justify-content:space-between;gap:6px;height:14px;margin-top:7px;font-family:var(--f);font-size:10px;line-height:14px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden}
+.tas-mc__ro b{font-weight:600;color:var(--ink)}
+.tas-mc__bar{display:block;height:3px;margin-top:7px;border-radius:2px;background:var(--paper-4);overflow:hidden}
+.tas-mc__bar i{display:block;height:100%;background:var(--ink);transform:scaleX(var(--p,0));transform-origin:left;transition:transform .7s var(--e)}
+.tas-mc__st{display:flex;align-items:center;gap:7px;height:16px;margin-top:auto;font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.02em;line-height:16px;color:var(--muted);white-space:nowrap;overflow:hidden}
+.tas-mc__sl,.tas-mc__ss{min-width:0}
+.tas-mc__sl{flex:none}
+.tas-mc__ss{overflow:hidden;text-overflow:ellipsis;font-weight:400}
+.tas-mc__sd{flex:none;width:7px;height:7px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--line-3)}
+.tas-mc[data-st="working"] .tas-mc__st{color:var(--ink)}
+.tas-mc[data-st="working"] .tas-mc__sd{background:var(--ink);box-shadow:none}
+.tas-mc[data-st="approval"]{border-color:var(--blue-line);box-shadow:0 0 0 1px var(--blue-line),var(--sh-1)}
+.tas-mc[data-st="approval"] .tas-mc__st{color:var(--blue-d)}
+.tas-mc[data-st="approval"] .tas-mc__sd{background:var(--blue);box-shadow:0 0 0 3px var(--blue-wash-2)}
+.is-live .tas-mc[data-st="approval"] .tas-mc__sd{animation:tas-led 2.2s var(--e-io) infinite}
+.tas-mc[data-st="approval"] .tas-mc__bar i{background:var(--blue)}
+.tas-mc[data-st="done"] .tas-mc__t{color:var(--txt)}
+.tas-mc[data-st="done"] .tas-mc__bar i{background:var(--line-3)}
+.tas-mc[data-st="done"] .tas-mc__sd{background:var(--blue);box-shadow:none}
+.tas-mc.is-in-new{animation:tas-mc-in .6s var(--e) both}
+/* a recycled card leaves the flow while it fades, so it never holds a slot */
+.tas-mc.is-out{position:absolute;left:0;right:0;z-index:0;animation:tas-mc-out .45s var(--e-io) both}
+@keyframes tas-mc-in{from{opacity:0;transform:translateY(-10px) scale(.97)}}
+@keyframes tas-mc-out{to{opacity:0;transform:scale(.94)}}
+.tas-mc b.is-tick{animation:tas-tick .5s var(--e)}
+@keyframes tas-tick{0%{color:var(--blue)}100%{color:var(--ink)}}
+
+/* live event line: the board's footer, from column 2 on wide screens */
+.tas-board__tick{display:flex;align-items:center;gap:12px;height:38px;margin:10px 0 0;padding:0 12px;border-radius:var(--r-sm);background:var(--paper);font-family:var(--f);font-size:10.5px;line-height:1.4;color:var(--txt);min-width:0}
+.tas-board__time{flex:none;color:var(--muted);font-variant-numeric:tabular-nums}
+.tas-board__tick [data-board-tick]{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tas-board__tick.is-new [data-board-tick]{animation:tas-mc-in .5s var(--e) both}
+
+/* ---- headline card: lower left, over the Queued column's empty second slot ---- */
+.tas-hero__card{grid-column:1 / span 6;grid-row:2;position:relative;z-index:2;min-width:0;margin-top:calc(-1 * var(--tas-ov));
+  padding:clamp(26px,2.5vw,36px) clamp(26px,3vw,44px) clamp(28px,3vw,40px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);box-shadow:var(--sh-2)}
+.tas-hero__eb{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);line-height:1.4}
+.tas-hero__eb .tas-kick__ref{letter-spacing:.06em}
+.tas-hero__h{margin:clamp(14px,1.3vw,18px) 0 0;font-family:var(--f-h);font-size:clamp(2.45rem,4.1vw,3.7rem);font-weight:500;line-height:1;letter-spacing:-.035em;color:var(--ink);max-width:15ch;text-wrap:balance}
+.tas-hero__lead{margin-top:clamp(16px,1.6vw,22px);max-width:52ch;font-size:clamp(1rem,1.2vw,1.125rem);line-height:1.6}
+.tas-hero__act{display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(22px,2.2vw,30px)}
+
+/* ---- meta (lower right, under the board) ---- */
+.tas-hero__meta{grid-column:7 / -1;grid-row:2;align-self:start;display:flex;flex-direction:column;min-width:0;margin-top:clamp(28px,3vw,40px);border-top:1px solid var(--ink)}
+.tas-hero__meta>div{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:14px;padding-block:13px;border-bottom:1px solid var(--line)}
+.tas-hero__meta dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.5}
+.tas-hero__meta dd{font-family:var(--f);font-size:var(--t-xs);font-weight:500;letter-spacing:.02em;line-height:1.5;color:var(--ink)}
+
+@media (min-width:1024px){
+  .tas-board__tick{margin-left:calc((100% - 30px) / 4 + 10px)}
+}
+/* 1280–1439: slightly narrower cards, so the agent name keeps its full width */
+@media (max-width:1439px){.tas-mc{padding-inline:10px}.tas-mc__agent{letter-spacing:0}}
+@media (max-width:1279px){
+  .tas-hero{--tas-mc-h:140px}
+  .tas-mc__agent,.tas-mc__idw{display:none}
+  .tas-mc__id{display:block}
+  .tas-mc__ss,.tas-mc__ro .tas-mc__step{display:none}
+  .tas-mc__t{font-size:.875rem}
+  .tas-mc__st{gap:6px;font-size:9.5px;letter-spacing:0}
+  .tas-board__ch small{display:none}
+  .tas-board__cl{display:none}
+  .tas-board__cs{display:inline}
+  .tas-hero__levels small{display:none}
+}
+@media (max-width:1023px){
+  .tas-hero{--tas-mc-h:148px}
+  .tas-mc__ss{display:inline}
+  .tas-mc__ro .tas-mc__step{display:inline}
+  .tas-mc__t{font-size:.9375rem}
+  .tas-mc__st{gap:7px;font-size:10px;letter-spacing:.02em}
+  .tas-board__cl{display:inline}
+  .tas-board__cs{display:none}
+  .tas-hero__card,.tas-hero__board,.tas-hero__meta{grid-column:1 / -1;grid-row:auto}
+  .tas-hero__legend{display:none}
+  .tas-hero__card{order:1;margin-top:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none}
+  .tas-hero__h{font-size:clamp(2.45rem,6.4vw,3.6rem)}
+  .tas-hero__board{order:2;margin-top:clamp(48px,7vw,72px)}
+  .tas-hero__meta{order:3;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--tas-gap)}
+  .tas-hero__meta>div{grid-template-columns:minmax(0,1fr);gap:6px}
+}
+@media (max-width:760px){
+  .tas-hero{--tas-mc-h:144px}
+  .tas-board{padding:10px}
+  .tas-board__cols{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  /* phones: one card per column (hero.js keeps one; without it, only the first shows) */
+  .tas-board__list{height:var(--tas-mc-h)}
+  .tas-mc:not(.is-out)~.tas-mc:not(.is-out){display:none}
+  .tas-board__stat--spend{display:none}
+  .tas-mc__agent,.tas-mc__idw,.tas-mc__ss{display:none}
+  .tas-mc__id{display:block}
+  .tas-mc__t{font-size:.875rem}
+  .tas-hero__meta{grid-template-columns:minmax(0,1fr)}
+  .tas-hero__meta>div{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}
+}
+@media (max-width:480px){
+  .tas-board__ch small{display:none}
+  .tas-mc{padding:9px 9px 8px}
+  .tas-mc__t{font-size:.8125rem}
+  .tas-mc__ro .tas-mc__step{display:none}
+  .tas-board__tick{display:none}
+  .tas-hero__h{font-size:clamp(2.2rem,10.4vw,2.7rem)}
+}
+@media (prefers-reduced-motion:reduce){.tas-mc,.tas-mc__bar i{transition:none;animation:none}.tas-mc[data-st="approval"] .tas-mc__sd{animation:none}}

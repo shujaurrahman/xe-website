@@ -1,0 +1,49 @@
+/* Deliver — the deliverables grid and the three ownership notes. Seven artefacts and one closing
+   ink tile fill the 4 × 2 grid, so there is no empty cell to explain. Reveal is the shared
+   [data-rv] / --i stagger; nothing loops here. */
+
+.tis-dl__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin:0;padding:0;list-style:none;
+  background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+.tis-dl__item{display:flex;flex-direction:column;min-width:0;padding:clamp(22px,2.2vw,30px);background:var(--paper);
+  transition:background var(--d2) var(--e)}
+.tis-dl__item:hover{background:var(--paper-2)}
+.tis-dl__top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 18px}
+.tis-dl__top .bdh-idx{margin:0}
+.tis-dl__ico{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--line-2);
+  border-radius:var(--r-sm);background:var(--paper-2);color:var(--ink)}
+.tis-dl__ico .xt-ico{display:block}
+.tis-dl__t{margin:0 0 12px;font-size:var(--t-body)}
+.tis-dl__item .bdh-d{margin:0 0 20px;max-width:none}
+.tis-dl__fmt{margin:0;padding-top:16px;border-top:1px solid var(--line-2)}
+/* the format chip sits on the floor of every card, so the row of chips reads as one line */
+.tis-dl__item>.tis-dl__fmt{margin-top:auto}
+
+/* the eighth cell closes the grid rather than sitting empty */
+.tis-dl__item--end{background:var(--ink)}
+.tis-dl__item--end:hover{background:var(--ink-2)}
+.tis-dl__item--end .tis-dl__ico{border-color:var(--on-ink-line);background:var(--on-ink-card);color:var(--on-ink)}
+.tis-dl__item--end .tis-dl__t{color:var(--on-ink)}
+.tis-dl__item--end .bdh-d{color:var(--on-ink-2)}
+.tis-dl__item--end .tis-dl__fmt{margin-top:auto;padding-top:20px;border-top-color:var(--on-ink-line)}
+.tis-dl__cta{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-b);font-size:var(--t-sm);font-weight:500;
+  line-height:1.3;color:var(--on-ink);text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--on-ink-line);
+  transition:text-decoration-color var(--d1) var(--e-io)}
+.tis-dl__cta:hover{text-decoration-color:var(--on-ink)}
+.tis-dl__cta .i{color:var(--blue)}
+
+.tis-dl__own{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap-l);margin-top:var(--bdh-block)}
+.tis-dl__ownc{min-width:0;padding-top:20px;border-top:2px solid var(--ink)}
+.tis-dl__owni{display:block;margin-bottom:14px;color:var(--ink)}
+.tis-dl__ownc .bdh-t{margin:0 0 10px;font-size:var(--t-body)}
+.tis-dl__ownc .bdh-d{margin:0;max-width:none}
+
+@media (max-width:1023px){
+  .tis-dl__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tis-dl__own{grid-template-columns:minmax(0,1fr);gap:32px}
+}
+@media (max-width:600px){
+  .tis-dl__grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  .tis-dl__item,.tis-dl__cta{transition:none}
+}

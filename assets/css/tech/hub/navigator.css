@@ -1,0 +1,161 @@
+/* Hub · navigator — a 5 × 2 index of real capability links with layer tags and mini glyphs; plus the dock. */
+.tih-navigator{padding-top:clamp(56px,6vw,96px);border-top:1px solid var(--line-2)}
+.tih-nav__head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px 48px;margin-bottom:clamp(36px,4vw,56px)}
+.tih-nav__head>div{display:flex;flex-direction:column;gap:18px}
+.tih-nav__legend{display:flex;flex-wrap:wrap;gap:6px 22px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tih-nav__legend li{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.tih-nav__legend b{font-weight:500;color:var(--blue-d)}
+
+.tih-nav__grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.tih-nav__cell{min-width:0;border-left:1px solid var(--line-2)}
+.tih-nav__cell:nth-child(5n+1){border-left:0}
+.tih-nav__cell:nth-child(n+6){border-top:1px solid var(--line-2)}
+
+.tih-nav__tile{position:relative;display:flex;flex-direction:column;height:100%;padding:24px 22px 26px;transition:background var(--d2) var(--e)}
+.tih-nav__tile::before{content:"";position:absolute;left:0;right:0;top:-1px;height:2px;background:var(--blue);transform:scaleX(0);transform-origin:left center;transition:transform var(--d2) var(--e)}
+.tih-nav__tile:hover,.tih-nav__tile:focus-visible{background:var(--paper-2)}
+.tih-nav__tile:hover::before,.tih-nav__tile:focus-visible::before{transform:none}
+.tih-nav__tile:focus-visible{outline-offset:-3px}
+
+.tih-nav__top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.tih-nav__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;color:var(--blue);line-height:1}
+.tih-nav__layer{font-family:var(--f);font-size:var(--tih-mono-s);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1}
+
+.tih-nav__art{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:26px;height:44px;color:var(--ink)}
+.tih-nav__ico{display:grid;place-items:center;width:44px;height:44px;border-radius:var(--r-sm);background:var(--paper-3);transition:background var(--d2) var(--e)}
+.tih-nav__tile:hover .tih-nav__ico,.tih-nav__tile:focus-visible .tih-nav__ico{background:var(--paper)}
+.tih-nav__glyph{width:64px;height:40px;flex:none;color:var(--line-3);transition:color var(--d2) var(--e)}
+.tih-nav__glyph .a{stroke:var(--blue)}
+.tih-nav__tile:hover .tih-nav__glyph,.tih-nav__tile:focus-visible .tih-nav__glyph{color:var(--muted)}
+
+.tih-nav__t{margin-top:22px;font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.008em;line-height:1.25;color:var(--ink)}
+.tih-nav__d{margin-top:10px;font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+.tih-nav__go{display:inline-flex;align-items:center;gap:8px;margin-top:auto;padding-top:22px;font-size:var(--t-xs);font-weight:500;color:var(--ink)}
+.tih-nav__go i{font-family:var(--f);font-style:normal;color:var(--blue);transition:transform var(--d2) var(--e)}
+.tih-nav__tile:hover .tih-nav__go i,.tih-nav__tile:focus-visible .tih-nav__go i{transform:translateX(4px)}
+
+/* ---- glyphs: the finished picture at rest, one run on hover / focus ---- */
+.tih-nav__glyph .f{stroke:var(--blue);stroke-width:2.5;stroke-dasharray:1;stroke-dashoffset:.22}
+.tih-nav__glyph .k,.tih-nav__glyph .pk{fill:currentColor;stroke:none}
+.tih-nav__glyph .n{transform-origin:32px 34px}
+.tih-nav__glyph .w{stroke-dasharray:1;stroke-dashoffset:0}
+.tih-nav__glyph .s{fill:var(--paper)}
+.tih-nav__glyph .s3{fill:var(--blue);stroke:var(--blue)}
+.tih-nav__glyph .l,.tih-nav__glyph .b,.tih-nav__glyph .r{transform-box:fill-box}
+.tih-nav__glyph .l{transform-origin:left center}
+.tih-nav__glyph .b{transform-origin:center bottom}
+.tih-nav__glyph .sw{transform-origin:32px 20px}
+.tih-nav__glyph .pk{fill:var(--blue)}
+.tih-nav__glyph .c{stroke-dasharray:1;stroke-dashoffset:0}
+.tih-nav__glyph .p{transform-box:fill-box;transform-origin:center}
+.tih-nav__glyph--search-ai-visibility .k{fill:var(--blue)}
+
+@media (prefers-reduced-motion:no-preference){
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .f{animation:tih-nav-gauge 1s var(--e) both}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .n{animation:tih-nav-needle 1s var(--e) both}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .w{animation:tih-nav-draw .9s var(--e) both}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .s{animation:tih-nav-step .5s var(--e) both}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .s2{animation-delay:.25s}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .s3{animation-delay:.5s}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .l{animation:tih-nav-grow .6s var(--e) both}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .l2{animation-delay:.12s}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .l3{animation-delay:.24s}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .sp{animation:tih-nav-fade .6s var(--e) .35s both}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .b{animation:tih-nav-rise .7s var(--e) both}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .b2{animation-delay:.07s}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .b3{animation-delay:.14s}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .b4{animation-delay:.21s}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .b5{animation-delay:.28s}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .sw{animation:tih-nav-sweep 1.2s var(--e-io) both}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .pk{animation:tih-nav-packet 1s var(--e-io) both}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .r3{animation:tih-nav-rank .8s var(--e) both}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .r1,
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .r2{animation:tih-nav-drop .8s var(--e) both}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .c{animation:tih-nav-draw .45s var(--e) both}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .c2{animation-delay:.2s}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .c3{animation-delay:.4s}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .p{animation:tih-nav-pop .45s var(--e) both}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .p2{animation-delay:.1s}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .p3{animation-delay:.2s}
+  :is(.tih-nav__tile:hover,.tih-nav__tile:focus-visible) .tih-nav__glyph .p4{animation-delay:.3s}
+}
+@keyframes tih-nav-gauge{from{stroke-dashoffset:1}to{stroke-dashoffset:.22}}
+@keyframes tih-nav-needle{from{transform:rotate(-110deg)}to{transform:none}}
+@keyframes tih-nav-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes tih-nav-step{from{opacity:.2}to{opacity:1}}
+@keyframes tih-nav-grow{from{transform:scaleX(0)}to{transform:none}}
+@keyframes tih-nav-fade{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes tih-nav-rise{from{transform:scaleY(.15)}to{transform:none}}
+@keyframes tih-nav-sweep{from{transform:rotate(-360deg)}to{transform:none}}
+@keyframes tih-nav-packet{0%{transform:translateX(0);opacity:0}15%{opacity:1}85%{opacity:1}100%{transform:translateX(20px);opacity:1}}
+@keyframes tih-nav-rank{from{transform:translateY(-23px)}to{transform:none}}
+@keyframes tih-nav-drop{from{transform:translateY(11.5px)}to{transform:none}}
+@keyframes tih-nav-pop{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+.tih-nav__glyph .pk{transform:translateX(20px)}
+
+/* ---- responsive ---- */
+@media (max-width:1279px){
+  .tih-nav__tile{padding:22px 18px 24px}
+  .tih-nav__glyph{display:none}
+}
+@media (max-width:1023px){
+  .tih-nav__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tih-nav__cell,.tih-nav__cell:nth-child(5n+1){border-left:1px solid var(--line-2)}
+  .tih-nav__cell:nth-child(odd){border-left:0}
+  .tih-nav__cell:nth-child(n+3){border-top:1px solid var(--line-2)}
+  .tih-nav__glyph{display:block}
+  .tih-nav__tile{padding:26px 24px 28px}
+  .tih-nav__cell:nth-child(odd) .tih-nav__tile{padding-left:0}
+  .tih-nav__cell:nth-child(odd) .tih-nav__tile:is(:hover,:focus-visible){padding-left:0}
+}
+@media (max-width:600px){
+  .tih-nav__grid{grid-template-columns:minmax(0,1fr)}
+  .tih-nav__cell,.tih-nav__cell:nth-child(odd),.tih-nav__cell:nth-child(5n+1){border-left:0}
+  .tih-nav__cell:nth-child(n+2){border-top:1px solid var(--line-2)}
+  .tih-nav__tile,.tih-nav__cell:nth-child(odd) .tih-nav__tile{display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:16px;padding:20px 0}
+  .tih-nav__top{grid-column:2;grid-row:1}
+  .tih-nav__art{grid-column:1;grid-row:1 / span 4;margin-top:0;height:auto;align-items:flex-start}
+  .tih-nav__glyph{display:none}
+  .tih-nav__t{grid-column:2;margin-top:10px}
+  .tih-nav__d{grid-column:2}
+  .tih-nav__del{grid-column:2}
+  .tih-nav__foot{grid-column:2}
+  .tih-nav__go{grid-column:2;padding-top:12px}
+  .tih-nav__legend{gap:6px 16px}
+}
+
+/* ---- dock (≥ 1024px, between the index and the end of #standards) ---- */
+.tih-dock{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:70;opacity:0;pointer-events:none;translate:-50% 16px;transition:opacity .45s var(--e),translate .45s var(--e)}
+.tih-dock.is-on{opacity:1;pointer-events:auto;translate:-50% 0}
+.tih-dock__in{display:flex;align-items:center;gap:2px;height:48px;padding:6px;border-radius:16px;background:var(--ink);border:1px solid var(--on-ink-line);box-shadow:var(--sh-nav)}
+.tih-dock__k{padding:0 12px 0 10px;margin-right:4px;border-right:1px solid var(--on-ink-line);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3);white-space:nowrap}
+.tih-dock__a{display:inline-flex;align-items:center;gap:7px;height:100%;padding:0 10px;border-radius:10px;font-size:var(--t-xs);font-weight:500;color:var(--on-ink-2);white-space:nowrap;
+  transition:background var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.tih-dock__a b{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.06em;color:var(--on-ink-3);transition:color var(--d1) var(--e-io)}
+.tih-dock__a:hover,.tih-dock__a:focus-visible{color:var(--on-ink);background:var(--on-ink-card)}
+.tih-dock__a:hover b,.tih-dock__a:focus-visible b{color:var(--blue)}
+@media (max-width:1379px){.tih-dock__k{display:none}}
+/* 1024–1279: the numbers alone, which is all the room there is. The names stay in the markup, so the links
+   keep their accessible name. */
+@media (max-width:1279px){
+  .tih-dock__in{height:44px}
+  .tih-dock__a{padding:0 9px;font-size:0}
+  .tih-dock__a b{font-size:var(--t-lbl)}
+}
+@media (max-width:1023px){.tih-dock{display:none}}
+@media (prefers-reduced-motion:reduce){.tih-dock,.tih-nav__tile,.tih-nav__tile::before{transition:none}}
+
+/* ---- what each capability delivers, on the tile ---- */
+.tih-nav__del{display:flex;flex-direction:column;gap:7px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line-2)}
+.tih-nav__del>.tih-k{color:var(--faint)}
+.tih-nav__di{display:flex;align-items:flex-start;gap:10px;min-width:0}
+.tih-nav__di b{flex:1 1 auto;min-width:0;font-weight:500;font-size:var(--t-sm);line-height:1.45;color:var(--txt)}
+.tih-nav__di i{flex:none;width:4px;height:4px;margin-top:8px;border-radius:50%;background:var(--dot)}
+.tih-nav__foot{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-top:auto;padding-top:18px}
+.tih-nav__len{display:flex;flex-direction:column;gap:5px;min-width:0}
+.tih-nav__len b{font-family:var(--f);font-size:var(--tih-mono-s);font-weight:500;letter-spacing:.04em;color:var(--ink)}
+.tih-nav__foot .tih-nav__go{margin-top:0;padding-top:0;border-top:0}
+@media (max-width:600px){
+  .tih-nav__foot{flex-direction:column;align-items:flex-start;gap:12px}
+}
+

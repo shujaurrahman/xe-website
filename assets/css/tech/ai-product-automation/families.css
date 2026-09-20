@@ -1,0 +1,100 @@
+/* AI Product & Automation · families — four tall cards (photo, capability strip, uses, the metric it moves)
+   and a two-row footer for what all four share. Strips play once on entry (.is-play from families.js) and
+   again on hover or keyboard focus. */
+.tap-fam{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--tap-gap)}
+.tap-fam__card{position:relative;display:flex;flex-direction:column;min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
+  transition:border-color var(--d2) var(--e),box-shadow var(--d2) var(--e),transform var(--d2) var(--e)}
+.tap-fam__card:hover,.tap-fam__card:focus-within{border-color:var(--line-3);box-shadow:var(--sh-2);transform:translateY(-2px)}
+[data-rv-s].is-in>.tap-fam__card{transition-delay:calc(var(--i,0) * 80ms)}
+[data-rv-s].is-in>.tap-fam__card:hover{transition-delay:0s}
+.tap-fam__hint{display:none;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;font-family:var(--f);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tap-fam__hint i{display:flex;gap:5px}
+.tap-fam__hint i b{width:18px;height:3px;border-radius:2px;background:var(--line-3);transition:background var(--d2) var(--e-io)}
+.tap-fam__hint i b.is-on{background:var(--ink)}
+
+.tap-fam__img{aspect-ratio:4 / 3;border-radius:0}
+.tap-fam__card:hover .tap-fam__img img{transform:scale(1.04)}
+.tap-fam__ico{position:absolute;left:14px;top:14px;z-index:2;display:grid;place-items:center;width:38px;height:38px;border-radius:var(--r-sm);background:var(--paper);color:var(--ink);box-shadow:var(--sh-1)}
+
+/* ---- capability strip ---- */
+.tap-fam__strip{display:flex;align-items:center;justify-content:space-between;gap:10px;height:52px;padding:0 16px;border-bottom:1px solid var(--line-2);background:var(--paper-2);overflow:hidden}
+.tap-fam__src{flex:none;font-family:var(--f);font-size:10px;letter-spacing:.02em;color:var(--muted);white-space:nowrap}
+
+/* knowledge: an answer line whose citation lights and whose source slides in */
+.tap-fam__ans{min-width:0;font-size:11px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tap-fam__card--knowledge .tap-fam__strip{flex-direction:column;align-items:flex-start;justify-content:center;gap:3px}
+.tap-fam__card--knowledge.is-play .tap-fam__src,.tap-fam__card--knowledge:hover .tap-fam__src,.tap-fam__card--knowledge:focus-within .tap-fam__src{animation:tap-fam-src .9s var(--e) both}
+.tap-fam__card--knowledge.is-play .tap-cite,.tap-fam__card--knowledge:hover .tap-cite,.tap-fam__card--knowledge:focus-within .tap-cite{animation:tap-fam-cite 1.2s var(--e-io) both}
+@keyframes tap-fam-src{0%{opacity:0;transform:translateX(-10px)}40%{opacity:0;transform:translateX(-10px)}100%{opacity:1;transform:none}}
+@keyframes tap-fam-cite{0%,100%{background:var(--blue-wash-2);color:var(--blue-d)}30%,70%{background:var(--blue);color:var(--on-ink)}}
+
+/* conversation: a waveform */
+.tap-fam__wave{display:flex;align-items:center;gap:2px;height:26px;min-width:0}
+.tap-fam__wave i{display:block;width:3px;height:26px;border-radius:2px;background:var(--ink);transform:scaleY(var(--h));transform-origin:center}
+.tap-fam__wave i:nth-child(3n){background:var(--blue)}
+.tap-fam__card--conversation.is-play .tap-fam__wave i,.tap-fam__card--conversation:hover .tap-fam__wave i,.tap-fam__card--conversation:focus-within .tap-fam__wave i{animation:tap-fam-wave .55s var(--e-io) calc(var(--k) * 30ms) 3 alternate}
+@keyframes tap-fam-wave{from{transform:scaleY(var(--h))}to{transform:scaleY(calc(1.15 - var(--h)))}}
+
+/* vision: a mini document whose total line gets boxed */
+.tap-fam__doc{position:relative;display:flex;flex-direction:column;justify-content:center;gap:4px;width:62px;height:36px;padding:5px 7px;border-radius:3px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line-3)}
+.tap-fam__doc i{display:block;height:2px;border-radius:1px;background:var(--line-3)}
+.tap-fam__doc i:nth-child(2){width:70%}.tap-fam__doc i:nth-child(3){width:85%}.tap-fam__doc i:nth-child(4){width:46%;margin-left:auto;background:var(--ink)}
+.tap-fam__doc b{position:absolute;right:4px;bottom:3px;width:28px;height:9px;border:1.5px solid var(--blue);border-radius:2px;clip-path:inset(0 0 0 0)}
+.tap-fam__card--vision.is-play .tap-fam__doc b,.tap-fam__card--vision:hover .tap-fam__doc b,.tap-fam__card--vision:focus-within .tap-fam__doc b{animation:tap-fam-box .9s var(--e) both}
+.tap-fam__card--vision.is-play .tap-fam__src,.tap-fam__card--vision:hover .tap-fam__src,.tap-fam__card--vision:focus-within .tap-fam__src{animation:tap-fam-src .9s var(--e) both}
+@keyframes tap-fam-box{0%{clip-path:inset(0 100% 100% 0)}100%{clip-path:inset(0 0 0 0)}}
+
+/* automation: a token passes through the nodes */
+.tap-fam__flow{width:120px;height:24px;flex:none;overflow:visible}
+.tap-fam__flow path{stroke:var(--line-3);stroke-width:1.5}
+.tap-fam__flow circle:not(.tap-fam__tok),.tap-fam__flow rect{fill:var(--paper);stroke:var(--ink);stroke-width:1.5}
+.tap-fam__flow rect{stroke:var(--blue)}
+.tap-fam__tok{fill:var(--blue);transform:translateX(104px)}
+.tap-fam__card--automation.is-play .tap-fam__tok,.tap-fam__card--automation:hover .tap-fam__tok,.tap-fam__card--automation:focus-within .tap-fam__tok{animation:tap-fam-tok 1.6s var(--e-io) both}
+@keyframes tap-fam-tok{0%{transform:none}22%,30%{transform:translateX(38px)}52%,60%{transform:translateX(76px)}100%{transform:translateX(104px)}}
+
+/* ---- body ---- */
+.tap-fam__body{display:flex;flex-direction:column;align-items:flex-start;flex:1;padding:clamp(20px,2vw,28px)}
+.tap-fam__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;color:var(--blue);line-height:1}
+.tap-fam__t{margin-top:12px;font-family:var(--f-h);font-size:1.3rem;font-weight:500;letter-spacing:-.015em;line-height:1.2;color:var(--ink)}
+.tap-fam__d{margin-top:10px;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.tap-fam__k{margin-top:22px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);line-height:1}
+.tap-fam__uses{margin-top:12px}
+.tap-fam__uses li{font-size:var(--t-xs)}
+.tap-fam__uses li+li{margin-top:8px}
+.tap-fam__metric{align-self:stretch;margin-top:auto;padding-top:22px}
+.tap-fam__metric .tap-fam__k{margin-top:0;padding-top:18px;border-top:1px solid var(--line)}
+.tap-fam__mv{margin-top:10px;font-family:var(--f-h);font-size:1.05rem;font-weight:500;letter-spacing:-.01em;line-height:1.25;color:var(--ink)}
+.tap-fam__md{margin-top:4px;min-height:3em;font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+.tap-fam__go{margin-top:20px}
+
+/* ---- shared footer rows ---- */
+.tap-fam__more{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 var(--tap-gap);margin-top:clamp(40px,4.4vw,64px)}
+.tap-fam__morek{grid-column:1 / -1;padding-bottom:14px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.tap-fam__row{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:16px;padding:20px 4px;border-top:1px solid var(--line-3);border-bottom:1px solid var(--line);transition:background var(--d2) var(--e-io)}
+.tap-fam__row:hover{background:var(--paper)}
+.tap-fam__rico{display:grid;place-items:center;width:44px;height:44px;border-radius:var(--r-sm);background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink)}
+.tap-fam__rtxt{display:flex;flex-direction:column;gap:4px;min-width:0}
+.tap-fam__rtxt b{font-family:var(--f-h);font-size:1.05rem;font-weight:500;letter-spacing:-.01em;color:var(--ink);line-height:1.25}
+.tap-fam__rtxt span{font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+.tap-fam__rarr{font-family:var(--f);font-size:1.1rem;color:var(--blue);transition:transform var(--d2) var(--e)}
+.tap-fam__row:hover .tap-fam__rarr{transform:translateX(4px)}
+
+@media (max-width:1180px){.tap-fam{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){.tap-fam__more{grid-template-columns:minmax(0,1fr)}.tap-fam__row+.tap-fam__row{border-top:0}}
+/* phone: the four cards become a swipeable row (scroll-snap), so the section is one card tall */
+@media (max-width:700px){
+  .tap-fam{display:flex;gap:12px;margin-inline:calc(var(--gutter) * -1);padding:4px var(--gutter) 10px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);scrollbar-width:none}
+  .tap-fam::-webkit-scrollbar{display:none}
+  .tap-fam__card{flex:0 0 86%;scroll-snap-align:start}
+  .tap-fam__card:hover,.tap-fam__card:focus-within{transform:none}
+  .tap-fam__hint{display:flex}
+}
+@media (max-width:640px){
+  .tap-fam__row{grid-template-columns:auto minmax(0,1fr) auto;gap:14px}
+  .tap-fam__row .bdh-tag{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .tap-fam__card,.tap-fam__card:hover{transform:none;transition:none}
+  .tap-fam__card .tap-fam__strip *{animation:none}
+}

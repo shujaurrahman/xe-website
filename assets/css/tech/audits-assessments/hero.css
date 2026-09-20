@@ -1,0 +1,97 @@
+/* Audits & Assessments · hero — the findings register.
+   Breadcrumb on its own line; headline (cols 1–7) with the lead and the calls to action beside it
+   (cols 8–12); then the register, full width inside the wrap, with a severity summary bar above an
+   eight-row table. hero.js sweeps a scan line down the rows once on entry (.is-scan). */
+.taa-hero{position:relative;isolation:isolate;padding-block:clamp(112px,13.5vh,156px) var(--band);background:var(--paper)}
+.taa-hero__wall{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  -webkit-mask-image:radial-gradient(64% 62% at 50% 22%,#000 0%,transparent 76%);mask-image:radial-gradient(64% 62% at 50% 22%,#000 0%,transparent 76%)}
+
+/* ---- headline row ---- */
+.taa-hero__top{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--taa-gap);row-gap:26px;align-items:end;margin-bottom:clamp(36px,4vw,60px)}
+.taa-hero__t{grid-column:1 / span 7;display:flex;flex-direction:column;align-items:flex-start;gap:22px;min-width:0}
+.taa-hero__side{grid-column:8 / -1;display:flex;flex-direction:column;align-items:flex-start;gap:24px;min-width:0}
+.taa-hero__h{margin:0;font-family:var(--f-h);font-size:clamp(2.1rem,4.35vw,3.85rem);font-weight:500;letter-spacing:-.035em;line-height:1.03;color:var(--ink);max-width:17ch}
+.taa-hero__lead{max-width:46ch}
+.taa-hero__act{display:flex;flex-wrap:wrap;gap:12px}
+
+/* ---- the register ---- */
+.taa-reg{overflow:hidden}
+.taa-reg__sum{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;padding:0;background:var(--line-2);border-bottom:1px solid var(--line-2)}
+.taa-reg__s{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;padding:14px 18px 12px;background:var(--paper)}
+.taa-reg__s b{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1.3}
+.taa-reg__s .taa-num{font-size:1.35rem;line-height:1}
+.taa-reg__s[data-s="critical"] .taa-num,.taa-reg__s[data-s="high"] .taa-num{color:var(--blue-d)}
+.taa-reg__sbar{flex:1 0 100%;display:block;height:4px;border-radius:var(--r-pill);background:var(--paper-4);overflow:hidden;margin-top:4px}
+.taa-reg__sbar em{display:block;height:100%;border-radius:inherit;background:var(--line-3);transform:scaleX(0);transform-origin:left center;transition:transform .9s var(--e) .1s}
+.taa-reg.is-in .taa-reg__sbar em{transform:scaleX(var(--p,1))}
+/* Without JS the summary bars ship filled: the zero state applies only once hero.js arms it. */
+.taa-reg:not(.is-anim) .taa-reg__sbar em{transform:scaleX(var(--p,1))}
+.taa-reg__s[data-s="critical"] .taa-reg__sbar em,.taa-reg__s[data-s="high"] .taa-reg__sbar em{background:var(--blue)}
+@media (max-width:640px){.taa-reg__sum{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.taa-reg__scroll{position:relative}
+.taa-reg__tbl{min-width:880px}
+.taa-reg__tbl thead th{background:var(--paper-2)}
+.taa-reg__tbl tbody tr{transition:background var(--d2) var(--e-io)}
+.taa-reg__tbl tbody tr:hover{background:var(--paper-2)}
+.taa-reg__f{font-weight:500;color:var(--ink);min-width:300px}
+.taa-reg__area{font-family:var(--f);font-size:var(--t-xs);letter-spacing:.04em;color:var(--muted);white-space:nowrap}
+.taa-reg__c{color:var(--ink);font-weight:500}
+.taa-reg__o{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:var(--r-xs);background:var(--paper-3);
+  font-family:var(--f);font-size:var(--t-xs);font-weight:600;color:var(--ink)}
+/* the first three in the published fix order stay marked whichever column the table is sorted by */
+.taa-reg__tbl tbody tr.is-top .taa-reg__o{background:var(--blue-wash-2);color:var(--blue-d)}
+
+/* sortable headers — hero.js upgrades the four numeric columns into buttons, so the extract answers
+   "what is worst", "what costs most", "what is cheapest" and "what comes first" */
+.taa-reg__th{padding:0}
+.taa-reg__sort{display:inline-flex;align-items:center;gap:9px;width:100%;min-height:44px;padding:12px 14px;border:0;background:none;cursor:pointer;
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);text-align:left;
+  transition:color var(--d1) var(--e-io),background var(--d1) var(--e-io)}
+.taa-reg__sort:hover{color:var(--ink);background:var(--paper-3)}
+.taa-reg__sort[data-dir="up"],.taa-reg__sort[data-dir="down"]{color:var(--ink)}
+.taa-reg__sorti{position:relative;display:block;width:8px;height:13px;flex:none}
+.taa-reg__sorti::before,.taa-reg__sorti::after{content:"";position:absolute;left:0;width:0;height:0;opacity:.3;
+  border-left:4px solid transparent;border-right:4px solid transparent}
+.taa-reg__sorti::before{top:0;border-bottom:5px solid currentColor}
+.taa-reg__sorti::after{bottom:0;border-top:5px solid currentColor}
+.taa-reg__sort[data-dir="up"] .taa-reg__sorti::before{opacity:1;border-bottom-color:var(--blue)}
+.taa-reg__sort[data-dir="down"] .taa-reg__sorti::after{opacity:1;border-top-color:var(--blue)}
+
+/* scan line: one sweep on entry, severity chips pop as it passes */
+.taa-reg__scan{position:absolute;left:0;right:0;top:0;height:2px;background:var(--blue);opacity:0;pointer-events:none;box-shadow:0 0 0 6px var(--blue-wash)}
+.taa-reg.is-scan .taa-reg__scan{animation:taa-scan 1.9s var(--e-io) forwards}
+@keyframes taa-scan{
+  0%{opacity:0;transform:translateY(38px)}
+  8%{opacity:1}
+  92%{opacity:1}
+  100%{opacity:0;transform:translateY(var(--h,520px))}
+}
+.taa-reg.is-scan .taa-reg__tbl tbody .taa-sev{opacity:.42;transform:translateY(2px);animation:taa-pop .5s var(--e) forwards;animation-delay:calc(140ms + var(--i,0) * 190ms)}
+@keyframes taa-pop{to{opacity:1;transform:none}}
+
+.taa-reg__foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:14px 18px;border-top:1px solid var(--line-2);background:var(--paper-2);
+  font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+.taa-reg__foot>span:last-child{max-width:82ch}
+.taa-reg__foot b{font-weight:600;color:var(--ink)}
+
+/* ---- meta strip ---- */
+.taa-hero__meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--taa-gap);margin:clamp(32px,3.4vw,48px) 0 0;padding-top:24px;border-top:1px solid var(--line)}
+.taa-hero__meta dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);line-height:1.3}
+.taa-hero__meta dd{margin:8px 0 0;font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.01em;line-height:1.3;color:var(--ink)}
+
+@media (max-width:1023px){
+  .taa-hero__t{grid-column:1 / -1}
+  .taa-hero__side{grid-column:1 / -1}
+  .taa-hero__h{max-width:20ch}
+}
+@media (max-width:760px){
+  .taa-hero{padding-block:clamp(96px,12vh,128px) var(--band)}
+  .taa-hero__meta{grid-template-columns:minmax(0,1fr);gap:18px}
+  .taa-hero__act .btn{width:100%;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  .taa-reg__scan{display:none}
+  .taa-reg.is-scan .taa-reg__tbl tbody .taa-sev{opacity:1;transform:none;animation:none}
+  .taa-reg__sbar em,.taa-reg.is-in .taa-reg__sbar em{transform:scaleX(var(--p,1));transition:none}
+}

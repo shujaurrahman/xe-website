@@ -1,0 +1,168 @@
+/* ==========================================================================
+   AI Product & Automation — "The Glass Box" · PAGE BASE LAYER (.tap-*)
+   services/technology-intelligence/ai-product-automation.php. Loads after hub.css and kit.css;
+   section styles live in assets/css/tech/ai-product-automation/<id>.css.
+   Art direction: every AI feature opened up. Hairline "glass" frames with corner ticks, mono
+   readouts for confidence and eval scores, one blue for the signal that matters.
+   Tokens from core.css only; no new colours; no gradients except mask fades; no !important.
+
+   Primitives
+   • .tap-head (+ --stack)            section head: glass-box eyebrow + h2 left, lead right
+   • .tap-eb                          eyebrow: box glyph · index · label · /path
+   • .tap-ill                         "Illustrative" stamp for mock numbers
+   • .tap-glass                       hairline frame with four corner ticks (<i> × 4 in .tap-glass__c)
+   • .tap-win (+ --ink)               mock software window with a mono path bar (only the most app-like mocks:
+                                      hero extract, inspector, conversation, automation, outcomes)
+   • .tap-sheet                       printed plan: paper sheet, ink top rule, hairline under the title row
+   • .tap-strip                       CI log strip: an ink status strip over a plain list
+   • .tap-calc                        calculator panel: recessed paper-2 body, no window chrome
+   • .tap-diagram                     pipeline diagram: no frame, an ink top rule and hairlines only
+   (all four reuse .tap-win__bar / __path / __end for their title row, without the traffic-light dots)
+   • .tap-led (+ --wait --off)        status light
+   • .tap-conf                        confidence readout: value + micro bar (--v 0–1)
+   • .tap-meter                       labelled score bar (--v 0–1), grows on .is-in
+   • .tap-btn (+ --blue --ghost)      compact control buttons
+   • .tap-cite                        inline citation marker
+   ========================================================================== */
+.tap{
+  --tap-gap:clamp(20px,2.4vw,32px);
+  --tap-gap-l:clamp(40px,6vw,96px);
+  --tap-head-mb:clamp(44px,5.2vw,76px);
+  --tap-hero-t:clamp(132px,15vh,184px);
+  overflow-x:clip;
+}
+.tap :focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* ---------- section head --------------------------------------------------- */
+.tap-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--tap-gap);row-gap:22px;align-items:end;margin-bottom:var(--tap-head-mb)}
+.tap-head>:first-child{grid-column:1 / span 7;display:flex;flex-direction:column;align-items:flex-start;gap:22px;min-width:0}
+.tap-head>:nth-child(2){grid-column:8 / -1;display:flex;flex-direction:column;align-items:flex-start;gap:20px;min-width:0}
+.tap-head .h2{max-width:19ch}
+.tap-head .lead{max-width:52ch}
+.tap-head--stack{grid-template-columns:minmax(0,1fr)}
+.tap-head--stack>:first-child,.tap-head--stack>:nth-child(2){grid-column:1 / -1}
+@media (max-width:900px){
+  .tap-head{grid-template-columns:minmax(0,1fr)}
+  .tap-head>:first-child,.tap-head>:nth-child(2){grid-column:1 / -1}
+}
+
+/* ---------- eyebrow: a small glass box, an index, a label, a path ---------- */
+.tap-eb{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;line-height:1.4;color:var(--muted)}
+.tap-eb__box{position:relative;width:14px;height:14px;flex:none;border:1px solid var(--ink);border-radius:3px}
+.tap-eb__box::after{content:"";position:absolute;inset:3px;border-radius:1px;background:var(--blue)}
+.tap-eb__n{color:var(--blue);font-variant-numeric:tabular-nums}
+.tap-eb__p{letter-spacing:.04em;text-transform:none;color:var(--faint)}
+.band--ink .tap-eb{color:var(--on-ink-2)}
+.band--ink .tap-eb__box{border-color:var(--on-ink)}
+.band--ink .tap-eb__p{color:var(--on-ink-3)}
+
+/* ---------- illustrative stamp ---------------------------------------------- */
+.tap-ill{display:inline-flex;align-items:center;gap:6px;min-height:22px;padding:2px 9px;border:1px dashed var(--line-3);border-radius:var(--r-pill);
+  font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;line-height:1.2;color:var(--muted);white-space:nowrap}
+.band--ink .tap-ill,.tap-on-ink .tap-ill{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+
+/* ---------- glass frame with corner ticks ----------------------------------- */
+.tap-glass{position:relative}
+.tap-glass__c{position:absolute;inset:0;z-index:3;pointer-events:none}
+.tap-glass__c i{position:absolute;width:12px;height:12px;border-color:var(--ink);border-style:solid;border-width:0}
+.tap-glass__c i:nth-child(1){left:-1px;top:-1px;border-left-width:1.5px;border-top-width:1.5px}
+.tap-glass__c i:nth-child(2){right:-1px;top:-1px;border-right-width:1.5px;border-top-width:1.5px}
+.tap-glass__c i:nth-child(3){right:-1px;bottom:-1px;border-right-width:1.5px;border-bottom-width:1.5px}
+.tap-glass__c i:nth-child(4){left:-1px;bottom:-1px;border-left-width:1.5px;border-bottom-width:1.5px}
+.band--ink .tap-glass__c i,.tap-on-ink .tap-glass__c i{border-color:var(--on-ink-2)}
+
+/* ---------- mock window ------------------------------------------------------- */
+.tap-win{position:relative;min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-1);overflow:hidden}
+.tap-win__bar{display:flex;align-items:center;gap:12px;min-height:44px;padding:8px 16px;border-bottom:1px solid var(--line-2);background:var(--paper-2);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--muted);line-height:1.35}
+.tap-win__dots{display:inline-flex;gap:5px;flex:none}
+.tap-win__dots i{width:7px;height:7px;border-radius:50%;background:var(--line-3)}
+.tap-win__path{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tap-win__path b{font-weight:500;color:var(--ink)}
+.tap-win__end{margin-left:auto;display:inline-flex;align-items:center;gap:10px;flex:none}
+.tap-win--ink,.band--ink .tap-win{background:var(--ink-2);border-color:var(--on-ink-line);box-shadow:none;color:var(--on-ink-2)}
+.tap-win--ink .tap-win__bar,.band--ink .tap-win__bar{background:var(--ink);border-color:var(--on-ink-line);color:var(--on-ink-3)}
+.tap-win--ink .tap-win__path b,.band--ink .tap-win__path b{color:var(--on-ink)}
+.tap-win--ink .tap-win__dots i,.band--ink .tap-win__dots i{background:var(--on-ink-line)}
+
+/* ---------- other frames (so the page is not one window after another) --------- */
+.tap-sheet{position:relative;min-width:0;background:var(--paper);border-top:2px solid var(--ink);border-radius:0 0 var(--r-sm) var(--r-sm);box-shadow:var(--sh-1)}
+.tap-sheet>.tap-win__bar{min-height:52px;padding-inline:clamp(16px,2vw,26px);background:transparent;border-bottom:1px solid var(--line-3)}
+.tap-sheet>.tap-win__bar .tap-win__path b{font-family:var(--f-b);font-size:var(--t-xs);font-weight:600;letter-spacing:0}
+.tap-strip{position:relative;min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+.tap-strip>.tap-win__bar{background:var(--ink);border-bottom:0;color:var(--on-ink-3)}
+.tap-strip>.tap-win__bar .tap-win__path b{color:var(--on-ink)}
+.tap-strip>.tap-win__bar .tap-ill{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+.tap-strip>.tap-win__bar .tap-btn{background:transparent;box-shadow:inset 0 0 0 1px var(--on-ink-line);color:var(--on-ink)}
+.tap-strip>.tap-win__bar .tap-btn:hover{box-shadow:inset 0 0 0 1px var(--on-ink-2)}
+.tap-strip>.tap-win__bar .tap-btn__i{color:var(--on-ink)}
+.tap-calc{position:relative;min-width:0;background:var(--paper-2);border-radius:var(--r-xl);box-shadow:inset 0 0 0 1px var(--line-2)}
+.tap-calc>.tap-win__bar{min-height:50px;padding-inline:clamp(16px,2vw,24px);background:transparent;border-bottom:1px dashed var(--line-3)}
+.tap-diagram{position:relative;min-width:0;border-top:1.5px solid var(--ink)}
+.tap-diagram>.tap-win__bar{padding-inline:0;background:transparent}
+
+@media (max-width:760px){
+  .tap-win__bar{flex-wrap:wrap;row-gap:6px}
+  .tap-win__end{flex-wrap:wrap;row-gap:6px;max-width:100%}
+}
+@media (max-width:600px){.tap-win__bar .tap-win__dots{display:none}}
+
+/* ---------- status light ------------------------------------------------------ */
+.tap-led{position:relative;display:inline-block;width:7px;height:7px;flex:none;border-radius:50%;background:var(--blue)}
+.tap-led--wait{background:transparent;box-shadow:inset 0 0 0 1.5px var(--blue)}
+.tap-led--off{background:var(--line-3)}
+.band--ink .tap-led--off,.tap-on-ink .tap-led--off{background:var(--on-ink-line)}
+.tap-led--ink{background:var(--ink)}
+.band--ink .tap-led--ink{background:var(--on-ink)}
+.tap-led::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--blue);opacity:0}
+.is-live .tap-led--pulse::after{animation:tap-ping 1.8s var(--e) infinite}
+@keyframes tap-ping{0%{transform:scale(.4);opacity:.9}100%{transform:scale(1.6);opacity:0}}
+
+/* ---------- confidence readout ------------------------------------------------ */
+.tap-conf{display:inline-flex;align-items:center;gap:7px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.02em;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1}
+.tap-conf__bar{position:relative;display:block;width:28px;height:4px;border-radius:2px;background:var(--line);overflow:hidden}
+.tap-conf__bar::after{content:"";position:absolute;inset:0;background:var(--blue);transform-origin:left;transform:scaleX(var(--v,1));transition:transform .6s var(--e)}
+.tap-conf.is-low{color:var(--muted)}
+.tap-conf.is-low .tap-conf__bar::after{background:var(--ink)}
+.band--ink .tap-conf,.tap-on-ink .tap-conf{color:var(--on-ink)}
+.band--ink .tap-conf__bar,.tap-on-ink .tap-conf__bar{background:var(--on-ink-line)}
+.band--ink .tap-conf.is-low,.tap-on-ink .tap-conf.is-low{color:var(--on-ink-3)}
+.band--ink .tap-conf.is-low .tap-conf__bar::after,.tap-on-ink .tap-conf.is-low .tap-conf__bar::after{background:var(--on-ink-2)}
+
+/* ---------- score meter -------------------------------------------------------- */
+.tap-meter{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:6px 12px;min-width:0}
+.tap-meter__k{min-width:0;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--muted);line-height:1.35}
+.tap-meter__v{font-family:var(--f);font-size:var(--t-xs);font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1}
+.tap-meter__t{grid-column:1 / -1;position:relative;height:4px;border-radius:2px;background:var(--line);overflow:hidden}
+.tap-meter__t i{position:absolute;inset:0;border-radius:2px;background:var(--blue);transform-origin:left;transform:scaleX(var(--v,0));transition:transform .9s var(--e) calc(var(--i,0) * 70ms)}
+.tap-meter__t b{position:absolute;top:-3px;bottom:-3px;left:calc(var(--th,0) * 100%);width:1.5px;background:var(--ink)}
+.tap-meter.is-low .tap-meter__t i{background:var(--faint)}
+.band--ink .tap-meter__k,.tap-on-ink .tap-meter__k{color:var(--on-ink-3)}
+.band--ink .tap-meter__v,.tap-on-ink .tap-meter__v{color:var(--on-ink)}
+.band--ink .tap-meter__t,.tap-on-ink .tap-meter__t{background:var(--on-ink-line)}
+.band--ink .tap-meter__t b,.tap-on-ink .tap-meter__t b{background:var(--on-ink)}
+.band--ink .tap-meter.is-low .tap-meter__t i,.tap-on-ink .tap-meter.is-low .tap-meter__t i{background:var(--on-ink-3)}
+
+/* ---------- compact controls ---------------------------------------------------- */
+.tap-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 16px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--line-3);background:var(--paper);
+  font-family:var(--f-b);font-size:var(--t-xs);font-weight:500;color:var(--ink);white-space:nowrap;transition:box-shadow var(--d1) var(--e-io),background var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.tap-btn:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.tap-btn--blue{background:var(--blue);box-shadow:none;color:var(--on-ink)}
+.tap-btn--blue:hover{background:var(--blue-d);box-shadow:none}
+.tap-btn[disabled]{opacity:.45;cursor:not-allowed}
+.tap-btn__i{font-family:var(--f);color:var(--blue)}
+.tap-btn--blue .tap-btn__i{color:var(--on-ink)}
+.band--ink .tap-btn,.tap-on-ink .tap-btn{background:transparent;box-shadow:inset 0 0 0 1px var(--on-ink-line);color:var(--on-ink)}
+.band--ink .tap-btn:hover,.tap-on-ink .tap-btn:hover{box-shadow:inset 0 0 0 1px var(--on-ink-2)}
+.band--ink .tap-btn--blue,.tap-on-ink .tap-btn--blue{background:var(--blue);box-shadow:none}
+.band--ink .tap-btn--blue:hover,.tap-on-ink .tap-btn--blue:hover{background:var(--blue-d)}
+
+/* ---------- citation marker ------------------------------------------------------ */
+.tap-cite{display:inline-grid;place-items:center;min-width:17px;height:17px;margin:0 1px;padding:0 4px;border-radius:4px;background:var(--blue-wash-2);color:var(--blue-d);
+  font-family:var(--f);font-size:10px;font-weight:600;font-style:normal;line-height:1;vertical-align:.14em}
+.band--ink .tap-cite,.tap-on-ink .tap-cite{background:var(--blue);color:var(--on-ink)}
+
+/* ---------- reduced motion ---------------------------------------------------------- */
+@media (prefers-reduced-motion:reduce){
+  .tap-conf__bar::after,.tap-meter__t i{transition:none}
+}

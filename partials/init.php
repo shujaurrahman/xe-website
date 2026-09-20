@@ -57,7 +57,10 @@ function xe_discipline_url(array $d): string {
 
 /** The URL of one capability: its own page when it has one, else the discipline. */
 function xe_cap_url(array $d, array $c): string {
-    if (!empty($c[2])) return xe_url('services/' . $d['slug'] . '/' . $c[2] . '.php');
+    // Only link a page that exists, so the menu never points at a capability still being built.
+    if (!empty($c[2]) && is_file(__DIR__ . '/../services/' . $d['slug'] . '/' . $c[2] . '.php')) {
+        return xe_url('services/' . $d['slug'] . '/' . $c[2] . '.php');
+    }
     return xe_discipline_url($d);
 }
 

@@ -1,0 +1,119 @@
+/* ==========================================================================
+   Search & AI Visibility — 05 · Content (band--alt)
+   Annotated page anatomy: the notes on the left, the mocked comparison page on the right,
+   linked by content.js (BDH.spy). Below, the photograph and how the pages get made.
+   ========================================================================== */
+
+.tsv-cnt__grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--tsv-gap-l);row-gap:var(--tsv-gap);
+  align-items:start;margin-bottom:var(--tsv-block)}
+.tsv-cnt__notes{grid-column:1 / span 5;min-width:0}
+.tsv-cnt__page{grid-column:6 / -1;min-width:0}
+
+/* ---------- the notes ----------------------------------------------------- */
+.tsv-notes{display:flex;flex-direction:column;gap:2px;margin:0;padding:0;list-style:none}
+.tsv-note-i{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:16px;row-gap:7px;
+  padding:20px 20px 20px 18px;border-left:2px solid transparent;border-radius:0 var(--r) var(--r) 0;
+  transition:background var(--d2) var(--e-io),border-color var(--d2) var(--e-io)}
+.tsv-note-i.is-on{border-left-color:var(--blue);background:var(--paper)}
+.tsv-note-i__n{grid-row:1 / span 3;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;line-height:1.7;color:var(--faint);
+  font-variant-numeric:tabular-nums;transition:color var(--d2) var(--e-io)}
+.tsv-note-i.is-on .tsv-note-i__n{color:var(--blue)}
+.tsv-note-i__t{margin:0;font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;letter-spacing:-.015em;line-height:1.25;color:var(--ink)}
+.tsv-note-i__d{margin:0;font-size:var(--t-sm);line-height:1.65;color:var(--muted)}
+.tsv-note-i__d code{font-family:var(--f);font-size:.92em;color:var(--ink)}
+.tsv-note-i__tag{justify-self:start;display:inline-flex;align-items:center;height:22px;padding:0 9px;border:1px solid var(--line-3);border-radius:var(--r-xs);
+  font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1;white-space:nowrap;
+  transition:border-color var(--d2) var(--e-io),color var(--d2) var(--e-io)}
+.tsv-note-i.is-on .tsv-note-i__tag{border-color:var(--blue-line);color:var(--blue-d)}
+
+/* ---------- the mocked page ---------------------------------------------- */
+.tsv-page{background:var(--paper)}
+.tsv-page__body{display:flex;flex-direction:column;gap:26px;padding:26px clamp(20px,2.6vw,32px) 30px}
+
+.tsv-blk{position:relative;padding-left:44px}
+.tsv-blk__n{position:absolute;top:1px;left:0;display:inline-flex;align-items:center;justify-content:center;width:28px;height:22px;
+  border:1px solid var(--line-3);border-radius:var(--r-xs);background:var(--paper-2);
+  font-family:var(--f);font-size:10px;font-weight:600;letter-spacing:.06em;color:var(--muted);line-height:1;font-variant-numeric:tabular-nums;
+  transition:border-color var(--d2) var(--e-io),background var(--d2) var(--e-io),color var(--d2) var(--e-io)}
+.tsv-blk.is-on .tsv-blk__n{border-color:var(--blue);background:var(--blue);color:var(--on-ink)}
+.tsv-blk::before{content:"";position:absolute;top:0;bottom:0;left:13px;width:1px;background:var(--line-2)}
+.tsv-blk:first-child::before{top:24px}
+.tsv-blk:last-child::before{bottom:auto;height:24px}
+.tsv-blk.is-on::before{background:var(--blue-line)}
+
+.tsv-page__h{margin:0 0 10px;font-family:var(--f-h);font-size:clamp(1.05rem,1.5vw,1.3rem);font-weight:500;letter-spacing:-.018em;line-height:1.25;color:var(--ink)}
+.tsv-page__a{margin:0;font-size:var(--t-sm);line-height:1.7;color:var(--ink)}
+
+.tsv-page__tbw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tsv-page__tb{width:100%;min-width:340px;border-collapse:collapse;font-size:var(--t-xs);line-height:1.45}
+.tsv-page__tb th,.tsv-page__tb td{padding:9px 10px;border-bottom:1px solid var(--line-2);text-align:left;vertical-align:top;font-weight:400;color:var(--txt)}
+.tsv-page__tb thead th{border-bottom-color:var(--line-3);font-family:var(--f);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tsv-page__tbk{font-weight:500;color:var(--ink)}
+.tsv-page__tb tbody tr:last-child th,.tsv-page__tb tbody tr:last-child td{border-bottom:0}
+
+.tsv-page__fig{margin:0;padding:16px 18px;border:1px solid var(--blue-line);border-radius:var(--r);background:var(--blue-wash-2)}
+.tsv-page__fig figcaption{font-family:var(--f);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-d);line-height:1.4}
+.tsv-page__stat{margin:10px 0 8px;font-size:var(--t-sm);line-height:1.6;color:var(--ink)}
+.tsv-page__stat b{font-family:var(--f-h);font-size:1.35em;font-weight:500;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums}
+.tsv-page__fig small{font-family:var(--f);font-size:10px;letter-spacing:.02em;line-height:1.5;color:var(--muted)}
+
+.tsv-page__by{display:flex;align-items:center;gap:14px}
+.tsv-page__av{position:relative;width:38px;height:38px;flex:none;border-radius:50%;background:var(--paper-4);box-shadow:inset 0 0 0 1px var(--line-3)}
+.tsv-page__av::after{content:"";position:absolute;inset:11px 11px auto;height:11px;border-radius:50%;background:var(--faint)}
+.tsv-page__bn{display:flex;flex-direction:column;gap:3px;min-width:0}
+.tsv-page__bn b{font-size:var(--t-sm);font-weight:600;line-height:1.35;color:var(--ink)}
+.tsv-page__bn small{font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+.tsv-page__bn code{font-family:var(--f);font-size:.94em;color:var(--txt)}
+
+.tsv-page__up{display:flex;align-items:baseline;gap:9px;margin:0;font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+.tsv-page__up .tsv-led{position:relative;top:-1px}
+.tsv-page__up b{font-family:var(--f);font-weight:600;letter-spacing:.01em;color:var(--ink)}
+
+.tsv-page__sk{margin:0 0 10px;font-family:var(--f);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1.4}
+.tsv-page__src{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.tsv-page__src li{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;min-width:0}
+.tsv-page__src span{font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+
+.tsv-page__faq{display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none}
+.tsv-page__faq li{display:flex;flex-direction:column;gap:4px}
+.tsv-page__faq b{font-size:var(--t-sm);font-weight:600;line-height:1.45;color:var(--ink)}
+.tsv-page__faq span{font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+
+/* ---------- how the pages get made --------------------------------------- */
+.tsv-cnt__how{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--tsv-gap-l);row-gap:var(--tsv-gap);align-items:start}
+.tsv-cnt__img{grid-column:1 / span 5;min-width:0}
+.tsv-cnt__howt{grid-column:7 / -1;display:flex;flex-direction:column;gap:20px;min-width:0}
+.tsv-cnt__lead{margin:-4px 0 0;font-size:var(--t-sm);line-height:1.7;color:var(--muted);max-width:52ch}
+
+.tsv-how{display:flex;flex-direction:column;gap:2px;margin:0;padding:0;list-style:none}
+.tsv-how li{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;row-gap:5px;padding:16px 0;border-top:1px solid var(--line-2)}
+.tsv-how li:last-child{border-bottom:1px solid var(--line-2)}
+.tsv-how__i{grid-row:1 / span 2;display:flex;align-items:flex-start;color:var(--ink)}
+.tsv-how b{font-size:var(--t-sm);font-weight:600;line-height:1.4;color:var(--ink)}
+.tsv-how small{font-size:var(--t-xs);line-height:1.65;color:var(--muted)}
+/* in place by default — the animation starts from hidden, not the row */
+.is-in .tsv-how li{animation:tsv-cnt-in 460ms var(--e-io) backwards;animation-delay:calc(var(--i,0) * 90ms)}
+@keyframes tsv-cnt-in{from{opacity:0;transform:translateY(8px)}}
+
+@media (max-width:1100px){
+  .tsv-cnt__grid{column-gap:var(--tsv-gap)}
+  .tsv-cnt__notes{grid-column:1 / span 5}
+  .tsv-cnt__page{grid-column:6 / -1}
+}
+@media (max-width:980px){
+  .tsv-cnt__grid,.tsv-cnt__how{grid-template-columns:minmax(0,1fr)}
+  .tsv-cnt__notes,.tsv-cnt__page,.tsv-cnt__img,.tsv-cnt__howt{grid-column:1 / -1}
+  .tsv-cnt__grid{row-gap:var(--tsv-block)}
+  .tsv-notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .tsv-note-i{border-left-width:2px;background:var(--paper)}
+}
+@media (max-width:620px){
+  .tsv-notes{grid-template-columns:minmax(0,1fr)}
+  .tsv-page__body{gap:22px;padding:22px 16px 26px}
+  .tsv-blk{padding-left:38px}
+  .tsv-page__tb th,.tsv-page__tb td{padding:8px 6px;font-size:10.5px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .tsv-how li{opacity:1;transform:none;animation:none}
+}

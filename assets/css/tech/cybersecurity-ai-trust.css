@@ -1,0 +1,111 @@
+/* ==========================================================================
+   Cybersecurity & AI Trust — "The Threat Model". Page base layer (.tsc-*).
+   services/technology-intelligence/cybersecurity-ai-trust.php. Loaded after hub.css and kit.css;
+   section styles live in assets/css/tech/cybersecurity-ai-trust/<id>.css.
+   Tokens from core.css only; no new colours; no gradients except mask fades; no !important.
+
+   Primitives
+   • .tsc-ref          threat-model reference eyebrow: <p class="tsc-ref"><b>TM-02</b><span>Exposure</span></p>
+   • .tsc-sev--crit|high|med|low|ok   severity / state chips (ink, blue, wash, grey, contained)
+   • .tsc-ill          "Illustrative" stamp for mock values
+   • .tsc-led          status light; pings only under .is-live
+   • .tsc-tick         drawn check in a circle (no glyph)
+   • .tsc-btn          console buttons (+ --pri, --ghost); work on paper and ink
+   • .tsc-kbd          mono key/code chip
+   • .tsc-mono         mono readout text
+   ========================================================================== */
+.tsc{
+  --tsc-hero-t:clamp(132px,15vh,184px);
+  --tsc-r:12px;
+  overflow-x:clip;
+}
+.tsc :focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.tsc .bdh-head .h2{max-width:21ch}
+
+/* ---------- threat-model reference eyebrow ------------------------------ */
+.tsc-ref{display:inline-flex;align-items:center;flex-wrap:wrap;gap:6px 12px;margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;line-height:1.3;color:var(--blue)}
+.tsc-ref b{display:inline-flex;align-items:center;height:22px;padding:0 7px;border:1px solid var(--blue-line);border-radius:5px;font-weight:500;letter-spacing:.08em;color:var(--blue-d)}
+.tsc-ref span{color:var(--muted)}
+.band--ink .tsc-ref b{border-color:var(--on-ink-line);color:var(--on-ink)}
+.band--ink .tsc-ref span{color:var(--on-ink-3)}
+
+/* ---------- severity and state chips ------------------------------------ */
+.tsc-sev{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:5px;font-family:var(--f);font-size:10px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;white-space:nowrap;line-height:1;flex:none}
+.tsc-sev::before{content:"";width:6px;height:6px;border-radius:1px;background:currentColor;flex:none}
+.tsc-sev--crit{background:var(--ink);color:var(--on-ink)}
+.tsc-sev--crit::before{background:var(--blue)}
+.tsc-sev--high{background:var(--blue);color:var(--on-ink)}
+.tsc-sev--med{background:var(--blue-wash-2);color:var(--blue-d)}
+.tsc-sev--low{background:var(--paper-3);color:var(--muted)}
+.tsc-sev--ok{background:var(--paper);box-shadow:inset 0 0 0 1px var(--blue-line);color:var(--blue-d)}
+.tsc-sev--ok::before{width:7px;height:4px;border-radius:0;background:none;border-left:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-1px) rotate(-45deg)}
+:is(.band--ink,.tsc-on-ink) .tsc-sev--crit{background:var(--on-ink);color:var(--ink)}
+:is(.band--ink,.tsc-on-ink) .tsc-sev--med{background:var(--on-ink-card);box-shadow:inset 0 0 0 1px var(--blue-line);color:var(--on-ink)}
+:is(.band--ink,.tsc-on-ink) .tsc-sev--low{background:var(--on-ink-card);color:var(--on-ink-3)}
+:is(.band--ink,.tsc-on-ink) .tsc-sev--ok{background:transparent;box-shadow:inset 0 0 0 1px var(--blue);color:var(--on-ink)}
+
+/* ---------- stamps, lights, ticks, keys --------------------------------- */
+.tsc-ill{display:inline-flex;align-items:center;gap:6px;min-height:22px;padding:2px 9px;border:1px dashed var(--line-3);border-radius:var(--r-pill);
+  font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap;line-height:1.2}
+:is(.band--ink,.tsc-on-ink) .tsc-ill{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+
+.tsc-led{position:relative;display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue);flex:none}
+.tsc-led::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--blue);opacity:0}
+.tsc-led--off{background:var(--line-3)}
+:is(.band--ink,.tsc-on-ink) .tsc-led--off{background:var(--on-ink-line)}
+.is-live .tsc-led--ping::after{animation:tsc-ping 1.8s var(--e) infinite}
+@keyframes tsc-ping{0%{transform:scale(.4);opacity:.9}100%{transform:scale(1.7);opacity:0}}
+
+.tsc-tick{position:relative;display:inline-block;width:16px;height:16px;border-radius:50%;background:var(--blue);flex:none}
+.tsc-tick::after{content:"";position:absolute;left:5px;top:4px;width:6px;height:3.5px;border-left:1.5px solid var(--on-ink);border-bottom:1.5px solid var(--on-ink);transform:rotate(-45deg)}
+.tsc-tick--off{background:transparent;box-shadow:inset 0 0 0 1px var(--line-3)}
+.tsc-tick--off::after{display:none}
+:is(.band--ink,.tsc-on-ink) .tsc-tick--off{box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+
+.tsc-kbd{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;background:var(--paper-3);font-family:var(--f);font-size:10.5px;font-weight:500;letter-spacing:.02em;color:var(--ink);white-space:nowrap;line-height:1}
+:is(.band--ink,.tsc-on-ink) .tsc-kbd{background:var(--on-ink-card);color:var(--on-ink);box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+.tsc-mono{font-family:var(--f);font-size:var(--t-xs);letter-spacing:.01em;font-variant-numeric:tabular-nums}
+
+/* ---------- console buttons ---------------------------------------------- */
+.tsc-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 14px;border:1px solid var(--line-3);border-radius:var(--r-sm);background:var(--paper);
+  font-size:var(--t-xs);font-weight:500;color:var(--ink);white-space:nowrap;transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.tsc-btn:hover{border-color:var(--ink)}
+.tsc-btn[aria-pressed="true"],.tsc-btn.is-on{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.tsc-btn--pri{background:var(--blue);border-color:var(--blue);color:var(--on-ink)}
+.tsc-btn--pri:hover{background:var(--blue-d);border-color:var(--blue-d)}
+.tsc-btn--ghost{border-color:transparent;background:transparent;color:var(--muted)}
+.tsc-btn--ghost:hover{border-color:var(--line-3);color:var(--ink)}
+.tsc-btn:disabled{opacity:.45;cursor:not-allowed}
+:is(.band--ink,.tsc-on-ink) .tsc-btn{background:transparent;border-color:var(--on-ink-line);color:var(--on-ink)}
+:is(.band--ink,.tsc-on-ink) .tsc-btn:hover{border-color:var(--on-ink-2)}
+:is(.band--ink,.tsc-on-ink) .tsc-btn[aria-pressed="true"],:is(.band--ink,.tsc-on-ink) .tsc-btn.is-on{background:var(--on-ink);border-color:var(--on-ink);color:var(--ink)}
+:is(.band--ink,.tsc-on-ink) .tsc-btn--pri{background:var(--blue);border-color:var(--blue);color:var(--on-ink)}
+:is(.band--ink,.tsc-on-ink) .tsc-btn--pri:hover{background:var(--blue-d);border-color:var(--blue-d)}
+:is(.band--ink,.tsc-on-ink) .tsc-btn--ghost{border-color:transparent;color:var(--on-ink-3)}
+
+/* ---------- small section foot note -------------------------------------- */
+.tsc-note{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:clamp(20px,2.2vw,28px);font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+.band--ink .tsc-note{color:var(--on-ink-3)}
+
+@media (prefers-reduced-motion:reduce){
+  .tsc-led::after{animation:none}
+}
+
+/* ---------- no JavaScript ------------------------------------------------ */
+/* core.css parks every [data-rv] / [data-rv-s] block at opacity 0 and lets core.js reveal it on entry.
+   With scripting off nothing ever adds .is-in, so those blocks stay invisible. The shipped HTML here is
+   always the finished state, so show it. Scoped to .tsc: the same rule is wanted site-wide, but core.css
+   and partials/head.php are shared files this page does not own. */
+@media (scripting:none){
+  .tsc [data-rv],.tsc [data-rv-s]>*{opacity:1;transform:none}
+  /* the same for the section reveals gated on .is-in, which BDH.enter never adds without scripting */
+  .tsc .tsc-cw__matrix .tsc-cw__ref,
+  .tsc .tsc-sh__item,
+  .tsc .tsc-surface__chips li.is-new{opacity:1;transform:none}
+  .tsc .tsc-oc__fill{opacity:min(1,calc(var(--n,0) / 9))}
+  .tsc .tsc-ow__bar i,
+  .tsc .tsc-pv__wire i,
+  .tsc .tsc-sh__ico .xt-ico{transform:none}
+}

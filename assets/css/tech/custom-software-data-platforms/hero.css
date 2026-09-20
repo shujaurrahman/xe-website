@@ -1,0 +1,167 @@
+/* Custom Software & Data Platforms · hero — heading row over the entity canvas (ERD + record card). */
+.tcs-hero{padding-top:var(--bdh-hero-t);overflow:hidden}
+
+/* ---- breadcrumb ---- */
+.tcs-crumb ol{display:flex;flex-wrap:wrap;align-items:center;gap:6px 0;font-size:var(--t-sm);color:var(--muted)}
+.tcs-crumb li+li::before{content:"\203A";margin-inline:10px;font-family:var(--f);color:var(--ghost)}
+.tcs-crumb a{color:var(--muted);text-decoration:underline;text-decoration-color:var(--line-3);text-underline-offset:4px;transition:color var(--d1) var(--e-io),text-decoration-color var(--d1) var(--e-io)}
+.tcs-crumb a:hover{color:var(--ink);text-decoration-color:var(--blue)}
+.tcs-crumb [aria-current]{color:var(--ink);font-weight:500}
+
+/* ---- heading row ---- */
+.tcs-hero__top{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--bdh-gap);row-gap:36px;align-items:end;margin-top:clamp(40px,4.6vw,68px)}
+.tcs-hero__h{grid-column:1 / span 7;display:flex;flex-direction:column;align-items:flex-start;gap:26px;min-width:0}
+.tcs-hero__t{font-size:clamp(2.5rem,5.1vw,4.5rem);line-height:1.02;letter-spacing:-.035em;max-width:15ch}
+.tcs-hero__side{grid-column:8 / -1;align-self:end;display:flex;flex-direction:column;align-items:flex-start;gap:28px;min-width:0;padding-bottom:10px}
+.tcs-hero__lead{max-width:48ch}
+/* two equal buttons on one line; when they no longer fit, each takes the full line */
+.tcs-hero__act{display:flex;flex-wrap:wrap;gap:12px;width:100%;max-width:500px}
+.tcs-hero__act .btn{flex:1 1 0;min-width:max-content;justify-content:center}
+@media (max-width:1100px){.tcs-hero__h{grid-column:1 / span 12}.tcs-hero__side{grid-column:1 / span 9}}
+@media (max-width:760px){.tcs-hero__side{grid-column:1 / -1}}
+@media (max-width:480px){.tcs-hero__act .btn{flex-basis:100%;min-width:0}.tcs-hero__ebx{display:none}}
+
+/* ---- the canvas panel ---- */
+.tcs-erd{position:relative;margin-top:clamp(56px,6.4vw,100px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper-2);box-shadow:var(--sh-2);overflow:hidden}
+.tcs-erd__bar{display:flex;align-items:center;gap:16px;min-height:50px;padding:0 20px;border-bottom:1px solid var(--line);background:var(--paper);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--muted);white-space:nowrap}
+.tcs-erd__path i{font-style:normal;color:var(--ghost);margin-inline:2px}
+.tcs-erd__path b{font-weight:500;color:var(--ink)}
+.tcs-erd__ver{color:var(--faint)}
+.tcs-erd__run{display:inline-flex;align-items:center;gap:8px;min-width:0;margin-left:auto;color:var(--txt);overflow:hidden}
+.tcs-erd__run [data-erd-status]{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tcs-erd__run .bdh-pulse{flex:none}
+.tcs-erd__pause{flex:none;min-height:32px;padding:0 12px;border:1px solid var(--line-3);border-radius:var(--r-pill);font-family:var(--f-b);font-size:var(--t-xs);font-weight:500;letter-spacing:0;color:var(--ink);transition:border-color var(--d1) var(--e-io)}
+.tcs-erd__pause:hover{border-color:var(--ink)}
+
+.tcs-erd__canvas{--tcs-rg:46px;position:relative;display:grid;grid-template-columns:minmax(0,1fr) 340px;column-gap:clamp(48px,4.6vw,72px);align-items:center;
+  padding:clamp(28px,3.2vw,48px)}   /* dot grid: core .dots */
+.tcs-erd__ents{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(36px,3.6vw,56px);row-gap:var(--tcs-rg);align-items:start;padding-bottom:28px}   /* room for the order_lines chip */
+.tcs-ent[data-ent="consent"]{grid-area:1 / 1}.tcs-ent[data-ent="event"]{grid-area:1 / 2}.tcs-ent[data-ent="opportunity"]{grid-area:1 / 3}
+.tcs-ent[data-ent="case"]{grid-area:2 / 1}.tcs-ent[data-ent="contact"]{grid-area:2 / 2}.tcs-ent[data-ent="account"]{grid-area:2 / 3}
+.tcs-ent[data-ent="product"]{grid-area:3 / 1}.tcs-ent[data-ent="order"]{grid-area:3 / 2}.tcs-erd__legend{grid-area:3 / 3}
+.tcs-ent[data-ent="account"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink),var(--sh-1)}
+.tcs-ent[data-ent="account"] .tcs-ent__h .xt-ico{color:var(--blue)}
+
+/* reveal: entities in dependency order, then the record pops out of Account */
+.tcs-erd .tcs-ent,.tcs-erd__legend{opacity:0;transform:translateY(12px) scale(.985);transition:opacity .6s var(--e) calc(var(--i,0) * 110ms + .15s),transform .6s var(--e) calc(var(--i,0) * 110ms + .15s)}
+.tcs-erd.is-in .tcs-ent,.tcs-erd.is-in .tcs-erd__legend{opacity:1;transform:none}
+.tcs-erd__rec{position:relative;z-index:1;min-width:0;opacity:0;transform:translateX(-28px) scale(.96);transform-origin:left center;transition:opacity .7s var(--e) 1.9s,transform .8s var(--e) 1.9s}
+.tcs-erd.is-in .tcs-erd__rec{opacity:1;transform:none}
+
+/* ---- relations ---- */
+.tcs-erd__svg{position:absolute;inset:0;z-index:0;width:100%;height:100%;overflow:visible;pointer-events:none;opacity:0;transition:opacity .3s var(--e)}
+.tcs-erd.is-routed .tcs-erd__svg{opacity:1}
+.tcs-erd__rel{fill:none;stroke:var(--faint);stroke-width:1.25;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;
+  transition:stroke-dashoffset .9s var(--e) calc(var(--i,0) * 110ms + 1.05s),opacity .2s linear calc(var(--i,0) * 110ms + 1.05s),stroke var(--d2) var(--e)}
+.tcs-erd.is-drawn .tcs-erd__rel{stroke-dashoffset:0;opacity:1}
+.tcs-erd__rel.is-hot{stroke:var(--blue)}
+.tcs-erd__mk path,.tcs-erd__mk circle{fill:none;stroke:var(--faint);stroke-width:1.25}
+.tcs-erd__mk circle{fill:var(--paper-2)}
+.tcs-erd__lbl{font-family:var(--f);font-size:10px;letter-spacing:.02em;fill:var(--muted);paint-order:stroke;stroke:var(--paper-2);stroke-width:5px;opacity:0;transition:opacity .4s var(--e) 2s}
+.tcs-erd.is-drawn .tcs-erd__lbl{opacity:1}
+.tcs-erd__lead{fill:none;stroke:var(--ink);stroke-width:1.25;stroke-dasharray:3 4;opacity:0;transition:opacity .5s var(--e) 2.1s}
+.tcs-erd.is-drawn .tcs-erd__lead{opacity:1}
+
+/* the order_lines join table: a small chip under Order and Product, placed by hero.js */
+.tcs-erd__jn{position:absolute;left:0;top:0;z-index:1;display:grid;grid-template-columns:auto auto;align-items:center;column-gap:7px;row-gap:3px;padding:6px 10px 6px 8px;border:1px dashed var(--line-3);border-radius:var(--r-sm);background:var(--paper);
+  font-family:var(--f);line-height:1.1;white-space:nowrap;opacity:0;transition:opacity .5s var(--e) calc(7 * 110ms + 1.05s),border-color var(--d2) var(--e)}
+.tcs-erd__jn .xt-ico{grid-row:1 / span 2;color:var(--muted)}
+.tcs-erd__jn b{font-size:10.5px;font-weight:600;color:var(--ink)}
+.tcs-erd__jn span{font-size:9.5px;color:var(--faint)}
+.tcs-erd.is-drawn.is-routed .tcs-erd__jn{opacity:1}
+.tcs-erd__jn.is-hot{border-style:solid;border-color:var(--blue)}
+
+/* the travelling record */
+.tcs-erd__dot{position:absolute;left:-6px;top:-6px;z-index:2;width:12px;height:12px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px var(--blue-wash-2);opacity:0;pointer-events:none;will-change:transform}
+.tcs-erd__dot.is-on{opacity:1}
+
+/* ---- legend ---- */
+.tcs-erd__legend{align-self:stretch;display:flex;flex-direction:column;gap:12px;min-width:0;padding:14px 4px 0}
+.tcs-erd__lk{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);line-height:1}
+.tcs-erd__keys{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px}
+.tcs-erd__keys li{display:flex;align-items:center;gap:8px;font-size:var(--t-xs);line-height:1.3;color:var(--txt)}
+.tcs-erd__keys svg{flex:none;overflow:visible}
+.tcs-erd__keys .tcs-erd__mk circle{fill:var(--paper-2)}
+.tcs-erd__health{display:grid;gap:0;margin-top:auto;border-top:1px solid var(--line-3)}
+.tcs-erd__health div{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid var(--line)}
+.tcs-erd__health dt{font-size:var(--t-xs);color:var(--muted)}
+.tcs-erd__health dd{font-family:var(--f);font-size:var(--t-xs);font-weight:500;color:var(--ink)}
+
+/* ---- the record card ---- */
+.tcs-rec{background:var(--paper);border:1px solid var(--line-3);border-radius:var(--r-lg);box-shadow:var(--sh-2);overflow:hidden}
+.tcs-rec__bar{display:flex;align-items:center;justify-content:space-between;gap:10px;height:46px;padding:0 14px;border-bottom:1px solid var(--line)}
+.tcs-rec__crumb{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--f);font-size:10.5px;letter-spacing:0;color:var(--muted)}
+.tcs-rec__crumb i{font-style:normal;color:var(--ghost)}
+.tcs-rec__crumb b{font-weight:500;color:var(--ink)}
+.tcs-rec__tabs{display:flex;gap:4px;padding:10px 14px 0;border-bottom:1px solid var(--line);overflow:hidden}
+.tcs-rec__tabs span{display:inline-flex;align-items:center;gap:6px;padding:0 6px 9px;font-size:var(--t-xs);font-weight:500;color:var(--muted);white-space:nowrap;box-shadow:inset 0 -2px 0 transparent}
+.tcs-rec__tabs span.is-on{color:var(--ink);box-shadow:inset 0 -2px 0 var(--blue)}
+.tcs-rec__tabs i{font-style:normal;font-family:var(--f);font-size:10px;color:var(--faint)}
+.tcs-rec__form{display:grid;gap:12px;padding:16px 14px}
+.tcs-rec__row{display:grid;gap:5px;min-width:0}
+.tcs-rec__row--2{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tcs-rec__row--2>div{display:grid;gap:5px;min-width:0}
+.tcs-rec__l{font-size:10.5px;font-weight:500;color:var(--muted)}
+.tcs-rec__in{position:relative;display:flex;align-items:center;min-width:0;height:34px;padding:0 10px;border:1px solid var(--line-3);border-radius:8px;background:var(--paper);font-size:var(--t-sm);color:var(--ink);white-space:nowrap;overflow:hidden}
+.tcs-rec__sel::after{content:"";position:absolute;right:12px;top:13px;width:6px;height:6px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:rotate(45deg)}
+.tcs-rec__bar2{display:flex;align-items:center;gap:10px;height:20px}
+.tcs-rec__bar2 i{position:relative;flex:1;height:6px;border-radius:var(--r-pill);background:var(--paper-4);overflow:hidden}
+.tcs-rec__bar2 i::after{content:"";position:absolute;inset:0;background:var(--blue);border-radius:inherit;transform:scaleX(var(--v,.5));transform-origin:left center;transition:transform 1s var(--e) 2.4s}
+.tcs-erd:not(.is-in) .tcs-rec__bar2 i::after{transform:scaleX(0)}
+.tcs-rec__bar2 b{font-family:var(--f);font-size:var(--t-xs);font-weight:500;color:var(--ink)}
+.tcs-rec__rel{display:grid;margin:0 14px;border-top:1px solid var(--line)}
+.tcs-rec__rel div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line-2)}
+.tcs-rec__rel dt{font-size:var(--t-xs);color:var(--muted)}
+.tcs-rec__rel dd{font-family:var(--f);font-size:var(--t-xs);font-weight:500;color:var(--ink);text-align:right;transition:color var(--d2) var(--e)}
+.tcs-rec__rel dd.is-new{color:var(--blue)}
+.tcs-rec__foot{display:flex;align-items:center;gap:8px;padding:12px 14px 14px;font-family:var(--f);font-size:10px;color:var(--muted)}
+
+/* ---- meta under the canvas ---- */
+.tcs-erd__meta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 0;padding:18px 20px;border-top:1px solid var(--line);background:var(--paper)}
+.tcs-erd__meta>div{display:flex;flex-direction:column;gap:6px;min-width:0;padding-right:28px;margin-right:28px;border-right:1px solid var(--line)}
+.tcs-erd__meta>div:nth-last-child(2){border-right:0}
+.tcs-erd__meta dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);line-height:1.2}
+.tcs-erd__meta dd{font-size:var(--t-sm);font-weight:500;color:var(--ink);line-height:1.35}
+.tcs-erd__meta .tcs-erd__ill{margin-left:auto;margin-right:0;padding-right:0;border-right:0}
+
+/* ---- responsive ---- */
+@media (max-width:1180px){
+  .tcs-erd__canvas{grid-template-columns:minmax(0,1fr);row-gap:40px}
+  .tcs-erd__ents{padding-bottom:44px}
+  .tcs-erd__ver{display:none}
+  .tcs-erd__rec{justify-self:center;width:min(100%,460px);transform:translateY(20px) scale(.97);transform-origin:center top}
+  .tcs-erd__lead{display:none}
+}
+@media (max-width:760px){
+  .tcs-erd__svg,.tcs-erd__dot,.tcs-erd__legend,.tcs-erd__jn{display:none}
+  .tcs-erd__ents{padding-bottom:0}
+  .tcs-erd__ents{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:12px;row-gap:12px}
+  .tcs-erd__ents>.tcs-ent{grid-area:auto}
+  .tcs-ent[data-ent="account"]{order:-2}.tcs-ent[data-ent="contact"]{order:-1}
+  .tcs-erd__canvas{padding:16px}
+  .tcs-erd__run{display:none}
+  .tcs-erd__pause{display:none}   /* relations and the travelling record are hidden here, so there is no motion to pause */
+  .tcs-erd__meta{flex-direction:column;align-items:flex-start}
+  .tcs-erd__meta>div{padding-right:0;margin-right:0;border-right:0}
+  .tcs-erd__meta .tcs-erd__ill{margin-left:0}
+}
+@media (max-width:520px){
+  .tcs-erd__ents{column-gap:10px;row-gap:10px}
+  .tcs-erd__canvas{padding:12px}
+  .tcs-erd__path i,.tcs-erd__path b{display:none}
+  .tcs-erd .tcs-ent__h{height:36px;gap:6px;padding:0 9px}
+  .tcs-erd .tcs-ent__h .xt-ico{width:14px;height:14px}
+  .tcs-erd .tcs-ent__t{font-size:.875rem}
+  .tcs-erd .tcs-ent__tb{display:none}
+  .tcs-erd .tcs-ent__f li{grid-template-columns:24px minmax(0,1fr);height:23px;padding:0 9px;font-size:10.5px}
+  .tcs-erd .tcs-ent__f em{display:none}
+  .tcs-erd .tcs-ent__f li:nth-child(n+5){display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .tcs-erd .tcs-ent,.tcs-erd__legend,.tcs-erd__rec,.tcs-erd__rel,.tcs-erd__lbl,.tcs-erd__lead,.tcs-rec__bar2 i::after,.tcs-erd__svg,.tcs-erd__jn{transition:none}
+  .tcs-erd.is-routed .tcs-erd__jn{opacity:1}
+  .tcs-erd .tcs-ent,.tcs-erd__legend,.tcs-erd__rec{opacity:1;transform:none}
+  .tcs-erd__rel{stroke-dashoffset:0;opacity:1}
+  .tcs-erd__lbl,.tcs-erd__lead{opacity:1}
+  .tcs-erd:not(.is-in) .tcs-rec__bar2 i::after{transform:scaleX(var(--v,.5))}
+}

@@ -1,0 +1,183 @@
+/* AI Strategy & Agents · evals — the harness dashboard: gate metrics with sparklines, success by
+   scenario against its gate, model comparison, the regression timeline; and how the harness is built. */
+.tas-ev__body{display:flex;flex-direction:column;gap:clamp(20px,2.2vw,28px);padding:clamp(18px,2.2vw,28px)}
+.tas-ev__gate{display:inline-flex;align-items:center;gap:8px;height:26px;padding:0 10px 0 8px;border-radius:var(--r-pill);background:var(--blue-wash);color:var(--blue-d);font-weight:500;letter-spacing:.04em;white-space:nowrap;transition:background var(--d2) var(--e-io),color var(--d2) var(--e-io)}
+.tas-ev__gate i{width:7px;height:7px;border-radius:50%;background:var(--blue)}
+.tas-ev__gate[data-ev-gate="blocked"]{background:var(--ink);color:var(--on-ink)}
+.tas-ev__gate[data-ev-gate="blocked"] i{background:var(--on-ink)}
+.tas-ev__h{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin-bottom:14px}
+.tas-ev__hn{font-family:var(--f);font-size:10.5px;letter-spacing:.04em;color:var(--faint)}
+
+/* ---- gate metrics ---- */
+.tas-ev__kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.tas-ev__kpi{display:grid;grid-template-columns:minmax(0,1fr) 72px;grid-template-rows:auto auto auto;column-gap:10px;min-width:0;padding:16px 16px 14px;border-radius:var(--r-lg);background:var(--paper-2);border:1px solid var(--line-2)}
+.tas-ev__kl{grid-column:1 / -1;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tas-ev__kv{margin-top:10px;font-family:var(--f-h);font-size:clamp(1.5rem,1.9vw,1.9rem);font-weight:500;letter-spacing:-.03em;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tas-ev__kt{display:flex;align-items:center;gap:7px;margin-top:8px;font-family:var(--f);font-size:10.5px;line-height:1.4;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tas-ev__ok{position:relative;flex:none;width:12px;height:12px;border-radius:50%;background:var(--blue)}
+.tas-ev__ok::after{content:"";position:absolute;left:4px;top:2px;width:3px;height:6px;border:solid var(--on-ink);border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+.tas-ev__spark{grid-column:2;grid-row:2 / span 2;align-self:end;width:72px;height:32px;overflow:visible}
+.tas-ev__spark polyline{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.tas-ev__kpi[data-k="policy"] .tas-ev__spark polyline{stroke:var(--blue)}
+
+/* ---- scenario bars + model table ---- */
+.tas-ev__grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(16px,2vw,28px)}
+.tas-ev__scen,.tas-ev__models{min-width:0;padding:clamp(16px,1.8vw,22px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.tas-ev__sr{display:grid;grid-template-columns:minmax(0,13rem) minmax(0,1fr) 5.2rem;align-items:center;column-gap:16px;padding-block:10px;border-top:1px solid var(--line-2)}
+.tas-ev__sr:first-child{border-top:0;padding-top:2px}
+.tas-ev__sn{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tas-ev__sn b{font-size:var(--t-sm);font-weight:500;line-height:1.3;color:var(--ink)}
+.tas-ev__sn em{align-self:flex-start;padding:2px 6px;border-radius:var(--r-xs);background:var(--blue-wash);font-family:var(--f);font-size:9.5px;font-style:normal;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--blue-d);line-height:1.3;white-space:nowrap}
+.tas-ev__sn small{font-family:var(--f);font-size:10px;color:var(--faint)}
+.tas-ev__sb{position:relative;display:block;height:14px;border-radius:4px;background:var(--paper-3);overflow:hidden}
+.tas-ev__sf{position:absolute;inset:0;width:calc(var(--w) * 100%);border-radius:4px;background:var(--ink);transform-origin:left center}
+.tas-ev__sr.is-pass .tas-ev__sf{background:var(--blue)}
+.tas-ev__sg{position:absolute;top:0;bottom:0;left:var(--g);width:2px;margin-left:-1px;background:var(--paper)}
+.tas-ev__sg::after{content:"";position:absolute;inset:0;background:var(--ink);opacity:.55}
+.tas-ev__sv{display:flex;flex-direction:column;align-items:flex-end;font-family:var(--f);line-height:1.3;font-variant-numeric:tabular-nums}
+.tas-ev__sv b{font-size:var(--t-sm);font-weight:600;color:var(--ink)}
+.tas-ev__sv small{font-size:10px;color:var(--faint);white-space:nowrap}
+
+.tas-ev__tw{overflow-x:auto;max-width:100%;scrollbar-width:thin}
+.tas-ev__tw:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+.tas-ev__tbl{width:100%;min-width:360px;border-collapse:collapse;table-layout:fixed;font-family:var(--f);font-size:var(--t-xs);line-height:1.4;color:var(--txt)}
+.tas-ev__tbl th,.tas-ev__tbl td{padding:9px 8px;text-align:left;vertical-align:top;border-top:1px solid var(--line-2);overflow-wrap:anywhere}
+.tas-ev__tbl th:first-child,.tas-ev__tbl td:first-child{padding-left:0;width:27%}
+.tas-ev__tbl thead th{padding-top:0;border-top:0;font-weight:500;color:var(--muted)}
+.tas-ev__tbl thead th b{display:block;font-weight:600;color:var(--ink)}
+.tas-ev__tbl thead th small{display:block;margin-top:2px;font-size:9.5px;letter-spacing:.02em;color:var(--faint)}
+.tas-ev__tbl tbody th{font-family:var(--f-b);font-weight:500;color:var(--ink)}
+.tas-ev__tbl td{font-variant-numeric:tabular-nums;white-space:nowrap}
+.tas-ev__tbl td.is-best{color:var(--blue-d);font-weight:600}
+.tas-ev__tbl td.is-best::after{content:"";display:inline-block;width:6px;height:6px;margin-left:7px;border-radius:50%;background:var(--blue);vertical-align:middle}
+.tas-ev__vr th,.tas-ev__vr td{border-top:1px solid var(--line-3);padding-top:11px}
+.tas-ev__vr td{font-family:var(--f-b);white-space:normal;color:var(--muted)}
+
+/* ---- regression timeline ---- */
+.tas-ev__reg{padding:clamp(16px,1.8vw,22px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.tas-ev__replay{min-height:34px;padding:0 12px;font-size:var(--t-xs)}
+.tas-ev__runs{display:flex;flex-direction:column}
+.tas-ev__run{position:relative;display:grid;grid-template-columns:22px 5.4rem 7.4rem minmax(0,1fr) auto;align-items:center;column-gap:14px;padding:11px 10px;border-radius:var(--r-sm);transition:opacity .45s var(--e),transform .45s var(--e)}
+.tas-ev__run+.tas-ev__run{margin-top:2px}
+.tas-ev__run::before{content:"";position:absolute;left:20.5px;top:-8px;height:12px;width:1px;background:var(--line-3)}
+.tas-ev__run:first-child::before{display:none}
+.tas-ev__rs{position:relative;width:18px;height:18px;border-radius:50%}
+.tas-ev__run[data-st="ok"] .tas-ev__rs{background:var(--blue)}
+.tas-ev__run[data-st="ok"] .tas-ev__rs::after{content:"";position:absolute;left:6px;top:3.5px;width:4.5px;height:8px;border:solid var(--on-ink);border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+.tas-ev__run[data-st="fail"] .tas-ev__rs{background:var(--ink)}
+.tas-ev__run[data-st="fail"] .tas-ev__rs::after{content:"!";position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f);font-size:11px;font-weight:600;color:var(--on-ink)}
+.tas-ev__run[data-st="fix"] .tas-ev__rs{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.tas-ev__run[data-st="fix"] .tas-ev__rs::after{content:"";position:absolute;left:5px;right:5px;top:8.25px;height:1.5px;background:var(--ink)}
+.tas-ev__rid,.tas-ev__rp,.tas-ev__rg{font-family:var(--f);font-size:10.5px;letter-spacing:.02em;line-height:1.4;white-space:nowrap}
+.tas-ev__rid{font-weight:600;color:var(--ink)}
+.tas-ev__rp{color:var(--muted)}
+.tas-ev__rt{min-width:0;font-size:var(--t-sm);line-height:1.45;color:var(--txt)}
+.tas-ev__run[data-st="fail"] .tas-ev__rt{color:var(--ink);font-weight:500}
+.tas-ev__rg{padding:3px 8px;border-radius:var(--r-xs);box-shadow:inset 0 0 0 1px var(--line-3);color:var(--muted)}
+.tas-ev__run[data-st="ok"] .tas-ev__rg{color:var(--blue-d);box-shadow:inset 0 0 0 1px var(--blue-line)}
+.tas-ev__run[data-st="fail"] .tas-ev__rg{background:var(--ink);color:var(--on-ink);box-shadow:none}
+.tas-ev__run[data-st="fail"]{background:var(--blue-wash)}
+.tas-ev__run.is-flash::after{content:"";position:absolute;inset:0;border-radius:var(--r-sm);box-shadow:inset 0 0 0 1.5px var(--blue);opacity:0;animation:tas-ev-flash .9s var(--e-io) 2}
+@keyframes tas-ev-flash{0%,100%{opacity:0}50%{opacity:1}}
+/* while the timeline plays, runs not yet reached stay on screen, dimmed (evals.js adds .is-armed) */
+.tas-ev.is-armed .tas-ev__run:not(.is-on){opacity:.34}
+/* the trajectory diff under the failed run: expected tool order, then what the agent did */
+.tas-ev__rx{grid-column:4 / -1;display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.tas-ev__rxl{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;font-family:var(--f);font-size:10.5px;line-height:1.4;color:var(--muted)}
+.tas-ev__rxl em{flex:none;width:4.6rem;font-size:9.5px;font-style:normal;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.tas-ev__rxl i{font-style:normal;color:var(--faint)}
+.tas-ev__rxl code{padding:1px 6px;border-radius:4px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line-3);color:var(--ink)}
+.tas-ev__rxl code.is-bad{background:var(--ink);box-shadow:none;color:var(--on-ink)}
+.tas-ev__rxl[data-k="expected"] code:last-child{box-shadow:inset 0 0 0 1px var(--blue-line);color:var(--blue-d)}
+.tas-ev__more{display:none}
+
+/* ---- how it is built ---- */
+.tas-ev__how{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--tas-gap);margin-top:var(--bdh-block)}
+.tas-ev__how li{display:flex;gap:14px;align-items:flex-start;min-width:0;padding-top:18px;border-top:1px solid var(--ink)}
+.tas-ev__how .xt-ico{margin-top:2px;flex:none;color:var(--ink)}
+.tas-ev__how h3{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.01em;line-height:1.25;color:var(--ink)}
+.tas-ev__how p{margin-top:6px;font-size:var(--t-sm);line-height:1.55;color:var(--muted)}
+
+/* five tiles, never an empty cell: 3 + 2 wide up to 1180px, then 2 + 2 + 1 */
+@media (max-width:1180px){
+  .tas-ev__kpis{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .tas-ev__kpi{grid-column:span 2}
+  .tas-ev__kpi:nth-child(n+4){grid-column:span 3}
+}
+@media (max-width:1023px){
+  .tas-ev__grid{grid-template-columns:minmax(0,1fr)}
+  .tas-ev__how{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:28px}
+}
+@media (max-width:760px){
+  .tas-ev__sr{grid-template-columns:minmax(0,1fr) 4.4rem;row-gap:8px}
+  .tas-ev__sn{grid-column:1 / -1;flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px 10px}
+  .tas-ev__run{grid-template-columns:22px minmax(0,1fr);row-gap:4px}
+  .tas-ev__rid{grid-column:2}
+  .tas-ev__rp,.tas-ev__rt,.tas-ev__rg,.tas-ev__rx{grid-column:2}
+  .tas-ev__rg{justify-self:start}
+  .tas-ev__run::before{display:none}
+  .tas-ev__kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tas-ev__kpi,.tas-ev__kpi:nth-child(n+4){grid-column:auto}
+  .tas-ev__kpi:last-child{grid-column:1 / -1}
+}
+@media (max-width:600px){
+  /* phones: one metric per row — label and gate on the left, value, then a sparkline with its own column */
+  .tas-ev__kpis{grid-template-columns:minmax(0,1fr);gap:6px}
+  .tas-ev__kpi:last-child{grid-column:auto}
+  .tas-ev__vr{display:none}
+  /* the three models fit the phone width: no sideways scroll */
+  .tas-ev__tbl{min-width:0;font-size:11px}
+  .tas-ev__tbl th,.tas-ev__tbl td{padding-inline:5px}
+  .tas-ev__tbl td.is-best::after{margin-left:4px}
+  /* scenarios: the first three, the rest behind "Show all" (evals.js) */
+  .tas-ev__scen.is-js:not(.is-open) .tas-ev__sr:nth-child(n+4){display:none}
+  .tas-ev__more:not([hidden]){display:inline-flex;align-items:center;align-self:flex-start;min-height:40px;margin-top:10px;padding:0 14px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--line-3);font-family:var(--f-b);font-size:var(--t-xs);font-weight:500;color:var(--ink)}
+  .tas-ev__kpi{grid-template-columns:minmax(0,1fr) auto 64px;grid-template-rows:auto auto;align-items:center;column-gap:14px;padding:12px 14px}
+  .tas-ev__kl{grid-column:1;grid-row:1;white-space:normal}
+  .tas-ev__kt{grid-column:1;grid-row:2;margin-top:4px;white-space:normal}
+  .tas-ev__kv{grid-column:2;grid-row:1 / span 2;margin-top:0;font-size:1.45rem;text-align:right}
+  .tas-ev__spark{grid-column:3;grid-row:1 / span 2;align-self:center;width:64px;height:28px}
+  .tas-ev__how{grid-template-columns:minmax(0,1fr)}
+  .tas-ev__body{padding:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .tas-ev__run{transition:none}
+  .tas-ev.is-armed .tas-ev__run:not(.is-on){opacity:1}
+  .tas-ev__run.is-flash::after{animation:none}
+}
+
+/* ---- right-sizing: cost and carbon per task ---- */
+.tas-ev__models{display:flex;flex-direction:column}
+.tas-ev__rz{margin-top:auto;padding-top:18px;border-top:1px solid var(--line-3)}
+.tas-ev__rz .tas-ev__h{margin-bottom:10px}
+.tas-ev__rzr{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:14px;row-gap:6px;align-items:center;padding-block:8px}
+.tas-ev__rzn{font-size:var(--t-xs);font-weight:500;line-height:1.35;color:var(--ink)}
+.tas-ev__rzb{grid-column:1;display:block;height:8px;border-radius:3px;background:var(--paper-3);overflow:hidden}
+.tas-ev__rzb i{display:block;height:100%;width:calc(var(--w) * 100%);border-radius:3px;background:var(--ink)}
+.tas-ev__rzr.is-best .tas-ev__rzb i{background:var(--blue)}
+.tas-ev__rzv{grid-column:2;grid-row:1 / span 2;display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-family:var(--f);line-height:1.3;font-variant-numeric:tabular-nums}
+.tas-ev__rzv b{font-size:var(--t-sm);font-weight:600;color:var(--ink)}
+.tas-ev__rzr.is-best .tas-ev__rzv b{color:var(--blue-d)}
+.tas-ev__rzv span{font-size:10px;color:var(--faint);white-space:nowrap}
+.tas-ev__sci{margin-top:10px;font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+.tas-ev__sci code{font-family:var(--f);font-size:10.5px;font-weight:600;color:var(--ink);white-space:nowrap}
+.tas-ev__scen{display:flex;flex-direction:column}
+.tas-ev__judge{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:auto;padding-top:16px;border-top:1px solid var(--line-3)}
+.tas-ev__sl+.tas-ev__judge{margin-top:auto}
+.tas-ev__judge div{min-width:0;padding:10px 12px;border-radius:var(--r-sm);background:var(--paper-2)}
+.tas-ev__judge dt{font-family:var(--f);font-size:9.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.tas-ev__judge dd{margin-top:4px;font-family:var(--f);font-size:var(--t-xs);font-weight:600;color:var(--ink)}
+@media (max-width:600px){
+  .tas-ev__judge{grid-template-columns:minmax(0,1fr);gap:0}
+  .tas-ev__judge div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 0;border-radius:0;background:none;border-bottom:1px solid var(--line-2)}
+  .tas-ev__judge dd{margin-top:0;text-align:right}
+  .tas-ev__rzr{grid-template-columns:minmax(0,1fr)}
+  .tas-ev__rzv{grid-column:1;grid-row:auto;flex-direction:row;align-items:baseline;gap:10px}
+}
+/* phones: how the harness is built, as a compact two-column index */
+@media (max-width:600px){
+  .tas-ev__how{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}
+  .tas-ev__how li{flex-direction:column;gap:10px;padding-block:16px}
+  .tas-ev__how h3{font-size:.9375rem}
+  .tas-ev__how p{display:none}
+}

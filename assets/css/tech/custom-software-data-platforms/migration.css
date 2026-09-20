@@ -1,0 +1,192 @@
+/* Custom Software & Data Platforms · migration — the strangler-fig board: legacy modules on the left, a routing
+   facade with a traffic dial per module in the middle, new services on the right; a week scrubber, KPI strip and
+   cutover log; a side column with the photograph and the four practices that keep the cutover reversible. */
+.tcs-mg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,330px);column-gap:clamp(32px,4vw,64px);row-gap:48px;align-items:start}
+.tcs-mg__win{min-width:0}
+
+/* ---- window chrome ---- */
+.tcs-mg__bar{gap:16px}
+.tcs-mg__path{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.tcs-mg__path i{font-style:normal;color:var(--ghost);margin-inline:2px}
+.tcs-mg__path b{font-weight:500;color:var(--ink)}
+.tcs-mg__wk{display:inline-flex;align-items:center;gap:8px;margin-left:auto;color:var(--txt)}
+
+/* ---- controls ---- */
+.tcs-mg__ctl{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:clamp(20px,3vw,40px);row-gap:16px;padding:20px 24px 18px;border-bottom:1px solid var(--line)}
+.tcs-mg__btns{display:flex;gap:8px}
+.tcs-mg__btns .tcs-btn:not(.tcs-btn--pri){width:40px;padding:0;font-family:var(--f);font-size:1rem}
+.tcs-mg__btns .tcs-btn--pri{min-width:148px}
+.tcs-mg__scrub{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:18px;row-gap:4px}
+.tcs-mg__sl{grid-row:1 / span 2;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.tcs-mg__rw{position:relative;height:24px}
+.tcs-mg__rail{position:absolute;left:9px;right:9px;top:10px;height:4px;border-radius:var(--r-pill);background:var(--line-3);overflow:hidden}
+.tcs-mg__rail i{position:absolute;inset:0;background:var(--blue);transform:scaleX(var(--v,0));transform-origin:left center;transition:transform .45s var(--e)}
+.tcs-mg__range{position:relative;z-index:1;display:block;width:100%;height:24px;margin:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+.tcs-mg__range::-webkit-slider-runnable-track{height:24px;background:transparent}
+.tcs-mg__range::-moz-range-track{height:24px;background:transparent}
+.tcs-mg__range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;margin-top:3px;border-radius:50%;background:var(--paper);border:2px solid var(--blue);box-shadow:var(--sh-1);transition:transform var(--d1) var(--e)}
+.tcs-mg__range::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--paper);border:2px solid var(--blue);box-shadow:var(--sh-1)}
+.tcs-mg__range:hover::-webkit-slider-thumb{transform:scale(1.12)}
+.tcs-mg__range:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:var(--r-sm)}
+.tcs-mg__ticks{display:flex;justify-content:space-between;padding-inline:9px}
+.tcs-mg__ticks i{position:relative;width:1px;height:6px;background:var(--line-3);font-style:normal}
+.tcs-mg__ticks i.is-past{background:var(--blue)}
+.tcs-mg__ticks b{position:absolute;top:9px;left:50%;transform:translateX(-50%);font-family:var(--f);font-size:10px;font-weight:400;letter-spacing:.02em;color:var(--faint);white-space:nowrap}
+.tcs-mg__ticks i.is-past b{color:var(--txt)}
+.tcs-mg__scrub{padding-bottom:14px}
+
+/* ---- the board ---- */
+.tcs-mg__board{--tcs-mg-cols:minmax(0,1fr) 44px 72px 44px minmax(0,1fr);position:relative;padding:22px 24px 28px;background:var(--paper-2)}
+.tcs-mg__board::before{content:"";position:absolute;top:22px;bottom:0;left:calc(50% - 50px);width:100px;border-inline:1px dashed var(--blue-line);background:var(--blue-wash);pointer-events:none}
+.tcs-mg__heads{position:relative;display:grid;grid-template-columns:var(--tcs-mg-cols);column-gap:0;align-items:end;margin-bottom:6px}
+.tcs-mg__hd{display:flex;flex-direction:column;gap:4px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);line-height:1.2}
+.tcs-mg__hd .xt-ico{margin-bottom:4px;color:var(--muted)}
+.tcs-mg__hd em{font-style:normal;font-weight:400;letter-spacing:.02em;text-transform:none;color:var(--faint)}
+.tcs-mg__hd--old{grid-column:1}
+.tcs-mg__hd--fac{grid-column:2 / span 3;align-items:center;text-align:center;padding-inline:4px}
+.tcs-mg__hd--fac .xt-ico{color:var(--blue)}
+.tcs-mg__hd--new{grid-column:5;align-items:flex-end;text-align:right}
+.tcs-mg__in{position:relative;display:flex;justify-content:center;margin:14px 0 10px}
+.tcs-mg__in span{position:relative;z-index:1;display:inline-flex;align-items:center;min-height:26px;padding:4px 12px;border:1px solid var(--line-3);border-radius:var(--r-pill);background:var(--paper);
+  font-family:var(--f);font-size:10px;letter-spacing:.02em;color:var(--txt);text-align:center;line-height:1.35}
+.tcs-mg__in::after{content:"";position:absolute;left:50%;top:100%;width:1px;height:10px;background:var(--blue-line)}
+
+.tcs-mg__rows{position:relative;display:grid;gap:10px}
+.tcs-mg__row{display:grid;grid-template-columns:var(--tcs-mg-cols);align-items:center;min-height:74px}
+.tcs-mg__old,.tcs-mg__new{position:relative;display:flex;flex-direction:column;justify-content:center;gap:3px;min-width:0;min-height:74px;padding:11px 14px;border:1px solid var(--line-3);border-radius:var(--r-sm);background:var(--paper);
+  transition:background var(--d3) var(--e),border-color var(--d3) var(--e),opacity var(--d3) var(--e),box-shadow var(--d3) var(--e)}
+.tcs-mg__old b,.tcs-mg__new b{font-size:var(--t-sm);font-weight:600;line-height:1.3;color:var(--ink)}
+.tcs-mg__new b{font-family:var(--f);font-size:var(--t-xs);font-weight:500}
+.tcs-mg__old span,.tcs-mg__new span{font-family:var(--f);font-size:10.5px;line-height:1.4;color:var(--muted)}
+.tcs-mg__new .tcs-mg__rc{display:flex;align-items:center;gap:6px;margin-top:3px;color:var(--faint)}
+.tcs-mg__new .tcs-mg__rc::before{content:"";flex:none;width:6px;height:6px;border-radius:1px;border:1px solid currentColor}
+.tcs-mg__old{background:var(--paper-3)}
+
+/* pipes: [0] the line, [1] a packet travelling in the direction of live traffic */
+.tcs-mg__pipe{position:relative;height:2px;margin-inline:-1px}
+.tcs-mg__pipe i{position:absolute}
+.tcs-mg__pipe i:first-child{inset:0;background:var(--ink);opacity:.14;transition:opacity var(--d3) var(--e),background var(--d3) var(--e)}
+.tcs-mg__pipe i:last-child{top:-2px;left:0;width:6px;height:6px;border-radius:50%;background:var(--ink);opacity:0}
+.tcs-mg__pipe--r i:last-child{background:var(--blue)}
+.tcs-mg__pipe--l i:first-child{opacity:calc(.14 + (1 - var(--p,0)) * .6)}
+.tcs-mg__pipe--r i:first-child{background:var(--blue);opacity:calc(.12 + var(--p,0) * .88)}
+
+/* the dial */
+.tcs-mg__dial{position:relative;z-index:1;display:grid;place-items:center;justify-self:center;width:60px;height:60px;border-radius:50%;background:var(--paper);box-shadow:var(--sh-1)}
+.tcs-mg__dial svg{position:absolute;inset:4px;width:52px;height:52px;transform:rotate(-90deg);overflow:visible}
+.tcs-mg__dt,.tcs-mg__dv{fill:none;stroke-width:3}
+.tcs-mg__dt{stroke:var(--line-3)}
+.tcs-mg__dv{stroke:var(--blue);stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:calc(100 - var(--p,0) * 100);transition:stroke-dashoffset .8s var(--e)}
+.tcs-mg__dial b{position:relative;font-family:var(--f);font-size:11px;font-weight:600;letter-spacing:-.01em;color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* stage styles */
+.tcs-mg__row.is-legacy .tcs-mg__new{border-style:dashed;background:transparent}
+.tcs-mg__row.is-legacy .tcs-mg__new b,.tcs-mg__row.is-legacy .tcs-mg__new span{color:var(--faint)}
+.tcs-mg__row.is-legacy .tcs-mg__dial b{color:var(--faint)}
+.tcs-mg__row.is-shadow .tcs-mg__new{border-style:dashed;border-color:var(--blue-line)}
+.tcs-mg__row.is-shadow .tcs-mg__pipe--r i:first-child{opacity:1;background:transparent;border-top:2px dotted var(--blue-line);top:0;height:0}
+.tcs-mg__row.is-shadow .tcs-mg__dt{stroke-dasharray:3 3;stroke:var(--blue-line)}
+.tcs-mg__row.is-shadow .tcs-mg__dial b{font-size:9.5px;font-weight:500;letter-spacing:.02em;color:var(--blue-d)}
+.tcs-mg__row:is(.is-canary,.is-split) .tcs-mg__new{border-color:var(--blue-line)}
+.tcs-mg__row:is(.is-live,.is-retired) .tcs-mg__new{border-color:var(--blue);background:var(--paper);box-shadow:0 0 0 3px var(--blue-wash)}
+.tcs-mg__row:is(.is-live,.is-retired) .tcs-mg__new .tcs-mg__rc{color:var(--blue-d)}
+.tcs-mg__row.is-live .tcs-mg__old{opacity:.8}
+.tcs-mg__row.is-live .tcs-mg__pipe--l i:first-child{opacity:1;background:transparent;border-top:2px dotted var(--line-3);height:0}
+.tcs-mg__row.is-retired .tcs-mg__old{opacity:.5;border-style:dashed;background:transparent}
+.tcs-mg__row.is-retired .tcs-mg__old b{text-decoration:line-through;text-decoration-color:var(--faint);text-decoration-thickness:1px}
+.tcs-mg__row.is-retired .tcs-mg__pipe--l i:first-child{opacity:0}
+
+/* packets run only while the board is on screen */
+.tcs-mg__win.is-live .tcs-mg__row:not(.is-live):not(.is-retired) .tcs-mg__pipe--l i:last-child{animation:tcs-mg-l 1.5s linear infinite;animation-delay:calc(var(--i) * -.37s)}
+.tcs-mg__win.is-live .tcs-mg__row:is(.is-canary,.is-split,.is-live,.is-retired) .tcs-mg__pipe--r i:last-child{animation:tcs-mg-r 1.5s linear infinite;animation-delay:calc(var(--i) * -.29s)}
+.tcs-mg__win.is-live .tcs-mg__row.is-canary .tcs-mg__pipe--r i:last-child{animation-duration:4.5s}
+.tcs-mg__win.is-live .tcs-mg__row.is-canary .tcs-mg__pipe--l i:last-child{animation-duration:1.2s}
+.tcs-mg__win.is-live .tcs-mg__row.is-shadow .tcs-mg__pipe--r i:last-child{animation:tcs-mg-r 1.5s linear infinite;background:transparent;box-shadow:inset 0 0 0 1.5px var(--blue)}
+@keyframes tcs-mg-r{0%{transform:translateX(0);opacity:0}15%,85%{opacity:1}100%{transform:translateX(38px);opacity:0}}
+@keyframes tcs-mg-l{0%{transform:translateX(38px);opacity:0}15%,85%{opacity:.7}100%{transform:translateX(0);opacity:0}}
+
+/* a row that just changed stage */
+.tcs-mg__row.is-flip .tcs-mg__dial{animation:tcs-mg-flip .6s var(--e)}
+@keyframes tcs-mg-flip{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
+
+/* ---- foot: KPIs + cutover log ---- */
+.tcs-mg__foot{border-top:1px solid var(--line)}
+.tcs-mg__kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-bottom:1px solid var(--line)}
+.tcs-mg__kpis div{display:flex;flex-direction:column;gap:6px;min-width:0;padding:16px 18px;border-right:1px solid var(--line)}
+.tcs-mg__kpis div:last-child{border-right:0}
+.tcs-mg__kpis dt{font-family:var(--f);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.3}
+.tcs-mg__kpis dd{font-family:var(--f);font-size:var(--t-body);font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1.2}
+.tcs-mg__log{padding:16px 24px 20px}
+.tcs-mg__lh{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+.tcs-mg__lh em{font-style:normal;font-weight:400;letter-spacing:.04em;text-transform:none;color:var(--faint)}
+.tcs-mg__ll{display:grid;gap:6px}
+.tcs-mg__ll li{display:grid;grid-template-columns:52px minmax(0,1fr);gap:12px;font-family:var(--f);font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+.tcs-mg__ll li time{color:var(--faint)}
+.tcs-mg__ll li.is-new{color:var(--ink)}
+.tcs-mg__ll li.is-new time{color:var(--blue)}
+.tcs-mg__ll li.is-enter{animation:tcs-mg-in .5s var(--e)}
+@keyframes tcs-mg-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* ---- side column ---- */
+.tcs-mg__side{display:flex;flex-direction:column;gap:24px;min-width:0}
+.tcs-mg__img{margin:0}
+.tcs-mg__cap{position:absolute;left:14px;bottom:14px;z-index:2;display:flex;max-width:min(260px,calc(100% - 28px))}
+.tcs-mg__st{font-family:var(--f-h);font-size:1.1875rem;font-weight:500;letter-spacing:-.008em;line-height:1.25;color:var(--ink);margin-top:8px}
+.tcs-mg__pr{display:grid;gap:0;border-top:1px solid var(--line)}
+.tcs-mg__pr li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.tcs-mg__pi{display:grid;place-items:center;width:34px;height:34px;border-radius:var(--r-sm);background:var(--paper);border:1px solid var(--line)}
+.tcs-mg__pr b{display:block;margin-bottom:4px;font-size:var(--t-sm);font-weight:600;line-height:1.35;color:var(--ink)}
+.tcs-mg__pr p{font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+.tcs-mg__note{margin-top:28px}
+
+/* ---- responsive ---- */
+@media (max-width:1180px){
+  .tcs-mg{grid-template-columns:minmax(0,1fr)}
+  .tcs-mg__side{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:var(--bdh-gap);row-gap:16px;align-items:start}
+  .tcs-mg__img{grid-row:1 / span 2}
+  .tcs-mg__st{margin-top:0}
+}
+@media (max-width:900px){
+  .tcs-mg__kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .tcs-mg__kpis div:nth-child(3){border-right:0}
+  .tcs-mg__kpis div:nth-child(-n+3){border-bottom:1px solid var(--line)}
+}
+@media (max-width:760px){
+  .tcs-mg__ctl{grid-template-columns:minmax(0,1fr);padding:16px}
+  .tcs-mg__btns .tcs-btn--pri{flex:1}
+  .tcs-mg__scrub{grid-template-columns:minmax(0,1fr)}
+  .tcs-mg__sl{grid-row:auto}
+  .tcs-mg__side{grid-template-columns:minmax(0,1fr)}
+  .tcs-mg__img{grid-row:auto}
+  .tcs-mg__wk{display:none}
+}
+@media (max-width:640px){
+  .tcs-mg__board{--tcs-mg-cols:minmax(0,1fr) 10px 56px 10px minmax(0,1fr);padding:18px 12px 20px}
+  .tcs-mg__board::before{left:calc(50% - 34px);width:68px}
+  .tcs-mg__hd em,.tcs-mg__hd .xt-ico{display:none}
+  .tcs-mg__hd{font-size:9.5px;letter-spacing:.06em}
+  .tcs-mg__hd--fac{padding-inline:0}
+  .tcs-mg__pipe i:last-child{display:none}
+  .tcs-mg__old,.tcs-mg__new{padding:9px 10px;min-height:82px}
+  .tcs-mg__old b{font-size:var(--t-xs)}
+  .tcs-mg__new b{font-size:10.5px;overflow-wrap:anywhere}
+  .tcs-mg__old span,.tcs-mg__new span{font-size:9.5px}
+  .tcs-mg__dial{width:50px;height:50px}
+  .tcs-mg__dial svg{inset:3px;width:44px;height:44px}
+  .tcs-mg__dial b{font-size:10px}
+  .tcs-mg__kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tcs-mg__kpis div{border-bottom:1px solid var(--line)}
+  .tcs-mg__kpis div:nth-child(3){border-right:1px solid var(--line)}
+  .tcs-mg__kpis div:nth-child(2n){border-right:0}
+  .tcs-mg__kpis div:last-child{grid-column:1 / -1;border-bottom:0}
+  .tcs-mg__log{padding:14px 14px 18px}
+  .tcs-mg__ll li{grid-template-columns:44px minmax(0,1fr);gap:8px;font-size:10.5px}
+  .tcs-mg__ticks b{font-size:9px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .tcs-mg__rail i,.tcs-mg__dv,.tcs-mg__old,.tcs-mg__new,.tcs-mg__pipe i{transition:none}
+  .tcs-mg__row.is-flip .tcs-mg__dial,.tcs-mg__ll li.is-enter{animation:none}
+}
+.tcs-mg__btns .tcs-btn[aria-disabled="true"]{opacity:.4;cursor:not-allowed}
+.tcs-mg__btns .tcs-btn[aria-disabled="true"]:hover{border-color:var(--line-3)}

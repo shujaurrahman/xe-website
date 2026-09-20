@@ -1,0 +1,71 @@
+/* Audits & Assessments · types — vertical tablist and photograph on the left (cols 1–4), the pane
+   on the right (cols 5–12). The checklist ticks in on every pane change (.is-tick). */
+.taa-ty{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--taa-gap-l);row-gap:var(--taa-gap)}
+.taa-ty__rail{grid-column:1 / span 4;display:flex;flex-direction:column;gap:22px;min-width:0}
+.taa-ty__panes{grid-column:5 / -1;min-width:0}
+
+/* ---- tabs ---- */
+.taa-ty__tabs{flex-direction:column;gap:2px;border-top:1px solid var(--ink)}
+.taa-ty__tabs [role="tab"]{width:100%;justify-content:flex-start;gap:12px;min-height:52px;padding:0 12px;border-radius:0;border-bottom:1px solid var(--line);
+  font-family:var(--f-h);font-size:1rem;font-weight:500;letter-spacing:-.01em;color:var(--muted);
+  transition:color var(--d1) var(--e-io),background var(--d1) var(--e-io),padding-left var(--d2) var(--e)}
+.taa-ty__tabs [role="tab"] .xt-ico{flex:none;opacity:.55;transition:opacity var(--d2) var(--e-io)}
+.taa-ty__tabs [role="tab"][aria-selected="true"]{background:var(--paper);color:var(--ink);padding-left:16px}
+.taa-ty__tabs [role="tab"][aria-selected="true"] .xt-ico{opacity:1}
+.taa-ty__tl{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.taa-ty__ts{display:none}
+.taa-ty__photo{margin:0}
+.taa-ty__rail .taa-cap{margin-top:0}
+
+/* ---- pane ---- */
+.taa-ty__pane{display:flex;flex-direction:column;gap:clamp(24px,2.6vw,34px);padding:clamp(24px,2.6vw,36px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper)}
+.taa-ty__top{display:flex;flex-direction:column;gap:12px}
+.taa-ty__lead{max-width:62ch;font-size:var(--t-body);color:var(--txt)}
+.taa-ty__cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,2.6vw,40px)}
+.taa-ty__col{display:flex;flex-direction:column;gap:14px;min-width:0}
+.taa-ty__exam>li{color:var(--txt)}
+
+/* checks: each row ticks in on pane change */
+.taa-ty__checks{display:flex;flex-direction:column;gap:12px}
+.taa-ty__checks>li{display:flex;align-items:flex-start;gap:10px;font-size:var(--t-sm);line-height:1.55;color:var(--txt)}
+.taa-ty__tick{display:inline-grid;place-items:center;flex:none;width:18px;height:18px;margin-top:1px;border-radius:var(--r-xs);
+  background:var(--paper-3);color:var(--faint);transition:background var(--d2) var(--e-io),color var(--d2) var(--e-io)}
+.taa-ty__tick svg{width:12px;height:12px;stroke-dasharray:18;stroke-dashoffset:0}
+.taa-ty__pane.is-tick .taa-ty__tick{background:var(--blue-wash-2);color:var(--blue-d);transition-delay:calc(var(--i,0) * 150ms)}
+.taa-ty__pane.is-tick .taa-ty__tick svg{animation:taa-tick .45s var(--e) forwards;animation-delay:calc(var(--i,0) * 150ms)}
+@keyframes taa-tick{from{stroke-dashoffset:18}to{stroke-dashoffset:0}}
+
+/* ---- pane foot ----
+   The six panes share one grid area, so the card takes the height of the longest. Pinning the foot
+   to the bottom turns the difference into breathing room under a footer instead of a card that ran
+   out of content. */
+.taa-ty__foot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,2.2vw,32px);margin-top:auto;padding-top:clamp(20px,2.2vw,28px);border-top:1px solid var(--line)}
+.taa-ty__fb{display:flex;flex-direction:column;gap:12px;min-width:0}
+.taa-ty__badges{display:flex;flex-wrap:wrap;gap:6px}
+.taa-ty__foot .xt-stack--logos{gap:14px 22px}
+.taa-ty__fm{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px var(--taa-gap);margin:0;padding-top:18px;border-top:1px solid var(--line-2)}
+.taa-ty__fm dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);line-height:1.3}
+.taa-ty__fm dd{margin:6px 0 0;font-size:var(--t-sm);line-height:1.5;color:var(--ink)}
+
+@media (max-width:1100px){
+  .taa-ty{column-gap:var(--taa-gap)}
+  .taa-ty__rail{grid-column:1 / span 5}
+  .taa-ty__panes{grid-column:6 / -1}
+  .taa-ty__cols{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:860px){
+  .taa-ty__rail,.taa-ty__panes{grid-column:1 / -1}
+  .taa-ty__tabs{flex-direction:row;flex-wrap:wrap;gap:4px;border-top:0}
+  .taa-ty__tabs [role="tab"]{width:auto;min-height:44px;padding:0 14px;border-bottom:0;border-radius:var(--r-sm);background:var(--paper);font-size:var(--t-sm)}
+  .taa-ty__tabs [role="tab"][aria-selected="true"]{padding-left:14px;box-shadow:inset 0 0 0 1px var(--line-3)}
+  .taa-ty__tl{display:none}
+  .taa-ty__ts{display:inline}
+  .taa-ty__photo{order:2}
+  .taa-ty__rail .taa-cap{order:3}
+  .taa-ty__foot{grid-template-columns:minmax(0,1fr)}
+  .taa-ty__fm{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  .taa-ty__pane.is-tick .taa-ty__tick,.taa-ty__pane.is-tick .taa-ty__tick svg{transition:none;animation:none}
+  .taa-ty__pane.is-tick .taa-ty__tick{background:var(--blue-wash-2);color:var(--blue-d)}
+}

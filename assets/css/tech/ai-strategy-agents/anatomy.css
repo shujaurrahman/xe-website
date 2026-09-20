@@ -1,0 +1,98 @@
+/* AI Strategy & Agents · anatomy — the agent loop (plan → act → observe) with eight slots around it,
+   each holding the technologies we work with for that part. The active phase lights its arc, its
+   label and every slot that belongs to it; the orbit dot turns while the diagram is on screen. */
+.tas-an{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr) minmax(0,1fr);column-gap:clamp(24px,3vw,44px);row-gap:var(--tas-gap);align-items:center}
+.tas-an__col{display:flex;flex-direction:column;gap:12px;min-width:0}
+
+/* ---- slots ---- */
+.tas-an__slot{position:relative;display:flex;flex-direction:column;gap:10px;min-width:0;padding:16px 18px 14px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);
+  transition:border-color var(--d3) var(--e-io),box-shadow var(--d3) var(--e),transform var(--d3) var(--e)}
+.tas-an__st{display:flex;align-items:center;gap:12px;min-width:0}
+.tas-an__si{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:var(--r-sm);background:var(--paper-3);color:var(--ink);transition:background var(--d3) var(--e-io),color var(--d3) var(--e-io)}
+.tas-an__si .xt-ico .a{transition:stroke var(--d3) var(--e-io)}
+.tas-an__st h3{min-width:0;font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.012em;line-height:1.25;color:var(--ink)}
+.tas-an__sp{margin-left:auto;flex:none;padding:3px 7px;border-radius:var(--r-xs);font-family:var(--f);font-size:10.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;line-height:1.2;color:var(--muted);box-shadow:inset 0 0 0 1px var(--line-3);
+  transition:background var(--d2) var(--e-io),box-shadow var(--d2) var(--e-io)}
+.tas-an__sw{font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+/* technologies: one chip style for every entry — a mark box (the library mark, or a neutral box
+   when there is no licence-clean mark) and the name in the reading face */
+.tas-an__tech{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding-top:12px;border-top:1px solid var(--line-2)}
+.tas-an__chip{display:inline-flex;align-items:center;gap:7px;min-width:0;min-height:28px;padding:3px 10px 3px 4px;border-radius:var(--r-pill);background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink)}
+.tas-an__gl{display:grid;place-items:center;flex:none;width:20px;height:20px;border-radius:50%;background:var(--paper-3);color:var(--ink)}
+.tas-an__gl.is-none::before{content:"";width:7px;height:7px;border-radius:2px;box-shadow:inset 0 0 0 1.5px var(--faint)}
+.tas-an__cn{font-family:var(--f-b);font-size:var(--t-xs);font-weight:500;line-height:1.2;white-space:nowrap}
+
+/* active phase */
+.tas-an[data-phase="plan"] .tas-an__slot[data-phase="plan"],.tas-an[data-phase="act"] .tas-an__slot[data-phase="act"],.tas-an[data-phase="observe"] .tas-an__slot[data-phase="observe"]{border-color:var(--blue-line);box-shadow:0 0 0 1px var(--blue-line),var(--sh-1)}
+.tas-an[data-phase="plan"] .tas-an__slot[data-phase="plan"] .tas-an__si,.tas-an[data-phase="act"] .tas-an__slot[data-phase="act"] .tas-an__si,.tas-an[data-phase="observe"] .tas-an__slot[data-phase="observe"] .tas-an__si{background:var(--blue);color:var(--on-ink)}
+.tas-an[data-phase="plan"] .tas-an__slot[data-phase="plan"] .tas-an__si .xt-ico .a,.tas-an[data-phase="act"] .tas-an__slot[data-phase="act"] .tas-an__si .xt-ico .a,.tas-an[data-phase="observe"] .tas-an__slot[data-phase="observe"] .tas-an__si .xt-ico .a{stroke:var(--on-ink)}
+.tas-an[data-phase="plan"] .tas-an__slot[data-phase="plan"] .tas-an__si .xt-ico .af,.tas-an[data-phase="act"] .tas-an__slot[data-phase="act"] .tas-an__si .xt-ico .af,.tas-an[data-phase="observe"] .tas-an__slot[data-phase="observe"] .tas-an__si .xt-ico .af{fill:var(--on-ink)}
+.tas-an[data-phase="plan"] .tas-an__slot[data-phase="plan"] .tas-an__sp,.tas-an[data-phase="act"] .tas-an__slot[data-phase="act"] .tas-an__sp,.tas-an[data-phase="observe"] .tas-an__slot[data-phase="observe"] .tas-an__sp{background:var(--ink);color:var(--on-ink);box-shadow:none}
+
+/* ---- the loop ---- */
+.tas-an__core{min-width:0;display:flex;flex-direction:column;gap:22px}
+/* live trace line above the loop: what the agent is doing in the lit phase */
+.tas-an__trace{display:flex;flex-direction:column;gap:6px;min-height:78px;padding:12px 14px;border-radius:var(--r);background:var(--ink);font-family:var(--f);font-size:10.5px;line-height:1.5;color:var(--on-ink-2)}
+.tas-an__tk{display:inline-flex;align-items:center;gap:8px;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-3)}
+.tas-an__trace .tas-an__ro{max-width:none;color:var(--on-ink)}
+.tas-an__loop{position:relative;width:100%;max-width:440px;margin-inline:auto}
+.tas-an__loop svg{display:block;width:100%;height:auto;overflow:visible}
+.tas-an__ring{fill:none;stroke:var(--line-2);stroke-width:1}
+.tas-an__ring--in{stroke:var(--line-3);stroke-dasharray:2 5}
+.tas-an__arc{fill:none;stroke:var(--ghost);stroke-width:4;stroke-linecap:round;transition:stroke var(--d3) var(--e-io)}
+.tas-an__head{fill:none;stroke:var(--ghost);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke var(--d3) var(--e-io)}
+.tas-an[data-phase="plan"] :is(.tas-an__arc,.tas-an__head)[data-p="plan"],.tas-an[data-phase="act"] :is(.tas-an__arc,.tas-an__head)[data-p="act"],.tas-an[data-phase="observe"] :is(.tas-an__arc,.tas-an__head)[data-p="observe"]{stroke:var(--blue)}
+.tas-an__orbit{transform-origin:160px 160px;transform:rotate(var(--deg,183deg))}
+.tas-an__orbit circle{fill:var(--blue);stroke:var(--paper);stroke-width:3}
+.tas-an.is-live:not(.is-manual) .tas-an__orbit{animation:tas-an-orbit 9s linear infinite}
+@keyframes tas-an-orbit{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.tas-an__pl{font-family:var(--f);font-size:11px;font-weight:500;letter-spacing:.14em;fill:var(--faint);transition:fill var(--d3) var(--e-io)}
+.tas-an[data-phase="plan"] .tas-an__pl:nth-of-type(1),.tas-an[data-phase="act"] .tas-an__pl:nth-of-type(2),.tas-an[data-phase="observe"] .tas-an__pl:nth-of-type(3){fill:var(--ink)}
+.tas-an__mid{position:absolute;left:50%;top:50%;width:50%;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;transform:translate(-50%,-50%)}
+.tas-an__agent{display:grid;place-items:center;width:52px;height:52px;margin-bottom:6px;border-radius:50%;background:var(--ink);color:var(--on-ink)}
+.tas-an__agent .xt-ico .a{stroke:var(--blue)}
+.tas-an__mid b{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tas-an__ph{font-family:var(--f-h);font-size:1.5rem;font-weight:500;letter-spacing:-.02em;line-height:1.1;color:var(--ink)}
+.tas-an__pd{font-size:var(--t-xs);line-height:1.45;color:var(--muted);max-width:18ch}
+.tas-an__ph.is-swap,.tas-an__ro.is-swap,.tas-an__pd.is-swap{animation:tas-an-in .45s var(--e) both}
+@keyframes tas-an-in{from{opacity:0;transform:translateY(5px)}}
+
+.tas-an__legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.tas-an__lg{display:flex;flex-direction:column;align-items:flex-start;gap:6px;width:100%;min-height:44px;padding:10px 12px;border-radius:var(--r-sm);text-align:left;box-shadow:inset 0 0 0 1px var(--line);background:var(--paper);
+  transition:box-shadow var(--d2) var(--e-io),background var(--d2) var(--e-io)}
+.tas-an__lg b{display:inline-flex;align-items:center;gap:8px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+.tas-an__lg b::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--line-3);transition:background var(--d2) var(--e-io)}
+.tas-an__lg span{font-size:10.5px;line-height:1.45;color:var(--muted)}
+.tas-an__lg:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.tas-an__lg[aria-pressed="true"]{background:var(--paper-3);box-shadow:inset 0 0 0 1px var(--line-3)}
+.tas-an__lg[aria-pressed="true"] b::before{background:var(--blue)}
+
+/* ---- facts ---- */
+.tas-an__facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--tas-gap);margin-top:var(--bdh-block)}
+.tas-an__facts li{display:flex;gap:14px;align-items:flex-start;min-width:0;padding-top:18px;border-top:1px solid var(--ink)}
+.tas-an__facts .xt-ico{margin-top:2px;flex:none;color:var(--ink)}
+.tas-an__facts h3{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.01em;line-height:1.25;color:var(--ink)}
+.tas-an__facts p{margin-top:6px;font-size:var(--t-sm);line-height:1.55;color:var(--muted)}
+
+@media (max-width:1100px){
+  .tas-an{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--tas-gap)}
+  .tas-an__core{grid-column:1 / -1;grid-row:1;max-width:520px;width:100%;margin-inline:auto}
+  .tas-an__col{grid-row:2}
+}
+@media (max-width:640px){
+  .tas-an{grid-template-columns:minmax(0,1fr)}
+  .tas-an__slot{gap:8px;padding:13px 14px 12px}
+  .tas-an__tech{gap:5px;padding-top:10px}
+  .tas-an__chip{min-height:26px}
+  .tas-an__col--l{grid-row:2}.tas-an__col--r{grid-row:3}
+  .tas-an__legend{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .tas-an__lg{align-items:center;justify-content:center;padding:10px 6px}
+  .tas-an__lg span{display:none}
+  .tas-an__facts{grid-template-columns:minmax(0,1fr)}
+  .tas-an__mid{width:62%}
+  .tas-an__ph{font-size:1.25rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .tas-an__orbit,.tas-an__ph.is-swap,.tas-an__ro.is-swap,.tas-an__pd.is-swap{animation:none}
+  .tas-an__slot,.tas-an__arc,.tas-an__head,.tas-an__pl,.tas-an__si,.tas-an__sp{transition:none}
+}

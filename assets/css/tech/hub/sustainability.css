@@ -1,0 +1,115 @@
+/* Hub · sustainability — photo + reporting rules beside an SCI report window (formula, region trade-off,
+   practice switches, reduction waterfall, live SCI), then the five practices. */
+.tih-sus{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--bdh-gap-l);align-items:start}
+
+/* ---- side ---- */
+.tih-sus__side{display:flex;flex-direction:column;gap:clamp(28px,3vw,40px);min-width:0}
+.tih-sus__img img{object-position:62% 50%}
+.tih-sus__chip{position:absolute;left:16px;bottom:16px}
+.tih-sus__rules{display:grid;gap:20px}
+.tih-sus__rules li{display:grid;grid-template-columns:32px minmax(0,1fr);column-gap:10px;row-gap:6px;padding-top:18px;border-top:1px solid var(--line)}
+.tih-sus__rules .bdh-idx{grid-row:1 / span 2;padding-top:4px}
+.tih-sus__rules .bdh-d{max-width:none}
+
+/* ---- report window ---- */
+.tih-sus__ui{min-width:0}
+.tih-sus__title{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.tih-sus__title i{font-style:normal;color:var(--faint)}
+.tih-sus__ill{margin-left:auto}
+.tih-sus__body{display:grid;gap:22px;padding:clamp(18px,2.2vw,28px)}
+
+.tih-sus__formula{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px 28px;align-items:center;padding:18px 20px;border-radius:var(--r-lg);background:var(--ink);color:var(--on-ink-2)}
+.tih-sus__eq{font-family:var(--f);font-size:clamp(1.05rem,1.6vw,1.375rem);letter-spacing:-.01em;color:var(--on-ink-2);white-space:nowrap}
+.tih-sus__eq b{font-weight:600;color:var(--on-ink)}
+.tih-sus__eq b.is-e,.tih-sus__eq b.is-i,.tih-sus__eq b.is-m,.tih-sus__eq b.is-r{color:var(--blue)}
+.tih-sus__terms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 20px;padding-left:24px;border-left:1px solid var(--on-ink-line)}
+.tih-sus__terms dt{font-family:var(--f);font-size:var(--tih-mono-s);letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-3)}
+.tih-sus__terms dt b{margin-right:6px;font-weight:600;color:var(--blue)}
+.tih-sus__terms dd{margin-top:3px;font-size:var(--t-xs);line-height:1.4;color:var(--on-ink-2)}
+.tih-sus__terms dd span{font-family:var(--f);font-weight:600;color:var(--on-ink);font-variant-numeric:tabular-nums}
+
+.tih-sus__ctl{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:22px}
+.tih-sus__grp{display:flex;flex-direction:column;gap:10px;min-width:0}
+.tih-sus__regions{display:grid;gap:4px}
+.tih-sus__rg{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 64px;grid-template-rows:auto auto;column-gap:12px;row-gap:5px;align-items:center;padding:9px 12px;border-radius:var(--r-sm);
+  border:1px solid var(--line);background:var(--paper);text-align:left;transition:border-color var(--d2) var(--e),background var(--d2) var(--e),box-shadow var(--d2) var(--e)}
+.tih-sus__rg:hover{border-color:var(--line-3)}
+.tih-sus__rg[aria-checked="true"]{border-color:var(--blue);background:var(--blue-wash);box-shadow:0 0 0 3px var(--blue-wash)}
+.tih-sus__rn{font-size:var(--t-xs);font-weight:600;line-height:1.2;color:var(--ink)}
+.tih-sus__rp{grid-column:1;grid-row:2;font-family:var(--f);font-size:var(--tih-mono-s);letter-spacing:.04em;color:var(--faint)}
+.tih-sus__rbar{grid-column:2;grid-row:1;position:relative;display:block;height:6px;border-radius:3px;background:var(--paper-3);overflow:hidden}
+.tih-sus__rbar i{position:absolute;inset:0 auto 0 0;width:calc(var(--w) * 100%);border-radius:3px;background:var(--line-3);transform-origin:left center;transition:background var(--d2) var(--e)}
+.tih-sus__rg[aria-checked="true"] .tih-sus__rbar i{background:var(--blue)}
+.tih-sus__rv{grid-column:3;grid-row:1;justify-self:end;font-family:var(--f);font-size:var(--tih-mono-s);color:var(--muted);white-space:nowrap}
+.tih-sus__rv b{font-size:var(--t-xs);font-weight:600;color:var(--ink)}
+.tih-sus__rx{grid-column:2 / -1;grid-row:2;font-family:var(--f);font-size:var(--tih-mono-s);letter-spacing:.02em;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tih-sus__sw{display:grid;gap:2px}
+.tih-sus__sw .bdh-switch{min-height:40px;font-size:var(--t-xs);text-align:left;line-height:1.3}
+
+/* waterfall */
+.tih-sus__fall{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:10px 28px;align-items:end;padding-top:20px;border-top:1px solid var(--line-2)}
+.tih-sus__fk{grid-column:1 / -1}
+.tih-sus__wf{display:grid;gap:6px;min-width:0}
+.tih-sus__wf li{display:grid;grid-template-columns:150px minmax(0,1fr) 52px;align-items:center;gap:12px;font-size:var(--t-xs);color:var(--txt);transition:opacity var(--d2) var(--e)}
+.tih-sus__wf li.is-off{opacity:.4}
+.tih-sus__wl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tih-sus__wt{position:relative;display:block;height:14px;border-radius:4px;background:var(--paper-3)}
+.tih-sus__wt i{position:absolute;top:0;bottom:0;left:0;width:100%;border-radius:3px;background:var(--blue-wash-2);box-shadow:inset 0 0 0 1px var(--blue-line);
+  transform-origin:left center;transform:translateX(var(--l)) scaleX(var(--w));transition:transform .6s var(--e)}
+.tih-sus__wf li.is-base .tih-sus__wt i{background:var(--line-3);box-shadow:none}
+.tih-sus__wf li.is-now .tih-sus__wt i{background:var(--blue);box-shadow:none}
+.tih-sus__wf li.is-base,.tih-sus__wf li.is-now{font-weight:600;color:var(--ink)}
+.tih-sus__wv{justify-self:end;font-family:var(--f);font-size:var(--t-lbl);font-variant-numeric:tabular-nums;color:var(--muted)}
+.tih-sus__wf li.is-now .tih-sus__wv{color:var(--blue-d);font-weight:600}
+.tih-sus__res{display:flex;flex-direction:column;gap:8px;padding:16px 18px;border-radius:var(--r-lg);background:var(--paper-2);box-shadow:inset 0 0 0 1px var(--line)}
+.tih-sus__big{display:flex;flex-direction:column;gap:4px}
+.tih-sus__big b{font-family:var(--f);font-size:clamp(2.2rem,3.2vw,2.8rem);font-weight:500;letter-spacing:-.05em;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.tih-sus__big span{font-family:var(--f);font-size:var(--tih-mono-s);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tih-sus__cut{font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+.tih-sus__cutv{font-weight:600;color:var(--blue-d)}
+
+/* ---- practices ---- */
+.tih-sus__prac{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--bdh-gap);margin-top:var(--bdh-block)}
+.tih-sus__prac li{display:flex;flex-direction:column;gap:10px;min-width:0;padding-top:20px;border-top:1px solid var(--line)}
+.tih-sus__pi{display:grid;place-items:center;width:40px;height:40px;margin-bottom:4px;border-radius:var(--r-sm);background:var(--paper-3);color:var(--ink)}
+.tih-sus__prac .bdh-d{max-width:none}
+/* a sentence, so it is set in the reading face rather than as another terminal readout */
+.tih-sus__lever{margin-top:auto;padding-top:8px;font-family:var(--f-b);font-size:var(--t-xs);letter-spacing:0;line-height:1.55;color:var(--blue-d)}
+.tih-sus__note{margin-top:28px}
+
+/* ---- responsive ---- */
+@media (max-width:1279px){
+  .tih-sus{grid-template-columns:minmax(0,1fr)}
+  .tih-sus__side{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--bdh-gap-l);align-items:center}
+  .tih-sus__img{aspect-ratio:4/3}
+  .tih-sus__prac{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:32px}
+}
+@media (max-width:860px){
+  .tih-sus__side{grid-template-columns:minmax(0,1fr)}
+  .tih-sus__formula{grid-template-columns:minmax(0,1fr)}
+  .tih-sus__terms{padding-left:0;border-left:0;padding-top:14px;border-top:1px solid var(--on-ink-line)}
+  .tih-sus__ctl{grid-template-columns:minmax(0,1fr)}
+  .tih-sus__fall{grid-template-columns:minmax(0,1fr)}
+  .tih-sus__prac{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:600px){
+  .tih-sus__title{display:none}
+  .tih-sus__body{padding:14px}
+  .tih-sus__formula{padding:16px}
+  .tih-sus__eq{font-size:1rem;white-space:normal}
+  .tih-sus__terms{grid-template-columns:minmax(0,1fr)}
+  .tih-sus__rg{grid-template-columns:minmax(0,1fr) 64px}
+  .tih-sus__rbar{grid-column:1 / -1;grid-row:3}
+  .tih-sus__rp{grid-row:2}
+  .tih-sus__rx{grid-column:1 / -1;grid-row:4}
+  .tih-sus__rv{grid-column:2;grid-row:1 / span 2}
+  .tih-sus__wf li{grid-template-columns:96px minmax(0,1fr) 44px;gap:8px}
+  .tih-sus__prac{grid-template-columns:minmax(0,1fr)}
+  .tih-sus__chip{left:12px;right:12px;bottom:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  .tih-sus__wt i,.tih-sus__rg,.tih-sus__rbar i,.tih-sus__wf li{transition:none}
+}
+
+/* why the default region is the default — answers the obvious question the picker raises */
+.tih-sus__rnote{margin-top:12px;padding-top:12px;border-top:1px solid var(--line-2)}

@@ -1,0 +1,91 @@
+/* ==========================================================================
+   Search & AI Visibility — 04 · Entities (paper)
+   The knowledge graph, the JSON-LD panel, the type table and the consistency list.
+   All motion is CSS, keyed off .is-in from [data-rv]; the finished state is the markup.
+   ========================================================================== */
+
+.tsv-ent__grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--tsv-gap);row-gap:var(--tsv-gap-l);
+  align-items:start;margin-bottom:var(--tsv-block)}
+.tsv-ent__graph{grid-column:1 / span 7;min-width:0}
+.tsv-ent__code{grid-column:8 / -1;display:flex;flex-direction:column;gap:18px;min-width:0}
+
+/* ---------- the graph ----------------------------------------------------- */
+.tsv-graph{position:relative;padding:8px 0 22px;border-bottom:1px solid var(--line-2)}
+.tsv-graph__svg{display:block;width:100%;height:auto;overflow:visible}
+
+/* drawn by default; .is-in replays the draw from the undrawn state, so no JS still shows every edge */
+.tsv-graph__e{stroke:var(--line-3);stroke-width:1;stroke-dasharray:var(--len,260);stroke-dashoffset:0}
+.is-in .tsv-graph__e{animation:tsv-ent-draw 620ms var(--e-io) backwards;animation-delay:calc(var(--i) * 70ms + 120ms)}
+@keyframes tsv-ent-draw{from{stroke-dashoffset:var(--len,260)}}
+
+.tsv-graph__n rect{fill:var(--paper);stroke:var(--line);stroke-width:1}
+/* drawn by default — the animation starts from hidden, so no JS means the finished graph */
+.tsv-graph__n{transform-box:fill-box;transform-origin:center}
+.is-in .tsv-graph__n{animation:tsv-ent-pop 420ms var(--e-io) backwards;animation-delay:calc(var(--i) * 70ms + 460ms)}
+@keyframes tsv-ent-pop{from{opacity:0}}
+.tsv-graph__nt{font-family:var(--f);font-size:12px;font-weight:600;letter-spacing:.01em;fill:var(--ink)}
+.tsv-graph__np{font-family:var(--f);font-size:9.5px;font-weight:500;letter-spacing:.08em;fill:var(--faint)}
+
+.tsv-graph__c rect{fill:var(--blue-wash-2);stroke:var(--blue-line);stroke-width:1}
+.tsv-graph__ct{font-family:var(--f-h);font-size:16px;font-weight:500;letter-spacing:-.01em;fill:var(--ink)}
+.tsv-graph__cp{font-family:var(--f);font-size:9.5px;font-weight:500;letter-spacing:.1em;fill:var(--blue-d)}
+
+.tsv-graph__key{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 22px;margin:22px 0 0;padding:0;list-style:none}
+.tsv-graph__key li{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);column-gap:10px;row-gap:3px;align-items:baseline;min-width:0}
+.tsv-graph__key b{font-family:var(--f);font-size:var(--t-xs);font-weight:600;letter-spacing:.02em;color:var(--blue-d);line-height:1.4}
+.tsv-graph__key i{justify-self:start;font-family:var(--f);font-size:9.5px;font-style:normal;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--faint);line-height:1.4;white-space:nowrap}
+.tsv-graph__key span{grid-column:1 / -1;font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+
+/* ---------- the JSON-LD panel -------------------------------------------- */
+.tsv-json{padding:16px 18px 20px}
+.tsv-json__k{margin:0 0 14px;font-family:var(--f);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1.4}
+.tsv-json__code{display:flex;flex-direction:column;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tsv-json__l{display:block;padding-left:calc(var(--ind) * 16px);font-family:var(--f);font-size:var(--t-xs);line-height:1.75;color:var(--txt);white-space:pre}
+.is-in .tsv-json__l{animation:tsv-ent-line 300ms var(--e-io) backwards;animation-delay:calc(var(--i) * 28ms + 220ms)}
+@keyframes tsv-ent-line{from{opacity:0;transform:translateY(3px)}}
+.tsv-json__l:first-child,.tsv-json__l:last-child{color:var(--muted)}
+
+.tsv-ent__code .tsv-win{background:var(--paper-2)}
+.tsv-ent__code .tsv-win__end{color:var(--faint)}
+
+/* ---------- the foot: types + consistency -------------------------------- */
+.tsv-ent__foot{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--tsv-gap);row-gap:var(--tsv-gap-l)}
+.tsv-ent__types{grid-column:1 / span 7;min-width:0}
+.tsv-ent__nap{grid-column:8 / -1;min-width:0}
+
+.tsv-sub{margin:0 0 20px;font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;letter-spacing:-.015em;line-height:1.25;color:var(--ink)}
+
+.tsv-types{margin:0;padding:0;list-style:none;border-top:1px solid var(--ink)}
+.tsv-types li{display:grid;grid-template-columns:minmax(0,7.5rem) minmax(0,1fr);column-gap:var(--tsv-gap);row-gap:5px;
+  padding:16px 0;border-bottom:1px solid var(--line-2)}
+.tsv-types__t{grid-row:1 / span 2;font-family:var(--f);font-size:var(--t-xs);font-weight:600;letter-spacing:.01em;line-height:1.5;color:var(--ink)}
+.tsv-types__w{font-size:var(--t-sm);line-height:1.5;color:var(--ink)}
+.tsv-types__e{font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+
+.tsv-nap{display:flex;flex-direction:column;gap:2px;margin:0;padding:0;list-style:none}
+.tsv-nap li{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;row-gap:4px;padding:15px 16px;border:1px solid var(--line);border-radius:var(--r);background:var(--paper-2)}
+.tsv-nap__n{grid-row:1 / span 2;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;color:var(--blue);line-height:1.6;font-variant-numeric:tabular-nums}
+.tsv-nap b{font-size:var(--t-sm);font-weight:600;line-height:1.45;color:var(--ink)}
+.tsv-nap small{font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+.tsv-nap code{font-family:var(--f);font-size:.92em;letter-spacing:.01em;color:var(--ink)}
+
+@media (max-width:1023px){
+  .tsv-ent__graph,.tsv-ent__code,.tsv-ent__types,.tsv-ent__nap{grid-column:1 / -1}
+  .tsv-ent__grid{row-gap:var(--tsv-block)}
+}
+@media (max-width:620px){
+  /* the drawing is dropped rather than squeezed: at this width its 12px labels render at
+     about 5.8px. The key below carries every relationship in words instead. */
+  .tsv-graph{display:none}
+  .tsv-graph__key{grid-template-columns:minmax(0,1fr);gap:0;margin:0;border-top:1px solid var(--ink)}
+  .tsv-graph__key li{padding:14px 0;border-bottom:1px solid var(--line-2)}
+  .tsv-types li{grid-template-columns:minmax(0,1fr)}
+  .tsv-types__t{grid-row:auto}
+  .tsv-json__l{font-size:11px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .tsv-graph__e{stroke-dashoffset:0;animation:none}
+  .tsv-graph__n,.tsv-json__l{opacity:1;transform:none;animation:none}
+}

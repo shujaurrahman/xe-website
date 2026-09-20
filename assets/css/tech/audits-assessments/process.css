@@ -1,0 +1,88 @@
+/* Audits & Assessments · process — the four-week schedule.
+   A Gantt grid (label column + four week columns) inside the window chrome, the gate list under it,
+   then a phase card per step and the access strip. The finished state is the drawn chart: .is-run,
+   added by process.js when the chart first enters, replays the bars drawing left to right. */
+.taa-pr{margin-top:0}
+
+/* ---- chart ---- */
+.taa-pr__chart{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;padding:clamp(18px,2.2vw,28px) clamp(16px,2vw,26px) clamp(20px,2.4vw,30px)}
+.taa-pr__chart::-webkit-scrollbar{display:none}
+.taa-pr__grid{position:relative;display:grid;grid-template-columns:minmax(132px,.82fr) repeat(4,minmax(0,1fr));align-items:center;row-gap:clamp(8px,1vw,12px)}
+.taa-pr__rule{grid-row:1 / -1;justify-self:start;width:0;height:100%;border-left:1px solid var(--line-2)}
+.taa-pr__rule:first-child{border-left-color:var(--line-3)}
+
+.taa-pr__cnr{align-self:end;padding-bottom:12px}
+.taa-pr__w{position:relative;display:flex;flex-direction:column;gap:3px;padding:0 0 12px 14px}
+.taa-pr__w b{font-family:var(--f);font-size:var(--t-xs);font-weight:600;letter-spacing:.08em;color:var(--ink)}
+.taa-pr__w i{font-family:var(--f);font-size:var(--t-lbl);font-style:normal;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.taa-pr__w::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--blue);transform:scaleX(1);transform-origin:left center}
+.taa-pr.is-run .taa-pr__w::after{animation:taa-pr-line .5s var(--e-io) both;animation-delay:calc(var(--i,0) * 160ms)}
+@keyframes taa-pr-line{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+.taa-pr__lbl{display:flex;align-items:baseline;gap:10px;padding-right:16px;min-width:0}
+.taa-pr__lbl em{font-family:var(--f);font-size:var(--t-lbl);font-style:normal;font-weight:600;letter-spacing:.06em;color:var(--blue-d)}
+.taa-pr__lbl b{font-family:var(--f-h);font-size:.9375rem;font-weight:500;letter-spacing:-.01em;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.taa-pr__lbl--mut em,.taa-pr__lbl--mut b{color:var(--muted)}
+
+/* bars: the fill is a ::before layer so only transform and opacity animate */
+.taa-pr__bar{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  min-height:44px;margin-right:8px;padding:0 14px;border-radius:var(--r-sm)}
+.taa-pr__bar::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--blue-wash-2);
+  box-shadow:inset 0 0 0 1px var(--blue-line);transform-origin:left center}
+.taa-pr__bt{font-family:var(--f-h);font-size:.875rem;font-weight:500;letter-spacing:-.008em;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.taa-pr__bm{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;color:var(--blue-d);white-space:nowrap}
+.taa-pr__bar--open{min-height:36px}
+.taa-pr__bar--open::before{background:transparent;box-shadow:inset 0 0 0 1px var(--line-3)}
+.taa-pr__bar--open .taa-pr__bt{font-family:var(--f-b);font-size:var(--t-xs);color:var(--muted);letter-spacing:0}
+.taa-pr.is-run .taa-pr__bar::before{animation:taa-pr-grow .72s var(--e) both;animation-delay:calc(260ms + var(--i,0) * 170ms)}
+.taa-pr.is-run .taa-pr__bar>span{animation:taa-pr-in .45s var(--e) both;animation-delay:calc(520ms + var(--i,0) * 170ms)}
+@keyframes taa-pr-grow{from{transform:scaleX(.012)}to{transform:scaleX(1)}}
+@keyframes taa-pr-in{from{opacity:0}to{opacity:1}}
+
+/* gates */
+.taa-pr__gate{display:flex;align-items:center;gap:8px;justify-self:end;padding:10px 8px 0 0;max-width:100%}
+.taa-pr__gate b{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.taa-pr__gd{flex:none;width:9px;height:9px;background:var(--blue);transform:rotate(45deg)}
+.taa-pr.is-run .taa-pr__gate{animation:taa-pr-in .5s var(--e) both;animation-delay:calc(900ms + var(--i,0) * 170ms)}
+
+/* gate list under the chart */
+.taa-pr__gl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line-2);border-top:1px solid var(--line-2)}
+.taa-pr__gl>li{display:flex;flex-direction:column;gap:8px;padding:clamp(18px,2vw,24px);background:var(--paper)}
+.taa-pr__gk{display:inline-flex;align-items:center;gap:9px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.taa-pr__gl b{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.01em;color:var(--ink)}
+.taa-pr__gl>li>span:last-child{font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+
+/* ---- phase cards ---- */
+.taa-pr__cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--taa-gap);margin-top:var(--taa-gap)}
+.taa-pr__card{gap:14px}
+.taa-pr__ci{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0}
+.taa-pr__cf{display:flex;flex-direction:column;gap:12px;margin-top:auto;padding-top:16px;border-top:1px solid var(--line-2)}
+.taa-pr__out{display:flex;flex-wrap:wrap;gap:6px}
+.taa-pr__cm{display:flex;flex-direction:column;gap:12px;margin:4px 0 0}
+.taa-pr__cm dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1.3}
+.taa-pr__cm dd{margin:5px 0 0;font-size:var(--t-xs);line-height:1.55;color:var(--txt)}
+
+/* ---- access strip ---- */
+.taa-pr__need{margin-top:var(--taa-gap);padding:clamp(22px,2.4vw,30px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.taa-pr__nh{margin-bottom:18px}
+.taa-pr__need ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,2.4vw,36px)}
+.taa-pr__need li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;align-items:start}
+.taa-pr__need .xt-ico{grid-row:1 / span 2;margin-top:2px}
+.taa-pr__need b{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.01em;color:var(--ink)}
+.taa-pr__need li>span{font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+
+@media (max-width:1023px){
+  .taa-pr__cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .taa-pr__need ul{grid-template-columns:minmax(0,1fr);gap:20px}
+}
+@media (max-width:760px){
+  .taa-pr__grid{min-width:620px}
+  .taa-pr__gl{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){
+  .taa-pr__cards{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  .taa-pr.is-run .taa-pr__w::after,.taa-pr.is-run .taa-pr__bar::before,
+  .taa-pr.is-run .taa-pr__bar>span,.taa-pr.is-run .taa-pr__gate{animation:none}
+}

@@ -1,0 +1,71 @@
+/* ==========================================================================
+   Tech Workforce · overlap — two studio cards (facts, no photographs: see the note at the top of
+   partials/tech/tech-workforce/overlap.php), a 24-hour IST strip comparing five client zones, and
+   the remote-first card with its three targets. The shared-hours bands glide out from their start
+   when the strip enters; unarmed, they are already drawn.
+   ========================================================================== */
+.ttw-ovl__places{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ttw-gap);margin-bottom:var(--ttw-block)}
+.ttw-ovl__pl{display:flex;flex-direction:column;gap:12px;min-width:0}
+.ttw-ovl__pl::before{content:"";position:absolute;inset:-1px -1px auto;height:2px;border-radius:var(--r-lg) var(--r-lg) 0 0;background:var(--blue-line)}
+.ttw-ovl__pk{display:flex;align-items:center;gap:9px;margin:0;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.ttw-ovl__pin{display:inline-flex;color:var(--ink)}
+.ttw-ovl__pix{margin-left:auto;flex:none;color:var(--blue);letter-spacing:.14em}
+.ttw-ovl__pn{margin:0;font-size:clamp(1.25rem,1.9vw,1.6rem);letter-spacing:-.025em;line-height:1.14}
+.ttw-ovl__pd{margin:0;max-width:56ch;font-size:var(--t-sm);line-height:1.65}
+.ttw-ovl__pf{display:flex;flex-direction:column;gap:0;margin:auto 0 0;padding-top:6px}
+.ttw-ovl__pf>div{display:grid;grid-template-columns:minmax(104px,auto) minmax(0,1fr);column-gap:16px;padding:11px 0;border-top:1px solid var(--line-2)}
+.ttw-ovl__pf dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);line-height:1.5}
+.ttw-ovl__pf dd{margin:0;font-size:var(--t-xs);line-height:1.55;color:var(--ink)}
+
+.ttw-ovl__strip{padding:clamp(20px,2.4vw,32px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.ttw-ovl__sh{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 18px;margin:0 0 16px}
+.ttw-ovl__sh .ttw-ro{color:var(--faint)}
+.ttw-ovl__ticks{display:flex;justify-content:space-between;margin:0 0 6px;padding-left:calc(var(--ttw-ovl-lbl, 180px) + 14px);
+  font-family:var(--f);font-size:10.5px;letter-spacing:.06em;color:var(--faint)}
+.ttw-ovl__rows{display:flex;flex-direction:column;gap:0;margin:0;padding:0;list-style:none;border-top:1px solid var(--line-2)}
+.ttw-ovl__row{display:grid;grid-template-columns:var(--ttw-ovl-lbl, 180px) minmax(0,1fr) auto;align-items:center;gap:14px;
+  padding:11px 0;border-bottom:1px solid var(--line-2)}
+.ttw-ovl__zn{display:flex;flex-direction:column;gap:2px;min-width:0;font-size:var(--t-sm);font-weight:500;line-height:1.3;color:var(--ink)}
+.ttw-ovl__zs{font-family:var(--f);font-size:var(--t-xs);font-weight:400;color:var(--faint)}
+.ttw-ovl__track{position:relative;display:block;height:14px;border-radius:var(--r-xs);background:var(--paper-3)}
+.ttw-ovl__shift,.ttw-ovl__win{position:absolute;top:0;bottom:0;left:var(--s);width:var(--w);border-radius:var(--r-xs)}
+.ttw-ovl__shift{background:var(--paper-4)}
+.ttw-ovl__win{background:var(--blue);transform-origin:0 50%}
+.ttw-ovl__rd{flex:none;white-space:nowrap;color:var(--muted)}
+.ttw-ovl__note{max-width:78ch;margin:16px 0 0;font-size:var(--t-xs);line-height:1.6;color:var(--faint)}
+
+/* ---------- remote-first: prose left, the three targets right ------------- */
+.ttw-ovl__sus{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(20px,3vw,48px);align-items:start;margin-top:var(--ttw-gap)}
+.ttw-ovl__st{display:flex;flex-direction:column;gap:12px;min-width:0}
+.ttw-ovl__si{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;flex:none;margin:0 0 4px;
+  border:1px solid var(--line-2);border-radius:var(--r-sm);background:var(--paper-2);color:var(--ink)}
+.ttw-ovl__st .bdh-d{max-width:52ch;font-size:var(--t-sm);line-height:1.68}
+.ttw-ovl__sf{display:flex;flex-direction:column;gap:0;margin:0;min-width:0}
+.ttw-ovl__sf>div{padding:14px 0;border-top:1px solid var(--line-2)}
+.ttw-ovl__sf>div:first-child{padding-top:0;border-top:0}
+.ttw-ovl__sf>div:last-child{padding-bottom:0}
+.ttw-ovl__sf dt{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-bottom:6px}
+.ttw-ovl__sf .ttw-fig{display:inline-block;font-size:clamp(1.15rem,1.7vw,1.45rem)}
+.ttw-ovl__su{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ttw-ovl__sf dd{margin:0;max-width:56ch;font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+
+/* Motion: armed only (see the contract in tech-workforce.css). Unarmed, every band is drawn. */
+@media (prefers-reduced-motion:no-preference){
+  .ttw-ovl__strip.is-armed .ttw-ovl__win{transition:transform .3s var(--e-io);transition-delay:calc(min(var(--i), 3) * 26ms)}
+  .ttw-ovl__strip.is-armed:not(.is-in) .ttw-ovl__win{transform:scaleX(0)}
+}
+
+@media (max-width:1023px){
+  .ttw-ovl__row{grid-template-columns:var(--ttw-ovl-lbl, 150px) minmax(0,1fr)}
+  .ttw-ovl__rd{grid-column:1 / -1;white-space:normal}
+  .ttw-ovl__ticks{padding-left:calc(var(--ttw-ovl-lbl, 150px) + 14px)}
+}
+@media (max-width:760px){
+  .ttw-ovl__places{grid-template-columns:minmax(0,1fr)}
+  .ttw-ovl__row{grid-template-columns:minmax(0,1fr);gap:8px}
+  .ttw-ovl__ticks{padding-left:0}
+  .ttw-ovl__sus{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:520px){
+  .ttw-ovl__pf>div{grid-template-columns:minmax(0,1fr);row-gap:4px}
+}

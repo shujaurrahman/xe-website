@@ -1,0 +1,154 @@
+/* Hub · standards — a wall of code-built badges in four groups, a sticky panel that connects the chosen
+   framework to the capability pages that apply it, and a crosswalk with a live audit-log tail. */
+.tih-std{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:var(--bdh-gap-l);align-items:start}
+
+/* ---- wall ---- */
+.tih-std__wall{display:flex;flex-direction:column;gap:clamp(36px,3.6vw,52px);min-width:0}
+.tih-std__gh{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line);
+  font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.008em;line-height:1.2;color:var(--ink)}
+.tih-std__gh b{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;color:var(--blue)}
+.tih-std__gh small{margin-left:auto;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.tih-std__list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tih-std__list>li{min-width:0}
+
+.tih-std__b{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:12px;width:100%;height:100%;padding:16px 16px 12px;border:1px solid var(--line);border-radius:var(--r);
+  background:var(--paper);text-align:left;--xt-badge:52px;
+  transition:border-color var(--d2) var(--e),box-shadow var(--d2) var(--e),background var(--d2) var(--e),transform var(--d2) var(--e)}
+.tih-std__b .xt-badge{align-items:center;gap:14px}
+.tih-std__b .xt-badge__name{font-size:var(--t-xs);line-height:1.4}
+.tih-std__b:hover{border-color:var(--line-3);transform:translateY(-1px)}
+.tih-std__b[aria-pressed="true"]{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-wash)}
+.tih-std__bc{display:flex;align-items:center;gap:6px;margin-top:auto;padding-top:10px;border-top:1px dashed var(--line);font-family:var(--f);font-size:var(--tih-mono-s);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.tih-std__bc b{font-weight:500;color:var(--ink)}
+.tih-std__bc::after{content:"\203A";margin-left:auto;font-size:.8125rem;color:var(--line-3);transition:color var(--d2) var(--e),transform var(--d2) var(--e)}
+.tih-std__b:hover .tih-std__bc::after{color:var(--blue);transform:translateX(3px)}
+.tih-std__b[aria-pressed="true"] .tih-std__bc{color:var(--blue-d)}
+.tih-std__b[aria-pressed="true"] .tih-std__bc::after{color:var(--blue)}
+/* the two disclaimers live under the wall with the vocabulary footnote, not above the h2 */
+.tih-std__notes{display:grid;gap:10px;margin-top:-8px;padding-top:18px;border-top:1px solid var(--line-2)}
+.tih-std__also{max-width:78ch}
+
+/* ---- panel ---- */
+.tih-std__side{position:sticky;top:var(--bdh-sticky);min-width:0}
+.tih-std__panel{display:flex;flex-direction:column;padding:clamp(22px,2.2vw,30px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);box-shadow:var(--sh-2)}
+.tih-std__top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:18px}
+.tih-std__pos{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--faint)}
+.tih-std__pos b{font-weight:500;color:var(--ink)}
+.tih-std__pane{display:flex;flex-direction:column;gap:8px}
+.tih-std__ph{display:grid;grid-template-columns:72px minmax(0,1fr);gap:16px;align-items:center;margin-bottom:14px;padding-bottom:18px;border-bottom:1px solid var(--line-2)}
+.tih-std__pmark{--xt-badge:72px;display:block;color:var(--ink)}
+.tih-std__pt{margin-top:8px;font-family:var(--f-h);font-size:1.3125rem;font-weight:500;letter-spacing:-.015em;line-height:1.2;color:var(--ink)}
+.tih-std__pn{margin-top:4px;font-size:var(--t-xs);line-height:1.45;color:var(--muted)}
+.tih-std__pc,.tih-std__pa{margin-bottom:10px;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.tih-std__pa{color:var(--ink)}
+.tih-std__ck{margin-top:8px;padding-top:18px;border-top:1px solid var(--line-2)}
+.tih-std__ck b{font-weight:500;color:var(--blue-d)}
+
+/* connector: the spine runs down from the badge to the last page that applies it; each lit page gets a branch */
+.tih-std__tree{position:relative;margin-top:14px;padding-left:26px}
+.tih-std__spine{position:absolute;left:7px;top:-6px;width:1.5px;height:var(--spine,0px);border-radius:1px;background:var(--blue);transform-origin:top center;transition:height .55s var(--e)}
+.tih-std__spine::before{content:"";position:absolute;left:-3.25px;top:-4px;width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.tih-std__cap{position:relative}
+.tih-std__cap::before{content:"";position:absolute;left:-19px;top:50%;width:14px;height:1.5px;background:var(--blue);transform:scaleX(0);transform-origin:left center;transition:transform .35s var(--e)}
+.tih-std__cap.is-on::before{transform:none;transition-delay:calc(var(--o,0) * 60ms + 120ms)}
+.tih-std__cap a{display:grid;grid-template-columns:26px minmax(0,1fr) auto;align-items:center;gap:8px;min-height:30px;padding:3px 8px;border-radius:var(--r-xs);
+  font-size:var(--t-xs);line-height:1.3;color:var(--faint);transition:color var(--d2) var(--e),background var(--d2) var(--e)}
+.tih-std__cap b{font-family:var(--f);font-size:var(--tih-mono-s);font-weight:500;letter-spacing:.06em;color:var(--ghost);transition:color var(--d2) var(--e)}
+.tih-std__cap i{font-family:var(--f);font-style:normal;color:transparent;transition:color var(--d2) var(--e),transform var(--d2) var(--e)}
+.tih-std__cap.is-on a{color:var(--ink);background:var(--blue-wash)}
+.tih-std__cap.is-on b{color:var(--blue-d)}
+.tih-std__cap.is-on i{color:var(--blue)}
+.tih-std__cap a:hover{color:var(--ink)}
+.tih-std__cap a:hover i{color:var(--blue);transform:translateX(3px)}
+.tih-std__cap+.tih-std__cap{margin-top:2px}
+
+/* ---- crosswalk ---- */
+.tih-std__cross{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--bdh-gap-l);align-items:center;margin-top:var(--bdh-block);padding-top:var(--bdh-block);border-top:1px solid var(--line)}
+.tih-std__ch{display:flex;flex-direction:column;gap:12px;min-width:0}
+.tih-std__xh{font-family:var(--f-h);font-size:clamp(1.5rem,2.2vw,1.875rem);font-weight:500;letter-spacing:-.022em;line-height:1.12;color:var(--ink)}
+.tih-std__xd{max-width:48ch}
+.tih-std__map{margin-top:14px;border-top:1px solid var(--line)}
+.tih-std__map li{display:grid;grid-template-columns:minmax(0,11fr) minmax(0,13fr) 20px;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px solid var(--line-2);font-size:var(--t-xs);line-height:1.4}
+.tih-std__map b{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.04em;color:var(--ink)}
+.tih-std__map span{color:var(--muted)}
+.tih-std__map i{justify-self:end;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--blue-wash-2);color:var(--blue-d);font-family:var(--f);font-size:10px;font-style:normal;line-height:1;transition:background var(--d2) var(--e),color var(--d2) var(--e),transform var(--d2) var(--e)}
+.tih-std__map li.is-hit i{background:var(--blue);color:var(--on-ink);transform:scale(1.15)}
+
+.tih-std__term{min-width:0;border-radius:var(--r-xl);background:var(--ink);color:var(--on-ink-2);box-shadow:0 30px 70px -40px rgba(25,25,29,.6);overflow:hidden}
+.tih-std__th{display:flex;align-items:center;gap:12px;height:44px;padding:0 18px;border-bottom:1px solid var(--on-ink-line);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--on-ink-3);white-space:nowrap}
+.tih-std__th .bdh-ui__dots i{background:var(--on-ink-line)}
+.tih-std__tt{min-width:0;overflow:hidden;text-overflow:ellipsis;color:var(--on-ink-2)}
+.tih-std__tt i{font-style:normal;color:var(--on-ink-3)}
+.tih-std__th .tih-live{margin-left:auto}
+.tih-std__lines{display:flex;flex-direction:column;gap:2px;min-height:236px;padding:16px 18px 14px;font-family:var(--f);font-size:var(--t-lbl);line-height:1.55}
+.tih-std__lines li{display:flex;flex-wrap:wrap;gap:0 12px;padding:6px 8px;border-radius:6px;color:var(--on-ink-2)}
+.tih-std__lines li.is-new{animation:tih-std-line .6s var(--e) both}
+.tih-std__ts{color:var(--on-ink-3)}
+.tih-std__f{white-space:nowrap;color:var(--on-ink)}
+.tih-std__f i{font-style:normal;color:var(--on-ink-3)}
+.tih-std__f.is-allow{color:var(--blue)}
+.tih-std__f.is-deny{padding:0 5px;border-radius:4px;background:rgba(255,255,255,.1);color:var(--on-ink)}
+@keyframes tih-std-line{from{opacity:0;transform:translateY(6px);background:rgba(0,130,251,.18)}60%{background:rgba(0,130,251,.18)}to{opacity:1;transform:none;background:transparent}}
+.tih-std__tf{display:flex;flex-wrap:wrap;gap:8px 22px;padding:12px 18px 14px;border-top:1px solid var(--on-ink-line);font-family:var(--f);font-size:var(--tih-mono-s);letter-spacing:.06em;text-transform:uppercase;color:var(--on-ink-3)}
+.tih-std__tf b{font-weight:500;color:var(--on-ink-2)}
+
+/* ---- responsive ---- */
+@media (max-width:1279px){
+  .tih-std{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--bdh-gap)}
+  .tih-std__list{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:1023px){
+  .tih-std{grid-template-columns:minmax(0,1fr)}
+  .tih-std__side{position:static;order:-1}
+  .tih-std__list{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .tih-std__caps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:10px}
+  .tih-std__tree{padding-left:0}
+  .tih-std__spine,.tih-std__cap::before{display:none}
+  .tih-std__cap+.tih-std__cap{margin-top:0}
+  .tih-std__cross{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:760px){
+  .tih-std__list{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:600px){
+  .tih-std__list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .tih-std__b{padding:12px 12px 10px;gap:10px;--xt-badge:40px}
+  .tih-std__b .xt-badge{flex-direction:column;align-items:flex-start;gap:10px}
+  .tih-std__b .xt-badge__name{display:none}
+  .tih-std__bc{padding-top:8px}
+  .tih-std__caps{grid-template-columns:minmax(0,1fr)}
+  .tih-std__ph{grid-template-columns:56px minmax(0,1fr);gap:14px}
+  .tih-std__pmark{--xt-badge:56px}
+  .tih-std__map li{grid-template-columns:minmax(0,1fr) 20px}
+  .tih-std__map span{grid-column:1}
+  .tih-std__map i{grid-row:1 / span 2;grid-column:2}
+  .tih-std__lines{min-height:0;padding:12px}
+  .tih-std__tt{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .tih-std__b,.tih-std__spine,.tih-std__cap::before,.tih-std__cap a,.tih-std__map i{transition:none}
+  .tih-std__lines li.is-new{animation:none}
+}
+
+/* The panel is as tall as the framework on show, not as the tallest of the 26 panes, and never taller than
+   the viewport it sticks in. When something has to give it is the prose, which scrolls in its own box with a
+   fade and a visible scrollbar — "Where it applies", the point of the panel, is never cut. */
+.tih-std__panes{display:block}
+.tih-std__panes>.tih-std__pane{display:none}
+.tih-std__panes>.tih-std__pane.is-on{display:flex;visibility:visible;opacity:1;transform:none}
+.tih-std__panel{max-height:calc(100vh - var(--bdh-sticky) - 28px);overscroll-behavior:contain}
+.tih-std__panes{flex:1 1 auto;min-height:96px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--line-3) transparent;
+  -webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(to bottom,#000 calc(100% - 26px),transparent)}
+.tih-std__panes::-webkit-scrollbar{width:6px}
+.tih-std__panes::-webkit-scrollbar-thumb{border-radius:3px;background:var(--line-3)}
+.tih-std__ck,.tih-std__tree{flex:none}
+/* short viewports: nothing sticks, the panel simply runs at its natural height */
+@media (max-height:820px){
+  .tih-std__side{position:static}
+  .tih-std__panel{max-height:none}
+  .tih-std__panes{overflow:visible;-webkit-mask-image:none;mask-image:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .tih-std__panes>.tih-std__pane.is-on{animation:tih-std-pane .38s var(--e) both}
+  @keyframes tih-std-pane{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+}

@@ -23,13 +23,13 @@ $CBA_CAP = $BD['brand-architecture'];
 /* Running order: the portfolio → the model → the rules → the route → the work → onward. */
 $CBA = [
     'hero', 'audit', 'offer', 'spectrum', 'lockup', 'naming', 'wayfinding',
-    'migration', 'process', 'register', 'outcomes', 'faq', 'onward',
+    'migration', 'process', 'register', 'outcomes', 'services', 'faq', 'onward',
 ];
 
 $cba_root = __DIR__ . '/../../';
 $cba_has  = fn (string $p): bool => is_file($cba_root . $p) && filesize($cba_root . $p) > 0;
-$cba_css  = ['assets/css/brand/hub.css'];
-$cba_js   = ['assets/js/brand/hub.js'];
+$cba_css  = ['assets/css/brand/hub.css', 'assets/css/services.css'];
+$cba_js   = ['assets/js/brand/hub.js', 'assets/js/services.js'];
 if ($cba_has('assets/css/brand/brand-architecture.css')) $cba_css[] = 'assets/css/brand/brand-architecture.css';
 if ($cba_has('assets/js/brand/brand-architecture.js'))   $cba_js[]  = 'assets/js/brand/brand-architecture.js';
 foreach ($CBA as $cba_id) {

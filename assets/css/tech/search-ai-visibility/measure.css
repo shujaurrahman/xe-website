@@ -1,0 +1,148 @@
+/* ==========================================================================
+   Search & AI Visibility — 08 · Measure (band--alt)
+   One dashboard window on a hairline grid: the Search Console trend, four headline figures,
+   share of answer by engine, and the feed table that names every source.
+   Everything here is the finished state in HTML. measure.js adds .is-anim only when motion is
+   allowed, which is what arms the line draw and the bar growth; .is-live then plays them.
+   ========================================================================== */
+
+.tsv-dash{margin-bottom:var(--tsv-gap)}
+
+/* the highlight-sampled control in the window bar */
+.tsv-dash__hl{min-height:32px;padding:0 11px;letter-spacing:.04em}
+.tsv-dash__sw{width:8px;height:8px;flex:none;border-radius:50%;background:var(--line-3);
+  transition:background var(--d1) var(--e-io),box-shadow var(--d1) var(--e-io)}
+.tsv-dash__hl[aria-pressed="true"]{border-color:var(--blue);color:var(--blue-d)}
+.tsv-dash__hl[aria-pressed="true"] .tsv-dash__sw{background:var(--blue);box-shadow:0 0 0 3px var(--blue-wash-2)}
+
+/* ---------- the hairline panel grid -------------------------------------- */
+.tsv-dash__grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1px;background:var(--line-2)}
+.tsv-dash__card{display:flex;flex-direction:column;gap:16px;min-width:0;padding:clamp(18px,2vw,26px);background:var(--paper);
+  transition:opacity var(--d2) var(--e-io),box-shadow var(--d2) var(--e-io)}
+.tsv-dash__card--chart{grid-column:1 / span 8}
+.tsv-dash__card--eng{grid-column:1 / span 5}
+.tsv-dash__card--feed{grid-column:6 / -1}
+
+.tsv-dash__kpis{grid-column:9 / -1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;
+  margin:0;padding:0;list-style:none;background:var(--line-2);min-width:0}
+
+.tsv-dash__hd{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px 14px}
+.tsv-dash__t{margin:0;font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;letter-spacing:-.018em;line-height:1.2;color:var(--ink)}
+
+/* ---------- the chart ----------------------------------------------------- */
+.tsv-dash__plot{display:grid;grid-template-columns:36px minmax(0,1fr) 40px;align-items:stretch;column-gap:10px}
+.tsv-dash__ax{position:relative;height:100%;margin:0;padding:0;list-style:none;
+  font-family:var(--f);font-size:10px;letter-spacing:.06em;color:var(--faint);line-height:1;font-variant-numeric:tabular-nums}
+.tsv-dash__ax li{position:absolute;white-space:nowrap;transform:translateY(-50%)}
+.tsv-dash__ax--l li{right:0}
+.tsv-dash__ax--r li{left:0}
+.tsv-dash__ax li:nth-child(1){top:3.85%}
+.tsv-dash__ax li:nth-child(2){top:26.92%}
+.tsv-dash__ax li:nth-child(3){top:50%}
+.tsv-dash__ax li:nth-child(4){top:73.08%}
+.tsv-dash__ax li:nth-child(5){top:96.15%}
+
+.tsv-dash__svg{display:block;width:100%;height:auto;min-width:0;overflow:visible}
+.tsv-dash__grid-l line{stroke:var(--line-2);stroke-width:1;vector-effect:non-scaling-stroke}
+.tsv-dash__grid-l .tsv-dash__base{stroke:var(--line-3)}
+.tsv-dash__area{fill:var(--blue-wash-2)}
+.tsv-dash__line{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.tsv-dash__line--i{stroke:var(--line-3);stroke-width:1.5}
+.tsv-dash__line--c{stroke:var(--blue)}
+.tsv-dash__pt{fill:var(--paper);stroke:var(--blue);stroke-width:2;opacity:0;vector-effect:non-scaling-stroke;
+  transition:opacity var(--d1) var(--e-io)}
+.tsv-dash__pt.is-at{opacity:1}
+
+/* month rail, keyed to the plot column */
+.tsv-dash__mo{display:flex;justify-content:space-between;margin:8px 50px 0 46px;padding:0;list-style:none;
+  font-family:var(--f);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1}
+
+.tsv-dash__foot{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:10px 18px;
+  margin-top:auto;padding-top:14px;border-top:1px solid var(--line-2)}
+.tsv-dash__key{display:flex;flex-wrap:wrap;gap:6px 16px;margin:0;padding:0;list-style:none}
+.tsv-dash__k{display:inline-flex;align-items:center;gap:7px;font-family:var(--f);font-size:var(--t-xs);color:var(--muted);line-height:1.4}
+.tsv-dash__k::before{content:"";width:14px;height:2px;border-radius:2px;background:var(--line-3);flex:none}
+.tsv-dash__k--c::before{background:var(--blue)}
+.tsv-dash__ro b{font-variant-numeric:tabular-nums}
+.tsv-dash__ro span{color:var(--muted)}
+
+/* ---------- the four headline figures ------------------------------------ */
+.tsv-dash__kpi{gap:8px;justify-content:flex-start}
+.tsv-dash__fig{font-family:var(--f-h);font-size:clamp(1.6rem,2.5vw,2.15rem);font-weight:500;letter-spacing:-.03em;line-height:1;
+  color:var(--ink);font-variant-numeric:tabular-nums}
+.tsv-dash__kt{margin:0;font-family:var(--f-h);font-size:var(--t-sm);font-weight:500;letter-spacing:-.01em;line-height:1.3;color:var(--ink)}
+.tsv-dash__kn{margin:0;font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+.tsv-dash__kpi .tsv-prov{margin-top:auto}
+
+/* ---------- share of answer bars ----------------------------------------- */
+.tsv-eng{display:flex;flex-direction:column;gap:18px;margin:0;padding:0;list-style:none}
+.tsv-eng__r{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:8px 14px}
+.tsv-eng__n{font-family:var(--f);font-size:var(--t-xs);font-weight:500;letter-spacing:.02em;color:var(--ink);line-height:1.4;min-width:0}
+.tsv-eng__v{font-family:var(--f);font-size:var(--t-xs);color:var(--muted);line-height:1.4;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tsv-eng__v b{font-weight:600;color:var(--ink)}
+.tsv-eng__bar{position:relative;grid-column:1 / -1;height:10px;border-radius:var(--r-pill);background:var(--paper-3);overflow:hidden}
+.tsv-eng__fill{position:absolute;top:0;bottom:0;left:0;width:var(--w,0%);border-radius:var(--r-pill);background:var(--line-3);
+  transform-origin:left center;will-change:transform}
+.tsv-eng__c{position:absolute;top:0;bottom:0;left:0;width:var(--c,0%);border-radius:var(--r-pill);background:var(--blue)}
+
+.tsv-eng__key{display:flex;flex-wrap:wrap;gap:8px 16px;margin:auto 0 0;padding-top:14px;border-top:1px solid var(--line-2);list-style:none}
+.tsv-eng__ky{display:inline-flex;align-items:center;gap:7px;font-family:var(--f);font-size:var(--t-xs);color:var(--muted);line-height:1.4}
+.tsv-eng__ky::before{content:"";width:10px;height:10px;border-radius:3px;flex:none;background:var(--blue)}
+.tsv-eng__ky--m::before{background:var(--line-3)}
+.tsv-eng__ky--a::before{background:var(--paper-3);box-shadow:inset 0 0 0 1px var(--line-3)}
+
+/* ---------- the feed table ------------------------------------------------ */
+.tsv-feed__w{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tsv-feed{width:100%;min-width:460px;border-collapse:collapse;text-align:left}
+.tsv-feed thead th{padding:0 14px 10px 0;border-bottom:1px solid var(--ink);
+  font-family:var(--f);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);line-height:1.4;white-space:nowrap}
+.tsv-feed tbody tr{border-bottom:1px solid var(--line-2);transition:opacity var(--d2) var(--e-io)}
+.tsv-feed tbody tr:last-child{border-bottom:0}
+.tsv-feed th[scope="row"]{padding:11px 14px 11px 0;font-family:var(--f);font-size:var(--t-xs);font-weight:500;letter-spacing:.01em;
+  color:var(--ink);line-height:1.45;vertical-align:top}
+.tsv-feed td{padding:11px 14px 11px 0;font-size:var(--t-xs);line-height:1.5;color:var(--muted);vertical-align:top}
+.tsv-feed td:last-child,.tsv-feed thead th:last-child{padding-right:0}
+.tsv-feed__r{font-family:var(--f);white-space:nowrap;color:var(--txt)}
+.tsv-feed th[scope="row"]{transition:color var(--d2) var(--e-io)}
+
+/* ---------- highlight sampled -------------------------------------------- */
+.tsv-dash.is-hl .tsv-dash__card[data-kind="m"]{opacity:.4}
+.tsv-dash.is-hl .tsv-dash__card[data-kind="s"]{box-shadow:inset 0 0 0 1.5px var(--blue)}
+.tsv-dash.is-hl .tsv-feed tbody tr[data-kind="m"]{opacity:.4}
+.tsv-dash.is-hl .tsv-feed tbody tr[data-kind="s"] th[scope="row"]{color:var(--blue-d)}
+
+/* ---------- closing notes ------------------------------------------------- */
+.tsv-meas__end{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--tsv-gap);align-items:start}
+
+/* ---------- motion, armed by measure.js ---------------------------------- */
+.tsv-dash.is-anim .tsv-dash__line{stroke-dasharray:1;stroke-dashoffset:1}
+.tsv-dash.is-anim .tsv-dash__area{opacity:0}
+.tsv-dash.is-anim .tsv-dash__pt{opacity:0}
+.tsv-dash.is-anim .tsv-eng__fill{transform:scaleX(0)}
+.tsv-dash.is-anim.is-live .tsv-dash__line{stroke-dashoffset:0;transition:stroke-dashoffset 1500ms var(--e-io)}
+.tsv-dash.is-anim.is-live .tsv-dash__line--c{transition-delay:220ms}
+.tsv-dash.is-anim.is-live .tsv-dash__area{opacity:1;transition:opacity 900ms var(--e-io) 500ms}
+.tsv-dash.is-anim.is-live .tsv-dash__pt.is-at{opacity:1;transition:opacity var(--d2) var(--e-io) 1500ms}
+.tsv-dash.is-anim.is-live .tsv-eng__fill{transform:none;transition:transform 900ms var(--e-io);transition-delay:calc(var(--i,0) * 90ms + 260ms)}
+
+/* ---------- responsive ---------------------------------------------------- */
+@media (max-width:1023px){
+  .tsv-dash__card--chart,.tsv-dash__card--eng,.tsv-dash__card--feed,.tsv-dash__kpis{grid-column:1 / -1}
+  .tsv-meas__end{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .tsv-dash__kpis{grid-template-columns:minmax(0,1fr)}
+  .tsv-dash__plot{grid-template-columns:30px minmax(0,1fr) 34px;column-gap:7px}
+  .tsv-dash__mo{margin-right:41px;margin-left:37px}
+  .tsv-dash__mo li:nth-child(even){display:none}
+  .tsv-dash__foot{flex-direction:column;align-items:flex-start}
+  .tsv-dash__hl{width:100%}
+}
+@media (max-width:520px){
+  .tsv-win__bar .tsv-win__end{margin-left:0;width:100%;flex-wrap:wrap}
+  .tsv-meas .tsv-win__bar{flex-wrap:wrap;padding-block:10px;white-space:normal}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .tsv-dash__card,.tsv-feed tbody tr,.tsv-dash__pt,.tsv-eng__fill{transition:none}
+}

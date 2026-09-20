@@ -1,0 +1,94 @@
+/* ==========================================================================
+   Integration & Support — "The Switchboard". Page base layer (.tis-*).
+   Loads after assets/css/brand/hub.css and assets/css/tech/kit.css; section styles live in
+   assets/css/tech/integration-support/<id>.css. Tokens from core.css only; no new colours;
+   no gradients except mask fades; no !important.
+
+   Primitives
+   • .tis                       page spacing + transit line tokens (--tis-l1 ink, --tis-l2 blue, --tis-l3 grey)
+   • .tis-kick                  mono command-line eyebrow above a section heading
+   • .tis-ill                   the dashed "Illustrative" stamp
+   • .tis-led                   status dot (ok / warn / off); pulses only under .is-live
+   • .tis-btn                   square-cornered console button (+ --blue, --ghost)
+   • .tis-word                  mono text chip for a technology with no library mark (never a drawn logo)
+   • .tis-code                  code / JSON / YAML block with token colours (.k key, .s string, .n number, .c comment)
+   • .tis-stn                   transit station marker (ring) used by hero, process and patterns
+   • .tis-panel                 a mock-UI surface with a mono title bar
+   ========================================================================== */
+.tis{
+  --tis-l1:var(--ink);
+  --tis-l2:var(--blue);
+  --tis-l3:var(--line-3);
+  --tis-mono:var(--f);
+  overflow-x:clip;
+}
+
+/* ---- command-line eyebrow ---- */
+.tis-kick{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.06em;line-height:1.5;color:var(--muted)}
+.tis-kick b{font-weight:500;color:var(--blue)}
+.tis-kick span{color:var(--faint)}
+.band--ink .tis-kick{color:var(--on-ink-2)}
+.band--ink .tis-kick span{color:var(--on-ink-3)}
+
+/* ---- illustrative stamp ---- */
+.tis-ill{display:inline-flex;align-items:center;gap:6px;min-height:22px;padding:2px 8px;border:1px dashed var(--line-3);border-radius:var(--r-xs);
+  font-family:var(--f);font-size:.625rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.2;white-space:nowrap}
+.band--ink .tis-ill,.xt-on-ink .tis-ill{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+
+/* ---- status led ---- */
+.tis-led{position:relative;display:inline-block;width:8px;height:8px;flex:none;border-radius:50%;background:var(--blue)}
+.tis-led--warn{background:var(--ink);box-shadow:inset 0 0 0 2px var(--paper),0 0 0 1.5px var(--ink)}
+.tis-led--off{background:var(--line-3)}
+.band--ink .tis-led--warn,.xt-on-ink .tis-led--warn{background:var(--on-ink);box-shadow:inset 0 0 0 2px var(--ink),0 0 0 1.5px var(--on-ink)}
+.band--ink .tis-led--off,.xt-on-ink .tis-led--off{background:var(--on-ink-line)}
+.tis-led::after{content:"";position:absolute;inset:-4px;border-radius:50%;box-shadow:0 0 0 1px var(--blue);opacity:0}
+.is-live .tis-led--pulse::after{animation:tis-ring 2.2s var(--e) infinite}
+@keyframes tis-ring{0%{opacity:.7;transform:scale(.6)}100%{opacity:0;transform:scale(1.8)}}
+
+/* ---- console buttons ---- */
+.tis-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 14px;border:1px solid var(--line-3);border-radius:var(--r-xs);background:var(--paper);
+  font-family:var(--f-b);font-size:var(--t-xs);font-weight:500;line-height:1.2;color:var(--ink);white-space:nowrap;
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io),color var(--d1) var(--e-io),box-shadow var(--d2) var(--e)}
+.tis-btn:hover{border-color:var(--ink)}
+.tis-btn[aria-pressed="true"],.tis-btn.is-on{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.tis-btn--blue{background:var(--blue);border-color:var(--blue);color:var(--on-ink)}
+.tis-btn--blue:hover{background:var(--blue-d);border-color:var(--blue-d)}
+.tis-btn--ghost{border-color:transparent;background:transparent;color:var(--muted)}
+.tis-btn--ghost:hover{border-color:var(--line-3);color:var(--ink)}
+.tis-btn:disabled{opacity:.45;cursor:not-allowed}
+.tis-btn kbd{font-family:var(--f);font-size:.625rem;padding:1px 5px;border-radius:4px;box-shadow:inset 0 0 0 1px currentColor;opacity:.6}
+.band--ink .tis-btn,.xt-on-ink .tis-btn{background:transparent;border-color:var(--on-ink-line);color:var(--on-ink)}
+.band--ink .tis-btn:hover,.xt-on-ink .tis-btn:hover{border-color:var(--on-ink-2)}
+.band--ink .tis-btn[aria-pressed="true"],.band--ink .tis-btn.is-on,.xt-on-ink .tis-btn[aria-pressed="true"]{background:var(--paper);border-color:var(--paper);color:var(--ink)}
+.band--ink .tis-btn--blue,.xt-on-ink .tis-btn--blue{background:var(--blue);border-color:var(--blue);color:var(--on-ink)}
+
+/* ---- text-only technology chip (no library mark exists) ---- */
+.tis-word{display:inline-flex;align-items:center;padding:.3em .62em;border:1px solid var(--line-3);border-radius:var(--r-xs);font-family:var(--f);font-size:.6875rem;font-weight:600;letter-spacing:.02em;line-height:1.2;color:inherit;white-space:nowrap}
+.band--ink .tis-word,.xt-on-ink .tis-word{border-color:var(--on-ink-line)}
+
+/* ---- code block ---- */
+.tis-code{margin:0;font-family:var(--f);font-size:var(--t-xs);line-height:1.75;color:var(--txt);white-space:pre;tab-size:2;font-variant-ligatures:none}
+.tis-code .k{color:var(--ink);font-weight:500}
+.tis-code .s{color:var(--blue-d)}
+.tis-code .n{color:var(--blue)}
+.tis-code .c{color:var(--faint)}
+.band--ink .tis-code,.xt-on-ink .tis-code{color:var(--on-ink-2)}
+.band--ink .tis-code .k,.xt-on-ink .tis-code .k{color:var(--on-ink)}
+.band--ink .tis-code .s,.xt-on-ink .tis-code .s,.band--ink .tis-code .n,.xt-on-ink .tis-code .n{color:var(--blue)}
+.band--ink .tis-code .c,.xt-on-ink .tis-code .c{color:var(--on-ink-3)}
+
+/* ---- transit station marker ---- */
+.tis-stn{display:inline-block;width:14px;height:14px;flex:none;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 3px var(--ink)}
+.tis-stn--blue{box-shadow:inset 0 0 0 3px var(--blue)}
+.tis-stn--hub{width:18px;height:18px;box-shadow:inset 0 0 0 3px var(--ink),0 0 0 3px var(--paper),0 0 0 4.5px var(--ink)}
+
+/* ---- mock-UI panel ---- */
+.tis-panel{position:relative;min-width:0;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);overflow:hidden}
+.tis-panel__bar{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;padding:8px 16px;border-bottom:1px solid var(--line-2);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.06em;line-height:1.3;color:var(--muted)}
+.tis-panel__bar b{font-weight:500;color:var(--ink)}
+.band--ink .tis-panel,.xt-on-ink.tis-panel{border-color:var(--on-ink-line);background:var(--on-ink-card)}
+.band--ink .tis-panel__bar,.xt-on-ink .tis-panel__bar{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+.band--ink .tis-panel__bar b,.xt-on-ink .tis-panel__bar b{color:var(--on-ink)}
+
+@media (prefers-reduced-motion:reduce){.tis-btn{transition:none}}

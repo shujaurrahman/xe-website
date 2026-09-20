@@ -1,0 +1,115 @@
+/* ==========================================================================
+   11 Deliver (.tic-deliver, alt band) — the infrastructure repository as a browsable terminal:
+   an ARIA tree on the left, the selected file beside it, then the handover pack and the rules.
+   Tokens from core.css only.
+   ========================================================================== */
+/* The browser is the section's mechanic, so it takes the full measure and the handover pack sits under it. */
+.tic-dv{display:flex;flex-direction:column;gap:var(--tic-gap-l)}
+
+/* ---- the terminal frame --------------------------------------------------------- */
+.tic-dv__termwrap{display:flex;flex-direction:column;gap:12px;min-width:0}
+.tic-dv__term{overflow:hidden;box-shadow:var(--sh-2)}
+.tic-dv__bar{gap:14px}
+.tic-dv__repo{color:var(--on-ink-2)}
+.tic-dv__count{margin-left:auto;color:var(--on-ink-3)}
+.tic-dv__body{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);min-width:0}
+
+/* ---- the tree -------------------------------------------------------------------- */
+.tic-dv__treewrap{display:flex;flex-direction:column;gap:12px;min-width:0;padding:clamp(16px,1.8vw,22px) clamp(14px,1.6vw,20px);border-right:1px solid var(--on-ink-line)}
+.tic-dv__hint{font-family:var(--f);font-size:10px;letter-spacing:.04em;line-height:1.5;color:var(--on-ink-3)}
+.tic-dv__tree{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tic-dv__group{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tic-dv__kids{display:flex;flex-direction:column;gap:2px;min-width:0;margin-left:14px;padding-left:10px;border-left:1px solid var(--on-ink-line)}
+.tic-dv__kids[hidden]{display:none}
+
+.tic-dv__dir,.tic-dv__file{display:grid;align-items:center;gap:9px;width:100%;min-height:34px;padding:5px 9px;border:1px solid transparent;border-radius:var(--r-xs);
+  background:transparent;text-align:left;font-family:var(--f);font-size:var(--t-xs);line-height:1.35;color:var(--on-ink-2);cursor:pointer;
+  transition:background var(--d1) var(--e-io),color var(--d1) var(--e-io),border-color var(--d1) var(--e-io)}
+.tic-dv__dir{grid-template-columns:10px auto minmax(0,1fr)}
+.tic-dv__file{grid-template-columns:12px minmax(0,1fr) auto}
+.tic-dv__dir:hover,.tic-dv__file:hover{background:var(--on-ink-card);color:var(--on-ink)}
+.tic-dv__dir:focus-visible,.tic-dv__file:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+.tic-dv__dn{color:var(--on-ink);font-weight:500}
+.tic-dv__dc{min-width:0;color:var(--on-ink-3);font-size:10px;letter-spacing:.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tic-dv__fn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tic-dv__lang{flex:none;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-3)}
+
+.tic-dv__caret{position:relative;width:10px;height:10px}
+.tic-dv__caret::before{content:"";position:absolute;left:1px;top:1px;width:5px;height:5px;border-right:1.5px solid var(--on-ink-3);border-bottom:1.5px solid var(--on-ink-3);
+  transform:rotate(-45deg);transition:transform var(--d2) var(--e)}
+[aria-expanded="true"] .tic-dv__caret::before{transform:rotate(45deg)}
+.tic-dv__fi{width:12px;height:12px;border:1px solid var(--on-ink-line);border-radius:2px}
+
+.tic-dv__file.is-on{background:var(--paper);border-color:var(--paper);color:var(--ink)}
+.tic-dv__file.is-on .tic-dv__lang{color:var(--muted)}
+.tic-dv__file.is-on .tic-dv__fi{border-color:var(--blue);background:var(--blue)}
+
+/* ---- the file view --------------------------------------------------------------- */
+.tic-dv__view{display:flex;flex-direction:column;min-width:0}
+.tic-dv__path{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;min-height:42px;padding:8px clamp(16px,1.8vw,22px);border-bottom:1px solid var(--on-ink-line);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.03em;color:var(--on-ink-2)}
+.tic-dv__path b{margin-left:auto;padding:2px 8px;border-radius:var(--r-pill);background:var(--on-ink-card);
+  font-weight:500;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-3)}
+.tic-dv__panes{display:flex;flex-direction:column;flex:1;min-width:0}
+.tic-dv__pane{display:flex;flex-direction:column;flex:1;min-width:0}
+.tic-dv__pane[hidden]{display:none}
+.tic-dv__fp{display:none}
+.tic-dv__code{display:block;flex:1;margin:0;padding:clamp(16px,1.8vw,22px) clamp(14px,1.6vw,20px);min-height:260px;
+  font-family:var(--f);font-size:var(--t-xs);line-height:1.75;color:var(--on-ink-2);white-space:pre}
+.tic-dv__code:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+.tic-dv__l{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;min-width:max-content}
+.tic-dv__l>i{font-style:normal;color:var(--on-ink-line);text-align:right;font-variant-numeric:tabular-nums}
+.tic-dv__l em{font-style:normal;color:var(--on-ink-3)}
+.tic-dv__pane--md .tic-dv__l b{font-weight:500;color:var(--on-ink)}
+.tic-dv__pane{animation:tic-dv-in .34s var(--e)}
+@keyframes tic-dv-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.tic-dv__prov{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin-top:auto;padding:12px clamp(14px,1.6vw,20px);
+  border-top:1px solid var(--on-ink-line);font-family:var(--f);font-size:10px;letter-spacing:.04em;line-height:1.5;color:var(--on-ink-3)}
+.tic-dv__prov span:first-child{color:var(--on-ink-2);font-variant-numeric:tabular-nums}
+.tic-dv__foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .tic-dv__body{grid-template-columns:minmax(0,1fr)}
+  .tic-dv__treewrap{border-right:0;border-bottom:1px solid var(--on-ink-line)}
+  .tic-dv__code{min-height:0}
+}
+@media (max-width:640px){.tic-dv__count{display:none}}
+@media (max-width:520px){
+  .tic-dv__dir{grid-template-columns:10px minmax(0,1fr)}
+  .tic-dv__dc{display:none}
+}
+
+/* Without scripting nothing can switch panes, so every file is shown in turn with its own path. */
+@media (scripting:none){
+  .tic-dv__hint,.tic-dv__path{display:none}
+  .tic-dv__pane[hidden]{display:block}
+  .tic-dv__fp{display:block;padding:10px clamp(14px,1.6vw,20px);border-bottom:1px solid var(--on-ink-line);
+    font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.03em;color:var(--on-ink-2)}
+  .tic-dv__pane+.tic-dv__pane .tic-dv__fp{border-top:1px solid var(--on-ink-line)}
+  .tic-dv__code{min-height:0}
+  .tic-dv__pane{animation:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .tic-dv__pane{animation:none}
+}
+
+/* ---- side ----------------------------------------------------------------------- */
+.tic-dv__side{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,3vw,42px) var(--tic-gap-l);align-items:start;min-width:0}
+.tic-dv__stack{grid-column:1 / -1}
+@media (max-width:860px){.tic-dv__side{grid-template-columns:minmax(0,1fr)}}
+.tic-dv__hand{display:flex;flex-direction:column;gap:14px}
+.tic-dv__list>li{gap:14px}
+
+.tic-dv__rules{display:flex;flex-direction:column;gap:0}
+.tic-dv__rule{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;row-gap:6px;align-items:start;
+  padding-block:18px;border-top:1px solid var(--line);opacity:0;transform:translateY(12px);
+  transition:opacity .6s var(--e),transform .6s var(--e)}
+.is-in .tic-dv__rule{opacity:1;transform:none}
+.tic-dv__rule:last-child{border-bottom:1px solid var(--line)}
+.tic-dv__rule .xt-ico{grid-row:1 / span 2;margin-top:2px}
+.tic-dv__rule b{font-family:var(--f-h);font-size:var(--t-sm);font-weight:500;letter-spacing:-.008em;color:var(--ink)}
+.tic-dv__rule span{font-size:var(--t-xs);line-height:1.65;color:var(--muted)}
+
+.tic-dv__stack{display:flex;flex-direction:column;gap:14px}
+
+@media (scripting:none){.tic-dv__rule{opacity:1;transform:none;transition:none}}

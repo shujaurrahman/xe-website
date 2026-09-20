@@ -1,0 +1,185 @@
+/* Hub · pace — a model changelog you can scrub and inspect, a weekly eval-gated release train,
+   and an idea-to-agent track. Code-built charts on paper. */
+
+/* ---- 1 · changelog card ---- */
+.tih-pc{border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);box-shadow:var(--sh-1);overflow:hidden}
+.tih-pc__top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px 40px;padding:24px clamp(20px,2.4vw,32px) 22px;border-bottom:1px solid var(--line-2)}
+.tih-pc__top>div{display:flex;flex-direction:column;gap:10px}
+.tih-pc__h{font-family:var(--f-h);font-size:clamp(1.15rem,1.5vw,1.375rem);font-weight:500;letter-spacing:-.014em;line-height:1.2;color:var(--ink)}
+.tih-pc__ro{display:flex;flex-wrap:wrap}
+.tih-pc__ro>div{padding:0 20px;border-left:1px solid var(--line-2)}
+.tih-pc__ro>div:first-child{padding-left:0;border-left:0}
+.tih-pc__ro dt{font-family:var(--f);font-size:var(--tih-mono-s);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.tih-pc__ro dd{margin-top:8px}
+.tih-pc__ro b{font-family:var(--f);font-size:var(--t-sm);font-weight:500;letter-spacing:-.01em;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+.tih-pc__body{display:grid;grid-template-columns:minmax(0,1fr) 320px}
+.tih-pc__chart{min-width:0;padding:22px clamp(18px,2.2vw,30px) 22px}
+
+/* plot */
+.tih-pc__plot{position:relative;height:300px;margin-top:6px}
+.tih-pc__svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.tih-pc__svg *{vector-effect:non-scaling-stroke}
+.tih-pc__grid{stroke:var(--line-2);stroke-width:1}
+.tih-pc__base{stroke:var(--line-3);stroke-width:1}
+.tih-pc__ev{stroke:var(--line-3);stroke-width:1;stroke-dasharray:3 4;transition:stroke var(--d2) var(--e),opacity var(--d2) var(--e)}
+.tih-pc__ev.is-yes{stroke:var(--blue-line)}
+.tih-pc__ev.is-sel{stroke:var(--blue);stroke-dasharray:none}
+.tih-pc__area{fill:var(--blue-wash);stroke:none}
+.tih-pc__line{fill:none;stroke:var(--blue);stroke-width:2.5;stroke-linejoin:round}
+.tih-pc__head{stroke:var(--ink);stroke-width:1;opacity:0;transition:opacity .3s var(--e)}
+.tih-pc.is-scrub .tih-pc__head{opacity:.5}
+.tih-pc__yl{position:absolute;left:0;top:calc(var(--y) * 1%);translate:0 -50%;font-family:var(--f);font-size:var(--tih-mono-s);color:var(--faint);line-height:1}
+
+.tih-pc__marks{position:absolute;inset:0;pointer-events:none}
+.tih-pc__mk{position:absolute;left:calc(var(--x) * 1%);top:calc(30 / 280 * 100%);translate:-50% -50%;pointer-events:auto;
+  display:grid;place-items:center;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line-3);background:var(--paper);
+  font-family:var(--f);font-size:var(--tih-mono-s);font-weight:600;color:var(--muted);line-height:1;
+  transition:background var(--d2) var(--e),border-color var(--d2) var(--e),color var(--d2) var(--e),box-shadow var(--d2) var(--e),opacity .35s var(--e),scale .35s var(--e)}
+.tih-pc__mk.is-yes{border-color:var(--blue);color:var(--blue-d)}
+.tih-pc__mk:hover{box-shadow:0 0 0 4px var(--blue-wash)}
+.tih-pc__mk[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--on-ink);box-shadow:0 0 0 4px var(--blue-wash-2)}
+.tih-pc__mk.is-yes[aria-pressed="true"]{background:var(--blue);border-color:var(--blue)}
+.tih-pc__mk.is-ahead{opacity:0;scale:.6}
+
+/* cost strip + months */
+.tih-pc__cost{position:relative;display:block;height:52px;margin-top:10px;border-top:1px dashed var(--line)}
+.tih-pc__bars{position:absolute;inset:0}
+.tih-pc__bars i{position:absolute;left:calc(var(--x) * 1%);bottom:0;width:18px;height:calc(var(--h) * 36px);margin-left:-9px;border-radius:3px 3px 0 0;background:var(--line-3);transform-origin:center bottom;transition:transform .7s var(--e) calc(var(--i,0) * 40ms),background var(--d2) var(--e)}
+.tih-pc__bars i b{position:absolute;left:50%;bottom:calc(100% + 4px);translate:-50% 0;font-family:var(--f);font-size:9px;font-weight:500;color:var(--muted);white-space:nowrap;opacity:0;transition:opacity var(--d2) var(--e)}
+.tih-pc__bars i:first-child b,.tih-pc__bars i:last-child b{opacity:1}
+.tih-pc__bars i:first-child{background:var(--ghost)}
+.tih-pc__bars i:last-child{background:var(--ink)}
+.tih-pc__months{position:relative;height:22px;margin-top:8px}
+.tih-pc__months span{position:absolute;left:calc(var(--x) * 1%);top:0;translate:-50% 0;font-family:var(--f);font-size:var(--tih-mono-s);letter-spacing:.04em;color:var(--faint);white-space:nowrap}
+.tih-pc__months span:last-child{color:var(--ink);font-weight:500}
+.tih-pc__legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;margin-top:14px;font-family:var(--f);font-size:var(--tih-mono-s);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tih-pc__legend>span:not(.bdh-ill){display:inline-flex;align-items:center;gap:8px}
+.tih-pc__legend i{display:inline-block;width:12px;height:12px;border-radius:50%}
+.tih-pc__legend i.is-line{width:18px;height:3px;border-radius:2px;background:var(--blue)}
+.tih-pc__legend i.is-yes{border:1.5px solid var(--blue)}
+.tih-pc__legend i.is-no{border:1.5px solid var(--line-3)}
+.tih-pc__legend i.is-bar{width:8px;height:12px;border-radius:2px 2px 0 0;background:var(--line-3)}
+
+/* side card */
+.tih-pc__card{display:flex;flex-direction:column;min-width:0;padding:22px 24px 24px;border-left:1px solid var(--line-2);background:var(--paper-2)}
+.tih-pc__card>.tih-pc__cp{display:none}
+.tih-pc__card>.tih-pc__cp.is-on{display:flex;flex-direction:column;gap:10px;animation:tih-pc-in .4s var(--e) both}
+@keyframes tih-pc-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.tih-pc__ct{font-family:var(--f-h);font-size:1.25rem;font-weight:500;letter-spacing:-.012em;line-height:1.2;color:var(--ink)}
+.tih-pc__cr{font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+.tih-pc__cr b{font-weight:600;color:var(--ink)}
+.tih-pc__tb{width:100%;margin-top:4px;border-collapse:collapse;font-size:var(--t-xs)}
+.tih-pc__tb thead th{padding:0 0 6px;text-align:right;font-family:var(--f);font-size:var(--tih-mono-s);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.tih-pc__tb tbody th{padding:8px 0;border-top:1px solid var(--line);text-align:left;font-weight:500;color:var(--txt)}
+.tih-pc__tb td{padding:8px 0;border-top:1px solid var(--line);text-align:right;font-family:var(--f);font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.tih-pc__dec{display:flex;gap:10px;align-items:flex-start;margin-top:4px;font-size:var(--t-sm);line-height:1.45;color:var(--ink)}
+.tih-pc__dec b{flex:none;display:grid;place-items:center;width:20px;height:20px;margin-top:1px;border-radius:50%;background:var(--paper-4);font-family:var(--f);font-size:11px;color:var(--muted)}
+.tih-pc__dec.is-yes b{background:var(--blue);color:var(--on-ink)}
+.tih-pc__cfg{display:grid;gap:6px;padding:10px 12px;border-radius:var(--r-sm);background:var(--ink);color:var(--on-ink)}
+.tih-pc__cfk{font-family:var(--f);font-size:var(--tih-mono-s);letter-spacing:.08em;color:var(--on-ink-3)}
+.tih-pc__cfg code{font-family:var(--f);font-size:var(--t-lbl);line-height:1.5;word-break:break-word}
+.tih-pc__cfg:not(.is-none) code::before{content:"+ ";color:var(--blue)}
+.tih-pc__cfg.is-none code{color:var(--on-ink-2)}
+.tih-pc__prov{display:grid;gap:12px;margin-top:auto;padding-top:22px}
+.tih-pc__prov .xt-stack{gap:14px;color:var(--muted)}
+
+/* ---- row: train + idea to agent ---- */
+.tih-pace__row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--bdh-gap);margin-top:var(--bdh-gap)}
+.tih-pc__train,.tih-pc__i2a{display:flex;flex-direction:column;gap:12px;min-width:0;padding:24px clamp(20px,2.4vw,30px) 26px;border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper)}
+.tih-pc__train>.tih-k,.tih-pc__i2a>.tih-k{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+
+/* release train */
+.tih-pc__weeks{position:relative;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px;margin-top:14px;padding-top:4px}
+.tih-pc__weeks::before{content:"";position:absolute;left:4%;right:4%;top:calc(4px + 118px + 8px + 9px);height:1px;background:var(--line-3)}
+.tih-pc__weeks li{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px}
+.tih-pc__wb{position:relative;display:flex;align-items:flex-end;justify-content:center;width:100%;height:118px}
+.tih-pc__wb i{display:block;width:min(16px,70%);height:calc(var(--h) * 100%);border-radius:3px 3px 0 0;background:var(--line-3);transform-origin:center bottom}
+.tih-pc__weeks li.is-held .tih-pc__wb i{display:none}
+.tih-pc__weeks li.is-held .tih-pc__wb::after{content:"held";position:absolute;bottom:6px;font-family:var(--f);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.tih-pc__wd{position:relative;z-index:1;width:18px;height:18px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px var(--paper)}
+.tih-pc__weeks li.is-held .tih-pc__wd{background:var(--paper);border:2px solid var(--ink)}
+.tih-pc__weeks li.is-held .tih-pc__wd::after{content:"";position:absolute;left:3px;right:3px;top:50%;height:2px;margin-top:-1px;background:var(--ink)}
+.tih-pc__wl{font-family:var(--f);font-size:9px;letter-spacing:.04em;color:var(--faint)}
+.tih-pc__weeks li.is-held .tih-pc__wl{color:var(--ink);font-weight:600}
+.tih-pc__gates{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:10px}
+.tih-pc__gates li{display:grid;grid-template-columns:18px minmax(0,1fr);column-gap:8px;row-gap:2px;align-items:center;padding:10px 10px 10px;border-radius:var(--r-sm);background:var(--paper-2);box-shadow:inset 0 0 0 1px var(--line-2)}
+.tih-pc__gates b{grid-row:1 / span 2;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--blue-wash-2);color:var(--blue-d);font-family:var(--f);font-size:10px;font-weight:500;line-height:1}
+.tih-pc__gates span{font-size:var(--t-xs);font-weight:600;line-height:1.2;color:var(--ink)}
+.tih-pc__gates small{font-family:var(--f);font-size:9px;letter-spacing:.02em;line-height:1.35;color:var(--muted)}
+.tih-pc__held{display:flex;align-items:flex-start;gap:10px;margin-top:8px;padding:12px 14px;border-radius:var(--r-sm);background:var(--paper-3);font-size:var(--t-xs);line-height:1.5;color:var(--txt)}
+.tih-pc__held b{font-weight:600;color:var(--ink)}
+.tih-pc__sum{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:auto;padding-top:14px;border-top:1px solid var(--line-2);font-size:var(--t-xs);color:var(--muted)}
+.tih-pc__sum b{font-family:var(--f);font-weight:600;color:var(--ink)}
+/* the chart ships drawn: the dots and bars rest at their final values and only animate FROM a hidden
+   state once the card is in view, so with JS off (no .is-in) the plot is complete, not empty */
+@media (prefers-reduced-motion:no-preference){
+  .tih-pc__train.is-in .tih-pc__wd{animation:tih-pc-pop .45s var(--e) both;animation-delay:calc(var(--i) * 110ms + 200ms)}
+  .tih-pc__train.is-in .tih-pc__wb i{animation:tih-pc-grow .5s var(--e) both;animation-delay:calc(var(--i) * 110ms + 200ms)}
+  @keyframes tih-pc-pop{from{opacity:0;scale:.3}to{opacity:1;scale:1}}
+  @keyframes tih-pc-grow{from{opacity:0;scale:1 0}to{opacity:1;scale:1}}
+}
+
+/* idea to agent */
+.tih-pc__clock{display:flex;align-items:baseline;gap:8px;margin-top:4px;font-family:var(--f);color:var(--faint)}
+.tih-pc__clock span{font-size:var(--t-sm)}
+.tih-pc__t{font-size:clamp(1.8rem,2.4vw,2.2rem);font-weight:500;letter-spacing:-.04em;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.tih-pc__ms{position:relative;display:grid;gap:0;margin-top:8px}
+.tih-pc__ms::before{content:"";position:absolute;left:7px;top:14px;bottom:14px;width:2px;background:var(--line)}
+.tih-pc__ms li{position:relative;display:grid;grid-template-columns:62px minmax(0,1fr);column-gap:14px;row-gap:2px;padding:9px 0 9px 28px}
+.tih-pc__ms li::before{content:"";position:absolute;left:0;top:13px;width:16px;height:16px;border-radius:50%;border:2px solid var(--line-3);background:var(--paper);box-sizing:border-box;transition:background .3s var(--e),border-color .3s var(--e),box-shadow .3s var(--e)}
+.tih-pc__ms li.is-done::before{border-color:var(--blue);background:var(--blue)}
+.tih-pc__ms li.is-here::before{border-color:var(--blue);background:var(--paper);box-shadow:0 0 0 5px var(--blue-wash-2)}
+.tih-pc__mw{grid-row:1 / span 3;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.04em;color:var(--blue-d);padding-top:2px;white-space:nowrap}
+.tih-pc__mn{font-size:var(--t-sm);font-weight:600;line-height:1.35;color:var(--ink)}
+.tih-pc__md{font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+.tih-pc__mg{font-family:var(--f);font-size:var(--tih-mono-s);letter-spacing:.04em;color:var(--faint)}
+.tih-pc__mg::before{content:"Gate · ";color:var(--blue-d)}
+.tih-pc__ms li:not(.is-done):not(.is-here) .tih-pc__mn,.tih-pc__ms li:not(.is-done):not(.is-here) .tih-pc__md{color:var(--faint)}
+
+/* ---- responsive ---- */
+@media (max-width:1279px){
+  .tih-pc__body{grid-template-columns:minmax(0,1fr)}
+  .tih-pc__card{border-left:0;border-top:1px solid var(--line-2);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px 32px}
+  .tih-pc__card>.tih-pc__cp.is-on{grid-column:1}
+  .tih-pc__prov{grid-column:2;margin-top:0;padding-top:0;align-content:start}
+}
+@media (max-width:1023px){
+  .tih-pace__row{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:760px){
+  .tih-pc__ro>div{padding:0 14px}
+  .tih-pc__card{grid-template-columns:minmax(0,1fr)}
+  .tih-pc__prov{grid-column:1;padding-top:6px}
+  .tih-pc__plot{height:240px}
+  .tih-pc__bars i{width:12px;margin-left:-6px}
+  .tih-pc__months span{display:none}
+  .tih-pc__months span:nth-child(3n+1),.tih-pc__months span:last-child{display:block}
+}
+@media (max-width:600px){
+  .tih-pc__top{padding:18px 16px}
+  .tih-pc__ro{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:14px;width:100%}
+  .tih-pc__ro>div{padding:0 0 0 12px}
+  .tih-pc__ro>div:nth-child(odd){padding-left:0;border-left:0}
+  .tih-pc__ro dt{white-space:normal;line-height:1.35}
+  .tih-pc__chart{padding:16px 12px 18px}
+  .tih-pc__plot{height:220px}
+  .tih-pc__mk{width:22px;height:22px;font-size:9px}
+  .tih-pc__yl{display:none}
+
+  .tih-pc__bars i{width:8px;margin-left:-4px}
+  .tih-pc__card{padding:18px 16px}
+  .tih-pc__train,.tih-pc__i2a{padding:18px 16px 20px}
+  .tih-pc__weeks{gap:2px}
+  .tih-pc__wl{font-size:8px}
+  .tih-pc__wd{width:14px;height:14px}
+  .tih-pc__ms li{grid-template-columns:minmax(0,1fr);padding-left:28px}
+  .tih-pc__gates{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tih-pc__wb{height:96px}
+  .tih-pc__weeks::before{top:calc(4px + 96px + 8px + 7px)}
+  .tih-pc__mw{grid-row:auto}
+}
+@media (prefers-reduced-motion:reduce){
+  .tih-pc__mk,.tih-pc__ev,.tih-pc__head,.tih-pc__bars i,.tih-pc__ms li::before{transition:none}
+  .tih-pc__card>.tih-pc__cp.is-on{animation:none}
+}

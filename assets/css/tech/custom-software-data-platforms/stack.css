@@ -1,0 +1,104 @@
+/* Custom Software & Data Platforms · stack — the exploded slab diagram (tabs) and the layer pane beside it.
+   Each plate is a slab drawn in oblique projection: the button is the front face, ::before the top face and
+   ::after the side face (both skewed 45°, --d deep). Upper slabs sit in front of lower ones, so pressed together
+   (--g apart) the top faces hide and the plates read as one block. Hovering the diagram, focusing inside it, or
+   .is-x (stack.js, once on entry) explodes the stack: each plate moves by (i − 3) × --sep with the translate
+   property, so the middle layer stays put and the gaps open to --g + --sep. Selection pulls a plate out like a
+   drawer (transform), hover pulls it a little: one treatment, two strengths. Reduced motion: the exploded view,
+   static. Phones: a static, lightly separated stack. */
+.tcs-sk{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);column-gap:var(--bdh-gap-l);row-gap:40px;align-items:start}
+.tcs-sk__cake{display:flex;flex-direction:column;gap:18px;min-width:0}
+.tcs-sk__ck{display:flex;justify-content:space-between;gap:10px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tcs-sk__ck em{font-style:normal;letter-spacing:.04em;text-transform:none;color:var(--faint)}
+
+.tcs-cake{--g:4px;--sep:14px;--d:12px;position:relative;display:flex;flex-direction:column;gap:var(--g);
+  padding:calc(3 * var(--sep) + var(--d) + 6px) calc(var(--d) + 22px) calc(3 * var(--sep) + 6px) 0}
+.tcs-cake::before,.tcs-cake::after{content:"";position:absolute;top:0;bottom:0;width:0;border-left:1px dashed var(--line-3);pointer-events:none}
+.tcs-cake::before{left:30px}.tcs-cake::after{right:calc(var(--d) + 52px)}
+
+.tcs-sk__plate{position:relative;z-index:calc(10 - var(--i));display:grid;grid-template-columns:30px minmax(0,1fr) auto;grid-template-rows:auto auto;column-gap:14px;row-gap:2px;align-items:center;width:100%;min-height:64px;padding:11px 16px 11px 14px;
+  border:1px solid var(--line-3);border-radius:3px;background:var(--paper);text-align:left;box-shadow:var(--sh-1);
+  translate:0 0;transition:translate .6s var(--e),transform .4s var(--e),border-color var(--d2) var(--e),box-shadow var(--d2) var(--e)}
+/* top face and side face */
+.tcs-sk__plate::before,.tcs-sk__plate::after{content:"";position:absolute;border:1px solid var(--line-3);pointer-events:none;transition:border-color var(--d2) var(--e),background var(--d2) var(--e)}
+.tcs-sk__plate::before{left:-1px;right:-1px;bottom:calc(100% + 1px);height:var(--d);border-bottom:0;background:var(--paper-3);transform-origin:0 100%;transform:skewX(-45deg)}
+.tcs-sk__plate::after{top:-1px;bottom:-1px;left:calc(100% + 1px);width:var(--d);border-left:0;background:var(--paper-4);transform-origin:0 0;transform:skewY(-45deg)}
+
+/* exploded view */
+.tcs-cake.is-x .tcs-sk__plate,.tcs-sk__cake:hover .tcs-sk__plate,.tcs-cake:focus-within .tcs-sk__plate{translate:0 calc((var(--i) - 3) * var(--sep))}
+
+/* hover and selection: the same pull-out, at two strengths */
+.tcs-sk__plate:hover{transform:translateX(5px)}
+.tcs-sk__plate:hover .tcs-sk__nm{color:var(--ink)}
+.tcs-sk__plate[aria-selected="true"]{transform:translateX(14px);border-color:var(--ink);box-shadow:inset 3px 0 0 var(--blue),var(--sh-2)}
+.tcs-sk__plate[aria-selected="true"]::before,.tcs-sk__plate[aria-selected="true"]::after{border-color:var(--ink)}
+.tcs-sk__plate[aria-selected="true"]::before{background:var(--paper-4)}
+.tcs-sk__plate:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+.tcs-sk__n{grid-row:1 / span 2;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;color:var(--faint);transition:color var(--d2) var(--e)}
+.tcs-sk__plate[aria-selected="true"] .tcs-sk__n{color:var(--blue)}
+.tcs-sk__nm{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.012em;line-height:1.2;color:var(--ink)}
+.tcs-sk__role{grid-column:2;font-size:var(--t-xs);line-height:1.35;color:var(--muted)}
+/* the plate's default technology: one recognisable mark, its name, and how many others sit in the layer */
+.tcs-sk__def{grid-row:1 / span 2;grid-column:3;display:grid;grid-template-columns:30px auto;grid-template-rows:auto auto;column-gap:10px;row-gap:2px;align-items:center;justify-items:start}
+.tcs-sk__dm{grid-row:1 / span 2;display:grid;place-items:center;width:30px;height:30px;color:var(--ink)}
+.tcs-sk__dm .xt-logo--word{font-size:10px}
+.tcs-sk__dn{font-family:var(--f);font-size:var(--t-xs);font-weight:500;line-height:1.2;color:var(--ink);white-space:nowrap}
+.tcs-sk__dc{font-family:var(--f);font-size:10px;line-height:1.2;color:var(--faint);white-space:nowrap}
+.tcs-sk__cn{display:inline-flex;align-items:center;gap:8px;font-family:var(--f);font-size:10.5px;letter-spacing:.02em;color:var(--faint)}
+
+/* ---- pane ---- */
+.tcs-sk__panes{display:grid;min-width:0}
+.tcs-sk__pane{grid-area:1 / 1;display:flex;flex-direction:column;align-items:flex-start;gap:16px;min-width:0;padding:clamp(24px,2.6vw,36px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .4s var(--e),transform .5s var(--e),visibility 0s linear .4s}
+.tcs-sk__pane.is-on{opacity:1;visibility:visible;transform:none;transition:opacity .4s var(--e),transform .5s var(--e),visibility 0s}
+.tcs-sk__pe{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+.tcs-sk__pt{font-size:clamp(1.5rem,2.2vw,2rem);letter-spacing:-.022em;line-height:1.1}
+.tcs-sk__why{font-size:var(--t-body);line-height:1.65;color:var(--txt);max-width:54ch}
+.tcs-sk__dl{display:grid;gap:12px;width:100%;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.tcs-sk__dl div{display:grid;grid-template-columns:150px minmax(0,1fr);gap:12px;align-items:baseline}
+.tcs-sk__dl dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.5}
+.tcs-sk__dl dd{font-size:var(--t-sm);line-height:1.55;color:var(--ink)}
+.tcs-sk__lk{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tcs-sk__pane .xt-stack{gap:6px}
+.tcs-sk__pane .xt-chip{min-height:34px;padding:4px 12px 4px 10px;font-size:var(--t-xs)}
+.tcs-sk__pane .xt-chip--word{padding-left:12px}
+.tcs-sk__also{font-size:var(--t-xs);line-height:1.5;color:var(--faint)}
+
+.tcs-sk__adr{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;width:100%;margin-top:auto;padding:12px 14px;border-radius:var(--r-sm);background:var(--paper-2);box-shadow:inset 0 0 0 1px var(--line-2)}
+.tcs-sk__adrid{display:inline-flex;align-items:center;gap:7px;font-family:var(--f);font-size:var(--t-xs);font-weight:500;color:var(--ink);white-space:nowrap}
+.tcs-sk__adrt{font-size:var(--t-xs);line-height:1.5;color:var(--txt)}
+@media (max-width:600px){.tcs-sk__adr{grid-template-columns:minmax(0,1fr) auto}.tcs-sk__adrt{grid-column:1 / -1;grid-row:2}}
+
+/* ---- rules ---- */
+.tcs-sk__rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap);margin-top:var(--bdh-block)}
+.tcs-sk__rules li{display:flex;flex-direction:column;gap:10px;padding-top:20px;border-top:1px solid var(--line-3)}
+.tcs-sk__rt{font-size:var(--t-h3);letter-spacing:-.012em;line-height:1.28}
+.tcs-sk__rules p{font-size:var(--t-sm);line-height:1.62;color:var(--muted);max-width:40ch}
+
+@media (max-width:1100px){
+  .tcs-sk{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:860px){.tcs-sk__rules{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:600px){
+  /* phones: a static, lightly separated stack; no explode, no pull-out, no default name */
+  .tcs-cake{--g:14px;--d:8px;padding:calc(var(--d) + 4px) calc(var(--d) + 4px) 4px 0}
+  .tcs-cake::before,.tcs-cake::after{display:none}
+  .tcs-cake.is-x .tcs-sk__plate,.tcs-sk__cake:hover .tcs-sk__plate,.tcs-cake:focus-within .tcs-sk__plate{translate:0 0}
+  .tcs-sk__plate,.tcs-sk__plate:hover,.tcs-sk__plate[aria-selected="true"]{transform:none}
+  .tcs-sk__plate{grid-template-columns:26px minmax(0,1fr) auto;column-gap:12px;min-height:56px;padding:10px 12px}
+  .tcs-sk__def{grid-template-columns:26px;row-gap:0}
+  .tcs-sk__dm{width:26px;height:26px}
+  .tcs-sk__dn{display:none}
+  .tcs-sk__dc{display:none}
+  .tcs-sk__cn{display:none}
+  .tcs-sk__dl div{grid-template-columns:minmax(0,1fr);gap:4px}
+}
+@media (prefers-reduced-motion:reduce){
+  .tcs-cake{--g:18px;padding-top:calc(var(--d) + 6px);padding-bottom:6px}
+  .tcs-cake.is-x .tcs-sk__plate,.tcs-sk__cake:hover .tcs-sk__plate,.tcs-cake:focus-within .tcs-sk__plate{translate:0 0}
+  .tcs-sk__plate,.tcs-sk__plate::before,.tcs-sk__plate::after,.tcs-sk__pane,.tcs-sk__pane.is-on{transition:none}
+  .tcs-sk__plate:hover{transform:none}
+}
+@media (prefers-reduced-motion:reduce) and (max-width:600px){
+  .tcs-cake{--g:14px;padding-top:calc(var(--d) + 4px);padding-bottom:4px}
+}

@@ -1,0 +1,228 @@
+/* AI Strategy & Agents · 03 SIGNATURE — the autonomy dial: controls, run header, trace, result, audit log */
+.tas-au{border-radius:var(--r-xl)}
+.tas-au__auto{color:var(--on-ink-2);transition:opacity var(--d2)}
+.tas-au__auto.is-off{opacity:0}
+.tas-au__body{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);min-width:0}
+
+/* ---- controls ---- */
+.tas-au__ctl{display:flex;flex-direction:column;gap:26px;min-width:0;padding:22px;border-right:1px solid var(--on-ink-line)}
+.tas-au__f{border:0;min-width:0}
+.tas-au__f legend{margin-bottom:12px;padding:0}
+.tas-au__tasks{display:flex;flex-direction:column;gap:6px}
+.tas-au__task{position:relative;display:block;cursor:pointer}
+.tas-au__task input,.tas-au__lv input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.tas-au__tbox{display:flex;flex-direction:column;gap:2px;padding:11px 14px;border-radius:var(--r-sm);box-shadow:inset 0 0 0 1px var(--on-ink-line);transition:background var(--d1) var(--e-io),box-shadow var(--d1) var(--e-io)}
+.tas-au__tbox b{font-size:var(--t-sm);font-weight:500;line-height:1.35;color:var(--on-ink)}
+.tas-au__ts{display:none}
+.tas-au__tbox small{font-size:var(--t-xs);line-height:1.4;color:var(--on-ink-2)}
+.tas-au__tbox em{font-family:var(--f);font-size:10px;font-style:normal;line-height:1.5;color:var(--on-ink-3)}
+.tas-au__task:hover .tas-au__tbox{box-shadow:inset 0 0 0 1px var(--on-ink-3)}
+.tas-au__task input:checked+.tas-au__tbox{background:var(--on-ink-card);box-shadow:inset 0 0 0 1.5px var(--blue)}
+.tas-au__task input:focus-visible+.tas-au__tbox,.tas-au__lv input:focus-visible+span{outline:2px solid var(--blue);outline-offset:2px}
+
+.tas-au__dial{position:relative;padding:4px 8px 0}
+.tas-au__dial svg{display:block;width:100%;max-width:240px;height:auto;margin-inline:auto;overflow:visible}
+.tas-au__arc{fill:none;stroke:var(--on-ink-line);stroke-width:6;stroke-linecap:round}
+.tas-au__arcon{fill:none;stroke:var(--blue);stroke-width:6;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:calc(100 - (var(--a) - 1) * 33.34);transition:stroke-dashoffset .6s var(--e)}
+.tas-au__stop{fill:var(--ink);stroke:var(--on-ink-3);stroke-width:1.5;transition:fill var(--d2),stroke var(--d2)}
+.tas-au__dial[style*="--a:1"] .tas-au__stop[data-s="1"],.tas-au__dial[style*="--a:2"] .tas-au__stop:is([data-s="1"],[data-s="2"]),
+.tas-au__dial[style*="--a:3"] .tas-au__stop:is([data-s="1"],[data-s="2"],[data-s="3"]),.tas-au__dial[style*="--a:4"] .tas-au__stop{fill:var(--blue);stroke:var(--blue)}
+.tas-au__sl{font-family:var(--f);font-size:10px;font-weight:500;fill:var(--on-ink-3)}
+.tas-au__needle{transform-origin:110px 112px;transform:rotate(calc(-90deg + (var(--a) - 1) * 60deg));transition:transform .7s cubic-bezier(.34,1.4,.64,1)}
+.tas-au__needle line{stroke:var(--on-ink);stroke-width:2.5;stroke-linecap:round}
+.tas-au__needle circle{fill:var(--on-ink)}
+.tas-au__dv{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:6px;text-align:center}
+.tas-au__dv b{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.01em;color:var(--on-ink)}
+.tas-au__dv small{font-size:var(--t-xs);color:var(--on-ink-2)}
+.tas-au__levels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:14px}
+.tas-au__lv{position:relative;display:block;cursor:pointer;min-width:0}
+.tas-au__lv>span{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:9px 10px;border-radius:var(--r-sm);box-shadow:inset 0 0 0 1px var(--on-ink-line);transition:background var(--d1),box-shadow var(--d1)}
+.tas-au__lv b{font-size:var(--t-xs);font-weight:500;line-height:1.3;color:var(--on-ink)}
+.tas-au__lv:hover>span{box-shadow:inset 0 0 0 1px var(--on-ink-3)}
+.tas-au__lv input:checked+span{background:var(--on-ink-card);box-shadow:inset 0 0 0 1.5px var(--blue)}
+
+.tas-au__rg+.tas-au__rg{margin-top:16px}
+/* limits summary: a disclosure on phones only (autonomy.js folds .tas-au__lims below 760px) */
+.tas-au__limt{display:none}
+.tas-au__rg label{display:flex;justify-content:space-between;gap:10px;font-size:var(--t-xs);font-weight:500;line-height:1.4;color:var(--on-ink-2)}
+.tas-au__rg output{font-family:var(--f);font-weight:600;color:var(--on-ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tas-au__rg output small{font-weight:400;font-size:10.5px;color:var(--on-ink-3)}
+.tas-au__rg input[type="range"]{-webkit-appearance:none;appearance:none;display:block;width:100%;height:28px;margin:2px 0 0;background:transparent;cursor:pointer}
+.tas-au__rg input[type="range"]::-webkit-slider-runnable-track{height:3px;border-radius:2px;background:var(--on-ink-line)}
+.tas-au__rg input[type="range"]::-moz-range-track{height:3px;border-radius:2px;background:var(--on-ink-line)}
+.tas-au__rg input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;margin-top:-7.5px;border-radius:50%;background:var(--paper);box-shadow:0 0 0 3px var(--ink),0 0 0 4px var(--on-ink-line)}
+.tas-au__rg input[type="range"]::-moz-range-thumb{width:18px;height:18px;border:0;border-radius:50%;background:var(--paper);box-shadow:0 0 0 3px var(--ink),0 0 0 4px var(--on-ink-line)}
+.tas-au__rg input[type="range"]:focus-visible{outline:none}
+.tas-au__rg input[type="range"]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px var(--ink),0 0 0 5px var(--blue)}
+.tas-au__rg input[type="range"]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 3px var(--ink),0 0 0 5px var(--blue)}
+.tas-au__prop{display:block;font-family:var(--f);font-size:10.5px;color:var(--on-ink-3)}
+.tas-au__prop b{font-weight:600;color:var(--on-ink-2)}
+.tas-au__prop.is-over b{color:var(--blue)}
+.tas-au__go{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.tas-au__run{flex:1 1 auto}
+.tas-au__run .xt-ico{color:currentColor}
+
+/* ---- main ---- */
+.tas-au__main{display:flex;flex-direction:column;min-width:0;padding:22px 24px 24px}
+.tas-au__head{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;padding-bottom:16px;border-bottom:1px solid var(--on-ink-line)}
+.tas-au__who{min-width:0;margin-right:auto}
+.tas-au__rid{font-family:var(--f);font-size:10.5px;letter-spacing:.02em;line-height:1.5;color:var(--on-ink-3)}
+.tas-au__task{font-family:var(--f-h);font-size:1.25rem;font-weight:500;letter-spacing:-.015em;line-height:1.25;color:var(--on-ink)}
+.tas-au__tot{display:flex;gap:0;border-left:1px solid var(--on-ink-line)}
+.tas-au__tot>div{padding:0 14px;border-right:1px solid var(--on-ink-line)}
+.tas-au__tot>div:last-child{border-right:0;padding-right:0}
+.tas-au__tot dt{font-family:var(--f);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-3);line-height:1.4}
+.tas-au__tot dd{margin-top:3px;font-family:var(--f);font-size:var(--t-sm);font-weight:500;color:var(--on-ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tas-au__status{margin-top:14px;font-family:var(--f);font-size:var(--t-xs);line-height:1.5;color:var(--on-ink-2)}
+.tas-au[data-state="running"] .tas-au__status{color:var(--on-ink)}
+
+/* trace */
+.tas-au__trace{position:relative;margin-top:12px}
+.tas-tr{position:relative;display:grid;grid-template-columns:34px minmax(0,1fr) auto 22px;column-gap:14px;align-items:start;padding-block:10px;border-top:1px solid var(--on-ink-card);transition:opacity .35s var(--e)}
+.tas-tr::before{content:"";position:absolute;left:16.5px;top:44px;bottom:-10px;width:1px;background:var(--on-ink-line)}
+.tas-tr:last-child::before{display:none}
+.tas-tr__ic{position:relative;z-index:1;display:grid;place-items:center;width:34px;height:34px;border-radius:var(--r-sm);background:var(--ink-2);box-shadow:inset 0 0 0 1px var(--on-ink-line);color:var(--on-ink-2);transition:background var(--d2),box-shadow var(--d2),color var(--d2)}
+.tas-tr__main{min-width:0}
+.tas-tr__h{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;line-height:1.3}
+.tas-tr__h b{font-size:var(--t-sm);font-weight:500;color:var(--on-ink)}
+.tas-tr__h code{font-size:var(--t-xs);color:var(--blue)}
+.tas-tr__scope,.tas-tr__model{display:inline-flex;align-items:center;height:18px;padding:0 6px;border-radius:4px;font-family:var(--f);font-size:9.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;line-height:1}
+.tas-tr__scope{box-shadow:inset 0 0 0 1px var(--on-ink-line);color:var(--on-ink-2)}
+.tas-tr__scope[data-scope="write"]{background:var(--blue);color:var(--on-ink);box-shadow:none}
+.tas-tr__scope[data-scope="draft"]{box-shadow:inset 0 0 0 1px var(--blue);color:var(--on-ink)}
+.tas-tr__scope[data-scope="denied"]{box-shadow:inset 0 0 0 1px var(--on-ink-3);color:var(--on-ink-3);text-decoration:line-through}
+.tas-tr__model{background:var(--on-ink-card);color:var(--on-ink-3);text-transform:none;letter-spacing:.02em}
+.tas-tr__io{display:grid;grid-template-columns:28px minmax(0,1fr);gap:6px;margin-top:4px;font-family:var(--f);font-size:11px;line-height:1.5;color:var(--on-ink-2)}
+.tas-tr__io span{color:var(--on-ink-3)}
+.tas-tr__io span.tas-tr__in{color:var(--on-ink-2)}
+.tas-tr__io em{font-style:normal;color:var(--on-ink)}
+.tas-tr__nums{display:flex;flex-direction:column;align-items:flex-end;gap:1px;padding-top:2px;font-family:var(--f);font-size:10.5px;line-height:1.45;color:var(--on-ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tas-tr__nums span:first-child{color:var(--on-ink-2)}
+.tas-tr__st{position:relative;width:18px;height:18px;margin-top:8px;border-radius:50%}
+.tas-tr[data-st="ok"] .tas-tr__st{background:var(--blue)}
+.tas-tr[data-st="ok"] .tas-tr__st::after{content:"";position:absolute;left:6px;top:3.5px;width:4.5px;height:8px;border:solid var(--on-ink);border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+.tas-tr[data-st="ok"] .tas-tr__ic{color:var(--on-ink);box-shadow:inset 0 0 0 1px var(--on-ink-3)}
+.tas-tr[data-st="wait"]{opacity:.38}
+.tas-tr[data-st="wait"] .tas-tr__st{box-shadow:inset 0 0 0 1.5px var(--on-ink-line)}
+.tas-tr[data-st="run"] .tas-tr__st{box-shadow:inset 0 0 0 2px var(--on-ink-line)}
+.tas-tr[data-st="run"] .tas-tr__st::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid transparent;border-top-color:var(--blue);animation:tas-spin .7s linear infinite}
+.tas-tr[data-st="run"] .tas-tr__ic{background:var(--blue);color:var(--on-ink);box-shadow:none}
+@keyframes tas-spin{to{transform:rotate(360deg)}}
+.tas-tr[data-st="await"] .tas-tr__ic,.tas-tr[data-st="flag"] .tas-tr__ic{box-shadow:inset 0 0 0 1.5px var(--blue);color:var(--on-ink)}
+.tas-tr[data-st="await"] .tas-tr__st{background:var(--blue-wash-2);box-shadow:inset 0 0 0 1.5px var(--blue);animation:tas-await 1.6s var(--e-io) infinite}
+@keyframes tas-await{50%{box-shadow:inset 0 0 0 1.5px var(--blue),0 0 0 6px var(--blue-wash-2)}}
+.tas-tr[data-st="flag"] .tas-tr__st,.tas-tr[data-st="halt"] .tas-tr__st,.tas-tr[data-st="skip"] .tas-tr__st{box-shadow:inset 0 0 0 1.5px var(--on-ink-2)}
+.tas-tr[data-st="flag"] .tas-tr__st::after{content:"!";position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f);font-size:11px;font-weight:600;color:var(--on-ink)}
+.tas-tr[data-st="halt"] .tas-tr__st::after{content:"×";position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f);font-size:13px;line-height:1;color:var(--on-ink)}
+.tas-tr[data-st="skip"] .tas-tr__st::after{content:"";position:absolute;left:5px;right:5px;top:8.25px;height:1.5px;background:var(--on-ink-2)}
+.tas-tr[data-st="halt"] .tas-tr__io--out em,.tas-tr[data-st="flag"] .tas-tr__io--out em{color:var(--on-ink)}
+.tas-tr[data-st="off"]{opacity:.2}
+.tas-tr.is-new{animation:tas-tr-in .4s var(--e) both}
+@keyframes tas-tr-in{from{opacity:0;transform:translateY(6px)}}
+
+/* result */
+.tas-au__res{display:grid;margin-top:14px}
+.tas-au__pane{grid-area:1 / 1;min-width:0;padding:16px 18px;border-radius:var(--r);background:var(--on-ink-card);box-shadow:inset 0 0 0 1px var(--on-ink-line);opacity:0;visibility:hidden;transform:translateY(6px);
+  transition:opacity .4s var(--e),transform .4s var(--e),visibility 0s linear .4s}
+.tas-au__pane.is-on{opacity:1;visibility:visible;transform:none;transition:opacity .4s var(--e),transform .4s var(--e),visibility 0s}
+.tas-au__pane[data-pane="approve"]{box-shadow:inset 0 0 0 1.5px var(--blue)}
+.tas-au__pk{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;line-height:1.4;color:var(--on-ink-2)}
+.tas-au__pk .xt-ico{color:var(--on-ink)}
+.tas-au__pt{margin-top:8px;font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.01em;line-height:1.4;color:var(--on-ink);max-width:60ch}
+.tas-au__pn{margin-top:6px;font-size:var(--t-xs);line-height:1.5;color:var(--on-ink-2)}
+.tas-au__pbtn{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.tas-au__pbtn .tas-btn{min-height:40px}
+.tas-au__pbtn .tas-btn.is-press{box-shadow:0 0 0 4px var(--blue-line)}
+.tas-au__draft{display:block;width:100%;margin-top:10px;padding:12px 14px;border-radius:var(--r-sm);background:var(--ink);box-shadow:inset 0 0 0 1px var(--on-ink-line);resize:vertical;
+  font-family:var(--f);font-size:11.5px;line-height:1.6;color:var(--on-ink)}
+.tas-au__draft:focus{outline:none;box-shadow:inset 0 0 0 1.5px var(--blue)}
+.tas-au__rc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 20px;margin-top:16px;padding-top:14px;border-top:1px solid var(--on-ink-line)}
+.tas-au__rc dt{font-family:var(--f);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-3);line-height:1.4}
+.tas-au__rc dd{margin-top:3px;font-family:var(--f);font-size:11px;line-height:1.5;color:var(--on-ink);overflow-wrap:anywhere}
+.tas-au__okdot,.tas-au__xdot{position:relative;width:16px;height:16px;border-radius:50%;flex:none}
+.tas-au__okdot{background:var(--blue)}
+.tas-au__okdot::after{content:"";position:absolute;left:5.5px;top:3px;width:4px;height:7.5px;border:solid var(--on-ink);border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+.tas-au__xdot{box-shadow:inset 0 0 0 1.5px var(--on-ink)}
+.tas-au__xdot::after{content:"×";position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f);font-size:12px;line-height:1;color:var(--on-ink)}
+
+/* audit log: one entry per run, two lines (what happened · the evidence), every field labelled */
+.tas-au__audit{margin-top:18px;padding-top:16px;border-top:1px solid var(--on-ink-line)}
+.tas-au__log{margin-top:10px;font-family:var(--f);font-size:10.5px;line-height:1.5;color:var(--on-ink-2)}
+.tas-au__le{padding-block:10px;border-top:1px solid var(--on-ink-line)}
+.tas-au__le.is-new{animation:tas-tr-in .5s var(--e) both}
+.tas-au__l1{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}
+.tas-au__lk{color:var(--on-ink-3);font-variant-numeric:tabular-nums}
+.tas-au__lr{font-weight:500;color:var(--on-ink-2)}
+.tas-au__lt{flex:1 1 12rem;min-width:0;font-family:var(--f-b);font-size:var(--t-xs);font-weight:500;color:var(--on-ink)}
+.tas-au__lo{flex:none;padding:1px 7px;border-radius:4px;box-shadow:inset 0 0 0 1px var(--on-ink-line);color:var(--on-ink)}
+.tas-au__lo[data-o="exec"]{box-shadow:inset 0 0 0 1px var(--blue)}
+.tas-au__l2{display:flex;flex-wrap:wrap;gap:3px 16px;margin-top:6px}
+.tas-au__l2 div{display:flex;gap:6px;min-width:0}
+.tas-au__l2 dt{flex:none;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--on-ink-3)}
+.tas-au__l2 dd{min-width:0;overflow-wrap:anywhere;color:var(--on-ink-2)}
+.tas-au__l2 div:first-child dd{color:var(--on-ink);font-weight:500}
+.tas-au__le+.tas-au__le{opacity:.72}
+
+/* guardrail strip */
+.tas-au__guards{margin-top:clamp(40px,4.4vw,64px)}
+.tas-au__gl{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--tas-gap)}
+.tas-au__gl li{min-width:0;padding-top:18px;border-top:1px solid var(--on-ink-line)}
+.tas-au__gl .xt-ico{color:var(--on-ink)}
+.tas-au__gl h3{margin-top:14px;font-family:var(--f-h);font-size:1rem;font-weight:500;letter-spacing:-.01em;line-height:1.3;color:var(--on-ink)}
+.tas-au__gl p{margin-top:6px;font-size:var(--t-xs);line-height:1.55;color:var(--on-ink-2)}
+.tas-au__owasp{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:clamp(28px,3vw,40px);padding:16px 20px;border-radius:var(--r-lg);box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+.tas-au__owasp p{flex:1 1 420px;font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-2)}
+.tas-au__owasp b{font-weight:600;color:var(--on-ink)}
+
+@media (max-width:1279px){.tas-au__gl{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:28px}}
+@media (max-width:1100px){
+  .tas-au__body{grid-template-columns:minmax(0,1fr)}
+  /* two balanced columns: task + limits on the left, the dial and the run buttons on the right */
+  .tas-au__ctl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"task level" "limits level" "limits go";align-items:start;gap:24px 28px;border-right:0;border-bottom:1px solid var(--on-ink-line)}
+  .tas-au__f:nth-of-type(1){grid-area:task}
+  .tas-au__f:nth-of-type(2){grid-area:level}
+  .tas-au__f:nth-of-type(3){grid-area:limits}
+  .tas-au__go{grid-area:go;align-self:end}
+  .tas-au__run{flex:1 1 auto}
+}
+@media (max-width:760px){
+  .tas-au__ctl{grid-template-columns:minmax(0,1fr);grid-template-areas:"task" "level" "limits" "go";padding:18px}
+  .tas-au__main{padding:18px 16px 20px}
+  .tas-au__head .tas-au__tot{width:100%;border-left:0;border-top:1px solid var(--on-ink-line);padding-top:10px;justify-content:space-between}
+  .tas-au__tot>div:first-child{padding-left:0}
+  .tas-tr{grid-template-columns:30px minmax(0,1fr) 20px;column-gap:10px}
+  .tas-tr__ic{width:30px;height:30px}
+  .tas-tr::before{left:14.5px;top:40px}
+  .tas-tr__nums{grid-column:2;grid-row:2;flex-direction:row;flex-wrap:wrap;justify-content:flex-start;gap:2px 12px;margin-top:4px}
+  .tas-tr__st{grid-column:3;grid-row:1}
+  .tas-tr__io{grid-template-columns:24px minmax(0,1fr)}
+  .tas-tr__io:not(.tas-tr__io--out){display:none}
+  /* guardrails as a compact two-column index on phones: icon and name, one short line under it */
+  .tas-au__gl{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}
+  .tas-au__gl li{display:grid;grid-template-columns:22px minmax(0,1fr);column-gap:10px;align-items:start;align-content:start;padding-block:12px}
+  .tas-au__dial svg{max-width:190px}
+  .tas-au__gl h3{margin-top:0;font-size:.9375rem}
+  .tas-au__gl p{grid-column:2;margin-top:3px;font-size:11.5px;line-height:1.45}
+  .tas-win__bar .tas-au__auto span{display:none}
+  /* tasks as a three-way segmented control with short names */
+  .tas-au__tasks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .tas-au__tbox{align-items:center;justify-content:center;min-height:48px;padding:8px 6px;text-align:center}
+  .tas-au__tbox small,.tas-au__tbox em,.tas-au__tl{display:none}
+  .tas-au__ts{display:inline}
+  .tas-au__tbox b{font-size:var(--t-xs);line-height:1.3}
+  /* limits fold behind a one-line summary */
+  .tas-au__limt{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:44px;padding:0 14px;border-radius:var(--r-sm);box-shadow:inset 0 0 0 1px var(--on-ink-line);
+    font-family:var(--f);font-size:var(--t-xs);font-weight:500;color:var(--on-ink);text-align:left}
+  .tas-au__limte{flex:none;font-family:var(--f-b);color:var(--on-ink-2)}
+  .tas-au__limte::after{content:"\203A";display:inline-block;margin-left:8px;transition:transform var(--d2) var(--e)}
+  .tas-au__limt[aria-expanded="true"] .tas-au__limte::after{transform:rotate(90deg)}
+  .tas-au__lims{margin-top:14px}
+  .tas-au__lims.is-shut{display:none}
+  .tas-au__le:nth-child(n+3){display:none}
+}
+@media (max-width:480px){.tas-win__path b{display:none}.tas-au__rc{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:359px){.tas-au__gl{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){
+  .tas-au__needle,.tas-au__arcon,.tas-au__pane,.tas-tr{transition:none}
+  .tas-tr[data-st="run"] .tas-tr__st::after,.tas-tr[data-st="await"] .tas-tr__st,.tas-tr.is-new,.tas-au__le.is-new{animation:none}
+}

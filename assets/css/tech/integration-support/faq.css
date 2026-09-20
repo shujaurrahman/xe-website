@@ -1,0 +1,83 @@
+/* ==========================================================================
+   Integration & Support · #faq — native <details> accordion with an aside.
+   Band: paper. Left: seven questions, exclusive-open through the details [name]
+   attribute, so no JS is involved and keyboard and screen-reader behaviour is
+   the browser's own. Right: a brief card, the capability facts and the
+   frameworks row. Motion: the marker rotates and the answer fades in; nothing
+   loops. Tokens from core.css only; no new colours; no !important.
+   ========================================================================== */
+
+.tis-fq__grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(300px,4fr);
+  column-gap:clamp(32px,4.4vw,80px);row-gap:clamp(32px,4vw,48px);align-items:start}
+
+/* ---- the accordion ------------------------------------------------------- */
+.tis-fq__list{display:flex;flex-direction:column;min-width:0;border-top:1px solid var(--line)}
+.tis-fq__item{border-bottom:1px solid var(--line)}
+
+.tis-fq__q{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;
+  gap:10px clamp(14px,1.6vw,22px);padding:clamp(20px,2.2vw,26px) 4px;cursor:pointer;list-style:none;
+  transition:color var(--d2) var(--e)}
+.tis-fq__q::-webkit-details-marker{display:none}
+.tis-fq__q:hover{color:var(--ink)}
+.tis-fq__q:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:var(--r-xs)}
+
+.tis-fq__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;
+  line-height:1;color:var(--blue);font-variant-numeric:tabular-nums}
+.tis-fq__qt{min-width:0;font-family:var(--f-h);font-size:clamp(1.0625rem,1.5vw,1.3125rem);font-weight:500;
+  line-height:1.35;letter-spacing:-.01em;color:var(--ink)}
+.tis-fq__tag{display:inline-flex;align-items:center;height:24px;padding:0 10px;border:1px solid var(--line-3);
+  border-radius:var(--r-pill);font-family:var(--f);font-size:.625rem;font-weight:500;letter-spacing:.1em;
+  line-height:1;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+
+/* marker: a plus that becomes a minus */
+.tis-fq__mk{position:relative;width:26px;height:26px;flex:none;border:1px solid var(--line-3);
+  border-radius:50%;color:var(--ink);transition:border-color var(--d2) var(--e),background-color var(--d2) var(--e)}
+.tis-fq__mk i{position:absolute;top:50%;left:50%;width:11px;height:1.5px;border-radius:1px;background:currentColor;
+  transform:translate(-50%,-50%);transition:transform var(--d3,.4s) var(--e),opacity var(--d2) var(--e)}
+.tis-fq__mk i:last-child{transform:translate(-50%,-50%) rotate(90deg)}
+.tis-fq__item[open] .tis-fq__mk{border-color:var(--blue);background:var(--blue-wash)}
+.tis-fq__item[open] .tis-fq__mk i:last-child{transform:translate(-50%,-50%) rotate(0deg);opacity:0}
+.tis-fq__q:hover .tis-fq__mk{border-color:var(--ink)}
+
+/* ---- the answer ---------------------------------------------------------- */
+.tis-fq__a{padding:0 clamp(36px,4vw,56px) clamp(24px,2.6vw,32px) clamp(30px,3.4vw,46px)}
+.tis-fq__a p{margin:0;font-size:var(--t-body);line-height:1.75;color:var(--txt);max-width:66ch}
+.tis-fq__item[open] .tis-fq__a{animation:tis-fq-in .42s var(--e) both}
+@keyframes tis-fq-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* ---- aside --------------------------------------------------------------- */
+.tis-fq__side{display:flex;flex-direction:column;gap:20px;position:sticky;top:var(--bdh-sticky,120px)}
+.tis-fq__card{display:flex;flex-direction:column;align-items:flex-start;gap:14px;
+  padding:clamp(24px,2.6vw,32px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper-2)}
+.tis-fq__cardi{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;
+  border:1px solid var(--line-3);border-radius:var(--r-sm);background:var(--paper);color:var(--ink)}
+.tis-fq__cta{margin-top:4px}
+.tis-fq__fine{margin:0;font-family:var(--f);font-size:var(--t-xs);line-height:1.6;color:var(--faint)}
+
+.tis-fq__facts{display:flex;flex-direction:column;gap:0;margin:0;padding:0;list-style:none;
+  border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.tis-fq__facts li{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px;
+  padding:14px 18px;border-bottom:1px solid var(--line)}
+.tis-fq__facts li:last-child{border-bottom:0}
+.tis-fq__fk{font-family:var(--f);font-size:.625rem;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--faint)}
+.tis-fq__fv{font-family:var(--f);font-size:var(--t-xs);font-weight:500;line-height:1.4;color:var(--ink);text-align:right}
+
+.tis-fq__badges{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 0;padding:0;list-style:none}
+.tis-fq__bnote{margin:0;font-size:var(--t-xs);line-height:1.6;color:var(--faint);max-width:42ch}
+
+/* ---- responsive ---------------------------------------------------------- */
+@media (max-width:980px){
+  .tis-fq__grid{grid-template-columns:minmax(0,1fr)}
+  .tis-fq__side{position:static;max-width:560px}
+}
+@media (max-width:560px){
+  .tis-fq__q{grid-template-columns:auto minmax(0,1fr) auto;row-gap:8px}
+  .tis-fq__tag{grid-column:2;justify-self:start}
+  .tis-fq__mk{grid-row:1;grid-column:3}
+  .tis-fq__a{padding:0 0 22px 30px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .tis-fq__item[open] .tis-fq__a{animation:none}
+}

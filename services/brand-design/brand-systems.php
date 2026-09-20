@@ -22,13 +22,13 @@ unset($cbs_disc);
 /* Running order: the pipeline → the editor → what we build → how it runs → proof → onward. */
 $CBS = [
     'hero', 'editor', 'manifest', 'flex', 'inventory', 'templates',
-    'governance', 'docs', 'process', 'bundle', 'adoption', 'faq', 'onward',
+    'governance', 'docs', 'process', 'bundle', 'adoption', 'services', 'faq', 'onward',
 ];
 
 $cbs_root = __DIR__ . '/../../';
 $cbs_has = function (string $p) use ($cbs_root): bool { $f = $cbs_root . $p; return is_file($f) && filesize($f) > 0; };
-$cbs_css = ['assets/css/brand/hub.css'];
-$cbs_js  = ['assets/js/brand/hub.js'];
+$cbs_css = ['assets/css/brand/hub.css', 'assets/css/services.css'];
+$cbs_js  = ['assets/js/brand/hub.js', 'assets/js/services.js'];
 if ($cbs_has('assets/css/brand/brand-systems.css')) $cbs_css[] = 'assets/css/brand/brand-systems.css';
 if ($cbs_has('assets/js/brand/brand-systems.js'))   $cbs_js[]  = 'assets/js/brand/brand-systems.js';
 foreach ($CBS as $cbs_id) {

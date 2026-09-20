@@ -1,0 +1,90 @@
+/* AI Strategy & Agents · outcomes — the 90-day agent review: a scorecard with a pass zone and a hold
+   zone per measure, the value at review as a bar, a status pill, the decision; then the three
+   outcomes. Switching agents re-scales the bars (transform) and re-colours the statuses. */
+.tas-oc{padding:clamp(22px,3vw,44px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);box-shadow:var(--sh-1)}
+.tas-oc__bar{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px 28px;padding-bottom:clamp(20px,2.2vw,28px);border-bottom:1px solid var(--ink)}
+.tas-oc__who{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-top:10px;font-size:var(--t-sm);color:var(--txt)}
+.tas-oc__who code{font-family:var(--f);font-size:clamp(1.1rem,1.6vw,1.375rem);font-weight:600;letter-spacing:-.01em;line-height:1.2;color:var(--ink)}
+.tas-oc__own{font-family:var(--f);font-size:var(--t-xs);color:var(--muted)}
+.tas-oc__own b{font-weight:500;color:var(--ink)}
+.tas-oc__who .is-swap,.tas-oc__who.is-swap{animation:tas-oc-in .4s var(--e) both}
+
+/* ---- scorecard ---- */
+.tas-oc__tbl{display:flex;flex-direction:column}
+.tas-oc__hr,.tas-oc__row{display:grid;grid-template-columns:minmax(0,4.4fr) minmax(0,4fr) minmax(0,2.4fr) minmax(0,1.3fr);column-gap:clamp(18px,2.4vw,36px);align-items:center}
+.tas-oc__hr{padding:14px 0 12px;border-bottom:1px solid var(--line);font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.tas-oc__hr span:nth-child(4){text-align:right}
+.tas-oc__row{padding-block:clamp(16px,1.6vw,22px);border-bottom:1px solid var(--line)}
+.tas-oc__m h3{font-family:var(--f-h);font-size:1.125rem;font-weight:500;letter-spacing:-.012em;line-height:1.25;color:var(--ink)}
+.tas-oc__m p{margin-top:4px;font-size:var(--t-xs);line-height:1.5;color:var(--muted);max-width:46ch}
+
+.tas-oc__meter{display:flex;flex-direction:column;gap:8px;min-width:0}
+.tas-oc__track{position:relative;display:block;height:12px;border-radius:3px;background:var(--paper-3)}
+.tas-oc__zone{position:absolute;top:0;bottom:0}
+.tas-oc__zone--pass{background:var(--blue-wash-2);border-radius:3px}
+.tas-oc__zone--hold{background:var(--paper-4);border-radius:3px}
+.tas-oc__tick{position:absolute;top:-4px;bottom:-4px;width:2px;margin-left:-1px;background:var(--blue)}
+.tas-oc__tick--h{background:var(--ink)}
+.tas-oc__val{position:absolute;left:0;right:0;top:4px;height:4px;border-radius:2px;background:var(--ink);transform:scaleX(var(--p,0));transform-origin:left center;transition:transform .9s var(--e),background var(--d2) var(--e-io)}
+.tas-oc__row[data-s="pass"] .tas-oc__val{background:var(--blue)}
+.tas-oc__lines{display:flex;justify-content:space-between;gap:10px;font-family:var(--f);font-size:10px;letter-spacing:.04em;color:var(--faint);white-space:nowrap}
+
+.tas-oc__v{font-family:var(--f);font-size:var(--t-sm);font-weight:600;line-height:1.4;color:var(--ink);font-variant-numeric:tabular-nums}
+.tas-oc__v.is-swap{animation:tas-oc-in .4s var(--e) both}
+.tas-oc__st{display:flex;justify-content:flex-end}
+.tas-oc__pill{display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 12px 0 10px;border-radius:var(--r-pill);font-family:var(--f);font-size:var(--t-lbl);font-weight:600;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;
+  transition:background var(--d2) var(--e-io),color var(--d2) var(--e-io),box-shadow var(--d2) var(--e-io),opacity .45s var(--e),transform .45s var(--e)}
+.tas-oc__pill i{position:relative;width:14px;height:14px;border-radius:50%}
+.tas-oc__row[data-s="pass"] .tas-oc__pill{background:var(--blue);color:var(--on-ink)}
+.tas-oc__row[data-s="pass"] .tas-oc__pill i{background:var(--on-ink)}
+.tas-oc__row[data-s="pass"] .tas-oc__pill i::after{content:"";position:absolute;left:4.8px;top:2.4px;width:3.5px;height:7px;border:solid var(--blue);border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+.tas-oc__row[data-s="watch"] .tas-oc__pill{background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.tas-oc__row[data-s="watch"] .tas-oc__pill i{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.tas-oc__row[data-s="watch"] .tas-oc__pill i::after{content:"";position:absolute;left:3.5px;right:3.5px;top:6.25px;height:1.5px;background:var(--ink)}
+.tas-oc__row[data-s="hold"] .tas-oc__pill{background:var(--ink);color:var(--on-ink)}
+.tas-oc__row[data-s="hold"] .tas-oc__pill i{background:var(--on-ink)}
+.tas-oc__row[data-s="hold"] .tas-oc__pill i::after{content:"";position:absolute;left:4px;top:4px;width:6px;height:6px;border-radius:1px;background:var(--ink)}
+.tas-oc__row.is-swap .tas-oc__pill{animation:tas-oc-pop .45s var(--e) both}
+
+/* ---- decision ---- */
+.tas-oc__dec{display:grid;grid-template-columns:minmax(0,4.4fr) minmax(0,7.7fr);column-gap:clamp(18px,2.4vw,36px);row-gap:10px;align-items:start;margin-top:clamp(22px,2.6vw,32px);padding:clamp(18px,2vw,26px);border-radius:var(--r-lg);background:var(--paper-3)}
+.tas-oc__dec .tas-lbl{grid-column:1;grid-row:1}
+.tas-oc__dt{grid-column:1;grid-row:2 / span 2;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;font-family:var(--f-h);font-size:clamp(1.3rem,1.9vw,1.6rem);font-weight:500;letter-spacing:-.02em;line-height:1.15;color:var(--ink)}
+.tas-oc__dn{grid-column:2;grid-row:1 / span 2;font-size:var(--t-sm);line-height:1.6;color:var(--txt);max-width:62ch}
+.tas-oc__sign{grid-column:2;display:flex;flex-wrap:wrap;gap:6px}
+.tas-oc__sign span{padding:3px 9px;border-radius:var(--r-xs);background:var(--paper);font-family:var(--f);font-size:10px;letter-spacing:.04em;color:var(--txt)}
+.tas-oc__dec .is-swap{animation:tas-oc-in .45s var(--e) both}
+.tas-oc__note{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:16px;font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+
+/* ---- three outcomes ---- */
+
+/* ---- armed: statuses tick in order, bars grow (outcomes.js adds .is-armed; never under reduced motion) ---- */
+.tas-oc.is-armed .tas-oc__val{transform:scaleX(0)}
+.tas-oc.is-armed .tas-oc__pill{opacity:0;transform:scale(.85)}
+.tas-oc.is-armed.is-in .tas-oc__val{transform:scaleX(var(--p,0));transition-delay:calc(var(--i) * 140ms + 150ms)}
+.tas-oc.is-armed.is-in .tas-oc__pill{opacity:1;transform:none;transition-delay:calc(var(--i) * 140ms + 700ms)}
+.tas-oc.is-armed.is-in.is-done .tas-oc__val,.tas-oc.is-armed.is-in.is-done .tas-oc__pill{transition-delay:0s}
+
+@keyframes tas-oc-in{from{opacity:0;transform:translateY(5px)}}
+@keyframes tas-oc-pop{0%{transform:scale(.85);opacity:.3}100%{transform:none;opacity:1}}
+
+@media (max-width:1023px){
+  .tas-oc__hr{display:none}
+  .tas-oc__row{grid-template-columns:minmax(0,1fr) auto;row-gap:12px}
+  .tas-oc__m{grid-column:1 / -1}
+  .tas-oc__meter{grid-column:1 / -1}
+  .tas-oc__v{grid-column:1}
+  .tas-oc__st{grid-column:2}
+  .tas-oc__dec{grid-template-columns:minmax(0,1fr)}
+  .tas-oc__dec .tas-lbl,.tas-oc__dt,.tas-oc__dn,.tas-oc__sign{grid-column:1;grid-row:auto}
+}
+@media (max-width:600px){
+  .tas-oc__m p{display:none}
+  .tas-oc{padding:18px}
+  .tas-oc__seg{width:100%}
+  .tas-oc__seg button{flex:1;padding:0 10px}
+}
+@media (prefers-reduced-motion:reduce){
+  .tas-oc__val,.tas-oc__pill{transition:none}
+  .tas-oc .is-swap,.tas-oc__row.is-swap .tas-oc__pill{animation:none}
+}

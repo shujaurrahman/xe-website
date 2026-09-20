@@ -1,0 +1,143 @@
+/* Audits & Assessments · fixplan — the fix-order planner, on ink.
+   Controls across the top (capacity slider left, objective segmented control right), four readouts,
+   three lanes of finding cards, the cumulative value curve, then the sortable register.
+   fixplan.js FLIPs the cards between lanes and redraws the curve; everything here renders complete
+   without it. */
+.taa-fx__win{margin-top:0}
+
+/* ---------- controls ------------------------------------------------------ */
+.taa-fx__ctl{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(24px,3vw,56px);
+  padding:clamp(20px,2.4vw,30px) clamp(18px,2.2vw,28px);border-bottom:1px solid var(--on-ink-line)}
+.taa-fx__cap,.taa-fx__obj{display:flex;flex-direction:column;gap:12px;min-width:0}
+.taa-fx__slide{display:flex;align-items:center;gap:16px}
+.taa-fx__capo{flex:none;min-width:5.5em;font-family:var(--f);font-size:var(--t-sm);color:var(--on-ink-2);font-variant-numeric:tabular-nums}
+.taa-fx__capo .taa-num{font-size:1.5rem;line-height:1}
+.taa-fx__ticks{display:flex;justify-content:space-between;margin:0;padding-right:calc(5.5em + 16px);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;color:var(--on-ink-3)}
+.taa-fx__note{margin:0;font-size:var(--t-xs);line-height:1.55;color:var(--on-ink-3);max-width:52ch}
+
+/* range input: one track, one thumb, tokens only */
+.taa-fx__slide input[type="range"]{flex:1 1 auto;min-width:0;height:26px;margin:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+.taa-fx__slide input[type="range"]::-webkit-slider-runnable-track{height:6px;border-radius:var(--r-pill);background:var(--on-ink-line)}
+.taa-fx__slide input[type="range"]::-moz-range-track{height:6px;border-radius:var(--r-pill);background:var(--on-ink-line)}
+.taa-fx__slide input[type="range"]::-moz-range-progress{height:6px;border-radius:var(--r-pill);background:var(--blue)}
+.taa-fx__slide input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;margin-top:-7px;border:0;border-radius:50%;
+  background:var(--blue);box-shadow:0 0 0 4px var(--blue-wash);transition:transform var(--d1) var(--e-io)}
+.taa-fx__slide input[type="range"]::-moz-range-thumb{width:20px;height:20px;border:0;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px var(--blue-wash)}
+.taa-fx__slide input[type="range"]:hover::-webkit-slider-thumb{transform:scale(1.12)}
+.taa-fx__slide input[type="range"]:focus-visible{outline:2px solid var(--blue);outline-offset:6px;border-radius:var(--r-pill)}
+.taa-fx__win.is-auto .taa-fx__slide input[type="range"]::-webkit-slider-thumb{box-shadow:0 0 0 7px var(--blue-wash)}
+
+/* objective: segmented control */
+.taa-fx__seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;padding:2px;border:1px solid var(--on-ink-line);border-radius:var(--r-sm);background:transparent}
+.taa-fx__seg button{display:flex;flex-direction:column;gap:4px;min-height:58px;padding:9px 12px;border:0;border-radius:var(--r-xs);background:transparent;
+  text-align:left;color:var(--on-ink-3);cursor:pointer;transition:background var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.taa-fx__segn{font-family:var(--f-h);font-size:.95rem;font-weight:500;letter-spacing:-.01em;line-height:1.2}
+.taa-fx__segd{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;line-height:1.35;color:var(--on-ink-3)}
+.taa-fx__seg button:hover{color:var(--on-ink-2)}
+.taa-fx__seg button[aria-checked="true"]{background:var(--on-ink-card);color:var(--on-ink);box-shadow:inset 0 0 0 1px var(--blue-line)}
+.taa-fx__seg button[aria-checked="true"] .taa-fx__segd{color:var(--on-ink-2)}
+
+/* ---------- readouts ------------------------------------------------------ */
+.taa-fx__out{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin:0;background:var(--on-ink-line)}
+.taa-fx__out>div{display:flex;flex-direction:column;gap:8px;padding:16px clamp(14px,1.8vw,22px) 18px;background:var(--ink)}
+.taa-fx__out dt{display:flex;align-items:center;gap:8px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink-3);line-height:1.3}
+.taa-fx__out dd{margin:0;display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
+.taa-fx__out .taa-num{font-size:clamp(1.5rem,2.3vw,2rem);line-height:1;letter-spacing:-.01em;transition:color var(--d2) var(--e-io)}
+.taa-fx__out .taa-est{height:19px;padding:0 7px}
+.taa-fx__u{font-family:var(--f);font-size:var(--t-xs);color:var(--on-ink-3);white-space:nowrap}
+.taa-fx__out .taa-meter i{transition:transform .65s var(--e)}
+.taa-fx__win.is-bump .taa-fx__out .taa-num{color:var(--blue)}
+
+/* ---------- lanes --------------------------------------------------------- */
+.taa-fx__lanes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--on-ink-line);border-top:1px solid var(--on-ink-line)}
+.taa-fx__lane{display:flex;flex-direction:column;gap:4px;padding:18px clamp(14px,1.6vw,20px) 22px;background:var(--ink);min-width:0}
+.taa-fx__laneh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0;
+  font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.01em;color:var(--on-ink)}
+.taa-fx__laneh .taa-num{font-size:var(--t-sm)}
+.taa-fx__laned{margin:0 0 10px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--on-ink-3)}
+.taa-fx__lane[data-lane="now"]{box-shadow:inset 2px 0 0 var(--blue)}
+.taa-fx__lane[data-lane="later"] .taa-fx__card{opacity:.62}
+.taa-fx__cards{display:flex;flex-direction:column;gap:8px;min-height:64px}
+.taa-fx__card{display:flex;flex-direction:column;gap:7px;padding:12px 13px;border:1px solid var(--on-ink-line);border-radius:var(--r-sm);
+  background:var(--on-ink-card);transition:opacity var(--d2) var(--e-io),box-shadow var(--d2) var(--e-io)}
+.taa-fx__card.is-pinned{box-shadow:inset 0 0 0 1px var(--blue)}
+.taa-fx__cardt{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0}
+.taa-fx__cardt .taa-id{font-family:var(--f);font-size:var(--t-xs);font-weight:600;letter-spacing:.04em;color:var(--blue)}
+.taa-fx__cardf{margin:0;font-size:var(--t-sm);line-height:1.45;color:var(--on-ink-2)}
+.taa-fx__cardm{display:flex;flex-wrap:wrap;gap:6px 14px;margin:0;font-family:var(--f);font-size:var(--t-xs);color:var(--on-ink-3);font-variant-numeric:tabular-nums}
+.taa-fx__card.is-move{will-change:transform}
+
+/* ---------- value curve --------------------------------------------------- */
+.taa-fx__curve{margin:0;padding:clamp(18px,2.2vw,26px) clamp(18px,2.2vw,28px) clamp(20px,2.4vw,28px);border-top:1px solid var(--on-ink-line)}
+.taa-fx__curve figcaption{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 18px;margin-bottom:14px}
+.taa-fx__key{display:flex;flex-wrap:wrap;gap:8px 16px}
+.taa-fx__k{display:inline-flex;align-items:center;gap:7px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--on-ink-3)}
+.taa-fx__k::before{content:"";width:18px;height:2px;background:var(--blue)}
+.taa-fx__k--dash::before{background:transparent;border-top:2px dashed var(--on-ink-line)}
+.taa-fx__k--mark::before{width:2px;height:14px;background:var(--on-ink-2)}
+.taa-fx__plot{position:relative}
+.taa-fx__plot svg{display:block;width:100%;height:clamp(140px,17vw,188px)}
+.taa-fx__grid line{stroke:var(--on-ink-line);stroke-width:1}
+.taa-fx__dash{stroke:var(--on-ink-line);stroke-width:2;stroke-dasharray:5 5}
+.taa-fx__solid{stroke:var(--blue);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.taa-fx__markl{stroke:var(--on-ink-2);stroke-width:1.5;stroke-dasharray:3 4;transition:transform .45s var(--e)}
+.taa-fx__ymax{position:absolute;top:0;left:0;color:var(--on-ink-3)}
+.taa-fx__xmax{position:absolute;right:0;bottom:-4px;color:var(--on-ink-3)}
+.taa-fx__win.is-draw .taa-fx__solid{stroke-dasharray:var(--len,1400);stroke-dashoffset:var(--len,1400);animation:taa-fx-draw 1.1s var(--e-io) forwards}
+@keyframes taa-fx-draw{to{stroke-dashoffset:0}}
+
+/* ---------- register table ------------------------------------------------ */
+.taa-fx__tbl{border-top:1px solid var(--on-ink-line)}
+.taa-fx__table{min-width:1000px}
+.taa-fx__table thead th{background:transparent}
+.taa-fx__sortth{padding:0}
+.taa-fx__table thead button{display:inline-flex;align-items:center;gap:7px;width:100%;padding:12px 14px;border:0;background:transparent;
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-3);cursor:pointer;
+  transition:color var(--d1) var(--e-io)}
+.taa-fx__table thead button:hover{color:var(--on-ink)}
+.taa-fx__ar{width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;opacity:0;transform:rotate(45deg) translate(-2px,-2px);transition:opacity var(--d1) var(--e-io),transform var(--d1) var(--e-io)}
+.taa-fx__table th[aria-sort="ascending"] button,.taa-fx__table th[aria-sort="descending"] button{color:var(--blue)}
+.taa-fx__table th[aria-sort="ascending"] .taa-fx__ar{opacity:1;transform:rotate(-135deg) translate(-2px,-2px)}
+.taa-fx__table th[aria-sort="descending"] .taa-fx__ar{opacity:1;transform:rotate(45deg) translate(-2px,-2px)}
+.taa-fx__f{font-weight:500;color:var(--on-ink);min-width:320px}
+.taa-fx__area{display:block;margin-top:3px;font-family:var(--f);font-size:var(--t-xs);font-weight:400;letter-spacing:.04em;color:var(--on-ink-3)}
+.taa-fx__of{color:var(--on-ink-3);font-size:var(--t-xs)}
+.taa-fx__na{color:var(--on-ink-3)}
+.taa-fx__dep{font-family:var(--f);font-size:var(--t-xs);color:var(--on-ink-2)}
+.taa-fx__lanetag{transition:background var(--d2) var(--e-io),color var(--d2) var(--e-io)}
+.taa-fx__table tr[data-lane="now"] .taa-fx__lanetag{background:var(--blue);color:var(--on-ink)}
+.taa-fx__table tr[data-lane="later"] .taa-fx__lanetag{color:var(--on-ink-3)}
+.taa-fx__table tbody tr{transition:background var(--d2) var(--e-io)}
+.taa-fx__table tbody tr:hover{background:var(--on-ink-card)}
+.taa-fx__pin{display:grid;place-items:center;width:30px;height:30px;border:1px solid var(--on-ink-line);border-radius:var(--r-xs);background:transparent;cursor:pointer;
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io)}
+.taa-fx__pini{width:9px;height:9px;border-radius:50%;background:var(--on-ink-line);transition:background var(--d1) var(--e-io),transform var(--d1) var(--e)}
+.taa-fx__pin:hover{border-color:var(--blue-line)}
+.taa-fx__pin:hover .taa-fx__pini{background:var(--on-ink-2)}
+.taa-fx__pin[aria-pressed="true"]{border-color:var(--blue);background:var(--blue-wash)}
+.taa-fx__pin[aria-pressed="true"] .taa-fx__pini{background:var(--blue);transform:scale(1.25)}
+
+.taa-fx__foot{padding:16px clamp(18px,2.2vw,28px) 20px;border-top:1px solid var(--on-ink-line);background:var(--on-ink-card)}
+.taa-fx__foot p{margin:0;max-width:104ch;font-size:var(--t-xs);line-height:1.6;color:var(--on-ink-3)}
+.taa-fx__foot b{font-weight:600;color:var(--on-ink-2)}
+
+/* ---------- responsive ---------------------------------------------------- */
+@media (max-width:1023px){
+  .taa-fx__ctl{grid-template-columns:minmax(0,1fr);gap:26px}
+  .taa-fx__out{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .taa-fx__lanes{grid-template-columns:minmax(0,1fr)}
+  .taa-fx__lane[data-lane="now"]{box-shadow:inset 0 2px 0 var(--blue)}
+}
+@media (max-width:640px){
+  .taa-fx__out{grid-template-columns:minmax(0,1fr)}
+  .taa-fx__seg{grid-template-columns:minmax(0,1fr)}
+  .taa-fx__ticks{padding-right:0}
+  .taa-fx__slide{flex-wrap:wrap}
+  .taa-fx__capo{min-width:0}
+  .taa-fx__curve figcaption{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){
+  .taa-fx__card,.taa-fx__markl,.taa-fx__out .taa-meter i,.taa-fx__out .taa-num{transition:none}
+  .taa-fx__win.is-draw .taa-fx__solid{animation:none;stroke-dasharray:none;stroke-dashoffset:0}
+}

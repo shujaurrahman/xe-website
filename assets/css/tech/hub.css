@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Technology & Intelligence hub — BASE LAYER (services/technology-intelligence.php)
+   Loaded after assets/css/brand/hub.css (.bdh-*) and assets/css/tech/kit.css (.xt-*).
+   Only .tih-* primitives shared by several sections live here; each section styles itself in
+   assets/css/tech/hub/<id>.css. Tokens from core.css :root only; no new colours; no gradients
+   except core .aurora/.dither and mask fades; no !important.
+
+   CONVENTIONS
+   • Root: <section class="band [band--alt|band--ink] tih-<id>" id="<id>" aria-labelledby="<id>-t">
+   • Heads reuse .bdh-head / --row / --c. Cards reuse .bdh-card, mock UI reuses .bdh-ui.
+   • .tih-stage   a fixed 1000 × 700 map (svg + absolutely placed .tih-node pills) shared by the
+                  hero topology and the composer mini-map; set --x / --y on each node (0–100).
+   • .tih-node    one capability on a map: <span class="tih-node"><b>04</b><span>AI Product</span></span>
+   • .tih-capl    a capability link chip: <a class="tih-capl" href="…"><b>04</b>AI Product<i>›</i></a>
+   • .tih-k       mono key label · .tih-note small footnote · .tih-on-ink for dark panels on paper
+   • Motion: loops only under .is-live (BDH.live / BDH.loop / BDH.seq); reduced motion = final state.
+   ========================================================================== */
+
+.tih{
+  --tih-bleed:max(var(--gutter),calc((100vw - var(--wrap)) / 2));   /* distance from .wrap edge to the viewport edge */
+  --tih-mono-s:.625rem;
+}
+
+/* ---------- labels + notes -------------------------------------------------- */
+.tih-k{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;line-height:1.3;color:var(--faint)}
+.band--ink .tih-k,.tih-on-ink .tih-k{color:var(--on-ink-3)}
+.tih-note{font-size:var(--t-xs);line-height:1.55;color:var(--muted);max-width:72ch}
+.band--ink .tih-note{color:var(--on-ink-3)}
+.tih-note b{font-weight:500;color:var(--ink)}
+.band--ink .tih-note b{color:var(--on-ink-2)}
+
+/* ---------- capability link chip -------------------------------------------- */
+.tih-capl{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 12px 0 6px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--paper);
+  font-size:var(--t-xs);font-weight:500;line-height:1.25;color:var(--ink);white-space:nowrap;
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.tih-capl b{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 6px;border-radius:var(--r-pill);background:var(--paper-3);font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.04em;color:var(--blue-d)}
+.tih-capl i{font-family:var(--f);font-style:normal;color:var(--blue);transition:transform var(--d2) var(--e)}
+.tih-capl:hover,.tih-capl:focus-visible{border-color:var(--blue-line);background:var(--blue-wash)}
+.tih-capl:hover i,.tih-capl:focus-visible i{transform:translateX(3px)}
+.band--ink .tih-capl,.tih-on-ink .tih-capl{background:var(--on-ink-card);border-color:var(--on-ink-line);color:var(--on-ink)}
+.band--ink .tih-capl b,.tih-on-ink .tih-capl b{background:rgba(255,255,255,.08);color:var(--on-ink)}
+.band--ink .tih-capl:hover,.band--ink .tih-capl:focus-visible{border-color:var(--blue);background:rgba(255,255,255,.1)}
+@media (max-width:600px){.tih-capl{white-space:normal;min-height:36px;padding-block:5px}}
+
+/* ---------- map stage (1000 × 700) + nodes ---------------------------------- */
+.tih-stage{position:relative;width:100%;aspect-ratio:1000 / 700}
+.tih-stage>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.tih-node{position:absolute;left:calc(var(--x) * 1%);top:calc(var(--y) * 1%);z-index:2;translate:-50% -50%;
+  display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 11px 0 5px;border-radius:var(--r-pill);
+  border:1px solid var(--line-3);background:var(--paper);box-shadow:var(--sh-1);
+  font-size:var(--t-xs);font-weight:500;line-height:1;color:var(--ink);white-space:nowrap;
+  transition:opacity var(--d2) var(--e),border-color var(--d2) var(--e),background var(--d2) var(--e),box-shadow var(--d2) var(--e),color var(--d2) var(--e)}
+.tih-node b{display:inline-grid;place-items:center;min-width:24px;height:22px;padding:0 5px;border-radius:var(--r-pill);background:var(--paper-3);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.02em;color:var(--muted);transition:background var(--d2) var(--e),color var(--d2) var(--e)}
+.tih-node.is-dim{opacity:.38}
+.tih-node.is-on{border-color:var(--blue);box-shadow:0 0 0 4px var(--blue-wash),var(--sh-1)}
+.tih-node.is-on b{background:var(--blue);color:var(--on-ink)}
+.tih-on-ink .tih-node{background:var(--ink-2);border-color:var(--on-ink-line);box-shadow:none;color:var(--on-ink)}
+.tih-on-ink .tih-node b{background:rgba(255,255,255,.08);color:var(--on-ink-2)}
+.tih-on-ink .tih-node.is-on{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,130,251,.18)}
+
+/* ---------- small shared bits ------------------------------------------------ */
+.tih-live{display:inline-flex;align-items:center;gap:8px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.band--ink .tih-live,.tih-on-ink .tih-live{color:var(--on-ink-2)}
+.tih-kbd{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:5px;border:1px solid var(--line-3);font-family:var(--f);font-size:var(--tih-mono-s);color:var(--muted);line-height:1}
+
+@media (prefers-reduced-motion:reduce){
+  .tih-node,.tih-capl,.tih-capl i{transition:none}
+}
+
+/* the one-copy brand-mark sprite the page shell writes at the top of <main> (see services/technology-intelligence.php) */
+.tih-sprite{position:absolute;width:0;height:0;overflow:hidden}

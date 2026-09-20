@@ -1,0 +1,133 @@
+/* ==========================================================================
+   AI Infrastructure & Cloud — "The Engine Room". Page base layer (.tic-*).
+   Loads after assets/css/brand/hub.css and assets/css/tech/kit.css. Tokens from core.css only;
+   no new colours; no gradients except mask fades; no !important.
+   Section styles: assets/css/tech/ai-infrastructure-cloud/<id>.css.
+
+   Primitives
+   • .tic-head          channel head: a numbered channel rule, the h2 left, the lead right
+   • .tic-ch            the channel rule on its own ("04 · Failure drill ———— readout")
+   • .tic-panel         instrument panel (paper; ink inside .band--ink or with .tic-panel--ink)
+   • .tic-k / .tic-v    mono readout label / mono figure
+   • .tic-led           status LED (.is-live blinks .tic-led--blink); --off, --warn
+   • .tic-btn           console button (aria-pressed / .is-on = engaged)
+   • .tic-chart         SVG chart defaults: grid, axis text, series strokes
+   ========================================================================== */
+.tic{
+  --tic-gap:clamp(20px,2.4vw,32px);
+  --tic-gap-l:clamp(40px,6vw,96px);
+  --tic-head-mb:clamp(44px,5.4vw,80px);
+  overflow-x:clip;
+}
+
+/* ---- channel head --------------------------------------------------------- */
+.tic-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--tic-gap);row-gap:22px;align-items:end;margin-bottom:var(--tic-head-mb)}
+.tic-head>.tic-ch{grid-column:1 / -1;margin-bottom:clamp(8px,1.4vw,18px)}
+.tic-head__t{grid-column:1 / span 7;display:flex;flex-direction:column;gap:18px;min-width:0}
+.tic-head__t .h2{max-width:21ch}
+.tic-head__l{grid-column:9 / -1;display:flex;flex-direction:column;align-items:flex-start;gap:18px;min-width:0}
+.tic-head__l .lead{max-width:52ch}
+.tic-head--wide .tic-head__t{grid-column:1 / span 8}
+.tic-head--wide .tic-head__t .h2{max-width:24ch}
+@media (max-width:1023px){.tic-head__t{grid-column:1 / span 8}.tic-head__l{grid-column:1 / span 9}}
+@media (max-width:860px){.tic-head__t,.tic-head__l,.tic-head--wide .tic-head__t{grid-column:1 / -1}}
+
+.tic-ch{display:flex;align-items:center;gap:12px;min-width:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;line-height:1.3;color:var(--muted)}
+.tic-ch b{font-weight:500;color:var(--blue);font-variant-numeric:tabular-nums}
+.tic-ch span{white-space:nowrap}
+.tic-ch i{flex:1;min-width:24px;height:1px;background:var(--line)}
+.tic-ch em{font-style:normal;color:var(--faint);letter-spacing:.08em;text-transform:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.band--ink .tic-ch{color:var(--on-ink-2)}
+.band--ink .tic-ch i{background:var(--on-ink-line)}
+.band--ink .tic-ch em{color:var(--on-ink-3)}
+@media (max-width:600px){.tic-ch em{display:none}}
+
+/* ---- panels + readouts ------------------------------------------------------ */
+.tic-panel{position:relative;min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg)}
+.band--ink .tic-panel,.tic-panel--ink{background:var(--ink-2);border-color:var(--on-ink-line);color:var(--on-ink-2)}
+.tic-panel__bar{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 16px;border-bottom:1px solid var(--line-2);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;color:var(--muted);white-space:nowrap;min-width:0}
+.band--ink .tic-panel__bar,.tic-panel--ink .tic-panel__bar{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+
+.tic-k{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;line-height:1.35;color:var(--muted)}
+.band--ink .tic-k,.tic-panel--ink .tic-k{color:var(--on-ink-3)}
+.tic-v{font-family:var(--f);font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.1;color:var(--ink)}
+.band--ink .tic-v,.tic-panel--ink .tic-v{color:var(--on-ink)}
+.tic-v small{font-size:.58em;font-weight:400;letter-spacing:0;color:var(--muted);margin-left:.25em}
+.band--ink .tic-v small,.tic-panel--ink .tic-v small{color:var(--on-ink-3)}
+
+/* ---- status LED ------------------------------------------------------------- */
+.tic-led{display:inline-block;flex:none;width:7px;height:7px;border-radius:50%;background:var(--blue);vertical-align:middle}
+.tic-led--off{background:var(--line-3)}
+.band--ink .tic-led--off,.tic-panel--ink .tic-led--off{background:var(--on-ink-line)}
+.tic-led--ink{background:var(--ink)}
+.band--ink .tic-led--ink{background:var(--on-ink)}
+.is-live .tic-led--blink{animation:tic-blink 2.2s steps(1,end) infinite;animation-delay:calc(var(--i,0) * -370ms)}
+@keyframes tic-blink{0%,62%{opacity:1}63%,70%{opacity:.25}71%,86%{opacity:1}87%,92%{opacity:.35}93%,100%{opacity:1}}
+
+/* ---- console buttons ------------------------------------------------------- */
+.tic-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid var(--line-3);border-radius:var(--r-sm);background:var(--paper);
+  font-size:var(--t-sm);font-weight:500;line-height:1.2;color:var(--ink);text-align:left;
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io),color var(--d1) var(--e-io),box-shadow var(--d2) var(--e)}
+.tic-btn:hover{border-color:var(--ink)}
+.tic-btn[aria-pressed="true"],.tic-btn.is-on{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.tic-btn:disabled{opacity:.45;cursor:not-allowed}
+.tic-btn--blue{background:var(--blue);border-color:var(--blue);color:var(--on-ink)}
+.tic-btn--blue:hover{background:var(--blue-d);border-color:var(--blue-d)}
+.band--ink .tic-btn{background:transparent;border-color:var(--on-ink-line);color:var(--on-ink)}
+.band--ink .tic-btn:hover{border-color:var(--on-ink-2)}
+.band--ink .tic-btn[aria-pressed="true"],.band--ink .tic-btn.is-on{background:var(--paper);border-color:var(--paper);color:var(--ink)}
+.band--ink .tic-btn--blue{background:var(--blue);border-color:var(--blue);color:var(--on-ink)}
+.tic-btn__k{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.08em;color:var(--blue)}
+.tic-btn[aria-pressed="true"] .tic-btn__k{color:inherit}
+
+/* ---- SVG chart defaults ------------------------------------------------------ */
+.tic-chart{display:block;width:100%;height:auto;overflow:visible}
+.tic-chart .gl{stroke:var(--line-2);stroke-width:1;vector-effect:non-scaling-stroke}
+.tic-chart .ax{stroke:var(--line-3);stroke-width:1;vector-effect:non-scaling-stroke}
+.tic-chart .th{stroke:var(--ink);stroke-width:1;stroke-dasharray:4 4;vector-effect:non-scaling-stroke}
+.tic-chart .s1{fill:none;stroke:var(--ink);stroke-width:1.75;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.tic-chart .s2{fill:none;stroke:var(--blue);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.tic-chart .s3{fill:none;stroke:var(--faint);stroke-width:1.25;stroke-dasharray:3 3;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.tic-chart text{font-family:var(--f);font-size:10px;letter-spacing:.04em;fill:var(--faint)}
+.band--ink .tic-chart .gl{stroke:var(--on-ink-line)}
+.band--ink .tic-chart .ax{stroke:var(--on-ink-line)}
+.band--ink .tic-chart .th{stroke:var(--on-ink-2)}
+.band--ink .tic-chart .s1{stroke:var(--on-ink)}
+.band--ink .tic-chart .s3{stroke:var(--on-ink-3)}
+.band--ink .tic-chart text{fill:var(--on-ink-3)}
+
+/* ---- small shared bits --------------------------------------------------------- */
+.tic-chip{display:inline-flex;align-items:center;gap:7px;min-height:28px;padding:3px 11px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--paper);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.06em;line-height:1.3;color:var(--txt);white-space:nowrap}
+.tic-chip .xt-logo{color:var(--ink)}
+.band--ink .tic-chip{background:var(--on-ink-card);border-color:var(--on-ink-line);color:var(--on-ink-2)}
+.band--ink .tic-chip .xt-logo{color:var(--on-ink)}
+.tic-chip__dot{flex:none;width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.tic-chip .xt-logo{flex:none}
+.tic-note{font-size:var(--t-xs);line-height:1.55;color:var(--faint)}
+.band--ink .tic-note{color:var(--on-ink-3)}
+
+/* ---- wipe reveal for drawn series -------------------------------------------- */
+/* A one-unit stroke-dasharray (pathLength="1") and vector-effect:non-scaling-stroke cannot both be
+   used on a path inside preserveAspectRatio="none": Chromium resolves the dash in the stroke's screen
+   space, so the line settles short of its end. Series that want a crisp, unstretched stroke reveal by
+   wiping a clip rect instead — the same technique the failure drill uses. The finished path is always
+   in the HTML; only the clip moves. */
+.tic-wipe{transform-box:fill-box;transform-origin:left center;transform:scaleX(0);transition:transform 1.25s var(--e) calc(var(--i,0) * 90ms + .15s)}
+.is-in .tic-wipe,.is-in.tic-wipe{transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  .tic *,.tic *::before,.tic *::after{animation:none;transition-duration:.01ms}
+  .tic-wipe{transform:none;transition:none}
+}
+
+/* ---- without JavaScript, nothing waits for .is-in ------------------------------- */
+/* core.css hides [data-rv] until a script adds .is-in, and the page's own reveals key off the same
+   class. With scripting off there is no script, so every reveal resolves to its finished state. */
+@media (scripting:none){
+  .tic [data-rv],.tic [data-rv-s]>*{opacity:1;transform:none}
+  .tic .bdh-draw :is(path,line,rect,circle,ellipse,polyline,polygon),
+  .tic :is(path,line,rect,circle,ellipse,polyline,polygon).bdh-draw{stroke-dashoffset:0}
+  .tic .bdh-grow,.tic .bdh-growY,.tic .bdh-up{transform:none;opacity:1}
+  .tic-wipe{transform:none}
+}

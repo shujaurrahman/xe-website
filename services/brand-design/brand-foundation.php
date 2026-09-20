@@ -22,13 +22,13 @@ unset($cbf_disc);
 /* Running order — reads like the document: premise → clauses → evidence → drafting → ratified → annex. */
 $CBF = [
     'hero', 'essay', 'charter', 'tensions', 'composer', 'rules', 'narrative',
-    'revisions', 'onepage', 'appendix', 'room', 'transcript', 'seealso',
+    'revisions', 'onepage', 'appendix', 'room', 'services', 'transcript', 'seealso',
 ];
 
 $cbf_root = __DIR__ . '/../../';
 $cbf_has  = fn (string $p): bool => is_file($cbf_root . $p) && filesize($cbf_root . $p) > 0;
-$cbf_css  = ['assets/css/brand/hub.css', 'assets/css/brand/brand-foundation.css'];
-$cbf_js   = ['assets/js/brand/hub.js'];
+$cbf_css  = ['assets/css/brand/hub.css', 'assets/css/services.css', 'assets/css/brand/brand-foundation.css'];
+$cbf_js   = ['assets/js/brand/hub.js', 'assets/js/services.js'];
 foreach ($CBF as $cbf_id) {
     if ($cbf_has($cbf_x = 'assets/css/brand/brand-foundation/' . $cbf_id . '.css')) $cbf_css[] = $cbf_x;
     if ($cbf_has($cbf_x = 'assets/js/brand/brand-foundation/' . $cbf_id . '.js'))   $cbf_js[]  = $cbf_x;

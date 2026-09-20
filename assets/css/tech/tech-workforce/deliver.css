@@ -1,0 +1,93 @@
+/* ==========================================================================
+   Tech Workforce · deliver — a manifest table inside window chrome: deliverable, format, when it
+   lands, and inclusion across the four engagement models. The deliverable column stays put while
+   the model columns scroll sideways; each model column head carries its own count; deliver.js
+   lights a whole column on hover or focus. Below it, two cards: where deliverables land, and the
+   reporting rhythm. Motion is armed only (see the contract in tech-workforce.css) — unarmed, every
+   row and every tick is in place.
+   ========================================================================== */
+.ttw-dlv__win{margin:0}
+.ttw-dlv__count{color:var(--muted)}
+
+.ttw-dlv__scroll{overflow-x:auto;overscroll-behavior-x:contain}
+.ttw-dlv__scroll:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+
+.ttw-dlv__tbl{width:100%;min-width:860px;border-collapse:collapse;text-align:left}
+.ttw-dlv__tbl thead th{padding:13px 16px;border-bottom:1px solid var(--line);background:var(--paper-2);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap;vertical-align:bottom}
+.ttw-dlv__tbl thead .ttw-dlv__ch{padding-left:20px}
+.ttw-dlv__tbl thead .ttw-dlv__cm{width:92px;text-align:center;vertical-align:bottom}
+.ttw-dlv__cn{display:block;margin-top:6px;font-size:10.5px;letter-spacing:.06em;color:var(--faint);font-variant-numeric:tabular-nums}
+/* The deliverable column holds its place while the model columns scroll sideways. */
+.ttw-dlv__tbl thead .ttw-dlv__ch,.ttw-dlv__rh{position:sticky;left:0;z-index:1}
+.ttw-dlv__tbl thead .ttw-dlv__ch{background:var(--paper-2)}
+.ttw-dlv__rh{background:var(--paper)}
+.ttw-dlv__tbl tbody td,.ttw-dlv__tbl tbody th{padding:16px;border-bottom:1px solid var(--line-2);vertical-align:top}
+.ttw-dlv__tbl tbody tr:last-child td,.ttw-dlv__tbl tbody tr:last-child th{border-bottom:0}
+
+.ttw-dlv__row{--i:0}
+.ttw-dlv__rh{padding-left:20px;font-weight:400}
+.ttw-dlv__rw{display:grid;grid-template-columns:auto auto minmax(0,1fr);align-items:start;gap:0 12px}
+.ttw-dlv__ix{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;color:var(--blue);padding-top:9px}
+.ttw-dlv__ic{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;flex:none;
+  border:1px solid var(--line-2);border-radius:var(--r-sm);background:var(--paper-2);color:var(--ink)}
+.ttw-dlv__tx{display:flex;flex-direction:column;gap:5px;min-width:0;max-width:44ch}
+.ttw-dlv__h{font-family:var(--f-h);font-size:clamp(.99rem,1.2vw,1.08rem);font-weight:500;letter-spacing:-.015em;line-height:1.28;color:var(--ink)}
+.ttw-dlv__d{font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+
+.ttw-dlv__fm{white-space:nowrap}
+/* The short form is the scannable value; the sentence under it keeps the detail to two lines. */
+.ttw-dlv__wh{min-width:150px;max-width:23ch}
+.ttw-dlv__when{display:inline-flex;align-items:center;min-height:22px;padding:0 9px;border:1px solid var(--blue-line);border-radius:var(--r-xs);
+  background:var(--blue-wash);font-family:var(--f);font-size:var(--t-xs);color:var(--blue-d);white-space:nowrap}
+.ttw-dlv__whl{display:block;margin-top:7px;font-family:var(--f);font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+.ttw-dlv__m{text-align:center;white-space:nowrap}
+.ttw-dlv__m .ttw-tick{margin:2px auto 0}
+.ttw-dlv__no{display:inline-block;padding-top:2px;font-family:var(--f);font-size:var(--t-xs);color:var(--faint)}
+.ttw-dlv__tbl tbody tr:hover td,.ttw-dlv__tbl tbody tr:hover th{background:var(--paper-2)}
+/* A model read down the page: deliver.js marks the column under the pointer or the focus ring. */
+.ttw-dlv__tbl .is-hl{background:var(--blue-wash)}
+.ttw-dlv__tbl tbody tr:hover .is-hl{background:var(--blue-wash-2)}
+.ttw-dlv__tbl thead th.is-hl{color:var(--blue-d)}
+.ttw-dlv__tbl thead th.is-hl .ttw-dlv__cn{color:var(--blue)}
+
+.ttw-dlv__hint{display:none;margin:10px 0 0;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+
+.ttw-dlv__strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ttw-gap);margin-top:var(--ttw-gap)}
+.ttw-dlv__c{display:flex;flex-direction:column;gap:13px}
+.ttw-dlv__stack{margin-top:2px}
+.ttw-dlv__fine{margin:auto 0 0;font-size:var(--t-xs);line-height:1.6;color:var(--faint)}
+.ttw-dlv__cad{display:flex;flex-direction:column;margin:2px 0 0}
+.ttw-dlv__cad>div{display:grid;grid-template-columns:104px minmax(0,1fr);gap:14px;padding:11px 0;border-bottom:1px solid var(--line-2)}
+.ttw-dlv__cad>div:last-child{border-bottom:0;padding-bottom:0}
+.ttw-dlv__cad dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--blue-d)}
+.ttw-dlv__cad dd{margin:0;font-size:var(--t-sm);line-height:1.55;color:var(--muted)}
+
+.ttw-dlv__note{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:clamp(24px,2.6vw,34px) 0 0;font-size:var(--t-sm);color:var(--muted)}
+
+@media (prefers-reduced-motion:no-preference){
+  /* The cascade is capped at the first few rows so the whole manifest is readable quickly. */
+  .ttw-dlv__win.is-armed .ttw-dlv__row{transition:opacity .3s var(--e),transform .3s var(--e);transition-delay:calc(min(var(--i), 3) * 30ms)}
+  .ttw-dlv__win.is-armed tbody:not(.is-in) .ttw-dlv__row{opacity:0;transform:translateY(10px)}
+  .ttw-dlv__win.is-armed .ttw-dlv__m .ttw-tick,.ttw-dlv__win.is-armed .ttw-dlv__no{transition:opacity .22s var(--e),transform .22s var(--e);transition-delay:calc((min(var(--i), 3) * 30ms) + 60ms)}
+  .ttw-dlv__win.is-armed tbody:not(.is-in) .ttw-dlv__m .ttw-tick,.ttw-dlv__win.is-armed tbody:not(.is-in) .ttw-dlv__no{opacity:0;transform:scale(.7)}
+  .ttw-dlv__tbl tbody td,.ttw-dlv__tbl tbody th{transition:background var(--d2) var(--e)}
+}
+
+@media (max-width:1023px){
+  .ttw-dlv__strip{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:900px){
+  .ttw-dlv__hint{display:block}
+  /* The scroller keeps the deliverable column wide enough to read: squeezing it here would wrap
+     every description into a column two words wide and make the table far taller than the page. */
+  .ttw-dlv__tbl{min-width:840px}
+  .ttw-dlv__rh{min-width:300px}
+  .ttw-dlv__wh{min-width:132px;max-width:17ch}
+  .ttw-dlv__rh,.ttw-dlv__tbl thead .ttw-dlv__ch{padding-left:16px}
+  .ttw-dlv__ix{display:none}
+  .ttw-dlv__rw{grid-template-columns:auto minmax(0,1fr)}
+}
+@media (max-width:520px){
+  .ttw-dlv__cad>div{grid-template-columns:minmax(0,1fr);gap:4px}
+}

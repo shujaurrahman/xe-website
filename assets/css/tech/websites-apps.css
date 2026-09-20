@@ -1,0 +1,82 @@
+/* ==========================================================================
+   Websites & Apps — "The Field Test". Page base layer (.twa-*), loaded after
+   assets/css/brand/hub.css and assets/css/tech/kit.css. Section styles live in
+   assets/css/tech/websites-apps/<id>.css. Tokens from core.css :root only; no new
+   colours; no gradients except mask fades; no !important.
+
+   Primitives
+   • .twa-head            section head: a mono test-log line over heading (left) and lead (right)
+   • .twa-rt--good|ni|poor Core Web Vitals rating: shape + word, never colour alone
+                          good = blue dot · needs improvement = outlined square · poor = solid triangle
+   • .twa-ill             "Illustrative" stamp for modelled numbers
+   • .twa-btn             square-shouldered control button (aria-pressed / is-on aware)
+   • .twa-mono            inline mono readout
+   • .twa-ph              editorial photo with a technical caption chip
+   ========================================================================== */
+.twa{
+  --twa-gap:clamp(20px,2.4vw,32px);
+  --twa-gap-l:clamp(40px,6vw,96px);
+  --twa-head-mb:clamp(44px,5vw,76px);
+  --twa-hero-t:clamp(132px,15vh,184px);
+  overflow-x:clip;
+}
+.twa :focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* ---------- section head --------------------------------------------------- */
+.twa-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--twa-gap);row-gap:22px;align-items:end;margin-bottom:var(--twa-head-mb)}
+.twa-head__run{grid-column:1 / -1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;padding-bottom:16px;border-bottom:1px solid var(--line);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1.4}
+.twa-head__run b{display:inline-flex;align-items:center;gap:12px;font-weight:500;color:var(--ink)}
+.twa-head__run b::before{content:"";width:7px;height:7px;flex:none;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px var(--blue-wash-2)}
+.twa-head__t{grid-column:1 / span 7;min-width:0;display:flex;flex-direction:column;gap:18px}
+.twa-head__t .h2{max-width:19ch}
+.twa-head__l{grid-column:8 / -1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:20px}
+.twa-head__l .lead{max-width:52ch}
+.twa-head--solo .twa-head__t{grid-column:1 / span 9}
+.band--ink .twa-head__run{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+.band--ink .twa-head__run b{color:var(--on-ink)}
+@media (max-width:860px){
+  .twa-head__t,.twa-head__l,.twa-head--solo .twa-head__t{grid-column:1 / -1}
+}
+
+/* ---------- Core Web Vitals rating ----------------------------------------- */
+.twa-rt{display:inline-flex;align-items:center;gap:7px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.08em;text-transform:uppercase;line-height:1.2;color:var(--ink);white-space:nowrap}
+.twa-rt::before{content:"";width:9px;height:9px;flex:none}
+.twa-rt--good::before{border-radius:50%;background:var(--blue)}
+.twa-rt--ni::before{width:8px;height:8px;border-radius:1px;box-shadow:inset 0 0 0 1.5px var(--ink)}
+.twa-rt--poor::before{width:10px;background:var(--ink);clip-path:polygon(50% 0,100% 100%,0 100%)}
+.band--ink .twa-rt,.xt-on-ink .twa-rt{color:var(--on-ink)}
+.band--ink .twa-rt--ni::before,.xt-on-ink .twa-rt--ni::before{box-shadow:inset 0 0 0 1.5px var(--on-ink)}
+.band--ink .twa-rt--poor::before,.xt-on-ink .twa-rt--poor::before{background:var(--on-ink)}
+
+/* ---------- stamps, readouts, controls ------------------------------------- */
+.twa-ill{display:inline-flex;align-items:center;gap:6px;min-height:22px;padding:2px 9px;border:1px dashed var(--line-3);border-radius:var(--r-pill);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.35;
+  /* the stamp wraps rather than running past its column and losing its last words */
+  max-width:100%}
+.band--ink .twa-ill,.xt-on-ink .twa-ill{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+.twa-mono{font-family:var(--f);font-size:var(--t-xs);letter-spacing:.02em;font-variant-numeric:tabular-nums}
+
+.twa-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 14px;border:1px solid var(--line-3);border-radius:var(--r-xs);background:var(--paper);
+  font-size:var(--t-xs);font-weight:500;color:var(--ink);white-space:nowrap;transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.twa-btn:hover{border-color:var(--ink)}
+.twa-btn[aria-pressed="true"],.twa-btn[aria-selected="true"],.twa-btn.is-on{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.twa-btn:disabled{opacity:.45;cursor:not-allowed}
+.twa-btn--blue{background:var(--blue);border-color:var(--blue);color:var(--on-ink)}
+.twa-btn--blue:hover{background:var(--blue-d);border-color:var(--blue-d)}
+.band--ink .twa-btn,.xt-on-ink .twa-btn{background:transparent;border-color:var(--on-ink-line);color:var(--on-ink)}
+.band--ink .twa-btn:hover,.xt-on-ink .twa-btn:hover{border-color:var(--on-ink-3)}
+.band--ink .twa-btn[aria-pressed="true"],.band--ink .twa-btn[aria-selected="true"],.band--ink .twa-btn.is-on{background:var(--paper);border-color:var(--paper);color:var(--ink)}
+.band--ink .twa-btn--blue{background:var(--blue);border-color:var(--blue);color:var(--on-ink)}
+
+/* ---------- editorial photo with a technical caption ------------------------ */
+.twa-ph{position:relative;min-width:0}
+.twa-ph .bdh-cap-chip{position:absolute;left:14px;bottom:14px;max-width:calc(100% - 28px)}
+.twa-ph__frame{position:absolute;inset:12px;z-index:2;pointer-events:none}
+.twa-ph__frame i{position:absolute;width:14px;height:14px;border:0 solid var(--on-ink)}
+.twa-ph__frame i:nth-child(1){left:0;top:0;border-left-width:1.5px;border-top-width:1.5px}
+.twa-ph__frame i:nth-child(2){right:0;top:0;border-right-width:1.5px;border-top-width:1.5px}
+.twa-ph__frame i:nth-child(3){right:0;bottom:0;border-right-width:1.5px;border-bottom-width:1.5px}
+.twa-ph__frame i:nth-child(4){left:0;bottom:0;border-left-width:1.5px;border-bottom-width:1.5px}
+
+@media (prefers-reduced-motion:reduce){.twa *,.twa *::before,.twa *::after{animation-duration:.001ms;animation-iteration-count:1;transition-duration:.001ms}}

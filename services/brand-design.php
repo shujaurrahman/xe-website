@@ -21,10 +21,13 @@ $BRAND = null;
 foreach ($SITE['disciplines'] as $bdh_disc) { if ($bdh_disc['slug'] === 'brand-design') $BRAND = $bdh_disc; }
 unset($bdh_disc);
 
-/* Running order: belief → system → world → proof. */
+/* Running order: belief → system → world → proof → buy.
+   'services' is the shared catalogue (partials/services/catalogue.php, data/services/brand-design.php). Its packages
+   row replaced the 'engagement' section (partials/brand/hub/engagement.php, kept on disk but no longer shown), so the
+   page never carries two competing sets of engagement models. */
 $HUB = [
     'hero', 'navigator', 'why-now', 'capabilities', 'journey', 'ai-os', 'ai-trust', 'deliverables',
-    'touchpoints', 'industries', 'global', 'sustainability', 'measurement', 'engagement', 'principles', 'faq',
+    'touchpoints', 'industries', 'global', 'sustainability', 'measurement', 'principles', 'services', 'faq',
 ];
 
 /* Base layer first, then each section's own file once it has content. ?v= busts the cache on edit. */
@@ -33,8 +36,8 @@ $bdh_asset = function (string $path) use ($bdh_root): ?string {
     $f = $bdh_root . $path;
     return (is_file($f) && filesize($f) > 0) ? $path . '?v=' . filemtime($f) : null;
 };
-$bdh_css = array_filter([$bdh_asset('assets/css/brand/hub.css')]);
-$bdh_js  = array_filter([$bdh_asset('assets/js/brand/hub.js')]);
+$bdh_css = array_filter([$bdh_asset('assets/css/brand/hub.css'), $bdh_asset('assets/css/services.css')]);
+$bdh_js  = array_filter([$bdh_asset('assets/js/brand/hub.js'), $bdh_asset('assets/js/services.js')]);
 foreach ($HUB as $bdh_id) {
     if ($bdh_x = $bdh_asset('assets/css/brand/hub/' . $bdh_id . '.css')) $bdh_css[] = $bdh_x;
     if ($bdh_x = $bdh_asset('assets/js/brand/hub/' . $bdh_id . '.js'))   $bdh_js[]  = $bdh_x;

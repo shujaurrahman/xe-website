@@ -1,0 +1,134 @@
+/* Hub · global — a typographic band: four facts about the working day, two studio plates and a 24-hour
+   overlap ribbon on IST set straight on the paper, with a season switch and a live "now". */
+
+/* ---- the working day, in four figures ---- */
+.tih-gl__facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 var(--bdh-gap);
+  margin-top:calc(var(--bdh-block) * -.25);padding:22px 0 26px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.tih-gl__facts>div{min-width:0;padding-right:20px}
+.tih-gl__facts dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);line-height:1}
+.tih-gl__facts dd{margin-top:12px;font-family:var(--f-h);font-size:clamp(1.5rem,2.3vw,2rem);font-weight:500;letter-spacing:-.026em;line-height:1;color:var(--ink)}
+.tih-gl__facts dd span{display:block;margin-top:10px;font-family:var(--f-b);font-size:var(--t-xs);font-weight:400;letter-spacing:0;line-height:1.5;color:var(--muted)}
+
+/* ---- studios ---- */
+.tih-gl__studios{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--bdh-gap);margin-top:var(--bdh-block)}
+.tih-gl__studio{display:flex;flex-direction:column;gap:20px;min-width:0}
+/* the studios read as a typographic plate: the city, the live local time, the address and what runs there —
+   no city photograph standing in for an office */
+.tih-gl__studio{padding:clamp(20px,2.2vw,28px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper-2)}
+.tih-gl__rk{margin-top:auto;padding-top:18px;border-top:1px solid var(--line-2)}
+.tih-gl__runs{display:grid;gap:8px;margin-top:-8px}
+.tih-gl__runs li{display:grid;grid-template-columns:5px minmax(0,1fr);align-items:baseline;gap:12px;font-size:var(--t-sm);line-height:1.5;color:var(--txt)}
+.tih-gl__runs li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--dot);translate:0 -3px}
+.tih-gl__sb{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px var(--bdh-gap);align-items:start}
+.tih-gl__local{display:inline-flex;align-items:center;gap:8px;font-family:var(--f);font-size:var(--tih-mono-s);letter-spacing:.06em;color:var(--muted);font-variant-numeric:tabular-nums}
+.tih-gl__sb>div{display:flex;flex-direction:column;gap:8px}
+.tih-gl__city{font-family:var(--f-h);font-size:clamp(1.5rem,2.2vw,1.875rem);font-weight:500;letter-spacing:-.022em;line-height:1.1;color:var(--ink)}
+.tih-gl__addr{display:flex;flex-direction:column;gap:2px;font-style:normal;font-size:var(--t-sm);line-height:1.5;color:var(--muted)}
+
+/* ---- ribbon: a chart on the page, with an editorial head — no window chrome ---- */
+.tih-gl{margin-top:var(--bdh-block)}
+.tih-gl__head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 24px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.tih-gl__ht{display:flex;flex-direction:column;gap:8px;min-width:0}
+.tih-gl__hh{font-family:var(--f-h);font-size:clamp(1.25rem,1.8vw,1.5rem);font-weight:500;letter-spacing:-.02em;line-height:1.2;color:var(--ink)}
+.tih-gl__seg{padding:2px}
+.tih-gl__seg>button{min-height:30px;padding:0 12px;font-family:var(--f);font-size:var(--tih-mono-s);letter-spacing:.06em;text-transform:uppercase}
+
+.tih-gl__body{--lw:188px;--vw:150px;--gp:22px;position:relative;padding:20px 0 10px}
+.tih-gl__axis,.tih-gl__row{display:grid;grid-template-columns:var(--lw) minmax(0,1fr) var(--vw);column-gap:var(--gp);align-items:center}
+.tih-gl__axis{height:28px}
+.tih-gl__ticks{position:relative;height:100%}
+.tih-gl__ticks i{position:absolute;top:50%;translate:-50% -50%;font-family:var(--f);font-size:var(--tih-mono-s);font-style:normal;letter-spacing:.04em;color:var(--faint)}
+.tih-gl__ticks i:first-child{translate:0 -50%}
+.tih-gl__ticks i:last-child{translate:-100% -50%}
+.tih-gl__axis .tih-gl__rv{justify-self:end}
+
+.tih-gl__rows{position:relative;padding-bottom:30px}
+.tih-gl__row{min-height:58px;padding:10px 0;border-top:1px solid var(--line-2)}
+.tih-gl__row--us{border-top:0;padding-bottom:16px}
+.tih-gl__rl{display:flex;flex-direction:column;gap:4px;min-width:0}
+.tih-gl__rl b{font-size:var(--t-sm);font-weight:600;line-height:1.2;color:var(--ink)}
+.tih-gl__rl small{font-family:var(--f);font-size:var(--tih-mono-s);letter-spacing:.04em;color:var(--faint);white-space:nowrap}
+.tih-gl__rv{justify-self:end;text-align:right}
+.tih-gl__rvv{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.tih-gl__rv b{font-family:var(--f);font-size:1.0625rem;font-weight:500;letter-spacing:-.02em;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.tih-gl__rv small{font-family:var(--f);font-size:var(--tih-mono-s);letter-spacing:.02em;color:var(--muted);white-space:nowrap}
+
+/* track: 24 hours with a faint three-hour grid */
+.tih-gl__track{position:relative;z-index:1;height:22px;border-radius:6px;background:var(--paper-3)}
+/* three-hour grid lines across every row (drawn under the tracks) */
+.tih-gl__vl{position:absolute;top:0;bottom:0;z-index:0;width:1px;background:var(--line-2);pointer-events:none;
+  left:calc(var(--lw) + var(--gp) + (100% - var(--lw) - var(--vw) - var(--gp) * 2) * var(--h) / 24)}
+.tih-gl__track i{position:absolute;top:0;bottom:0;display:block;border-radius:5px;box-sizing:border-box}
+.tih-gl__set{position:absolute;inset:0;transition:opacity .45s var(--e)}
+.tih-gl__day{background:var(--paper);box-shadow:inset 0 0 0 1px var(--line-3)}
+.tih-gl__oe{background:var(--blue-wash-2);box-shadow:inset 0 0 0 1px var(--blue-line)}
+.tih-gl__oc{background:var(--blue)}
+.tih-gl__core{background:var(--ink)}
+.tih-gl__ext{background:var(--paper);border:1.5px dashed var(--ink)}
+.tih-gl__oncall{left:0;right:0;top:auto;bottom:-8px;height:2px;border-radius:1px;background:var(--ink);opacity:.35}
+.tih-gl__track .tih-gl__oncall{top:auto;bottom:-8px}
+.tih-gl__ho{position:absolute;top:-7px;z-index:2;translate:-50% 0;display:flex;flex-direction:column;align-items:center;gap:2px;pointer-events:none}
+.tih-gl__ho::before{content:"";width:10px;height:10px;background:var(--blue);transform:rotate(45deg);box-shadow:0 0 0 3px var(--paper)}
+.tih-gl__ho b{margin-top:22px;font-family:var(--f);font-size:9px;font-weight:600;letter-spacing:.04em;color:var(--blue-d)}
+
+/* seasons: both are in the markup, one is shown */
+.tih-gl[data-season="summer"] .tih-gl__s--winter,.tih-gl[data-season="winter"] .tih-gl__s--summer{display:none}
+.tih-gl .tih-gl__set.tih-gl__s{display:block}
+.tih-gl[data-season="summer"] .tih-gl__set.tih-gl__s--winter,.tih-gl[data-season="winter"] .tih-gl__set.tih-gl__s--summer{opacity:0}
+
+/* now marker, across the tracks */
+.tih-gl__now{position:absolute;top:0;bottom:0;z-index:3;width:0;pointer-events:none;
+  left:calc(var(--lw) + var(--gp) + (100% - var(--lw) - var(--vw) - var(--gp) * 2) * var(--now) / 100)}
+.tih-gl__now::before{content:"";position:absolute;left:-1px;top:6px;bottom:22px;width:2px;border-radius:1px;background:var(--blue)}
+.tih-gl__now b{position:absolute;left:50%;bottom:4px;translate:-50% 0;padding:3px 7px;border-radius:5px;background:var(--blue);
+  font-family:var(--f);font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--on-ink);white-space:nowrap}
+
+.tih-gl__foot{display:grid;gap:10px;padding:16px 0 0;border-top:1px solid var(--line-2)}
+.tih-gl__legend{display:flex;flex-wrap:wrap;gap:8px 20px;font-family:var(--f);font-size:var(--tih-mono-s);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tih-gl__legend span{display:inline-flex;align-items:center;gap:8px}
+.tih-gl__legend i{display:inline-block;width:18px;height:10px;border-radius:3px}
+.tih-gl__legend i.is-core{background:var(--ink)}
+.tih-gl__legend i.is-ext{border:1.5px dashed var(--ink)}
+.tih-gl__legend i.is-call{height:2px;background:var(--ink);opacity:.35}
+.tih-gl__legend i.is-oc{background:var(--blue)}
+.tih-gl__legend i.is-ho{width:9px;height:9px;border-radius:0;background:var(--blue);transform:rotate(45deg)}
+
+/* ---- entrance: the bars grow from their start, but the ribbon ships drawn — the animation runs FROM a
+   zero width once the chart is in view, so with no JavaScript (no .is-in) every bar is at full length ---- */
+@media (prefers-reduced-motion:no-preference){
+  .tih-gl.is-in .tih-gl__track i:not(.tih-gl__oncall){animation:tih-gl-grow .9s var(--e) both;animation-delay:calc(var(--i,0) * 80ms + 150ms)}
+  .tih-gl.is-in .tih-gl__oc{animation-delay:calc(var(--i,0) * 80ms + 550ms)}
+  @keyframes tih-gl-grow{from{transform:scaleX(0);transform-origin:left center}to{transform:none}}
+}
+
+/* ---- responsive ---- */
+@media (max-width:1023px){
+  .tih-gl__body{--lw:140px;--vw:118px;--gp:16px}
+  .tih-gl__sb{grid-template-columns:minmax(0,1fr)}
+  .tih-gl__facts{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:26px}
+}
+@media (max-width:760px){
+  .tih-gl__studios{grid-template-columns:minmax(0,1fr);gap:24px}
+  .tih-gl__facts{grid-template-columns:minmax(0,1fr);row-gap:22px;padding:20px 0 22px}
+  .tih-gl__facts>div{display:flex;align-items:baseline;justify-content:space-between;gap:18px;padding-right:0}
+  .tih-gl__facts dd{margin-top:0;text-align:right;font-size:1.25rem}
+  .tih-gl__facts dd span{margin-top:6px}
+  .tih-gl__body{--lw:0px;--vw:96px;--gp:12px;padding:14px 0 8px}
+  .tih-gl__rows{padding-bottom:0}
+  .tih-gl__axis,.tih-gl__row{grid-template-columns:minmax(0,1fr) var(--vw);row-gap:8px}
+  .tih-gl__axis .tih-gl__rl{display:none}
+  .tih-gl__rl{grid-column:1 / -1}
+  .tih-gl__row .tih-gl__rl{flex-direction:row;align-items:baseline;gap:10px}
+  .tih-gl__track{grid-column:1}
+  .tih-gl__rv{grid-column:2;grid-row:2}
+  .tih-gl__axis .tih-gl__rv{grid-row:1}
+  .tih-gl__now,.tih-gl__vl{display:none}
+  .tih-gl__ticks i:nth-child(even){display:none}
+  .tih-gl__ticks i:last-child{display:block}
+}
+@media (max-width:600px){
+  .tih-gl__row .tih-gl__rl{flex-direction:column;gap:2px}
+}
+@media (prefers-reduced-motion:reduce){
+  .tih-gl__set{transition:none}
+}

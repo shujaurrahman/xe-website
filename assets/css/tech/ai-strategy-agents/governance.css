@@ -1,0 +1,113 @@
+/* AI Strategy & Agents · governance — framework filter row, the four-function crosswalk with
+   artefact chips and clause tags, the EU AI Act timeline and the plain-words note. Ink band. */
+.tas-gv__top{display:flex;flex-direction:column;gap:16px;margin-bottom:clamp(28px,3vw,40px)}
+.tas-gv__fws{display:flex;flex-wrap:wrap;gap:8px}
+.tas-gv__fw{display:inline-flex;align-items:center;gap:10px;min-height:40px;padding:4px 12px 4px 4px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--on-ink-line);color:var(--on-ink-2);
+  transition:box-shadow var(--d2) var(--e-io),background var(--d2) var(--e-io),color var(--d2) var(--e-io)}
+.tas-gv__fw .xt-badge--chip{background:transparent;border-color:transparent;min-height:30px;padding-right:4px}
+.tas-gv__fwn,.tas-gv__word{padding:0 6px 0 12px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.08em;text-transform:uppercase;line-height:1.3;color:var(--on-ink)}
+.tas-gv__word{display:inline-flex;align-items:center;gap:8px}
+.tas-gv__word::before{content:"";width:12px;height:12px;border-radius:3px;box-shadow:inset 0 0 0 1.2px var(--blue)}
+.tas-gv__fw small{font-family:var(--f);font-size:10px;color:var(--on-ink-3)}
+.tas-gv__fw:hover{box-shadow:inset 0 0 0 1px var(--on-ink-3)}
+.tas-gv__fw[aria-pressed="true"]{background:var(--paper);color:var(--ink);box-shadow:none}
+.tas-gv__fw[aria-pressed="true"] :is(.tas-gv__fwn,.tas-gv__word,.xt-badge__code){color:var(--ink)}
+.tas-gv__fw[aria-pressed="true"] small{color:var(--muted)}
+.tas-gv__ro{font-family:var(--f);font-size:var(--t-xs);line-height:1.5;color:var(--on-ink-3)}
+.tas-gv__ro b{font-weight:600;color:var(--on-ink)}
+
+/* ---- the crosswalk ---- */
+.tas-gv__cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tas-gv__col{display:flex;flex-direction:column;min-width:0;padding:18px 14px 14px;border-radius:var(--r-lg);background:var(--on-ink-card);box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+.tas-gv__ch{padding:0 4px 16px;border-bottom:1px solid var(--on-ink-line)}
+.tas-gv__fn{display:flex;align-items:center;gap:8px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);line-height:1.3}
+.tas-gv__fn span{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 5px;border-radius:var(--r-xs);box-shadow:inset 0 0 0 1px var(--on-ink-line);color:var(--on-ink-2);letter-spacing:.04em}
+.tas-gv__ct{margin-top:12px;font-family:var(--f-h);font-size:1.4rem;font-weight:500;letter-spacing:-.02em;line-height:1.1;color:var(--on-ink)}
+.tas-gv__cm{margin-top:8px;font-size:var(--t-xs);line-height:1.55;color:var(--on-ink-2)}
+.tas-gv__list{display:flex;flex-direction:column;gap:6px;padding-top:12px}
+.tas-gv__chip{min-width:0;padding:11px 12px 10px;border-radius:var(--r-sm);background:var(--ink);box-shadow:inset 0 0 0 1px var(--on-ink-line);transition:opacity .4s var(--e),transform .5s var(--e),box-shadow var(--d2) var(--e-io)}
+.tas-gv__at{font-size:var(--t-sm);font-weight:500;line-height:1.35;color:var(--on-ink)}
+.tas-gv__tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.tas-gv__tags span{display:inline-flex;align-items:center;gap:4px;padding:3px 6px;border-radius:4px;background:var(--on-ink-card);font-family:var(--f);font-size:9.5px;letter-spacing:.02em;line-height:1.3;color:var(--on-ink-3);white-space:nowrap;transition:background var(--d2) var(--e-io),color var(--d2) var(--e-io)}
+.tas-gv__tags b{font-weight:600;color:var(--on-ink-2)}
+/* filter */
+.tas-gv:not([data-fw="all"]) .tas-gv__chip:not(.is-hit){opacity:.22}
+.tas-gv__chip.is-hit{box-shadow:inset 0 0 0 1.5px var(--blue)}
+.tas-gv__chip.is-hit .tas-gv__tags span.is-hit{background:var(--blue);color:var(--on-ink)}
+.tas-gv__chip.is-hit .tas-gv__tags span.is-hit b{color:var(--on-ink)}
+/* entry: chips drop in */
+.tas-gv.is-armed .tas-gv__chip{opacity:0;transform:translateY(-10px)}
+.tas-gv.is-armed.is-in .tas-gv__chip{opacity:1;transform:none;transition-delay:calc(var(--i) * 45ms)}
+.tas-gv.is-armed.is-in:not([data-fw="all"]) .tas-gv__chip:not(.is-hit){opacity:.22}
+/* once the chips have landed (governance.js adds .is-settled), filtering responds at once */
+.tas-gv.is-armed.is-in.is-settled .tas-gv__chip{transition-delay:0s}
+
+/* ---- foot: timeline + note ---- */
+.tas-gv__foot{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(32px,3.4vw,48px);margin-top:var(--bdh-block);padding-top:clamp(28px,3vw,40px);border-top:1px solid var(--on-ink-line)}
+.tas-gv__dates{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:20px;margin-top:18px;position:relative}
+.tas-gv__dates::before{content:"";position:absolute;left:0;right:0;top:5px;height:1px;background:var(--on-ink-line)}
+.tas-gv__dates li{position:relative;display:flex;flex-direction:column;gap:6px;min-width:0;padding-top:20px}
+.tas-gv__dates li::before{content:"";position:absolute;left:0;top:0;width:11px;height:11px;border-radius:50%;background:var(--ink);box-shadow:inset 0 0 0 1.5px var(--on-ink-3)}
+.tas-gv__dates li.is-past::before{background:var(--blue);box-shadow:none}
+.tas-gv__dates b{display:flex;flex-direction:column;align-items:flex-start;gap:3px;font-family:var(--f);font-size:var(--t-xs);font-weight:600;letter-spacing:.02em;color:var(--on-ink)}
+.tas-gv__dates b em{font-size:9.5px;font-style:normal;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--on-ink-3)}
+.tas-gv__dates li.is-past b em{color:var(--blue)}
+.tas-gv__dates span{font-size:var(--t-xs);line-height:1.5;color:var(--on-ink-2)}
+.tas-gv__dates small{font-family:var(--f);font-size:10px;color:var(--on-ink-3)}
+/* the plain-words note: label, text and link on one row under the timeline */
+.tas-gv__note{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,6fr) minmax(0,3fr);column-gap:var(--tas-gap);align-items:start;padding-top:clamp(24px,2.6vw,32px);border-top:1px solid var(--on-ink-line)}
+.tas-gv__note p+p{font-size:var(--t-sm);line-height:1.65;color:var(--on-ink-2);max-width:62ch}
+.tas-gv__note .tl{justify-self:end}
+
+/* function switch: phones only */
+.tas-gv__fnsw{display:none}
+/* per-function disclosure (phones) and the empty note when a framework has no artefact there */
+.tas-gv__none,.tas-gv__more{display:none}
+.tas-gv__more{align-self:flex-start;align-items:center;gap:8px;min-height:40px;margin-top:10px;padding:0 14px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--on-ink-line);font-family:var(--f-b);font-size:var(--t-xs);font-weight:500;color:var(--on-ink);transition:box-shadow var(--d1) var(--e-io)}
+.tas-gv__more:hover{box-shadow:inset 0 0 0 1px var(--on-ink-3)}
+.tas-gv__col.is-empty .tas-gv__none{display:block;padding:12px 4px 0;font-size:var(--t-xs);line-height:1.5;color:var(--on-ink-3)}
+
+@media (max-width:1100px){
+  .tas-gv__cols{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tas-gv__note{grid-template-columns:minmax(0,1fr);row-gap:12px}
+  .tas-gv__note .tl{justify-self:start}
+}
+@media (max-width:1100px){.tas-gv__dates{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:24px}.tas-gv__dates::before{display:none}}
+@media (max-width:760px){
+  .tas-gv.is-js[data-fw="all"] .tas-gv__col:not(.is-open) .tas-gv__chip:nth-child(n+3){display:none}
+  .tas-gv.is-js[data-fw="all"] .tas-gv__more:not([hidden]){display:inline-flex}
+  .tas-gv.is-js:not([data-fw="all"]) .tas-gv__chip:not(.is-hit){display:none}
+  .tas-gv__cm{display:none}
+  .tas-gv__dates{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tas-gv__dates::before{display:none}
+  .tas-gv__dates li{padding-top:0;padding-left:20px}
+  .tas-gv__dates li::before{top:4px}
+}
+@media (max-width:560px){
+  .tas-gv__dates{grid-template-columns:minmax(0,1fr);row-gap:14px}
+  .tas-gv__dates li{display:grid;grid-template-columns:6.4rem minmax(0,1fr);column-gap:12px;row-gap:2px}
+  .tas-gv__dates b{grid-row:span 2}
+  /* phones: the badge row as a compact 3-up grid of marks and codes (the filter row names them too) */
+  .tas-gv__badges{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 12px;--xt-badge:44px}
+  .tas-gv__badges .xt-badge__name{display:none}
+  .tas-gv__cols{grid-template-columns:minmax(0,1fr)}
+  .tas-gv__fnsw:not([hidden]){display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-bottom:12px;padding:4px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+  .tas-gv__fnsw button{min-height:40px;border-radius:var(--r-pill);font-family:var(--f-b);font-size:var(--t-xs);font-weight:500;color:var(--on-ink-2);transition:background var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+  .tas-gv__fnsw button[aria-pressed="true"]{background:var(--paper);color:var(--ink)}
+  .tas-gv[data-colon="govern"] .tas-gv__col:not([data-col="govern"]),.tas-gv[data-colon="map"] .tas-gv__col:not([data-col="map"]),
+  .tas-gv[data-colon="measure"] .tas-gv__col:not([data-col="measure"]),.tas-gv[data-colon="manage"] .tas-gv__col:not([data-col="manage"]){display:none}
+  .tas-gv__fws{flex-wrap:nowrap;overflow-x:auto;max-width:100%;scrollbar-width:none;padding-bottom:4px}
+  .tas-gv__fws::-webkit-scrollbar{display:none}
+  .tas-gv__fw{flex:none}
+  .tas-gv__dates{gap:20px 14px}
+}
+@media (prefers-reduced-motion:reduce){.tas-gv__chip{transition:none}}
+
+/* frameworks as full code-built badges (kit .xt-badge; layout only here) */
+.tas-gv__std{margin-top:var(--bdh-block);padding-top:clamp(28px,3vw,40px);border-top:1px solid var(--on-ink-line)}
+.tas-gv__badges{margin-top:22px;grid-template-columns:repeat(7,minmax(0,1fr));gap:24px clamp(16px,2vw,28px);--xt-badge:52px}
+.tas-gv__badges .xt-badge{flex-direction:column;align-items:flex-start;gap:12px}
+@media (max-width:1100px){.tas-gv__badges{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:600px){.tas-gv__badges{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.tas-gv__std+.tas-gv__foot{margin-top:clamp(40px,4.4vw,64px)}
+.tas-gv__tln{margin-top:18px;font-size:var(--t-xs);line-height:1.6;color:var(--on-ink-3);max-width:64ch}

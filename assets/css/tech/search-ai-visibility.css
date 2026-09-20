@@ -1,0 +1,124 @@
+/* ==========================================================================
+   Search & AI Visibility — "Search, Answered". Page base layer (.tsv-*).
+   Loaded after assets/css/brand/hub.css and assets/css/tech/kit.css. Tokens from core.css only;
+   no new colours, no gradients except mask fades, no !important.
+   Section styles: assets/css/tech/search-ai-visibility/<id>.css.
+   Primitives: page spacing, the section head (ref chip + eyebrow, title, lead), source chips,
+   window chrome for the mock result surfaces, status LED, "Illustrative" stamp, mono readouts,
+   the method note and the small stat rail.
+   ========================================================================== */
+.tsv{
+  --tsv-gap:clamp(20px,2.4vw,32px);
+  --tsv-gap-l:clamp(40px,6vw,96px);
+  --tsv-block:clamp(52px,6.4vw,104px);
+  --tsv-head-mb:clamp(44px,5.2vw,76px);
+  overflow-x:clip;
+}
+.tsv :focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* ---------- section head: title left, lead right ------------------------- */
+.tsv-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--tsv-gap);row-gap:22px;align-items:end;margin-bottom:var(--tsv-head-mb)}
+.tsv-head__t{grid-column:1 / span 7;display:flex;flex-direction:column;align-items:flex-start;gap:20px;min-width:0}
+.tsv-head__l{grid-column:9 / -1;display:flex;flex-direction:column;align-items:flex-start;gap:18px;min-width:0}
+.tsv-head .h2{max-width:19ch;font-size:clamp(1.85rem,3.4vw,2.95rem);letter-spacing:-.03em;line-height:1.05}
+.tsv-head .lead{max-width:50ch}
+.tsv-head--wide .tsv-head__t{grid-column:1 / span 8}
+.tsv-head--wide .h2{max-width:23ch}
+@media (max-width:1023px){
+  .tsv-head__t,.tsv-head--wide .tsv-head__t{grid-column:1 / span 11}
+  .tsv-head__l{grid-column:1 / span 10}
+}
+@media (max-width:760px){.tsv-head__t,.tsv-head--wide .tsv-head__t,.tsv-head__l{grid-column:1 / -1}}
+
+/* ---------- eyebrow + ref chip ------------------------------------------- */
+.tsv-kick{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);line-height:1.3}
+.tsv-kick__ref{display:inline-flex;align-items:center;gap:7px;height:22px;padding:0 8px;border:1px solid var(--line-3);border-radius:var(--r-xs);background:var(--paper);color:var(--ink);letter-spacing:.06em}
+.tsv-kick__ref::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.band--ink .tsv-kick__ref{border-color:var(--on-ink-line);background:transparent;color:var(--on-ink)}
+
+/* ---------- source chip: favicon square + host (tsv_src in the shell) ----- */
+.tsv-src{display:inline-flex;align-items:center;gap:7px;min-width:0;font-family:var(--f);font-size:var(--t-xs);font-weight:500;letter-spacing:.01em;line-height:1.3;color:var(--txt)}
+.tsv-src__n{flex:none;font-style:normal;font-size:10px;letter-spacing:.06em;color:var(--faint)}
+.tsv-src__f{position:relative;flex:none;width:14px;height:14px;border-radius:4px;background:var(--paper-4);box-shadow:inset 0 0 0 1px var(--line-3)}
+.tsv-src__f::after{content:"";position:absolute;inset:4px;border-radius:1.5px;background:var(--faint)}
+.tsv-src__h{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tsv-src.is-you{color:var(--blue-d)}
+.tsv-src.is-you .tsv-src__f{background:var(--blue-wash-2);box-shadow:inset 0 0 0 1px var(--blue-line)}
+.tsv-src.is-you .tsv-src__f::after{background:var(--blue)}
+:is(.band--ink,.tsv-on-ink) .tsv-src{color:var(--on-ink-2)}
+:is(.band--ink,.tsv-on-ink) .tsv-src__f{background:var(--on-ink-card);box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+:is(.band--ink,.tsv-on-ink) .tsv-src__f::after{background:var(--on-ink-3)}
+:is(.band--ink,.tsv-on-ink) .tsv-src.is-you{color:var(--on-ink)}
+:is(.band--ink,.tsv-on-ink) .tsv-src.is-you .tsv-src__f::after{background:var(--blue)}
+
+/* ---------- window chrome for the mock result surfaces ------------------- */
+.tsv-win{position:relative;min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh-2);overflow:hidden}
+.tsv-win__bar{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 16px;border-bottom:1px solid var(--line-2);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.05em;color:var(--muted);white-space:nowrap;min-width:0}
+.tsv-win__dots{display:inline-flex;gap:6px;flex:none}
+.tsv-win__dots i{width:8px;height:8px;border-radius:50%;background:var(--line-3)}
+.tsv-win__path{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.tsv-win__path b{font-weight:500;color:var(--ink)}
+.tsv-win__end{display:inline-flex;align-items:center;gap:8px;margin-left:auto;flex:none}
+.tsv-win--ink{background:var(--on-ink-card);border-color:var(--on-ink-line);box-shadow:none;color:var(--on-ink-2)}
+.tsv-win--ink .tsv-win__bar{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+.tsv-win--ink .tsv-win__dots i{background:var(--on-ink-line)}
+.tsv-win--ink .tsv-win__path b{color:var(--on-ink)}
+
+/* ---------- LED, stamp, readouts, notes ---------------------------------- */
+.tsv-led{display:inline-block;flex:none;width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px var(--blue-wash-2)}
+.tsv-led--off{background:var(--line-3);box-shadow:none}
+.is-live .tsv-led--pulse{animation:tsv-led 2.2s var(--e-io) infinite}
+@keyframes tsv-led{0%,100%{box-shadow:0 0 0 3px var(--blue-wash-2)}50%{box-shadow:0 0 0 7px transparent}}
+
+.tsv-ill{display:inline-flex;align-items:center;gap:6px;min-height:22px;padding:2px 8px;border:1px dashed var(--line-3);border-radius:var(--r-xs);
+  font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.3;white-space:nowrap}
+:is(.band--ink,.tsv-on-ink) .tsv-ill{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+
+.tsv-ro{font-family:var(--f);font-size:var(--t-xs);line-height:1.5;letter-spacing:.01em;color:var(--txt);font-variant-numeric:tabular-nums}
+.tsv-ro b{font-weight:600;color:var(--ink)}
+:is(.band--ink,.tsv-on-ink) .tsv-ro{color:var(--on-ink-2)}
+:is(.band--ink,.tsv-on-ink) .tsv-ro b{color:var(--on-ink)}
+
+/* method note: a quiet framed paragraph that says how a number was produced */
+.tsv-note{display:flex;gap:12px;padding:14px 16px;border:1px solid var(--line);border-radius:var(--r);background:var(--paper-2);font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+.tsv-note .xt-ico{flex:none;margin-top:1px;color:var(--muted)}
+.tsv-note b{font-family:var(--f);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.band--alt .tsv-note{background:var(--paper)}
+:is(.band--ink,.tsv-on-ink) .tsv-note{border-color:var(--on-ink-line);background:var(--on-ink-card);color:var(--on-ink-3)}
+:is(.band--ink,.tsv-on-ink) .tsv-note b{color:var(--on-ink)}
+:is(.band--ink,.tsv-on-ink) .tsv-note .xt-ico{color:var(--on-ink-3)}
+
+/* measured vs sampled: the page never blurs the two */
+.tsv-prov{display:inline-flex;align-items:center;gap:6px;height:20px;padding:0 8px;border-radius:var(--r-pill);background:var(--paper-3);
+  font-family:var(--f);font-size:9.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1;white-space:nowrap}
+.tsv-prov::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--faint)}
+.tsv-prov--m::before{background:var(--blue)}
+:is(.band--ink,.tsv-on-ink) .tsv-prov{background:var(--on-ink-card);color:var(--on-ink-3)}
+
+/* ---------- small stat rail ---------------------------------------------- */
+.tsv-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--tsv-gap);border-top:1px solid var(--ink)}
+.tsv-stats>div{display:flex;flex-direction:column;gap:6px;padding-top:16px}
+.tsv-stats dt,.tsv-stats__k{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.5;order:2}
+.tsv-stats dd,.tsv-stats__v{font-family:var(--f-h);font-size:clamp(1.3rem,2vw,1.75rem);font-weight:500;letter-spacing:-.02em;line-height:1.1;color:var(--ink);order:1}
+:is(.band--ink,.tsv-on-ink) .tsv-stats{border-top-color:var(--on-ink)}
+:is(.band--ink,.tsv-on-ink) .tsv-stats dd,:is(.band--ink,.tsv-on-ink) .tsv-stats__v{color:var(--on-ink)}
+:is(.band--ink,.tsv-on-ink) .tsv-stats dt,:is(.band--ink,.tsv-on-ink) .tsv-stats__k{color:var(--on-ink-3)}
+
+/* ---------- page buttons -------------------------------------------------- */
+.tsv-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:38px;padding:0 14px;border:1px solid var(--line-3);border-radius:var(--r-sm);background:var(--paper);
+  font-family:var(--f);font-size:var(--t-xs);font-weight:500;letter-spacing:.06em;line-height:1;color:var(--ink);white-space:nowrap;
+  transition:border-color var(--d1) var(--e-io),color var(--d1) var(--e-io),background var(--d1) var(--e-io)}
+.tsv-btn:hover{border-color:var(--blue);color:var(--blue-d)}
+.tsv-btn--go{border-color:var(--blue);background:var(--blue);color:var(--on-ink)}
+.tsv-btn--go:hover{background:var(--blue-d);border-color:var(--blue-d);color:var(--on-ink)}
+.tsv-btn[disabled],.tsv-btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+:is(.band--ink,.tsv-on-ink) .tsv-btn{border-color:var(--on-ink-line);background:transparent;color:var(--on-ink)}
+:is(.band--ink,.tsv-on-ink) .tsv-btn:hover{border-color:var(--blue);color:var(--on-ink)}
+
+/* ---------- scan sweep, used by the lens and the crawler ------------------ */
+.tsv-scan{position:absolute;top:0;bottom:0;width:2px;background:var(--blue);opacity:0;pointer-events:none;z-index:2}
+.tsv-scan.is-on{opacity:.55}
+
+@media (prefers-reduced-motion:reduce){
+  .tsv-scan{display:none}
+}

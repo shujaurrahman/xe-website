@@ -1,0 +1,43 @@
+/* ==========================================================================
+   Tech Workforce · security — a six-item control checklist beside the frameworks we align
+   delivery with and the three questions a security team always asks. Ticks stamp in on entry.
+   ========================================================================== */
+.ttw-sec__grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:var(--ttw-gap-l)}
+
+.ttw-sec__list{display:flex;flex-direction:column;gap:0;margin:0;padding:0;list-style:none;border-top:1px solid var(--line-2)}
+.ttw-sec__it{display:grid;grid-template-columns:auto auto minmax(0,1fr);align-items:start;gap:0 14px;padding:clamp(16px,1.8vw,22px) 0;border-bottom:1px solid var(--line-2)}
+.ttw-sec__tk{margin-top:2px}
+.ttw-sec__ic{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;flex:none;margin-top:-5px;
+  border:1px solid var(--line-2);border-radius:var(--r-sm);background:var(--paper-2);color:var(--ink)}
+.ttw-sec__tx{display:flex;flex-direction:column;gap:6px;min-width:0}
+.ttw-sec__h{font-family:var(--f-h);font-size:clamp(1.02rem,1.35vw,1.16rem);font-weight:500;letter-spacing:-.02em;line-height:1.25;color:var(--ink)}
+.ttw-sec__d{max-width:64ch;font-size:var(--t-sm);line-height:1.64;color:var(--muted)}
+
+.ttw-sec__side{display:flex;flex-direction:column;gap:var(--ttw-gap)}
+.ttw-sec__card{display:flex;flex-direction:column;gap:14px}
+.ttw-sec__badges{--xt-badge:46px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:4px 0 0;padding:0;list-style:none}
+.ttw-sec__fine{margin:4px 0 0;font-size:var(--t-xs);line-height:1.6;color:var(--faint)}
+.ttw-sec__qa{display:flex;flex-direction:column;gap:0;margin:0}
+.ttw-sec__qa>div{padding:12px 0;border-bottom:1px solid var(--line-2)}
+.ttw-sec__qa>div:last-child{border-bottom:0;padding-bottom:0}
+.ttw-sec__qa dt{font-family:var(--f);font-size:var(--t-xs);letter-spacing:.02em;color:var(--ink);margin-bottom:6px}
+.ttw-sec__qa dd{margin:0;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+
+/* Motion: armed only (see the contract in tech-workforce.css). Unarmed, every tick is already struck. */
+@media (prefers-reduced-motion:no-preference){
+  .ttw-sec__list.is-armed .ttw-sec__tk{transition:opacity .22s var(--e),transform .22s var(--e);transition-delay:calc(min(var(--i), 3) * 30ms)}
+  .ttw-sec__list.is-armed:not(.is-in) .ttw-sec__tk{opacity:0;transform:scale(.7)}
+}
+
+@media (max-width:1023px){
+  .ttw-sec__grid{grid-template-columns:minmax(0,1fr)}
+  .ttw-sec__side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+}
+@media (max-width:760px){
+  .ttw-sec__side{grid-template-columns:minmax(0,1fr)}
+  .ttw-sec__it{grid-template-columns:auto minmax(0,1fr)}
+  .ttw-sec__ic{display:none}
+}
+@media (max-width:420px){
+  .ttw-sec__badges{grid-template-columns:minmax(0,1fr)}
+}

@@ -1,0 +1,91 @@
+/* ==========================================================================
+   Tech Workforce · outcomes — three outcome cards, each carrying a figure and a link to where that
+   figure is shown, then six target-range rows. Each row draws a
+   measure's own scale with the target band on it; bands grow from their left edge and the target
+   marker settles as the list enters. Reduced motion shows the finished bands.
+   ========================================================================== */
+.ttw-out__top{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--ttw-gap);margin:0 0 var(--ttw-gap);padding:0;list-style:none}
+.ttw-out__tc{display:flex;flex-direction:column;gap:12px}
+.ttw-out__tf{display:flex;flex-direction:column;gap:7px;margin:auto 0 0;padding-top:16px;border-top:1px solid var(--line-2)}
+.ttw-out__tu{font-family:var(--f);font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+.ttw-out__tl{margin:0;font-size:var(--t-sm)}
+.ttw-out__tic{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;
+  border:1px solid var(--line-2);border-radius:var(--r-sm);background:var(--paper-2);color:var(--ink)}
+.ttw-out__th{margin:0}
+
+.ttw-out__wrap{border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);overflow:hidden}
+.ttw-out__cap{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:0;padding:16px clamp(18px,2vw,26px);border-bottom:1px solid var(--line-2);background:var(--paper-2)}
+.ttw-out__capt{max-width:86ch;font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+
+.ttw-out__rows{margin:0;padding:0;list-style:none}
+.ttw-out__r{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1.25fr) 158px;align-items:center;
+  column-gap:clamp(20px,2.4vw,40px);row-gap:18px;padding:clamp(20px,2.2vw,28px) clamp(18px,2vw,26px);border-bottom:1px solid var(--line-2)}
+.ttw-out__r:last-child{border-bottom:0}
+.ttw-out__r{--i:0}
+
+.ttw-out__lft{min-width:0}
+.ttw-out__ix{margin:0 0 8px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;color:var(--blue)}
+.ttw-out__h{margin:0 0 7px;font-family:var(--f-h);font-size:clamp(1.05rem,1.45vw,1.2rem);font-weight:500;letter-spacing:-.02em;line-height:1.22;color:var(--ink)}
+.ttw-out__d{margin:0;max-width:52ch;font-size:var(--t-xs);line-height:1.62;color:var(--muted)}
+
+.ttw-out__mid{min-width:0}
+.ttw-out__bar{position:relative;height:12px;min-width:0}
+.ttw-out__track{position:absolute;inset:0;border:1px solid var(--line-2);border-radius:var(--r-pill);background:var(--paper-3)}
+.ttw-out__tick{position:absolute;top:2px;bottom:2px;left:var(--p);width:1px;background:var(--line-3)}
+.ttw-out__band{position:absolute;top:0;bottom:0;left:var(--s);right:calc(100% - var(--e));
+  border:1px solid var(--blue-line);border-radius:var(--r-pill);background:var(--blue-wash);transform-origin:0 50%}
+.ttw-out__mk{position:absolute;top:-5px;bottom:-5px;left:var(--m);width:2px;margin-left:-1px;border-radius:1px;background:var(--blue)}
+.ttw-out__mk::after{content:"";position:absolute;top:-4px;left:50%;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:var(--blue)}
+.ttw-out__scale{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:12px 0 0;
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-variant-numeric:tabular-nums}
+.ttw-out__mez{text-align:center;color:var(--muted);letter-spacing:.06em}
+
+.ttw-out__rgt{min-width:0;text-align:right}
+.ttw-out__tg{display:flex;flex-direction:column;align-items:flex-end;gap:4px;margin:0}
+.ttw-out__u{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);line-height:1.35}
+/* The direction tag wraps inside the fixed target column rather than running past its edge. */
+.ttw-out__dir{display:flex;justify-content:flex-end;margin:10px 0 0}
+.ttw-out__dir .bdh-tag{max-width:100%;height:auto;min-height:24px;padding-block:5px;line-height:1.3;white-space:normal;text-align:right}
+
+.ttw-out__dora{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:clamp(20px,2.4vw,34px);
+  margin-top:var(--ttw-gap);padding:clamp(20px,2.2vw,28px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper-2)}
+.ttw-out__badge{--xt-badge:60px}
+.ttw-out__dx{min-width:0;display:flex;flex-direction:column;gap:12px}
+.ttw-out__dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(18px,2vw,30px);margin:4px 0 0}
+.ttw-out__dl>div{padding:10px 0;border-bottom:1px solid var(--line-2)}
+.ttw-out__dl>div:nth-last-child(-n+2){border-bottom:0;padding-bottom:0}
+.ttw-out__dl dt{font-family:var(--f);font-size:var(--t-xs);color:var(--ink);margin-bottom:4px}
+.ttw-out__dl dd{margin:0;font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+
+.ttw-out__note{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:clamp(22px,2.4vw,32px) 0 0;font-size:var(--t-sm);color:var(--muted)}
+
+/* Motion: armed only (see the contract in tech-workforce.css). Unarmed, every band and marker is
+   already at its target. The cascade is capped at the first few rows so the scales read quickly. */
+@media (prefers-reduced-motion:no-preference){
+  .ttw-out__rows.is-armed .ttw-out__band{transition:transform .3s var(--e-io);transition-delay:calc(min(var(--i), 3) * 22ms)}
+  .ttw-out__rows.is-armed .ttw-out__mk{transition:opacity .2s var(--e),transform .2s var(--e);transition-delay:calc((min(var(--i), 3) * 22ms) + 90ms)}
+  .ttw-out__rows.is-armed:not(.is-in) .ttw-out__band{transform:scaleX(0)}
+  .ttw-out__rows.is-armed:not(.is-in) .ttw-out__mk{opacity:0;transform:translateY(6px)}
+}
+
+@media (max-width:1100px){
+  .ttw-out__top{grid-template-columns:minmax(0,1fr)}
+  .ttw-out__r{grid-template-columns:minmax(0,1fr) 150px}
+  .ttw-out__mid{grid-column:1 / -1;order:3}
+  .ttw-out__lft{order:1}
+  .ttw-out__rgt{order:2}
+}
+@media (max-width:760px){
+  .ttw-out__dora{grid-template-columns:minmax(0,1fr)}
+  .ttw-out__dl{grid-template-columns:minmax(0,1fr)}
+  .ttw-out__dl>div:nth-last-child(-n+2){border-bottom:1px solid var(--line-2);padding-bottom:10px}
+  .ttw-out__dl>div:last-child{border-bottom:0;padding-bottom:0}
+}
+@media (max-width:560px){
+  .ttw-out__r{grid-template-columns:minmax(0,1fr)}
+  .ttw-out__rgt{text-align:left}
+  .ttw-out__tg{align-items:flex-start}
+  .ttw-out__dir{margin-top:8px}
+  .ttw-out__scale{flex-wrap:wrap;gap:6px 12px}
+  .ttw-out__mez{order:3;width:100%;text-align:left}
+}

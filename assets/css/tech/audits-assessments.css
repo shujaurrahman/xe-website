@@ -1,0 +1,118 @@
+/* ==========================================================================
+   Audits & Assessments — "The Findings Register". Page base layer (.taa-*).
+   Loaded after assets/css/brand/hub.css and assets/css/tech/kit.css. Tokens from core.css only;
+   no new colours, no gradients except mask fades, no !important.
+   Section styles: assets/css/tech/audits-assessments/<id>.css.
+   Primitives here: page spacing, the section head (ref chip + eyebrow, title, lead), the severity
+   chip rendered by taa_sev() in the shell, register table shell, window chrome for mock software,
+   estimate stamp, mono readouts, meters and the armed-motion hook.
+   ========================================================================== */
+.taa{
+  --taa-gap:clamp(20px,2.4vw,32px);
+  --taa-gap-l:clamp(40px,6vw,96px);
+  --taa-head-mb:clamp(48px,5.4vw,80px);
+  --taa-block:clamp(48px,6vw,96px);
+  overflow-x:clip;
+}
+.taa :focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* ---------- section head: ref chip + eyebrow, title left, lead right ------- */
+.taa-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--taa-gap);row-gap:22px;align-items:end;margin-bottom:var(--taa-head-mb)}
+.taa-head__t{grid-column:1 / span 7;display:flex;flex-direction:column;align-items:flex-start;gap:20px;min-width:0}
+.taa-head__l{grid-column:9 / -1;display:flex;flex-direction:column;align-items:flex-start;gap:18px;min-width:0}
+.taa-head .h2{max-width:19ch;font-size:clamp(1.85rem,3.4vw,2.9rem);letter-spacing:-.03em;line-height:1.06}
+.taa-head .lead{max-width:50ch}
+.taa-head--wide .taa-head__t{grid-column:1 / span 8}
+.taa-head--wide .h2{max-width:23ch}
+@media (max-width:1023px){
+  .taa-head__t,.taa-head--wide .taa-head__t{grid-column:1 / span 11}
+  .taa-head__l{grid-column:1 / span 9}
+}
+@media (max-width:760px){.taa-head__t,.taa-head--wide .taa-head__t,.taa-head__l{grid-column:1 / -1}}
+
+.taa-kick{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);line-height:1.3}
+.taa-kick__ref{display:inline-flex;align-items:center;gap:7px;height:22px;padding:0 8px;border:1px solid var(--line-3);border-radius:var(--r-xs);background:var(--paper);color:var(--ink);letter-spacing:.06em}
+.taa-kick__ref::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.band--ink .taa-kick__ref{border-color:var(--on-ink-line);background:transparent;color:var(--on-ink)}
+
+/* ---------- severity chip (taa_sev) --------------------------------------- */
+/* Four pips carry the level, so colour is never the only signal. */
+.taa-sev{display:inline-flex;align-items:center;gap:7px;height:22px;padding:0 8px 0 7px;border-radius:var(--r-xs);background:var(--paper-3);
+  font-family:var(--f);font-size:10.5px;font-weight:500;letter-spacing:.03em;line-height:1;color:var(--ink);white-space:nowrap}
+.taa-sev__p{display:inline-flex;align-items:flex-end;gap:2px;height:11px;flex:none}
+.taa-sev__p i{width:3px;border-radius:1px;background:var(--line-3);transition:background var(--d2) var(--e-io)}
+.taa-sev__p i:nth-child(1){height:5px}.taa-sev__p i:nth-child(2){height:7px}.taa-sev__p i:nth-child(3){height:9px}.taa-sev__p i:nth-child(4){height:11px}
+.taa-sev[data-p="1"] .taa-sev__p i:nth-child(-n+1),
+.taa-sev[data-p="2"] .taa-sev__p i:nth-child(-n+2),
+.taa-sev[data-p="3"] .taa-sev__p i:nth-child(-n+3),
+.taa-sev[data-p="4"] .taa-sev__p i{background:var(--blue)}
+.taa-sev[data-s="critical"]{background:var(--blue-wash-2)}
+.taa-sev[data-s="high"]{background:var(--blue-wash)}
+.taa-sev__n{min-width:0}
+:is(.band--ink,.taa-on-ink) .taa-sev{background:var(--on-ink-card);color:var(--on-ink);box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+:is(.band--ink,.taa-on-ink) .taa-sev__p i{background:var(--on-ink-line)}
+:is(.band--ink,.taa-on-ink) .taa-sev[data-p="1"] .taa-sev__p i:nth-child(-n+1),
+:is(.band--ink,.taa-on-ink) .taa-sev[data-p="2"] .taa-sev__p i:nth-child(-n+2),
+:is(.band--ink,.taa-on-ink) .taa-sev[data-p="3"] .taa-sev__p i:nth-child(-n+3),
+:is(.band--ink,.taa-on-ink) .taa-sev[data-p="4"] .taa-sev__p i{background:var(--blue)}
+
+/* ---------- breadcrumb ---------------------------------------------------- */
+.taa-crumb{margin-bottom:clamp(18px,1.6vw,24px)}
+.taa-crumb ol{display:flex;flex-wrap:wrap;align-items:center;gap:6px 0;font-size:var(--t-sm);line-height:1.5;color:var(--muted)}
+.taa-crumb li{white-space:nowrap}
+.taa-crumb li:not(:last-child)::after{content:"\203A";margin-inline:10px;font-family:var(--f);color:var(--blue)}
+.taa-crumb a{color:var(--muted);text-decoration:underline;text-decoration-color:var(--line-3);text-underline-offset:4px;transition:color var(--d1) var(--e-io),text-decoration-color var(--d1) var(--e-io)}
+.taa-crumb a:hover{color:var(--ink);text-decoration-color:var(--blue)}
+.taa-crumb [aria-current]{color:var(--ink);font-weight:500}
+
+/* ---------- mock software chrome ------------------------------------------ */
+.taa-win{position:relative;border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);box-shadow:var(--sh-2);overflow:hidden}
+.taa-win__bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;min-height:44px;padding:10px 18px;border-bottom:1px solid var(--line-2);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--muted);line-height:1.3}
+.taa-win__bar b{font-weight:600;color:var(--ink)}
+.taa-win__t{margin-right:auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.taa-win__st{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+:is(.band--ink,.taa-on-ink) .taa-win{border-color:var(--on-ink-line);background:var(--on-ink-card);box-shadow:none;color:var(--on-ink-2)}
+:is(.band--ink,.taa-on-ink) .taa-win__bar{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+:is(.band--ink,.taa-on-ink) .taa-win__bar b{color:var(--on-ink)}
+
+/* status LED */
+.taa-led{width:7px;height:7px;flex:none;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px var(--blue-wash)}
+
+/* ---------- readouts, stamps, chips --------------------------------------- */
+.taa-ro{font-family:var(--f);font-size:var(--t-xs);line-height:1.5;font-variant-numeric:tabular-nums;color:var(--muted)}
+.taa-num{font-family:var(--f);font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink)}
+:is(.band--ink,.taa-on-ink) .taa-num{color:var(--on-ink)}
+.taa-est{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border:1px dashed var(--line-3);border-radius:var(--r-pill);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+:is(.band--ink,.taa-on-ink) .taa-est{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+.taa-lbl{margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);line-height:1.3}
+:is(.band--ink,.taa-on-ink) .taa-lbl{color:var(--on-ink-3)}
+.taa-pill{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:var(--r-pill);background:var(--paper-3);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.06em;color:var(--txt);white-space:nowrap}
+:is(.band--ink,.taa-on-ink) .taa-pill{background:var(--on-ink-card);color:var(--on-ink-2)}
+
+/* ---------- register table shell ------------------------------------------ */
+.taa-tbl{width:100%;border-collapse:collapse;font-size:var(--t-sm);line-height:1.4}
+.taa-tbl th,.taa-tbl td{padding:12px 14px;text-align:left;vertical-align:middle;border-bottom:1px solid var(--line-2)}
+.taa-tbl thead th{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+  border-bottom:1px solid var(--line-3);white-space:nowrap}
+.taa-tbl tbody tr:last-child td{border-bottom:0}
+.taa-tbl .taa-id{font-family:var(--f);font-size:var(--t-xs);font-weight:600;letter-spacing:.04em;color:var(--blue-d);white-space:nowrap}
+.taa-tbl .taa-n{font-variant-numeric:tabular-nums;white-space:nowrap}
+:is(.band--ink,.taa-on-ink) .taa-tbl th,:is(.band--ink,.taa-on-ink) .taa-tbl td{border-color:var(--on-ink-line);color:var(--on-ink-2)}
+:is(.band--ink,.taa-on-ink) .taa-tbl thead th{color:var(--on-ink-3)}
+:is(.band--ink,.taa-on-ink) .taa-tbl .taa-id{color:var(--blue)}
+
+/* ---------- meters -------------------------------------------------------- */
+.taa-meter{position:relative;display:block;height:6px;border-radius:var(--r-pill);background:var(--paper-4);overflow:hidden}
+.taa-meter i{position:absolute;inset:0 auto 0 0;width:100%;border-radius:inherit;background:var(--blue);transform:scaleX(var(--p,0));transform-origin:left center}
+:is(.band--ink,.taa-on-ink) .taa-meter{background:var(--on-ink-line)}
+
+/* Staggered entrances on this page use the site-wide [data-rv-s] hook from core.css, which
+   partials/head.php's <noscript> block already restores, so no page-local reveal class can leave a
+   block invisible without JS. */
+
+/* ---------- shared figure caption ----------------------------------------- */
+.taa-cap{margin-top:12px;font-size:var(--t-xs);line-height:1.5;color:var(--faint)}
+:is(.band--ink,.taa-on-ink) .taa-cap{color:var(--on-ink-3)}

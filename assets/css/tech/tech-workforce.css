@@ -1,0 +1,117 @@
+/* ==========================================================================
+   Tech Workforce — "Squad Assembly". Page base layer (.ttw-*).
+   Loaded after assets/css/brand/hub.css and assets/css/tech/kit.css. Tokens from core.css only;
+   no new colours, no gradients except mask fades, no !important.
+   Section styles: assets/css/tech/tech-workforce/<id>.css.
+   Primitives here: page spacing, the section head, the ref chip, role chips, window chrome for
+   mock software, status dot, "Illustrative" stamp, mono readouts, page buttons, the checklist
+   tick, and the armed-motion hook (.is-armed / .is-on).
+   ========================================================================== */
+.ttw{
+  --ttw-gap:clamp(20px,2.4vw,32px);
+  --ttw-gap-l:clamp(40px,5.6vw,88px);
+  --ttw-head-mb:clamp(44px,5.2vw,76px);
+  --ttw-hero-t:clamp(132px,15vh,188px);
+  --ttw-block:clamp(48px,6vw,96px);
+  overflow-x:clip;
+}
+.ttw :focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* ---------- section head: eyebrow + title left, lead right ---------------- */
+.ttw-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--ttw-gap);row-gap:22px;align-items:end;margin-bottom:var(--ttw-head-mb)}
+.ttw-head__t{grid-column:1 / span 7;display:flex;flex-direction:column;align-items:flex-start;gap:20px;min-width:0}
+.ttw-head__l{grid-column:9 / -1;display:flex;flex-direction:column;align-items:flex-start;gap:18px;min-width:0}
+.ttw-head .h2{max-width:20ch;font-size:clamp(1.85rem,3.4vw,2.95rem);letter-spacing:-.03em;line-height:1.06}
+.ttw-head .lead{max-width:50ch}
+.ttw-head--wide .ttw-head__t{grid-column:1 / span 8}
+.ttw-head--wide .h2{max-width:23ch}
+@media (max-width:1023px){
+  .ttw-head__t,.ttw-head--wide .ttw-head__t{grid-column:1 / span 11}
+  .ttw-head__l{grid-column:1 / span 10}
+}
+@media (max-width:760px){.ttw-head__t,.ttw-head--wide .ttw-head__t,.ttw-head__l{grid-column:1 / -1}}
+
+.ttw-kick{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);line-height:1.3}
+.ttw-kick__ref{display:inline-flex;align-items:center;gap:7px;height:22px;padding:0 8px;border:1px solid var(--line-3);border-radius:var(--r-xs);background:var(--paper);color:var(--ink);letter-spacing:.06em}
+.ttw-kick__ref::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.band--ink .ttw-kick__ref{border-color:var(--on-ink-line);background:transparent;color:var(--on-ink)}
+
+/* ---------- mono labels and readouts ------------------------------------- */
+.ttw-lbl{margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.35}
+:is(.band--ink,.ttw-on-ink) .ttw-lbl{color:var(--on-ink-3)}
+.ttw-ro{font-family:var(--f);font-size:var(--t-xs);line-height:1.5;font-variant-numeric:tabular-nums}
+/* Tracking stays at zero: tabular-nums does the aligning, and a mono face fights negative tracking. */
+.ttw-fig{display:block;font-family:var(--f);font-size:clamp(1.5rem,2.4vw,2rem);font-weight:500;letter-spacing:0;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+:is(.band--ink,.ttw-on-ink) .ttw-fig{color:var(--on-ink)}
+
+/* ---------- role chip: a person-shaped tag ------------------------------- */
+.ttw-chip{display:inline-flex;align-items:center;gap:9px;min-height:30px;padding:4px 12px 4px 9px;border:1px solid var(--line-3);border-radius:var(--r-pill);
+  background:var(--paper);color:var(--ink);font-family:var(--f);font-size:var(--t-xs);font-weight:500;letter-spacing:.01em;line-height:1.3}
+.ttw-chip__d{width:7px;height:7px;flex:none;border-radius:50%;background:var(--blue)}
+.ttw-chip__s{color:var(--muted)}
+.ttw-chip--q{border-style:dashed;color:var(--muted)}
+.ttw-chip--q .ttw-chip__d{background:var(--line-3)}
+:is(.band--ink,.ttw-on-ink) .ttw-chip{background:var(--on-ink-card);border-color:var(--on-ink-line);color:var(--on-ink)}
+:is(.band--ink,.ttw-on-ink) .ttw-chip__s{color:var(--on-ink-3)}
+
+/* ---------- window chrome for mock software ------------------------------ */
+.ttw-win{position:relative;min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh-2);overflow:hidden}
+.ttw-win--ink{background:var(--on-ink-card);border-color:var(--on-ink-line);box-shadow:none;color:var(--on-ink-2)}
+.ttw-win__bar{display:flex;align-items:center;gap:12px;min-height:46px;margin:0;padding:8px 18px;border-bottom:1px solid var(--line-2);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.05em;color:var(--muted);min-width:0;flex-wrap:wrap}
+.ttw-win__dots{display:inline-flex;gap:6px;flex:none}
+.ttw-win__dots i{width:8px;height:8px;border-radius:50%;background:var(--line-3)}
+.ttw-win__path{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ttw-win__path b{font-weight:500;color:var(--ink)}
+.ttw-win__end{display:inline-flex;align-items:center;gap:8px;margin-left:auto;flex:none}
+.ttw-win--ink .ttw-win__bar,.ttw-win__bar--ink{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+.ttw-win--ink .ttw-win__dots i,.ttw-win__bar--ink .ttw-win__dots i{background:var(--on-ink-line)}
+.ttw-win--ink .ttw-win__path b,.ttw-win__bar--ink .ttw-win__path b{color:var(--on-ink)}
+
+/* ---------- status dot, stamp -------------------------------------------- */
+.ttw-led{display:inline-block;flex:none;width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px var(--blue-wash-2)}
+.ttw-led--off{background:var(--line-3);box-shadow:none}
+.is-live .ttw-led--pulse{animation:ttw-led 2.4s var(--e-io) infinite}
+@keyframes ttw-led{0%,100%{box-shadow:0 0 0 3px var(--blue-wash-2)}50%{box-shadow:0 0 0 7px transparent}}
+
+.ttw-ill{display:inline-flex;align-items:center;gap:6px;min-height:22px;padding:2px 8px;border:1px dashed var(--line-3);border-radius:var(--r-xs);
+  font-family:var(--f);font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.2;white-space:nowrap}
+:is(.band--ink,.ttw-on-ink) .ttw-ill{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+
+/* ---------- page buttons -------------------------------------------------- */
+.ttw-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 15px;border:1px solid var(--line-3);border-radius:var(--r-sm);
+  background:var(--paper);font-family:var(--f-b);font-size:var(--t-sm);font-weight:500;line-height:1.2;color:var(--ink);white-space:nowrap;cursor:pointer;
+  transition:border-color var(--d2) var(--e),color var(--d2) var(--e),background var(--d2) var(--e)}
+.ttw-btn:hover{border-color:var(--blue);color:var(--blue-d)}
+.ttw-btn[aria-pressed="true"],.ttw-btn[aria-selected="true"],.ttw-btn[aria-checked="true"]{border-color:var(--blue);background:var(--blue-wash);color:var(--blue-d)}
+.ttw-btn[disabled]{cursor:default;color:var(--muted)}
+.ttw-btn[disabled]:hover{border-color:var(--line-3);color:var(--muted)}
+:is(.band--ink,.ttw-on-ink) .ttw-btn{background:var(--on-ink-card);border-color:var(--on-ink-line);color:var(--on-ink-2)}
+:is(.band--ink,.ttw-on-ink) .ttw-btn:hover{border-color:var(--blue-line);color:var(--on-ink)}
+:is(.band--ink,.ttw-on-ink) .ttw-btn[aria-pressed="true"],:is(.band--ink,.ttw-on-ink) .ttw-btn[aria-selected="true"],:is(.band--ink,.ttw-on-ink) .ttw-btn[aria-checked="true"]{border-color:var(--blue);background:var(--blue-wash-2);color:var(--on-ink)}
+:is(.band--ink,.ttw-on-ink) .ttw-btn[disabled]{color:var(--on-ink-3)}
+:is(.band--ink,.ttw-on-ink) .ttw-btn[disabled]:hover{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+
+/* ---------- checklist tick ------------------------------------------------ */
+.ttw-tick{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;flex:none;border-radius:50%;
+  border:1px solid var(--blue-line);background:var(--blue-wash);color:var(--blue);margin-top:1px}
+.ttw-tick svg{width:11px;height:11px;display:block}
+.ttw-tick--gap{border-color:var(--line-3);background:var(--paper-3);color:var(--muted)}
+:is(.band--ink,.ttw-on-ink) .ttw-tick--gap{border-color:var(--on-ink-line);background:var(--on-ink-card);color:var(--on-ink-3)}
+
+/* ---------- surfaces ------------------------------------------------------ */
+.ttw-card{position:relative;min-width:0;padding:clamp(20px,2.2vw,28px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.band--alt .ttw-card{background:var(--paper)}
+:is(.band--ink) .ttw-card{background:var(--on-ink-card);border-color:var(--on-ink-line);color:var(--on-ink-2)}
+
+/* ---------- armed motion hook --------------------------------------------
+   THE PAGE'S MOTION CONTRACT. A section that hides anything before it enters marks its root
+   [data-ttw-arm], and every hide rule in that section is written behind .is-armed. Only
+   assets/js/tech/tech-workforce/arm.js adds that class, and only when window.BDH exists and
+   motion is allowed. So with JS off, or under prefers-reduced-motion, nothing is hidden and the
+   shipped HTML — already the finished state — is what is read. Reveals then run off .is-in
+   (BDH.enter via [data-bdh-in]) or .is-on (a section script).
+   Any new hide rule on this page must carry .is-armed. ------------------- */
+@media (prefers-reduced-motion:no-preference){
+  .ttw-fade{transition:opacity .5s var(--e),transform .5s var(--e)}
+}

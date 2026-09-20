@@ -1,0 +1,113 @@
+/* ==========================================================================
+   Tech Workforce · Governance (#governance, .ttw-gov) — the sprint report mock and the swap flow.
+   Loaded after assets/css/tech/tech-workforce.css. Tokens from core.css only; no new colours,
+   no gradients, no !important. The HTML is the finished state; motion only replays it.
+   ========================================================================== */
+
+/* ---------- report window ------------------------------------------------- */
+.ttw-gov__win{margin-bottom:var(--ttw-gap-l)}
+.ttw-gov__body{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);
+  column-gap:clamp(24px,2.8vw,44px);row-gap:clamp(24px,2.8vw,40px);align-items:start;
+  padding:clamp(20px,2.4vw,32px)}
+
+.ttw-gov__ch{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px 16px;margin:0 0 18px;padding-bottom:12px;border-bottom:1px solid var(--on-ink-line)}
+.ttw-gov__ch .ttw-ro{color:var(--on-ink-3)}
+
+/* ---------- committed against delivered ---------------------------------- */
+.ttw-gov__chart{min-width:0}
+.ttw-gov__plot{display:flex;align-items:flex-end;gap:clamp(8px,1.4vw,20px);height:clamp(186px,20vw,250px);padding-top:22px}
+.ttw-gov__col{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1 1 0;min-width:0;height:100%}
+.ttw-gov__bars{position:relative;display:flex;align-items:flex-end;justify-content:center;gap:4px;width:100%;flex:1 1 auto;min-height:0}
+.ttw-gov__cm,.ttw-gov__dl{display:block;width:clamp(10px,1.5vw,20px);height:var(--h);border-radius:2px 2px 0 0;transform-origin:50% 100%}
+.ttw-gov__cm{position:relative;border:1px dashed var(--on-ink-line);border-bottom:0;background:transparent}
+.ttw-gov__dl{position:relative;background:var(--blue)}
+.ttw-gov__cm b,.ttw-gov__dl b{position:absolute;left:50%;bottom:calc(100% + 5px);transform:translateX(-50%);
+  font-family:var(--f);font-weight:500;font-variant-numeric:tabular-nums}
+.ttw-gov__dl b{font-size:var(--t-xs);color:var(--on-ink)}
+.ttw-gov__cm b{font-size:10.5px;color:var(--on-ink-3)}
+.ttw-gov__cl{font-family:var(--f);font-size:var(--t-xs);color:var(--on-ink-3);line-height:1;font-variant-numeric:tabular-nums}
+/* Escaped defects: the third series, plotted as a marker row under the columns rather than
+   asserted in the legend. The value carries its own weight — fewer defects, fainter mark. */
+.ttw-gov__ed{display:inline-flex;align-items:center;justify-content:center;width:22px;height:20px;flex:none;
+  border:1px solid var(--on-ink-line);border-radius:var(--r-xs);background:var(--on-ink-card);
+  font-family:var(--f);font-size:var(--t-xs);color:var(--on-ink-2);line-height:1;font-variant-numeric:tabular-nums}
+.ttw-gov__ed[data-n="1"]{color:var(--on-ink-3)}
+.ttw-gov__ed[data-n="4"]{border-color:var(--blue-line);color:var(--on-ink)}
+
+.ttw-gov__key{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;margin:18px 0 0;padding-top:14px;border-top:1px solid var(--on-ink-line);
+  font-family:var(--f);font-size:var(--t-xs);color:var(--on-ink-3);line-height:1.5}
+.ttw-gov__k{display:inline-flex;align-items:center;gap:8px}
+.ttw-gov__sw{width:12px;height:10px;flex:none;border-radius:2px}
+.ttw-gov__sw--c{border:1px dashed var(--on-ink-line)}
+.ttw-gov__sw--d{background:var(--blue)}
+.ttw-gov__sw--e{display:inline-flex;align-items:center;justify-content:center;width:18px;height:16px;
+  border:1px solid var(--on-ink-line);border-radius:var(--r-xs);background:var(--on-ink-card);
+  font-family:var(--f);font-size:10.5px;font-style:normal;color:var(--on-ink-3);line-height:1}
+
+/* ---------- metric tiles -------------------------------------------------- */
+.ttw-gov__tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none}
+.ttw-gov__tiles li{display:flex;flex-direction:column;gap:9px;min-width:0;padding:16px;border:1px solid var(--on-ink-line);border-radius:var(--r-sm);background:var(--on-ink-card)}
+.ttw-gov__tiles .ttw-ro{color:var(--on-ink-3);line-height:1.45}
+
+/* ---------- risks and blockers -------------------------------------------- */
+.ttw-gov__risks{min-width:0}
+.ttw-gov__risks ul{display:flex;flex-direction:column;gap:2px;margin:0;padding:0;list-style:none}
+.ttw-gov__risk{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;row-gap:6px;align-items:start;padding:14px 0;border-bottom:1px solid var(--on-ink-line)}
+.ttw-gov__risk:last-child{border-bottom:0}
+.ttw-gov__rs{display:inline-flex;align-items:center;gap:7px;min-height:22px;padding:0 9px;border:1px solid var(--on-ink-line);border-radius:var(--r-pill);
+  font-family:var(--f);font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-3);white-space:nowrap;line-height:1}
+.ttw-gov__rs::before{content:"";width:6px;height:6px;flex:none;border-radius:50%;background:var(--on-ink-line)}
+.ttw-gov__risk[data-s="open"] .ttw-gov__rs{border-color:var(--blue-line);color:var(--on-ink)}
+.ttw-gov__risk[data-s="open"] .ttw-gov__rs::before{background:var(--blue)}
+.ttw-gov__risk[data-s="watching"] .ttw-gov__rs{color:var(--on-ink-2)}
+.ttw-gov__risk[data-s="watching"] .ttw-gov__rs::before{background:var(--on-ink-3)}
+.ttw-gov__rt{font-family:var(--f-b);font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-2)}
+.ttw-gov__ro{grid-column:2;color:var(--on-ink-3)}
+
+/* ---------- delivery-manager note ---------------------------------------- */
+.ttw-gov__note{margin:0;padding:18px 0 0 20px;border-left:2px solid var(--blue-line)}
+.ttw-gov__note p{margin:0;font-family:var(--f-b);font-size:var(--t-sm);line-height:1.7;color:var(--on-ink-2)}
+.ttw-gov__note footer{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-top:14px}
+.ttw-gov__who{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink)}
+.ttw-gov__note .ttw-ro{color:var(--on-ink-3)}
+
+/* ---------- cadence and swap cards ---------------------------------------- */
+.ttw-gov__after{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:var(--ttw-gap);align-items:start}
+.ttw-gov__after .bdh-t{margin:0 0 18px;max-width:34ch}
+
+.ttw-gov__cl2{display:flex;flex-direction:column;gap:0;margin:0}
+.ttw-gov__cl2 > div{display:grid;grid-template-columns:minmax(96px,auto) minmax(0,1fr);column-gap:16px;padding:14px 0;border-top:1px solid var(--on-ink-line)}
+.ttw-gov__cl2 > div:first-child{border-top:0;padding-top:0}
+.ttw-gov__cl2 dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink);line-height:1.5}
+.ttw-gov__cl2 dd{margin:0;font-family:var(--f-b);font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-2)}
+
+.ttw-gov__sl{display:flex;flex-direction:column;gap:0;margin:0;padding:0;list-style:none;counter-reset:none}
+.ttw-gov__sl li{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:16px;padding:14px 0;border-top:1px solid var(--on-ink-line)}
+.ttw-gov__sl li:first-child{border-top:0;padding-top:0}
+.ttw-gov__sn{font-family:var(--f);font-size:var(--t-xs);color:var(--on-ink-3);line-height:1.7;font-variant-numeric:tabular-nums}
+.ttw-gov__st{display:flex;flex-direction:column;gap:5px;min-width:0;font-family:var(--f-b);font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-2)}
+.ttw-gov__st b{font-weight:600;color:var(--on-ink)}
+.ttw-gov__sw2{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:20px 0 0;padding-top:18px;border-top:1px solid var(--on-ink-line)}
+.ttw-gov__sw2 .ttw-ro{color:var(--on-ink-3)}
+
+/* ---------- responsive ---------------------------------------------------- */
+@media (max-width:1023px){
+  .ttw-gov__body{grid-template-columns:minmax(0,1fr)}
+  .ttw-gov__after{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){
+  .ttw-gov__tiles{grid-template-columns:minmax(0,1fr)}
+  .ttw-gov__plot{gap:6px;height:190px}
+  .ttw-gov__risk{grid-template-columns:minmax(0,1fr)}
+  .ttw-gov__ro{grid-column:1}
+  .ttw-gov__cl2 > div{grid-template-columns:minmax(0,1fr);row-gap:6px}
+  .ttw-gov__sl li{grid-template-columns:minmax(0,1fr);row-gap:6px}
+}
+
+/* ---------- motion: the chart draws up from the axis ---------------------
+   One short pass, no per-column delay, so the chart is readable the moment it settles. The
+   figures above the bars are part of the finished state and never animate. --------------- */
+@media (prefers-reduced-motion:no-preference){
+  .ttw-gov__win.is-armed .ttw-gov__cm,.ttw-gov__win.is-armed .ttw-gov__dl{transition:transform .4s var(--e-io)}
+  .ttw-gov__win.is-armed:not(.is-in) .ttw-gov__cm,.ttw-gov__win.is-armed:not(.is-in) .ttw-gov__dl{transform:scaleY(0)}
+}

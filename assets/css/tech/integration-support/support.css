@@ -1,0 +1,106 @@
+/* Support — incident timeline, dead-letter queue graph, MTTA/MTTR tiles, two clocks, photo.
+   Ink band. Tokens from core.css only. */
+
+.tis-su{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--bdh-gap-l);row-gap:var(--bdh-gap)}
+.tis-su>*{min-width:0}
+.tis-su__main{grid-column:1 / span 7}
+.tis-su__side{grid-column:8 / -1;display:flex;flex-direction:column;gap:var(--bdh-gap)}
+
+/* ---- incident head ---- */
+.tis-su__head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;
+  padding-bottom:20px;border-bottom:1px solid var(--on-ink-line)}
+.tis-su__id{color:var(--blue);letter-spacing:.08em;margin:0 0 8px}
+.tis-su__state{display:inline-flex;align-items:center;gap:8px;margin:0;font-family:var(--f);font-size:var(--t-lbl);
+  letter-spacing:.06em;color:var(--on-ink-2)}
+
+/* ---- timeline ---- */
+.tis-su__tl{list-style:none;margin:0;padding:0}
+.tis-su__step{position:relative;display:grid;grid-template-columns:52px 28px minmax(0,1fr);gap:0 16px;padding:22px 0}
+.tis-su__step+.tis-su__step{border-top:1px solid var(--on-ink-line)}
+/* the spine */
+.tis-su__step::before{content:"";position:absolute;left:65px;top:0;bottom:0;width:1px;background:var(--on-ink-line)}
+.tis-su__step:first-child::before{top:36px}
+.tis-su__step:last-child::before{bottom:calc(100% - 36px)}
+.tis-su__t{padding-top:6px;color:var(--on-ink-3);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tis-su__node{position:relative;z-index:1;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;
+  background:var(--ink);box-shadow:inset 0 0 0 1px var(--on-ink-line);color:var(--on-ink-3);
+  transition:box-shadow var(--d2) var(--e),color var(--d2) var(--e),background var(--d2) var(--e)}
+.tis-su__sb{display:flex;flex-direction:column;gap:8px;min-width:0}
+.tis-su__sb h4{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.tis-su__who{font-family:var(--f);font-size:.625rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  padding:2px 8px;border-radius:var(--r-pill);background:var(--on-ink-card);color:var(--on-ink-3);white-space:nowrap}
+.tis-su__ro{color:var(--on-ink-3);overflow-wrap:anywhere}
+
+/* who acted: system, agent, engineer */
+.tis-su__step.is-sys .tis-su__node{color:var(--on-ink)}
+.tis-su__step.is-agent .tis-su__node{box-shadow:inset 0 0 0 1px var(--blue);color:var(--blue)}
+.tis-su__step.is-agent .tis-su__who{color:var(--blue)}
+.tis-su__step.is-agent .tis-su__ro{color:var(--blue)}
+.tis-su__step.is-human .tis-su__node{background:var(--paper);box-shadow:inset 0 0 0 1px var(--paper);color:var(--ink)}
+.tis-su__step.is-human .tis-su__who{background:var(--paper);color:var(--ink)}
+
+/* JS lights each step in turn */
+.tis-su__step.is-now .tis-su__node{box-shadow:inset 0 0 0 1px var(--blue),0 0 0 5px var(--blue-wash-2)}
+
+.tis-su__rule{display:flex;align-items:flex-start;gap:12px;margin:24px 0 0;padding-top:22px;border-top:1px solid var(--on-ink-line);
+  font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-2)}
+.tis-su__rule .xt-ico{flex:none;margin-top:2px;color:var(--blue)}
+
+/* ---- dead-letter queue graph ---- */
+.tis-su__q{padding:20px 22px;border:1px solid var(--on-ink-line);border-radius:var(--r-lg);background:var(--on-ink-card)}
+.tis-su__qh{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px}
+.tis-su__qh p{margin:0;color:var(--on-ink-3)}
+.tis-su__qn{color:var(--blue)}
+.tis-su__qg{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);align-items:end;gap:5px;height:86px;margin:16px 0 10px}
+.tis-su__qb{position:relative;height:var(--h);min-height:2px;border-radius:2px 2px 0 0;background:var(--on-ink-line);
+  transform:scaleY(0);transform-origin:center bottom;transition:transform .6s var(--e) calc(var(--i,0) * 55ms),background var(--d2) var(--e)}
+.tis-su__qb.is-zero{background:var(--blue)}
+.tis-su.is-in .tis-su__qb{transform:scaleY(1)}
+.tis-su__qx{display:flex;justify-content:space-between;margin:0;color:var(--on-ink-3)}
+.tis-su__qx span:nth-child(2){color:var(--blue)}
+
+/* ---- MTTA / MTTR tiles ---- */
+.tis-su__tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;list-style:none;margin:0;padding:0}
+.tis-su__tile{display:flex;flex-direction:column;gap:6px;padding:20px 22px;border:1px solid var(--on-ink-line);border-radius:var(--r);background:var(--on-ink-card)}
+.tis-su__fig{display:flex;align-items:baseline;gap:4px;margin:0;font-family:var(--f);font-size:clamp(1.75rem,3vw,2.25rem);font-weight:500;
+  line-height:1;color:var(--on-ink);font-variant-numeric:tabular-nums}
+.tis-su__fig span{font-size:var(--t-sm);font-weight:500;color:var(--blue)}
+.tis-su__tl2{margin:0;font-family:var(--f-h);font-size:var(--t-sm);font-weight:500;line-height:1.3;color:var(--on-ink)}
+.tis-su__tile .bdh-d{color:var(--on-ink-3);font-size:var(--t-xs)}
+
+/* ---- the two clocks ---- */
+.tis-su__clocks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--bdh-gap);
+  padding:20px 22px;border:1px solid var(--on-ink-line);border-radius:var(--r-lg)}
+.tis-su__clock{min-width:0}
+.tis-su__ct{display:flex;align-items:baseline;gap:8px;margin:0 0 4px;font-family:var(--f);font-size:1.5rem;font-weight:500;line-height:1;
+  color:var(--on-ink);font-variant-numeric:tabular-nums}
+.tis-su__ct span{font-size:var(--t-lbl);letter-spacing:.12em;color:var(--blue)}
+.tis-su__cl{margin:0;font-size:var(--t-xs);line-height:1.4;color:var(--on-ink-3)}
+
+.tis-su__img{border-radius:var(--r-lg)}
+.tis-su__note{margin:0;font-size:var(--t-xs);line-height:1.6;color:var(--on-ink-3)}
+
+/* ---- the stack strip ---- */
+.tis-su__stack{display:flex;flex-wrap:wrap;align-items:center;gap:16px var(--bdh-gap-l);
+  margin-top:var(--bdh-block);padding-top:var(--bdh-gap);border-top:1px solid var(--on-ink-line)}
+.tis-su__stackk{flex:none;margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--on-ink-3)}
+.tis-su__stack .xt-chip{background:transparent;border-color:var(--on-ink-line);color:var(--on-ink)}
+
+@media (max-width:1023px){
+  .tis-su__main,.tis-su__side{grid-column:1 / -1}
+  .tis-su__tiles{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media (max-width:720px){
+  .tis-su__step{grid-template-columns:44px 28px minmax(0,1fr);gap:0 12px}
+  .tis-su__step::before{left:57px}
+  .tis-su__tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:480px){
+  .tis-su__qg{gap:3px;height:70px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .tis-su__qb{transform:scaleY(1);transition:none}
+  .tis-su__node{transition:none}
+}

@@ -1,0 +1,51 @@
+/* TM-10 Deliver — the evidence locker. A bar, a grid of folder cards (each with a tab that lifts on
+   hover and focus) and the hand-over rules. Reveal comes from [data-rv-s] on the grid. Tokens only. */
+
+.tsc-lk{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper-2);overflow:hidden}
+
+.tsc-lk__bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;padding:14px clamp(16px,2vw,24px);border-bottom:1px solid var(--line);background:var(--paper)}
+.tsc-lk__bk{display:flex;align-items:center;gap:9px;margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tsc-lk__bn{margin:0;color:var(--muted)}
+.tsc-lk__bn b{color:var(--ink);font-weight:500}
+.tsc-lk__bi{margin:0 0 0 auto}
+
+/* ---------- folders ------------------------------------------------------- */
+.tsc-lk__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:clamp(14px,1.6vw,20px);list-style:none;margin:0;
+  padding:clamp(18px,2.2vw,28px) clamp(16px,2vw,24px)}
+.tsc-lk__f{position:relative;display:grid;gap:10px;align-content:start;margin-top:12px;padding:18px;border:1px solid var(--line);border-top-left-radius:0;
+  border-radius:0 var(--r) var(--r) var(--r);background:var(--paper);
+  transition:transform var(--d2) var(--e),border-color var(--d1) var(--e-io),box-shadow var(--d2) var(--e)}
+.tsc-lk__f:hover,.tsc-lk__f:focus-within{transform:translateY(-3px);border-color:var(--line-3);box-shadow:var(--sh-1)}
+.tsc-lk__tab{position:absolute;left:-1px;top:-13px;width:92px;height:13px;border:1px solid var(--line);border-bottom:0;border-radius:6px 6px 0 0;background:var(--paper);
+  transition:width var(--d2) var(--e),border-color var(--d1) var(--e-io)}
+.tsc-lk__f:hover .tsc-lk__tab,.tsc-lk__f:focus-within .tsc-lk__tab{width:116px;border-color:var(--line-3)}
+
+.tsc-lk__fh{display:flex;align-items:center;gap:10px}
+.tsc-lk__fico{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:var(--blue-wash);color:var(--blue-d);flex:none}
+.tsc-lk__fn{margin:0;color:var(--faint);letter-spacing:.1em}
+.tsc-lk__fc{margin:0 0 0 auto;color:var(--muted);white-space:nowrap}
+.tsc-lk__ft{margin:2px 0 0;font-family:var(--f-h);font-size:var(--t-body);font-weight:500;letter-spacing:-.01em;line-height:1.35;color:var(--ink)}
+.tsc-lk__fmt{justify-self:start}
+
+.tsc-lk__files{list-style:none;margin:4px 0 0;padding:12px 0 0;border-top:1px solid var(--line-2);display:grid;gap:7px}
+.tsc-lk__files li{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:8px;font-family:var(--f);font-size:10.5px;line-height:1.5;color:var(--muted);
+  overflow-wrap:anywhere}
+.tsc-lk__doc{width:9px;height:12px;flex:none;border:1px solid var(--line-3);border-radius:2px;position:relative}
+.tsc-lk__doc::after{content:"";position:absolute;left:2px;right:2px;top:3px;height:1px;background:var(--line-3);box-shadow:0 3px 0 var(--line-3)}
+.tsc-lk__f:hover .tsc-lk__doc,.tsc-lk__f:focus-within .tsc-lk__doc{border-color:var(--blue-line)}
+
+/* ---------- rules --------------------------------------------------------- */
+.tsc-lk__foot{padding:clamp(18px,2.2vw,26px) clamp(16px,2vw,24px);border-top:1px solid var(--line);background:var(--paper)}
+.tsc-lk__rules{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:16px clamp(20px,3vw,40px)}
+.tsc-lk__rules li{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:10px;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.tsc-lk__rules .tsc-tick{margin-top:3px}
+.tsc-lk__rules b{font-weight:600;color:var(--ink)}
+
+@media (max-width:480px){
+  .tsc-lk__grid{grid-template-columns:minmax(0,1fr)}
+  .tsc-lk__bi{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .tsc-lk__f,.tsc-lk__tab{transition:none}
+  .tsc-lk__f:hover,.tsc-lk__f:focus-within{transform:none}
+}

@@ -1,0 +1,132 @@
+/* Contracts — spec diff, contract-check pipeline, consumer impact, rules and standards.
+   Paper band. Tokens from core.css only. */
+
+/* align-items:start, so a short panel sizes to its content instead of stretching to match the
+   tallest one and leaving a bordered box half empty */
+.tis-ct{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--bdh-gap);row-gap:var(--bdh-gap);align-items:start}
+.tis-ct>*{min-width:0}
+.tis-ct__spec{grid-column:1 / span 7}
+.tis-ct__ci{grid-column:8 / -1}
+.tis-ct__cons{grid-column:1 / span 7}
+.tis-ct__rules{grid-column:8 / -1}
+.tis-ct__std{grid-column:1 / -1}
+
+/* ---- the diff ---- */
+.tis-ct__branch{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--blue)}
+.tis-ct__diff{padding:18px 0}
+.tis-ct__lines{list-style:none;margin:0;padding:0;min-width:max-content}
+.tis-ct__l{display:grid;grid-template-columns:44px 16px minmax(0,1fr);align-items:baseline;padding:2px 20px 2px 0;
+  border-left:2px solid transparent;transition:background var(--d2) var(--e-io),border-color var(--d2) var(--e-io)}
+.tis-ct__g{font-family:var(--f);font-size:.625rem;line-height:1.75;text-align:right;padding-right:12px;color:var(--ghost);font-variant-numeric:tabular-nums}
+.tis-ct__s{font-family:var(--f);font-size:var(--t-xs);line-height:1.75;color:var(--faint)}
+.tis-ct__l .tis-code{overflow:visible}
+.tis-ct__l--hunk{padding-block:8px;margin-bottom:4px;border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);background:var(--paper-2)}
+.tis-ct__l--hunk .tis-code{font-size:.625rem;letter-spacing:.06em;color:var(--faint)}
+.tis-ct__l--del{background:var(--paper-3);border-left-color:var(--ink)}
+.tis-ct__l--del .tis-code{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:var(--line-3)}
+.tis-ct__l--del .tis-ct__s{color:var(--ink)}
+.tis-ct__l--add{background:var(--blue-wash);border-left-color:var(--blue)}
+.tis-ct__l--add .tis-ct__s{color:var(--blue)}
+/* JS walks the diff once on entry; the resting state above is already the finished, readable diff */
+.tis-ct__l.is-lit{background:var(--blue-wash-2)}
+
+.tis-ct__note{display:flex;align-items:flex-start;gap:12px;margin:0;padding:16px 20px;border-top:1px solid var(--line-2);
+  font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+.tis-ct__note .xt-ico{flex:none;margin-top:2px;color:var(--ink)}
+.tis-ct__note b{font-weight:600;color:var(--ink)}
+
+/* ---- the CI pipeline ---- */
+.tis-ct__verdict{display:inline-flex;align-items:center;gap:8px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--blue)}
+.tis-ct__jobs{list-style:none;margin:0;padding:8px 0}
+.tis-ct__job{position:relative;display:grid;grid-template-columns:28px minmax(0,1fr);gap:14px;padding:16px 20px 16px 18px}
+.tis-ct__job+.tis-ct__job{border-top:1px solid var(--line-2)}
+/* the pipeline spine */
+.tis-ct__job::before{content:"";position:absolute;left:31px;top:0;bottom:0;width:1px;background:var(--line-2)}
+.tis-ct__job:first-child::before{top:32px}
+.tis-ct__job:last-child::before{bottom:calc(100% - 32px)}
+.tis-ct__mark{position:relative;z-index:1;display:grid;place-items:center;width:28px;height:28px;margin-top:-2px;border-radius:50%;
+  background:var(--paper);box-shadow:inset 0 0 0 1px var(--line-3);color:var(--faint);
+  transition:box-shadow var(--d2) var(--e),color var(--d2) var(--e),background var(--d2) var(--e)}
+.tis-ct__jb{min-width:0;display:flex;flex-direction:column;gap:6px}
+.tis-ct__ro{color:var(--faint)}
+/* pass is the filled mark; a finding is a hollow ink ring with an ink rule down the row, so the
+   two red rows never read as the most finished thing on the panel */
+.tis-ct__job.is-pass .tis-ct__mark{background:var(--blue-wash);box-shadow:inset 0 0 0 1px var(--blue);color:var(--blue)}
+.tis-ct__job.is-pass .tis-ct__ro{color:var(--blue)}
+.tis-ct__job.is-fail{box-shadow:inset 2px 0 0 var(--ink)}
+.tis-ct__job.is-fail .tis-ct__mark{background:var(--paper);box-shadow:inset 0 0 0 2px var(--ink);color:var(--ink)}
+.tis-ct__job.is-fail .tis-ct__ro{color:var(--ink);font-weight:500}
+.tis-ct__job.is-warn .tis-ct__mark{box-shadow:inset 0 0 0 1px var(--ink);color:var(--ink)}
+.tis-ct__job.is-warn .tis-ct__ro{color:var(--muted)}
+/* JS marks the job it is currently running */
+.tis-ct__job.is-now{background:var(--paper-2)}
+.tis-ct__job.is-now .tis-ct__mark{box-shadow:inset 0 0 0 1px var(--blue),0 0 0 4px var(--blue-wash)}
+
+/* ---- consumer impact ---- */
+.tis-ct__clist{list-style:none;margin:0;padding:0}
+.tis-ct__c{display:grid;grid-template-columns:10px minmax(150px,1.1fr) minmax(0,1.6fr) auto;align-items:baseline;gap:14px;padding:16px 20px}
+.tis-ct__c+.tis-ct__c{border-top:1px solid var(--line-2)}
+.tis-ct__c .tis-led{align-self:center}
+.tis-ct__cn{display:flex;flex-direction:column;gap:3px;font-size:var(--t-sm);font-weight:500;line-height:1.35;color:var(--ink)}
+.tis-ct__cn small{font-family:var(--f);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;color:var(--faint)}
+.tis-ct__cd{font-size:var(--t-sm);line-height:1.55;color:var(--muted)}
+.tis-ct__cs{flex:none;text-align:right;white-space:nowrap;color:var(--faint)}
+.tis-ct__c.is-fail .tis-ct__cs{color:var(--ink);font-weight:500}
+.tis-ct__c.is-pass .tis-ct__cs{color:var(--blue)}
+
+/* ---- the rules ---- */
+.tis-ct__rules{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.tis-ct__rule{display:grid;grid-template-columns:20px minmax(0,1fr);gap:16px;padding:20px 22px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.tis-ct__rule .xt-ico{margin-top:2px}
+.tis-ct__rule h3{margin-bottom:6px}
+
+/* ---- specs + badges ---- */
+.tis-ct__std{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--bdh-gap) var(--bdh-gap-l);
+  margin-top:8px;padding-top:var(--bdh-gap);border-top:1px solid var(--line)}
+.tis-ct__stdg{display:flex;flex-direction:column;gap:16px;min-width:0}
+.tis-ct__stdk{margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.tis-ct__specs{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0;color:var(--txt)}
+
+/* ---- deprecation window (under the diff) ---- */
+.tis-ct__dep{padding:18px 20px 20px;border-top:1px solid var(--line-2);background:var(--paper-2)}
+.tis-ct__depk{margin:0 0 14px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tis-ct__deps{list-style:none;margin:0;padding:0}
+.tis-ct__dp{position:relative;display:grid;grid-template-columns:62px minmax(0,1fr);gap:24px;padding:0 0 16px 0}
+.tis-ct__dp:last-child{padding-bottom:0}
+/* the window as a short line with a stop per milestone */
+.tis-ct__dp::before{content:"";position:absolute;left:74px;top:16px;bottom:0;width:1px;background:var(--line-3)}
+.tis-ct__dp:last-child::before{display:none}
+.tis-ct__dpw{position:relative;padding-top:1px;color:var(--faint);font-variant-numeric:tabular-nums}
+.tis-ct__dpw::after{content:"";position:absolute;right:-16.5px;top:5px;width:9px;height:9px;border-radius:50%;
+  background:var(--paper-2);box-shadow:inset 0 0 0 2px var(--line-3)}
+.tis-ct__dp.is-now .tis-ct__dpw::after,.tis-ct__dp.is-done .tis-ct__dpw::after{box-shadow:inset 0 0 0 2px var(--blue)}
+.tis-ct__dp.is-now .tis-ct__dpw{color:var(--blue)}
+.tis-ct__dpb{display:flex;flex-direction:column;gap:4px;min-width:0}
+.tis-ct__dpb b{font-family:var(--f-h);font-size:1rem;font-weight:500;letter-spacing:-.01em;line-height:1.3;color:var(--ink)}
+.tis-ct__dpb span{font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+
+/* ---- what the contract registry holds (under the consumers) ---- */
+.tis-ct__reg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin:0;
+  border-top:1px solid var(--line-2);background:var(--line-2)}
+.tis-ct__reg>div{min-width:0;padding:16px 20px;background:var(--paper)}
+.tis-ct__reg dt{font-family:var(--f);font-size:.625rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;line-height:1.3;color:var(--faint)}
+.tis-ct__reg dd{margin:7px 0 0;font-size:var(--t-sm);line-height:1.55;color:var(--txt)}
+
+@media (max-width:1023px){
+  .tis-ct__spec,.tis-ct__ci,.tis-ct__cons,.tis-ct__rules{grid-column:1 / -1}
+}
+@media (max-width:720px){
+  .tis-ct__reg{grid-template-columns:minmax(0,1fr)}
+  .tis-ct__dp{grid-template-columns:54px minmax(0,1fr);gap:20px}
+  .tis-ct__dp::before{left:64px}
+  .tis-ct__dpw::after{right:-14.5px}
+  .tis-ct__c{grid-template-columns:10px minmax(0,1fr);row-gap:8px}
+  .tis-ct__cd{grid-column:2}
+  .tis-ct__cs{grid-column:2;text-align:left}
+  .tis-ct__std{grid-template-columns:minmax(0,1fr)}
+  .tis-ct__l{grid-template-columns:34px 14px minmax(0,1fr)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .tis-ct__l,.tis-ct__mark{transition:none}
+}

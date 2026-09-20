@@ -1,0 +1,125 @@
+/* AI Product & Automation · automation — SVG node graph on ink with a travelling token, run console with a
+   real approval gate, run history table and the reliability rules. Node states: is-idle, is-active,
+   is-done, is-fail, is-wait, is-skip (set by automation.js; the markup ships every node done). */
+.tap-auto__canvas{border-radius:var(--r-xl)}
+.tap-auto__canvas .tap-win__bar{flex-wrap:wrap;row-gap:6px}
+.tap-auto__status{display:inline-flex;align-items:center;gap:8px;font-family:var(--f);font-size:10.5px;color:var(--on-ink-2)}
+.tap-auto__pause{min-height:30px;padding:0 12px;font-size:10.5px}
+.tap-auto__scroll{padding:clamp(12px,2vw,28px)}
+.tap-auto__svg{display:block;width:100%;min-width:940px;height:auto;overflow:visible}
+.tap-auto__hint{display:none;align-items:center;gap:8px;padding:0 16px 14px;font-family:var(--f);font-size:10.5px;letter-spacing:.04em;color:var(--on-ink-3)}
+.tap-auto__hint i{font-style:normal;color:var(--blue)}
+@media (max-width:1000px){.tap-auto__hint{display:flex}}
+
+.tap-auto__e{fill:none;stroke:var(--on-ink-3);stroke-width:1.5}
+.tap-auto__e.is-dash{stroke-dasharray:4 5;stroke:var(--on-ink-line)}
+.tap-auto__e.is-lit{stroke:var(--blue);stroke-width:2}
+.tap-auto__e.is-off{stroke:var(--on-ink-line)}
+.tap-auto__el{font-family:var(--f);font-size:10.5px;fill:var(--on-ink-3);letter-spacing:.02em}
+.tap-auto__retry,.tap-auto__retryh{fill:none;stroke:var(--on-ink-3);stroke-width:1.2;stroke-dasharray:3 3}
+.tap-auto__retryh{stroke-dasharray:none}
+.tap-automation.is-retry .tap-auto__retry,.tap-automation.is-retry .tap-auto__retryh{stroke:var(--blue)}
+
+.tap-auto__n{transition:opacity .4s var(--e)}
+.tap-auto__box{fill:var(--ink-2);stroke:var(--on-ink-line);stroke-width:1.2;transition:stroke .3s var(--e-io),fill .3s var(--e-io)}
+.tap-auto__kind{font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.12em;fill:var(--on-ink-3)}
+.tap-auto__title{font-family:var(--f-b);font-size:14px;font-weight:600;fill:var(--on-ink)}
+.tap-auto__sub{font-family:var(--f);font-size:10.5px;fill:var(--on-ink-2)}
+.tap-auto__n .xt-ico{color:var(--on-ink-3)}
+.tap-auto__dot{fill:var(--on-ink-line);transition:fill .3s}
+.tap-auto__n.is-done .tap-auto__dot{fill:var(--blue)}
+.tap-auto__n.is-quiet{opacity:.55}
+.tap-auto__n.is-idle{opacity:.5}
+.tap-auto__n.is-idle .tap-auto__sub{fill:var(--on-ink-3)}
+.tap-auto__n.is-active .tap-auto__box{stroke:var(--blue);stroke-width:2;fill:var(--ink)}
+.tap-auto__n.is-active .xt-ico{color:var(--blue)}
+.tap-auto__n.is-active .tap-auto__dot{fill:var(--blue)}
+.tap-auto__n.is-fail .tap-auto__box{stroke:var(--on-ink);stroke-width:2;stroke-dasharray:6 4}
+.tap-auto__n.is-fail .tap-auto__dot{fill:var(--on-ink)}
+.tap-auto__n.is-wait .tap-auto__box{stroke:var(--blue);stroke-width:2;stroke-dasharray:6 4}
+.tap-auto__n.is-wait .tap-auto__dot{fill:var(--on-ink)}
+.is-live .tap-auto__n.is-wait .tap-auto__box{animation:tap-auto-dash 1s linear infinite}
+.tap-auto__n.is-skip{opacity:.28}
+@keyframes tap-auto-dash{to{stroke-dashoffset:-20}}
+.tap-auto__tokg{opacity:0;transition:opacity .2s}
+.tap-auto__tokg.is-on{opacity:1}
+.tap-auto__tok{fill:var(--blue)}
+.tap-auto__halo{fill:var(--blue);opacity:.22}
+
+/* ---- console + gate ---- */
+.tap-auto__below{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--tap-gap);margin-top:var(--tap-gap);align-items:start}
+.tap-auto__console{display:flex;flex-direction:column;border-radius:var(--r-lg)}
+.tap-auto__log{display:flex;flex-direction:column;justify-content:flex-end;height:292px;padding:12px 16px;overflow:hidden;font-family:var(--f);font-size:11px;line-height:1.55;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 40px);mask-image:linear-gradient(180deg,transparent 0,#000 40px)}
+.tap-auto__log li{display:grid;grid-template-columns:92px 64px minmax(0,1fr);gap:8px;padding:3px 0;flex:none;color:var(--on-ink-2)}
+.tap-auto__log time{color:var(--on-ink-3)}
+.tap-auto__log b{font-weight:500;color:var(--blue)}
+.tap-auto__log li.is-err b,.tap-auto__log li.is-err span{color:var(--on-ink)}
+.tap-auto__log li.is-new{animation:tap-auto-in .4s var(--e) both}
+@keyframes tap-auto-in{from{opacity:0;transform:translateY(6px)}}
+.tap-auto__gate{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin:0 12px 12px;padding:12px 14px;border-radius:var(--r-sm);background:var(--ink);box-shadow:inset 0 0 0 1px var(--on-ink-line);transition:box-shadow var(--d2) var(--e-io)}
+.tap-auto__gate.is-wait{box-shadow:inset 0 0 0 1.5px var(--blue)}
+/* idle gate: both buttons read as unavailable outlines; Approve turns blue only when the gate opens */
+.tap-auto__gb .tap-btn[disabled]{opacity:1;background:transparent;box-shadow:inset 0 0 0 1px var(--on-ink-line);color:var(--on-ink-3)}
+/* console: the previous run's last lines stay, dimmed, above the new run's divider */
+.tap-auto__log li.is-prev{opacity:.4}
+.tap-auto__log li.tap-auto__div{display:flex;align-items:center;gap:10px;padding:6px 0;color:var(--on-ink-3)}
+.tap-auto__log li.tap-auto__div::before,.tap-auto__log li.tap-auto__div::after{content:"";flex:1;height:1px;background:var(--on-ink-line)}
+.tap-auto__also{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px}
+.tap-auto__also>span:first-child{margin-right:2px;font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink-3)}
+.tap-auto__wd{display:inline-flex;align-items:center;min-height:32px;padding:4px 12px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--on-ink-line);font-family:var(--f);font-size:11px;font-weight:500;color:var(--on-ink)}
+.tap-auto__gt{display:flex;align-items:center;gap:10px;min-width:0;font-size:var(--t-xs);font-weight:500;line-height:1.4;color:var(--on-ink)}
+.tap-auto__gi{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:50%;background:var(--on-ink-card);color:var(--on-ink)}
+.tap-auto__gate.is-wait .tap-auto__gi{background:var(--blue)}
+.tap-auto__gb{display:flex;gap:8px}
+.tap-auto__gb .tap-btn{min-height:36px}
+
+/* ---- history ---- */
+.tap-auto__hist{min-width:0}
+.tap-auto__kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tap-auto__kpis li{padding:14px 16px;border-radius:var(--r-sm);background:var(--on-ink-card);box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+.tap-auto__kpis b{display:block;font-family:var(--f);font-size:1.35rem;font-weight:500;letter-spacing:-.02em;color:var(--on-ink);font-variant-numeric:tabular-nums;line-height:1.1}
+.tap-auto__kpis span{display:block;margin-top:6px;font-size:var(--t-xs);line-height:1.4;color:var(--on-ink-3)}
+.tap-auto__tw{margin-top:14px}
+.tap-auto__table{width:100%;min-width:560px;border-collapse:collapse;font-size:var(--t-xs)}
+.tap-auto__table th,.tap-auto__table td{padding:10px 10px;border-bottom:1px solid var(--on-ink-line);text-align:left;vertical-align:top;color:var(--on-ink-2);white-space:nowrap}
+.tap-auto__table thead th{padding-top:4px;font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-3)}
+.tap-auto__table th:first-child,.tap-auto__table td:first-child{padding-left:0}
+.tap-auto__table tbody th{font-weight:400}
+.tap-auto__table tbody th code{display:block;font-size:11px;font-weight:500;color:var(--on-ink)}
+.tap-auto__table tbody th span{display:block;margin-top:2px;font-size:10.5px;color:var(--on-ink-3)}
+.tap-auto__table td{font-family:var(--f);font-size:11px;font-variant-numeric:tabular-nums}
+.tap-auto__st{display:inline-flex;align-items:center;gap:7px;font-family:var(--f-b);font-size:var(--t-xs);color:var(--on-ink)}
+.tap-auto__st i{width:7px;height:7px;border-radius:50%;background:var(--blue)}
+.is-wait .tap-auto__st i{background:transparent;box-shadow:inset 0 0 0 1.5px var(--blue)}
+.is-fail .tap-auto__st i{background:var(--on-ink)}
+.is-rej .tap-auto__st i{background:transparent;box-shadow:inset 0 0 0 1.5px var(--on-ink)}
+.tap-auto__table tr.is-new{animation:tap-auto-in .5s var(--e) both}
+
+/* ---- rules + tools ---- */
+.tap-auto__built{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:var(--tap-gap-l);margin-top:clamp(40px,4.4vw,64px);align-items:start}
+.tap-auto__rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px var(--tap-gap)}
+.tap-auto__rules li{padding-top:16px;border-top:1px solid var(--on-ink-line)}
+.tap-auto__rt{font-family:var(--f-h);font-size:1.05rem;font-weight:500;letter-spacing:-.01em;line-height:1.3;color:var(--on-ink)}
+.tap-auto__rules span{display:block;margin-top:6px;font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-2)}
+.tap-auto__tools{padding-top:16px;border-top:1px solid var(--on-ink-line)}
+.tap-auto__tk{margin-bottom:14px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink-3)}
+
+@media (max-width:1100px){
+  .tap-auto__below{grid-template-columns:minmax(0,1fr)}
+  .tap-auto__built{grid-template-columns:minmax(0,1fr);gap:36px}
+}
+@media (max-width:600px){
+  .tap-auto__rules{grid-template-columns:minmax(0,1fr)}
+  .tap-auto__kpis{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .tap-auto__kpis li:last-child{grid-column:1 / -1}
+  .tap-auto__log{height:320px;padding-inline:12px}
+  .tap-auto__log li{grid-template-columns:minmax(0,1fr);gap:0;padding:4px 0}
+  .tap-auto__log time{font-size:10px}
+  .tap-auto__canvas .tap-win__path{white-space:normal}
+  .tap-auto__canvas .tap-win__end{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .tap-auto__log li.is-new,.tap-auto__table tr.is-new{animation:none}
+  .tap-auto__n,.tap-auto__box,.tap-auto__tokg{transition:none}
+}

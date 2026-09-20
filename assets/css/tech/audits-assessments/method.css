@@ -1,0 +1,99 @@
+/* Audits & Assessments · method — the evidence chain.
+   Six stages across the top on a rail with a marker that rides it; below, the finding's evidence
+   record on the left and what every finding carries, plus the photograph, on the right.
+   method.js drives .is-on / .is-done; the finished state is what the HTML ships. */
+.taa-me__wrap{display:flex;flex-direction:column;gap:clamp(32px,4vw,56px)}
+
+/* ---------- the chain ----------------------------------------------------- */
+.taa-me__chain{position:relative;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--taa-gap);padding-top:76px;margin:0;list-style:none}
+.taa-me__rail{position:absolute;left:0;right:0;top:51px;height:1px;background:var(--line-2)}
+.taa-me__rail::after{content:"";position:absolute;inset:0 auto 0 0;width:100%;background:var(--blue);transform:scaleX(var(--f,1));transform-origin:left center;transition:transform .5s var(--e)}
+.taa-me__rider{position:absolute;top:2px;left:0;z-index:1;display:block;transition:transform .5s var(--e)}
+.taa-me__riderid{position:relative;display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:var(--r-pill);background:var(--ink);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:600;letter-spacing:.06em;color:var(--on-ink);white-space:nowrap}
+.taa-me__riderid::after{content:"";position:absolute;left:50%;top:100%;width:1px;height:27px;background:var(--blue-line)}
+
+.taa-me__st{position:relative;display:flex;flex-direction:column;gap:10px;min-width:0;padding-top:4px}
+.taa-me__stn{display:flex;align-items:center;gap:10px;margin:0 0 2px}
+.taa-me__dot{position:absolute;top:-40px;left:0;display:grid;place-items:center;width:30px;height:30px;border:1px solid var(--line-3);border-radius:50%;
+  background:var(--paper);color:var(--faint);transition:border-color var(--d2) var(--e-io),color var(--d2) var(--e-io),background var(--d2) var(--e-io)}
+.taa-me__dot .xt-ico{width:16px;height:16px}
+.taa-me__num{font-family:var(--f);font-size:var(--t-lbl);font-weight:600;letter-spacing:.12em;color:var(--faint);transition:color var(--d2) var(--e-io)}
+.taa-me__sth{margin:0;font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.01em;line-height:1.25;color:var(--ink)}
+.taa-me__std{margin:0;font-size:var(--t-xs);line-height:1.6;color:var(--txt)}
+.taa-me__out{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:6px;list-style:none}
+.taa-me__out li{display:inline-flex;align-items:center;height:22px;padding:0 9px;border:1px solid var(--line-2);border-radius:var(--r-xs);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--muted);
+  transition:border-color var(--d2) var(--e-io),color var(--d2) var(--e-io),background var(--d2) var(--e-io)}
+
+.taa-me__st.is-done .taa-me__dot{border-color:var(--blue-line);background:var(--blue-wash);color:var(--blue-d)}
+.taa-me__st.is-done .taa-me__num{color:var(--ink)}
+.taa-me__st.is-done .taa-me__out li{border-color:var(--line-3);color:var(--txt);background:var(--paper-2)}
+/* --xt-accent: with a --blue fill the icon's blue accent would disappear into it; use the dot's colour */
+.taa-me__st.is-on .taa-me__dot{border-color:var(--blue);background:var(--blue);color:var(--on-ink);box-shadow:0 0 0 5px var(--blue-wash);--xt-accent:currentColor}
+
+/* ---------- the finding record -------------------------------------------- */
+.taa-me__demo{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--taa-gap-l);row-gap:var(--taa-gap)}
+.taa-me__card{grid-column:1 / span 7;align-self:start}
+.taa-me__aside{grid-column:8 / -1;display:flex;flex-direction:column;gap:20px;min-width:0}
+
+.taa-me__ev{list-style:none;margin:0;padding:0}
+.taa-me__evr{position:relative;display:grid;grid-template-columns:minmax(120px,148px) minmax(0,1fr);gap:8px 18px;padding:11px 18px;
+  border-bottom:1px solid var(--line-2);
+  transition:opacity .45s var(--e),background .45s var(--e),box-shadow .45s var(--e)}
+/* The record is a record, not a reveal: every row stays readable for the whole walk. While the chain
+   runs, rows the marker has not reached yet are dimmed and the rows the current stage just produced
+   carry a blue rule, so the walk highlights rather than assembles. method.js adds .is-anim only when
+   it starts, and drops it again when the walk lands on the last stage. */
+[data-taa-method].is-anim .taa-me__evr{opacity:.34}
+[data-taa-method].is-anim .taa-me__evr.is-on{opacity:1}
+[data-taa-method].is-anim .taa-me__evr.is-new{background:var(--blue-wash);box-shadow:inset 2px 0 0 var(--blue)}
+[data-taa-method]:not(.is-anim) .taa-me__num{color:var(--ink)}
+[data-taa-method]:not(.is-anim) .taa-me__out li{border-color:var(--line-3);color:var(--txt);background:var(--paper-2)}
+.taa-me__evr:last-child{border-bottom:0}
+.taa-me__evk{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.5}
+.taa-me__evv{font-size:var(--t-sm);line-height:1.5;color:var(--ink)}
+.taa-me__foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:0;padding:14px 18px;border-top:1px solid var(--line-2);background:var(--paper-2);
+  font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+.taa-me__foot>span:last-child{flex:1 1 32ch;max-width:78ch}
+
+/* ---------- aside --------------------------------------------------------- */
+.taa-me__asideh{margin:0;font-family:var(--f-h);font-size:1.25rem;font-weight:500;letter-spacing:-.015em;line-height:1.25;color:var(--ink)}
+.taa-me__carry{display:flex;flex-direction:column;gap:0;margin:0;border-top:1px solid var(--line)}
+.taa-me__carry>div{padding:13px 0;border-bottom:1px solid var(--line-2)}
+.taa-me__carry dt{font-family:var(--f-h);font-size:.9375rem;font-weight:500;letter-spacing:-.005em;color:var(--ink)}
+.taa-me__carry dd{margin:4px 0 0;font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+.taa-me__fig{display:flex;flex-direction:column;gap:12px;min-width:0}
+.taa-me__photo{margin:0}
+.taa-me__aside .taa-cap{margin-top:0;max-width:52ch}
+
+/* ---------- responsive ---------------------------------------------------- */
+@media (max-width:1100px){
+  /* The card and the aside both span the full row below 1100, so the twelve tracks and their
+     40–96px column gaps only add width the wrap does not have. One track, no column gap. */
+  .taa-me__demo{grid-template-columns:minmax(0,1fr);column-gap:0}
+  .taa-me__chain{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:52px}
+  .taa-me__rail,.taa-me__rider{display:none}
+  .taa-me__dot{position:static;top:auto}
+  .taa-me__chain{padding-top:0}
+  .taa-me__card{grid-column:1 / -1}
+  /* the aside now has the whole band: the list takes the left half and the photograph the right,
+     so the figure keeps a sensible size instead of stretching to a full-width 4:3 slab */
+  .taa-me__aside{grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    grid-template-areas:"head img" "list img";column-gap:clamp(24px,3.4vw,56px);row-gap:18px;align-items:start}
+  .taa-me__asideh{grid-area:head}
+  .taa-me__carry{grid-area:list}
+  .taa-me__fig{grid-area:img}
+}
+@media (max-width:760px){
+  .taa-me__aside{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "list" "img"}
+  .taa-me__chain{grid-template-columns:minmax(0,1fr);row-gap:28px}
+  .taa-me__st{padding-bottom:22px;border-bottom:1px solid var(--line-2)}
+  .taa-me__st:last-child{border-bottom:0;padding-bottom:0}
+  .taa-me__evr{grid-template-columns:minmax(0,1fr);gap:3px;padding:12px 16px}
+}
+@media (prefers-reduced-motion:reduce){
+  .taa-me__rider,.taa-me__rail::after,.taa-me__dot,.taa-me__num,.taa-me__out li{transition:none}
+  [data-taa-method].is-anim .taa-me__evr{opacity:1;transition:none}
+  [data-taa-method].is-anim .taa-me__evr.is-new{background:none;box-shadow:none}
+}

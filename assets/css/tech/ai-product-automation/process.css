@@ -1,0 +1,124 @@
+/* AI Product & Automation · process — the delivery plan as a Gantt in a window: a week ruler, four phase bars
+   (tabs) with exit gates, the golden set growing per week, eval-gated release dots, and a playhead
+   (.tap-plan__head, --p in weeks) that process.js sweeps across. Weeks sit on a 14-column track grid; every
+   row shares the label column (--kw). The markup is the finished plan (--p = 14, everything lit). */
+.tap-plan{border-radius:0 0 var(--r-xs) var(--r-xs)}
+.tap-plan__bar{flex-wrap:wrap;row-gap:6px}
+.tap-plan__now{font-family:var(--f);font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tap-plan__now b{font-weight:500;color:var(--ink)}
+
+.tap-plan__chart{--kw:168px;--kg:18px;--pad:clamp(16px,2.4vw,32px);position:relative;padding:clamp(20px,2.4vw,30px) var(--pad) 18px;border-bottom:1px solid var(--line-2)}
+.tap-plan__row{display:grid;grid-template-columns:var(--kw) minmax(0,1fr);column-gap:var(--kg);align-items:center}
+.tap-plan__k{display:flex;flex-direction:column;gap:2px;min-width:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;line-height:1.3;color:var(--muted)}
+.tap-plan__k small{font-size:10px;font-weight:400;letter-spacing:.04em;text-transform:none;color:var(--faint)}
+.tap-plan__track{position:relative;display:grid;grid-template-columns:repeat(var(--wk),minmax(0,1fr));align-items:center;min-width:0;height:100%}
+
+/* ruler: week numbers with a faint column grid behind every row */
+.tap-plan__row--ruler{height:30px;border-bottom:1px solid var(--line-3)}
+.tap-plan__wk{grid-column:var(--c);grid-row:1;font-family:var(--f);font-size:10px;color:var(--faint);text-align:center;font-variant-numeric:tabular-nums}
+.tap-plan__grid{position:absolute;top:clamp(20px,2.4vw,30px);bottom:44px;left:calc(var(--pad) + var(--kw) + var(--kg));right:var(--pad);display:grid;grid-template-columns:repeat(var(--wk),minmax(0,1fr));pointer-events:none}
+.tap-plan__grid i{border-left:1px solid var(--line-2)}
+.tap-plan__grid i:last-child{border-right:1px solid var(--line-2)}
+
+/* phases */
+.tap-plan__phases{display:flex;flex-direction:column;padding-block:10px 6px}
+.tap-plan__row--ph{height:50px}
+.tap-plan__row--ph .tap-plan__k{flex-direction:row;align-items:baseline;gap:10px;font-family:var(--f-b);font-size:var(--t-sm);font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink)}
+.tap-plan__row--ph .tap-plan__k b{font-family:var(--f);font-size:10px;font-weight:500;color:var(--blue)}
+.tap-plan__row--ph .tap-plan__k small{display:none}
+.tap-plan__bar-b{position:relative;grid-column:var(--a) / span var(--n);grid-row:1;display:flex;align-items:center;height:32px;margin-inline:3px;padding:0 12px;border-radius:8px;background:var(--paper-3);box-shadow:inset 0 0 0 1px var(--line-3);overflow:hidden;text-align:left;
+  transition:box-shadow var(--d2) var(--e-io),background var(--d2) var(--e-io)}
+.tap-plan__bar-b:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.tap-plan__fill{position:absolute;inset:0;background:var(--ink);transform-origin:left;transform:scaleX(var(--f,1));transition:transform .25s linear}
+.tap-plan__bl{position:relative;z-index:1;font-family:var(--f);font-size:10.5px;font-weight:500;letter-spacing:.02em;color:var(--muted);white-space:nowrap}
+/* a white copy of the label, clipped to the filled part of the bar (--f is set on the button) */
+.tap-plan__bl--on{position:absolute;inset:0;z-index:2;display:flex;align-items:center;padding:0 12px;color:var(--on-ink);clip-path:inset(0 calc((1 - var(--f,1)) * 100%) 0 0)}
+.tap-plan__bar-b[aria-selected="true"]{box-shadow:0 0 0 2px var(--paper),0 0 0 3.5px var(--blue)}
+.tap-plan__bar-b[aria-selected="true"] .tap-plan__fill{background:var(--blue)}
+.tap-plan__bar-b:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.tap-plan.is-play .tap-plan__fill{transition:none}
+
+.tap-plan__gate{grid-column:var(--c);grid-row:1;justify-self:end;position:relative;z-index:2;display:grid;place-items:center;width:20px;height:20px;margin-right:-10px;pointer-events:none}
+.tap-plan__gate i{width:12px;height:12px;border-radius:2px;background:var(--paper);box-shadow:inset 0 0 0 1.5px var(--ink);transform:rotate(45deg);transition:background var(--d2) var(--e-io),box-shadow var(--d2) var(--e-io)}
+.tap-plan__gate b{position:absolute;left:50%;bottom:calc(100% + 1px);transform:translateX(-50%);font-family:var(--f);font-size:9px;font-weight:600;color:var(--ink);letter-spacing:.04em}
+.tap-plan__row--ph:not(.is-todo):not(.is-run) .tap-plan__gate i{background:var(--blue);box-shadow:inset 0 0 0 1.5px var(--blue)}
+
+/* golden set */
+.tap-plan__row--gold{height:92px;padding-top:14px;border-top:1px solid var(--line-2)}
+.tap-plan__row--gold .tap-plan__track{align-items:end;height:66px}
+.tap-plan__col{position:relative;grid-column:var(--c);grid-row:1;align-self:stretch;display:flex;align-items:flex-end;justify-content:center}
+.tap-plan__col i{display:block;width:44%;max-width:22px;height:100%;border-radius:3px 3px 0 0;background:var(--ink-2);transform-origin:bottom;transform:scaleY(var(--h));transition:transform .45s var(--e)}
+.tap-plan__col:last-child i,.tap-plan__col:nth-last-child(2) i{background:var(--blue)}
+.tap-plan__col b{position:absolute;left:50%;bottom:calc(var(--h) * 100% + 4px);transform:translateX(-50%);font-family:var(--f);font-size:9.5px;font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums;transition:opacity .3s var(--e)}
+.tap-plan__col.is-off i{transform:scaleY(0)}
+.tap-plan__col.is-off b{opacity:0}
+
+/* releases */
+.tap-plan__row--rel{height:42px;border-top:1px solid var(--line-2)}
+.tap-plan__rel{grid-column:var(--c);grid-row:1;justify-self:center;display:grid;place-items:center;width:18px;height:18px;transition:opacity .3s var(--e),transform .3s var(--e)}
+.tap-plan__rel i{width:10px;height:10px;border-radius:50%;background:var(--ink)}
+.tap-plan__rel--prod i{width:12px;height:12px;background:var(--blue);box-shadow:0 0 0 3px var(--blue-wash-2)}
+.tap-plan__rel--block i{background:var(--paper);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.tap-plan__rel.is-off{opacity:0;transform:scale(.4)}
+
+.tap-plan__legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:14px;padding-left:calc(var(--kw) + var(--kg));font-size:var(--t-xs);color:var(--muted)}
+.tap-plan__legend li{display:inline-flex;align-items:center;gap:8px}
+.tap-plan__lg{width:10px;height:10px;border-radius:50%;background:var(--ink)}
+.tap-plan__lg--block{background:var(--paper);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.tap-plan__lg--prod{background:var(--blue)}
+.tap-plan__lg--gate{width:9px;height:9px;border-radius:1.5px;background:var(--blue);transform:rotate(45deg)}
+
+/* playhead */
+.tap-plan__head{position:absolute;z-index:3;top:clamp(20px,2.4vw,30px);bottom:44px;left:calc(var(--pad) + var(--kw) + var(--kg));right:var(--pad);pointer-events:none;opacity:0;transition:opacity .4s var(--e)}
+.tap-plan__head i{position:absolute;inset:0;transform:translateX(calc(var(--p) / var(--wk) * 100%))}
+.tap-plan__head i::before{content:"";position:absolute;left:-1px;top:0;bottom:0;width:2px;border-radius:1px;background:var(--blue)}
+.tap-plan__head i::after{content:"";position:absolute;left:-5px;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px var(--blue-wash-2)}
+.tap-plan.is-play .tap-plan__head{opacity:1}
+
+/* detail panes */
+.tap-plan__panes{padding:clamp(22px,2.6vw,34px) var(--pad,28px) clamp(24px,2.6vw,34px);padding-inline:clamp(16px,2.4vw,32px)}
+.tap-plan__pane{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:clamp(24px,3vw,48px);align-items:start}
+.tap-plan__pk{display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+.tap-plan__pk span+span{color:var(--muted)}
+.tap-plan__pt{margin-top:12px;font-family:var(--f-h);font-size:clamp(1.4rem,2vw,1.75rem);font-weight:500;letter-spacing:-.02em;line-height:1.15;color:var(--ink)}
+.tap-plan__pd{margin-top:12px;max-width:52ch;font-size:var(--t-sm);line-height:1.7;color:var(--txt)}
+.tap-plan__outs{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.tap-plan__outs li{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:var(--r-pill);background:var(--paper-3);font-size:var(--t-xs);font-weight:500;color:var(--ink)}
+.tap-plan__outs .xt-ico{color:var(--muted)}
+.tap-plan__facts{display:flex;flex-direction:column}
+.tap-plan__facts>div{padding:14px 0;border-top:1px solid var(--line-2)}
+.tap-plan__facts>div:first-child{padding-top:0;border-top:0}
+.tap-plan__facts dt{display:flex;align-items:center;gap:9px;font-family:var(--f);font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.tap-plan__facts dt .xt-ico{color:var(--ink)}
+.tap-plan__facts dd{margin-top:6px;padding-left:25px;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.tap-plan__gi{width:10px;height:10px;margin-inline:3px;border-radius:2px;background:var(--blue);transform:rotate(45deg)}
+.tap-plan__gatef{margin-bottom:4px;padding:14px 16px;border-radius:var(--r-sm);background:var(--blue-wash);box-shadow:inset 0 0 0 1px var(--blue-line)}
+.tap-plan__facts>.tap-plan__gatef:first-child{padding:14px 16px}
+
+@media (max-width:1023px){
+  .tap-plan__chart{--kw:124px;--kg:12px}
+  .tap-plan__pane{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:700px){
+  .tap-plan__chart{--kw:0px;--kg:0px}
+  .tap-plan__row{grid-template-columns:minmax(0,1fr);row-gap:6px}
+  .tap-plan__row--ruler .tap-plan__k{display:none}
+  .tap-plan__row--ph{height:auto;padding-block:6px}
+  .tap-plan__row--ph .tap-plan__k{font-size:var(--t-xs)}
+  .tap-plan__row--ph .tap-plan__k small{display:inline;font-family:var(--f);font-size:10px;font-weight:400;color:var(--muted)}
+  .tap-plan__row--ph .tap-plan__track{height:28px}
+  .tap-plan__bar-b{height:26px;margin-inline:1px;padding:0 6px}
+  .tap-plan__bl{display:none}
+  .tap-plan__row--gold,.tap-plan__row--rel{height:auto;padding-top:10px}
+  .tap-plan__row--rel .tap-plan__track{height:26px}
+  .tap-plan__wk{font-size:8.5px}
+  .tap-plan__col b{font-size:8.5px}
+  .tap-plan__gate b{display:none}
+  .tap-plan__legend{padding-left:0;gap:8px 16px}
+  .tap-plan__head,.tap-plan__grid{display:none}
+  .tap-plan__facts dd{padding-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .tap-plan__fill,.tap-plan__col i,.tap-plan__col b,.tap-plan__rel,.tap-plan__gate i,.tap-plan__head{transition:none}
+  .tap-plan.is-play .tap-plan__head{opacity:0}
+}

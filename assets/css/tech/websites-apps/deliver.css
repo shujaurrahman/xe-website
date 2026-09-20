@@ -1,0 +1,70 @@
+/* ==========================================================================
+   Websites & Apps · 10 deliver — the handover shown as a repository tree.
+   Six folders as real disclosure buttons, file rows carrying the deliverable and
+   its format, and a side column for what lives outside the repository.
+   Markup: partials/tech/websites-apps/deliver.php · JS: deliver.js.
+   Tokens only; no new colours; no gradients; no !important.
+   ========================================================================== */
+
+.twa-deliver .twa-dl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,330px);gap:var(--twa-gap);align-items:start}
+@media (max-width:1023px){.twa-deliver .twa-dl{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- repository ---------------------------------------------------- */
+.twa-dl__repo{display:flex;flex-direction:column;min-width:0;border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);overflow:hidden}
+.twa-dl__bar{display:flex;align-items:center;gap:14px;height:46px;padding:0 clamp(14px,1.8vw,20px);border-bottom:1px solid var(--line-2);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;color:var(--muted);white-space:nowrap}
+.twa-dl__path{display:inline-flex;align-items:center;gap:8px;min-width:0;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+.twa-dl__hint{margin-left:auto;text-transform:uppercase;letter-spacing:.12em;color:var(--faint)}
+@media (max-width:600px){.twa-dl__hint{display:none}}
+
+.twa-dl__tree{list-style:none;padding:0;margin:0}
+.twa-dl__fo{border-bottom:1px solid var(--line-2)}
+.twa-dl__fh{margin:0;font-family:var(--f-h)}
+.twa-dl__fb{display:grid;grid-template-columns:14px 28px minmax(0,auto) minmax(0,1fr) auto;align-items:center;gap:12px;width:100%;
+  padding:16px clamp(14px,1.8vw,20px);text-align:left;transition:background var(--d1) var(--e-io)}
+.twa-dl__fb:hover{background:var(--paper-2)}
+.twa-dl__caret{width:0;height:0;border-left:6px solid var(--faint);border-block:4.5px solid transparent;transition:transform var(--d2) var(--e)}
+.twa-dl__fb[aria-expanded="true"] .twa-dl__caret{transform:rotate(90deg)}
+.twa-dl__fi{display:grid;place-items:center;width:28px;height:28px;border-radius:var(--r-xs);background:var(--blue-wash);color:var(--ink)}
+.twa-dl__fp{font-family:var(--f);font-size:var(--t-sm);font-weight:500;letter-spacing:.02em;color:var(--ink);white-space:nowrap}
+.twa-dl__fn{min-width:0;font-family:var(--f-b);font-size:var(--t-sm);font-weight:400;line-height:1.4;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.twa-dl__fc{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--ghost);white-space:nowrap}
+@media (max-width:760px){
+  .twa-dl__fb{grid-template-columns:14px 28px minmax(0,1fr);row-gap:4px}
+  .twa-dl__fn{grid-column:3;white-space:normal}
+  .twa-dl__fc{grid-column:3;grid-row:3}
+}
+
+.twa-dl__files{list-style:none;padding:0 0 10px;margin:0;overflow:hidden}
+.twa-dl__files[hidden]{display:none}
+.twa-dl__file{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr) auto;align-items:baseline;gap:8px 18px;
+  padding:9px clamp(14px,1.8vw,20px) 9px clamp(40px,5vw,62px);border-top:1px solid var(--line-2);
+  opacity:0;transform:translateY(-4px);transition:opacity .3s var(--e) calc(var(--i,0) * 45ms),transform .3s var(--e) calc(var(--i,0) * 45ms)}
+.twa-dl__files:not([hidden]) .twa-dl__file{opacity:1;transform:none}
+.twa-dl__fname{font-family:var(--f);font-size:var(--t-xs);font-weight:500;letter-spacing:.02em;color:var(--ink);overflow-wrap:anywhere}
+.twa-dl__fd{font-size:var(--t-sm);line-height:1.55;color:var(--muted)}
+.twa-dl__ff{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);white-space:nowrap;text-align:right}
+@media (max-width:760px){
+  .twa-dl__file{grid-template-columns:minmax(0,1fr);gap:4px;padding-left:clamp(24px,7vw,40px)}
+  .twa-dl__ff{text-align:left}
+}
+
+.twa-dl__foot{display:flex;align-items:flex-start;gap:12px;padding:16px clamp(14px,1.8vw,20px);background:var(--paper-2);
+  font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+.twa-dl__foot .xt-ico{flex:none;margin-top:2px}
+
+/* ---------- outside the repository ---------------------------------------- */
+.twa-dl__side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.twa-dl__sk{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.twa-dl__out{display:flex;flex-direction:column;gap:12px;list-style:none;padding:0;margin:0}
+.twa-dl__out>li{display:flex;flex-direction:column;gap:10px;padding:clamp(18px,2vw,24px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.twa-dl__oi{display:grid;place-items:center;width:36px;height:36px;border-radius:var(--r-xs);box-shadow:inset 0 0 0 1px var(--line-3);color:var(--ink)}
+.twa-dl__ot{font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;line-height:1.3;color:var(--ink)}
+.twa-dl__od{font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+@media (max-width:1023px){.twa-dl__out{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.twa-dl__out{grid-template-columns:minmax(0,1fr)}}
+
+@media (prefers-reduced-motion:reduce){
+  .twa-dl__file{opacity:1;transform:none;transition:none}
+  .twa-dl__caret{transition:none}
+}

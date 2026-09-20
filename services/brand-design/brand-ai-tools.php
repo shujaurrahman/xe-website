@@ -29,13 +29,13 @@ unset($cat_row);
 /* Running order: the room → the commands → the data → the run → the checks → the record → the handover. */
 $CAT_SECTIONS = [
     'hero', 'help', 'curate', 'playground', 'guardrails', 'eval',
-    'provenance', 'vault', 'deploy', 'registry', 'reports', 'man', 'onward',
+    'provenance', 'vault', 'deploy', 'registry', 'reports', 'services', 'man', 'onward',
 ];
 
 $cat_root = __DIR__ . '/../../';
 $cat_has  = fn (string $p): bool => is_file($cat_root . $p) && filesize($cat_root . $p) > 0;
-$cat_css  = ['assets/css/brand/hub.css', 'assets/css/brand/brand-ai-tools.css'];
-$cat_js   = ['assets/js/brand/hub.js'];
+$cat_css  = ['assets/css/brand/hub.css', 'assets/css/services.css', 'assets/css/brand/brand-ai-tools.css'];
+$cat_js   = ['assets/js/brand/hub.js', 'assets/js/services.js'];
 foreach ($CAT_SECTIONS as $cat_id) {
     if ($cat_has($cat_x = 'assets/css/brand/brand-ai-tools/' . $cat_id . '.css')) $cat_css[] = $cat_x;
     if ($cat_has($cat_x = 'assets/js/brand/brand-ai-tools/' . $cat_id . '.js'))   $cat_js[]  = $cat_x;

@@ -1,0 +1,67 @@
+/* ==========================================================================
+   Tech Workforce · skills — a depth matrix. Rows are technologies with their marks; the three
+   cells are the depths we staff at, shaded by availability. Two columns of rows at desktop.
+   Cells fill column by column when the matrix enters; filter chips fade rows out.
+   ========================================================================== */
+.ttw-skl__bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 24px;margin-bottom:clamp(18px,2vw,26px)}
+.ttw-skl__filters{display:flex;flex-wrap:wrap;gap:8px}
+.ttw-skl__f{min-height:36px;padding:0 12px;font-size:var(--t-xs)}
+.ttw-skl__fn{font-family:var(--f);font-size:10.5px;color:var(--faint)}
+.ttw-skl__f[aria-pressed="true"] .ttw-skl__fn{color:var(--blue-d)}
+.ttw-skl__legend{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin:0}
+.ttw-skl__lg{display:inline-flex;align-items:center;gap:7px;font-family:var(--f);font-size:var(--t-xs);color:var(--muted)}
+.ttw-skl__sw{width:16px;height:9px;border-radius:2px;background:var(--blue);flex:none}
+.ttw-skl__sw[data-l="2"]{opacity:.55}
+.ttw-skl__sw[data-l="1"]{opacity:.24}
+
+.ttw-skl__matrix{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);overflow:hidden}
+.ttw-skl__cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0;border-bottom:1px solid var(--line-2);background:var(--paper-2);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.ttw-skl__cg{display:grid;grid-template-columns:minmax(0,1fr) repeat(3,minmax(58px,74px));align-items:center;gap:0 10px;
+  padding:12px clamp(14px,1.6vw,20px)}
+.ttw-skl__cg--2{border-left:1px solid var(--line-2)}
+.ttw-skl__cd{text-align:center}
+
+.ttw-skl__rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0;padding:0;list-style:none}
+.ttw-skl__row{display:grid;grid-template-columns:minmax(0,1fr) repeat(3,minmax(58px,74px));align-items:center;gap:0 10px;
+  padding:9px clamp(14px,1.6vw,20px);border-bottom:1px solid var(--line-2);min-width:0}
+.ttw-skl__rows>.ttw-skl__row:nth-child(odd){border-right:1px solid var(--line-2)}
+.ttw-skl__t{display:inline-flex;align-items:center;gap:11px;min-width:0;color:var(--ink)}
+/* Stands in for a mark where no licence-clean SVG exists, so every row keeps the same left gutter. */
+.ttw-skl__dot{position:relative;width:20px;height:20px;flex:none;border-radius:var(--r-xs);border:1px solid var(--line-2);background:var(--paper-2)}
+.ttw-skl__dot::after{content:"";position:absolute;inset:50% auto auto 50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:var(--line-3)}
+.ttw-skl__tn{font-size:var(--t-sm);font-weight:500;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ttw-skl__c{position:relative;display:block;height:20px;border-radius:3px;background:var(--paper-3);overflow:hidden}
+.ttw-skl__c i{position:absolute;inset:0;display:block;background:var(--blue);transform-origin:50% 50%}
+.ttw-skl__c[data-l="3"] i{opacity:1}
+.ttw-skl__c[data-l="2"] i{opacity:.55}
+.ttw-skl__c[data-l="1"] i{opacity:.24}
+.ttw-skl__c[data-l="0"] i{opacity:0}
+.ttw-skl__row.is-off{display:none}
+
+.ttw-skl__note{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:clamp(18px,2vw,26px) 0 0;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+
+/* Motion: armed only (see the contract in tech-workforce.css). The matrix settles inside 450 ms —
+   60 ms per depth column, 320 ms a cell — and fades rather than wipes, so a cell caught mid-flight
+   still reads as a cell rather than as a missing column. Unarmed, all 96 cells are already drawn. */
+@media (prefers-reduced-motion:no-preference){
+  .ttw-skl__matrix.is-armed .ttw-skl__c i{transition:opacity .32s var(--e),transform .32s var(--e-io);transition-delay:calc(var(--c, 0) * 60ms)}
+  .ttw-skl__matrix.is-armed:not(.is-in) .ttw-skl__c i{opacity:0;transform:scaleY(.4)}
+  .ttw-skl__row{transition:opacity .3s var(--e)}
+}
+
+@media (max-width:900px){
+  .ttw-skl__rows{grid-template-columns:minmax(0,1fr)}
+  .ttw-skl__rows>.ttw-skl__row:nth-child(odd){border-right:0}
+  .ttw-skl__cols{grid-template-columns:minmax(0,1fr)}
+  .ttw-skl__cg--2{display:none}
+}
+@media (max-width:560px){
+  .ttw-skl__cg,.ttw-skl__row{grid-template-columns:minmax(0,1fr) repeat(3,minmax(0,44px))}
+  .ttw-skl__cd{font-size:9px;letter-spacing:.04em}
+  .ttw-skl__bar{flex-direction:column;align-items:flex-start}
+}
+
+/* JS-managed column rule: with rows filtered, the "odd row" rule is recomputed on what is visible. */
+.ttw-skl__rows.is-js>.ttw-skl__row{border-right:0}
+@media (min-width:901px){.ttw-skl__rows.is-js>.ttw-skl__row.is-r{border-right:1px solid var(--line-2)}}

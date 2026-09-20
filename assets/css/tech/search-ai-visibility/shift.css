@@ -1,0 +1,65 @@
+/* Search & AI Visibility · shift (ink) — two journeys and three shift cards.
+   The journeys hold cols 1–7, the photograph cols 9–12; the cards run full width beneath.
+   Each journey is a vertical stop list: a dot column with a connector that draws downwards when
+   the block is revealed, and the modern journey's last leg is dashed and half-opacity because a
+   citation is not a visit. Motion is CSS only, keyed off core's [data-rv] .is-in. */
+.tsv-shift__grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--tsv-gap);row-gap:clamp(36px,4vw,56px);align-items:stretch}
+.tsv-shift__j{grid-column:1 / span 7;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--tsv-gap);min-width:0}
+.tsv-shift__img{grid-column:9 / -1;display:flex;flex-direction:column;gap:14px;min-width:0}
+.tsv-shift__cap{margin:0;font-family:var(--f);font-size:var(--t-xs);line-height:1.6;letter-spacing:.01em;color:var(--on-ink-3);max-width:34ch}
+
+/* the two readings this page keeps side by side, set up here and measured in section 08 */
+.tsv-shift__rep{display:flex;flex-direction:column;margin:auto 0 0;padding-top:4px}
+.tsv-shift__rep>div{display:flex;flex-direction:column;gap:5px;padding:14px 0;border-top:1px solid var(--on-ink-line)}
+.tsv-shift__rep>div:last-child{border-bottom:1px solid var(--on-ink-line)}
+.tsv-shift__rep dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3);line-height:1.4}
+.tsv-shift__rep dd{margin:0;font-size:var(--t-xs);line-height:1.6;color:var(--on-ink)}
+
+.tsv-jrn{display:flex;flex-direction:column;gap:18px;height:100%;min-width:0;padding:clamp(20px,2vw,26px);border:1px solid var(--on-ink-line);border-radius:var(--r-lg);background:var(--on-ink-card)}
+.tsv-jrn__h{display:flex;flex-direction:column;gap:8px;min-width:0}
+.tsv-jrn__k{display:inline-flex;align-items:center;align-self:flex-start;height:22px;padding:0 9px;border-radius:var(--r-xs);background:var(--on-ink-card);box-shadow:inset 0 0 0 1px var(--on-ink-line);
+  font-family:var(--f);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink);line-height:1}
+.tsv-jrn.is-now .tsv-jrn__k{background:var(--blue);box-shadow:none;color:var(--on-ink)}
+.tsv-jrn__w{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.014em;line-height:1.25;color:var(--on-ink)}
+
+/* the stops share the slack when the card stretches to the photo column, so the connector
+   simply runs longer instead of leaving a void under the list */
+.tsv-jrn__stops{display:flex;flex-direction:column;flex:1 1 auto;list-style:none;min-width:0}
+.tsv-stop{position:relative;display:flex;flex-direction:column;flex:1 1 auto;gap:3px;min-width:0;padding:0 0 22px 28px}
+.tsv-stop:last-child{flex:0 0 auto;padding-bottom:0}
+.tsv-stop__d{position:absolute;left:0;top:4px;width:11px;height:11px;border-radius:50%;background:var(--ink);box-shadow:inset 0 0 0 1.5px var(--on-ink-3)}
+.tsv-jrn.is-now .tsv-stop__d{box-shadow:inset 0 0 0 1.5px var(--blue)}
+/* the connector is drawn in the shipped HTML; .is-in replays the draw from nothing */
+.tsv-stop:not(:last-child)::after{content:"";position:absolute;left:5px;top:16px;bottom:-1px;width:1px;background:var(--on-ink-line);transform-origin:top}
+.is-in .tsv-stop:not(:last-child)::after{animation:tsv-sh-draw .55s var(--e) backwards;animation-delay:calc(var(--i,0) * 160ms)}
+@keyframes tsv-sh-draw{from{transform:scaleY(0)}}
+.tsv-stop.is-thin::after{width:0;background:none;border-left:1px dashed var(--on-ink-line)}
+.tsv-stop b{font-family:var(--f-h);font-size:.9375rem;font-weight:500;letter-spacing:-.01em;line-height:1.3;color:var(--on-ink)}
+.tsv-stop small{font-size:var(--t-xs);line-height:1.5;color:var(--on-ink-3)}
+.tsv-stop:last-child b,.tsv-stop:last-child small{opacity:1}
+.tsv-jrn.is-now .tsv-stop:last-child b,.tsv-jrn.is-now .tsv-stop:last-child small{color:var(--on-ink-3)}
+.tsv-jrn__n{margin-top:auto;padding-top:16px;border-top:1px solid var(--on-ink-line);font-family:var(--f);font-size:var(--t-xs);line-height:1.6;letter-spacing:.01em;color:var(--on-ink-2)}
+
+.tsv-shift__cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--tsv-gap);margin-top:var(--tsv-block);list-style:none}
+.tsv-shift__card{gap:16px;align-items:flex-start}
+.tsv-shift__ico{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:var(--r-sm);background:var(--on-ink-card);
+  box-shadow:inset 0 0 0 1px var(--on-ink-line);color:var(--on-ink)}
+.tsv-shift__card .bdh-d{max-width:46ch}
+.tsv-shift__card .bdh-tag{margin-top:auto}
+
+@media (max-width:1100px){
+  .tsv-shift__j{grid-column:1 / span 8}
+  .tsv-shift__img{grid-column:9 / -1}
+}
+@media (max-width:900px){
+  .tsv-shift__j,.tsv-shift__img{grid-column:1 / -1}
+  .tsv-shift__img .bdh-img{aspect-ratio:16/9}
+  .tsv-shift__rep{margin-top:8px}
+  .tsv-shift__cards{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){
+  .tsv-shift__j{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  .tsv-stop:not(:last-child)::after,.is-in .tsv-stop:not(:last-child)::after{transform:none;animation:none}
+}

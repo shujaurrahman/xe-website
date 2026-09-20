@@ -1,0 +1,119 @@
+/* AI Infrastructure & Cloud · reference — the architecture diagram, its list twin, the choice, pace and logos. */
+.tic-ref{position:relative;padding:clamp(14px,1.8vw,26px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);box-shadow:var(--sh-1)}
+.tic-ref__bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;padding:4px 6px 16px;border-bottom:1px solid var(--line-2)}
+.tic-ref__legend{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--muted)}
+.tic-ref__legend i{display:inline-block;margin-left:8px}
+.tic-ref__legend i:first-child{margin-left:0}
+.tic-ref__legend .is-req{width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.tic-ref__legend .is-tok{width:12px;height:3px;border-radius:2px;background:var(--ink)}
+.tic-ref__legend .is-can{width:16px;height:0;border-top:1.5px dashed var(--faint)}
+.tic-ref__now{display:inline-flex;align-items:center;gap:10px;min-height:30px;padding:0 12px;border-radius:var(--r-pill);background:var(--ink);color:var(--on-ink);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.03em;white-space:nowrap;max-width:100%;overflow:hidden}
+.tic-ref__now span:last-child{overflow:hidden;text-overflow:ellipsis}
+
+/* ---- the diagram ---- */
+.tic-ref__svg{display:block;width:100%;height:auto;margin-top:clamp(12px,1.6vw,22px);overflow:visible}
+.tic-ref__svg .tt{font-family:var(--f-h);font-size:15px;font-weight:500;letter-spacing:-.01em;fill:var(--ink)}
+.tic-ref__svg .tt--s{font-size:13px}
+.tic-ref__svg .tl{font-family:var(--f);font-size:11px;letter-spacing:.01em;fill:var(--muted)}
+.tic-ref__svg .tl--s{font-size:10px}
+.tic-ref__svg .tv{font-family:var(--f);font-size:10.5px;font-weight:600;fill:var(--ink)}
+.tic-ref__svg .tk{font-family:var(--f);font-size:9.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;fill:var(--faint)}
+.tic-ref__box{fill:var(--paper);stroke:var(--line-3);stroke-width:1;transition:stroke var(--d3) var(--e)}
+.tic-ref__box--key{stroke:var(--ink);stroke-width:1.5}
+.tic-ref__rail{fill:var(--paper-3)}
+.tic-ref__drop{stroke:var(--line-3);stroke-width:1;stroke-dasharray:2 4}
+.tic-ref__w{fill:none;stroke:var(--line-3);stroke-width:1.5;transition:stroke var(--d3) var(--e),stroke-width var(--d3) var(--e)}
+.tic-ref__w--can{stroke:var(--faint);stroke-dasharray:4 4}
+.tic-ref__svg[data-route="a"] .tic-ref__w--a,.tic-ref__svg[data-route="s"] .tic-ref__w--s,.tic-ref__svg[data-route="fb"] .tic-ref__w--s{stroke:var(--blue);stroke-width:2.25}
+.tic-ref__svg[data-route="s"] .tic-ref__box--s,.tic-ref__svg[data-route="fb"] .tic-ref__box--s,.tic-ref__svg[data-route="a"] .tic-ref__box--a{stroke:var(--blue)}
+.tic-ref__svg[data-route="fb"] .tic-ref__box--a{stroke-dasharray:5 4}
+.tic-ref__wl{font-family:var(--f);font-size:9.5px;letter-spacing:.06em;fill:var(--faint)}
+.tic-ref__pk{fill:var(--blue)}
+.tic-ref__tok{fill:var(--ink)}
+.tic-ref__pks{opacity:0;transition:opacity .4s var(--e)}
+.tic-ref__svg[data-route="a"] .tic-ref__pks--a,.tic-ref__svg[data-route="s"] .tic-ref__pks--s,.tic-ref__svg[data-route="fb"] .tic-ref__pks--s{opacity:1}
+.tic-ref__429{opacity:0;transition:opacity var(--d2) var(--e)}
+.tic-ref__429 rect{fill:var(--ink)}
+.tic-ref__429 text{font-family:var(--f);font-size:10px;font-weight:600;letter-spacing:.06em;fill:var(--on-ink)}
+.tic-ref__svg[data-route="fb"] .tic-ref__429{opacity:1}
+.tic-ref__ro{fill:var(--ink)}
+.tic-ref__rok{font-family:var(--f);font-size:8.5px;font-weight:500;letter-spacing:.16em;fill:var(--on-ink-3)}
+.tic-ref__rov{font-family:var(--f);font-size:11px;font-weight:500;fill:var(--on-ink)}
+.tic-ref__gpu{fill:var(--ink)}
+.tic-ref__gpu.is-warm{fill:var(--paper);stroke:var(--faint);stroke-width:1;stroke-dasharray:3 2}
+.is-live .tic-ref__gpu:not(.is-warm){animation:tic-ref-gpu 1.9s steps(1,end) infinite;animation-delay:calc(var(--i) * -290ms)}
+@keyframes tic-ref-gpu{0%,55%{fill:var(--ink)}56%,74%{fill:var(--blue)}75%,100%{fill:var(--ink)}}
+.tic-ref__track{fill:var(--paper-4)}
+.tic-ref__fill{fill:var(--blue);transform-box:fill-box;transform-origin:left center;transform:scaleX(var(--c,.25));transition:transform .8s var(--e)}
+.tic-ref__gate{fill:var(--blue-wash);stroke:var(--blue-line);stroke-width:1}
+.tic-ref__gatet{font-family:var(--f);font-size:10px;font-weight:500;letter-spacing:.04em;fill:var(--blue-d)}
+
+/* assembly: tiers rise in order, wires fade in after */
+.tic-ref__tier{opacity:0;transform:translateY(12px);transition:opacity .7s var(--e) calc(var(--i) * 140ms + 100ms),transform .7s var(--e) calc(var(--i) * 140ms + 100ms)}
+.tic-ref__wires{opacity:0;transition:opacity .9s var(--e) .75s}
+.tic-ref.is-in .tic-ref__tier,.tic-ref.is-in .tic-ref__wires{opacity:1;transform:none}
+
+/* ---- the list twin: sr-only only where the diagram has the width to stay legible ----
+   The SVG scales with its column, so below about 1280px its smallest type drops under 10 effective px.
+   From there down the ordered list is the visible version and the diagram is hidden. */
+.tic-ref__list{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+@media (max-width:1279px){
+  .tic-ref__svg{display:none}
+  .tic-ref__list{position:relative;width:auto;height:auto;margin:18px 0 0;overflow:visible;clip:auto;white-space:normal;display:flex;flex-direction:column}
+  .tic-ref__list li{position:relative;display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;padding-bottom:18px}
+  .tic-ref__list li::before{content:"";position:absolute;left:15px;top:34px;bottom:0;width:1px;background:var(--line-3)}
+  .tic-ref__list li:last-child::before{display:none}
+  .tic-ref__list li:nth-child(3) .tic-ref__ln{background:var(--ink);color:var(--on-ink);box-shadow:none}
+  .tic-ref__ln{display:grid;place-items:center;width:31px;height:31px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--line-3);font-family:var(--f);font-size:var(--t-lbl);font-weight:500;color:var(--blue-d);background:var(--paper)}
+  .tic-ref__lt{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.01em;line-height:1.3;color:var(--ink);padding-top:4px}
+  .tic-ref__list p{margin-top:4px;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+  .tic-ref__legend{display:none}
+}
+
+/* ---- choice, pace, logos ---- */
+.tic-ref__choose{display:flex;flex-direction:column;gap:clamp(20px,2.4vw,32px);margin-top:var(--bdh-block)}
+.tic-ref__cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--tic-gap)}
+.tic-ref__card{display:flex;flex-direction:column;gap:12px;padding:clamp(22px,2.4vw,32px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.tic-ref__when{margin-top:8px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-d)}
+.tic-ref__watch{margin-top:auto;padding-top:14px;border-top:1px dashed var(--line-3);font-size:var(--t-sm);line-height:1.55;color:var(--txt)}
+.tic-ref__watch b{display:block;margin-bottom:4px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.tic-ref__card.is-default{background:var(--ink);border-color:var(--ink);color:var(--on-ink-2)}
+.tic-ref__card.is-default .bdh-t{color:var(--on-ink)}
+.tic-ref__card.is-default .tic-k{color:var(--on-ink-3)}
+.tic-ref__card.is-default .tic-ref__when{color:var(--on-ink-2)}
+.tic-ref__card.is-default .bdh-bullets>li{color:var(--on-ink-2)}
+.tic-ref__card.is-default .tic-ref__watch{border-color:var(--on-ink-line);color:var(--on-ink-2)}
+.tic-ref__card.is-default .tic-ref__watch b{color:var(--on-ink-3)}
+
+.tic-ref__pace{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--tic-gap-l);align-items:center;padding:clamp(24px,3vw,40px);border-radius:var(--r-lg);background:var(--paper-3)}
+.tic-ref__pt{display:flex;flex-direction:column;gap:12px}
+.tic-ref__pt .tic-k{display:inline-flex;align-items:center;gap:8px;color:var(--ink)}
+.tic-ref__pt .bdh-d{max-width:52ch}
+.tic-ref__steps{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.tic-ref__steps::before{content:"";position:absolute;left:5px;right:5px;top:5px;height:1px;background:var(--line-3)}
+.tic-ref__steps li{position:relative;display:flex;flex-direction:column;gap:6px;padding-top:24px}
+.tic-ref__steps li::before{content:"";position:absolute;left:0;top:0;width:11px;height:11px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.tic-ref__steps li:last-child::before{background:var(--blue);box-shadow:none}
+.tic-ref__steps b{font-family:var(--f);font-size:var(--t-xs);font-weight:600;color:var(--ink)}
+.tic-ref__steps span{font-size:var(--t-sm);line-height:1.5;color:var(--txt)}
+
+.tic-ref__logos{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 40px;padding-top:clamp(20px,2.4vw,28px);border-top:1px solid var(--line)}
+.tic-ref__logos .xt-stack{gap:18px clamp(20px,2.6vw,36px)}
+.tic-ref__logos .xt-lo{color:var(--ink)}
+
+@media (max-width:1023px){
+  .tic-ref__cards{grid-template-columns:minmax(0,1fr)}
+  .tic-ref__pace{grid-template-columns:minmax(0,1fr);gap:28px}
+}
+@media (max-width:600px){
+  .tic-ref__steps{grid-template-columns:minmax(0,1fr);gap:0}
+  .tic-ref__steps::before{left:5px;right:auto;top:5px;bottom:5px;width:1px;height:auto}
+  .tic-ref__steps li{padding:0 0 16px 26px}
+  .tic-ref__now{white-space:normal;border-radius:var(--r-sm);padding:6px 12px}
+}
+@media (prefers-reduced-motion:reduce){.tic-ref__pks{display:none}}
+/* packets only move (and show) while the diagram is on screen */
+.tic-ref:not(.is-live) .tic-ref__pks{opacity:0}
+
+/* Without scripting nothing adds .is-in, so the assembled diagram is the shipped state. */
+@media (scripting:none){.tic-ref__tier,.tic-ref__wires{opacity:1;transform:none;transition:none}}

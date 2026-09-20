@@ -1,0 +1,87 @@
+/* ==========================================================================
+   Search & AI Visibility — 07 · Toolbelt (paper)
+   Six job tabs over a three-column pane: the question and the provenance label on the left,
+   what the tooling reads, cannot see and leaves behind in the middle, the technology marks and
+   the mark-less tools on the right. Panes slide in on change (stack.js / BDH.tabs).
+   Only layout is set on .xt-* here — the kit owns their look.
+   ========================================================================== */
+
+.tsv-belt__w{margin-bottom:var(--tsv-gap-l)}
+
+/* ---------- the job tabs -------------------------------------------------- */
+.tsv-belt__tabs{gap:6px;margin-bottom:var(--tsv-gap);padding-bottom:2px}
+.tsv-belt__tabs .tsv-belt__tab{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 18px;border:1px solid var(--line);border-radius:var(--r-pill);
+  background:var(--paper);color:var(--muted);font-family:var(--f-b);font-size:var(--t-sm);font-weight:500;line-height:1;white-space:nowrap;cursor:pointer;
+  transition:border-color var(--d1) var(--e-io),color var(--d1) var(--e-io),background var(--d1) var(--e-io)}
+.tsv-belt__tabs .tsv-belt__tab:hover{border-color:var(--line-3);background:var(--paper);color:var(--ink)}
+.tsv-belt__tn{font-family:var(--f);font-size:10px;font-weight:600;letter-spacing:.1em;color:var(--faint);font-variant-numeric:tabular-nums;
+  transition:color var(--d1) var(--e-io)}
+.tsv-belt__tabs .tsv-belt__tab[aria-selected="true"]{border-color:var(--ink);background:var(--ink);color:var(--on-ink)}
+.tsv-belt__tabs .tsv-belt__tab[aria-selected="true"] .tsv-belt__tn{color:var(--blue)}
+
+/* ---------- the panes ----------------------------------------------------- */
+/* .bdh-panes stacks every pane in one grid cell and cross-fades them; only the slide
+   direction and the inner layout are ours. */
+.tsv-belt__panes{position:relative;border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper-2);overflow:hidden}
+.tsv-belt__pane{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(24px,2.6vw,44px);row-gap:var(--tsv-gap);
+  align-content:start;padding:clamp(24px,3vw,40px);transform:translateX(16px)}
+.tsv-belt__pane.is-on{transform:none}
+
+.tsv-belt__t{grid-column:1 / span 4;display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-width:0}
+.tsv-belt__facts{grid-column:5 / span 4;margin:0;min-width:0;border-top:1px solid var(--ink)}
+.tsv-belt__g{grid-column:9 / -1;display:flex;flex-direction:column;gap:14px;min-width:0}
+
+.tsv-belt__jk{display:inline-flex;align-items:center;gap:9px;margin:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);line-height:1.3}
+.tsv-belt__jn{color:var(--blue);font-variant-numeric:tabular-nums}
+.tsv-belt__q{margin:0;font-family:var(--f-h);font-size:clamp(1.15rem,1.8vw,1.5rem);font-weight:500;letter-spacing:-.022em;line-height:1.2;color:var(--ink);max-width:20ch}
+.tsv-belt__d{margin:0;font-size:var(--t-sm);line-height:1.7;color:var(--muted);max-width:44ch}
+.tsv-belt__prov{height:auto;margin-top:2px;padding:5px 11px;line-height:1.45;white-space:normal;text-align:left}
+
+/* what the tooling reads, what it cannot see, what it leaves behind */
+.tsv-fact{display:flex;flex-direction:column;gap:6px;padding:15px 0;border-bottom:1px solid var(--line-2)}
+.tsv-fact dt{font-family:var(--f);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1.4}
+.tsv-fact dd{margin:0;font-size:var(--t-sm);line-height:1.6;color:var(--ink)}
+.tsv-fact.is-limit dt{color:var(--blue)}
+.tsv-fact.is-limit dd{color:var(--muted)}
+
+.tsv-belt__gk{margin:0;font-family:var(--f);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1.4}
+.tsv-belt__also{display:flex;flex-wrap:wrap;align-items:center;gap:7px;width:100%;margin:6px 0 0;padding-top:16px;border-top:1px solid var(--line-2)}
+.tsv-belt__also span{width:100%;margin-bottom:2px;font-family:var(--f);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.4}
+.tsv-belt__also i{display:inline-flex;align-items:center;height:26px;padding:0 10px;border:1px dashed var(--line-3);border-radius:var(--r-xs);
+  font-family:var(--f);font-size:var(--t-xs);font-style:normal;font-weight:500;letter-spacing:.01em;color:var(--txt);line-height:1;white-space:nowrap}
+
+/* layout only — the kit owns the tiles */
+.tsv-belt__g .xt-stack--tiles{--xt-tile:140px}
+
+.tsv-belt__note{max-width:none}
+
+/* the three columns hold down to 900px; the tiles simply stack two, then one, per row */
+@media (max-width:1240px){
+  .tsv-belt__g .xt-stack--tiles{--xt-tile:112px}
+}
+@media (max-width:900px){
+  .tsv-belt__t{grid-column:1 / span 6}
+  .tsv-belt__facts{grid-column:7 / -1}
+  .tsv-belt__g{grid-column:1 / -1}
+  .tsv-belt__g .xt-stack--tiles{--xt-tile:150px}
+  .tsv-belt__pane{row-gap:var(--tsv-gap)}
+}
+@media (max-width:760px){
+  .tsv-belt__pane{grid-template-columns:minmax(0,1fr)}
+  .tsv-belt__t,.tsv-belt__facts,.tsv-belt__g{grid-column:1 / -1}
+}
+@media (max-width:600px){
+  .tsv-belt__tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    margin-inline:calc(var(--gutter) * -1);padding-inline:var(--gutter);padding-bottom:10px;scrollbar-width:none}
+  .tsv-belt__tabs::-webkit-scrollbar{display:none}
+  .tsv-belt__tab{padding:0 14px}
+}
+
+@media (max-width:480px){
+  .tsv-belt__facts{border-top-color:var(--line)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .tsv-belt__pane,.tsv-belt__pane.is-on{transform:none}
+}

@@ -26,7 +26,7 @@ unset($cbi_row);
 /* Running order — plate by plate, like a specimen book. */
 $CBI = [
     'hero', 'anatomy', 'offer', 'construct', 'colour', 'type', 'voice',
-    'motion', 'touchpoints', 'process', 'deliver', 'outcomes', 'onward',
+    'motion', 'touchpoints', 'process', 'deliver', 'outcomes', 'services', 'onward',
 ];
 
 $cbi_root = __DIR__ . '/../../';
@@ -34,8 +34,8 @@ $cbi_has  = function (string $path) use ($cbi_root): bool {
     $f = $cbi_root . $path;
     return is_file($f) && filesize($f) > 0;
 };
-$cbi_css = ['assets/css/brand/hub.css', 'assets/css/brand/brand-identity.css'];
-$cbi_js  = ['assets/js/brand/hub.js'];
+$cbi_css = ['assets/css/brand/hub.css', 'assets/css/services.css', 'assets/css/brand/brand-identity.css'];
+$cbi_js  = ['assets/js/brand/hub.js', 'assets/js/services.js'];
 foreach ($CBI as $cbi_id) {
     if ($cbi_has('assets/css/brand/brand-identity/' . $cbi_id . '.css')) $cbi_css[] = 'assets/css/brand/brand-identity/' . $cbi_id . '.css';
     if ($cbi_has('assets/js/brand/brand-identity/' . $cbi_id . '.js'))   $cbi_js[]  = 'assets/js/brand/brand-identity/' . $cbi_id . '.js';

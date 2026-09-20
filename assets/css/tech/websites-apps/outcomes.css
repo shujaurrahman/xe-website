@@ -1,0 +1,113 @@
+/* ==========================================================================
+   Websites & Apps · 11 outcomes — three measures, each drawn as the artefact
+   it is read from: a CrUX-style band distribution, a seven-day line against a
+   floor, and a DORA restore-time histogram. No section JS; .bdh-grow and
+   .bdh-growY only animate shapes the HTML already draws in full.
+   Markup: partials/tech/websites-apps/outcomes.php.
+   Tokens only; no new colours; no gradients; no !important.
+   ========================================================================== */
+
+.twa-outcomes .twa-oc{display:flex;flex-direction:column;gap:0;list-style:none;padding:0;margin:0;border-top:1px solid var(--line)}
+.twa-oc__row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(24px,4vw,64px);
+  padding:clamp(28px,3.4vw,48px) 0;border-bottom:1px solid var(--line)}
+
+/* ---------- left: what it is and how it is read --------------------------- */
+.twa-oc__lead{display:grid;grid-template-columns:46px minmax(0,1fr);column-gap:18px;row-gap:8px;align-content:start;min-width:0}
+.twa-oc__i{grid-row:1 / span 2;display:grid;place-items:center;width:46px;height:46px;border-radius:var(--r-sm);background:var(--blue-wash);color:var(--ink)}
+.twa-oc__lead .bdh-idx{grid-column:2;align-self:end}
+.twa-oc__n{grid-column:2;font-family:var(--f-h);font-size:clamp(1.1rem,1.6vw,1.375rem);font-weight:500;line-height:1.22;letter-spacing:-.018em;color:var(--ink)}
+.twa-oc__d{grid-column:2;font-size:var(--t-sm);line-height:1.7;color:var(--muted);max-width:48ch}
+.twa-oc__how{grid-column:2;display:flex;flex-direction:column;margin:10px 0 0;padding:0}
+.twa-oc__how>div{display:grid;grid-template-columns:minmax(0,140px) minmax(0,1fr);gap:6px 18px;padding:11px 0;border-top:1px solid var(--line-2)}
+.twa-oc__how dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;line-height:1.5;color:var(--faint)}
+.twa-oc__how dd{margin:0;font-size:var(--t-xs);line-height:1.6;color:var(--txt)}
+
+/* ---------- right: the artefact ------------------------------------------- */
+.twa-oc__art{display:flex;flex-direction:column;gap:16px;min-width:0}
+.twa-oc__m{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;line-height:1.5;color:var(--ink)}
+.twa-oc__t{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;padding-top:2px}
+.twa-oc__t b{font-family:var(--f-h);font-size:1.375rem;font-weight:500;letter-spacing:-.02em;color:var(--ink)}
+.twa-oc__note{font-size:var(--t-xs);line-height:1.7;color:var(--muted);max-width:62ch}
+
+/* --- Core Web Vitals distribution ----------------------------------------- */
+.twa-oc__cwv{display:flex;flex-direction:column;gap:14px;padding:clamp(16px,2vw,22px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.twa-oc__cr{display:grid;grid-template-columns:minmax(0,96px) minmax(0,1fr) minmax(0,92px);align-items:center;gap:6px 16px}
+.twa-oc__ck{display:flex;flex-direction:column;gap:2px;min-width:0}
+.twa-oc__ck b{font-family:var(--f);font-size:var(--t-sm);font-weight:500;letter-spacing:.06em;color:var(--ink)}
+.twa-oc__ck em{font-family:var(--f);font-style:normal;font-size:10px;letter-spacing:.04em;color:var(--muted);font-variant-numeric:tabular-nums}
+.twa-oc__cb{position:relative;height:16px;border-radius:var(--r-xs);background:var(--paper-3);box-shadow:inset 0 0 0 1px var(--line-2);overflow:hidden}
+.twa-oc__cb i{position:absolute;top:0;bottom:0;display:block}
+.twa-oc__cg{left:0;background:var(--blue);transform-origin:left center}
+.twa-oc__cni{background:var(--paper-4);box-shadow:inset 0 0 0 1px var(--line-3)}
+.twa-oc__cp{background:var(--ink)}
+/* the 75% line: a URL passes the assessment when the good band reaches it */
+.twa-oc__c75{position:absolute;top:-2px;bottom:-2px;left:75%;width:2px;background:var(--paper);box-shadow:0 0 0 1px var(--ink)}
+.twa-oc__cv{display:flex;flex-direction:column;gap:2px;text-align:right;min-width:0}
+.twa-oc__cv b{font-family:var(--f);font-size:var(--t-sm);font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.twa-oc__cv em{font-family:var(--f);font-style:normal;font-size:10px;letter-spacing:.03em;color:var(--muted);font-variant-numeric:tabular-nums}
+.twa-oc__ckey{display:flex;flex-wrap:wrap;gap:6px 18px;padding-top:12px;border-top:1px solid var(--line-2);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--muted)}
+.twa-oc__ckey span{display:inline-flex;align-items:center;gap:7px}
+.twa-oc__ckey span::before{content:"";width:10px;height:10px;flex:none;border-radius:2px}
+.twa-oc__kg::before{background:var(--blue)}
+.twa-oc__kn::before{background:var(--paper-4);box-shadow:inset 0 0 0 1px var(--line-3)}
+.twa-oc__kp::before{background:var(--ink)}
+.twa-oc__ckey .twa-oc__k75::before{width:2px;height:12px;border-radius:0;background:var(--ink)}
+
+/* --- seven-day line ------------------------------------------------------- */
+.twa-oc__line{display:flex;flex-direction:column;gap:10px;padding:clamp(16px,2vw,22px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.twa-oc__line svg{display:block;width:100%;height:auto;overflow:visible}
+.twa-oc__grid{stroke:var(--line-2);stroke-width:1}
+.twa-oc__floorline{stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 4}
+.twa-oc__path{fill:none;stroke:var(--blue);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:1200;stroke-dashoffset:1200;transition:stroke-dashoffset 1.5s var(--e) .15s}
+.is-in .twa-oc__path{stroke-dashoffset:0}
+.twa-oc__dot{fill:var(--blue)}
+.twa-oc__dot.is-under{fill:var(--ink)}
+.twa-oc__ax{font-family:var(--f);font-size:10px;fill:var(--faint)}
+.twa-oc__lk{display:flex;flex-wrap:wrap;gap:6px 18px;padding-top:10px;border-top:1px solid var(--line-2);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.05em;color:var(--muted)}
+.twa-oc__lk span{display:inline-flex;align-items:center;gap:7px;min-width:0}
+.twa-oc__lk span::before{content:"";width:12px;height:2px;flex:none;background:var(--ink)}
+.twa-oc__lk .twa-oc__ku::before{width:10px;height:10px;border-radius:50%}
+
+/* --- restore-time histogram ------------------------------------------------ */
+.twa-oc__hist{display:flex;flex-direction:column;gap:12px;padding:clamp(16px,2vw,22px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.twa-oc__bars{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(6px,1vw,14px);list-style:none;padding:0;margin:0}
+.twa-oc__bar{display:grid;grid-template-rows:auto 1fr auto;gap:6px;min-width:0}
+.twa-oc__bn{font-family:var(--f);font-size:var(--t-sm);font-weight:500;text-align:center;color:var(--faint);font-variant-numeric:tabular-nums}
+.twa-oc__bar.is-in .twa-oc__bn{color:var(--ink)}
+.twa-oc__bt{display:flex;align-items:flex-end;height:clamp(96px,11vw,132px);border-bottom:1px solid var(--line-2)}
+.twa-oc__bt i{display:block;width:100%;border-radius:var(--r-xs) var(--r-xs) 0 0;background:var(--paper-4);box-shadow:inset 0 0 0 1px var(--line-3);transform-origin:center bottom}
+.twa-oc__bar.is-in .twa-oc__bt i{background:var(--blue);box-shadow:none}
+.twa-oc__bl{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;text-align:center;line-height:1.4;color:var(--muted)}
+/* the target marker sits in the gap between the last bucket inside 15 minutes and the first one outside it */
+.twa-oc__bar:nth-child(3) .twa-oc__bt{position:relative}
+.twa-oc__bar:nth-child(3) .twa-oc__bt::before{content:"";position:absolute;top:-8px;bottom:-1px;left:calc(clamp(3px,.5vw,7px) * -1);width:2px;background:var(--ink)}
+.twa-oc__hk{padding-top:10px;border-top:1px solid var(--line-2);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.05em;line-height:1.6;color:var(--muted)}
+.twa-oc__hk b{font-weight:500;color:var(--ink)}
+
+@media (max-width:980px){
+  .twa-oc__row{grid-template-columns:minmax(0,1fr);gap:26px}
+  .twa-oc__note{max-width:none}
+}
+@media (max-width:560px){
+  .twa-oc__lead{grid-template-columns:minmax(0,1fr)}
+  .twa-oc__i{grid-row:auto}
+  .twa-oc__lead .bdh-idx,.twa-oc__n,.twa-oc__d,.twa-oc__how{grid-column:1}
+  .twa-oc__how>div{grid-template-columns:minmax(0,1fr)}
+  .twa-oc__cr{grid-template-columns:minmax(0,1fr) auto;row-gap:8px}
+  .twa-oc__cb{grid-column:1 / -1;order:3}
+  .twa-oc__cv{order:2}
+  .twa-oc__bars{gap:5px}
+  .twa-oc__bl{font-size:9px}
+}
+
+.twa-oc__base{display:flex;align-items:flex-start;gap:14px;margin-top:var(--twa-gap);padding:clamp(18px,2vw,26px);
+  border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);font-size:var(--t-sm);line-height:1.7;color:var(--muted)}
+.twa-oc__base .xt-ico{flex:none;margin-top:3px}
+.twa-oc__base b{font-weight:600;color:var(--ink)}
+
+@media (prefers-reduced-motion:reduce){
+  .twa-oc__path{stroke-dashoffset:0;transition:none}
+}
