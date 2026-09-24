@@ -411,6 +411,7 @@ p,li,dd,blockquote,figcaption{text-wrap:pretty}
 
 @media (max-width:1140px){
   .nav__links,.nav__clock{display:none}
+  .mega{display:none}   /* its trigger lives in .nav__links; left in the page it overflowed narrow screens */
   .nav__burger{display:grid}
   .nav__in{gap:14px;padding:0 8px 0 14px}
   .nav.is-stuck .nav__cta{max-width:190px;padding-inline:14px}
