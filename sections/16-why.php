@@ -14,6 +14,7 @@
          The artefacts are illustrative readouts (aria-hidden) that restate each claim; each has a .bdh-sr sentence. -->
     <ol class="s16__rows" data-rv-s data-rv-step="90">
 
+      <!-- PLACEHOLDER: illustrative contract terms — confirm before launch (check the IP/ownership clause wording against the standard SOW) -->
       <li class="s16__row">
         <div class="s16__claim">
           <div class="s16__meta">
@@ -32,7 +33,7 @@
         <div class="s16__art">
           <p class="bdh-sr">Illustrative contract clause: models, datasets and systems are owned by the client.</p>
           <div class="s16__file" aria-hidden="true">
-            <div class="s16__bar"><span>Contract clause</span><span>ownership</span></div>
+            <div class="s16__bar"><span>Contract clause</span><span>ownership <em class="s16__ill">Illustrative</em></span></div>
             <dl class="s16__code">
               <div><dt>models</dt><dd>client</dd></div>
               <div><dt>datasets</dt><dd>client</dd></div>
