@@ -79,7 +79,7 @@ foreach ($SITE['disciplines'] as $ct_d) {
                     $ct_g['main'][] = $ct_block;
                 }
             } else {
-                $ct_block = ['label' => $ct_m['name'], 'sub' => 'Capability page', 'chips' => []];
+                $ct_block = ['label' => $ct_m['name'], 'sub' => 'Capability page', 'key' => $ct_pk, 'url' => $ct_m['url'] ?? xe_discipline_url($ct_d), 'chips' => []];
                 foreach ($ct_p['categories'] as $ct_c) {
                     foreach ($ct_c['offers'] as $ct_o) {
                         $ct_block['chips'][] = $ct_chip($ct_pk . ':' . $ct_o['key'], $ct_o['name'], $ct_d['name'] . ' · ' . $ct_m['name'] . ' · ' . $ct_c['name'],
@@ -99,9 +99,24 @@ foreach ($SITE['disciplines'] as $ct_d) {
     $ct_count = fn (array $ct_blocks): int => array_sum(array_map(fn ($ct_b) => count(array_filter($ct_b['chips'], fn ($ct_x) => $ct_x['on'])), $ct_blocks));
     $ct_g['on_main'] = $ct_count($ct_g['main']);
     $ct_g['on_more'] = $ct_count($ct_g['more']);
-    $ct_g['total']   = array_sum(array_map(fn ($ct_b) => count($ct_b['chips']), array_merge($ct_g['main'], $ct_g['more'])));
+    /* one vocabulary site-wide: "services" = the discipline's own offers (the same count home s25 shows);
+       the capability pages' finer-grained offers are "in detail" and load on demand */
+    $ct_g['n_main']  = array_sum(array_map(fn ($ct_b) => count($ct_b['chips']), $ct_g['main']));
+    $ct_g['n_more']  = array_sum(array_map(fn ($ct_b) => count($ct_b['chips']), $ct_g['more']));
     $ct_g['open']    = ($ct_g['on_main'] + $ct_g['on_more']) > 0 || ($ct_from && $ct_from['dslug'] === $ct_d['slug']);
     $ct_groups[] = $ct_g;
+}
+
+/* ---- the capability pages' services, fetched by contact.js when a list opens or a search runs ---- */
+if (isset($_GET['ct_more'])) {
+    $ct_json = [];
+    foreach ($ct_groups as $ct_g) foreach ($ct_g['more'] as $ct_b) {
+        $ct_json[$ct_b['key']] = array_map(fn ($ct_x) => [$ct_x['id'], $ct_x['name'], $ct_x['meta'], $ct_x['search']], $ct_b['chips']);
+    }
+    header('Content-Type: application/json; charset=utf-8');
+    header('Cache-Control: public, max-age=300');
+    echo json_encode($ct_json, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    exit;
 }
 
 /* ---- the brief summary (server copy; contact.js keeps it live) ---- */
@@ -251,22 +266,16 @@ include 'partials/nav.php';
                     <span class="ct-disc__n"><?= e($ct_g['d']['n']) ?></span>
                     <span class="ct-disc__t"><?= e($ct_g['d']['name']) ?></span>
                     <span class="ct-disc__c" data-ct-dcount><?= $ct_on ? $ct_on . ' selected' : '' ?></span>
-                    <span class="ct-disc__all"><?= $ct_g['total'] ?> services</span>
+                    <span class="ct-disc__all"><?= $ct_g['n_main'] ?> services<?php if ($ct_g['n_more']): ?><span class="ct-disc__more"> · <?= $ct_g['n_more'] ?> in detail</span><?php endif; ?></span>
                     <span class="ct-disc__pm" aria-hidden="true"></span>
                   </summary>
                   <div class="ct-disc__b">
                     <?php foreach ($ct_g['main'] as $ct_b): ?>
                       <div class="ct-block" data-ct-block>
                         <p class="ct-block__h"><?= e($ct_b['label']) ?><?php if ($ct_b['sub']): ?> <span><?= e($ct_b['sub']) ?></span><?php endif; ?></p>
-                        <ul class="ct-chips">
+                        <ul class="ct-chips" data-meta="<?= e($ct_b['chips'][0]['meta'] ?? '') ?>">
                           <?php foreach ($ct_b['chips'] as $ct_x): ?>
-                            <li data-ct-item data-s="<?= e($ct_x['search']) ?>">
-                              <label class="ct-chip">
-                                <input type="checkbox" name="service[]" value="<?= e($ct_x['id']) ?>" data-name="<?= e($ct_x['name']) ?>" data-meta="<?= e($ct_x['meta']) ?>"<?= $ct_x['on'] ? ' checked' : '' ?>>
-                                <span class="ct-chip__box" aria-hidden="true"><?= svc_icon('tick') ?></span>
-                                <span class="ct-chip__n"><?= e($ct_x['name']) ?></span>
-                              </label>
-                            </li>
+                            <li data-ct-item data-s="<?= e($ct_x['search']) ?>"><label class="ct-chip"><input type="checkbox" name="service[]" value="<?= e($ct_x['id']) ?>"<?= $ct_x['meta'] !== ($ct_b['chips'][0]['meta'] ?? '') ? ' data-meta="' . e($ct_x['meta']) . '"' : '' ?><?= $ct_x['on'] ? ' checked' : '' ?>><span class="ct-chip__box" aria-hidden="true"></span><span class="ct-chip__n"><?= e($ct_x['name']) ?></span></label></li>
                           <?php endforeach; ?>
                         </ul>
                       </div>
@@ -275,8 +284,9 @@ include 'partials/nav.php';
                     <?php if ($ct_g['more']): ?>
                       <div class="ct-caps" data-ct-caps>
                         <p class="ct-block__h">Every service, by capability page</p>
-                        <?php foreach ($ct_g['more'] as $ct_b): $ct_bon = count(array_filter($ct_b['chips'], fn ($ct_x) => $ct_x['on'])); ?>
-                          <details class="ct-more" data-ct-more<?= $ct_bon ? ' open' : '' ?>>
+                        <?php foreach ($ct_g['more'] as $ct_b): $ct_bon = count(array_filter($ct_b['chips'], fn ($ct_x) => $ct_x['on']));
+                          $ct_full = $ct_bon || $ct_v['from'] === $ct_b['key'];   /* arrived from this capability page: show its services */ ?>
+                          <details class="ct-more" data-ct-more<?= $ct_full ? ' open' : '' ?>>
                             <summary class="ct-more__s">
                               <span class="ct-more__t"><?= e($ct_b['label']) ?></span>
                               <span class="ct-more__on" data-ct-mcount><?= $ct_bon ? $ct_bon . ' selected' : '' ?></span>
@@ -284,17 +294,16 @@ include 'partials/nav.php';
                             </summary>
                             <div class="ct-more__b">
                               <div class="ct-block" data-ct-block>
+                                <?php if ($ct_full): /* a pre-filled block renders in full, so the selection is visible and sent */ ?>
                                 <ul class="ct-chips">
                                   <?php foreach ($ct_b['chips'] as $ct_x): ?>
-                                    <li data-ct-item data-s="<?= e($ct_x['search']) ?>">
-                                      <label class="ct-chip">
-                                        <input type="checkbox" name="service[]" value="<?= e($ct_x['id']) ?>" data-name="<?= e($ct_x['name']) ?>" data-meta="<?= e($ct_x['meta']) ?>"<?= $ct_x['on'] ? ' checked' : '' ?>>
-                                        <span class="ct-chip__box" aria-hidden="true"><?= svc_icon('tick') ?></span>
-                                        <span class="ct-chip__n"><?= e($ct_x['name']) ?></span>
-                                      </label>
-                                    </li>
+                                    <li data-ct-item data-s="<?= e($ct_x['search']) ?>"><label class="ct-chip"><input type="checkbox" name="service[]" value="<?= e($ct_x['id']) ?>" data-meta="<?= e($ct_x['meta']) ?>"<?= $ct_x['on'] ? ' checked' : '' ?>><span class="ct-chip__box" aria-hidden="true"></span><span class="ct-chip__n"><?= e($ct_x['name']) ?></span></label></li>
                                   <?php endforeach; ?>
                                 </ul>
+                                <?php else: /* the rest load on demand (contact.js, ?ct_more=1) to keep the page light */ ?>
+                                <ul class="ct-chips" data-ct-lazy="<?= e($ct_b['key']) ?>"></ul>
+                                <p class="ct-more__nojs" data-ct-lazyn>These <?= count($ct_b['chips']) ?> services list here with JavaScript on. Without it, name what you need in your message, or read the <a class="tl" href="<?= e($ct_b['url']) ?>"><?= e($ct_b['label']) ?> page</a>.</p>
+                                <?php endif; ?>
                               </div>
                             </div>
                           </details>

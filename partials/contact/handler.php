@@ -1,4 +1,4 @@
-<?php
+<?php /* DRAFT COPY — review before launch */
 /**
  * Contact — reads the query, handles the POST and sends the lead. Include from contact.php after
  * partials/init.php and partials/services/lib.php, BEFORE any output (it may redirect and exit).

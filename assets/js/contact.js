@@ -28,14 +28,52 @@
   if (focusEl) { focusEl.focus(); }
 
   var X = '<svg class="svc-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>';
-  var boxes  = $$('input[name="service[]"]', form);
+  var boxes  = [];
   var radios = $$('input[name="package"]', form);
   var list   = $('[data-ct-blist]');
   var empty  = $('[data-ct-bempty]');
   var bcount = $('[data-ct-bcount]');
   var bpk    = $('[data-ct-bpk]');
   var byId   = {};
-  boxes.forEach(function (b) { byId[b.value] = b; });
+  function index() { boxes = $$('input[name="service[]"]', form); byId = {}; boxes.forEach(function (b) { byId[b.value] = b; }); }
+  index();
+  /* a service's name and its "discipline · page · category" line: on the input, or shared by its list */
+  function nm(b) { var n = b.getAttribute('data-name'); if (n !== null) return n; var t = b.parentNode.querySelector('.ct-chip__n'); return t ? t.textContent : b.value; }
+  function mt(b) { var m = b.getAttribute('data-meta'); if (m !== null) return m; var u = b.closest('[data-meta]'); return u ? u.getAttribute('data-meta') : ''; }
+
+  /* ---- the capability pages' services load on demand (the page ships only each discipline's own) ---- */
+  var lazies = $$('[data-ct-lazy]', form);
+  var more = null;
+  function hydrate() {
+    if (!lazies.length) return Promise.resolve();
+    if (more) return more;
+    lazies.forEach(function (u) { var n = u.parentNode.querySelector('[data-ct-lazyn]'); if (n) n.textContent = 'Loading services…'; });
+    more = fetch(location.pathname + '?ct_more=1', { headers: { Accept: 'application/json' } })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (data) {
+        lazies.forEach(function (u) {
+          var rows = data[u.getAttribute('data-ct-lazy')] || [];
+                    rows.forEach(function (x) {
+            var li = document.createElement('li'); li.setAttribute('data-ct-item', ''); li.setAttribute('data-s', x[3]);
+            var lb = document.createElement('label'); lb.className = 'ct-chip';
+            var inp = document.createElement('input'); inp.type = 'checkbox'; inp.name = 'service[]'; inp.value = x[0]; inp.setAttribute('data-meta', x[2]);
+            var bx = document.createElement('span'); bx.className = 'ct-chip__box'; bx.setAttribute('aria-hidden', 'true');
+            var nn = document.createElement('span'); nn.className = 'ct-chip__n'; nn.textContent = x[1];
+            lb.appendChild(inp); lb.appendChild(bx); lb.appendChild(nn); li.appendChild(lb); u.appendChild(li);
+          });
+          var n = u.parentNode.querySelector('[data-ct-lazyn]'); if (n) n.parentNode.removeChild(n);
+          u.removeAttribute('data-ct-lazy');
+        });
+        lazies = [];
+        index();
+      })
+      .catch(function () {
+        more = null;
+        lazies.forEach(function (u) { var n = u.parentNode.querySelector('[data-ct-lazyn]'); if (n) n.textContent = 'These services did not load. Name what you need in your message instead.'; });
+      });
+    return more;
+  }
+  $$('[data-ct-more]', form).forEach(function (d) { d.addEventListener('toggle', function () { if (d.open) hydrate(); }); });
 
   function checked() { return boxes.filter(function (b) { return b.checked; }); }
   function pkgRadio() { return radios.filter(function (r) { return r.checked; })[0] || null; }
@@ -46,10 +84,10 @@
       list.innerHTML = '';
       on.forEach(function (b) {
         var li = document.createElement('li'); li.className = 'ct-bi';
-        var n = document.createElement('span'); n.className = 'ct-bi__n'; n.textContent = b.getAttribute('data-name'); li.appendChild(n);
-        var m = document.createElement('span'); m.className = 'ct-bi__m'; m.textContent = b.getAttribute('data-meta'); li.appendChild(m);
+        var n = document.createElement('span'); n.className = 'ct-bi__n'; n.textContent = nm(b); li.appendChild(n);
+        var m = document.createElement('span'); m.className = 'ct-bi__m'; m.textContent = mt(b); li.appendChild(m);
         var x = document.createElement('button'); x.type = 'button'; x.className = 'ct-bi__x'; x.setAttribute('data-ct-rm', b.value);
-        x.setAttribute('aria-label', 'Remove ' + b.getAttribute('data-name') + ' from your brief'); x.innerHTML = X; li.appendChild(x);
+        x.setAttribute('aria-label', 'Remove ' + nm(b) + ' from your brief'); x.innerHTML = X; li.appendChild(x);
         list.appendChild(li);
       });
     }
@@ -76,8 +114,8 @@
     if (!persist) return;
     var s = load() || { items: [], package: '', packageName: '' };
     s.items = on.map(function (b) {
-      var parts = (b.getAttribute('data-meta') || '').split(' · ');
-      return { id: b.value, name: b.getAttribute('data-name'), page: parts[1] === 'Overview' ? parts[0] : (parts[1] || ''), pageKey: b.value.split(':')[0] };
+      var parts = mt(b).split(' · ');
+      return { id: b.value, name: nm(b), page: parts[1] === 'Overview' ? parts[0] : (parts[1] || ''), pageKey: b.value.split(':')[0] };
     });
     s.package = r ? r.value : '';
     s.packageName = r && r.value ? r.getAttribute('data-name') + ' · ' + (r.getAttribute('data-meta') || '').split(' · ')[0] : '';
@@ -114,7 +152,8 @@
   /* ---- services the catalogue brief still holds ---- */
   (function offerBack() {
     var s = load();
-    if (!s || !side) return;
+    if (!s || !side || !s.items.length) return;
+    if (s.items.some(function (it) { return !byId[it.id]; }) && lazies.length) { hydrate().then(offerBack); return; }
     var missing = s.items.filter(function (it) { return byId[it.id] && !byId[it.id].checked; });
     if (!missing.length) return;
     var box = document.createElement('div');
@@ -147,7 +186,7 @@
   if (find && q) {
     find.hidden = false;
     var t = null;
-    q.addEventListener('input', function () { clearTimeout(t); t = setTimeout(filter, 90); });
+    q.addEventListener('input', function () { clearTimeout(t); t = setTimeout(function () { hydrate().then(filter); }, 90); });
     q.addEventListener('keydown', function (e) { if (e.key === 'Escape' && q.value) { q.value = ''; filter(); } });
   }
   function filter() {
