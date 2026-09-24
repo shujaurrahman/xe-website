@@ -5,6 +5,7 @@
   </div>
   <div class="wrap s02__in">
 
+    <p class="lbl lbl--blue s02__eyebrow"><span class="dot"></span>From a brief</p>
     <h2 class="sr" id="s02-t">From a brief to a system that runs</h2>
 
     <!-- the reference's two-pill diagram, made into a real control:
@@ -25,6 +26,7 @@
     </div>
 
     <div class="s02__stage" data-rv data-rv-d="170">
+      <span class="s02__grid dots" aria-hidden="true"></span>
       <div class="s02__panes">
 
         <!-- ── pane 1 · the brief as it arrives ───────────────────────────── -->

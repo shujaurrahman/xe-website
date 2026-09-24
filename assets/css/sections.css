@@ -136,6 +136,7 @@
 }
 .s02__in{display:flex;flex-direction:column;align-items:center}
 
+.s02__eyebrow{align-self:flex-start;position:relative;z-index:1}
 .s02__head{margin-bottom:clamp(24px,2.7vw,36px)}
 .s02__h{max-width:24ch}
 
@@ -187,9 +188,8 @@
   border:1px solid var(--line);border-radius:var(--r-xl);
   background:var(--paper-2);overflow:hidden;
 }
-.s02__stage::before{                 /* faint dot grid, faded out at the edges */
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background-image:radial-gradient(var(--dot) 1px,transparent 1px);
+.s02__grid{                          /* faint dot grid (core .dots), faded out at the edges */
+  position:absolute;inset:0;pointer-events:none;
   background-size:22px 22px;opacity:.75;
   -webkit-mask-image:radial-gradient(118% 92% at 50% 0%,#000 0%,rgba(0,0,0,.5) 58%,transparent 94%);
   mask-image:radial-gradient(118% 92% at 50% 0%,#000 0%,rgba(0,0,0,.5) 58%,transparent 94%);
@@ -294,28 +294,6 @@
 /* no travelling dot, no filling rule — the pills alone carry the state */
 @media (prefers-reduced-motion:reduce){
   .s02__dot,.s02__fill{display:none}
-}
-
-/* ---------- the brief card (moved here from the hero) -------------------- */
-
-
-/* the blue lands on the border itself, with a soft ring outside it */
-
-
-
-.is-live 
-50%{opacity:.3}}
-
-
-
-
-
-
-
-@media (max-width:600px){
-  
-  
-  
 }
 
 /* the animated wash behind this section */
