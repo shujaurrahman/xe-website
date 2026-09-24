@@ -2301,7 +2301,7 @@
 .s22__links .s22__soon{cursor:default;color:var(--on-ink-3)}
 .s22__links .s22__soon:hover{color:var(--on-ink-3)}
 .s22__links .s22__soon::after{content:none}
-.s22__links .s22__soon i{color:var(--on-ink-3);transform:none}
+.s22__tag{flex:none;padding:3px 8px;border:1px solid var(--on-ink-line);border-radius:var(--r-pill);font-family:var(--f);font-size:var(--t-lbl);font-weight:400;line-height:1.2;letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3)}   /* no chevron: it goes nowhere yet */
 
 @media (min-width:1200px){
   .s22__links{grid-template-columns:repeat(6,minmax(0,1fr))}
