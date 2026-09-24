@@ -26,8 +26,7 @@ $xe_route = (function () {
     if (is_file("$root$uri") || is_file("$root$uri/index.php")) return false;         // assets and folder indexes
 
     http_response_code(404);   // php -S would otherwise answer unknown paths with the home page
-    echo 'Not found';
-    return true;
+    return "$root/404.php";    // the designed not-found page (it sets the 404 status itself too)
 })();
 
 if (is_string($xe_route)) {       // a page: run it at the top level, from its own folder, as if requested directly

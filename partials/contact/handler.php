@@ -25,7 +25,7 @@
  */
 
 $CT = [
-    'state' => 'form', 'errors' => [], 'dropped' => 0, 'ref' => '', 'mailto' => '',
+    'state' => 'form', 'app' => null, 'errors' => [], 'dropped' => 0, 'ref' => '', 'mailto' => '',
     'v' => ['name' => '', 'email' => '', 'company' => '', 'phone' => '', 'services' => [], 'package' => '',
             'budget' => '', 'timeline' => '', 'message' => '', 'from' => '', 'pre' => []],
     // PLACEHOLDER: confirm the currency and the bands before launch.
@@ -67,6 +67,16 @@ function ct_age($tok): ?int {
     if (!hash_equals(substr(hash_hmac('sha256', $m[1], ct_key()), 0, 20), $m[2])) return null;
     return time() - (int) $m[1];
 }
+/** A careers application arrives as message "Application: <role> (<id>)" with from=careers.
+    Returns ['role' =>, 'id' =>] so the page and the email can say it in plain words, or null. */
+function ct_app(string $msg, string $from): ?array {
+    if ($from !== 'careers' || !preg_match('~^\s*Application:\s*(.+?)\s*\(([A-Za-z0-9._-]{1,40})\)~u', $msg, $m)) return null;
+    return ['role' => mb_substr(trim($m[1]), 0, 120), 'id' => $m[2]];
+}
+/** The same application, as a sentence a person would write. */
+function ct_app_text(array $app, string $rest = ''): string {
+    return 'I would like to apply for the ' . $app['role'] . ' role (reference ' . $app['id'] . ').' . ($rest !== '' ? "\n\n" . $rest : '');
+}
 function ct_from($s): string { return (is_string($s) && preg_match('~^[a-z0-9-]{1,64}$~', $s)) ? $s : ''; }
 /** "Name <email>" with the name MIME-encoded, so nothing in it can break the header. */
 function ct_addr(string $name, string $email): string {
@@ -99,6 +109,7 @@ elseif (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET') {
     $CT['v']['package'] = isset(svc_packages()[$ct_pk]) ? $ct_pk : '';
     $CT['v']['from']    = ct_from($_GET['from'] ?? '');
     $CT['v']['pre']     = $CT['v']['services'];
+    $CT['v']['message'] = ct_text($_GET['message'] ?? '', 4000);   // careers links carry "Application: <role> (<id>)"
 }
 
 /* ---------------- arriving with a selection, posted from a service catalogue ----------------
@@ -120,6 +131,7 @@ elseif (($_POST['intent'] ?? '') === 'select') {
     $CT['v']['package'] = isset(svc_packages()[$ct_pk]) ? $ct_pk : '';
     $CT['v']['from']    = ct_from($_POST['from'] ?? '');
     $CT['v']['pre']     = $CT['v']['services'];
+    $CT['v']['message'] = ct_text($_POST['message'] ?? '', 4000);
 }
 
 /* ---------------- the form ---------------- */
@@ -171,6 +183,13 @@ else {
         $ct_names = array_map(fn ($ct_r) => $ct_r['name'], $ct_rows);
         $ct_sum   = $ct_names ? $ct_names[0] . (count($ct_names) > 1 ? ' +' . (count($ct_names) - 1) . ' more' : '') : 'General enquiry';
         $ct_subj  = '[Lead] ' . $ct_sum . ($ct_pkg ? ' · ' . $ct_pkg['name'] : '') . ' · ' . ($ct_v['company'] !== '' ? $ct_v['company'] : $ct_v['name']);
+        $ct_app = ct_app($ct_v['message'], $ct_v['from']) ?? ct_app(is_string($P['apply'] ?? null) ? $P['apply'] : '', $ct_v['from']);
+        if ($ct_app) {
+            if (preg_match('~^\s*Application:~', $ct_v['message'])) {   // sent straight from a careers form: say it in words
+                $ct_v['message'] = ct_app_text($ct_app, trim(preg_replace('~^\s*Application:\s*.+?\([A-Za-z0-9._-]{1,40}\)\s*~u', '', $ct_v['message'], 1)));
+            }
+            $ct_subj = '[Application] ' . $ct_app['role'] . ' (' . $ct_app['id'] . ') · ' . $ct_v['name'];   // PLACEHOLDER: route applications to careers@ once that inbox exists
+        }
         $ct_subj  = ct_line($ct_subj, 180);
 
         $ct_src = '—';
@@ -240,4 +259,12 @@ else {
     }
 }
 
+/* A careers application reads as a sentence on the page ("I would like to apply for the … role"),
+   and the page switches to its application wording. The success redirect keeps from=careers. */
+$CT['app'] = ct_app($CT['v']['message'], $CT['v']['from'])
+    ?? ct_app(is_string($_POST['apply'] ?? null) ? $_POST['apply'] : '', $CT['v']['from']);
+if ($CT['app'] && $CT['state'] !== 'sent' && strpos($CT['v']['message'], 'I would like to apply') !== 0) {
+    $ct_rest = trim(preg_replace('~^\s*Application:\s*.+?\([A-Za-z0-9._-]{1,40}\)\s*~u', '', $CT['v']['message'], 1));
+    $CT['v']['message'] = ct_app_text($CT['app'], $ct_rest);
+}
 $CT['t'] = ct_token();

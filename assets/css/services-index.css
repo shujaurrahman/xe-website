@@ -1,0 +1,130 @@
+/* What we do (services/index.php) — .svx-*. Tokens only. */
+
+/* ---------- hero: statement + discipline ledger ---------- */
+.svx-hero{position:relative;overflow:hidden;padding-top:var(--bdh-hero-t)}
+.svx-hero__dots{position:absolute;inset:0 0 auto auto;width:46%;height:70%;opacity:.55;-webkit-mask-image:linear-gradient(to left,#000,transparent);mask-image:linear-gradient(to left,#000,transparent);pointer-events:none}
+.svx-hero__in{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(40px,6vw,96px);align-items:start}
+.svx-hero__h{margin:22px 0 0;max-width:12ch}
+.svx-hero__lead{margin-top:26px;max-width:46ch}
+.svx-hero__go{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.svx-hero__stats{display:flex;gap:0;margin:44px 0 0;border-top:1px solid var(--line)}
+.svx-hero__stats div{padding:18px 28px 0 0;margin-right:28px;border-right:1px solid var(--line)}
+.svx-hero__stats div:last-child{border-right:0;margin-right:0}
+.svx-hero__stats dt{font:500 var(--t-lbl)/1.2 var(--f);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.svx-hero__stats dd{margin:8px 0 0;font:500 var(--t-h4)/1 var(--f-h);color:var(--ink)}
+
+.svx-ledger{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh-2);padding:10px 8px 8px}
+.svx-ledger__k{display:flex;justify-content:space-between;margin:0;padding:12px 18px 12px;font:500 var(--t-lbl)/1 var(--f);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);border-bottom:1px solid var(--line)}
+.svx-ledger__list{list-style:none;margin:0;padding:0}
+.svx-ledger__list li+li{border-top:1px solid var(--line)}
+.svx-ledger__row{display:grid;grid-template-columns:34px minmax(0,1fr) auto 18px;gap:14px;align-items:start;padding:18px 18px;border-radius:var(--r);color:var(--txt);text-decoration:none;transition:background .25s var(--e)}
+.svx-ledger__row:hover,.svx-ledger__row:focus-visible{background:var(--paper-2)}
+.svx-ledger__n{font:500 var(--t-xs)/1.9 var(--f);color:var(--blue)}
+.svx-ledger__b{display:flex;flex-direction:column;gap:6px;min-width:0}
+.svx-ledger__t{font:500 var(--t-h4)/1.2 var(--f-h);color:var(--ink)}
+.svx-ledger__d{font:400 var(--t-sm)/1.55 var(--f-b);color:var(--muted)}
+.svx-ledger__c{font:500 var(--t-sm)/1.6 var(--f);color:var(--ink);min-width:2ch;text-align:right}
+.svx-ledger__go{font:500 18px/1.2 var(--f-b);color:var(--faint);transition:transform .25s var(--e),color .25s var(--e)}
+.svx-ledger__row:hover .svx-ledger__go{transform:translateX(3px);color:var(--blue)}
+
+/* ---------- finder ---------- */
+.svx-f{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:clamp(28px,4vw,64px);align-items:start}
+.svx-f__ctl{position:sticky;top:calc(var(--nav-h) + 24px);display:flex;flex-direction:column;gap:26px;padding:26px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg)}
+.svx-f__k{display:block;margin:0 0 10px;padding:0;font:500 var(--t-lbl)/1.2 var(--f);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.svx-f__set{border:0;margin:0;padding:0;min-width:0}
+.svx-f__qw{position:relative;display:block}
+.svx-f__qw .xt-ico{position:absolute;left:14px;top:50%;width:18px;height:18px;transform:translateY(-50%);color:var(--muted)}
+.svx-f__in{width:100%;min-height:48px;padding:0 14px 0 42px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--paper);font:400 var(--t-body)/1.2 var(--f-b);color:var(--ink)}
+.svx-f__in:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:var(--blue)}
+.svx-f__chips{display:flex;flex-wrap:wrap;gap:8px}
+.svx-chip{position:relative;display:inline-flex}
+.svx-chip input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.svx-chip span{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border:1px solid var(--line-2);border-radius:var(--r-pill);font:500 var(--t-sm)/1.2 var(--f-b);color:var(--txt);background:var(--paper);transition:background .2s var(--e),border-color .2s var(--e),color .2s var(--e)}
+.svx-chip b{font:500 var(--t-xs)/1 var(--f);color:var(--faint)}
+.svx-chip:hover span{border-color:var(--ink-2)}
+.svx-chip input:checked+span{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.svx-chip input:checked+span b{color:var(--on-ink-3)}
+.svx-chip input:focus-visible+span{outline:2px solid var(--blue);outline-offset:2px}
+.svx-f__act{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.svx-f.is-js .svx-f__act [data-svx-apply]{display:none}
+
+.svx-f__n{margin:0 0 22px;font:500 var(--t-xs)/1.3 var(--f);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.svx-f__n b{color:var(--ink);font-weight:500}
+.svx-grp+.svx-grp{margin-top:34px}
+.svx-grp__h{display:flex;align-items:baseline;gap:12px;margin:0 0 6px;padding-bottom:12px;border-bottom:1px solid var(--line-2);font:500 var(--t-h4)/1.2 var(--f-h)}
+.svx-grp__h span{font:500 var(--t-xs)/1 var(--f);color:var(--blue)}
+.svx-grp__h a{color:var(--ink);text-decoration:none}
+.svx-grp__h a:hover{text-decoration:underline;text-underline-offset:4px}
+.svx-res{list-style:none;margin:0;padding:0}
+.svx-res li{border-bottom:1px solid var(--line)}
+.svx-res__a{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr) 18px;gap:6px 28px;padding:18px 4px;color:var(--txt);text-decoration:none}
+.svx-res__t{font:500 var(--t-body)/1.35 var(--f-h);font-size:17px;color:var(--ink)}
+.svx-res__d{font:400 var(--t-sm)/1.55 var(--f-b);color:var(--muted);grid-column:2}
+.svx-res__m{grid-column:2;display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin-top:6px}
+.svx-res__p{font:500 var(--t-lbl)/1.3 var(--f);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.svx-res__go{grid-column:3;grid-row:1;align-self:start;color:var(--faint);font:500 18px/1.2 var(--f-b);transition:transform .25s var(--e),color .25s var(--e)}
+.svx-res__a:hover .svx-res__t{text-decoration:underline;text-underline-offset:4px}
+.svx-res__a:hover .svx-res__go{transform:translateX(3px);color:var(--blue)}
+.svx-none{padding:28px;border:1px dashed var(--line-3);border-radius:var(--r-lg);background:var(--paper)}
+.svx-none__t{margin:0 0 6px;font:500 var(--t-h4)/1.2 var(--f-h);color:var(--ink)}
+.svx-none .btn{margin-top:14px}
+
+/* ---------- system: the relay + shared foundation ---------- */
+.svx-relay{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:22px;position:relative}
+.svx-relay::before{content:"";position:absolute;left:22px;right:calc((100% - 110px) / 6 - 22px);top:21px;height:1px;background:var(--on-ink-line)}
+.svx-relay__s{position:relative;display:flex;flex-direction:column}
+.svx-relay__node{position:relative;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ink);border:1px solid var(--on-ink-line);font:500 var(--t-xs)/1 var(--f);color:var(--on-ink)}
+.svx-relay__s:first-child .svx-relay__node{background:var(--blue);border-color:var(--blue)}
+.svx-relay__k{margin:22px 0 6px;font:500 var(--t-lbl)/1.2 var(--f);letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink-3)}
+.svx-relay__t{margin:0;font:500 var(--t-h4)/1.2 var(--f-h)}
+.svx-relay__t a{color:var(--on-ink);text-decoration:none}
+.svx-relay__t a:hover{text-decoration:underline;text-underline-offset:4px}
+.svx-relay__w{margin:10px 0 18px;min-height:calc(2 * 1.55em);font:400 var(--t-sm)/1.55 var(--f-b);color:var(--on-ink-2)}
+.svx-relay__io{margin:0;display:flex;flex-direction:column;gap:12px;padding-top:16px;border-top:1px solid var(--on-ink-line)}
+.svx-relay__io dt{font:500 var(--t-lbl)/1.2 var(--f);letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3)}
+.svx-relay__io dd{margin:4px 0 0;font:400 var(--t-sm)/1.5 var(--f-b);color:var(--on-ink)}
+.svx-relay__loop{display:flex;align-items:center;gap:12px;margin:34px 0 0;font:400 var(--t-sm)/1.5 var(--f-b);color:var(--on-ink-2)}
+.svx-relay__loop .xt-ico{flex:none;width:22px;height:22px;color:var(--on-ink)}
+.svx-core{margin-top:clamp(44px,6vw,72px);display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,2fr);gap:32px;padding:clamp(24px,3vw,40px);border:1px solid var(--on-ink-line);border-radius:var(--r-xl);background:var(--on-ink-card)}
+.svx-core__k{margin:0 0 10px;font:500 var(--t-lbl)/1.2 var(--f);letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink-3)}
+.svx-core__t{margin:0;font:500 var(--t-h4)/1.3 var(--f-h);color:var(--on-ink)}
+.svx-core__list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 32px}
+.svx-core__list li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:4px 14px}
+.svx-core__list .xt-ico{width:24px;height:24px;color:var(--on-ink);grid-row:span 2}
+.svx-core__list b{font:500 var(--t-body)/1.3 var(--f-h);color:var(--on-ink)}
+.svx-core__list span{font:400 var(--t-sm)/1.55 var(--f-b);color:var(--on-ink-2)}
+
+/* ---------- responsive ---------- */
+@media (max-width:1180px){
+  .svx-relay{grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 28px}
+  .svx-relay::before{display:none}
+}
+@media (max-width:1023px){
+  .svx-hero__in{grid-template-columns:minmax(0,1fr)}
+  .svx-hero__h{max-width:16ch}
+  .svx-f{grid-template-columns:minmax(0,1fr)}
+  .svx-f__ctl{position:static}
+  .svx-core{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:720px){
+  .svx-res__a{grid-template-columns:minmax(0,1fr) 18px}
+  .svx-res__d,.svx-res__m{grid-column:1}
+  .svx-res__a{padding:14px 2px}
+  .svx-res__m .bdh-tag{display:none}   /* the need filter still works; the tags just stop doubling the list's length */
+  .svx-relay{grid-template-columns:minmax(0,1fr);gap:0}
+  .svx-relay::before{display:block;left:22px;right:auto;top:22px;bottom:22px;width:1px;height:auto}
+  .svx-relay__s{display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:18px;padding-bottom:34px}
+  .svx-relay__s>*:not(.svx-relay__node){grid-column:2}
+  .svx-relay__node{grid-row:1 / span 5}
+  .svx-relay__k{margin-top:12px}
+  .svx-core__list{grid-template-columns:minmax(0,1fr)}
+  .svx-hero__stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .svx-hero__stats div{padding:16px 10px 0 0;margin-right:12px}
+  .svx-hero__stats dt{letter-spacing:.08em}
+  .svx-relay__w{min-height:0}
+  .svx-ledger__row{grid-template-columns:28px minmax(0,1fr) auto;padding:16px 12px}
+  .svx-ledger__go{display:none}
+  .svx-ledger__d{display:none}
+  .svx-f__ctl{padding:20px}
+}
+@media (prefers-reduced-motion:reduce){.svx-ledger__go,.svx-res__go{transition:none}}

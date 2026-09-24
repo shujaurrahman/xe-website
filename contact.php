@@ -13,6 +13,7 @@
 $BASE = '';
 require 'partials/init.php';
 require_once 'partials/services/lib.php';
+require_once 'partials/tech/kit.php';
 require 'partials/contact/handler.php';
 
 $ct_v    = $CT['v'];
@@ -25,16 +26,28 @@ $page = [
     'key'   => 'contact',
     'title' => 'Contact',
     'desc'  => 'Tell us what you are building and we will tell you straight whether we are the right team for it.',
-    'css'   => ['assets/css/contact.css'],
+    'css'   => ['assets/css/tech/kit.css', 'assets/css/contact.css'],
     'js'    => ['assets/js/contact.js'],
 ];
 
-$hero = $CT['state'] === 'sent'
-    ? ['eyebrow' => 'Brief received', 'title' => 'Thank you.<br><span class="g">Your brief is with us.</span>',
-       'lead' => 'A named lead reads every brief and replies within one working day.']
-    : ['eyebrow' => 'Contact', 'title' => 'Thirty minutes,<br><span class="g">and a straight answer.</span>',
-       'lead' => 'Tell us what you are building and we will tell you straight whether we are the right team for it.',
-       'meta' => ['Reply within one working day', 'NDA on request', 'New Delhi · Ludhiana']];
+/* PLACEHOLDER: confirm the response times quoted on this page ("one working day", "five working days") before launch. */
+$ct_app  = $CT['app'];
+$ct_apps = $CT['state'] === 'sent' && $ct_v['from'] === 'careers';
+if ($CT['state'] === 'sent') {
+    $hero = $ct_apps
+        ? ['eyebrow' => 'Application received', 'title' => 'Thank you.<br><span class="g">Your application is with us.</span>',
+           'lead' => 'The hiring lead for the role reads every application and aims to reply within five working days.']
+        : ['eyebrow' => 'Brief received', 'title' => 'Thank you.<br><span class="g">Your brief is with us.</span>',
+           'lead' => 'A named lead reads every brief and aims to reply within one working day.'];
+} elseif ($ct_app) {
+    $hero = ['eyebrow' => 'Careers · Apply', 'title' => 'Apply for<br><span class="g">' . e($ct_app['role']) . '.</span>',
+             'lead' => 'Tell us who you are and send a link to your work. The hiring lead for the role reads every application.',
+             'meta' => ['Reference ' . $ct_app['id'], 'Reply aimed within five working days', 'No recruiters, please']];
+} else {
+    $hero = ['eyebrow' => 'Contact', 'title' => 'Thirty minutes,<br><span class="g">and a straight answer.</span>',
+             'lead' => 'Tell us what you are building and we will tell you straight whether we are the right team for it.',
+             'meta' => ['Reply aimed within one working day', 'NDA on request', 'New Delhi · Ludhiana']];
+}
 
 /* ---- the services picker: every discipline, grouped by page and category ---- */
 $ct_sel = array_flip($ct_v['services']);
@@ -114,7 +127,7 @@ include 'partials/nav.php';
         <span class="ct-done__tick" aria-hidden="true"><?= svc_icon('tick') ?></span>
         <div class="ct-done__main">
           <p class="lbl lbl--blue"><span class="dot"></span>Sent</p>
-          <h2 class="ct-done__t" id="ct-done-t">We have your brief.</h2>
+          <h2 class="ct-done__t" id="ct-done-t"><?= $ct_apps ? 'We have your application.' : 'We have your brief.' ?></h2>
           <?php if ($CT['ref']): ?>
             <p class="ct-done__ref"><span>Reference</span><b><?= e($CT['ref']) ?></b></p>
           <?php endif; ?>
@@ -122,9 +135,15 @@ include 'partials/nav.php';
             <a href="mailto:<?= e($SITE['company']['email']) ?>"><?= e($SITE['company']['email']) ?></a><?= $CT['ref'] ? ' and quote the reference' : '' ?>.</p>
         </div>
         <ol class="ct-next">
-          <li><span class="ct-next__n">01</span><b>It goes to the right lead.</b><span>Each brief is routed to the lead for the discipline it is about.</span></li>
-          <li><span class="ct-next__n">02</span><b>A named lead replies.</b><span>Within one working day, with questions or a time to talk.</span></li>
-          <li><span class="ct-next__n">03</span><b>Thirty minutes, then a scope.</b><span>A call, a straight answer, and a written scope if we are the right team.</span></li>
+          <?php if ($ct_apps): ?>
+            <li><span class="ct-next__n">01</span><b>The hiring lead reads it.</b><span>Every application is read by a person, not screened by keyword.</span></li>
+            <li><span class="ct-next__n">02</span><b>You hear back either way.</b><span>We aim to reply within five working days, with next steps or a clear no.</span></li>
+            <li><span class="ct-next__n">03</span><b>A conversation, then a task.</b><span>If it fits, a first call and a short, scoped work sample.</span></li>
+          <?php else: ?>
+            <li><span class="ct-next__n">01</span><b>It goes to the right lead.</b><span>Each brief is routed to the lead for the discipline it is about.</span></li>
+            <li><span class="ct-next__n">02</span><b>A named lead replies.</b><span>We aim to reply within one working day, with questions or a time to talk.</span></li>
+            <li><span class="ct-next__n">03</span><b>Thirty minutes, then a scope.</b><span>A call, a straight answer, and a written scope if we are the right team.</span></li>
+          <?php endif; ?>
         </ol>
         <div class="ct-done__go">
           <?php if ($ct_from): ?>
@@ -178,6 +197,7 @@ include 'partials/nav.php';
           <input type="hidden" name="from" value="<?= e($ct_v['from']) ?>">
           <input type="hidden" name="pre" value="<?= e(implode(',', $ct_v['pre'])) ?>">
           <input type="hidden" name="t" value="<?= e($CT['t']) ?>">
+          <?php if ($ct_app): ?><input type="hidden" name="apply" value="<?= e('Application: ' . $ct_app['role'] . ' (' . $ct_app['id'] . ')') ?>"><?php endif; ?>
           <div class="ct-hp" aria-hidden="true">
             <label for="ct-website">Website (leave this empty)</label>
             <input type="text" id="ct-website" name="website" tabindex="-1" autocomplete="off">
@@ -210,6 +230,7 @@ include 'partials/nav.php';
             </div>
           </fieldset>
 
+          <?php if (!$ct_app): /* an application skips services, package and budget */ ?>
           <!-- 02 · What you need -->
           <fieldset class="ct-set ct-set--svc<?= isset($ct_err['service']) ? ' is-bad' : '' ?>" id="ct-service" aria-describedby="ct-set2-d<?= isset($ct_err['service']) ? ' ct-e-service' : '' ?>">
             <legend class="ct-set__lg"><span class="ct-set__n">02</span>What you need</legend>
@@ -342,11 +363,16 @@ include 'partials/nav.php';
             </div>
           </fieldset>
 
-          <!-- 05 · Anything else -->
+          <?php endif; ?>
+          <!-- 05 · Anything else (02 for an application) -->
           <fieldset class="ct-set">
-            <legend class="ct-set__lg"><span class="ct-set__n">05</span>Anything else</legend>
+            <legend class="ct-set__lg"><span class="ct-set__n"><?= $ct_app ? '02' : '05' ?></span><?= $ct_app ? 'About you and your work' : 'Anything else' ?></legend>
             <div class="ct-field">
+              <?php if ($ct_app): ?>
+              <label class="ct-label" for="ct-message">Your application <span class="ct-opt">A few lines on why this role, and links to your portfolio, CV or code</span></label>
+              <?php else: ?>
               <label class="ct-label" for="ct-message">Tell us about the work <span class="ct-opt">What you are building, what is in the way, what good looks like</span></label>
+              <?php endif; ?>
               <textarea class="ct-input ct-area" id="ct-message" name="message" rows="7" maxlength="4000" aria-describedby="ct-message-n" data-ct-msg><?= e($ct_v['message']) ?></textarea>
               <p class="ct-count" id="ct-message-n" data-ct-count>Up to 4,000 characters.</p>
             </div>
@@ -354,23 +380,26 @@ include 'partials/nav.php';
 
           <div class="ct-send">
             <!-- PLACEHOLDER: link "Privacy Notice" to the real page once it exists (data/site.php 'legal'). -->
-            <p class="ct-consent">By sending this brief you agree that we use these details to reply to it. Nothing is added to a mailing list, and nothing is shared outside the team.</p>
-            <button class="btn btn--ink btn--lg ct-send__btn" type="submit" data-ct-send>Send the brief <span class="i" aria-hidden="true">›</span></button>
+            <p class="ct-consent">By sending this <?= $ct_app ? 'application' : 'brief' ?> you agree that we use these details to reply to it. Nothing is added to a mailing list, and nothing is shared outside the team.</p>
+            <button class="btn btn--ink btn--lg ct-send__btn" type="submit" data-ct-send><?= $ct_app ? 'Send the application' : 'Send the brief' ?> <span class="i" aria-hidden="true">›</span></button>
           </div>
         </form>
       </div>
 
-      <aside class="ct-side" aria-labelledby="ct-brief-t">
+      <aside class="ct-side<?= ($ct_rows || $ct_pkg || $ct_app) ? ' ct-side--lead' : '' ?>" aria-labelledby="ct-brief-t">
         <div class="ct-brief" data-ct-brief>
           <div class="ct-brief__head">
-            <h2 class="ct-brief__t" id="ct-brief-t">Your brief</h2>
-            <span class="ct-brief__c" data-ct-bcount><?= count($ct_rows) === 1 ? '1 service' : count($ct_rows) . ' services' ?></span>
+            <h2 class="ct-brief__t" id="ct-brief-t"><?= $ct_app ? 'Your application' : 'Your brief' ?></h2>
+            <?php if (!$ct_app): ?><span class="ct-brief__c" data-ct-bcount><?= count($ct_rows) === 1 ? '1 service' : count($ct_rows) . ' services' ?></span><?php endif; ?>
           </div>
           <?php if ($ct_from): ?>
             <p class="ct-brief__from"><span>From</span><a href="<?= e($ct_from['url']) ?>"><?= e($ct_from['name']) ?></a></p>
           <?php endif; ?>
 
-          <ul class="ct-brief__list" data-ct-blist>
+          <?php if ($ct_app): ?>
+            <p class="ct-brief__role"><span>Role</span><b><?= e($ct_app['role']) ?></b><span>Reference <?= e($ct_app['id']) ?></span></p>
+          <?php endif; ?>
+          <ul class="ct-brief__list" data-ct-blist<?= $ct_app ? ' hidden' : '' ?>>
             <?php foreach ($ct_rows as $ct_r): ?>
               <li class="ct-bi">
                 <span class="ct-bi__n"><?= e($ct_r['name']) ?></span>
@@ -379,7 +408,7 @@ include 'partials/nav.php';
               </li>
             <?php endforeach; ?>
           </ul>
-          <p class="ct-brief__empty" data-ct-bempty<?= $ct_rows ? ' hidden' : '' ?>>No services chosen yet. Pick some from the list, or simply tell us the problem.</p>
+          <?php if (!$ct_app): ?><p class="ct-brief__empty" data-ct-bempty<?= $ct_rows ? ' hidden' : '' ?>>No services chosen yet. Pick some from the list, or simply tell us the problem.</p><?php endif; ?>
 
           <div class="ct-brief__pk" data-ct-bpk<?= $ct_pkg ? '' : ' hidden' ?>>
             <span class="ct-brief__pkk">Package</span>
@@ -389,9 +418,15 @@ include 'partials/nav.php';
           </div>
 
           <ol class="ct-brief__next">
-            <li><span>01</span>It goes to the lead for that discipline.</li>
-            <li><span>02</span>You get a reply within one working day.</li>
-            <li><span>03</span>A thirty-minute call, then a written scope.</li>
+            <?php if ($ct_app): ?>
+              <li><span>01</span>The hiring lead for the role reads it.</li>
+              <li><span>02</span>We aim to reply within five working days.</li>
+              <li><span>03</span>A first call if it is a fit.</li>
+            <?php else: ?>
+              <li><span>01</span>It goes to the lead for that discipline.</li>
+              <li><span>02</span>We aim to reply within one working day.</li>
+              <li><span>03</span>A thirty-minute call, then a written scope.</li>
+            <?php endif; ?>
           </ol>
         </div>
 
@@ -399,17 +434,14 @@ include 'partials/nav.php';
           <p class="ct-direct__k">Prefer to write or talk?</p>
           <a class="ct-direct__mail" href="mailto:<?= e($SITE['company']['email']) ?>"><?= e($SITE['company']['email']) ?></a>
           <a class="tl" href="<?= xe_url('index.php#book') ?>">Book a thirty-minute call <span class="i" aria-hidden="true">›</span></a>
-          <ul class="ct-direct__offices">
-            <?php foreach ($SITE['company']['studios'] as $ct_s): ?>
-              <li><b><?= e($ct_s['city']) ?></b><span><?= e(implode(', ', $ct_s['lines'])) ?></span></li>
-            <?php endforeach; ?>
-          </ul>
+          <a class="tl" href="#reach">Other inboxes and our offices <span class="i" aria-hidden="true">›</span></a>
         </div>
       </aside>
 
     </div>
   </section>
 <?php endif; ?>
+<?php include 'partials/contact/reach.php'; ?>
 </main>
 
 <?php include 'partials/footer.php'; ?>
