@@ -59,11 +59,18 @@ $s10_i = 0;
 <?php foreach ($s10_r['tiles'] as $s10_t): $s10_i++; ?>
         <figure class="s10__c<?= isset($s10_t['vid']) ? ' s10__c--v' : '' ?><?= !empty($s10_t['ui']) ? ' s10__c--ui' : '' ?>" style="--ar:<?= $s10_t['w'] ?>/<?= $s10_t['h'] ?>">
           <div class="s10__frame">
+<?php if (!empty($s10_t['ui'])): ?>
+            <span class="s10__chrome"><i></i><i></i><i></i><span>Your platform</span></span>
+            <span class="s10__screen">
+<?php endif; ?>
 <?php if (isset($s10_t['vid'])): ?>
             <video src="<?= $s10_t['vid'] ?>" poster="<?= $s10_t['poster'] ?>" width="<?= $s10_t['w'] ?>" height="<?= $s10_t['h'] ?>" muted loop playsinline preload="none" data-s10-v></video>
             <span class="s10__rec"><i></i>Video</span>
 <?php else: ?>
             <img src="<?= $s10_t['img'] ?>" alt="" width="<?= $s10_t['w'] ?>" height="<?= $s10_t['h'] ?>" loading="lazy" decoding="async">
+<?php endif; ?>
+<?php if (!empty($s10_t['ui'])): ?>
+            </span>
 <?php endif; ?>
           </div>
           <figcaption class="s10__slate"><b><?= sprintf('%02d', $s10_i) ?></b><span><?= $s10_t['fmt'] ?></span><em><?= $s10_t['ar'] ?></em></figcaption>

@@ -1299,10 +1299,26 @@
   overflow:hidden;border-radius:var(--r);border:1px solid var(--line);background:var(--paper-3);
 }
 .s10__frame img,.s10__frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-/* the UI stills are pale, mostly-empty reference captures: frame them as a close-up on the
-   interface (zoom to the centre panel, cropping the pale margins and the foreign accent tag) so they read as screens, not blanks */
-.s10__c--ui .s10__frame{background:var(--paper-2)}
-.s10__c--ui .s10__frame img{transform:scale(1.6);transform-origin:50% 55%}
+/* the UI stills are pale reference captures: seat each one in an ink device plate (app chrome
+   drawn in CSS, the capture inset as the screen) so it reads as product UI, not a blank card.
+   Inside the screen the still is zoomed to its centre panel, cropping the pale margins and the foreign accent tag. */
+.s10__c--ui .s10__frame{background:var(--ink);border-color:var(--ink-2);box-shadow:var(--sh-1)}
+.s10__chrome{
+  position:absolute;left:0;right:0;top:0;height:30px;display:flex;align-items:center;gap:5px;padding-inline:12px;
+}
+.s10__chrome i{flex:none;width:7px;height:7px;border-radius:50%;background:var(--on-ink-line)}
+.s10__chrome span{
+  flex:0 1 auto;min-width:0;margin-inline:auto;padding:3px 12px;border-radius:var(--r-pill);
+  background:var(--on-ink-card);border:1px solid var(--on-ink-line);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.08em;line-height:1.2;text-transform:uppercase;
+  color:var(--on-ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.s10__chrome span::before{content:"";display:inline-block;width:5px;height:5px;margin-right:7px;border-radius:50%;background:var(--blue);vertical-align:.12em}
+.s10__screen{
+  position:absolute;inset:30px 7px 7px;overflow:hidden;border-radius:calc(var(--r) - 5px);
+  background:var(--paper-2);
+}
+.s10__c--ui .s10__screen img{transform:scale(1.6);transform-origin:50% 55%;filter:brightness(.75) contrast(2)}   /* lifts the faded capture: text and panels read, the ground stays a light screen */
 
 .s10__rec{
   position:absolute;left:10px;top:10px;display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;
@@ -1332,6 +1348,13 @@
   .s10{--s10-h:220px}
   .s10__rec{left:8px;top:8px}
   .s10__slate{letter-spacing:.06em}
+}
+/* the device chrome tightens once the row height (and so the 7:8 screens) shrinks */
+@media (max-width:1100px){
+  .s10__chrome{padding-inline:9px;gap:4px}
+  .s10__chrome i{width:6px;height:6px}
+  .s10__chrome span{padding:3px 8px;letter-spacing:.03em}
+  .s10__chrome span::before{margin-right:5px}
 }
 @media (prefers-reduced-motion:reduce){
   .s10.is-anim .s10__track{animation:none}
