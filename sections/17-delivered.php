@@ -1,8 +1,9 @@
-<section class="band band--rules s17" id="delivered" aria-labelledby="s17-t">
+<noscript><style>.s17__viewport{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;background:none;min-height:0}.s17__slide{position:relative;inset:auto;flex:0 0 92%;opacity:1;visibility:visible;scroll-snap-align:start;border-radius:var(--r-lg);overflow:hidden;background:var(--ink)}.s17__slide img{height:auto;aspect-ratio:16/10}.s17__bar{display:none}</style></noscript>
+<section class="band band--alt band--rules s17" id="delivered" aria-labelledby="s17-t">
   <span class="s17__ghost" aria-hidden="true">Delivered.</span>
 
   <div class="wrap s17__in">
-    <p class="lbl s17__eyebrow">(Selected work)</p>
+    <p class="lbl lbl--blue s17__eyebrow"><span class="dot"></span>Selected work</p>
     <h2 class="sr" id="s17-t">Selected work</h2>
 
     <div class="s17__grid">
@@ -21,7 +22,7 @@
 
       <!-- PLACEHOLDER: reference imagery and illustrative outcomes — replace with real case studies -->
       <div class="s17__slider" data-s17 data-rv data-rv-d="90">
-        <div class="s17__viewport">
+        <div class="s17__viewport" tabindex="0" role="region" aria-label="Case studies">
           <article class="s17__slide is-on" data-s17-slide>
             <img src="assets/imgs/8599929a_o35xFsOzb7RHHzOvvCWvhTp3T5k.png" alt="Case study: consumer brand relaunch" width="2048" height="1332" loading="lazy" decoding="async">
             <div class="s17__cap">
