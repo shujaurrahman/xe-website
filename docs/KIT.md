@@ -71,7 +71,7 @@ lines `--line --line-2 --line-3 --dot` · blue `--blue --blue-d --blue-wash --bl
 on ink `--on-ink --on-ink-2 --on-ink-3 --on-ink-line --on-ink-card` · radii `--r-xs --r-sm --r --r-lg --r-xl --r-pill` ·
 shadows `--sh-1 --sh-2` · easing `--e --e-io` · type `--t-d1 --t-d2 --t-h2 --t-h3 --t-h4 --t-lead --t-body --t-sm --t-xs --t-lbl`(11px, the floor) ·
 fonts `--f-h` (Outfit, headings) `--f` (JetBrains Mono, labels/figures/readouts) `--f-b` (Montserrat, body/buttons) · layout `--wrap --gutter --nav-h --band`.
-Core classes: `.wrap .band .band--alt .band--ink .band--tight .head .head--row .lbl .lbl--blue .dot .g .h1 .h2 .h3 .lead .p .sm .tl`(text link) `.btn .btn--ink`(blue) `.btn--white .btn--out .btn--dark .btn--blk .btn--sm .btn--lg .i`(chevron) `.pill .card .sr .dots .aurora .dither .mask-x`.
+Core classes: `.wrap .band .band--alt .band--ink .band--tight .head .head--row .lbl .lbl--blue .dot .g .d1 .d2 .h2 .h3 .lead .p .sm .tl`(text link) `.btn .btn--ink`(blue) `.btn--white .btn--out .btn--dark .btn--blk .btn--sm .btn--lg .i`(chevron) `.pill .card .sr .dots .aurora .dither .mask-x`.
 On `.band--ink`, core already maps h2/h3/.g/.lbl/.p/.tl/.card/.pill to on-ink colours.
 
 ## .bdh-* primitives (assets/css/brand/hub.css — needs `bdh` on `<main>`)
