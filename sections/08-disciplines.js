@@ -18,8 +18,15 @@
   var cur = 0, auto = false;
   var narrow = window.matchMedia('(max-width:900px)');
 
-  function orient() { list.setAttribute('aria-orientation', narrow.matches ? 'horizontal' : 'vertical'); }
+  function orient() {
+    list.setAttribute('aria-orientation', narrow.matches ? 'horizontal' : 'vertical');
+    /* the phone/tablet strip scrolls sideways: make the region itself reachable by keyboard */
+    if (narrow.matches && scroller.scrollWidth > scroller.clientWidth + 1) scroller.setAttribute('tabindex', '0');
+    else scroller.removeAttribute('tabindex');
+  }
   orient();
+  var ot = null;
+  XE.on(window, 'resize', function () { clearTimeout(ot); ot = setTimeout(orient, 150); });
   if (narrow.addEventListener) narrow.addEventListener('change', function () { orient(); stop(); });
 
   /* keep the active pill in view inside the horizontal strip (phones) without moving the page */

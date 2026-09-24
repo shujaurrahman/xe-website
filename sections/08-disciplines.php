@@ -6,10 +6,12 @@
 $s08_items = [
   ['slug' => 'brand-design', 'name' => 'Brand Design',
    'intro' => 'We define who a brand can become across every interaction that shapes it, and build the systems that let it show up that way at scale.',
-   'caps' => ['Growth Strategy', 'Brand Identity', 'Brand Foundation', 'Brand Systems', 'Brand Architecture', 'Brand AI Tools']],
+   'caps' => ['Growth Strategy', 'Brand Identity', 'Brand Foundation', 'Brand Systems', 'Brand Architecture', 'Brand AI Tools'],
+   'more' => ['#brand', 'See what each produces']],
   ['slug' => 'technology-intelligence', 'name' => 'Technology & Intelligence',
    'intro' => 'We build and run the technical foundation a brand needs — software, AI systems, infrastructure, and the security and support to keep it all dependable.',
-   'caps' => ['Websites & Apps', 'Custom Software & Data Platforms', 'AI Strategy & Agents', 'AI Product & Automation', 'AI Infrastructure & Cloud', 'Cybersecurity & AI Trust', 'Integration & Support', 'Search & AI Visibility', 'Audits & Assessments', 'Tech Workforce']],
+   'caps' => ['Websites & Apps', 'Custom Software & Data Platforms', 'AI Strategy & Agents', 'AI Product & Automation', 'AI Infrastructure & Cloud', 'Cybersecurity & AI Trust', 'Integration & Support', 'Search & AI Visibility', 'Audits & Assessments', 'Tech Workforce'],
+   'more' => ['#technology', 'See the system']],
   ['slug' => 'campaign-content', 'name' => 'Campaign & Content Design',
    'intro' => 'We build campaigns and content systems that earn a place in culture — using storytelling that pulls technology, media, and design into one thread.',
    'caps' => ['Content Marketing', 'Social Media Marketing', 'Public Relations', 'Social & Influencer Activation', 'Performance Marketing', 'Omnichannel Marketing Strategy', 'Campaign Design Systems', 'Global Content Production']],
@@ -57,7 +59,7 @@ $s08_h = static fn(string $t): string => htmlspecialchars($t, ENT_QUOTES, 'UTF-8
       <div class="s08__left">
         <div class="s08__sticky">
         <p class="s08__kick" aria-hidden="true"><span>Disciplines</span><span><?= sprintf('%02d', $s08_n) ?></span></p>
-        <div class="s08__scroller" data-s08-scroller>
+        <div class="s08__scroller" data-s08-scroller role="region" aria-label="Disciplines">
           <div class="s08__track" data-s08-track role="tablist" aria-orientation="vertical" aria-label="Six disciplines">
 <?php foreach ($s08_items as $s08_k => $s08_it): $s08_on = $s08_k === 0; ?>
             <a class="s08__pill<?= $s08_on ? ' is-on' : '' ?>" href="#s08-pane-<?= $s08_k ?>" role="tab" data-i="<?= $s08_k ?>"
@@ -82,15 +84,19 @@ $s08_h = static fn(string $t): string => htmlspecialchars($t, ENT_QUOTES, 'UTF-8
           <article class="s08__pane<?= $s08_k === 0 ? ' is-on' : '' ?>" id="s08-pane-<?= $s08_k ?>" role="tabpanel" aria-labelledby="s08-tab-<?= $s08_k ?>" data-i="<?= $s08_k ?>">
             <div class="s08__meta" aria-hidden="true">
               <span class="s08__n"><?= sprintf('%02d', $s08_k + 1) ?> <i>/ <?= sprintf('%02d', $s08_n) ?></i></span>
-              <span class="s08__count"><?= count($s08_it['caps']) ?> capabilities</span>
             </div>
             <h3 class="s08__name"><?= $s08_h($s08_it['name']) ?></h3>
             <p class="s08__intro"><?= $s08_h($s08_it['intro']) ?></p>
-            <ul class="s08__caps">
+<?php /* Brand Design and Technology & Intelligence are expanded by 23 and 24 directly below,
+         so here their capabilities run as one inline line with a link down to the full version */ ?>
+            <ul class="s08__caps<?= isset($s08_it['more']) ? ' s08__caps--line' : '' ?>">
 <?php foreach ($s08_it['caps'] as $s08_cap): ?>
               <li class="s08__cap"><?= $s08_h($s08_cap) ?></li>
 <?php endforeach; ?>
             </ul>
+<?php if (isset($s08_it['more'])): ?>
+            <a class="tl s08__down" href="<?= $s08_h($s08_it['more'][0]) ?>"><?= $s08_h($s08_it['more'][1]) ?> <span class="s08__arr" aria-hidden="true">↓</span></a>
+<?php endif; ?>
             <div class="s08__acts">
 <?php if ($s08_has): ?>
               <a class="btn btn--ink s08__hub" href="<?= $s08_h(xe_url($s08_hub)) ?>">Explore <?= $s08_h($s08_it['name']) ?> <span class="i" aria-hidden="true">›</span></a>
