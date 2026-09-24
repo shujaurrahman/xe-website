@@ -412,7 +412,8 @@ p,li,dd,blockquote,figcaption{text-wrap:pretty}
 @media (max-width:1140px){
   .nav__links,.nav__clock{display:none}
   .mega{display:none}   /* its trigger lives in .nav__links; left in the page it overflowed narrow screens */
-  .nav__burger{display:grid}
+  .nav__burger{display:grid;width:44px;height:44px}
+  .nav__logo{min-height:44px}
   .nav__in{gap:14px;padding:0 8px 0 14px}
   .nav.is-stuck .nav__cta{max-width:190px;padding-inline:14px}
 }
@@ -497,7 +498,11 @@ p,li,dd,blockquote,figcaption{text-wrap:pretty}
   .foot__copy{white-space:normal}
   .foot__end{justify-content:flex-start}
   .foot__legal{gap:10px 20px}
-  .foot__icon{width:42px;height:42px}
+  .foot__icon{width:44px;height:44px}
+  /* every footer link is a 44px tap target on phones */
+  .foot__legal{gap:0 20px}
+  .foot__legal a,.foot__logo,.foot__mail,.foot__cta,.foot__col a{display:inline-flex;align-items:center;min-height:44px}
+  .foot__col a.foot__oaddr{display:block;min-height:44px;padding:6px 0}
 }
 
 /* ---------- 11. Utilities ------------------------------------------------ */
