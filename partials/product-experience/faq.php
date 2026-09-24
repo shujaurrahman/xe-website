@@ -6,7 +6,7 @@ $pxh_fq = [
     ['Will you work with our designers and engineers?', 'Yes, and we plan for it. We work in your Figma, your repositories and your ticketing, pair with your people, and hand over the working files and the decision record so the team can carry on without us.', null],
 ];
 foreach ($CAPS as $pxh_slug => $pxh_cap) {
-    if (!empty($pxh_cap['faq'][0])) $pxh_fq[] = [$pxh_cap['faq'][0][0], $pxh_cap['faq'][0][1], [$pxh_slug, $pxh_cap['name']]];
+    if (!empty($pxh_cap['faq'][0])) $pxh_fq[] = [$pxh_cap['faq'][0][0], $pxh_cap['faq'][0][1], [$pxh_slug, $pxh_cap['name'], array_values(array_filter($DISC['caps'], fn ($pxh_dc) => $pxh_dc[2] === $pxh_slug))[0] ?? [$pxh_cap['name'], '', $pxh_slug]]];
 }
 ?>
 <section class="band pxh-faq" id="faq" aria-labelledby="faq-t">
@@ -26,7 +26,7 @@ foreach ($CAPS as $pxh_slug => $pxh_cap) {
           <summary><span class="pxh-faq__n">Q<?= str_pad((string) ($pxh_i + 1), 2, '0', STR_PAD_LEFT) ?></span><span class="pxh-faq__q"><?= e($pxh_q[0]) ?></span><span class="pxh-faq__p" aria-hidden="true"></span></summary>
           <div class="pxh-faq__a">
             <p><?= e($pxh_q[1]) ?></p>
-            <?php if ($pxh_q[2]): ?><a class="tl" href="<?= e(xe_url('services/product-experience.php') . '#' . $pxh_q[2][0]) ?>"><?= e($pxh_q[2][1]) ?> <span class="i" aria-hidden="true"></span></a><?php endif; ?>
+            <?php if ($pxh_q[2]): ?><a class="tl" href="<?= e(xe_cap_url($DISC, $pxh_q[2][2])) ?>"><?= e($pxh_q[2][1]) ?> <span class="i" aria-hidden="true"></span></a><?php endif; ?>
           </div>
         </details>
         <?php endforeach; ?>

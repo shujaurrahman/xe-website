@@ -9,7 +9,8 @@ $pxh_cap_fid = [
     'system-design'                   => [3, 4, 5],
 ];
 $pxh_cap_short = [];
-foreach ($DISC['caps'] as $pxh_dc) { $pxh_cap_short[$pxh_dc[2]] = $pxh_dc[1]; }
+$pxh_cap_row = [];
+foreach ($DISC['caps'] as $pxh_dc) { $pxh_cap_short[$pxh_dc[2]] = $pxh_dc[1]; $pxh_cap_row[$pxh_dc[2]] = $pxh_dc; }
 ?>
 <section class="band band--alt pxh-capabilities" id="capabilities" aria-labelledby="capabilities-t">
   <div class="wrap">
@@ -40,7 +41,7 @@ foreach ($DISC['caps'] as $pxh_dc) { $pxh_cap_short[$pxh_dc[2]] = $pxh_dc[1]; }
         <div class="pxh-card__foot">
           <!-- PLACEHOLDER: confirm typical length before launch -->
           <span class="pxh-card__meta"><?= e($pxh_cap['meta_k'][0]) ?> · <?= e($pxh_cap['meta'][0]) ?></span>
-          <a class="tl" href="<?= e(xe_url('services/product-experience.php') . '#' . $pxh_slug) ?>">Explore <?= e($pxh_cap['short']) ?><span class="sr"> — <?= e($pxh_cap['name']) ?></span> <span class="i" aria-hidden="true"></span></a>
+          <a class="tl" href="<?= e(xe_cap_url($DISC, $pxh_cap_row[$pxh_slug])) ?>">Explore <?= e($pxh_cap['short']) ?><span class="sr"> — <?= e($pxh_cap['name']) ?></span> <span class="i" aria-hidden="true"></span></a>
         </div>
       </article>
       <?php endforeach; ?>
