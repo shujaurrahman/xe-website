@@ -5,7 +5,7 @@
 .aih-sts__t{margin:0;font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;line-height:1.2;color:var(--ink)}
 .aih-sts__d{margin:0;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
 .aih-bub{padding:12px 14px;border-radius:var(--r) var(--r) var(--r) var(--r-xs);background:var(--paper);border:1px solid var(--line);font-size:var(--t-xs);line-height:1.55;color:var(--txt)}
-.aih-bub sup{font-family:var(--f);color:var(--blue);font-size:.8em}
+.aih-bub sup{font-family:var(--f);color:var(--blue);font-size:var(--t-lbl);line-height:0}
 .aih-bub s{color:var(--faint)}
 .aih-bub b{font-weight:600;color:var(--ink);background:var(--blue-wash);padding:0 3px;border-radius:3px}
 .aih-conf{display:flex;align-items:center;gap:8px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--muted)}

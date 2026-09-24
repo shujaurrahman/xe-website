@@ -1,3 +1,4 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <?php
 /**
  * AI Design — the ONE capability-page template. Shells in services/ai-design/<slug>.php set $BASE and $AID_KEY
@@ -20,6 +21,15 @@ $CAPS  = require __DIR__ . '/../../../data/ai-design.php';
 $STACK = require __DIR__ . '/../../../data/tech-stack.php';
 $CAP   = $CAPS[$AID_KEY];
 $AID_X = (require __DIR__ . '/extra.php')[$AID_KEY];
+$AID_T = (require __DIR__ . '/topic.php')[$AID_KEY] ?? [];
+/** Section heading from topic.php (grey phrase, ink rest), falling back to the template default. */
+function aid_h(string $k, string $g, string $ink): string {
+    global $AID_T;
+    $aid_v = $AID_T['h'][$k] ?? [$g, $ink];
+    return '<span class="g">' . e($aid_v[0]) . '</span> ' . e($aid_v[1]);
+}
+/** Section lead from topic.php, falling back to the template default. */
+function aid_lead(string $k, string $d): string { global $AID_T; return e($AID_T['h'][$k][2] ?? $d); }
 $AID_SVC = $CAP['svc'] ?? $CAP['slug'];
 $DISC = null; $CAPROW = null;
 foreach ($SITE['disciplines'] as $aid_d) { if ($aid_d['slug'] === 'ai-design') $DISC = $aid_d; }
@@ -27,14 +37,14 @@ foreach ($DISC['caps'] as $aid_r) { if ($aid_r[2] === $AID_KEY) $CAPROW = $aid_r
 unset($aid_d, $aid_r);
 $AIH_URL = xe_discipline_url($DISC);
 
-$AID_SECTIONS = ['hero', 'offer', 'process', 'outcomes', 'deliverables', 'fit', 'stack', 'standards', 'services', 'faq', 'onward'];
+$AID_SECTIONS = ['hero', 'offer', 'process', 'show', 'outcomes', 'deliverables', 'fit', 'stack', 'standards', 'services', 'faq', 'onward'];
 
 $aid_root = __DIR__ . '/../../../';
 $aid_has  = fn (string $p): ?string => (is_file($aid_root . $p) && filesize($aid_root . $p) > 0) ? $p : null;
 $aid_css  = array_filter([
     $aid_has('assets/css/brand/hub.css'), $aid_has('assets/css/tech/kit.css'), $aid_has('assets/css/ai-design.css'),
     $aid_has('assets/css/ai-design/outcomes.css'), $aid_has('assets/css/ai-design/standards.css'), $aid_has('assets/css/ai-design/faq.css'),
-    $aid_has('assets/css/ai-design/cap.css'), $aid_has('assets/css/ai-design/cap-sig.css'), $aid_has('assets/css/services.css'),
+    $aid_has('assets/css/ai-design/cap.css'), $aid_has('assets/css/ai-design/cap-sig.css'), $aid_has('assets/css/ai-design/cap-show.css'), $aid_has('assets/css/services.css'),
 ]);
 $aid_js = array_filter([
     $aid_has('assets/js/brand/hub.js'), $aid_has('assets/js/ai-design/process.js'), $aid_has('assets/js/ai-design/models.js'),

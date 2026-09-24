@@ -19,7 +19,7 @@
 .aid-sig__play span{width:10px;height:12px;border-left:3px solid currentColor;border-right:3px solid currentColor}
 .aid-sig__play[aria-pressed="false"] span{width:0;height:0;border-style:solid;border-width:6px 0 6px 10px;border-color:transparent transparent transparent currentColor}
 .aid-sig.is-anim [data-s]{transition:opacity .45s var(--e),transform .45s var(--e),filter .45s var(--e)}
-.aid-sig.is-anim .is-off{opacity:.12;transform:translateY(4px)}
+.aid-sig.is-anim .is-off{opacity:.45;transform:translateY(4px)}
 .aid-sig .aid-k{display:flex;justify-content:space-between;gap:12px;margin:0 0 8px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3)}
 .aid-sig .ok{color:var(--blue)}
 .aid-flag{display:inline-block;padding:2px 8px;margin-right:8px;border:1px solid var(--on-ink-3);border-radius:var(--r-pill);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--on-ink)}

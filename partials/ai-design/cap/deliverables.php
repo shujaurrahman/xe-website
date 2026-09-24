@@ -5,8 +5,8 @@
   <div class="wrap aid-dl">
     <div class="aid-dl__head">
       <p class="lbl lbl--blue"><span class="dot"></span>What you keep</p>
-      <h2 class="h2" id="deliverables-t"><span class="g">Handed over,</span> in your accounts, from week one.</h2>
-      <p class="p">Everything below lives in your repositories and workspaces as it is made, so the work keeps running after we leave.</p>
+      <h2 class="h2" id="deliverables-t"><?= aid_h('deliver', 'Handed over,', 'in your accounts, from week one.') ?></h2>
+      <p class="p"><?= aid_lead('deliver', 'Everything below lives in your repositories and workspaces as it is made, so the work keeps running after we leave.') ?></p>
     </div>
     <div class="aid-dl__sheet">
       <p class="aid-dl__cap"><span>Manifest · <?= e($CAP['short']) ?></span><span><?= count($CAP['deliver']) ?> items</span></p>

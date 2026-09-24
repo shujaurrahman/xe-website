@@ -1,5 +1,5 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <?php
-/* DRAFT COPY — review before launch */
 /**
  * Per-capability extras for the shared template (content data/ai-design.php does not carry).
  *   m    3 measures, one per outcome in data/ai-design.php: [measure, measured by, baseline 0–1, target 0–1, baseline text, target text]

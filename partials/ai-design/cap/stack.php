@@ -6,10 +6,14 @@
     <div class="bdh-head bdh-head--row">
       <div>
         <p class="lbl lbl--blue"><span class="dot"></span>Technologies we work with</p>
-        <h2 class="h2" id="stack-t"><span class="g">Chosen per task,</span> never locked in.</h2>
+        <h2 class="h2" id="stack-t"><?= aid_h('stack', 'Chosen per task,', 'never locked in.') ?></h2>
       </div>
-      <div><p class="lead">The tools most used on <?= e($CAP['name']) ?> work, most relevant first. Each is picked on your evaluation set; prompts, evaluation sets and configuration stay yours when a tool changes.</p></div>
+      <div><p class="lead"><?= aid_lead('stack', 'The tools most used on ' . $CAP['name'] . ' work, most relevant first. Each is picked on your evaluation set; prompts, evaluation sets and configuration stay yours when a tool changes.') ?></p></div>
     </div>
-    <?= xt_stack($CAP['stack'], ['variant' => 'tiles', 'label' => $CAP['name'] . ' technologies']) ?>
+    <?php /* Tiles only for slugs with a licence-clean mark; word-only names as chips beneath (no empty glyph boxes). */
+      $aid_mk = array_values(array_filter($CAP['stack'], fn ($aid_s) => !empty($STACK[$aid_s]['file'])));
+      $aid_wd = array_values(array_diff($CAP['stack'], $aid_mk)); ?>
+    <?= xt_stack($aid_mk, ['variant' => 'tiles', 'label' => $CAP['name'] . ' technologies']) ?>
+    <?php if ($aid_wd): ?><div class="aid-stack__more"><p class="aid-stack__k">Also in use</p><?= xt_stack($aid_wd, ['variant' => 'chips', 'label' => 'More ' . $CAP['name'] . ' technologies']) ?></div><?php endif; ?>
   </div>
 </section>

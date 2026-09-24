@@ -113,3 +113,4 @@
   .aih-card,.aih-card__media img,.aih-step__i{transition:none}
   .aih-bars.is-anim .aih-bar__fill{transform:none;transition:none}
 }
+.aih .tl{display:inline-flex;align-items:center;min-height:44px}

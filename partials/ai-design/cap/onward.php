@@ -10,7 +10,7 @@ foreach ($DISC['caps'] as $aid_r) { $aid_rows[$aid_r[2]] = $aid_r; }
     <div class="bdh-head bdh-head--row">
       <div>
         <p class="lbl lbl--blue"><span class="dot"></span>Also in AI Design</p>
-        <h2 class="h2" id="onward-t"><span class="g">Same studio,</span> three more ways in.</h2>
+        <h2 class="h2" id="onward-t"><?= aid_h('on', 'Same studio,', 'three more ways in.') ?></h2>
       </div>
       <div>
         <p class="lead">Each shares the models, evaluation sets and approval rules built here.</p>

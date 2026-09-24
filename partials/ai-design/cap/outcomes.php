@@ -7,9 +7,9 @@
     <div class="bdh-head bdh-head--row">
       <div>
         <p class="lbl"><span class="dot"></span>What changes</p>
-        <h2 class="h2" id="outcomes-t"><span class="g">Three changes,</span> each with a number attached.</h2>
+        <h2 class="h2" id="outcomes-t"><?= aid_h('out', 'Three changes,', 'each with a number attached.') ?></h2>
       </div>
-      <div><p class="lead">Measures are agreed in the first week and baselined before anything is designed. The ranges below are typical targets, not promises; yours are set per engagement.</p></div>
+      <div><p class="lead"><?= aid_lead('out', 'Measures are agreed in the first week and baselined before anything is designed. The ranges below are typical targets, not promises; yours are set per engagement.') ?></p></div>
     </div>
     <div class="aih-oc">
       <?php foreach ($CAP['outcomes'] as $aid_i => $aid_o): $aid_m = $AID_X['m'][$aid_i]; ?>
