@@ -2356,7 +2356,14 @@
 
 /* ---- artefact window ------------------------------------------------------- */
 .s23__art{min-width:0}
-@media (min-width:961px){ .s23__art{position:sticky;top:calc(var(--nav-h) + 24px)} }
+/* side by side: the artefact window fills the pane's height (the spec sheet sets it), with the
+   artefact centred in its canvas, so no empty card sits under the shorter mocks */
+@media (min-width:961px){
+  .s23__pane{align-items:stretch}
+  .s23__art{display:flex;flex-direction:column}
+  .s23 .s23__win{flex:1}
+  .s23 .s23__canvas{flex:1;justify-content:center}
+}
 .s23 .s23__win{display:flex;flex-direction:column;border-radius:var(--r-lg);box-shadow:none;background:var(--paper-2)}
 .s23 .s23__bar{background:var(--paper)}
 .s23__crumb{min-width:0;white-space:nowrap;letter-spacing:.04em}
@@ -2491,8 +2498,8 @@
   .s23-gs__zone,.s23-gs__key li,.s23-bi__diff li,.s23-bf__out,.s23-ai__why,.s23-ba__row p,.s23-ba__gate,.s23-bs__note,.s23-bs__v{font-size:var(--t-sm)}
   .s23-bs__l,.s23-bf__log b,.s23-ai__n b,.s23-bi__hl{font-size:var(--t-body)}
   .is-after .s23-bi__hl{font-size:1.3125rem}
-  .s23-bs li,.s23-bf__log li{padding:18px 20px}
-  .s23-ai li{padding:12px 16px}
+  .s23-bs li,.s23-bf__log li{padding:16px 20px}
+  .s23-ai li{padding:10px 16px}
 }
 
 /* ---- build-in (only once JS has added .is-anim; replays on .is-run) ------------ */
