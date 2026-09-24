@@ -1,0 +1,40 @@
+.mth-caps__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.mth-mod__main{display:flex;flex-direction:column;flex:1}
+.mth-caps__runs{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column}
+.mth-caps__runs li{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-top:1px solid var(--line-2);font-size:var(--t-sm);line-height:1.4;color:var(--txt)}
+.mth-caps__runs .xt-ico{width:16px;height:16px;flex:none;margin-top:2px;color:var(--ink)}
+.mth-caps__meta{display:flex;flex-direction:column;gap:4px;font-family:var(--f);font-size:var(--t-xs);color:var(--ink)}
+.mth-caps__meta span{font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.mth-mod__foot .tl{min-height:44px;display:inline-flex;align-items:center}
+
+/* the wide card: Customer Relationship Strategy */
+.mth-mod--wide{grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-rows:auto 1fr}
+.mth-mod--wide .mth-mod__bar{grid-column:1 / -1}
+.mth-mod--wide .mth-mod__img{aspect-ratio:auto;min-height:100%}
+.mth-mod--wide .mth-mod__body{padding:28px 30px 20px}
+.mth-mod--wide .mth-mod__foot{padding-inline:30px}
+.mth-caps__one{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--blue-d);margin-top:6px}
+.mth-caps__loop{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;counter-reset:mth}
+.mth-caps__loop li{position:relative;display:flex;flex-direction:column;gap:8px;padding:14px 12px;border:1px solid var(--line);border-radius:var(--r);background:var(--paper-2);min-width:0}
+.mth-caps__loop li:not(:last-child)::after{content:"";position:absolute;top:24px;left:calc(100% + 2px);width:6px;height:1px;background:var(--line-3)}
+.mth-caps__ln{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;color:var(--blue)}
+.mth-caps__loop .xt-ico{width:18px;height:18px;color:var(--ink)}
+.mth-caps__lt{font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;line-height:1.25;color:var(--ink);hyphens:auto;overflow-wrap:break-word}
+.mth-caps__ld{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.02em;line-height:1.4;color:var(--faint)}
+
+@media (max-width:1180px){
+  .mth-caps__loop{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .mth-caps__loop li::after{display:none}
+}
+@media (max-width:1023px){
+  .mth-caps__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mth-mod--wide{grid-template-columns:minmax(0,1fr)}
+  .mth-mod--wide .mth-mod__img{aspect-ratio:16/9;min-height:0}
+}
+@media (max-width:640px){
+  .mth-caps__grid{grid-template-columns:minmax(0,1fr)}
+  .mth-caps__loop{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .mth-mod--wide .mth-mod__body,.mth-mod--wide .mth-mod__foot{padding-inline:20px}
+}
+@media (max-width:360px){ .mth-caps__loop{grid-template-columns:minmax(0,1fr)} }
+.mth-mod:not(.mth-mod--wide) .mth-mod__foot{flex-direction:column;align-items:flex-start;gap:6px}

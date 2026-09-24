@@ -1,0 +1,29 @@
+.mth-meas__wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--bdh-gap-l);align-items:start}
+.mth-meas__list{margin:0}
+.mth-meas__row{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:8px 20px;padding:18px 0;border-top:1px solid var(--line)}
+.mth-meas__row:last-child{border-bottom:1px solid var(--line)}
+.mth-meas__row dt{display:flex;flex-direction:column;gap:8px;font-family:var(--f-h);font-size:1.0625rem;font-weight:500;color:var(--ink)}
+.mth-meas__row dd{margin:0;font-size:var(--t-sm);line-height:1.55;color:var(--txt)}
+.mth-meas__how{margin-top:6px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.mth-meas__card{padding:22px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh-2)}
+.mth-meas__tabs{display:inline-flex;gap:2px;padding:3px;margin-bottom:18px;border-radius:var(--r-pill);background:var(--paper-3)}
+.mth-meas__tabs [role="tab"]{min-height:44px;padding:0 18px;border:0;border-radius:var(--r-pill);background:none;font-family:var(--f-b);font-size:var(--t-xs);font-weight:500;color:var(--muted);cursor:pointer}
+.mth-meas__tabs [aria-selected="true"]{background:var(--paper);color:var(--ink);box-shadow:var(--sh-1)}
+.mth-meas__tabs [role="tab"]:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.mth-meas__pane+.mth-meas__pane{margin-top:36px;padding-top:28px;border-top:1px solid var(--line-2)}
+.mth-meas__card.is-tabs .mth-meas__pane+.mth-meas__pane{margin-top:0;padding-top:0;border-top:0}
+.mth-meas__ttl{color:var(--ink)}
+.mth-meas__big{font-size:var(--t-sm);color:var(--muted)}
+.mth-meas__big .bdh-ro{font-size:clamp(1.75rem,3vw,2.5rem);font-weight:500;color:var(--ink);margin-right:8px}
+.mth-meas__yl{font-family:var(--f);font-size:11px;fill:var(--faint)}
+.mth-meas__axis{padding-left:6.6%}
+.mth-meas__card.is-anim .mth-meas__pane:not([hidden]) .mth-meas__line{stroke-dasharray:1200;stroke-dashoffset:1200}
+.mth-meas__card.is-anim.is-in .mth-meas__pane:not([hidden]) .mth-meas__line{stroke-dashoffset:0;transition:stroke-dashoffset 1.6s var(--e-io)}
+@media (max-width:1023px){ .mth-meas__wrap{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:600px){
+  .mth-meas__row{grid-template-columns:minmax(0,1fr)}
+  .mth-meas__yl{font-size:20px}
+  .mth-meas__card{padding:16px}
+  .mth-meas__tabs{display:flex}
+  .mth-meas__tabs [role="tab"]{flex:1}
+}

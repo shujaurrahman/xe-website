@@ -1,0 +1,54 @@
+/* hero: headline + one customer's week as a channel tape */
+.mth-hero{padding-top:var(--bdh-hero-t);overflow:hidden}
+.mth-hero__top{display:flex;flex-direction:column;gap:22px;max-width:1080px}
+.mth-hero__top .d1{max-width:17ch}
+.mth-hero__row{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--bdh-gap);row-gap:28px;margin-top:36px;align-items:start}
+.mth-hero__lead{grid-column:1 / span 6;max-width:56ch}
+.mth-hero__act{grid-column:8 / 13;display:flex;flex-direction:column;gap:28px}
+.mth-hero__btns{display:flex;flex-wrap:wrap;gap:12px}
+.mth-hero__meta{display:grid;grid-template-columns:auto auto auto;gap:14px 28px;margin:0;padding-top:22px;border-top:1px solid var(--line)}
+.mth-hero__meta dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+.mth-hero__meta dd{margin:0;font-family:var(--f);font-size:var(--t-xs);color:var(--ink);line-height:1.5}
+
+.mth-tape{margin:clamp(48px,6vw,80px) 0 0;border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);box-shadow:var(--sh-2);overflow:hidden}
+.mth-tape__bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;min-height:48px;padding:10px 18px;border-bottom:1px solid var(--line-2);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mth-tape__sum{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}
+.mth-tape__scroll{overflow-x:auto}
+.mth-tape__plot{position:relative;min-width:960px;padding:14px 22px 22px}
+.mth-tape__days,.mth-tape__track{margin-left:120px}
+.mth-tape__days{display:grid;grid-template-columns:repeat(7,1fr);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding-bottom:10px}
+.mth-tape__days span{padding-left:6px;border-left:1px solid var(--line-2)}
+.mth-tape__lane{position:relative;height:58px;border-top:1px solid var(--line-2)}
+.mth-tape__ln{position:absolute;left:0;top:50%;transform:translateY(-50%);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);width:112px}
+.mth-tape__track{position:relative;height:100%}
+.mth-tape__quiet{position:absolute;top:0;bottom:0;background:var(--paper-2)}
+.mth-tape__m{position:absolute;top:50%;display:flex;align-items:center;gap:8px;transform:translate(-6px,-50%);white-space:nowrap}
+.mth-tape__m b{width:12px;height:12px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px var(--blue-wash);flex:none}
+.mth-tape__m em{font-style:normal;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.02em;color:var(--ink);background:var(--paper);padding:2px 6px;border-radius:var(--r-xs)}
+.mth-tape__m--r{flex-direction:row-reverse;transform:translate(calc(-100% + 6px),-50%)}
+.mth-tape__m--sig b{width:10px;height:10px;border-radius:2px;background:var(--ink);box-shadow:none;transform:rotate(45deg)}
+.mth-tape__m--goal b{background:var(--ink);box-shadow:0 0 0 3px var(--paper-3)}
+.mth-tape__m--hold b{background:var(--paper);border:2px dashed var(--muted);box-shadow:none}
+.mth-tape__m--hold em,.mth-tape__m--stop em{color:var(--muted)}
+.mth-tape__m--stop b{background:var(--paper);border:2px solid var(--ghost);box-shadow:none}
+.mth-tape__now{position:absolute;top:36px;bottom:22px;left:calc(142px + (100% - 164px) * .62);width:1px;background:var(--blue);opacity:0}
+.mth-tape__cap{padding:12px 18px 16px;border-top:1px solid var(--line-2);font-size:var(--t-xs);line-height:1.55;color:var(--faint)}
+
+/* motion: only once JS marks the tape live; a scan line sweeps the week */
+.mth-tape.is-live .mth-tape__now{opacity:1;animation:mth-scan 14s linear infinite}
+@keyframes mth-scan{from{left:142px}to{left:calc(100% - 22px)}}
+
+@media (max-width:1023px){
+  .mth-hero__lead{grid-column:1 / -1}
+  .mth-hero__act{grid-column:1 / -1}
+}
+@media (max-width:600px){
+  .mth-hero__meta{grid-template-columns:1fr 1fr}
+  .mth-hero__meta>div:last-child{grid-column:1 / -1}
+  .mth-hero__btns .btn{width:100%;justify-content:center}
+  .mth-tape__sum{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .mth-tape.is-live .mth-tape__now{animation:none;opacity:0}
+}

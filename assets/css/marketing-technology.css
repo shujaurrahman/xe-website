@@ -1,0 +1,112 @@
+/* Marketing Technology — the discipline's visual language (prefix mth). Reused by the capability pages.
+   Tokens only (core.css). Components: .mth-chip .mth-mod .mth-flow/.mth-node .mth-viz .mth-steps .mth-ledger */
+
+.mth [hidden]{display:none}
+
+/* ---------- status chips ------------------------------------------------------------------------------ */
+.mth-chip{display:inline-flex;align-items:center;gap:6px;min-height:22px;padding:0 9px;border-radius:var(--r-pill);background:var(--paper-3);color:var(--txt);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;line-height:1}
+.mth-chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.mth-chip--ok{background:var(--blue-wash);color:var(--blue-d)}
+.mth-chip--hold{background:var(--paper-3);color:var(--muted)}
+.mth-chip--stop{background:transparent;color:var(--muted);box-shadow:inset 0 0 0 1px var(--line-3)}
+.mth-chip--stop::before{border-radius:1px;transform:rotate(45deg)}
+.mth-chip--wait{background:var(--ink);color:var(--on-ink)}
+.mth-chip--wait::before{background:var(--blue)}
+.band--ink .mth-chip{background:var(--on-ink-card);color:var(--on-ink-2)}
+.band--ink .mth-chip--ok{color:var(--on-ink);box-shadow:inset 0 0 0 1px var(--blue)}
+.band--ink .mth-chip--wait{background:var(--blue);color:var(--on-ink)}
+.band--ink .mth-chip--wait::before{background:var(--on-ink)}
+
+/* ---------- card system: the module card ------------------------------------------------------------- */
+.mth-mod{position:relative;display:flex;flex-direction:column;min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
+  transition:border-color .3s var(--e),box-shadow .3s var(--e)}
+.mth-mod:hover{border-color:var(--line-3);box-shadow:var(--sh-1)}
+.mth-mod:target{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-wash)}
+.mth-mod__bar{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 16px;border-bottom:1px solid var(--line-2);font-family:var(--f);font-size:var(--t-lbl);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.mth-mod__bar .xt-ico{width:18px;height:18px;color:var(--ink)}
+.mth-mod__bar .mth-chip{margin-left:auto}
+.mth-mod__img{margin:0;aspect-ratio:16/10;overflow:hidden;background:var(--paper-3)}
+.mth-mod__img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s var(--e)}
+.mth-mod:hover .mth-mod__img img{transform:scale(1.03)}
+.mth-mod__body{display:flex;flex-direction:column;gap:12px;padding:22px 22px 18px;flex:1}
+.mth-mod__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;padding:14px 22px 18px;border-top:1px solid var(--line-2)}
+.mth-mod--flat .mth-mod__body{padding-top:20px}
+.band--ink .mth-mod{background:var(--on-ink-card);border-color:var(--on-ink-line)}
+.band--ink .mth-mod__bar{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+.band--ink .mth-mod__bar .xt-ico{color:var(--on-ink)}
+
+/* ---------- diagram idiom: a flow of nodes ------------------------------------------------------------ */
+/* Connectors live in the gap between nodes (::after on every node but the last), so an edge always starts at
+   one box's edge and ends at the next box's edge. */
+.mth-flow{--mth-gap:28px;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:var(--mth-gap);list-style:none;margin:0;padding:0}
+.mth-node{position:relative;display:flex;flex-direction:column;gap:8px;min-width:0;padding:14px 14px 12px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);
+  transition:border-color .25s var(--e),box-shadow .25s var(--e),background .25s var(--e)}
+.mth-node:not(:last-child)::after{content:"";position:absolute;top:50%;left:calc(100% + 5px);width:calc(var(--mth-gap) - 10px);height:1px;background:var(--line-3)}
+.mth-node:not(:last-child)::before{content:"";position:absolute;top:calc(50% - 3px);left:calc(100% + var(--mth-gap) - 9px);border:3px solid transparent;border-left:4px solid var(--line-3)}
+.mth-node__k{display:flex;align-items:center;gap:8px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.mth-node__k .xt-ico{width:16px;height:16px;color:var(--ink)}
+.mth-node__t{font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;line-height:1.25;color:var(--ink)}
+.mth-node__d{font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+.mth-node.is-hot{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-wash)}
+.mth-node.is-hot:not(:last-child)::after{background:var(--blue)}
+@media (max-width:860px){
+  .mth-flow{grid-auto-flow:row;grid-auto-columns:auto;--mth-gap:18px}
+  .mth-node:not(:last-child)::after{top:calc(100% + 4px);left:24px;width:1px;height:calc(var(--mth-gap) - 8px)}
+  .mth-node:not(:last-child)::before{top:calc(100% + var(--mth-gap) - 8px);left:21px;border:3px solid transparent;border-top:4px solid var(--line-3)}
+}
+
+/* ---------- data-viz idiom ---------------------------------------------------------------------------- */
+.mth-viz{display:flex;flex-direction:column;gap:14px;min-width:0}
+.mth-viz__head{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.mth-viz__key{display:inline-flex;align-items:center;gap:8px}
+.mth-viz__key::before{content:"";width:18px;height:2px;background:var(--blue)}
+.mth-viz__key--b::before{background:none;border-top:2px dashed var(--ghost);height:0}
+.mth-viz__ill{margin-left:auto;padding:4px 8px;border:1px dashed var(--line-3);border-radius:var(--r-pill);color:var(--faint)}
+.mth-viz svg{display:block;width:100%;height:auto;overflow:visible}
+.mth-viz__grid{stroke:var(--line-2);stroke-width:1}
+.mth-viz__a{fill:none;stroke:var(--blue);stroke-width:2.25;stroke-linejoin:round;stroke-linecap:round}
+.mth-viz__b{fill:none;stroke:var(--ghost);stroke-width:2;stroke-dasharray:5 5;stroke-linejoin:round}
+.mth-viz__gap{fill:var(--blue-wash);stroke:none}
+.mth-viz__dot{fill:var(--paper);stroke:var(--blue);stroke-width:2}
+.mth-viz__axis{display:flex;justify-content:space-between;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--faint)}
+.mth-viz__note{font-size:var(--t-xs);line-height:1.5;color:var(--faint)}
+
+/* ---------- stepper ----------------------------------------------------------------------------------- */
+.mth-steps__rail{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:8px;list-style:none;margin:0 0 28px;padding:0}
+.mth-steps__rail::before{content:"";position:absolute;left:0;right:0;top:21px;height:1px;background:var(--line)}
+.mth-steps__tab{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;width:100%;min-height:44px;padding:0 8px 0 0;background:none;border:0;text-align:left;cursor:pointer;color:var(--muted)}
+.mth-steps__n{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--paper);border:1px solid var(--line-3);font-family:var(--f);font-size:var(--t-xs);font-weight:500;color:var(--ink);
+  transition:background .25s var(--e),color .25s var(--e),border-color .25s var(--e)}
+.mth-steps__txt{display:flex;flex-direction:column;gap:4px}
+.mth-steps__l{font-family:var(--f-h);font-size:1rem;font-weight:500;line-height:1.25;color:var(--ink)}
+.mth-steps__w{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.mth-steps__tab[aria-selected="true"] .mth-steps__n,.mth-steps__tab.is-done .mth-steps__n{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.mth-steps__tab[aria-selected="true"] .mth-steps__n{background:var(--blue);border-color:var(--blue)}
+.mth-steps__tab:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:var(--r-sm)}
+.mth-steps__pane+.mth-steps__pane{margin-top:24px}
+.mth-steps.is-tabs .mth-steps__pane+.mth-steps__pane{margin-top:0}
+.mth-steps:not(.is-tabs) .mth-steps__rail{display:none}
+@media (max-width:860px){
+  .mth-steps__rail{grid-auto-flow:row;grid-auto-columns:auto;gap:0}
+  .mth-steps__rail::before{left:21px;right:auto;top:8px;bottom:8px;width:1px;height:auto}
+  .mth-steps__tab{flex-direction:row;align-items:center;gap:14px;padding:6px 0}
+  .mth-steps__tab .mth-steps__txt{display:flex;flex-direction:column;gap:4px}
+}
+
+/* ---------- log idiom --------------------------------------------------------------------------------- */
+.mth-ledger{list-style:none;margin:0;padding:0;font-family:var(--f);font-size:var(--t-xs);line-height:1.45;font-variant-numeric:tabular-nums}
+.mth-ledger li{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:4px 10px;padding:9px 0;border-bottom:1px solid var(--line-2);color:var(--muted)}
+.mth-ledger__tm{color:var(--faint)}
+.mth-ledger__id{color:var(--ink);font-weight:500}
+.mth-ledger__tx{min-width:0;overflow-wrap:anywhere}
+.mth-ledger__tx b{font-weight:500;color:var(--ink)}
+.mth-ledger li .mth-chip{grid-column:3;justify-self:start}
+
+@media (prefers-reduced-motion:reduce){
+  .mth-mod,.mth-mod__img img,.mth-node,.mth-steps__n{transition:none}
+}
+
+/* wide content scrolls (and fades at its edges) only where it can overflow; where it fits, no fade over the first column */
+@media (min-width:900px){ .mth .bdh-scroll-x.mask-x{-webkit-mask-image:none;mask-image:none} }
