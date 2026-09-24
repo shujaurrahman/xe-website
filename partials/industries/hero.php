@@ -1,12 +1,12 @@
 <?php /* DRAFT COPY — review before launch */ ?>
 <?php
 $ind_cols = [
-    ['Advertising & claims', 'ASCI, CCPA, SEBI codes'],
-    ['Sector regulator', 'RBI, TRAI, drug law'],
-    ['Payments', 'PCI DSS v4.0.1'],
-    ['Personal data', 'DPDP Act, GDPR'],
-    ['Accessibility', 'WCAG 2.2 AA'],
-    ['AI governance', 'EU AI Act, OWASP LLM'],
+    ['Advertising & claims', 'ASCI, CCPA, SEBI codes', 'Claims'],
+    ['Sector regulator', 'RBI, TRAI, drug law', 'Regulator'],
+    ['Payments', 'PCI DSS v4.0.1', 'Payments'],
+    ['Personal data', 'DPDP Act, GDPR', 'Data'],
+    ['Accessibility', 'WCAG 2.2 AA', 'Access'],
+    ['AI governance', 'EU AI Act, OWASP LLM', 'AI'],
 ];
 $ind_map = [
     'consumer-health'    => [3, 3, 1, 2, 2, 2],
@@ -40,7 +40,7 @@ $ind_lv = [1 => 'Sometimes shapes the work', 2 => 'Often shapes the work', 3 => 
         <table class="ind-map__t">
           <caption class="sr">How heavily each area of regulation typically shapes our work in each sector, from sometimes to most of the work.</caption>
           <thead><tr><th scope="col" class="ind-map__corner">Sector</th>
-            <?php foreach ($ind_cols as $ind_c): ?><th scope="col"><span class="ind-map__ch"><?= e($ind_c[0]) ?></span><span class="ind-map__cs"><?= e($ind_c[1]) ?></span></th><?php endforeach; ?>
+            <?php foreach ($ind_cols as $ind_c): ?><th scope="col"><span class="ind-map__ch"><?= e($ind_c[0]) ?></span><span class="ind-map__ab" aria-hidden="true"><?= e($ind_c[2]) ?></span><span class="ind-map__cs"><?= e($ind_c[1]) ?></span></th><?php endforeach; ?>
           </tr></thead>
           <tbody>
           <?php foreach ($IND as $ind_s): ?>
@@ -52,7 +52,7 @@ $ind_lv = [1 => 'Sometimes shapes the work', 2 => 'Often shapes the work', 3 => 
           </tbody>
         </table>
       </div>
-      <p class="ind-map__note sm">Our reading of typical programmes, not legal advice. Each dossier below names the specific rules.</p>
+      <p class="ind-map__note sm">Our reading of typical programmes, not legal advice. Each dossier below names the specific rules.<span class="ind-map__swipe"> Swipe the table for all six areas.</span></p>
     </figure>
   </div>
 </section>

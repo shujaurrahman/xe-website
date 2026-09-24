@@ -9,7 +9,7 @@
     </div>
 
     <div class="ind-exp__app">
-      <div class="ind-exp__list" role="tablist" aria-label="Sectors" aria-orientation="vertical" hidden data-ind-tabs>
+      <div class="ind-exp__list mask-x" role="tablist" aria-label="Sectors" aria-orientation="vertical" hidden data-ind-tabs>
         <?php foreach ($IND as $ind_i => $ind_s): ?>
         <button type="button" role="tab" id="ind-tab-<?= e($ind_s['id']) ?>" aria-controls="ind-pane-<?= e($ind_s['id']) ?>" aria-selected="<?= $ind_i ? 'false' : 'true' ?>" tabindex="<?= $ind_i ? '-1' : '0' ?>">
           <span class="ind-exp__n"><?= e($ind_s['n']) ?></span><span class="ind-exp__nm"><?= e($ind_s['name']) ?></span><span class="ind-exp__kpi"><?= e($ind_s['kpi']) ?></span>

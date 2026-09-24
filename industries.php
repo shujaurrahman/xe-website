@@ -1,6 +1,6 @@
 <?php
 /* Industries — six sector dossiers read through the rules each category plays by: a regulation map (hero),
-   a sector explorer (discipline mix), one dossier section per sector, the cross-industry baseline.
+   a sector explorer (discipline mix), six collapsible sector dossiers, each with its own artefact, the cross-industry baseline.
    Sections: partials/industries/<id>.php (+ assets/js/industries/<id>.js); styles in assets/css/industries.css. */
 $BASE = '';
 require __DIR__ . '/partials/init.php';
