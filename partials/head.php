@@ -41,6 +41,11 @@ $full  = ($page['key'] ?? '') === 'home'
      state here — after the page stylesheets, since brand/hub.css also declares .bdh-up{opacity:0}. */
   [data-rv],[data-rv-s]>*,.bdh-up{opacity:1;transform:none}
   .bdh-grow,.bdh-growY{transform:none}
+  /* phones: the menu buttons are JS-only, so swap in the <noscript> links in partials/nav.php and open the sheet by :target */
+  .nav button.nav__burger,.sheet button.nav__burger{display:none}
+  .sheet:target{transform:none;visibility:visible;transition:none}
+  .sheet__panel{display:block}
+  .sheet__btn>span:last-child{display:none}
   .bdh-draw :is(path,line,rect,circle,ellipse,polyline,polygon),:is(path,line,rect,circle,ellipse,polyline,polygon).bdh-draw{stroke-dashoffset:0}
 </style></noscript>
 
