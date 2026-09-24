@@ -35,7 +35,7 @@ $mth_sh_names = array_column($DISC['caps'], 0, 2);
         <div class="mth-shift__so">
           <p class="mth-shift__k">What it means</p>
           <p class="mth-shift__m"><?= e($mth_sh[3]) ?></p>
-          <a class="tl" href="<?= e(xe_url('services/marketing-technology.php')) ?>#<?= e($mth_sh[4]) ?>"><?= e($mth_sh_names[$mth_sh[4]] ?? '') ?> <span class="i" aria-hidden="true">›</span></a>
+          <a class="tl" href="<?= e(xe_cap_url($DISC, [2 => $mth_sh[4]])) ?>"><?= e($mth_sh_names[$mth_sh[4]] ?? '') ?> <span class="i" aria-hidden="true">›</span></a>
         </div>
       </li>
       <?php endforeach; ?>

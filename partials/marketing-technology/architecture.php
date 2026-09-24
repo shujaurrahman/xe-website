@@ -1,7 +1,6 @@
 <?php /* DRAFT COPY — review before launch */
 /* How the seven fit: a layered reference architecture. Signals rise from the data layer, decisions come down to
    the channels, and measurement runs alongside every layer. Capability chips link to their cards. */
-$mth_ar_url = xe_url('services/marketing-technology.php');
 $mth_ar_names = array_column($DISC['caps'], 0, 2);
 $mth_ar_layers = [
     ['05', 'Strategy',               'Who the customer is, which moments matter, what each stage is worth.', ['customer-relationship-strategy'], ['Journey maps', 'Segments', 'Loyalty design']],
@@ -29,7 +28,7 @@ $mth_ar_layers = [
           <p class="mth-arch__d"><?= e($mth_ar[2]) ?></p>
           <div class="mth-arch__parts">
             <?php foreach ($mth_ar[3] as $mth_ar_s): ?>
-            <a class="mth-arch__cap" href="<?= e($mth_ar_url) ?>#<?= e($mth_ar_s) ?>"><?= e($mth_ar_names[$mth_ar_s] ?? '') ?> <span class="i" aria-hidden="true">›</span></a>
+            <a class="mth-arch__cap" href="<?= e(xe_cap_url($DISC, [2 => $mth_ar_s])) ?>"><?= e($mth_ar_names[$mth_ar_s] ?? '') ?> <span class="i" aria-hidden="true">›</span></a>
             <?php endforeach; ?>
             <?php foreach ($mth_ar[4] as $mth_ar_p): ?><span class="mth-arch__el"><?= e($mth_ar_p) ?></span><?php endforeach; ?>
           </div>
@@ -39,7 +38,7 @@ $mth_ar_layers = [
       <aside class="mth-arch__rail" aria-label="Measurement across all layers">
         <p class="mth-arch__k"><span class="bdh-idx">∥</span>Measurement</p>
         <p class="mth-arch__d">Runs beside every layer: holdouts on journeys, incrementality tests on media, mix models across the budget.</p>
-        <a class="mth-arch__cap" href="<?= e($mth_ar_url) ?>#ai-campaign-optimization"><?= e($mth_ar_names['ai-campaign-optimization']) ?> <span class="i" aria-hidden="true">›</span></a>
+        <a class="mth-arch__cap" href="<?= e(xe_cap_url($DISC, [2 => 'ai-campaign-optimization'])) ?>"><?= e($mth_ar_names['ai-campaign-optimization']) ?> <span class="i" aria-hidden="true">›</span></a>
         <ul class="mth-arch__ms">
           <li>Holdout groups</li><li>Geo experiments</li><li>Mix modelling</li><li>One conversion definition</li>
         </ul>

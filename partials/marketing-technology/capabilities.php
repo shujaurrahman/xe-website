@@ -1,8 +1,7 @@
 <?php /* DRAFT COPY — review before launch */
-/* The seven capabilities as module cards (.mth-mod). Each card's id is the capability slug, so the hub's own
-   anchors stand in for the capability pages until they exist. Customer Relationship Strategy is one capability:
+/* The seven capabilities as module cards (.mth-mod). Each card links to its capability page via xe_cap_url() (the hub itself until that page exists).
+   Customer Relationship Strategy is one capability:
    its card is the wide one, listing its five practices as one loop. */
-$mth_cp_url  = xe_url('services/marketing-technology.php');
 $mth_cp_desc = array_column($DISC['caps'], 1, 2);
 ?>
 <section class="band band--alt mth-caps" id="capabilities" aria-labelledby="capabilities-t">
@@ -47,7 +46,7 @@ $mth_cp_desc = array_column($DISC['caps'], 1, 2);
           </div>
           <div class="mth-mod__foot">
             <p class="mth-caps__meta"><span><?= e($mth_cp['meta_k'][0]) ?></span><!-- PLACEHOLDER: confirm timeframe before launch --><?= e($mth_cp['meta'][0]) ?></p>
-            <a class="tl" href="<?= e($mth_cp_url) ?>#<?= e($mth_cp_slug) ?>" aria-label="<?= e($mth_cp['name']) ?>: <?= e($mth_cp['short']) ?> in detail">Explore <?= e($mth_cp['short']) ?> <span class="i" aria-hidden="true">›</span></a>
+            <a class="tl" href="<?= e(xe_cap_url($DISC, [2 => $mth_cp_slug])) ?>" aria-label="<?= e($mth_cp['name']) ?>: <?= e($mth_cp['short']) ?> in detail">Explore <?= e($mth_cp['short']) ?> <span class="i" aria-hidden="true">›</span></a>
           </div>
         </div>
       </article>
