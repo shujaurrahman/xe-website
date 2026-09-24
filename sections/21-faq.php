@@ -1,13 +1,14 @@
+<noscript><style>.s21__panel{height:auto;overflow:visible}.s21__plus{display:none}</style></noscript>
 <section class="band band--rules s21" id="faq" aria-labelledby="s21-t">
   <div class="wrap">
     <div class="s21__grid">
 
       <div class="s21__side" data-rv>
         <p class="lbl lbl--blue"><span class="dot"></span>FAQ</p>
-        <h2 class="h2 s21__h" id="s21-t">Frequently<br>Asked Questions</h2>
+        <h2 class="h2 s21__h" id="s21-t"><span class="g">Frequently</span> Asked Questions</h2>
         <div class="s21__ask">
           <p class="sm">Any more questions?</p>
-          <a class="tl" href="#book">Contact us <span class="i" aria-hidden="true">›</span></a>
+          <a class="tl s21__tl" href="#book">Contact us <span class="i" aria-hidden="true">›</span></a>
         </div>
       </div>
 
@@ -68,6 +69,7 @@
             <span class="s21__plus" aria-hidden="true"></span>
           </button>
           <div class="s21__panel" id="s21-a4" data-acc-p>
+            <!-- PLACEHOLDER: confirm typical start times and the one-working-day reply before launch -->
             <p class="s21__a">A sprint usually begins within about two weeks of a signed scope, a
               program within four. We reply to every brief within one working day, including the ones
               we are not the right team for.</p>
