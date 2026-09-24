@@ -18,7 +18,7 @@
  * No JavaScript: nodes are anchors to their detail blocks; the first detail shows and any other
  * shows when targeted (CSS :target). The frameworks index is plain content.
  * With JavaScript (24-technology.js, .is-js): selection in place, the details share one reserved
- * cell so nothing shifts, and the framework rows become toggle buttons.
+ * cell so nothing shifts (above 900px; narrower, the open detail sizes to its content), and the framework rows become toggle buttons.
  */
 $s24_ti   = require __DIR__ . '/../data/technology-intelligence.php';
 $s24_site = require __DIR__ . '/../data/site.php';
@@ -136,7 +136,7 @@ $s24_first = $s24_layers[0][3][0];
               <?php endforeach; ?>
             </ul>
             <?php if ($s24_href): ?>
-            <a class="btn btn--white btn--sm s24__go" href="<?= e($s24_href) ?>">Explore <?= e($s24_cap['short']) ?> <span class="i" aria-hidden="true">›</span><span class="sr"> — <?= e($s24_cap['name']) ?></span></a>
+            <a class="btn btn--white btn--sm s24__go" href="<?= e($s24_href) ?>">Explore <?= e($s24_cap['name']) ?> <span class="i" aria-hidden="true">›</span></a>
             <?php endif; ?>
           </div>
 
@@ -188,7 +188,7 @@ $s24_first = $s24_layers[0][3][0];
       </div>
       <ul class="s24__fwl" id="s24-fwl">
         <?php $s24_fi = 0; foreach ($s24_std_n as $s24_sk => $s24_cnt): $s24_s = xt_standard($s24_sk); if (!$s24_s) continue; $s24_fi++; ?>
-        <li class="s24__fr<?= $s24_fi > 8 ? ' s24__more' : '' ?>" data-s24-std="<?= e($s24_sk) ?>" data-code="<?= e($s24_s['code']) ?>" style="--n:<?= (int) $s24_cnt ?>">
+        <li class="s24__fr<?= ($s24_fi > 5 ? ' s24__o5' : '') . ($s24_fi > 8 ? ' s24__more' : '') . ($s24_fi > 10 ? ' s24__o10' : '') ?>" data-s24-std="<?= e($s24_sk) ?>" data-code="<?= e($s24_s['code']) ?>" style="--n:<?= (int) $s24_cnt ?>">
           <svg class="s24__pip" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M6 1 10.5 2.8v3.1c0 2.6-1.9 4.5-4.5 5.3C3.4 10.4 1.5 8.5 1.5 5.9V2.8z"/></svg>
           <span class="s24__fc"><?= e($s24_s['code']) ?></span>
           <span class="s24__fn"><?= (int) $s24_cnt ?><i aria-hidden="true">/<?= $s24_total ?></i><span class="sr"> of <?= $s24_total ?> capabilities</span></span>

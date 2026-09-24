@@ -2564,7 +2564,7 @@
    in one reserved cell so the page never shifts, and turns framework rows into toggle buttons.
    Motion: one faint signal pulse per stratum, only under .is-live (BDH.live), never when reduced. */
 
-.s24 .s24__head{margin-bottom:clamp(36px,4.4vw,64px)}
+.s24 .s24__head{margin-bottom:clamp(32px,3.4vw,48px)}
 .s24 .s24__head .h2{max-width:24ch;text-wrap:balance}
 .s24 .s24__head .h2 .g{display:block}
 .s24 .s24__head .tl{min-height:44px}
@@ -2574,12 +2574,12 @@
 .s24__sl span{letter-spacing:.08em;text-transform:none;color:var(--on-ink-3)}
 
 /* ---------- the diagram -------------------------------------------------- */
-.s24__hint{display:none;margin-bottom:14px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;color:var(--on-ink-3)}
+.s24__hint{display:none;margin-bottom:10px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;color:var(--on-ink-3)}
 .s24.is-js .s24__hint{display:block}
 .s24__strata{position:relative}
 /* the spine through the layer codes */
 .s24__strata::before{content:"";position:absolute;left:17px;top:34px;bottom:34px;width:1px;background:var(--on-ink-line)}
-.s24__str{position:relative;display:grid;grid-template-columns:minmax(0,270px) minmax(0,1fr);gap:16px 28px;align-items:center;padding-block:16px;border-top:1px solid var(--on-ink-line)}
+.s24__str{position:relative;display:grid;grid-template-columns:minmax(0,270px) minmax(0,1fr);gap:16px 28px;align-items:center;padding-block:10px;border-top:1px solid var(--on-ink-line)}
 .s24__str:last-child{border-bottom:1px solid var(--on-ink-line)}
 .s24__sh{display:flex;align-items:center;gap:16px;min-width:0}
 .s24__sc{position:relative;display:grid;place-items:center;width:35px;height:35px;flex:none;border:1px solid var(--on-ink-line);border-radius:50%;background:var(--ink);
@@ -2588,7 +2588,7 @@
 .s24__sd{margin-top:4px;font-size:var(--t-xs);line-height:1.5;color:var(--on-ink-3);max-width:30ch}
 
 .s24__nodes{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:8px;min-width:0}
-.s24__node{position:relative;display:flex;align-items:center;gap:12px;height:100%;min-height:58px;padding:10px 16px 10px 12px;
+.s24__node{position:relative;display:flex;align-items:center;gap:12px;height:100%;min-height:48px;padding:7px 16px 7px 10px;
   border:1px solid var(--on-ink-line);border-radius:var(--r);background:var(--on-ink-card);color:var(--on-ink-2);
   font-size:var(--t-sm);font-weight:500;line-height:1.3;
   transition:background var(--d2) var(--e),border-color var(--d2) var(--e),color var(--d2) var(--e)}
@@ -2616,8 +2616,8 @@
 @keyframes s24-pulse{0%{transform:translateX(-100%)}40%,100%{transform:translateX(160px)}}
 
 /* ---------- the detail ---------------------------------------------------- */
-.s24__dets{margin-top:clamp(20px,2.4vw,32px);border:1px solid var(--on-ink-line);border-radius:var(--r-xl);background:var(--on-ink-card)}
-.s24__det{display:grid;grid-template-columns:minmax(0,3.7fr) minmax(0,4.5fr) minmax(0,3.8fr);gap:clamp(24px,3vw,48px);padding:clamp(24px,3vw,40px);min-width:0}
+.s24__dets{margin-top:clamp(20px,2vw,24px);border:1px solid var(--on-ink-line);border-radius:var(--r-xl);background:var(--on-ink-card)}
+.s24__det{display:grid;grid-template-columns:minmax(0,3.7fr) minmax(0,4.5fr) minmax(0,3.8fr);gap:clamp(24px,3vw,48px);padding:clamp(22px,2.2vw,30px);min-width:0}
 /* no JS: first detail, or the targeted one */
 .s24:not(.is-js) .s24__det{display:none}
 .s24:not(.is-js) .s24__det.is-on{display:grid}
@@ -2632,30 +2632,31 @@
 .s24__k{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;line-height:1.5;text-transform:uppercase;color:var(--on-ink-3)}
 .s24__k b{font-weight:500;color:var(--blue)}
 .s24__h{margin-top:14px;font-family:var(--f-h);font-size:clamp(1.45rem,2.2vw,1.95rem);font-weight:500;letter-spacing:-.02em;line-height:1.12;color:var(--on-ink);text-wrap:balance}
-.s24__d{margin-top:10px;margin-bottom:24px;font-size:var(--t-sm);line-height:1.65;color:var(--on-ink-2);max-width:44ch}
-.s24__ships{align-self:stretch;margin-top:10px;margin-bottom:24px}
-.s24__ships li{display:flex;align-items:center;gap:12px;padding-block:9px;border-top:1px solid var(--on-ink-line);font-size:var(--t-sm);line-height:1.4;color:var(--on-ink-2)}
+.s24__d{margin-top:10px;margin-bottom:20px;font-size:var(--t-sm);line-height:1.65;color:var(--on-ink-2);max-width:44ch}
+.s24__ships{align-self:stretch;margin-top:8px;margin-bottom:20px}
+.s24__ships li{display:flex;align-items:center;gap:12px;padding-block:8px;border-top:1px solid var(--on-ink-line);font-size:var(--t-sm);line-height:1.4;color:var(--on-ink-2)}
 .s24__ships li:last-child{border-bottom:1px solid var(--on-ink-line)}
 .s24__ships .xt-ico{color:var(--on-ink-3)}
 .s24__go{margin-top:auto;min-height:44px}
 
 .s24__db,.s24__dc{min-width:0}
 .s24__with{margin-top:10px}
-.s24__with>div{display:flex;flex-direction:column;gap:8px;padding-block:12px;border-top:1px solid var(--on-ink-line)}
+.s24__with>div{display:flex;flex-direction:column;gap:6px;padding-block:10px;border-top:1px solid var(--on-ink-line)}
 .s24__with dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;line-height:1.4;text-transform:uppercase;color:var(--on-ink-3)}
 .s24 .s24__chips{gap:6px}
+
 .s24 .s24__chips .xt-chip{min-height:32px;gap:8px;padding:4px 12px 4px 9px;font-size:var(--t-xs)}
 
 .s24__stds{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 .s24__stds .xt-badge--chip{transition:border-color var(--d2) var(--e)}
 .s24__stds .xt-badge--chip.is-hit{border-color:var(--blue)}
-.s24__meta{margin-top:24px}
+.s24__meta{margin-top:18px}
 .s24__meta div{display:flex;flex-direction:column;gap:4px;padding-block:10px;border-top:1px solid var(--on-ink-line)}
 .s24__meta dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;line-height:1.4;text-transform:uppercase;color:var(--on-ink-3)}
 .s24__meta dd{font-size:var(--t-xs);line-height:1.5;color:var(--on-ink)}
 
 /* ---------- frameworks index --------------------------------------------- */
-.s24__fw{margin-top:clamp(48px,5.4vw,80px)}
+.s24__fw{margin-top:clamp(40px,3.6vw,52px)}
 .s24__fwh{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
 .s24__fwr{display:none}
 .s24.is-js .s24__fwr{display:block}
@@ -2670,7 +2671,7 @@
 .s24__fwc li.is-hit{border-color:var(--blue);color:var(--on-ink)}
 .s24__fwc li.is-hit::before{background:var(--blue);box-shadow:none}
 
-.s24__fwl{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,272px),1fr));gap:0 28px}
+.s24__fwl{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:0 28px}
 /* a row: plain content without JS (.s24__fr), the same row inside a button with JS (.s24__fb) */
 .s24__fr:not(.is-up),.s24__fb{position:relative;display:flex;align-items:center;gap:12px;width:100%;min-height:48px;padding:10px 4px 12px 2px;border-bottom:1px solid var(--on-ink-line);color:var(--on-ink);text-align:left}
 .s24__fb{padding-inline:12px 14px;border:1px solid var(--on-ink-line);border-radius:var(--r-sm);background:none;cursor:pointer;
@@ -2695,12 +2696,17 @@
 .s24__fb[aria-pressed="true"] .s24__fm{background:var(--line)}
 .s24__fb[aria-pressed="true"] .s24__fm::after{background:var(--blue)}
 
-/* up to 1180px: the eight most used, then a disclosure (JS only; without JS every row shows) */
+/* the most used first, then a disclosure (JS only; without JS every row shows):
+   ten (two rows of five) on wide screens, eight up to 1180px, five on phones */
 .s24__all{display:none;margin-top:12px;min-height:44px;border:1px solid var(--on-ink-line);background:none;color:var(--on-ink)}
 @media (hover:hover){.s24__all:hover{border-color:var(--on-ink-3)}}
+.s24.is-js .s24__all:not([hidden]){display:inline-flex}
+.s24.is-js .s24__fwl:not(.is-open) .s24__o10{display:none}
 @media (max-width:1180px){
-  .s24.is-js .s24__all:not([hidden]){display:inline-flex}
   .s24.is-js .s24__fwl:not(.is-open) .s24__more{display:none}
+}
+@media (max-width:600px){
+  .s24.is-js .s24__fwl:not(.is-open) .s24__o5{display:none}
 }
 .s24__note{margin-top:20px;font-size:var(--t-xs);line-height:1.6;color:var(--on-ink-3);max-width:80ch}
 
@@ -2720,13 +2726,62 @@
 @media (max-width:700px){
   .s24__det,.s24__dc{grid-template-columns:minmax(0,1fr)}
 }
+/* up to 900px: only the open detail is in flow and it sizes to its content (it reflows only when
+   the reader picks another capability; nothing changes on its own) */
+@media (max-width:900px){
+  .s24.is-js .s24__dets{display:block}
+  .s24.is-js .s24__det{display:none}
+  .s24.is-js .s24__det.is-on{display:grid}
+}
+/* phones: the diagram becomes a compact two-column list under one-line layer labels;
+   the layer descriptions stay in the markup for screen readers only */
 @media (max-width:600px){
-  .s24__det{padding:22px 18px}
-  .s24__node{gap:10px;padding:10px 12px 10px 10px}
-  .s24__nic{width:30px;height:30px}
+  .s24__str{gap:4px;padding-block:6px 8px}
+  .s24__sh{gap:10px;align-items:baseline}
+  .s24__sc{display:inline;width:auto;height:auto;border:0;border-radius:0;background:none}
+  .s24__sd{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .s24__nodes{gap:6px}
+  .s24__node{gap:8px;min-height:44px;padding:5px 10px 5px 6px;font-size:var(--t-xs);line-height:1.25}
+  .s24__nic{width:28px;height:28px}
+  .s24__nd{top:6px;right:6px}
+  .s24__det{padding:20px 18px;gap:14px}
+  .s24__meta{margin-top:10px}
+  .s24__meta div{display:grid;grid-template-columns:minmax(0,96px) minmax(0,1fr);gap:0 12px;align-items:baseline;padding-block:8px}
   .s24 .s24__chips .xt-chip{white-space:normal}
+  .s24__h{margin-top:10px}
+  .s24__d{margin-bottom:16px}
+  /* ships: two short columns */
+  .s24__ships{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:14px;margin-bottom:18px;border-bottom:1px solid var(--on-ink-line)}
+  .s24__ships li,.s24__ships li:last-child{align-items:flex-start;gap:8px;padding-block:7px;border-bottom:0;font-size:var(--t-xs);line-height:1.35}
+  .s24__ships .xt-ico{flex:none;margin-top:1px}
+  .s24__with>div{gap:5px;padding-block:7px}
+  .s24 .s24__chips{gap:5px}
+  .s24 .s24__chips .xt-chip{min-height:27px;padding:2px 9px 2px 7px;gap:6px}
+  .s24__meta div{grid-template-columns:minmax(0,118px) minmax(0,1fr);padding-block:5px}
+  .s24__fw{margin-top:28px}
+  .s24__fwh{gap:6px}
+  .s24 .s24__head{margin-bottom:24px}
+  .s24__note{margin-top:16px}
+  /* the lit-capabilities readout: an inline run of names instead of pills */
+  .s24__fwc{display:block;margin-top:8px;line-height:1.3}
+  .s24__fwc li{display:inline-block;white-space:nowrap;min-height:0;margin:0 8px 0 0;padding:0;border:0;border-radius:0;font-size:var(--t-lbl);line-height:1.55}
+  .s24__fwc li::before{display:inline-block;width:5px;height:5px;margin:0 5px 1px 0;vertical-align:middle}
+  .s24__fwc li.is-hit{color:var(--on-ink)}
+  /* frameworks: two compact columns */
+  .s24.is-js .s24__fwl,.s24__fwl{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  .s24__fb{gap:8px;min-height:48px;padding:8px 8px 11px 10px;align-items:flex-start}
+  .s24__fb .s24__fm{left:10px;right:8px}
+  .s24__pip{margin-top:2px}
 }
 
+/* wide: label | content rows in the detail, so the reserved cell stays short */
+@media (min-width:1181px){
+  .s24__with>div{display:grid;grid-template-columns:minmax(0,96px) minmax(0,1fr);gap:0 14px;align-items:start}
+  .s24__with dt{padding-top:9px}
+  .s24__meta div{display:grid;grid-template-columns:minmax(0,132px) minmax(0,1fr);gap:0 14px;align-items:baseline}
+  .s24__fwc{gap:4px}
+  .s24__fwc li{padding-inline:9px 10px;gap:6px}
+}
 @media (prefers-reduced-motion:reduce){
   .s24__node,.s24__fb,.s24.is-js .s24__det,.s24.is-js .s24__det.is-on{transition:none}
 }
