@@ -54,7 +54,7 @@
   font-size:var(--s07-ui);font-weight:500;line-height:1.3;letter-spacing:0;
   transition:border-color var(--d2) var(--e),color var(--d2) var(--e),box-shadow var(--d2) var(--e);
 }
-.s07-app__drop{width:1px;height:16px;background:var(--line-3);transition:background var(--d2) var(--e)}
+.s07-app__drop{width:1px;height:22px;background:var(--line-3);transition:background var(--d2) var(--e)}
 .s07-app__col.is-on .s07-app__chip{
   border-color:var(--blue);color:var(--ink);box-shadow:0 0 0 3px var(--blue-wash);
 }
@@ -63,7 +63,7 @@
 /* the org-chart elbow: drops → rail → one stem into the bar.
    inset = half a column, so the rail ends exactly under the outer two drops. */
 .s07-app__rail{
-  position:relative;height:15px;
+  position:relative;flex:1 1 15px;min-height:15px;max-height:72px;   /* the stem takes up the card's slack, so the router reads as one tall diagram */
   margin-inline:calc((100% - (var(--s07-cg) * 2)) / 6);
   border-top:1px solid var(--line-3);
 }
@@ -116,18 +116,23 @@
 }
 .s07-studio__pmeta .num{letter-spacing:.06em;color:var(--muted)}
 .s07-studio__track{display:block;height:2px;border-radius:2px;background:var(--paper-4);overflow:hidden}
+/* shipped / no-JS / reduced-motion state is the readout itself: 04 of 06 → two-thirds filled.
+   The loop runs only while the card is on screen (.is-live), starting from that frame and returning to it. */
 .s07-studio__fill{
   display:block;height:100%;width:100%;border-radius:2px;background:var(--blue);
-  transform:scaleX(0);transform-origin:left center;
-  animation:s07-prog 5.4s var(--e-io) infinite;animation-play-state:paused;
+  transform:scaleX(.667);transform-origin:left center;
 }
-.s07-studio.is-live .s07-studio__fill{animation-play-state:running}
+.s07-studio.is-live .s07-studio__fill{animation:s07-prog 5.4s var(--e-io) infinite}
 @keyframes s07-prog{
-  0%{transform:scaleX(0);opacity:1}
-  68%{transform:scaleX(1);opacity:1}
-  88%{transform:scaleX(1);opacity:1}
-  100%{transform:scaleX(1);opacity:0}
+  0%{transform:scaleX(.667);opacity:1}
+  40%{transform:scaleX(1);opacity:1}
+  60%{transform:scaleX(1);opacity:1}
+  70%{transform:scaleX(1);opacity:0}
+  71%{transform:scaleX(0);opacity:0}
+  72%{transform:scaleX(0);opacity:1}
+  100%{transform:scaleX(.667);opacity:1}
 }
+@media (prefers-reduced-motion:reduce){.s07-studio.is-live .s07-studio__fill{animation:none}}
 
 /* ---------- 3 · Brand AI Tools -------------------------------------------- */
 /* the library ends on a full row inside its own border */
@@ -176,7 +181,7 @@
   display:flex;align-items:center;justify-content:space-between;gap:10px;
   font-family:var(--f);font-size:var(--s07-ui);letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
 }
-.s07-road__track{position:relative;margin-top:auto;padding-top:18px}
+.s07-road__track{position:relative;margin-block:auto;padding-top:18px}   /* centred in the slack under the header */
 .s07-road__rule{position:absolute;left:0;right:0;top:calc(18px + 5px);height:1px;background:var(--line-3)}
 .s07-road__chev{
   position:absolute;top:calc(18px + 5px);translate:-50% -50%;
