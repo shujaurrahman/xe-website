@@ -10,7 +10,7 @@ $wrk_checks = ['Tokens', 'Type', 'Claims', 'Pack'];
       <div class="wrk-feat__say">
         <p class="lbl lbl--blue"><span class="dot"></span>Featured · <?= e($WRK['industries'][$wrk_f['industry']]) ?></p>
         <h2 class="h2" id="featured-t"><span class="g"><?= e($wrk_f['title']) ?>.</span> Every market ships from the same rules.</h2>
-        <blockquote class="wrk-brief"><p>“<?= e($wrk_f['brief']) ?>”</p><footer class="bdh-ro">The brief, in the client’s words</footer></blockquote>
+        <div class="wrk-brief"><p class="bdh-ro wrk-brief__l">The brief, as we would write it · illustrative</p><p class="wrk-brief__t"><?= e($wrk_f['brief']) ?></p></div>
         <p class="p"><?= e($wrk_f['system']) ?></p>
         <ul class="wrk-feat__did">
           <?php foreach ($wrk_f['did'] as $wrk_x): $wrk_d = $wrk_disc[$wrk_x[0]]; ?>

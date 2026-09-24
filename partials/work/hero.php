@@ -14,18 +14,17 @@ foreach ($WRK['cases'] as $wrk_c) foreach ($wrk_c['did'] as $wrk_x) $wrk_used[$w
       <div class="wrk-hero__side">
         <p class="lead">Work that reshapes how people experience a brand, moves the numbers that matter, and leaves the system better than we found it. Our clients’ names stay theirs — so each programme below is told through its brief, the system we built and how it is measured.</p>
         <div class="wrk-hero__cta">
-          <a class="btn btn--ink btn--lg" href="#index">Browse the programmes <span class="i" aria-hidden="true">›</span></a>
+          <a class="btn btn--ink btn--lg" href="#programmes">Browse the programmes <span class="i" aria-hidden="true">›</span></a>
           <a class="btn btn--out btn--lg" href="#featured">Featured case <span class="i" aria-hidden="true">›</span></a>
         </div>
       </div>
     </div>
 
-    <!-- PLACEHOLDER: figures carried over from the previous site — confirm before launch -->
-    <dl class="wrk-led" aria-label="The work in numbers">
-      <div><dt>Programmes shipped</dt><dd data-bdh-count>380+</dd></div>
-      <div><dt>Markets under delivery</dt><dd>9</dd></div>
-      <div><dt>Industries served</dt><dd>12</dd></div>
-      <div><dt>On this page</dt><dd><?= $wrk_n_cases ?> programmes · <?= count($wrk_used) ?> disciplines</dd></div>
+    <dl class="wrk-led" aria-label="What this page shows">
+      <div><dt>Programmes on this page</dt><dd><?= $wrk_n_cases ?></dd></div>
+      <div><dt>Disciplines involved</dt><dd><?= count($wrk_used) ?> of 6</dd></div>
+      <div><dt>Sectors covered</dt><dd><?= count(array_unique(array_column($WRK['cases'], 'industry'))) ?></dd></div>
+      <div><dt>Clients named</dt><dd>None, by design · names shared only with written permission</dd></div>
     </dl>
   </div>
 </section>

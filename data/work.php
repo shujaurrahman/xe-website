@@ -12,7 +12,7 @@ return [
     [
       'id' => 'nine-markets-one-brand', 'industry' => 'consumer-health', 'featured' => true,
       'title' => 'Nine markets, one brand system',
-      'brief' => 'Nine markets. One brand. Stop the drift.',
+      'brief' => 'Hold one brand across nine markets without slowing any of them down.',
       'did' => [['brand-design', 'Brand system, pack architecture and market flex rules'], ['campaign-content', 'Approved-claims library and market production templates'], ['ai-design', 'Brand-check agent with human approval']],
       'system' => 'A token-based brand system with market-level flex rules, a shared claims library and a brand-check agent that flags drift before assets reach review.',
       'deliverables' => ['Brand guidelines as a living site', 'Design tokens and pack templates', 'Claims library with approval history', 'Brand-check agent and audit log'],
@@ -22,7 +22,7 @@ return [
     [
       'id' => 'crm-that-remembers', 'industry' => 'financial-services',
       'title' => 'A CRM that knows what happened last',
-      'brief' => 'Our CRM knows nothing about our customers.',
+      'brief' => 'Make every customer message aware of the last thing that happened.',
       'did' => [['marketing-technology', 'Journey-led CRM, consent and suppression'], ['technology-intelligence', 'Event pipeline from core systems'], ['product-experience', 'Lifecycle journey design']],
       'system' => 'An event-driven customer profile joining app, web and servicing events, with consent and regulatory suppression applied before any message is sent.',
       'deliverables' => ['Customer event schema', 'Lifecycle journey maps', 'Consent and preference centre', 'Message audit log'],
@@ -32,7 +32,7 @@ return [
     [
       'id' => 'assistant-sales-trusts', 'industry' => 'b2b-technology',
       'title' => 'An assistant that answers what sales kept repeating',
-      'brief' => 'Ship an AI assistant that doesn’t embarrass us.',
+      'brief' => 'Give sales an assistant that answers from approved sources, and says when it does not know.',
       'did' => [['ai-design', 'Retrieval assistant, evals and guardrails'], ['product-experience', 'Product experience and hand-off to sales'], ['technology-intelligence', 'AI infrastructure and observability']],
       'system' => 'A retrieval assistant grounded in approved product documentation, gated by an eval set, with prompt-injection tests and a hand-off to a person when confidence is low.',
       'deliverables' => ['Eval set and scoring rubric', 'Guardrail and escalation policy', 'Assistant UI in site and product', 'Conversation audit dashboard'],
@@ -42,7 +42,7 @@ return [
     [
       'id' => 'visible-in-ai-answers', 'industry' => 'retail-commerce',
       'title' => 'Visible in AI answers, not only in search',
-      'brief' => 'We rank on Google. We’re invisible in ChatGPT.',
+      'brief' => 'Be cited in AI answers, not only ranked in search results.',
       'did' => [['marketing-technology', 'Search and AI visibility measurement'], ['technology-intelligence', 'Structured product data and feeds'], ['campaign-content', 'Answer-shaped category content']],
       'system' => 'Structured product data, schema markup and answer-shaped content, tracked against a fixed panel of priority questions across AI assistants.',
       'deliverables' => ['Priority-question panel', 'Product data model and feeds', 'Category content templates', 'Visibility tracking report'],
@@ -52,7 +52,7 @@ return [
     [
       'id' => 'season-in-days', 'industry' => 'retail-commerce',
       'title' => 'A season shipped in days, not weeks',
-      'brief' => 'Every season takes six weeks and three agencies.',
+      'brief' => 'Take a season from six weeks and three agencies down to days.',
       'did' => [['campaign-content', 'Template-driven campaign production'], ['ai-design', 'Generative variants with brand checks'], ['brand-design', 'Campaign system rules']],
       'system' => 'A campaign system of master layouts and rules; variants for every channel and size generate from one approved key visual and pass a brand check before a person signs off.',
       'deliverables' => ['Campaign master templates', 'Variant generation pipeline', 'Brand-check rules', 'Channel delivery specs'],
@@ -62,7 +62,7 @@ return [
     [
       'id' => 'direct-booking-product', 'industry' => 'hospitality',
       'title' => 'Direct booking, treated as a product',
-      'brief' => 'Guests find us on aggregators and book there.',
+      'brief' => 'Move bookings from aggregators back to the hotel’s own site.',
       'did' => [['product-experience', 'Search-to-checkout booking experience'], ['marketing-technology', 'Guest profile and post-stay journeys'], ['technology-intelligence', 'Fast booking front end and integrations']],
       'system' => 'A booking front end on the property and channel systems, with transparent all-in pricing, and guest profiles that carry preferences from one stay to the next.',
       'deliverables' => ['Booking flow and design system', 'Property-system integrations', 'Pre-stay and post-stay journeys', 'Conversion analytics by step'],
@@ -72,7 +72,7 @@ return [
     [
       'id' => 'one-intelligence-layer', 'industry' => 'telecom-media',
       'title' => 'Coverage, content and care on one intelligence layer',
-      'brief' => 'Network, marketing and care each have their own truth.',
+      'brief' => 'Give network, marketing and care one version of the truth.',
       'did' => [['technology-intelligence', 'Shared data platform and metrics layer'], ['ai-design', 'Care assistant with agent hand-off'], ['marketing-technology', 'Registered messaging and preferences']],
       'system' => 'A shared data layer and metric definitions used by network, marketing and care, feeding a care assistant and registered, consented customer messaging.',
       'deliverables' => ['Data platform and metric catalogue', 'Care assistant and eval set', 'Preference centre', 'Operational dashboards'],
@@ -82,7 +82,7 @@ return [
     [
       'id' => 'global-content-production', 'industry' => 'consumer-health',
       'title' => 'Global content production from one source',
-      'brief' => 'Every market re-makes the same asset from scratch.',
+      'brief' => 'Make each asset once, then adapt it for every market.',
       'did' => [['campaign-content', 'Global production line and adaptation'], ['ai-design', 'Assisted adaptation with human review'], ['marketing-technology', 'Asset management and delivery']],
       'system' => 'A hub-and-spoke production model: one master asset, market adaptations generated and checked against approved claims, and a single asset library with usage rights.',
       'deliverables' => ['Production operating model', 'Adaptation workflow', 'Asset library and rights metadata', 'Market review queue'],
@@ -92,7 +92,7 @@ return [
     [
       'id' => 'onboarding-with-disclosures', 'industry' => 'financial-services',
       'title' => 'Onboarding with disclosures designed in',
-      'brief' => 'Half our applicants stop at the KYC step.',
+      'brief' => 'Get more applicants through KYC without hiding a single disclosure.',
       'did' => [['product-experience', 'Onboarding and video-KYC journey'], ['brand-design', 'Trust signals and product voice'], ['technology-intelligence', 'Secure web and app build']],
       'system' => 'A mobile onboarding flow where the Key Fact Statement, consent and KYC steps are designed as part of the journey, measured step by step.',
       'deliverables' => ['Journey and service blueprint', 'App and web screens', 'Disclosure content patterns', 'Step-level analytics'],

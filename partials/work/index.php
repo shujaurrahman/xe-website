@@ -1,20 +1,21 @@
 <?php /* DRAFT COPY — review before launch */ ?>
 <?php
+require_once __DIR__ . '/thumbs.php';
 $wrk_shown = 0;
 foreach ($WRK['cases'] as $wrk_c) if ($wrk_match($wrk_c, $wrk_fd, $wrk_fi)) $wrk_shown++;
 $wrk_total = count($WRK['cases']);
 $wrk_cnt_d = function (string $d) use ($WRK, $wrk_match, $wrk_fi) { $n = 0; foreach ($WRK['cases'] as $c) if ($wrk_match($c, $d, $wrk_fi)) $n++; return $n; };
 $wrk_cnt_i = function (string $i) use ($WRK, $wrk_match, $wrk_fd) { $n = 0; foreach ($WRK['cases'] as $c) if ($wrk_match($c, $wrk_fd, $i)) $n++; return $n; };
 ?>
-<section class="band wrk-idx" id="index" aria-labelledby="index-t">
+<section class="band wrk-idx" id="programmes" aria-labelledby="programmes-t">
   <div class="wrap">
     <div class="bdh-head bdh-head--row" data-rv>
       <div><p class="lbl lbl--blue"><span class="dot"></span>Programme index</p>
-        <h2 class="h2" id="index-t"><span class="g">Filter by discipline or sector.</span> Every programme, told the same way.</h2></div>
-      <div><p class="lead">Each entry gives the brief, what we did and in which discipline, the system left behind, the deliverables and what is measured. Durations are typical ranges.</p></div>
+        <h2 class="h2" id="programmes-t"><span class="g">Filter by discipline or sector.</span> Every programme, told the same way.</h2></div>
+      <div><p class="lead">Each entry leads with the artefact the programme left behind, then the brief as we would frame it, what we did and in which discipline, the system left behind, the deliverables and what is measured. Durations are typical ranges.</p></div>
     </div>
 
-    <form class="wrk-filter" action="<?= xe_url('work.php') ?>#index" method="get" data-wrk-filter>
+    <form class="wrk-filter" action="<?= xe_url('work.php') ?>#programmes" method="get" data-wrk-filter>
       <fieldset class="wrk-filter__set">
         <legend class="bdh-ro">Discipline</legend>
         <div class="wrk-filter__opts">
@@ -36,11 +37,11 @@ $wrk_cnt_i = function (string $i) use ($WRK, $wrk_match, $wrk_fd) { $n = 0; fore
       <div class="wrk-filter__foot">
         <p class="wrk-filter__status" role="status" aria-live="polite" data-wrk-status>Showing <?= $wrk_shown ?> of <?= $wrk_total ?> programmes</p>
         <button class="btn btn--ink btn--sm wrk-filter__go" type="submit">Apply filters</button>
-        <a class="tl wrk-filter__reset" href="<?= xe_url('work.php') ?>#index" data-wrk-reset>Clear filters</a>
+        <a class="tl wrk-filter__reset" href="<?= xe_url('work.php') ?>#programmes" data-wrk-reset>Clear filters</a>
       </div>
     </form>
 
-    <p class="wrk-empty" data-wrk-empty<?= $wrk_shown ? ' hidden' : '' ?>>No programme on this page matches that combination yet. <a class="tl" href="<?= xe_url('work.php') ?>#index" data-wrk-reset>Clear filters</a> or <a class="tl" href="<?= xe_url('contact.php') ?>">ask us about it directly</a>.</p>
+    <p class="wrk-empty" data-wrk-empty<?= $wrk_shown ? ' hidden' : '' ?>>No programme on this page matches that combination yet. <a class="tl" href="<?= xe_url('work.php') ?>#programmes" data-wrk-reset>Clear filters</a> or <a class="tl" href="<?= xe_url('contact.php') ?>">ask us about it directly</a>.</p>
 
     <ol class="wrk-list">
       <?php foreach ($WRK['cases'] as $wrk_n => $wrk_c): $wrk_on = $wrk_match($wrk_c, $wrk_fd, $wrk_fi); ?>
@@ -51,8 +52,9 @@ $wrk_cnt_i = function (string $i) use ($WRK, $wrk_match, $wrk_fd) { $n = 0; fore
             <span class="bdh-tag"><?= e($WRK['industries'][$wrk_c['industry']]) ?></span>
             <span class="wrk-case__dur bdh-ro"><?= xt_icon('clock') ?><span class="sr">Typical duration: </span><?= e($wrk_c['duration']) ?></span>
           </header>
+          <?= wrk_thumb($wrk_c['id']) ?>
           <h3 class="wrk-case__t" id="<?= e($wrk_c['id']) ?>-t"><?= e($wrk_c['title']) ?></h3>
-          <p class="wrk-case__brief">“<?= e($wrk_c['brief']) ?>”</p>
+          <p class="wrk-case__brief"><span class="bdh-ro wrk-case__bl">Brief</span><?= e($wrk_c['brief']) ?></p>
           <ul class="wrk-case__did" aria-label="What we did">
             <?php foreach ($wrk_c['did'] as $wrk_x): $wrk_d = $wrk_disc[$wrk_x[0]]; ?>
             <li><a href="<?= xe_discipline_url($wrk_d) ?>"><?= e($wrk_d['name']) ?></a><span><?= e($wrk_x[1]) ?></span></li>
@@ -75,7 +77,7 @@ $wrk_cnt_i = function (string $i) use ($WRK, $wrk_match, $wrk_fd) { $n = 0; fore
       <li class="wrk-next">
         <p class="bdh-ro wrk-next__n">Next</p>
         <h3 class="wrk-case__t">Your programme</h3>
-        <p class="p">Tell us the brief in one line, the way the briefs above are written. We will reply with how we would approach it and which disciplines it needs.</p>
+        <p class="p">Tell us the brief in one line. We will reply with how we would approach it and which disciplines it needs.</p>
         <a class="btn btn--ink" href="<?= xe_url('contact.php') ?>">Share a brief <span class="i" aria-hidden="true">›</span></a>
       </li>
     </ol>

@@ -28,7 +28,7 @@
       var q = [];
       if (d) q.push('d=' + encodeURIComponent(d));
       if (i) q.push('i=' + encodeURIComponent(i));
-      try { history.replaceState(null, '', location.pathname + (q.length ? '?' + q.join('&') : '') + '#index'); } catch (e) {}
+      try { history.replaceState(null, '', location.pathname + (q.length ? '?' + q.join('&') : '') + '#programmes'); } catch (e) {}
     }
   }
   form.addEventListener('change', function () { apply(true); });
