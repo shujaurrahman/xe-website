@@ -256,3 +256,24 @@
 @media (prefers-reduced-motion:reduce){
   .apr-ln,.apr-meter__bar i{transition:none}
 }
+
+/* ---------- contracts: stages covered (polish) ---------- */
+.apr-pk__cov{grid-column:2 / -1;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 16px;align-items:center}
+.apr-pk__cl{margin:0;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.apr-pk__stg{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}
+.apr-pk__stg li{padding:6px 4px;text-align:center;border-radius:var(--r-xs);background:var(--paper-2);border:1px dashed var(--line-2);font-family:var(--f);font-size:var(--t-lbl);color:var(--faint)}
+.apr-pk__stg li.is-in{background:var(--blue-wash);border:1px solid var(--blue-line);color:var(--blue-d)}
+.apr-pk__ex{grid-column:2;margin:0;font-size:var(--t-sm);color:var(--muted)}
+/* responsible AI: lane mapping */
+.apr-ra__map{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:12px 0 0}
+.apr-ra__lane{display:inline-flex;align-items:center;gap:4px;min-height:44px;font-family:var(--f);font-size:var(--t-xs);color:var(--on-ink);text-decoration:none}
+.apr-ra__lane:hover{text-decoration:underline}
+.apr-ra__ln{color:var(--on-ink-3)}
+.apr-ra__log{padding:3px 8px;border-radius:var(--r-xs);background:var(--on-ink-card);border:1px solid var(--on-ink-line);font-family:var(--f);font-size:var(--t-lbl);color:var(--on-ink-2)}
+@media (max-width:1100px){ .apr-pk__cov{grid-column:2} }
+@media (max-width:640px){
+  .apr-pk__cov{grid-column:1;grid-template-columns:minmax(0,1fr)}
+  .apr-pk__ex{grid-column:1}
+  .apr-pk__stg{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .apr-pk__go.btn--sm{min-height:44px}
+}
