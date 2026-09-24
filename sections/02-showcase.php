@@ -90,57 +90,57 @@
 
         <!-- ── pane 2 · what shipped ──────────────────────────────────────── -->
         <div class="s02__pane" id="s02-pane-2" role="tabpanel" aria-labelledby="s02-tab-2" tabindex="0">
-          <!-- PLACEHOLDER: reference imagery, swap for Xterra Edze's own work before launch -->
+          <!-- PLACEHOLDER: credited Unsplash placeholder photos (sections/CREDITS.md) — swap for Xterra Edze's own work before launch -->
           <div class="s02__mosaic">
             <!-- the first four tiles answer briefs 01–04, in order, by discipline -->
             <div class="s02__row">
               <figure class="s02__t s02__t--16">
-                <img src="assets/imgs/c69b0bdd_T5J8ZvGDJWsakqEOGBZNtykg3E0.webp" alt="" aria-hidden="true"
-                     width="3200" height="2400" loading="lazy" decoding="async">
+                <img src="assets/imgs/brand/hub/capabilities/ai-tools.jpg" alt="" aria-hidden="true"
+                     width="1200" height="675" loading="lazy" decoding="async">
                 <figcaption class="s02__cap s02__cap--brief"><span class="s02__bi"><span class="sr">Answers brief </span>01 <span aria-hidden="true">→</span></span>Brand</figcaption>
               </figure>
 
               <figure class="s02__t s02__t--43">
-                <img src="assets/imgs/1e2b6b79_cap-client-portals.webp" alt="" aria-hidden="true"
-                     width="900" height="641" loading="lazy" decoding="async">
+                <img src="assets/imgs/brand/hub/touchpoints/app.jpg" alt="" aria-hidden="true"
+                     width="1200" height="1011" loading="lazy" decoding="async">
                 <figcaption class="s02__cap s02__cap--brief"><span class="s02__bi"><span class="sr">Answers brief </span>02 <span aria-hidden="true">→</span></span>Marketing Technology</figcaption>
               </figure>
 
               <figure class="s02__t s02__t--34">
-                <img src="assets/imgs/17973a26_j5zkzCoLjv3Nel6mPelVJ5OwCjM.png" alt="" aria-hidden="true"
-                     width="2048" height="1536" loading="lazy" decoding="async">
+                <img src="assets/imgs/brand/hub/ai-os/gen-2.jpg" alt="" aria-hidden="true"
+                     width="900" height="506" loading="lazy" decoding="async">
                 <figcaption class="s02__cap s02__cap--brief"><span class="s02__bi"><span class="sr">Answers brief </span>03 <span aria-hidden="true">→</span></span>AI</figcaption>
               </figure>
 
               <figure class="s02__t s02__t--43">
-                <img src="assets/imgs/b19b0950_2b4e28b5bffd2be8.jpg" alt="" aria-hidden="true"
-                     width="1027" height="662" loading="lazy" decoding="async">
+                <img src="assets/imgs/brand/hub/ai-os/retail-shelf.jpg" alt="" aria-hidden="true"
+                     width="900" height="600" loading="lazy" decoding="async">
                 <figcaption class="s02__cap s02__cap--brief"><span class="s02__bi"><span class="sr">Answers brief </span>04 <span aria-hidden="true">→</span></span>Technology</figcaption>
               </figure>
             </div>
 
             <div class="s02__row">
               <figure class="s02__t s02__t--34">
-                <img src="assets/imgs/3b186bd3_L3MIwmBYXPmulFMJfyH5uCFEns.png" alt="" aria-hidden="true"
-                     width="3805" height="2376" loading="lazy" decoding="async">
+                <img src="assets/imgs/brand/hub/touchpoints/stationery.jpg" alt="" aria-hidden="true"
+                     width="1200" height="800" loading="lazy" decoding="async">
                 <figcaption class="s02__cap">Product</figcaption>
               </figure>
 
               <figure class="s02__t s02__t--1">
-                <img src="assets/imgs/69efafe1_ds3pyMGMNrhRq7KRBPggBjJLMNg.png" alt="" aria-hidden="true"
-                     width="1440" height="900" loading="lazy" decoding="async">
+                <img src="assets/imgs/brand/hub/ai-os/social-b.jpg" alt="" aria-hidden="true"
+                     width="900" height="596" loading="lazy" decoding="async">
                 <figcaption class="s02__cap">Campaign</figcaption>
               </figure>
 
               <figure class="s02__t s02__t--1">
-                <img src="assets/imgs/8599929a_o35xFsOzb7RHHzOvvCWvhTp3T5k.png" alt="" aria-hidden="true"
-                     width="2048" height="1332" loading="lazy" decoding="async">
+                <img src="assets/imgs/brand/hub/touchpoints/tote.jpg" alt="" aria-hidden="true"
+                     width="1200" height="800" loading="lazy" decoding="async">
                 <figcaption class="s02__cap">Brand</figcaption>
               </figure>
 
               <figure class="s02__t s02__t--32">
-                <img src="assets/imgs/0713d126_962143a38444fcca.jpg" alt="" aria-hidden="true"
-                     width="1023" height="662" loading="lazy" decoding="async">
+                <img src="assets/imgs/brand/hub/capabilities/growth.jpg" alt="" aria-hidden="true"
+                     width="1200" height="802" loading="lazy" decoding="async">
                 <figcaption class="s02__cap">Product</figcaption>
               </figure>
             </div>

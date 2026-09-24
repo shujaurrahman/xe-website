@@ -60,6 +60,7 @@ $s25_pkkeys = array_keys($s25_pks);
 ?>
 <?php if ($s25_discs && $s25_pks): ?>
 <section class="band s25 bdh" id="offer" aria-labelledby="s25-t" data-s25>
+  <svg class="s25-sprite" width="0" height="0" aria-hidden="true" focusable="false"><symbol id="s25-tick" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol></svg>
   <div class="wrap">
 
     <div class="bdh-head bdh-head--row s25-head" data-rv>
@@ -126,7 +127,7 @@ $s25_pkkeys = array_keys($s25_pks);
                           <label class="s25-svc">
                             <input class="s25-svc__in" type="checkbox" name="service[]" value="<?= e($s25_id) ?>"
                                    data-s25-svc data-d="<?= e($s25_slug) ?>" data-name="<?= e($s25_o['name']) ?>" data-time="<?= e($s25_o['time'] ?? '') ?>">
-                            <span class="s25-svc__box" aria-hidden="true"><?= svc_icon('tick', ['size' => 12]) ?></span>
+                            <span class="s25-svc__box" aria-hidden="true"><svg class="svc-ico" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" focusable="false"><use href="#s25-tick"/></svg></span>
                             <span class="s25-svc__n"><?= e($s25_o['name']) ?></span>
                             <?php if (!empty($s25_o['time'])): ?>
                               <span class="s25-svc__t"><span class="sr">, typically <?= e($s25_o['time']) ?></span><span aria-hidden="true"><?= e($s25_wk($s25_o['time'])) ?></span></span>

@@ -92,6 +92,7 @@ details[open]>summary .s25-disc__chev{transform:translateY(2px) rotate(225deg)}
 .s25-svc__box{display:grid;place-items:center;width:16px;height:16px;border:1px solid var(--line-3);border-radius:4px;background:var(--paper);color:transparent;
   transition:background var(--d1) var(--e-io),border-color var(--d1) var(--e-io),color var(--d1) var(--e-io)}
 .s25-svc__box svg{stroke-width:2.4}
+.s25-sprite{position:absolute;width:0;height:0;overflow:hidden}
 .s25-svc__n{font-size:var(--t-xs);line-height:1.4;color:var(--txt)}
 .s25-svc__t{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:0;line-height:1.4;color:var(--faint);white-space:nowrap;text-align:right}
 .s25-svc:hover .s25-svc__box{border-color:var(--ink)}

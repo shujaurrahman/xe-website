@@ -6,7 +6,7 @@
 
       <div class="s21__side" data-rv>
         <p class="lbl lbl--blue"><span class="dot"></span>FAQ</p>
-        <h2 class="h2 s21__h" id="s21-t"><span class="g">Frequently</span> Asked Questions</h2>
+        <h2 class="h2 s21__h" id="s21-t"><span class="g">Straight answers,</span> before you ask.</h2>
         <div class="s21__ask">
           <p class="sm">Any more questions?</p>
           <a class="tl s21__tl" href="#book">Contact us <span class="i" aria-hidden="true">›</span></a>

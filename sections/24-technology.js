@@ -33,8 +33,8 @@
       });
     }
 
-    function select(slug) {
-      if (!slug || slug === current) return;
+    function select(slug, force) {
+      if (!slug || (slug === current && !force)) return;
       current = slug;
       nodes.forEach(function (n) {
         var on = n.getAttribute('data-s24-node') === slug;
@@ -66,7 +66,29 @@
 
     var first = nodes.filter(function (n) { return n.classList.contains('is-on'); })[0] || nodes[0];
     var fromHash = location.hash.indexOf('#s24-d-') === 0 ? location.hash.slice(7) : null;
-    select(fromHash && root.querySelector('#s24-d-' + fromHash) ? fromHash : first.getAttribute('data-s24-node'));
+    select(first.getAttribute('data-s24-node'));
+
+    /* the other capability details load once, as the section nears the viewport (see index.php ?s24=) */
+    var loaded = false;
+    function loadRest() {
+      if (loaded) return; loaded = true;
+      var src = dets.getAttribute('data-s24-src');
+      if (!src || !window.fetch) return;
+      fetch(location.pathname + src, { credentials: 'same-origin' }).then(function (r) { return r.ok ? r.text() : ''; }).then(function (html) {
+        if (!html) return;
+        var box = document.createElement('div');
+        box.innerHTML = html;
+        $$('.s24__det', box).forEach(function (d) { if (!document.getElementById(d.id)) dets.appendChild(d); });
+        select(fromHash && document.getElementById('s24-d-' + fromHash) ? fromHash : current, true);
+        fromHash = null;
+        markBadges();
+      }).catch(function () { loaded = false; });
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); loadRest(); } }, { rootMargin: '900px 0px' });
+      io.observe(root);
+    } else loadRest();
+    if (fromHash) loadRest();
 
     /* ---------- frameworks index: rows become toggle buttons --------------- */
     var read = root.querySelector('[data-s24-read]');

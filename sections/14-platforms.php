@@ -21,6 +21,7 @@
       </div>
 
       <!-- PLACEHOLDER: illustrative figures — confirm before launch -->
+      <p class="bdh-sr">An illustrative model-selection panel for one brief: long-context synthesis goes to model A, structured extraction to model B, and a task that must answer in under 400 milliseconds to model C; the choice is re-scored every sprint against your own evaluations.</p>
       <div class="s14__panel" aria-hidden="true">
         <p class="s14__plbl">Model selection · this brief <span class="s14__tag">Illustrative</span></p>
         <ul class="s14__rows">

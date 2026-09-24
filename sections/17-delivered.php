@@ -21,11 +21,11 @@
         <a class="btn btn--white s17__cta" href="#offer">Start a brief <span class="i" aria-hidden="true">›</span></a>
       </div>
 
-      <!-- PLACEHOLDER: reference imagery and illustrative outcomes — replace with real case studies -->
+      <!-- PLACEHOLDER: credited Unsplash placeholder photos (sections/CREDITS.md) and illustrative outcomes — replace with real case studies -->
       <div class="s17__slider" data-s17 data-rv data-rv-d="90">
         <div class="s17__viewport" tabindex="0" role="region" aria-label="Case studies">
           <article class="s17__slide is-on" data-s17-slide>
-            <img src="assets/imgs/8599929a_o35xFsOzb7RHHzOvvCWvhTp3T5k.png" alt="Case study: consumer brand relaunch" width="2048" height="1332" loading="lazy" decoding="async">
+            <img src="assets/imgs/brand/hub/touchpoints/packaging.jpg" alt="Case study: consumer brand relaunch" width="1200" height="800" loading="lazy" decoding="async">
             <div class="s17__cap">
               <p class="s17__sector">Consumer health · nine markets</p>
               <p class="s17__line">One brand system, rebuilt so every market ships from the same rules.</p>
@@ -34,7 +34,7 @@
           </article>
 
           <article class="s17__slide" data-s17-slide>
-            <img src="assets/imgs/c69b0bdd_T5J8ZvGDJWsakqEOGBZNtykg3E0.webp" alt="Case study: platform and product build" width="3200" height="2400" loading="lazy" decoding="async">
+            <img src="assets/imgs/brand/hub/touchpoints/app.jpg" alt="Case study: platform and product build" width="1200" height="1011" loading="lazy" decoding="async">
             <div class="s17__cap">
               <p class="s17__sector">B2B technology</p>
               <p class="s17__line">A product experience and an assistant that answers what sales kept repeating.</p>
@@ -43,7 +43,7 @@
           </article>
 
           <article class="s17__slide" data-s17-slide>
-            <img src="assets/imgs/3b186bd3_L3MIwmBYXPmulFMJfyH5uCFEns.png" alt="Case study: lifecycle and martech rebuild" width="3805" height="2376" loading="lazy" decoding="async">
+            <img src="assets/imgs/tech/hub/industry-finance.jpg" alt="Case study: lifecycle and martech rebuild" width="1400" height="934" loading="lazy" decoding="async">
             <div class="s17__cap">
               <p class="s17__sector">Financial services</p>
               <p class="s17__line">A CRM rebuilt around the journey, so every message knows what happened last.</p>

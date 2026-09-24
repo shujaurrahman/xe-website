@@ -28,8 +28,13 @@ $HX_CHAPTERS = [
     ['The idea',      ['01-hero', '05-flow', '04-pillars', '09-proof']],
     ['What we do',    ['08-disciplines', '23-brand', '24-technology', '07-ai-design', '06-equip', '14-platforms']],
     ['How we work',   ['12-process', '13-operation', '16-why']],
-    ['The work',      ['02-showcase', '17-delivered', '10-production', '03-industries', '11-clients', '15-testimonials']],
-    ['Work with us',  ['18-engagements', '25-offer', '19-cta-card', '20-booking', '21-faq', '22-final-cta']],
+    ['The work',      ['02-showcase', '17-delivered', '10-production', '03-industries']],
+    /* Removed in the four-agent polish (files kept for the owner):
+       11-clients — real third-party wordmarks under "Brands that build with us" (§3: no real client names; owner decision);
+       15-testimonials — fabricated quotes with scraped portraits (§3: no fake testimonials);
+       18-engagements — its Sprint / Program / Embedded squad contradicted 25-offer's six contracts;
+       19-cta-card — a second "what are we building" CTA doing 22-final-cta's job. */
+    ['Work with us',  ['25-offer', '20-booking', '21-faq', '22-final-cta']],
 ];
 /* Section file → its root id: the rail links to each chapter's opener and spies on every section. */
 $HX_IDS = ['01-hero' => 'hero', '05-flow' => 'flow', '04-pillars' => 'pillars', '09-proof' => 'proof',
@@ -41,6 +46,16 @@ $HX_IDS = ['01-hero' => 'hero', '05-flow' => 'flow', '04-pillars' => 'pillars', 
            '18-engagements' => 'engagements', '25-offer' => 'offer', '19-cta-card' => 'cta', '20-booking' => 'book',
            '21-faq' => 'faq', '22-final-cta' => 'cta-final'];
 $SECTIONS = array_merge(...array_column($HX_CHAPTERS, 1));
+
+/* s24's nine deferred capability details, fetched by 24-technology.js (keeps the page itself light). */
+if (isset($_GET['s24'])) {
+    header('Content-Type: text/html; charset=utf-8');
+    header('Cache-Control: public, max-age=3600');
+    header('X-Robots-Tag: noindex');
+    $HX_S24_FRAG = true;
+    include 'sections/24-technology.php';
+    exit;
+}
 
 include 'partials/head.php';
 include 'partials/nav.php';
@@ -57,6 +72,19 @@ include 'partials/nav.php';
   <span class="hx-rail__bar" aria-hidden="true"><?php foreach ($HX_CHAPTERS as $hx_n => $hx_c): ?><i data-hx-seg="<?= $hx_n ?>"></i><?php endforeach; ?></span>
 </nav>
 
+<?php
+/* Weight: strip the partials' source indentation from the page (≈15% of its bytes). <textarea> and <pre>
+   bodies are left untouched, since their whitespace is content. */
+ob_start(function (string $hx_html): string {
+    $hx_parts = preg_split('~(<(textarea|pre)\b.*?</\2>)~is', $hx_html, -1, PREG_SPLIT_DELIM_CAPTURE);
+    $hx_out = '';
+    foreach ($hx_parts as $hx_i => $hx_p) {
+        if ($hx_i % 3 === 2) continue;                     // the captured tag name
+        $hx_out .= ($hx_i % 3 === 1) ? $hx_p : preg_replace('~\n[ \t]*(?:\n[ \t]*)*~', "\n", $hx_p);
+    }
+    return $hx_out;
+});
+?>
 <main id="main">
 <?php foreach ($HX_CHAPTERS as $hx_n => [$hx_name, $hx_secs]): ?>
 <!-- ===== Chapter <?= sprintf('%02d', $hx_n + 1) ?> · <?= e($hx_name) ?> ===== -->
@@ -66,5 +94,6 @@ include 'partials/nav.php';
 <?php endforeach; ?>
 <?php endforeach; ?>
 </main>
+<?php ob_end_flush(); ?>
 
 <?php include 'partials/footer.php'; ?>
