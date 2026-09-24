@@ -24,6 +24,11 @@ $CAPS  = require __DIR__ . '/../../../data/marketing-technology.php';
 $STACK = require __DIR__ . '/../../../data/tech-stack.php';
 $CAP   = $CAPS[$MTD_KEY];
 $MTD_X = (require __DIR__ . '/topics.php')[$MTD_KEY];
+$MTD_HS = require __DIR__ . '/heads.php';
+$MTD_H  = $MTD_HS[$MTD_KEY] ?? [];
+require_once __DIR__ . '/matrix.php';
+/* Section heading: topic copy from heads.php, template default as the fallback. Returns [grey, ink, lead]. */
+$mtd_head = fn (string $mtd_k, array $mtd_def): array => ($MTD_H['h'][$mtd_k] ?? []) + $mtd_def;
 $DISC  = null;
 foreach ($SITE['disciplines'] as $mtd_x) { if ($mtd_x['slug'] === 'marketing-technology') $DISC = $mtd_x; }
 $CAP_ROW = null;
@@ -60,14 +65,14 @@ function mtd_t(array $t): string {
 $MTD_CRS = $MTD_KEY === 'customer-relationship-strategy';
 $MTD_SECTIONS = $MTD_CRS
     ? ['hero', 'parts', 'flow', 'process', 'deliver', 'outcomes', 'stack', 'standards', 'services', 'faq', 'onward']
-    : ['hero', 'offer', 'flow', 'process', 'deliver', 'outcomes', 'stack', 'standards', 'services', 'faq', 'onward'];
+    : ['hero', 'offer', 'flow', 'process', 'showcase', 'deliver', 'outcomes', 'stack', 'standards', 'services', 'faq', 'onward'];
 
 $mtd_root = __DIR__ . '/../../../';
 $mtd_has  = fn (string $p): ?string => (is_file($mtd_root . $p) && filesize($mtd_root . $p) > 0) ? $p : null;
 $mtd_css  = array_values(array_filter([
     $mtd_has('assets/css/brand/hub.css'), $mtd_has('assets/css/tech/kit.css'), $mtd_has('assets/css/marketing-technology.css'),
     $mtd_has('assets/css/marketing-technology/faq.css'), $mtd_has('assets/css/marketing-technology/cap.css'),
-    $mtd_has('assets/css/marketing-technology/cap-sig.css'), $mtd_has('assets/css/services.css'),
+    $mtd_has('assets/css/marketing-technology/cap-sig.css'), $mtd_has('assets/css/marketing-technology/cap-x.css'), $mtd_has('assets/css/services.css'),
 ]));
 $mtd_js   = array_values(array_filter([
     $mtd_has('assets/js/brand/hub.js'), $mtd_has('assets/js/marketing-technology/cap/cap.js'), $mtd_has('assets/js/services.js'),

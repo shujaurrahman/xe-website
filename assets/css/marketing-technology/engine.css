@@ -97,3 +97,13 @@
 @media (prefers-reduced-motion:reduce){ .mth-ledger li.is-new{animation:none} }
 
 .mth-eng__pan--people .mask-x{-webkit-mask-image:none;mask-image:none}
+/* Polish: at 320–400 the Run/Step/Reset row and the clock wrapped past the panel edge; let the row wrap and
+   keep every panel shrinkable so the profile table scrolls inside its own region instead of being clipped. */
+.mth-eng__pan{min-width:0}
+@media (max-width:400px){
+  .mth-eng__ctl{flex-wrap:wrap;gap:6px}
+  .mth-eng__ctl .mth-eng__btn{flex:1 1 0;padding:0 8px;min-width:0}
+  .mth-eng__ctl .mth-eng__btn[data-act="run"]{min-width:0}
+  .mth-eng__clock{flex:1 1 100%;padding-left:0;text-align:right}
+  .mth-eng__bar{padding:10px 12px}
+}

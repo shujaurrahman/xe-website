@@ -1,6 +1,7 @@
 <?php /* DRAFT COPY — review before launch */ ?>
 <?php
 /* Onward aid: the two capabilities this one pairs with, then every other sibling and the hub. */
+$mtd_hn = $mtd_head('next', ['One engine,', 'more of it switched on.', 'Each capability runs on its own. These two share the most data, consent and measurement with ' . strtolower($CAP['short']) . ', so they cost least to add next.']);
 $mtd_rows = [];
 foreach ($DISC['caps'] as $mtd_r) $mtd_rows[$mtd_r[2]] = $mtd_r;
 $mtd_rest = array_values(array_filter(array_keys($CAPS), fn ($mtd_k) => $mtd_k !== $MTD_KEY && !in_array($mtd_k, $CAP['pairs'], true)));
@@ -9,12 +10,13 @@ $mtd_rest = array_values(array_filter(array_keys($CAPS), fn ($mtd_k) => $mtd_k !
   <div class="wrap">
     <div class="bdh-head bdh-head--row" data-rv>
       <div><p class="lbl"><span class="dot"></span>Works best with</p>
-        <h2 class="h2" id="next-t"><span class="g">One engine,</span> more of it switched on.</h2></div>
-      <div><p class="lead">Each capability runs on its own. These two share the most data, consent and measurement with <?= e(strtolower($CAP['short'])) ?>, so they cost least to add next.</p></div>
+        <h2 class="h2" id="next-t"><span class="g"><?= e($mtd_hn[0]) ?></span> <?= e($mtd_hn[1]) ?></h2></div>
+      <div><p class="lead"><?= e($mtd_hn[2]) ?></p></div>
     </div>
     <div class="mtd-on__pair">
       <?php foreach ($CAP['pairs'] as $mtd_k): $mtd_p = $CAPS[$mtd_k] ?? null; if (!$mtd_p) continue; ?>
-      <a class="mth-mod mtd-on__card" href="<?= e(xe_cap_url($DISC, $mtd_rows[$mtd_k])) ?>" data-rv>
+      <a class="mth-mod mtd-on__card bdh-zoom" href="<?= e(xe_cap_url($DISC, $mtd_rows[$mtd_k])) ?>" data-rv>
+        <span class="bdh-img bdh-img--r219 mtd-on__img"><img src="<?= e($BASE . 'assets/imgs/marketing-technology/' . $mtd_k . '.jpg') ?>" alt="" width="1200" height="514" loading="lazy" decoding="async"></span>
         <span class="mth-mod__bar"><span class="bdh-idx"><?= e($mtd_p['n']) ?></span><?= xt_icon($mtd_p['icon']) ?><span><?= e($mtd_p['kicker']) ?></span></span>
         <span class="mth-mod__body">
           <span class="mtd-on__t"><?= e($mtd_p['name']) ?></span>

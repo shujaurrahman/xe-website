@@ -3,6 +3,7 @@
 /* Outcomes: three aims from the data, beside the hub's data-viz idiom (.mth-viz) drawn from topics.php.
    The chart is a shape, labelled ILLUSTRATIVE, never a claimed result. */
 $mtd_v  = $MTD_X['viz'];
+$mtd_ho = $mtd_head('out', ['Three things', 'you should notice.', 'Outcomes we design for and measure against a holdout or an agreed baseline.']);
 $mtd_lo = min(array_merge($mtd_v[3], $mtd_v[4])); $mtd_hi = max(array_merge($mtd_v[3], $mtd_v[4]));
 $mtd_pt = fn (array $s): array => array_map(fn ($mtd_j, $mtd_y) => [30 + $mtd_j * 90, round(200 - ($mtd_y - $mtd_lo) / max(1, $mtd_hi - $mtd_lo) * 160, 1)], array_keys($s), $s);
 $mtd_a  = $mtd_pt($mtd_v[3]);
@@ -13,8 +14,8 @@ $mtd_ps = fn (array $p): string => implode(' ', array_map(fn ($mtd_q) => $mtd_q[
   <div class="wrap">
     <div class="bdh-head bdh-head--row" data-rv>
       <div><p class="lbl lbl--blue"><span class="dot"></span>What changes</p>
-        <h2 class="h2" id="outcomes-t"><span class="g">Three things</span> you should notice.</h2></div>
-      <div><p class="lead">Outcomes we design for and measure against a holdout or an agreed baseline. They are aims, not guarantees.</p></div>
+        <h2 class="h2" id="outcomes-t"><span class="g"><?= e($mtd_ho[0]) ?></span> <?= e($mtd_ho[1]) ?></h2></div>
+      <div><p class="lead"><?= e($mtd_ho[2]) ?> They are aims, not guarantees.</p></div>
     </div>
     <div class="mtd-out__g">
       <ol class="mtd-out__l">

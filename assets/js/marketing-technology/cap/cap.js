@@ -16,6 +16,14 @@
     done(0);
   }
 
+  /* Customer Relationship Strategy practice switcher: every practice is shown in the shipped HTML; here the rail
+     becomes a vertical ARIA tablist (.is-tabs) and only the chosen practice stays in flow. */
+  var prac = document.querySelector('[data-mtd-prac]');
+  if (prac) {
+    prac.classList.add('is-tabs');
+    BDH.tabs(prac, { panes: '.mtd-prac__pane', orientation: 'vertical' });
+  }
+
   document.querySelectorAll('[data-mtd-sig]').forEach(function (sig) {
     var btns = sig.querySelectorAll('[data-mtd-set]');
     var n = btns.length;

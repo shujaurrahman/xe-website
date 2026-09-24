@@ -1,6 +1,6 @@
 # marketing-technology — image credits
 
-PLACEHOLDER imagery, free under the Unsplash License (commercial use allowed, no attribution required — credited anyway). Replace with Xterra Edze's own work before launch. Each file is a 1200 × 800 crop of a photo already credited elsewhere on the site (source noted), reused on the Marketing Technology hub capability cards.
+PLACEHOLDER imagery, free under the Unsplash License (commercial use allowed, no attribution required — credited anyway). Replace with Xterra Edze's own work before launch. Each file is a 1200 × 800 crop of a photo already credited elsewhere on the site (source noted), reused on the Marketing Technology hub capability cards and, since the polish pass, as the offer photograph on each capability's own page and on the "works best with" cards of its sibling pages.
 
 | File | Used in | Unsplash user | Unsplash page |
 |---|---|---|---|

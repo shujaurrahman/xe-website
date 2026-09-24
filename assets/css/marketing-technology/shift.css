@@ -12,3 +12,5 @@
   .mth-shift__when{flex-direction:row;align-items:baseline;gap:12px}
   .mth-shift__so{padding-left:16px}
 }
+.mth-shift__rev{margin:28px 0 0;color:var(--muted)}
+.mth-shift .tl{display:inline-flex;align-items:center;min-height:44px}

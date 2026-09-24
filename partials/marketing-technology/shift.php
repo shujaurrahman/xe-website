@@ -40,5 +40,7 @@ $mth_sh_names = array_column($DISC['caps'], 0, 2);
       </li>
       <?php endforeach; ?>
     </ol>
+    <!-- PLACEHOLDER: re-check every dated rule above against its source before launch and at each content review; these facts go stale -->
+    <p class="mth-shift__rev bdh-ro">Dates and rules last reviewed September 2026. Regulations change; we re-check them at the start of every engagement.</p>
   </div>
 </section>
