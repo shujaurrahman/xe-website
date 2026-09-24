@@ -1,0 +1,115 @@
+/* AI Design — shared primitives (.aih-*). The hub and its four capability pages reuse these.
+   Card system · diagram idiom (flow) · data-viz idiom (bars) · stepper · record chip. Tokens only. */
+
+.aih{--aih-gap:clamp(16px,2vw,24px)}
+.aih .band{overflow-x:clip}
+
+/* ---------- record chip: mono key/value readout ---------- */
+.aih-rec{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 16px;font-family:var(--f);font-size:var(--t-xs);line-height:1.5;color:var(--txt)}
+.aih-rec>dt,.aih-rec>dd{margin:0;padding:9px 0;border-top:1px solid var(--line)}
+.aih-rec>dt{color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-size:var(--t-lbl)}
+.aih-rec>dd{text-align:right;overflow-wrap:anywhere}
+.aih-rec>dt:first-of-type,.aih-rec>dd:first-of-type{border-top:0}
+.aih-rec .ok{color:var(--blue)}
+.band--ink .aih-rec{color:var(--on-ink-2)}
+.band--ink .aih-rec>dt,.band--ink .aih-rec>dd{border-color:var(--on-ink-line)}
+.band--ink .aih-rec>dt{color:var(--on-ink-3)}
+
+/* ---------- card system ---------- */
+.aih-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--aih-gap)}
+.aih-card{position:relative;display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;color:var(--txt);scroll-margin-top:calc(var(--nav-h) + 24px);transition:border-color .3s var(--e),box-shadow .3s var(--e),transform .3s var(--e)}
+.band--alt .aih-card{background:var(--paper)}
+.aih-card:hover{border-color:var(--line-3);box-shadow:var(--sh-2)}
+.aih-card:target{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-wash)}
+.aih-card__media{position:relative;aspect-ratio:3/2;background:var(--paper-3);overflow:hidden}
+.aih-card__media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s var(--e)}
+.aih-card:hover .aih-card__media img{transform:scale(1.03)}
+.aih-card__body{display:flex;flex-direction:column;gap:12px;padding:22px 22px 24px;flex:1}
+.aih-card__idx{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+.aih-card__t{font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;line-height:1.2;color:var(--ink);margin:0}
+.aih-card__d{font-size:var(--t-sm);line-height:1.6;color:var(--muted);margin:0}
+.aih-card__foot{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:12px}
+.aih-card--ink{background:var(--ink);border-color:var(--ink-2);color:var(--on-ink-2)}
+.aih-card--ink .aih-card__t{color:var(--on-ink)}
+.aih-card--ink .aih-card__d{color:var(--on-ink-3)}
+.aih-card--ink .aih-card__foot{border-color:var(--on-ink-line)}
+.aih-card--flat{box-shadow:none}
+.aih-card--flat:hover{box-shadow:none}
+.aih-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.aih-list li{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--line);font-size:var(--t-sm);color:var(--txt)}
+.aih-list li:first-child{border-top:0}
+.aih-list li>span+span{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);text-align:right;flex:none;max-width:48%}
+.band--ink .aih-list li{border-color:var(--on-ink-line);color:var(--on-ink-2)}
+.band--ink .aih-list li>span+span{color:var(--on-ink-3)}
+
+/* ---------- diagram idiom: nodes joined by edge connectors ---------- */
+.aih-flow{display:flex;align-items:stretch;gap:0}
+.aih-node{flex:1 1 0;min-width:0;border:1px solid var(--line-2);border-radius:var(--r);background:var(--paper);padding:16px 16px 18px;display:flex;flex-direction:column;gap:8px}
+.aih-node__k{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.aih-node__t{font-family:var(--f-h);font-size:var(--t-body);font-weight:500;color:var(--ink);line-height:1.25}
+.aih-node__d{font-size:var(--t-xs);line-height:1.55;color:var(--muted);margin:0}
+.aih-node--blue{background:var(--blue);border-color:var(--blue);color:var(--on-ink);--xt-accent:currentColor}
+.aih-node--blue .aih-node__k,.aih-node--blue .aih-node__d{color:var(--on-ink)}
+.aih-node--blue .aih-node__t{color:var(--on-ink)}
+.aih-node--ghost{background:transparent;border-style:dashed}
+.aih-edge{flex:0 0 36px;position:relative;align-self:center;height:12px}
+.aih-edge::before{content:"";position:absolute;left:4px;right:6px;top:50%;border-top:1.5px solid var(--line-3)}
+.aih-edge::after{content:"";position:absolute;right:3px;top:50%;width:7px;height:7px;border-top:1.5px solid var(--line-3);border-right:1.5px solid var(--line-3);transform:translateY(-50%) rotate(45deg)}
+.aih-edge--blue::before,.aih-edge--blue::after{border-color:var(--blue)}
+@media (max-width:860px){
+  .aih-flow{flex-direction:column}
+  .aih-edge{flex:0 0 28px;width:12px;height:auto;align-self:center}
+  .aih-edge::before{left:50%;right:auto;top:4px;bottom:6px;border-top:0;border-left:1.5px solid var(--line-3)}
+  .aih-edge::after{top:auto;bottom:4px;right:auto;left:50%;transform:translateX(-50%) rotate(135deg)}
+}
+
+/* ---------- data-viz idiom: horizontal bars with a threshold ---------- */
+.aih-bars{position:relative;display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none}
+.aih-bar{display:grid;grid-template-columns:minmax(0,11rem) minmax(0,1fr) 3.4rem;align-items:center;gap:12px;font-size:var(--t-sm)}
+.aih-bar__l{color:var(--txt);line-height:1.3}
+.aih-bar__track{position:relative;height:10px;border-radius:var(--r-pill);background:var(--paper-3)}
+.aih-bar__fill{position:absolute;inset:0 auto 0 0;width:calc(var(--v,0) * 100%);border-radius:inherit;background:var(--ink-2);transform-origin:left center}
+.aih-bar--pass .aih-bar__fill{background:var(--blue)}
+.aih-bar__v{font-family:var(--f);font-size:var(--t-xs);text-align:right;color:var(--ink)}
+.aih-bar__thr{position:absolute;top:-6px;bottom:-6px;left:calc(var(--t,0) * 100%);border-left:1.5px dashed var(--ink);pointer-events:none}
+.band--ink .aih-bar__l{color:var(--on-ink-2)}
+.band--ink .aih-bar__track{background:var(--on-ink-card)}
+.band--ink .aih-bar__fill{background:var(--on-ink-3)}
+.band--ink .aih-bar--pass .aih-bar__fill{background:var(--blue)}
+.band--ink .aih-bar__v{color:var(--on-ink)}
+.band--ink .aih-bar__thr{border-color:var(--on-ink)}
+.aih-bars.is-anim .aih-bar__fill{transform:scaleX(0);transition:transform .9s var(--e) calc(var(--i,0) * 80ms)}
+.aih-bars.is-anim.is-in .aih-bar__fill{transform:none}
+@media (max-width:600px){
+  .aih-bar{grid-template-columns:minmax(0,1fr) 3.2rem;row-gap:6px}
+  .aih-bar__l{grid-column:1 / -1}
+}
+
+/* ---------- stepper ---------- */
+.aih-stepper{position:relative}
+.aih-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(var(--n,5),minmax(0,1fr));gap:var(--aih-gap);position:relative;counter-reset:aihs}
+.aih-stepper::before{content:"";position:absolute;left:0;right:0;top:22px;border-top:1px solid var(--line-2)}
+.aih-steps__bar{z-index:0;position:absolute;left:0;top:21px;height:3px;width:100%;background:var(--blue);transform-origin:left center;transform:scaleX(var(--p,1));border-radius:var(--r-pill)}
+.aih-step{position:relative;z-index:1;display:flex;flex-direction:column;gap:10px;padding-top:56px}
+.aih-step__i{position:absolute;top:0;left:0;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--paper);border:1px solid var(--line-2);font-family:var(--f);font-size:var(--t-xs);color:var(--ink);transition:background .4s var(--e),color .4s var(--e),border-color .4s var(--e)}
+.band--alt .aih-step__i{background:var(--paper-2)}
+.aih-step.is-on .aih-step__i,.aih-stepper:not(.is-anim) .aih-step__i{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.aih-step__time{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
+.aih-step__t{font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;color:var(--ink);margin:0;line-height:1.2}
+.aih-step__d{font-size:var(--t-sm);line-height:1.6;color:var(--muted);margin:0}
+.aih-step__out{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.aih-step__out li{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;padding:5px 9px;border:1px solid var(--line);border-radius:var(--r-pill);color:var(--txt);background:var(--paper)}
+@media (max-width:1023px){
+  .aih-steps{grid-template-columns:minmax(0,1fr);gap:0}
+  .aih-stepper::before{left:22px;right:auto;top:0;bottom:0;border-top:0;border-left:1px solid var(--line-2)}
+  .aih-steps__bar{left:21px;top:0;width:3px;height:100%;transform-origin:center top;transform:scaleY(var(--p,1))}
+  .aih-step{padding:0 0 32px 68px}
+  .aih-step:last-child{padding-bottom:0}
+}
+
+@media (max-width:1180px){.aih-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.aih-cards{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){
+  .aih-card,.aih-card__media img,.aih-step__i{transition:none}
+  .aih-bars.is-anim .aih-bar__fill{transform:none;transition:none}
+}

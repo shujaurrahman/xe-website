@@ -1,0 +1,8 @@
+.aih-std{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--aih-gap)}
+.aih-std__i{display:flex;flex-direction:column;gap:16px;padding:24px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);min-width:0}
+.aih-std__i .xt-badge{align-self:flex-start}
+.aih-std__t{margin:0 0 6px;font-family:var(--f);font-size:var(--t-xs);letter-spacing:.04em;font-weight:500;color:var(--ink)}
+.aih-std__d{margin:0;font-size:var(--t-sm);line-height:1.55;color:var(--muted)}
+.aih-std__i--note{background:transparent;border-style:dashed;justify-content:center}
+@media (max-width:1180px){.aih-std{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.aih-std{grid-template-columns:minmax(0,1fr)}.aih-std__i{padding:20px}}

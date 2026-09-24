@@ -1,0 +1,3 @@
+.aih-cap__len{margin:0;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--ink)}
+.aih-cap__len span{color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-right:6px}
+.aih-capabilities .aih-list li>span:first-child{line-height:1.4}
