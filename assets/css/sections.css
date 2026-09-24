@@ -656,6 +656,10 @@
   .s05__out{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (prefers-reduced-motion:reduce){.s05__oc{animation:none}}
+@media (max-width:600px){
+  .s05__head{align-items:flex-start;text-align:left;margin-inline:0}
+  .s05__head .lead{text-align:left}
+}
 
 /* ===== 06-equip ===== */
 /* 06 — capability rail. A native scroll-snap row (swipe, trackpad, keyboard, no JS
