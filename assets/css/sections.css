@@ -486,7 +486,8 @@
 
 /* ===== 04-pillars ===== */
 /* 04 — three pillars, divided by hairlines, each closing on a tinted claim. */
-.s04__head{max-width:44ch;margin-inline:auto}
+.s04__head .h2{max-width:20ch;text-wrap:balance}
+.s04__head .lead{max-width:56ch}
 .s04__grid{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
   gap:0;border-top:1px solid var(--line-2);
@@ -497,11 +498,10 @@
   border-right:1px solid var(--line-2);
 }
 .s04__col:first-child{padding-left:0}
-.s04__col:last-child{border-right:0;padding-right:0}
-.s04__icon{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;
+.s04__col:last-child{border-right:0}
+.s04__icon{display:grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);
   background:var(--blue-wash);color:var(--blue-d);margin-bottom:clamp(20px,2.4vw,30px)}
-.s04__icon svg{width:22px;height:22px}
-.s04__icon svg{width:100%;height:100%}
+.s04__icon svg{width:20px;height:20px}
 .s04__t{margin-bottom:10px}
 .s04__p{font-size:var(--t-sm);line-height:1.6;color:var(--muted);margin-bottom:22px}
 .s04__stat{margin-top:auto;align-self:flex-start;letter-spacing:.1em}

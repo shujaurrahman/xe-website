@@ -1,6 +1,6 @@
 <section class="band band--rules band--tight s04" id="pillars" aria-labelledby="s04-t">
   <div class="wrap">
-    <div class="head head--c s04__head" data-rv>
+    <div class="head s04__head" data-rv>
       <p class="lbl lbl--blue"><span class="dot"></span>Why it compounds</p>
       <h2 class="h2" id="s04-t"><span class="g">Win on</span> what compounds</h2>
       <p class="lead">Strategy, craft and technology in one team — so the work gets sharper every week
