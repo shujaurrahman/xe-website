@@ -135,16 +135,18 @@ judge with your eyes, not from the file list. Give every parallel agent its own 
 
 | Area | State |
 |---|---|
-| Brand Design hub + 6 capability pages | done, reviewed, polished |
+| Brand Design hub + 6 capability pages | done, reviewed, polished (the benchmark) |
 | Technology & Intelligence hub + 10 capability pages | done, independently reviewed, 186 fixes applied |
-| Services catalogue + lead-tagged contact | done; selection POSTs to `/contact` and pre-fills; GET still works |
-| Clean URLs | done and verified in all three environments |
-| Site-wide no-JS reveal fix | done in `partials/head.php` |
-| `data/` for the 4 new disciplines | **done** — content + catalogue data written and linting clean |
-| The 4 new discipline pages | **stubs (55 lines each)** — this is the next job |
-| Home page showcase sections | `index.php` prepped, `23-brand` / `24-technology` / `25-offer` listed in `$SECTIONS` but **files not built** |
+| Home page | 25 sections as a five-chapter story with a chapter rail; 23/24/25 built; reviewed + polished. Sections 11, 15, 18, 19 are kept as files but not rendered (real logos / fake testimonials / duplicate CTAs) — `index.php` `$HX_CHAPTERS` |
+| Industries, Work, Approach, Careers, What we do (`/services/`), 404, Contact | built → critiqued → polished → verified, on `cloud/index-rebuild` |
+| Legal suite (`legal/` — hub, privacy, terms, cookies + working preferences, accessibility, commercial policy, IP & trademarks, responsible AI, security, `.well-known/security.txt`) | built → critiqued → polished → verified; every identifier and legal judgement is a PLACEHOLDER for counsel |
+| The 4 new discipline hubs + 24 capability pages (one template per discipline, topic-specific showcases) | built → critiqued → polished → verified, on `cloud/discipline-pages` |
+| Services catalogue + lead-tagged contact | done; careers applications and the home booking form also post to `/contact` |
+| Clean URLs + designed 404 | done (router.php + .htaccess final rule) |
 
-Nothing is committed. Nothing is deployed. `deploy.sh` targets `xe.shujaurrahman.com`.
+Nothing is deployed. `docs/KIT.md` is the compact build reference agents read instead of the benchmark source.
+Open owner items: real logos (s11), testimonials (s15), stock/placeholder photography, illustrative figures, legal entity details,
+® registration, careers openings and benefits, response times.
 
 ---
 
