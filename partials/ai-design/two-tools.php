@@ -45,7 +45,7 @@ $aih_rows = [
         </tbody>
         <tfoot>
           <tr><td></td>
-            <td><a class="tl" href="<?= e($AIH_URL . '#brand-ai-tools') ?>">Brand-tuned models <span class="i" aria-hidden="true"></span></a></td>
+            <td><a class="tl" href="<?= e(xe_url('services/ai-design/brand-ai-tools.php')) ?>">Brand-tuned models <span class="i" aria-hidden="true"></span></a></td>
             <td><a class="tl" href="<?= e($aih_bd_url) ?>">Brand governance tooling <span class="i" aria-hidden="true"></span></a></td></tr>
         </tfoot>
       </table>

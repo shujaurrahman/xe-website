@@ -1,6 +1,6 @@
 <?php /* DRAFT COPY — review before launch */
 /* Capabilities — the card system every AI Design page reuses (.aih-card). Stable id = capability slug.
-   Links point at the card's own anchor on this hub until the capability pages exist. */
+   Links use xe_cap_url(), which falls back to the hub while a capability page does not exist. */
 $aih_cap_alt = [
     'ai-application-design'  => 'Over-ear headphones and a microphone in front of an open laptop',
     'ai-content-studio'      => 'An editor works on footage at a monitor in a darkened edit suite',
@@ -23,7 +23,7 @@ $aih_cap_alt = [
         $aih_slug = $aih_cp[2];
         $aih_c    = $CAPS[$aih_slug] ?? null;
         if (!$aih_c) continue;
-        $aih_href = $AIH_URL . '#' . $aih_slug; ?>
+        $aih_href = xe_cap_url($DISC, $aih_cp); ?>
         <article class="aih-card" id="<?= e($aih_slug) ?>" aria-labelledby="<?= e($aih_slug) ?>-t">
           <div class="aih-card__media">
             <img src="<?= e(xe_url($aih_c['img']['src'])) ?>" width="1200" height="800" alt="<?= e($aih_cap_alt[$aih_slug] ?? '') ?>" loading="lazy">
