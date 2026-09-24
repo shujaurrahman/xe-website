@@ -67,7 +67,7 @@ with sync_playwright() as p:
             f = OUT / f"{stem}-full-{TAG}.png"; pg.screenshot(path=str(f), full_page=True); print(f)
         else:
             sels = [SEL] if SEL else pg.evaluate("""()=>[...document.querySelectorAll('main > section, main > nav')].map((s,i)=>{
-                const c=[...s.classList].find(c=>/^(bd|bg|bi|bf|bs|ba|bt|xt|tih|twa|tcs|tas|tap|tic|tsc|tis|tsv|taa|ttw|cch|ccd|aih|aid|pxh|pxd|mth|mtd)-[a-z0-9-]+$/.test(c)||c==='s22'); return c?'.'+c:null}).filter(Boolean)""")
+                const c=[...s.classList].find(c=>/^(bd|bg|bi|bf|bs|ba|bt|xt|tih|twa|tcs|tas|tap|tic|tsc|tis|tsv|taa|ttw|cch|ccd|aih|aid|pxh|pxd|mth|mtd)-[a-z0-9-]+$/.test(c)||/^s\d\d$/.test(c)); return c?'.'+c:null}).filter(Boolean)""")
             seen = {}
             for sel in sels:
                 els = pg.query_selector_all(sel)
