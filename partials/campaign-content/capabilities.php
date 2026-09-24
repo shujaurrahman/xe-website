@@ -39,7 +39,7 @@ foreach ($DISC['caps'] as $cch_c) $cch_desc[$cch_c[2]] = $cch_c[1];
           </ul>
           <div class="cch-card__f">
             <span class="bdh-ro"><?= e($cch_cap['meta'][0]) ?><!-- PLACEHOLDER: confirm typical set-up time before launch --></span>
-            <a class="tl" href="<?= e(xe_url('services/campaign-content.php') . '#' . $cch_slug) ?>" aria-label="Explore <?= e($cch_cap['name']) ?>">Explore <span class="i"></span></a>
+            <a class="tl" href="<?= e(xe_cap_url($DISC, [$cch_cap['name'], '', $cch_slug])) ?>" aria-label="Explore <?= e($cch_cap['name']) ?>">Explore <span class="i"></span></a>
           </div>
         </article>
         <?php endforeach; ?>
