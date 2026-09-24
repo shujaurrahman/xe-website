@@ -1,13 +1,14 @@
-<section class="band band--rules s12" id="process" aria-labelledby="s12-t">
+<noscript><style>.s12__d{max-height:none;opacity:1}.s12__bar{display:none}.s12__step .s12__t{color:var(--ink)}.s12__stage{display:flex;flex-direction:column;min-height:0}.s12__scene{position:relative;inset:auto;opacity:1;visibility:visible;transform:none}.s12__scene+.s12__scene{border-top:1px solid var(--line)}</style></noscript>
+<section class="band band--alt band--rules s12" id="process" aria-labelledby="s12-t">
   <div class="wrap">
     <div class="head head--c s12__head" data-rv>
       <p class="lbl lbl--blue"><span class="dot"></span>How we work</p>
-      <h2 class="h2" id="s12-t">Intelligence is the new advantage</h2>
+      <h2 class="h2 s12__h" id="s12-t"><span class="g">Intelligence</span> is the new advantage</h2>
       <p class="lead">Everything the market is saying, in. A system that keeps getting sharper, out.</p>
     </div>
 
     <div class="s12__panel" data-s12 data-rv data-rv-d="80">
-      <span class="s12__dots" aria-hidden="true"></span>
+      <span class="s12__dots dots" aria-hidden="true"></span>
 
       <div class="s12__steps" role="tablist" aria-label="How we work">
         <button class="s12__step is-on" type="button" role="tab" id="s12-t0" aria-controls="s12-p0" aria-selected="true">

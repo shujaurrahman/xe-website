@@ -39,7 +39,12 @@
 
   show(0);
   if (!XE.reduced) {
-    panel.classList.add('is-live');
+    /* the ping only loops while the panel is on screen */
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        panel.classList.toggle('is-live', es[0].isIntersecting);
+      }, { threshold: 0 }).observe(panel);
+    } else { panel.classList.add('is-live'); }
     timer = XE.liveTimer(panel, 6000, function () { if (!pinned) show(i + 1); });
     XE.on(panel, 'mouseenter', function () { if (timer) timer.stop(); });
     XE.on(panel, 'mouseleave', function () { if (!pinned && timer) timer.start(); });
