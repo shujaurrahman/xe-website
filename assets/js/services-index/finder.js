@@ -20,6 +20,8 @@
     });
     grps.forEach(function (g) { g.hidden = !g.querySelector('[data-svx-row]:not([hidden])'); });
     shown.textContent = count; none.hidden = count > 0;
+    var dsc = root.querySelector('[data-svx-describe]');   /* carry the chosen discipline into the brief */
+    if (dsc) { var u = dsc.getAttribute('href').split('?')[0]; dsc.setAttribute('href', d ? u + '?from=' + encodeURIComponent(d) : u); }
     if (push && window.history && history.replaceState) {
       var p = []; if (s) p.push('q=' + encodeURIComponent(q.value.trim())); if (d) p.push('d=' + d); if (n) p.push('need=' + n);
       history.replaceState(null, '', (p.length ? '?' + p.join('&') : location.pathname) + '#finder');

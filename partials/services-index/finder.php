@@ -8,6 +8,14 @@ $svx_match = function (array $svx_r) use ($svx_q, $svx_fd, $svx_fn): bool {
     return true;
 };
 $svx_shown = count(array_filter($svx_rows, $svx_match));
+/* Enquire pre-fills the brief: a catalogue-backed capability opens contact on its own page's services
+   (from=<page key>); a capability with no catalogue is ticked directly (cap:<discipline>:<capability>). */
+$svx_gen = svc_general();
+$svx_enq = function (array $svx_r) use ($svx_gen): string {
+    $svx_slug = $svx_r['slug'] !== '' ? $svx_r['slug'] : svc_slug($svx_r['name']);
+    if (isset($svx_gen[$svx_r['d']['slug']])) return svc_contact_url(['cap:' . $svx_r['d']['slug'] . ':' . $svx_slug]);
+    return svc_contact_url([], null, svc_page($svx_slug) ? $svx_slug : $svx_r['d']['slug']);
+};
 $svx_link  = function (string $svx_key, string $svx_val) use ($svx_q, $svx_fd, $svx_fn): string {
     $svx_p = array_filter(['q' => $svx_q, 'd' => $svx_fd, 'need' => $svx_fn]);
     if ($svx_val === '') unset($svx_p[$svx_key]); else $svx_p[$svx_key] = $svx_val;
@@ -77,6 +85,7 @@ $svx_link  = function (string $svx_key, string $svx_val) use ($svx_q, $svx_fd, $
                     </span>
                     <span class="svx-res__go" aria-hidden="true">›</span>
                   </a>
+                  <a class="svx-res__q" href="<?= e($svx_enq($svx_r)) ?>" aria-label="Enquire about <?= e($svx_r['name']) ?>">Enquire <span class="i" aria-hidden="true">›</span></a>
                 </li>
               <?php endforeach; ?>
             </ul>
@@ -85,7 +94,7 @@ $svx_link  = function (string $svx_key, string $svx_val) use ($svx_q, $svx_fd, $
         <div class="svx-none" data-svx-none<?= $svx_shown ? ' hidden' : '' ?>>
           <p class="svx-none__t">Nothing matches that yet.</p>
           <p class="p">Describe the problem instead and we will route it to the right lead.</p>
-          <a class="btn btn--out btn--sm" href="<?= e(xe_url('contact.php')) ?>">Describe it to us <span class="i" aria-hidden="true">›</span></a>
+          <a class="btn btn--out" href="<?= e(svc_contact_url([], null, $svx_fd !== '' ? $svx_fd : null)) ?>" data-svx-describe>Describe it to us <span class="i" aria-hidden="true">›</span></a>
         </div>
       </div>
     </div>

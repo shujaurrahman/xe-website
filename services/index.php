@@ -3,6 +3,7 @@
 $BASE = '../';
 require __DIR__ . '/../partials/init.php';
 require_once __DIR__ . '/../partials/tech/kit.php';
+require_once __DIR__ . '/../partials/services/lib.php';   // svc_contact_url() for the finder's Enquire links
 
 /* ---- every capability, tagged by the need it answers (used by hero, finder and system) ---- */
 $SVX_NEEDS = [
@@ -20,7 +21,7 @@ foreach ($SITE['disciplines'] as $svx_d) {
         $svx_n = [];
         foreach ($SVX_NEEDS as $svx_k => $svx_nd) if (preg_match($svx_nd[1], $svx_hay)) $svx_n[] = $svx_k;
         if (!$svx_n) $svx_n[] = 'build';
-        $svx_rows[] = ['d' => $svx_d, 'name' => $svx_c[0], 'desc' => $svx_c[1], 'url' => xe_cap_url($svx_d, $svx_c),
+        $svx_rows[] = ['d' => $svx_d, 'name' => $svx_c[0], 'desc' => $svx_c[1], 'slug' => (string) ($svx_c[2] ?? ''), 'url' => xe_cap_url($svx_d, $svx_c),
                        'own' => xe_cap_url($svx_d, $svx_c) !== xe_discipline_url($svx_d), 'needs' => $svx_n];
     }
 }
