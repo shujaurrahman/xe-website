@@ -27,7 +27,14 @@
 }
 /* mock readout: label, model ids, badge and note in the display face; the task names read in Montserrat */
 .s14__plbl,.s14__rows i,.s14__pick,.s14__pnote{font-family:var(--f)}
-.s14__plbl{font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.s14__plbl{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;
+  font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);
+}
+.s14__tag{
+  padding:3px 8px;border:1px solid var(--line-2);border-radius:var(--r-pill);
+  font-size:var(--t-lbl);letter-spacing:.1em;line-height:1.2;color:var(--muted);
+}
 .s14__rows{display:flex;flex-direction:column;gap:8px}
 .s14__rows li{
   display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;
