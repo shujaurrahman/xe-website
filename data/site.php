@@ -159,6 +159,7 @@ return [
         ['Accessibility',      'legal/accessibility.php'],
         ['Commercial Policy',  'legal/commercial-policy.php'],
         ['IP & Trademarks',    'legal/intellectual-property.php'],
+        ['Responsible AI',     'legal/responsible-ai.php'],
         ['Security',           'legal/security.php'],
     ],
 

@@ -52,7 +52,7 @@ $foot_href = function ($h) { return preg_match('~^(#|mailto:|tel:|https?://)~', 
 
     <div class="foot__bar">
       <p class="foot__copy">© <span data-year><?= date('Y') ?></span> <?= e($SITE['company']['name']) ?>. All rights reserved.
-        <!-- PLACEHOLDER: confirm the legal entity name before launch -->
+        <!-- PLACEHOLDER: confirm the legal entity name and the trademark registration number/class before launch; use ™ instead of ® until registration is confirmed -->
         <span class="foot__tm">Xterra Edze® is a registered trademark of [Legal entity name] Private Limited.</span></p>
 
       <ul class="foot__legal" aria-label="Legal">
