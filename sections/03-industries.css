@@ -66,9 +66,11 @@
     height:auto;overflow-x:auto;scroll-snap-type:x mandatory;
     margin-inline:calc(-1 * var(--gutter));padding-inline:var(--gutter);scroll-padding-inline:var(--gutter);
     padding-bottom:8px;scrollbar-width:none;
-    -webkit-mask-image:linear-gradient(90deg,transparent,#000 var(--gutter),#000 calc(100% - var(--gutter)),transparent);
-    mask-image:linear-gradient(90deg,transparent,#000 var(--gutter),#000 calc(100% - var(--gutter)),transparent);
+    /* the mask-x fade, tuned to the gutter the rail bleeds into */
+    -webkit-mask-image:linear-gradient(90deg,transparent,var(--ink) var(--gutter),var(--ink) calc(100% - var(--gutter)),transparent);
+    mask-image:linear-gradient(90deg,transparent,var(--ink) var(--gutter),var(--ink) calc(100% - var(--gutter)),transparent);
   }
+  .s03__rail:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
   .s03__rail::-webkit-scrollbar{display:none}
   .s03__card{flex:0 0 78%;height:380px;scroll-snap-align:center}
   .s03__card.is-on{flex:0 0 78%}

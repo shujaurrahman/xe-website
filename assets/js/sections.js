@@ -165,8 +165,13 @@ try {
     var tabsOn = wide.matches;
     if (tabsOn) {
       rail.setAttribute('role', 'tablist'); rail.removeAttribute('aria-roledescription');
+      rail.removeAttribute('tabindex');
+      rail.setAttribute('aria-label', 'Industries we work in');
     } else {
+      /* a sideways scroller: focusable so arrow keys scroll it, named as one */
       rail.setAttribute('role', 'region');
+      rail.setAttribute('tabindex', '0');
+      rail.setAttribute('aria-label', 'Industries we work in, scroll sideways');
     }
     tabs.forEach(function (t, k) {
       var body = cards[k].querySelector('.s03__body');
