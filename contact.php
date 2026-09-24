@@ -2,6 +2,9 @@
 /**
  * Contact — the brief. Arrives pre-filled from any service catalogue (partials/services/catalogue.php):
  *   contact?service[]=<page>:<offer>&service[]=…&package=<key>&from=<page key>
+ *   or the same fields POSTed with intent=select (what the catalogue does, so a long brief
+ *   stays out of the URL); a single "Enquire" posts only=<page>:<offer>, a package card
+ *   posts pick_package=<key>. Both routes pre-fill; neither sends anything.
  * The query and the POST are handled in partials/contact/handler.php (validation, the lead email,
  * Post/Redirect/Get, the honest failure state). Styles: assets/css/contact.css (.ct-*);
  * behaviour: assets/js/contact.js (live brief, service search, counters, error focus).

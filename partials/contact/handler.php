@@ -101,6 +101,27 @@ elseif (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET') {
     $CT['v']['pre']     = $CT['v']['services'];
 }
 
+/* ---------------- arriving with a selection, posted from a service catalogue ----------------
+   The catalogue posts rather than links so a brief of many services does not become a long query
+   string. 'intent' marks it as a selection to pre-fill, not a completed enquiry to send. A single
+   "Enquire" button posts 'only' with its own service id; the brief posts every ticked service[].
+   The GET form above still works, so older links and shared URLs keep pre-filling. */
+elseif (($_POST['intent'] ?? '') === 'select') {
+    $ct_raw = (isset($_POST['only']) && is_string($_POST['only']))
+        ? svc_ids($_POST['only'])
+        : svc_ids($_POST['service'] ?? []);
+    foreach ($ct_raw as $ct_id) {
+        if (svc_resolve($ct_id)) $CT['v']['services'][] = $ct_id; else $CT['dropped']++;
+    }
+    /* a package card posts its own key; the brief's picker posts 'package' */
+    $ct_pk = is_string($_POST['pick_package'] ?? null) && $_POST['pick_package'] !== ''
+        ? $_POST['pick_package']
+        : (is_string($_POST['package'] ?? null) ? $_POST['package'] : '');
+    $CT['v']['package'] = isset(svc_packages()[$ct_pk]) ? $ct_pk : '';
+    $CT['v']['from']    = ct_from($_POST['from'] ?? '');
+    $CT['v']['pre']     = $CT['v']['services'];
+}
+
 /* ---------------- the form ---------------- */
 else {
     $P = $_POST;

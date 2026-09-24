@@ -8,16 +8,47 @@
    keyed off .is-in the way the rest of the page is; under reduced motion it is all shown at once.
    Every value below is a placeholder for the example company; none of it describes Xterra Edze. */
 
+/* An edge runs between two boxes, not between their centres: drawn centre-to-centre it would cross
+   the centre card and the node card it points at. Given both boxes, this returns where the line
+   should start and stop — the point at which the ray leaves each box, plus a small breathing gap. */
+$tsv_en_edge = static function (float $ax, float $ay, float $ahw, float $ahh,
+                                float $bx, float $by, float $bhw, float $bhh, float $gap = 7.0): array {
+    $dx = $bx - $ax;
+    $dy = $by - $ay;
+    $len = sqrt($dx * $dx + $dy * $dy);
+    if ($len < 0.001) {
+        return [$ax, $ay, $bx, $by];
+    }
+    $ux = $dx / $len;
+    $uy = $dy / $len;
+    /* how far along the ray a box of this size is left: whichever side it reaches first */
+    $leaves = static fn (float $hw, float $hh): float => min(
+        abs($ux) > 1e-6 ? $hw / abs($ux) : INF,
+        abs($uy) > 1e-6 ? $hh / abs($uy) : INF
+    );
+    $from = $leaves($ahw, $ahh) + $gap;
+    $to   = $len - ($leaves($bhw, $bhh) + $gap);
+    if ($to <= $from) {          // boxes overlap or nearly touch: no edge worth drawing
+        $from = $to = $len / 2;
+    }
+    return [
+        round($ax + $ux * $from, 1), round($ay + $uy * $from, 1),
+        round($ax + $ux * $to, 1),   round($ay + $uy * $to, 1),
+    ];
+};
+
 /* [x, y, box width, schema type, the property that connects it, what it earns] */
+/* The two side nodes sit further out than a circle would put them: at equal radius their boxes and
+   the centre card nearly touch, leaving no room to draw the edge between them. */
 $tsv_en_nodes = [
-    [280,  50, 132, 'Product',        'makesOffer',      'What you sell, named consistently'],
-    [386,  94, 128, 'Person',         'employee',        'Named authors and spokespeople'],
-    [430, 200, 148, 'PostalAddress',  'address',         'One address, everywhere the same'],
-    [386, 306, 126, 'Review',         'review',          'Ratings you did not write yourself'],
-    [280, 350, 132, 'sameAs',         'profiles',        'The profiles that confirm the entity'],
-    [174, 306, 126, 'Article',        'author',          'Who wrote it, and when it changed'],
-    [130, 200, 132, 'FAQPage',        'mainEntity',      'Questions, answered on the page'],
-    [174,  94, 156, 'BreadcrumbList', 'itemListElement', 'Where the page sits in the site'],
+    [320,  50, 132, 'Product',        'makesOffer',      'What you sell, named consistently'],
+    [455,  95, 128, 'Person',         'employee',        'Named authors and spokespeople'],
+    [536, 200, 148, 'PostalAddress',  'address',         'One address, everywhere the same'],
+    [455, 305, 126, 'Review',         'review',          'Ratings you did not write yourself'],
+    [320, 350, 132, 'sameAs',         'profiles',        'The profiles that confirm the entity'],
+    [185, 305, 126, 'Article',        'author',          'Who wrote it, and when it changed'],
+    [104, 200, 132, 'FAQPage',        'mainEntity',      'Questions, answered on the page'],
+    [185,  95, 156, 'BreadcrumbList', 'itemListElement', 'Where the page sits in the site'],
 ];
 
 /* the JSON-LD panel: [indent level, line]. Illustrative values for the placeholder company. */
@@ -83,11 +114,13 @@ $tsv_en_nap = [
 
       <div class="tsv-ent__graph" data-rv>
         <div class="tsv-graph">
-          <svg viewBox="0 0 560 400" class="tsv-graph__svg" role="img"
+          <svg viewBox="0 0 640 400" class="tsv-graph__svg" role="img"
                aria-label="A knowledge graph: the placeholder company at the centre, connected by eight typed edges to Product, Person, PostalAddress, Review, sameAs, Article, FAQPage and BreadcrumbList.">
             <g class="tsv-graph__edges">
-              <?php foreach ($tsv_en_nodes as $tsv_eni => $tsv_enn): ?>
-                <line class="tsv-graph__e" x1="280" y1="200" x2="<?= (int) $tsv_enn[0] ?>" y2="<?= (int) $tsv_enn[1] ?>" style="--i:<?= $tsv_eni ?>"/>
+              <?php foreach ($tsv_en_nodes as $tsv_eni => $tsv_enn):
+                  [$tsv_ex1, $tsv_ey1, $tsv_ex2, $tsv_ey2] =
+                      $tsv_en_edge(320, 200, 82, 27, (float) $tsv_enn[0], (float) $tsv_enn[1], $tsv_enn[2] / 2, 21); ?>
+                <line class="tsv-graph__e" x1="<?= $tsv_ex1 ?>" y1="<?= $tsv_ey1 ?>" x2="<?= $tsv_ex2 ?>" y2="<?= $tsv_ey2 ?>" style="--i:<?= $tsv_eni ?>"/>
               <?php endforeach; ?>
             </g>
 
@@ -102,7 +135,7 @@ $tsv_en_nap = [
               <?php endforeach; ?>
             </g>
 
-            <g class="tsv-graph__c" transform="translate(280,200)">
+            <g class="tsv-graph__c" transform="translate(320,200)">
               <rect x="-82" y="-27" width="164" height="54" rx="11"/>
               <text class="tsv-graph__ct" text-anchor="middle" y="-4">Your company</text>
               <text class="tsv-graph__cp" text-anchor="middle" y="13">Organization · @id</text>

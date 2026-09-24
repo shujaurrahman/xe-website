@@ -121,8 +121,8 @@ return [
         'name'     => 'Marketing Technology',
         'short'    => 'Marketing',
         'intro'    => 'We build the technology backbone that makes personalization, automation, and always-on marketing possible, and design the relationships that turn a single purchase into a lasting one.',
-        'group'    => 'Customer Relationship Strategy',
-        'group_at' => 6,
+        /* No 'group' heading any more: it used to introduce the five customer capabilities below it,
+           and those are now the single "Customer Relationship Strategy" capability at the end. */
         'caps'     => [
             ['AI-Driven Marketing Automation', 'Automating the repetitive work so marketing teams can focus on what actually needs a human.'],
             ['Content & Communication Infrastructure', 'Infrastructure that gets the right message to the right channel without extra manual work.'],
@@ -130,11 +130,10 @@ return [
             ['AI Creative Solutions', 'AI-assisted creative production built to move at the pace martech demands.'],
             ['AI Lead Generation', 'Identifying and qualifying the leads that are actually worth a sales team\'s time.'],
             ['Automated & Dynamic Sales', 'Sales workflows that adapt in real time to wherever a prospect actually is.'],
-            ['Customer Journey Mapping', 'Designing a connected, consistent experience across every platform a customer touches.'],
-            ['Customer Segmentation & Insights', 'Understanding what different customer groups actually need, and serving each of them well.'],
-            ['Customer Engagement Programs', 'Personalized programs that keep people coming back and raise lifetime value.'],
-            ['Loyalty Strategy & Programs', 'Rewards and experiences engineered to earn retention, not just repeat purchases.'],
-            ['Lifecycle Marketing', 'Personalized strategies that nurture leads, convert prospects, and retain customers.'],
+            /* One capability, not five: journey mapping, segmentation, engagement programmes, loyalty
+               and lifecycle marketing are the parts of a single customer relationship practice, and
+               they are sold and delivered together. They are the sections of this one page. */
+            ['Customer Relationship Strategy', 'Journey mapping, segmentation, engagement, loyalty and lifecycle marketing as one connected practice that raises retention and lifetime value.'],
         ],
     ],
     ],

@@ -64,7 +64,12 @@ if ($svc_page):
       </ol>
     </div>
 
-    <form class="svc-cat" action="<?= e(xe_url('contact.php')) ?>" method="get" data-svc-form>
+    <?php /* Posted, not linked: a brief of many services would otherwise become a very long query
+             string. 'intent' tells the contact page this is a selection to pre-fill, not an
+             enquiry to send. Every action below is a real submit button, so the whole flow still
+             works with JavaScript off. */ ?>
+    <form class="svc-cat" id="svc-form-<?= e($svc_key) ?>" action="<?= e(xe_url('contact.php')) ?>" method="post" data-svc-form>
+      <input type="hidden" name="intent" value="select">
       <input type="hidden" name="from" value="<?= e($svc_key) ?>">
 
       <div class="svc-cols">
@@ -159,9 +164,9 @@ if ($svc_page):
                     <?php endif; ?>
 
                     <div class="svc-card__act">
-                      <a class="svc-card__enq" href="<?= e(svc_contact_url([$svc_id], null, $svc_key)) ?>">
+                      <button class="svc-card__enq" type="submit" name="only" value="<?= e($svc_id) ?>" data-svc-enq>
                         Enquire<span class="sr"> about <?= e($svc_o['name']) ?></span> <span class="svc-card__arr" aria-hidden="true">›</span>
-                      </a>
+                      </button>
                       <label class="svc-add">
                         <input class="svc-add__in" type="checkbox" name="service[]" value="<?= e($svc_id) ?>"
                                aria-label="Add <?= e($svc_o['name']) ?> to your brief" data-svc-add>
@@ -249,10 +254,10 @@ if ($svc_page):
                   </ul>
                   <p class="svc-pkc__best"><span>Best for</span><?= e($svc_p['best']) ?></p>
                 </div>
-                <a class="svc-pkc__go" href="<?= e(svc_contact_url([], $svc_x, $svc_key)) ?>" data-svc-pklink="<?= e($svc_x) ?>">
+                <button class="svc-pkc__go" type="submit" form="svc-form-<?= e($svc_key) ?>" name="pick_package" value="<?= e($svc_x) ?>" data-svc-pklink="<?= e($svc_x) ?>">
                   <span>Choose <?= e($svc_p['name']) ?></span>
                   <span class="svc-pkc__arrow" aria-hidden="true"><i></i><b>›</b></span>
-                </a>
+                </button>
               </div>
             </li>
           <?php endforeach; ?>

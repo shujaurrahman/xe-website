@@ -3,14 +3,14 @@
    Standalone: needs only the catalogue markup. Uses window.XE (core.js) for
    the reduced-motion flag and inView when present; never needs BDH.
 
-   What it adds to the plain-HTML catalogue (which already works as a GET form):
+   What it adds to the plain-HTML catalogue (which already works as a POST form):
    • ARIA tabs over the categories: arrows, Home/End, a sliding ink marker,
      one pane at a time, cards rising in turn on each switch.
    • The brief: "Add to brief" checkboxes feed a tray that shows the count,
      the names (removable), the package picker and "Continue to contact".
      The brief lives in sessionStorage ('xe-brief') for the visit, so services
      picked on one page are still there on the next. Continue sends every id.
-   • Every "Choose <package>" link carries the services already in the brief.
+   • Every "Choose <package>" button carries the services already in the brief.
    Everything is announced through a polite live region.
    ========================================================================== */
 (function () {
@@ -46,12 +46,25 @@
     io.observe(el);
   }
 
-  function contactUrl(base, ids, pkg, from) {
-    var q = [];
-    ids.forEach(function (id) { q.push('service%5B%5D=' + encodeURIComponent(id).replace(/%3A/gi, ':')); });
-    if (pkg) q.push('package=' + encodeURIComponent(pkg));
-    if (from) q.push('from=' + encodeURIComponent(from));
-    return base + (q.length ? '?' + q.join('&') : '');
+  /* The brief can hold services added on earlier pages, which the form on this page does not know
+     about, so the selection is posted from a form built here rather than left to the native submit.
+     Posting also keeps a long brief out of the URL. The contact page reads 'intent=select'. */
+  function postSelection(base, ids, pkg, from) {
+    var f = document.createElement('form');
+    f.method = 'post';
+    f.action = base;
+    f.hidden = true;
+    function add(name, value) {
+      var i = document.createElement('input');
+      i.type = 'hidden'; i.name = name; i.value = value;
+      f.appendChild(i);
+    }
+    add('intent', 'select');
+    ids.forEach(function (id) { add('service[]', id); });
+    if (pkg) add('package', pkg);
+    if (from) add('from', from);
+    document.body.appendChild(f);
+    f.submit();
   }
 
   function replay(el, cls) {
@@ -295,7 +308,8 @@
         var tag = c.querySelector('[data-svc-pksel]');
         if (tag) tag.hidden = !on;
       });
-      pkLinks.forEach(function (a) { a.href = contactUrl(base, ids, a.getAttribute('data-svc-pklink'), from); });
+      /* the package cards are submit buttons now, so there is no href to keep in step: the brief
+         and the chosen package are gathered when the form is submitted */
 
       if (!first) say(msg);
       first = false;
@@ -374,8 +388,18 @@
     if (form) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        var ids = state.items.map(function (it) { return it.id; });
-        window.location.href = contactUrl(base, ids, pkg ? pkg.value : '', from);
+        /* which control was used decides what travels: "Enquire" sends that one service on its own,
+           a package card sends the brief with that package, anything else sends the brief as it is */
+        var hit = e.submitter || null;
+        var ids, chosen = pkg ? pkg.value : '';
+        if (hit && hit.name === 'only') {
+          ids = [hit.value];
+          chosen = '';
+        } else {
+          ids = state.items.map(function (it) { return it.id; });
+          if (hit && hit.name === 'pick_package') chosen = hit.value;
+        }
+        postSelection(base, ids, chosen, from);
       });
     }
 
