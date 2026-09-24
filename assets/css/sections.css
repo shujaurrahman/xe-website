@@ -157,13 +157,13 @@
              border-color var(--d2) var(--e-io);
 }
 .s02__pill:hover{color:var(--blue-d);border-color:var(--blue-line)}
-.s02__pill[aria-selected="true"]{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 8px 22px -10px rgba(0,130,251,.6)}
+.s02__pill[aria-selected="true"]{background:var(--blue);border-color:var(--blue);color:var(--on-ink);box-shadow:0 8px 22px -10px var(--blue-line)}
 
-/* the connecting rule: dashed like a blueprint dimension line */
+/* the connecting rule: one solid hairline (the page's single rule style) */
 .s02__wire{
   position:absolute;top:50%;left:calc(var(--s02-pw) + 12px);right:calc(var(--s02-pw) + 12px);
   height:1px;margin-top:-.5px;pointer-events:none;
-  background:repeating-linear-gradient(90deg,var(--line-3) 0 5px,transparent 5px 11px);
+  background:var(--line-3);
 }
 .s02__fill{
   position:absolute;inset:0;background:var(--blue);opacity:.5;
@@ -255,10 +255,9 @@
 .s02__cap{
   position:absolute;left:9px;bottom:9px;
   display:inline-flex;align-items:center;gap:.5em;height:24px;padding:0 10px;
-  border-radius:var(--r-pill);background:rgba(255,255,255,.93);
-  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  border-radius:var(--r-pill);background:var(--paper);border:1px solid var(--line);
   font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;
-  line-height:1;color:var(--ink);box-shadow:0 1px 2px rgba(25,25,29,.12);
+  line-height:1;color:var(--ink);box-shadow:var(--sh-1);
 }
 .s02__cap::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--blue);flex:none}
 
@@ -321,7 +320,12 @@
 
 /* the animated wash behind this section */
 .s02{position:relative;overflow:hidden}
-.s02__bg{position:absolute;inset:0;pointer-events:none;z-index:0}
+.s02__bg{
+  position:absolute;inset:0;pointer-events:none;z-index:0;
+  /* the wash fades out before either edge, so neither seam (01→02, 02→08) is a hard line */
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 14%,#000 70%,transparent 100%);
+  mask-image:linear-gradient(180deg,transparent 0%,#000 14%,#000 70%,transparent 100%);
+}
 .s02__dither{opacity:.38}
 .s02__in{position:relative;z-index:1}
 
@@ -337,10 +341,10 @@
   position:relative;display:flex;flex-direction:column;gap:16px;overflow:hidden;
   padding:clamp(20px,2.2vw,28px);border-radius:var(--r-lg);
   background:var(--paper);border:1px solid var(--line);
-  box-shadow:0 1px 2px rgba(25,25,29,.03);
+  box-shadow:var(--sh-1);
   transition:border-color .3s var(--e),box-shadow .3s var(--e),transform .3s var(--e);
 }
-.s02__brief:hover{border-color:var(--blue-line);box-shadow:0 22px 46px -30px rgba(0,130,251,.45);transform:translateY(-3px)}
+.s02__brief:hover{border-color:var(--blue-line);box-shadow:var(--sh-2);transform:translateY(-3px)}
 .s02__edge{
   position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--blue);
   transform:scaleY(0);transform-origin:top center;transition:transform .5s var(--e);
@@ -363,7 +367,7 @@
   transition:background .3s var(--e),color .3s var(--e);
 }
 .s02__brief:hover .s02__tags i:first-child{background:var(--blue-wash);color:var(--blue-d)}
-.s02__wks{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.s02__wks{margin-left:auto;white-space:nowrap;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
 
 /* they deal themselves in when the pane opens */
 .s02__pane.is-on .s02__brief{animation:s02-deal .62s var(--e) both}
@@ -387,6 +391,25 @@
 @media (prefers-reduced-motion:reduce){
   .s02__pane.is-on .s02__brief{animation:none}
 }
+
+/* ---------- finish pass -------------------------------------------------- */
+/* alt band: the stage is a white plate, the brief cards sit on it with a line */
+.s02.band--alt .s02__stage{background:var(--paper)}
+
+/* each delivered tile that answers a brief carries that brief's index */
+.s02__cap--brief::before{display:none}
+.s02__bi{
+  display:inline-flex;align-items:center;gap:.35em;margin-left:-4px;padding:3px 7px;border-radius:var(--r-pill);
+  background:var(--blue-wash);color:var(--blue-d);letter-spacing:.06em;
+}
+
+/* the foot of a brief: tags wrap together, the duration always holds the right edge */
+.s02__foot{flex-wrap:nowrap;align-items:flex-end}
+.s02__tags{min-width:0}
+
+/* a long discipline may wrap inside a narrow tile: the chip grows with it */
+.s02__cap{height:auto;min-height:24px;max-width:calc(100% - 18px);padding-block:3px;line-height:1.3}
+.s02__cap--brief{border-radius:12px}
 
 /* ===== 03-industries ===== */
 /* 03 — industries. The reference's expanding image-card accordion, re-cut:

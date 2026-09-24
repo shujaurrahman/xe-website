@@ -90,11 +90,11 @@ try {
 
   /* one leg of the loop: fill the rule, then turn the pane over */
   function travel() {
-    if (pinned) return;
+    if (pinned || !live) return;
     var forward = i === 0;
     toggle.classList.add(forward ? 'is-travel' : 'is-back');
     t1 = setTimeout(function () {
-      if (pinned) return;
+      if (pinned || !live) return;
       toggle.classList.remove('is-travel', 'is-back');
       paint(forward ? 1 : 0);
       t2 = setTimeout(travel, 4200);
@@ -119,9 +119,25 @@ try {
   });
 
   paint(0);
+
+  /* the loop (and the wash behind it) only runs while the section is on screen */
   if (!XE.reduced) {
-    sec.classList.add('is-live');
-    XE.inView(sec, function () { t2 = setTimeout(travel, 2200); });
+    var live = false;
+    function setLive(on) {
+      on = on && !document.hidden;
+      if (on === live) return;
+      live = on;
+      sec.classList.toggle('is-live', on);
+      if (on) { if (!pinned) t2 = setTimeout(travel, 2200); }
+      else clear();
+    }
+    if ('IntersectionObserver' in window) {
+      var seen = false;
+      new IntersectionObserver(function (es) {
+        seen = es[0].isIntersecting; setLive(seen);
+      }, { threshold: 0.15 }).observe(sec);
+      XE.on(document, 'visibilitychange', function () { setLive(seen); });
+    } else { setLive(true); }
   }
 })();
 } catch (e) { console.error('[02-showcase]', e); }
