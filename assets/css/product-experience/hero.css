@@ -79,3 +79,24 @@
   .pxh-hero__meta div:nth-child(3) { padding-left: 0; border-left: 0; }
   .pxh-hero__cta .btn { width: 100%; justify-content: center; }
 }
+
+/* Polish: the lens sits over a research-wall photograph and fills the column (was ~35% of it) */
+.pxh-hero__photo { position: absolute; top: 0; right: 0; width: 64%; z-index: 0; }
+.pxh-hero__vis { padding: 120px 0 72px; min-height: 640px; display: flex; flex-direction: column; justify-content: center; }
+.pxh-hero__vis .pxh-lens { z-index: 1; width: 92%; }
+.pxh-hero__vis .pxh-lens__l { padding: clamp(22px, 2.6vw, 36px); gap: 22px; }
+.pxh-hero__vis .pxh-lens__plan { padding: 18px 14px; min-height: 150px; }
+.pxh-hero__chip { z-index: 2; }
+.pxh-hero__chip--a { top: 0; right: auto; left: -24px; }
+.pxh-hero__chip--b { bottom: 16px; left: auto; right: 0; }
+@media (max-width: 1023px) {
+  .pxh-hero__vis { min-height: 0; }
+  .pxh-hero__chip--a { left: 0; }
+}
+@media (max-width: 600px) {
+  .pxh-hero__vis { padding: 0; min-height: 0; }
+  .pxh-hero__photo { position: relative; width: 100%; aspect-ratio: 16 / 10; order: -2; }
+  .pxh-hero__vis .pxh-lens { width: 100%; margin-top: -48px; order: -1; }
+  .pxh-hero__vis .pxh-hero__chip--a { order: 0; }
+  .pxh-hero__vis .pxh-lens__plan { min-height: 0; padding: 12px 8px; }
+}

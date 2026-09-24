@@ -1,15 +1,29 @@
 <?php /* DRAFT COPY — review before launch */
 /* The data-driven middle of every capability page: offer · process · deliver · outcomes · stack · standards.
    Markup reuses the hub's idioms (.pxh-card, .pxh-steps, .pxh-man, .pxh-db, .pxh-stack, .pxh-standards). */
+$pxd_hd = $pxd_h('deliv', [count($CAP['deliver']) . ' working files.', 'Yours from day one.', 'Everything is handed over in the tools your teams already use, with the evidence and decisions that produced it.']);
+$pxd_ho = $pxd_h('out', ['Three outcomes.', 'Each with the measure that proves it.', 'The baseline, the target and the instrument are agreed in the first week, and the same instrument is used afterwards so the comparison is honest.']);
+$pxd_hs = $pxd_h('stack', ['The tools this runs on.', 'Usually yours already.', 'Technologies we work with most for ' . strtolower($CAP['short']) . ' work, most relevant first. We work in your accounts and hand everything over in them.']);
+$pxd_ht = $pxd_h('std', ['A standard is a test.', 'Here is where each one runs.', 'These are frameworks this work is built to or aligned with. They are not certifications we hold; each is a set of checks with a place in the process.']);
+/* Logos with artwork render as tiles; names without artwork as a chip row beneath (no empty glyph boxes). */
+$pxd_sk = xt_stack_data();
+$pxd_st_tiles = array_values(array_filter($CAP['stack'], fn ($pxd_z) => !empty($pxd_sk[$pxd_z]['file'])));
+$pxd_st_chips = array_values(array_diff($CAP['stack'], $pxd_st_tiles));
 $pxd_steps = $CAP['process']['steps'];
 $pxd_deliv = $CAP['deliver'];
 ?>
 <section class="band band--alt pxd-offer" id="offer" aria-labelledby="offer-t">
   <div class="wrap">
-    <div class="bdh-head bdh-head--row" data-rv>
-      <div><p class="lbl lbl--blue"><span class="dot"></span>What it covers</p>
-        <h2 class="h2" id="offer-t"><?= $CAP['offer_title'] ?></h2></div>
-      <div><p class="lead"><?= e($CAP['offer_lead']) ?></p></div>
+    <div class="pxd-offer__head">
+      <div class="bdh-head" data-rv>
+        <p class="lbl lbl--blue"><span class="dot"></span>What it covers · <?= count($CAP['offer']) ?> parts</p>
+        <h2 class="h2" id="offer-t"><?= $CAP['offer_title'] ?></h2>
+        <p class="lead"><?= e($CAP['offer_lead']) ?></p>
+      </div>
+      <?php if (!empty($PXD_T['img'])): ?>
+      <!-- PLACEHOLDER: reference photograph (Unsplash, credited in assets/imgs/product-experience/CREDITS.md) — replace with own photography before launch -->
+      <figure class="bdh-img bdh-img--r43 pxd-offer__img" data-rv><img src="<?= e($BASE . 'assets/imgs/product-experience/' . $PXD_T['img'][0]) ?>" alt="<?= e($PXD_T['img'][1]) ?>" width="1200" height="900" loading="lazy" decoding="async"></figure>
+      <?php endif; ?>
     </div>
     <div class="pxh-cards pxd-offer__cards" data-bdh-stagger>
       <?php foreach ($CAP['offer'] as $pxd_i => $pxd_o): ?>
@@ -52,14 +66,16 @@ $pxd_deliv = $CAP['deliver'];
   </div>
 </section>
 
+<?php include __DIR__ . '/showcase.php'; ?>
+
 <section class="band band--alt pxd-deliver" id="deliverables" aria-labelledby="deliverables-t">
   <div class="wrap">
     <div class="bdh-grid">
       <div class="bdh-c4">
         <div class="bdh-sticky bdh-head" data-rv>
           <p class="lbl lbl--blue"><span class="dot"></span>What you keep</p>
-          <h2 class="h2" id="deliverables-t"><span class="g"><?= count($pxd_deliv) ?> working files.</span> Yours from day one.</h2>
-          <p class="lead">Everything is handed over in the tools your teams already use, with the evidence and decisions that produced it.</p>
+          <h2 class="h2" id="deliverables-t"><span class="g"><?= e($pxd_hd[0]) ?></span> <?= e($pxd_hd[1]) ?></h2>
+          <p class="lead"><?= e($pxd_hd[2]) ?></p>
         </div>
       </div>
       <div class="bdh-c7 bdh-s6 pxh-man pxd-deliver__man" data-bdh-stagger>
@@ -89,8 +105,8 @@ $pxd_deliv = $CAP['deliver'];
   <div class="wrap">
     <div class="bdh-head bdh-head--row" data-rv>
       <div><p class="lbl lbl--blue"><span class="dot"></span>What changes</p>
-        <h2 class="h2" id="outcomes-t"><span class="g">Three outcomes.</span> Each with the measure that proves it.</h2></div>
-      <div><p class="lead">The baseline, the target and the instrument are agreed in the first week, and the same instrument is used afterwards so the comparison is honest.</p></div>
+        <h2 class="h2" id="outcomes-t"><span class="g"><?= e($pxd_ho[0]) ?></span> <?= e($pxd_ho[1]) ?></h2></div>
+      <div><p class="lead"><?= e($pxd_ho[2]) ?> Baseline, target and instrument are agreed in week one.</p></div>
     </div>
     <div class="bdh-grid">
       <ol class="bdh-c5 pxd-outcomes__list">
@@ -128,10 +144,11 @@ $pxd_deliv = $CAP['deliver'];
   <div class="wrap">
     <div class="bdh-head bdh-head--row" data-rv>
       <div><p class="lbl lbl--blue"><span class="dot"></span>The stack</p>
-        <h2 class="h2" id="stack-t"><span class="g">The tools this runs on.</span> Usually yours already.</h2></div>
-      <div><p class="lead">Technologies we work with most for <?= e(strtolower($CAP['short'])) ?> work, most relevant first. We work in your accounts and hand everything over in them.</p></div>
+        <h2 class="h2" id="stack-t"><span class="g"><?= e($pxd_hs[0]) ?></span> <?= e($pxd_hs[1]) ?></h2></div>
+      <div><p class="lead"><?= e($pxd_hs[2]) ?> Technologies we work with, not partnerships.</p></div>
     </div>
-    <?= xt_stack($CAP['stack'], ['variant' => 'tiles', 'label' => $CAP['name'] . ' technologies']) ?>
+    <?= xt_stack($pxd_st_tiles, ['variant' => 'tiles', 'label' => $CAP['name'] . ' technologies']) ?>
+    <?php if ($pxd_st_chips): ?><div class="pxd-stack__more"><?= xt_stack($pxd_st_chips, ['variant' => 'chips', 'label' => 'Also used']) ?></div><?php endif; ?>
   </div>
 </section>
 
@@ -139,15 +156,15 @@ $pxd_deliv = $CAP['deliver'];
   <div class="wrap">
     <div class="bdh-head bdh-head--row" data-rv>
       <div><p class="lbl lbl--blue"><span class="dot"></span>Frameworks we build to</p>
-        <h2 class="h2" id="standards-t"><span class="g">A standard is a test.</span> Here is where each one runs.</h2></div>
-      <div><p class="lead">These are frameworks this work is built to or aligned with. They are not certifications we hold; each is a set of checks with a place in the process.</p></div>
+        <h2 class="h2" id="standards-t"><span class="g"><?= e($pxd_ht[0]) ?></span> <?= e($pxd_ht[1]) ?></h2></div>
+      <div><p class="lead"><?= e($pxd_ht[2]) ?></p></div>
     </div>
     <ul class="pxh-standards__list">
       <?php foreach ($CAP['standards'] as $pxd_k): $pxd_st = xt_standard($pxd_k); if (!$pxd_st) continue; ?>
       <li class="pxh-standards__r" data-rv>
         <div class="pxh-standards__b"><?= xt_badge($pxd_k) ?></div>
         <p class="pxh-standards__d"><?= e($pxd_st['covers']) ?></p>
-        <p class="pxh-standards__w"><span class="pxh-mono">How we apply it</span><?= e($pxd_st['apply']) ?></p>
+        <p class="pxh-standards__w"><span class="pxh-mono">How we apply it</span><?= e($PXD_TS['_apply'][$pxd_k] ?? $pxd_st['apply']) ?></p>
       </li>
       <?php endforeach; ?>
     </ul>

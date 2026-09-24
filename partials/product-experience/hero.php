@@ -12,7 +12,7 @@ $pxh_hero_plans = [['Starter', '1 workspace', 0], ['Team', '10 workspaces', 1], 
       <h1 class="d1" id="pxh-hero-t"><span class="g">Every screen is a claim about people.</span> We test it before you build it.</h1>
       <p class="lead"><?= e($DISC['intro']) ?> Research, strategy, interaction design and front-end engineering in one loop, so what gets built is what people can actually use.</p>
       <div class="pxh-hero__cta">
-        <a class="btn btn--ink btn--lg" href="<?= e(xe_url('contact.php')) ?>">Start with one question <span class="i" aria-hidden="true"></span></a>
+        <a class="btn btn--ink btn--lg" href="<?= e(svc_contact_url([], null, 'product-experience')) ?>">Start with one question <span class="i" aria-hidden="true"></span></a>
         <a class="btn btn--out btn--lg" href="#signal">Follow an idea to release <span class="i" aria-hidden="true"></span></a>
       </div>
       <dl class="pxh-hero__meta">
@@ -23,6 +23,8 @@ $pxh_hero_plans = [['Starter', '1 workspace', 0], ['Team', '10 workspaces', 1], 
     </div>
 
     <div class="pxh-hero__vis" data-bdh-live>
+      <!-- PLACEHOLDER: reference photograph (Unsplash, credited in assets/imgs/product-experience/CREDITS.md) — replace with own research photography before launch -->
+      <figure class="bdh-img bdh-img--r45 bdh-img--xl pxh-hero__photo" aria-hidden="true"><img src="<?= e($BASE . 'assets/imgs/product-experience/hero-research-wall.jpg') ?>" alt="" width="1200" height="1500" fetchpriority="high" decoding="async"></figure>
       <div class="pxh-lens" aria-hidden="true">
         <div class="pxh-lens__bar"><span class="pxh-lens__dot"></span>Your platform · Change plan · v3</div>
         <div class="pxh-lens__stage">

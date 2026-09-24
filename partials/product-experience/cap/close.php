@@ -4,6 +4,8 @@
    as cards, and the way back to the hub. */
 $svc_key = $PXD_KEY;
 include __DIR__ . '/../../services/catalogue.php';
+$pxd_hf = $pxd_h('faq', ['Asked before', 'the first workshop.']);
+$pxd_hn = $pxd_h('next', ['One loop, five ways in.', 'This work hands its evidence on.', 'Each capability is scoped on its own, and each passes its research, decisions and files to the next, so nothing is rediscovered.']);
 $pxd_rows = [];
 foreach ($DISC['caps'] as $pxd_r) { $pxd_rows[$pxd_r[2]] = $pxd_r; }
 ?>
@@ -13,9 +15,9 @@ foreach ($DISC['caps'] as $pxd_r) { $pxd_rows[$pxd_r[2]] = $pxd_r; }
       <div class="bdh-c4">
         <div class="bdh-sticky bdh-head" data-rv>
           <p class="lbl lbl--blue"><span class="dot"></span>Questions</p>
-          <h2 class="h2" id="faq-t"><span class="g">Asked before</span> the first workshop.</h2>
+          <h2 class="h2" id="faq-t"><span class="g"><?= e($pxd_hf[0]) ?></span> <?= e($pxd_hf[1]) ?></h2>
           <p class="lead">Anything else goes straight to the people who would do the work.</p>
-          <a class="btn btn--ink" href="<?= e(xe_url('contact.php')) ?>">Ask a question <span class="i" aria-hidden="true"></span></a>
+          <a class="btn btn--ink" href="<?= e(svc_contact_url([], null, $PXD_KEY)) ?>">Ask a question <span class="i" aria-hidden="true"></span></a>
         </div>
       </div>
       <div class="bdh-c7 bdh-s6 pxh-faq__list">
@@ -34,8 +36,8 @@ foreach ($DISC['caps'] as $pxd_r) { $pxd_rows[$pxd_r[2]] = $pxd_r; }
   <div class="wrap">
     <div class="bdh-head bdh-head--row" data-rv>
       <div><p class="lbl lbl--blue"><span class="dot"></span>Keep going</p>
-        <h2 class="h2" id="next-t"><span class="g">One loop, five ways in.</span> This work hands its evidence on.</h2></div>
-      <div><p class="lead">Each capability is scoped on its own, and each passes its research, decisions and files to the next, so nothing is rediscovered.</p></div>
+        <h2 class="h2" id="next-t"><span class="g"><?= e($pxd_hn[0]) ?></span> <?= e($pxd_hn[1]) ?></h2></div>
+      <div><p class="lead"><?= e($pxd_hn[2]) ?></p></div>
     </div>
     <nav class="pxd-next__idx" aria-label="<?= e($DISC['name']) ?> capabilities">
       <ol>
@@ -51,7 +53,8 @@ foreach ($DISC['caps'] as $pxd_r) { $pxd_rows[$pxd_r[2]] = $pxd_r; }
     </nav>
     <div class="pxd-next__g">
       <?php foreach ($CAP['pairs'] as $pxd_slug): $pxd_c = $CAPS[$pxd_slug] ?? null; if (!$pxd_c) continue; ?>
-      <a class="pxh-card pxd-next__card" href="<?= e(xe_cap_url($DISC, $pxd_rows[$pxd_slug])) ?>">
+      <a class="pxh-card pxd-next__card bdh-zoom" href="<?= e(xe_cap_url($DISC, $pxd_rows[$pxd_slug])) ?>">
+        <?php if (!empty($PXD_TS[$pxd_slug]['img'])): ?><span class="bdh-img bdh-img--r169 pxd-next__img"><img src="<?= e($BASE . 'assets/imgs/product-experience/' . $PXD_TS[$pxd_slug]['img'][0]) ?>" alt="" width="1200" height="675" loading="lazy" decoding="async"></span><?php endif; ?>
         <span class="pxh-card__top"><span class="pxh-card__idx"><?= e($pxd_c['n']) ?> · Pairs well</span><span class="pxh-card__ico"><?= xt_icon($pxd_c['icon']) ?></span></span>
         <span class="pxh-card__k"><?= e($pxd_c['kicker']) ?></span>
         <span class="pxh-card__t"><?= e($pxd_c['name']) ?></span>

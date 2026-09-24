@@ -52,4 +52,9 @@ $pxd_xy = fn (string $pxd_id): array => [$pxd_cx[$pxd_nodes[$pxd_id][1]], $pxd_t
     <?php endforeach; ?>
   </svg>
 </div>
+<ol class="pxd-ar__list">
+  <?php foreach ($pxd_cols as $pxd_j => $pxd_t): ?>
+  <li><span class="pxd-ar__lh"><?= sprintf('%02d', $pxd_j + 1) ?> · <?= e($pxd_t) ?></span><span class="pxd-ar__chips"><?php foreach ($pxd_nodes as $pxd_id => $pxd_n): if ($pxd_n[1] !== $pxd_j) continue; $pxd_sel = implode(' ', array_keys($pxd_pick, $pxd_id, true)); ?><span class="pxd-ar__chip" data-hi="<?= $pxd_hi($pxd_id) ?>"<?= $pxd_sel ? ' data-sel="' . $pxd_sel . '"' : '' ?>><?= e($pxd_n[0]) ?></span><?php endforeach; ?></span></li>
+  <?php endforeach; ?>
+</ol>
 <p class="pxd-ar__ro"><?php foreach ($pxd_pick as $pxd_v => $pxd_id): ?><span data-on="<?= $pxd_v ?>"><b><?= count($pxd_down[$pxd_v]) - 1 ?></b> parts inherit a change to <?= e($pxd_nodes[$pxd_id][0]) ?></span><?php endforeach; ?></p>

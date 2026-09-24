@@ -17,7 +17,7 @@ foreach ($CAPS as $pxh_slug => $pxh_cap) {
           <p class="lbl lbl--blue"><span class="dot"></span>Questions</p>
           <h2 class="h2" id="faq-t"><span class="g">Asked before</span> the first workshop.</h2>
           <p class="lead">Anything else goes to the team that would do the work.</p>
-          <a class="btn btn--ink" href="<?= e(xe_url('contact.php')) ?>">Ask a question <span class="i" aria-hidden="true"></span></a>
+          <a class="btn btn--ink" href="<?= e(svc_contact_url([], null, 'product-experience')) ?>">Ask a question <span class="i" aria-hidden="true"></span></a>
         </div>
       </div>
       <div class="bdh-c7 bdh-s6 pxh-faq__list">

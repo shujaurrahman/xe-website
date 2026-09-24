@@ -27,7 +27,7 @@ $pxd_total = str_pad((string) count($CAPS), 2, '0', STR_PAD_LEFT);
         <h1 class="d2" id="top-t"><?= $CAP['title'] ?></h1>
         <p class="lead"><?= e($CAP['lead']) ?></p>
         <div class="pxd-hero__cta">
-          <a class="btn btn--ink" href="<?= e(xe_url('contact.php')) ?>"><?= e($CAP['cta']) ?> <span class="i" aria-hidden="true"></span></a>
+          <a class="btn btn--ink" href="<?= e(svc_contact_url([], null, $PXD_KEY)) ?>"><?= e($CAP['cta']) ?> <span class="i" aria-hidden="true"></span></a>
           <a class="btn btn--out" href="#offer">What it covers <span class="i" aria-hidden="true"></span></a>
         </div>
         <!-- PLACEHOLDER: confirm typical length before launch -->
