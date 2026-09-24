@@ -3,9 +3,10 @@
    Registry certificates exactly; use of ® is lawful only for registered marks in India (Trade Marks Act 1999 s.107);
    copyright-assignment formalities (Copyright Act 1957 s.19); takedown handling vs. IT Act s.79 intermediary rules. */ ?>
 <?php lgl_sec('marks'); ?>
+  <!-- PLACEHOLDER: confirm trademark registration number/class before launch; use ™ until registered -->
   <p><strong>Xterra Edze®</strong> is a registered trademark of <span class="lgl-ph"><?= e($LGL_CO['entity']) ?></span>, registered with the Trade Marks Registry, Government of India.</p>
   <!-- PLACEHOLDER: registration numbers, classes and specifications — confirm against the certificates before launch. -->
-  <div class="lgl-tw" tabindex="0" role="region" aria-label="Trademark registrations, scrolls sideways on small screens">
+  <div class="lgl-tw mask-x" tabindex="0" role="region" aria-label="Trademark registrations, scrolls sideways on small screens">
     <table class="lgl-tbl">
       <thead><tr><th scope="col">Mark</th><th scope="col">Registration no.</th><th scope="col">Class</th><th scope="col">Covers</th></tr></thead>
       <tbody>

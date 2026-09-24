@@ -19,7 +19,7 @@
 <?php lgl_sec('status'); ?>
   <!-- PLACEHOLDER: conformance status — replace with the audit result before launch. -->
   <p>This website is <strong>partially conformant</strong> with WCAG 2.2 AA: we build and test to it, but some content may not yet fully conform, and it has not been independently audited.</p>
-  <div class="lgl-tw" tabindex="0" role="region" aria-label="Testing status, scrolls sideways on small screens">
+  <div class="lgl-tw mask-x" tabindex="0" role="region" aria-label="Testing status, scrolls sideways on small screens">
     <table class="lgl-tbl">
       <thead><tr><th scope="col">Check</th><th scope="col">How</th><th scope="col">Status</th></tr></thead>
       <tbody>

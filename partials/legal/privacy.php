@@ -9,8 +9,8 @@ $lgl_rows = [
     ['Name, email, company, phone', 'contact brief', 'Contact form', 'Reply to your enquiry; prepare a proposal', 'Consent (DPDP s.6); GDPR Art. 6(1)(b) steps before a contract', '24 months from last contact'],
     ['Services picked, package, budget band, timeline, message', 'contact brief', 'Contact form and services brief', 'Understand the work you want and scope it', 'Consent; GDPR Art. 6(1)(b)', '24 months from last contact'],
     ['Services brief in your browser', 'brief', 'Services catalogue (sessionStorage <code>xe-brief</code>)', 'Carry the services you picked to the contact form', 'Strictly necessary for a feature you use', 'Until you close the tab; never sent unless you submit the form'],
-    ['Call details — name, email, time, notes', 'booking', 'Calls arranged by email or calendar invite', 'Hold the call; record what was agreed', 'Consent; GDPR Art. 6(1)(b)', '24 months from last contact'],
-    ['CV, portfolio, work history, references', 'careers', 'Job applications sent by email', 'Assess your application; contact you about roles', 'Consent; GDPR Art. 6(1)(b)', '12 months after the role closes, unless you ask us to keep it longer'],
+    ['Call requests — name, email, company, the day and time you picked, your time zone and your brief', 'booking', 'The call-request form on our home page, or calls arranged by email', 'Confirm and hold the call; record what was agreed', 'Consent; GDPR Art. 6(1)(b)', '24 months from last contact'],
+    ['Name, email, optional phone, your message and portfolio or LinkedIn links; a CV or references if you email them', 'careers', 'The application form on our careers page (no file uploads), or applications sent by email', 'Assess your application; contact you about roles', 'Consent; GDPR Art. 6(1)(b)', '12 months after the role closes, unless you ask us to keep it longer'],
     ['IP address, browser, pages requested, time, referrer', 'logs', 'Web server logs (our hosting provider)', 'Deliver pages, detect abuse, fix faults', 'DPDP legitimate use / reasonable purpose; GDPR Art. 6(1)(f) security', 'Rolling 30–90 days, set by the host'],
     ['Contract contacts, invoices, correspondence', 'client', 'Client engagements', 'Deliver the work, invoice, meet tax and company-law duties', 'Contract; legal obligation', '8 years after the financial year (Companies Act / GST records)'],
     ['Personal data inside client systems we work on', 'client', 'Client engagements, as a processor', 'Only the client\'s documented instructions', 'The client\'s basis; our Data Processing Agreement', 'Returned or deleted at the end of the engagement'],
@@ -31,7 +31,7 @@ $lgl_src = ['all' => 'All sources', 'contact' => 'Contact form', 'brief' => 'Ser
         <button class="lgl-chip" type="button" data-lgl-f="<?= e($lgl_k) ?>" aria-pressed="<?= $lgl_k === 'all' ? 'true' : 'false' ?>"><?= e($lgl_v) ?> <b><?= $lgl_n ?></b></button>
       <?php endforeach; ?>
     </div>
-    <div class="lgl-tw" tabindex="0" role="region" aria-label="Data map, scrolls sideways on small screens">
+    <div class="lgl-tw mask-x" tabindex="0" role="region" aria-label="Data map, scrolls sideways on small screens">
       <table class="lgl-tbl">
         <caption class="sr">Personal data Xterra Edze holds, with source, purpose, lawful basis and retention</caption>
         <thead><tr><th scope="col">Data</th><th scope="col">Where from</th><th scope="col">Why</th><th scope="col">Basis</th><th scope="col">Kept for</th></tr></thead>
@@ -46,13 +46,13 @@ $lgl_src = ['all' => 'All sources', 'contact' => 'Contact form', 'brief' => 'Ser
   </div>
   <!-- PLACEHOLDER: retention periods are proposed defaults — confirm with counsel and the finance team before launch. -->
   <p>We do not ask for sensitive data such as health, religion, caste, biometrics or financial account details. Please do not send it in a message or CV. We do not use automated decision-making that has legal or similarly significant effects on you.</p>
-  <p>Today there is no online booking tool on this site: calls are arranged by email and calendar invitation. If we add one, this notice will name it before it goes live.</p>
+  <p>The booking form on our home page sends a call request; nothing is reserved until we confirm by email. We use no third-party scheduling tool. The careers form sends your application to the same inbox as the contact form; it takes no file uploads.</p>
 </section>
 
 <?php lgl_sec('use'); ?>
   <p>We use personal data only for the purposes in the map above, and for these related purposes:</p>
   <ul>
-    <li><strong>Keeping the site and our systems secure</strong> — detecting spam, abuse and attacks. The contact form uses a hidden honeypot field and a timing check, not a third-party CAPTCHA.</li>
+    <li><strong>Keeping the site and our systems secure</strong> — detecting spam, abuse and attacks. Our forms (contact, call request and careers) use a hidden honeypot field and a timing check, not a third-party CAPTCHA.</li>
     <li><strong>Meeting legal duties</strong> — tax, accounting, company law and lawful requests from authorities.</li>
     <li><strong>Defending legal claims</strong> — only for as long as a claim could be brought.</li>
   </ul>
@@ -71,7 +71,7 @@ $lgl_src = ['all' => 'All sources', 'contact' => 'Contact form', 'brief' => 'Ser
 
 <?php lgl_sec('share'); ?>
   <p>We share personal data only with service providers who process it for us under contract, and only as much as they need:</p>
-  <div class="lgl-tw" tabindex="0" role="region" aria-label="Processors, scrolls sideways on small screens">
+  <div class="lgl-tw mask-x" tabindex="0" role="region" aria-label="Processors, scrolls sideways on small screens">
     <table class="lgl-tbl">
       <thead><tr><th scope="col">Processor</th><th scope="col">What for</th><th scope="col">Location</th></tr></thead>
       <tbody>

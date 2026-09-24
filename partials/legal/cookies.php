@@ -39,7 +39,7 @@
 </section>
 
 <?php lgl_sec('inventory'); ?>
-  <div class="lgl-tw" tabindex="0" role="region" aria-label="Storage inventory, scrolls sideways on small screens">
+  <div class="lgl-tw mask-x" tabindex="0" role="region" aria-label="Storage inventory, scrolls sideways on small screens">
     <table class="lgl-tbl">
       <caption class="sr">Every cookie and browser-storage item used by this website</caption>
       <thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">What it does</th><th scope="col">Lasts</th><th scope="col">Category</th></tr></thead>
