@@ -239,6 +239,7 @@ p,li,dd,blockquote,figcaption{text-wrap:pretty}
 /* text link with a travelling chevron */
 .tl{display:inline-flex;align-items:center;gap:.5em;color:var(--ink);font-size:var(--t-sm);font-weight:500}
 .tl .i{color:var(--blue)}
+@media (max-width:680px){.tl{min-height:44px}}   /* standalone text links are 44px tap targets on phones */
 .band--ink .tl{color:var(--on-ink)}
 
 .pill{
