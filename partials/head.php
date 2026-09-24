@@ -12,6 +12,7 @@ $full  = ($page['key'] ?? '') === 'home'
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?= e($full) ?></title>
 <meta name="description" content="<?= e($desc) ?>">
+<?php if (!empty($page['noindex'])): ?><meta name="robots" content="noindex"><?php endif; ?>
 <meta name="theme-color" content="#FFFFFF">
 <meta name="color-scheme" content="light">
 

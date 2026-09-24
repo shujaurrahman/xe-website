@@ -41,6 +41,7 @@ $pp_css  = array_filter([$pp_has('assets/css/brand/hub.css'), $pp_has('assets/cs
 $pp_js   = array_filter([$pp_has('assets/js/brand/hub.js')]);
 $page = [
     'key'   => 'e404',
+    'noindex' => true,
     'title' => 'Page not found',
     'desc'  => 'This address does not lead to a page on the Xterra Edze site. Here is where to go instead.',
     'css'   => array_values($pp_css),
