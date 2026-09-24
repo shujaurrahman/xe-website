@@ -6,7 +6,7 @@
   color:var(--paper-4);white-space:nowrap;pointer-events:none;user-select:none;z-index:0;
 }
 .s17__in{position:relative;z-index:1}
-.s17__eyebrow{display:flex;justify-content:center;margin-bottom:clamp(56px,7vw,110px)}
+.s17__eyebrow{display:flex;margin-bottom:clamp(56px,7vw,110px)}
 
 .s17__grid{display:grid;grid-template-columns:minmax(260px,.82fr) minmax(0,1.6fr);gap:clamp(16px,2.4vw,28px);align-items:stretch}
 
