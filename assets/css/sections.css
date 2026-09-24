@@ -1193,6 +1193,7 @@
 .s09__nodes{display:flex;flex-wrap:wrap;align-items:center;gap:8px 0;
   font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink-3)}
 .s09__nodes li{display:inline-flex;align-items:center}
+.s09__x{margin-left:6px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--on-ink-3)}   /* the two Ludhiana offices, named once */
 .s09__nodes li+li::before{content:"";width:22px;height:1px;margin-inline:10px;background:var(--on-ink-line)}
 
 /* photo + solid number plate */

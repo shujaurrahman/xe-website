@@ -16,8 +16,7 @@
             <span class="s09__mark">›</span>
             <ol class="s09__nodes">
               <li>New Delhi</li>
-              <li>Ludhiana</li>
-              <li>Ludhiana</li>
+              <li>Ludhiana<span class="s09__x">×2</span></li>
             </ol>
           </div>
         </div>
