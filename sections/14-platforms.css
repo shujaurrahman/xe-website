@@ -1,17 +1,21 @@
 /* 14 — the stack we build on. Brand marks are masked so they take our ink,
    and nothing here claims a partnership. */
-.s14__head{display:flex;flex-direction:column;gap:16px;margin-bottom:clamp(28px,3.2vw,44px)}
+.s14__head{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:clamp(24px,4vw,64px);row-gap:16px;
+  align-items:end;margin-bottom:clamp(28px,3.2vw,44px);
+}
+.s14__head > .lbl{grid-column:1 / -1}
+.s14__h{max-width:11em;text-wrap:wrap}   /* the grey phrase holds one line; "that matter." takes the next */
 .s14__sub{max-width:52ch}
 
 .s14__feature{
   display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(16px,2.4vw,32px);
-  align-items:stretch;padding-bottom:clamp(24px,3vw,40px);
-  border-bottom:1px solid var(--line-2);margin-bottom:clamp(24px,3vw,40px);
+  align-items:stretch;margin-bottom:clamp(32px,4vw,56px);
 }
 .s14__fbody{display:flex;flex-direction:column;justify-content:center;gap:14px}
 .s14__chips{display:flex;gap:8px}
 .s14__chip{
-  display:grid;place-items:center;width:40px;height:40px;border-radius:12px;
+  display:grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);
   border:1px solid transparent;background:var(--blue-wash);color:var(--blue-d);
 }
 .s14__ft{max-width:22ch}
@@ -19,7 +23,7 @@
 
 .s14__panel{
   display:flex;flex-direction:column;gap:12px;
-  padding:clamp(18px,2vw,24px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper-2);
+  padding:clamp(18px,2vw,24px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);
 }
 /* mock readout: label, model ids, badge and note in the display face; the task names read in Montserrat */
 .s14__plbl,.s14__rows i,.s14__pick,.s14__pnote{font-family:var(--f)}
@@ -27,7 +31,7 @@
 .s14__rows{display:flex;flex-direction:column;gap:8px}
 .s14__rows li{
   display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;
-  padding:11px 13px;border-radius:var(--r-sm);background:var(--paper);border:1px solid var(--line-2);
+  padding:11px 13px;border-radius:var(--r-sm);background:var(--paper-2);border:1px solid var(--line);
   font-size:var(--t-xs);font-weight:500;color:var(--txt);
 }
 .s14__rows i{font-style:normal;color:var(--muted);font-size:var(--t-lbl);letter-spacing:.06em}
@@ -41,14 +45,14 @@
 .s14__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
 .s14__card{
   display:flex;flex-direction:column;gap:10px;padding:clamp(18px,2.2vw,28px);
-  border-right:1px solid var(--line-2);border-bottom:1px solid var(--line-2);
+  border-right:1px solid var(--line);border-bottom:1px solid var(--line);
 }
 .s14__card:nth-child(3n){border-right:0}
-.s14__card:nth-child(1),.s14__card:nth-child(2),.s14__card:nth-child(3){border-top:1px solid var(--line-2)}
+.s14__card:nth-child(1),.s14__card:nth-child(2),.s14__card:nth-child(3){border-top:1px solid var(--line)}
 .s14__card:nth-last-child(-n+3){border-bottom:0}
 .s14__card:nth-child(3n+1){padding-left:0}
 .s14__logo{
-  display:grid;place-items:center;width:38px;height:38px;border-radius:11px;
+  display:grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);
   border:1px solid transparent;background:var(--blue-wash);color:var(--blue-d);margin-bottom:6px;
 }
 .s14__mono{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;font-weight:500}
@@ -56,7 +60,7 @@
 
 /* marks, masked so they inherit our ink */
 .s14__ico{
-  display:block;width:18px;height:18px;background:currentColor;
+  display:block;width:20px;height:20px;background:currentColor;
   -webkit-mask-position:center;mask-position:center;
   -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
   -webkit-mask-size:contain;mask-size:contain;
@@ -71,18 +75,21 @@
   .s14__feature{grid-template-columns:1fr}
   .s14__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .s14__card{padding-inline:clamp(14px,2vw,22px)}
-  .s14__card:nth-child(3n){border-right:1px solid var(--line-2)}
+  .s14__head{grid-template-columns:1fr}
+  .s14__card:nth-child(3n){border-right:1px solid var(--line)}
   .s14__card:nth-child(2n){border-right:0}
   .s14__card:nth-child(3){border-top:0}
   .s14__card:nth-child(3n+1){padding-left:clamp(14px,2vw,22px)}
   .s14__card:nth-child(2n+1){padding-left:0}
-  .s14__card:nth-last-child(-n+3){border-bottom:1px solid var(--line-2)}
+  .s14__card:nth-last-child(-n+3){border-bottom:1px solid var(--line)}
   .s14__card:nth-last-child(-n+2){border-bottom:0}
 }
 @media (max-width:560px){
   .s14__grid{grid-template-columns:1fr}
-  .s14__card{border-right:0;padding-inline:0}
-  .s14__card:nth-child(3){border-top:0}
-  .s14__card:nth-last-child(-n+2){border-bottom:1px solid var(--line-2)}
+  /* the same selectors as the 900 block, so these win on order rather than losing on specificity */
+  .s14__card,.s14__card:nth-child(3n),.s14__card:nth-child(2n){border-right:0}
+  .s14__card,.s14__card:nth-child(3n+1),.s14__card:nth-child(2n+1){padding-inline:0}
+  .s14__card:nth-child(2),.s14__card:nth-child(3){border-top:0}
+  .s14__card:nth-last-child(-n+3),.s14__card:nth-last-child(-n+2){border-bottom:1px solid var(--line)}
   .s14__card:last-child{border-bottom:0}
 }

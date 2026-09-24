@@ -1,8 +1,8 @@
-<section class="band band--rules s14" id="platforms" aria-labelledby="s14-t">
+<section class="band band--alt band--rules s14" id="platforms" aria-labelledby="s14-t">
   <div class="wrap">
     <div class="s14__head" data-rv>
       <p class="lbl lbl--blue"><span class="dot"></span>Platforms</p>
-      <h2 class="h2" id="s14-t"><span class="g">Fluent in the platforms</span><br>that matter.</h2>
+      <h2 class="h2 s14__h" id="s14-t"><span class="g">Fluent in the platforms</span> that matter.</h2>
       <p class="lead s14__sub">We are not a reseller and we hold no partner badges. We pick the tool
         that wins the job, and we tell you why.</p>
     </div>
