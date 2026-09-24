@@ -3,10 +3,7 @@
     <div class="s03__head" data-rv>
       <div class="s03__intro">
         <p class="lbl lbl--blue"><span class="dot"></span>Industries</p>
-        <h2 class="h2 s03__h" id="s03-t">
-        Helping brands win in
-        <span class="s03__swap" aria-live="polite"><span class="s03__word" data-s03-word>Consumer Health</span></span>
-        </h2>
+        <h2 class="h2 s03__h" id="s03-t"><span class="g">Helping brands win in</span> <span class="s03__swap" aria-live="polite"><span class="s03__word" data-s03-word>Consumer Health</span></span></h2>
       </div>
       <a class="tl s03__more" href="#delivered">Explore case studies <span class="i" aria-hidden="true">›</span></a>
     </div>
@@ -94,5 +91,15 @@
       </article>
 
     </div>
+
+    <noscript><style>
+      /* without JS nothing opens: every sector shows its card, three across, then one per row on phones */
+      .s03__rail{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));height:auto;overflow:visible;gap:10px}
+      .s03__card,.s03__card.is-on{flex:none;min-height:clamp(280px,26vw,340px);height:auto}
+      .s03__img{filter:none}
+      .s03__spine{display:none}
+      .s03__body{opacity:1;transform:none}
+      @media (max-width:860px){.s03__rail{grid-template-columns:minmax(0,1fr);margin-inline:0;padding-inline:0;-webkit-mask-image:none;mask-image:none}.s03__card,.s03__card.is-on{flex:none;height:340px}}
+    </style></noscript>
   </div>
 </section>
