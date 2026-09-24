@@ -2,7 +2,7 @@
   <div class="wrap">
     <div class="head head--c s05__head" data-rv>
       <p class="lbl lbl--blue"><span class="dot"></span>The intelligence layer</p>
-      <h2 class="h2" id="s05-t"><span class="g">Turn every signal</span><br>into an advantage</h2>
+      <h2 class="h2" id="s05-t"><span class="g">Turn every signal</span> into an advantage</h2>
       <p class="lead">Every signal into one layer — then brand, product and campaign run on it.</p>
     </div>
 
@@ -51,7 +51,9 @@
         <span class="s05__pulse s05__pulse--2"></span>
       </div>
 
+      <p class="sr">What the layer produces: a locked brand system at v2.4, a live customer agent, one voice across 9 markets, campaigns on brief in every market, search answers cited by 4 engines, a mapped 6-touchpoint journey and a model tuned this week.</p>
       <div class="s05__out" aria-hidden="true">
+        <div class="s05__oc">
         <article class="s05__card s05__card--a">
           <p class="s05__lbl">Brand system</p>
           <span class="s05__sw"><i></i><i></i><i></i><i></i></span>
@@ -76,6 +78,8 @@
           <p class="s05__meta">on brief, every market</p>
         </article>
 
+        </div>
+        <div class="s05__oc s05__oc--2">
         <article class="s05__card s05__card--e">
           <p class="s05__lbl">Search</p>
           <svg class="s05__spark" viewBox="0 0 110 30" fill="none">
@@ -95,6 +99,7 @@
           <span class="s05__bar"><i></i></span>
           <p class="s05__meta">tuned this week</p>
         </article>
+        </div>
       </div>
     </div>
 

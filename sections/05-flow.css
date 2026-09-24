@@ -1,6 +1,7 @@
 /* 05 — the intelligence layer. Signals on the left, the layer down the middle,
    what it produces drifting out to the right. */
 .s05__head{max-width:54ch;margin-inline:auto}
+.s05__head .h2{max-width:20ch;text-wrap:balance}
 .s05__diagram{
   position:relative;display:grid;
   grid-template-columns:minmax(210px,286px) minmax(60px,1fr) 84px minmax(250px,1.2fr);
@@ -12,7 +13,7 @@
 .s05__in{
   display:flex;align-items:center;gap:11px;height:50px;padding:0 14px;
   border-radius:var(--r-sm);background:var(--paper);border:1px solid var(--line);
-  box-shadow:0 1px 2px rgba(25,25,29,.03);
+  box-shadow:var(--sh-1);
   transition:border-color var(--d2) var(--e),transform var(--d2) var(--e);
 }
 .s05__ico{display:grid;place-items:center;width:26px;height:26px;border-radius:7px;
@@ -34,11 +35,11 @@
 .s05__wire{position:relative;display:block;height:50px}
 .s05__wire::before{
   content:"";position:absolute;left:0;right:0;top:50%;height:1px;
-  background:repeating-linear-gradient(90deg,var(--line-3) 0 4px,transparent 4px 9px);
+  background:var(--line-3);
 }
 .s05__pkt{
   position:absolute;top:50%;left:0;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;
-  background:var(--blue);opacity:0;box-shadow:0 0 0 3px rgba(0,130,251,.12);
+  background:var(--blue);opacity:0;box-shadow:0 0 0 3px var(--blue-wash-2);
 }
 .is-live .s05__pkt{animation:s05-run 5.4s linear infinite}
 .s05__wire:nth-child(1) .s05__pkt{animation-delay:0s}   .s05__wire:nth-child(2) .s05__pkt{animation-delay:.9s}
@@ -53,14 +54,14 @@
   background:var(--blue);
 }
 .s05__bus::after{
-  content:"";position:absolute;inset:0;border-radius:3px;background:#fff;opacity:.55;
+  content:"";position:absolute;inset:0;border-radius:3px;background:var(--paper);opacity:.55;
 }
 .is-live .s05__bus::after{animation:s05-bus 3.4s var(--e-io) infinite}
 @keyframes s05-bus{0%,100%{transform:translateY(-100%)}50%{transform:translateY(100%)}}
 .s05__tile{
   position:relative;display:grid;place-items:center;width:74px;height:74px;border-radius:18px;
   background:var(--paper);border:1px solid var(--line);color:var(--ink);
-  box-shadow:0 2px 6px rgba(25,25,29,.05),0 18px 40px -20px rgba(0,130,251,.45);
+  box-shadow:var(--sh-1),0 18px 40px -20px var(--blue-line);
 }
 .s05__tile svg{width:34px;height:29px}
 .s05__pulse{
@@ -71,32 +72,29 @@
 .is-live .s05__pulse--2{animation-delay:1.7s}
 @keyframes s05-pulse{0%{opacity:.75;transform:scale(1)}75%{opacity:0;transform:scale(1.7)}100%{opacity:0;transform:scale(1.7)}}
 
-/* ---- outputs ---- */
+/* ---- outputs ----
+   Two staggered columns with a fixed 14px gutter, so no card ever sits on another
+   and nothing runs past the edge. Each column drifts as one, so gaps never close. */
 .s05__out{
-  position:relative;height:100%;min-height:500px;
-  -webkit-mask-image:linear-gradient(90deg,#000 0,#000 76%,transparent 100%);
-  mask-image:linear-gradient(90deg,#000 0,#000 76%,transparent 100%);
+  position:relative;display:flex;align-items:center;gap:14px;
+  padding-left:clamp(12px,1.6vw,24px);
 }
+.s05__oc{flex:0 1 200px;min-width:0;display:flex;flex-direction:column;gap:14px}
+.s05__oc--2{padding-top:56px}
 .s05__card{
-  position:absolute;display:flex;flex-direction:column;gap:8px;width:186px;padding:13px;
+  position:relative;display:flex;flex-direction:column;gap:8px;padding:13px;
   background:var(--paper);border:1px solid var(--line);border-radius:var(--r);
-  box-shadow:0 1px 2px rgba(25,25,29,.03),0 22px 44px -30px rgba(25,25,29,.34);
+  box-shadow:var(--sh-1);
 }
-.is-live .s05__card{animation:s05-drift 12s var(--e-io) infinite}
+.is-live .s05__oc{animation:s05-drift 12s var(--e-io) infinite}
+.is-live .s05__oc--2{animation-delay:-5s}
 @keyframes s05-drift{0%,100%{translate:0 0}50%{translate:0 -11px}}
-.s05__card--a{top:1%;   left:1%;  animation-delay:-.4s}
-.s05__card--b{top:21%;  left:23%; animation-delay:-3.2s}
-.s05__card--c{top:50%;  left:0;   animation-delay:-1.6s}
-.s05__card--d{top:71%;  left:26%; animation-delay:-5.1s}
-.s05__card--e{top:4%;   left:57%; animation-delay:-2.4s}
-.s05__card--f{top:32%;  left:65%; animation-delay:-6.3s}
-.s05__card--g{top:60%;  left:59%; animation-delay:-8.2s}
 
 .s05__row{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .s05__lbl{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .s05__meta{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--muted)}
 .s05__state{
-  font-family:var(--f);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-d);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--blue-d);
   background:var(--blue-wash);padding:2px 6px;border-radius:var(--r-pill);
 }
 .s05__sw{display:flex;gap:5px}
@@ -107,7 +105,7 @@
 .s05__sw i:nth-child(4){background:var(--paper-4)}
 .s05__bub{align-self:flex-start;max-width:100%;padding:5px 8px;border-radius:8px 8px 8px 2px;
   background:var(--paper-3);font-size:var(--t-lbl);line-height:1.35;color:var(--txt);letter-spacing:0}
-.s05__bub--a{align-self:flex-end;border-radius:8px 8px 2px 8px;background:var(--blue);color:#fff}
+.s05__bub--a{align-self:flex-end;border-radius:8px 8px 2px 8px;background:var(--blue);color:var(--on-ink)}
 .s05__wave{display:flex;align-items:center;gap:3px;height:26px}
 .s05__wave i{flex:1;background:var(--line-3);border-radius:2px;height:30%}
 .is-live .s05__wave i{animation:s05-wave 1.5s var(--e-io) infinite}
@@ -146,14 +144,14 @@
   .s05__core{height:110px;align-self:auto}
   .s05__bus{top:50%;bottom:auto;left:0;right:0;width:auto;height:3px;margin:0}
   .s05__bus::after{display:none}
-  .s05__out{
-    position:relative;height:auto;min-height:0;display:flex;gap:10px;
-    overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:none;
-    -webkit-mask-image:linear-gradient(90deg,#000 0,#000 92%,transparent 100%);
-    mask-image:linear-gradient(90deg,#000 0,#000 92%,transparent 100%);
-  }
-  .s05__out::-webkit-scrollbar{display:none}
-  .s05__card{position:relative;top:auto;left:auto;flex:0 0 186px;scroll-snap-align:start;animation:none}
+  /* every output card on show: 4 across, then 2 across on phones; the last spans two */
+  .s05__out{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:stretch;gap:10px;padding-left:0}
+  .s05__oc,.s05__oc--2{display:contents}
+  .s05__card--g{grid-column:span 2}
   .s05__foot{grid-template-columns:1fr;gap:16px}
 }
-@media (max-width:560px){.s05__inputs{grid-template-columns:1fr}}
+@media (max-width:560px){
+  .s05__inputs{grid-template-columns:1fr}
+  .s05__out{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){.s05__oc{animation:none}}
