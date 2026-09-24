@@ -7,7 +7,8 @@ try {
   if (!sec || !window.XE) return;
 
   /* reveal + start the ambient loops */
-  requestAnimationFrame(function () { sec.classList.add('is-in'); });
+  if (!XE.reduced) sec.classList.add('is-anim');   /* floats start hidden only when JS runs */
+  requestAnimationFrame(function () { requestAnimationFrame(function () { sec.classList.add('is-in'); }); });
   if (!XE.reduced) {
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) {

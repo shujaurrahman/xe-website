@@ -6,7 +6,12 @@
   padding:clamp(132px,15vh,190px) 0 clamp(72px,9vh,120px);
   background:var(--paper);
 }
-.s01__bg{position:absolute;inset:0;pointer-events:none;z-index:0}
+.s01__bg{
+  position:absolute;inset:0;pointer-events:none;z-index:0;
+  /* fade the aurora, dither and grain out before the section edge — no hard line into 02 */
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 68%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 68%,transparent 100%);
+}
 .s01__dither{opacity:.5}
 .s01__grain{
   position:absolute;inset:0;
@@ -28,7 +33,7 @@
 }
 .s01__dot{width:7px;height:7px;border-radius:50%;background:var(--blue);flex:none;box-shadow:0 0 0 3px var(--blue-wash)}
 .is-live .s01__dot{animation:s01-ping 2.4s var(--e-io) infinite}
-@keyframes s01-ping{0%,100%{box-shadow:0 0 0 3px var(--blue-wash)}50%{box-shadow:0 0 0 6px rgba(0,130,251,.04)}}
+@keyframes s01-ping{0%,100%{box-shadow:0 0 0 3px var(--blue-wash)}50%{box-shadow:0 0 0 6px transparent}}
 
 .s01__h{
   font-size:clamp(1.7rem,3.9vw,3.35rem);line-height:1.1;letter-spacing:-.034em;font-weight:500;
@@ -59,13 +64,15 @@
 .s01__floats{position:absolute;inset:0;z-index:1;pointer-events:none}
 .s01__f{
   position:absolute;overflow:hidden;border-radius:12px;
-  border:1px solid rgba(25,25,29,.06);
-  box-shadow:0 2px 6px rgba(25,25,29,.05),0 26px 50px -28px rgba(25,25,29,.4);
-  animation:s01-float 12s var(--e-io) infinite;
+  border:1px solid var(--line);
+  box-shadow:var(--sh-2);
   translate:var(--px,0) var(--py,0);
-  opacity:0;
 }
-.is-in .s01__f{opacity:1;transition:opacity .9s var(--e) var(--d,0ms)}
+/* visible by default (no-JS = finished state); 01-hero.js adds .is-anim at init to fade them in */
+.s01.is-anim .s01__f{opacity:0}
+.s01.is-anim.is-in .s01__f{opacity:1;transition:opacity .9s var(--e) var(--d,0ms)}
+/* the drift only runs while the hero is on screen */
+.s01.is-live .s01__f{animation:s01-float 12s var(--e-io) infinite}
 .s01__f img{width:100%;height:100%;object-fit:cover;display:block}
 
 .s01__f--1{width:clamp(104px,9.4vw,146px);aspect-ratio:1;    top:13%;  left:2.5%;  animation-delay:-.6s;  --d:120ms}
@@ -93,7 +100,7 @@
   .s01__f--5,.s01__f--6{bottom:5%}
 }
 @media (max-width:900px){
-  .s01{min-height:0;padding-top:clamp(116px,20vh,150px)}
+  .s01{min-height:0;padding-top:calc(var(--nav-h) + 48px)}
   .s01__floats{position:relative;inset:auto;height:0}
   .s01__f{display:none}
   .s01__h{max-width:18ch}
@@ -101,9 +108,11 @@
 @media (max-width:560px){
   .s01__act{width:100%;flex-direction:column}
   .s01__act .btn{width:100%}
-  .s01__status{letter-spacing:.1em;text-align:left}
+  /* the 12-word line wraps: centre it, balance the two lines, round the plate to suit */
+  .s01__status{display:block;letter-spacing:.06em;text-align:center;text-wrap:balance;border-radius:var(--r-lg);padding:8px 16px;line-height:1.6}
+  .s01__dot{display:inline-block;vertical-align:.1em;margin-right:.7em}
 }
 @media (prefers-reduced-motion:reduce){
-  .s01__f{opacity:1;animation:none}
+  .s01__f,.s01.is-live .s01__f{opacity:1;animation:none}
   .s01__scroll{display:none}
 }
