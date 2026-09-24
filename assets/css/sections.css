@@ -16,8 +16,7 @@
 .s01__dither{opacity:.5}
 .s01__grain{
   position:absolute;inset:0;
-  background-image:radial-gradient(var(--dot) 1px,transparent 1px);
-  background-size:30px 30px;
+  background-size:30px 30px;          /* core .dots, at the hero's wider pitch */
   -webkit-mask-image:radial-gradient(105% 72% at 50% 40%,#000 0%,rgba(0,0,0,.35) 52%,transparent 80%);
   mask-image:radial-gradient(105% 72% at 50% 40%,#000 0%,rgba(0,0,0,.35) 52%,transparent 80%);
   opacity:.75;
