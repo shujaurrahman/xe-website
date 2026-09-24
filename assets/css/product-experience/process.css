@@ -1,0 +1,4 @@
+.pxh-process__img { margin-top: 28px; }
+.pxh-process .pxh-steps { padding-top: 6px; }
+.pxh-process .pxh-steps__gate { text-transform: none; letter-spacing: .02em; font-size: var(--t-xs); }
+@media (max-width: 860px) { .pxh-process .pxh-steps { margin-top: 32px; } }
