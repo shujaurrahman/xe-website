@@ -1,4 +1,5 @@
 /* ===== 01-hero ===== */
+try {
 /* 01 — the floating work drifts with the pointer; everything fades in once. */
 (function () {
   'use strict';
@@ -49,8 +50,10 @@
     raf = (Math.abs(tx - cx) > .002 || Math.abs(ty - cy) > .002) ? requestAnimationFrame(loop) : null;
   }
 })();
+} catch (e) { console.error('[01-hero]', e); }
 
 /* ===== 02-showcase ===== */
+try {
 /* 02 — Brief ⇄ Delivered. It runs itself: the rule fills across, then the pane
    turns over. Clicking a pill takes control. */
 (function () {
@@ -120,8 +123,10 @@
     XE.inView(sec, function () { t2 = setTimeout(travel, 2200); });
   }
 })();
+} catch (e) { console.error('[02-showcase]', e); }
 
 /* ===== 03-industries ===== */
+try {
 /* 03 — hovering or focusing a card opens it and swaps the word in the heading. */
 (function () {
   'use strict';
@@ -182,8 +187,10 @@
     XE.on(sec, 'mouseleave', function () { if (!pinned && timer) timer.start(); });
   }
 })();
+} catch (e) { console.error('[03-industries]', e); }
 
 /* ===== 05-flow ===== */
+try {
 /* 05 — the diagram only animates while it is on screen, and never under
    reduced motion. Everything else is CSS. */
 (function () {
@@ -198,8 +205,10 @@
     if (document.hidden) d.classList.remove('is-live');
   });
 })();
+} catch (e) { console.error('[05-flow]', e); }
 
 /* ===== 06-equip ===== */
+try {
 /* 06 — the rail loops for ever; the arrows nudge it and hovering holds it. */
 (function () {
   'use strict';
@@ -233,8 +242,10 @@
   XE.on(XE.$('[data-s06-prev]', sec), 'click', function () { step(-1); });
   XE.on(XE.$('[data-s06-next]', sec), 'click', function () { step(1); });
 })();
+} catch (e) { console.error('[06-equip]', e); }
 
 /* ===== 07-ai-design ===== */
+try {
 /* 07 — ai design bento: two live details only. The render rule runs while the
    studio card is on screen, and the routed model chip moves on a slow tick.
    The cards themselves are static — no hover lift, no parallax. */
@@ -299,8 +310,10 @@
     });
   }
 })();
+} catch (e) { console.error('[07-ai-design]', e); }
 
 /* ===== 08-disciplines ===== */
+try {
 /* 08 — the discipline list drifts for ever. Whichever pill is crossing the
    centre line is the active one, and it drives the panel on the right. */
 (function () {
@@ -398,8 +411,10 @@
     schedule();
   }
 })();
+} catch (e) { console.error('[08-disciplines]', e); }
 
 /* ===== 10-production ===== */
+try {
 /* 10 — the marquee videos only load and play while the section is on screen. */
 (function () {
   'use strict';
@@ -418,8 +433,10 @@
     });
   }, { threshold: 0.05 }).observe(sec);
 })();
+} catch (e) { console.error('[10-production]', e); }
 
 /* ===== 12-process ===== */
+try {
 /* 12 — the three steps advance on a 6s dwell; clicking one pins it. */
 (function () {
   'use strict';
@@ -467,8 +484,10 @@
     XE.on(panel, 'mouseleave', function () { if (!pinned && timer) timer.start(); });
   }
 })();
+} catch (e) { console.error('[12-process]', e); }
 
 /* ===== 13-operation ===== */
+try {
 /* 13 — the two photographs drift a few pixels apart as the section passes. */
 (function () {
   'use strict';
@@ -497,8 +516,10 @@
   }, { passive: true });
   tick();
 })();
+} catch (e) { console.error('[13-operation]', e); }
 
 /* ===== 17-delivered ===== */
+try {
 /* 17 — case slider: arrows, keyboard, swipe, and a slow auto-advance. */
 (function () {
   'use strict';
@@ -540,8 +561,10 @@
     timer = XE.liveTimer(root, 7000, function () { if (!stopped) show(i + 1); });
   }
 })();
+} catch (e) { console.error('[17-delivered]', e); }
 
 /* ===== 20-booking ===== */
+try {
 /* 20 — booking widget.
    HOOK 1: AVAILABLE(date)    — which days can be offered
    HOOK 2: SLOTS(date)        — which times can be offered
@@ -755,8 +778,10 @@
   renderMonth();
   renderTimes();
 })();
+} catch (e) { console.error('[20-booking]', e); }
 
 /* ===== 22-final-cta ===== */
+try {
 /* 22 — the orbit dots only travel while the band is on screen and the tab is
    visible. Everything else in the section is CSS. */
 (function () {
@@ -771,8 +796,10 @@
     if (document.hidden) sec.classList.remove('is-live');
   });
 })();
+} catch (e) { console.error('[22-final-cta]', e); }
 
 /* ===== 23-brand ===== */
+try {
 /* 23 — Brand Design, in depth. Turns the stacked capability panes into a tabbed viewer:
    selector shown, inactive panes [hidden] (only one in flow), ARIA tabs + arrow keys via
    BDH.tabs. While on screen, and until the visitor touches it, it steps through the six
@@ -848,14 +875,18 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
+} catch (e) { console.error('[23-brand]', e); }
 
 /* ===== 24-technology ===== */
-/* 24 — Technology & Intelligence: "the manifest".
-   The HTML is the finished, readable state (all ten manifests, one after another). Here:
-   · .is-js at once, so the rail shows and only the current manifest stays in flow;
-   · the rail becomes an ARIA tablist (BDH.tabs) that advances by itself every 7 s while on screen,
-     until the first interaction anywhere in the section;
-   · the frameworks strip becomes a set of toggle buttons that mark the capabilities built to each.
+try {
+/* 24 — Technology & Intelligence: "the system diagram".
+   The HTML is the finished, readable state: every capability is a node linking to its detail, and the
+   framework rows are plain content. Here:
+   · .is-js at once, so the details share one reserved cell (no shift) and the hint shows;
+   · choosing a node (click, Enter, focus, or hover on hover-capable devices) opens its detail in place;
+   · framework rows become toggle buttons that light the capabilities built to each, in the diagram
+     and in a readout of fixed height directly above the rows (so nothing moves under the pointer);
+   · one faint pulse per stratum while on screen (BDH.live); nothing moves under reduced motion.
    hub.js (window.BDH) loads after sections.js, so init waits for DOMContentLoaded. */
 (function () {
   'use strict';
@@ -863,92 +894,133 @@
   if (!root) return;
   root.classList.add('is-js');
 
+  function $$(sel, el) { return Array.prototype.slice.call((el || root).querySelectorAll(sel)); }
+
   function init() {
     var BDH = window.BDH;
-    var x = root.querySelector('[data-s24]');
-    var rail = root.querySelector('[data-s24-rail]');
-    if (!x || !rail) return;
-    if (!BDH) { root.classList.remove('is-js'); return; }   // no helpers: keep the complete static list
+    var sys = root.querySelector('[data-s24]');
+    var dets = root.querySelector('.s24__dets');
+    if (!sys || !dets) return;
+    var R = BDH ? !!BDH.reduced : window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (BDH) BDH.live(sys, 0.15);
 
-    var R = !!BDH.reduced;
-    var MS = 7000;
-    var tabs = Array.prototype.slice.call(rail.querySelectorAll('.s24__tab'));
-    var panes = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
-
-    /* ARIA: one vertical tablist; the layer groups are presentational (each tab names its layer) */
-    rail.setAttribute('role', 'tablist');
-    rail.setAttribute('aria-label', 'Technology capabilities');
-    Array.prototype.forEach.call(rail.querySelectorAll('.s24__grp, .s24__tabs'), function (g) { g.setAttribute('role', 'none'); });
-    tabs.forEach(function (t, n) {
-      t.setAttribute('role', 'tab');
-      t.setAttribute('aria-selected', n === 0 ? 'true' : 'false');
-    });
-    panes.forEach(function (p, n) {
-      if (!p) return;
-      p.setAttribute('role', 'tabpanel');
-      p.setAttribute('aria-labelledby', tabs[n].id);
-    });
-
-    x.style.setProperty('--s24-t', MS + 'ms');
-    BDH.live(x, 0.2);
-
+    var nodes = $$('[data-s24-node]');
     var active = null;   // the framework key currently pressed
+    var current = null;
 
-    function markPane(p) {
-      if (!p) return;
-      Array.prototype.forEach.call(p.querySelectorAll('.s24__stds > .xt-badge'), function (b) {
+    function markBadges() {
+      $$('.s24__stds > .xt-badge').forEach(function (b) {
         b.classList.toggle('is-hit', !!active && b.classList.contains('s24__std-' + active));
       });
     }
 
-    var api = BDH.tabs(x, {
-      tabs: tabs,
-      panes: panes,
-      auto: R ? 0 : MS,
-      orientation: 'vertical',
-      interactRoot: root,
-      onChange: function (i) {
-        var p = panes[i];
-        markPane(p);
-        if (R || !p) return;
-        p.classList.remove('is-enter');
-        void p.offsetWidth;                       // restart the entrance
-        p.classList.add('is-enter');
-      }
-    });
-    markPane(panes[api.index()]);
-
-    /* the progress rule belongs to the automatic tour only */
-    BDH.onInteract(root, function () { x.classList.add('is-manual'); });
-    if (R) x.classList.add('is-manual');
-
-    /* ---------- frameworks strip: toggle buttons ---------------------------- */
-    var read = root.querySelector('[data-s24-read]');
-    var idle = read ? read.textContent : '';
-    var fbs = Array.prototype.slice.call(root.querySelectorAll('[data-s24-std]'));
-
-    function names(key) {
-      return tabs.filter(function (t) { return (' ' + t.getAttribute('data-std') + ' ').indexOf(' ' + key + ' ') > -1; });
+    function select(slug) {
+      if (!slug || slug === current) return;
+      current = slug;
+      nodes.forEach(function (n) {
+        var on = n.getAttribute('data-s24-node') === slug;
+        n.classList.toggle('is-on', on);
+        if (on) n.setAttribute('aria-current', 'true'); else n.removeAttribute('aria-current');
+      });
+      $$('.s24__det').forEach(function (d) { d.classList.toggle('is-on', d.id === 's24-d-' + slug); });
     }
+
+    var canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+    var hoverT = null;
+    nodes.forEach(function (n) {
+      var slug = n.getAttribute('data-s24-node');
+      n.addEventListener('click', function (e) {
+        e.preventDefault();
+        select(slug);
+        /* on narrow screens the detail sits below the diagram: bring it into view if it is off screen */
+        var r = dets.getBoundingClientRect();
+        if (r.top > window.innerHeight - 120) dets.scrollIntoView({ behavior: R ? 'auto' : 'smooth', block: 'nearest' });
+      });
+      n.addEventListener('focus', function () { select(slug); });
+      n.addEventListener('pointerenter', function () {
+        if (!canHover.matches) return;
+        clearTimeout(hoverT);
+        hoverT = setTimeout(function () { select(slug); }, 90);
+      });
+      n.addEventListener('pointerleave', function () { clearTimeout(hoverT); });
+    });
+
+    var first = nodes.filter(function (n) { return n.classList.contains('is-on'); })[0] || nodes[0];
+    var fromHash = location.hash.indexOf('#s24-d-') === 0 ? location.hash.slice(7) : null;
+    select(fromHash && root.querySelector('#s24-d-' + fromHash) ? fromHash : first.getAttribute('data-s24-node'));
+
+    /* ---------- frameworks index: rows become toggle buttons --------------- */
+    var read = root.querySelector('[data-s24-read]');
+    var rows = $$('.s24__fr');
+    var fbs = [];
+    rows.forEach(function (li) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 's24__fb';
+      b.setAttribute('aria-pressed', 'false');
+      while (li.firstChild) b.appendChild(li.firstChild);
+      li.appendChild(b);
+      li.classList.add('is-up');
+      b.s24key = li.getAttribute('data-s24-std');
+      b.s24code = li.getAttribute('data-code');
+      fbs.push(b);
+    });
+
+    function hitsFor(key) {
+      return nodes.filter(function (n) { return (' ' + n.getAttribute('data-std') + ' ').indexOf(' ' + key + ' ') > -1; });
+    }
+    var caps = $$('[data-s24-cap]');
+    var capList = root.querySelector('.s24__fwc');
+    function paintRead(key) {
+      if (!read) return;
+      read.textContent = '';
+      if (!key) { read.textContent = 'Choose a framework to light the capabilities built to it.'; return; }
+      var b = fbs.filter(function (f) { return f.s24key === key; })[0];
+      var hits = hitsFor(key);
+      var code = document.createElement('b');
+      code.textContent = b ? b.s24code : key;
+      read.appendChild(code);
+      read.appendChild(document.createTextNode(' — ' + hits.length + ' of ' + nodes.length + ' capabilities are built to it'));
+      var names = document.createElement('span');
+      names.className = 'sr';
+      names.textContent = ': ' + hits.map(function (n) { return n.querySelector('.s24__nn').textContent; }).join(', ');
+      read.appendChild(names);
+      read.appendChild(document.createTextNode('.'));
+    }
+    /* reserve the tallest sentence, so pressing a framework never moves the rows under the pointer */
+    function reserve() {
+      if (!read) return;
+      read.style.minHeight = '';
+      var max = 0;
+      [null].concat(fbs.map(function (f) { return f.s24key; })).forEach(function (k) {
+        paintRead(k); max = Math.max(max, read.offsetHeight);
+      });
+      read.style.minHeight = max + 'px';
+      paintRead(active);
+    }
+
     function apply(key) {
       active = key;
-      fbs.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-s24-std') === key ? 'true' : 'false'); });
-      var hits = key ? names(key) : [];
-      tabs.forEach(function (t) { t.classList.toggle('is-hit', hits.indexOf(t) > -1); });
-      x.classList.toggle('is-filter', !!key);
-      markPane(panes[api.index()]);
-      if (!read) return;
-      if (!key) { read.textContent = idle; return; }
-      var b = fbs.filter(function (f) { return f.getAttribute('data-s24-std') === key; })[0];
-      read.innerHTML = '';
-      var code = document.createElement('b');
-      code.textContent = b.getAttribute('data-code');
-      read.appendChild(code);
-      var list = hits.map(function (t) { return t.querySelector('.s24__tt').firstChild.textContent.trim(); });
-      read.appendChild(document.createTextNode(': ' + hits.length + ' of ' + tabs.length + ' capabilities are built to it — ' + list.join(', ') + '.'));
-      /* keep the open manifest relevant: jump to the first capability that uses it */
-      if (hits.length && hits.indexOf(tabs[api.index()]) === -1) api.show(tabs.indexOf(hits[0]), true);
+      fbs.forEach(function (b) { b.setAttribute('aria-pressed', b.s24key === key ? 'true' : 'false'); });
+      var hits = key ? hitsFor(key) : [];
+      nodes.forEach(function (n) { n.classList.toggle('is-hit', hits.indexOf(n) > -1); });
+      sys.classList.toggle('is-filter', !!key);
+      if (capList) capList.classList.toggle('is-filter', !!key);
+      var hitSlugs = hits.map(function (n) { return n.getAttribute('data-s24-node'); });
+      caps.forEach(function (c) { c.classList.toggle('is-hit', hitSlugs.indexOf(c.getAttribute('data-s24-cap')) > -1); });
+      markBadges();
+      paintRead(key);
     }
+    fbs.forEach(function (b) {
+      b.addEventListener('click', function () { apply(active === b.s24key ? null : b.s24key); });
+    });
+    reserve();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(reserve);
+    window.addEventListener('load', reserve);
+    var rt = null;
+    window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(reserve, 150); });
+
+    /* show all frameworks (the list is cut to eight up to 1180px) */
     var all = root.querySelector('.s24__all');
     var fwl = root.querySelector('.s24__fwl');
     if (all && fwl) {
@@ -961,21 +1033,15 @@
         all.textContent = open ? 'Show fewer frameworks' : label;
       });
     }
-
-    fbs.forEach(function (b) {
-      b.disabled = false;
-      b.addEventListener('click', function () {
-        var key = b.getAttribute('data-s24-std');
-        apply(active === key ? null : key);
-      });
-    });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
+} catch (e) { console.error('[24-technology]', e); }
 
 /* ===== 25-offer ===== */
+try {
 /* 25 — Offer: the brief builder.
    The HTML is a complete POST form without this file. This adds: the six discipline lists as an ARIA
    tablist (BDH.tabs), a pick count per discipline, the live summary bar, the chosen package's column,
@@ -1115,3 +1181,4 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
+} catch (e) { console.error('[25-offer]', e); }
