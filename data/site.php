@@ -150,14 +150,16 @@ return [
         ]],
     ],
 
-    /* The legal line in the footer bar.
-       PLACEHOLDER: none of these pages exist yet — point each at its page before launch. */
+    /* The legal line in the footer bar. Every policy also lists on the legal hub (legal/index.php). */
     'legal' => [
-        ['Privacy Notice',     '#'],
-        ['Terms of Use',       '#'],
-        ['Cookie Preferences', '#'],
-        ['Accessibility',      '#'],
-        ['Commercial Policy',  '#'],
+        ['Legal',              'legal/'],
+        ['Privacy Notice',     'legal/privacy.php'],
+        ['Terms of Use',       'legal/terms.php'],
+        ['Cookie Preferences', 'legal/cookies.php#preferences'],
+        ['Accessibility',      'legal/accessibility.php'],
+        ['Commercial Policy',  'legal/commercial-policy.php'],
+        ['IP & Trademarks',    'legal/intellectual-property.php'],
+        ['Security',           'legal/security.php'],
     ],
 
     // PLACEHOLDER: add the real profile URLs.
