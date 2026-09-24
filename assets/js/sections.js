@@ -771,3 +771,347 @@
     if (document.hidden) sec.classList.remove('is-live');
   });
 })();
+
+/* ===== 23-brand ===== */
+/* 23 — Brand Design, in depth. Turns the stacked capability panes into a tabbed viewer:
+   selector shown, inactive panes [hidden] (only one in flow), ARIA tabs + arrow keys via
+   BDH.tabs. While on screen, and until the visitor touches it, it steps through the six
+   with a progress line on the current tab. Each pane's artefact builds in when shown.
+   Reduced motion: tabs work, no auto-advance, no build-in, no loops.
+   hub.js (window.BDH) loads after sections.js, so init waits for DOMContentLoaded. */
+(function () {
+  'use strict';
+
+  function init() {
+    var root = document.querySelector('.s23');
+    var BDH = window.BDH;
+    if (!root || !BDH) return;
+    var app = root.querySelector('[data-s23]');
+    var tabs = BDH.$$('.s23__tab', root);
+    var panes = BDH.$$('.s23__pane', root);
+    if (!app || !tabs.length || tabs.length !== panes.length) return;
+
+    var R = BDH.reduced, DUR = 7000, TICK = 100, elapsed = 0, auto = false;
+
+    /* deep link: #s23-<slug> opens that capability */
+    var start = 0;
+    panes.forEach(function (p, i) { if (location.hash && location.hash === '#' + p.id) start = i; });
+
+    panes.forEach(function (p, i) {
+      p.setAttribute('role', 'tabpanel');
+      p.setAttribute('aria-labelledby', tabs[i].id);
+      p.setAttribute('tabindex', '0');
+      p.hidden = i !== start;
+    });
+    root.classList.add('is-ready');
+    if (!R) root.classList.add('is-anim');
+
+    var seen = false;
+    function run(p) {
+      if (R || !seen) return;
+      p.classList.remove('is-run');
+      void p.offsetWidth;                // restart the build-in
+      p.classList.add('is-run');
+    }
+    function paint() {
+      if (!auto) return;
+      var cur = api ? api.index() : start;
+      tabs.forEach(function (t, i) { t.style.setProperty('--p', i === cur ? String(Math.min(1, elapsed / DUR)) : '0'); });
+    }
+
+    var api = null;
+    api = BDH.tabs(app, {
+      tabs: tabs, panes: panes, initial: start,
+      onChange: function (i) { elapsed = 0; paint(); run(panes[i]); }
+    });
+
+    BDH.inView(app, function () { seen = true; run(panes[api.index()]); });
+    BDH.live(root, 0.15);
+
+    if (R) return;                        // progress lines stay full (--p unset → 1)
+    auto = true;
+    root.classList.add('is-auto');
+    paint();
+    var timer = BDH.loop(app, TICK, function () {
+      elapsed += TICK;
+      if (elapsed >= DUR) api.show(api.index() + 1, false);
+      else paint();
+    });
+    BDH.onInteract(app, function () {
+      auto = false;
+      timer.stop();
+      root.classList.remove('is-auto');
+      tabs.forEach(function (t) { t.style.removeProperty('--p'); });
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+
+/* ===== 24-technology ===== */
+/* 24 — Technology & Intelligence: "the manifest".
+   The HTML is the finished, readable state (all ten manifests, one after another). Here:
+   · .is-js at once, so the rail shows and only the current manifest stays in flow;
+   · the rail becomes an ARIA tablist (BDH.tabs) that advances by itself every 7 s while on screen,
+     until the first interaction anywhere in the section;
+   · the frameworks strip becomes a set of toggle buttons that mark the capabilities built to each.
+   hub.js (window.BDH) loads after sections.js, so init waits for DOMContentLoaded. */
+(function () {
+  'use strict';
+  var root = document.querySelector('.s24');
+  if (!root) return;
+  root.classList.add('is-js');
+
+  function init() {
+    var BDH = window.BDH;
+    var x = root.querySelector('[data-s24]');
+    var rail = root.querySelector('[data-s24-rail]');
+    if (!x || !rail) return;
+    if (!BDH) { root.classList.remove('is-js'); return; }   // no helpers: keep the complete static list
+
+    var R = !!BDH.reduced;
+    var MS = 7000;
+    var tabs = Array.prototype.slice.call(rail.querySelectorAll('.s24__tab'));
+    var panes = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
+
+    /* ARIA: one vertical tablist; the layer groups are presentational (each tab names its layer) */
+    rail.setAttribute('role', 'tablist');
+    rail.setAttribute('aria-label', 'Technology capabilities');
+    Array.prototype.forEach.call(rail.querySelectorAll('.s24__grp, .s24__tabs'), function (g) { g.setAttribute('role', 'none'); });
+    tabs.forEach(function (t, n) {
+      t.setAttribute('role', 'tab');
+      t.setAttribute('aria-selected', n === 0 ? 'true' : 'false');
+    });
+    panes.forEach(function (p, n) {
+      if (!p) return;
+      p.setAttribute('role', 'tabpanel');
+      p.setAttribute('aria-labelledby', tabs[n].id);
+    });
+
+    x.style.setProperty('--s24-t', MS + 'ms');
+    BDH.live(x, 0.2);
+
+    var active = null;   // the framework key currently pressed
+
+    function markPane(p) {
+      if (!p) return;
+      Array.prototype.forEach.call(p.querySelectorAll('.s24__stds > .xt-badge'), function (b) {
+        b.classList.toggle('is-hit', !!active && b.classList.contains('s24__std-' + active));
+      });
+    }
+
+    var api = BDH.tabs(x, {
+      tabs: tabs,
+      panes: panes,
+      auto: R ? 0 : MS,
+      orientation: 'vertical',
+      interactRoot: root,
+      onChange: function (i) {
+        var p = panes[i];
+        markPane(p);
+        if (R || !p) return;
+        p.classList.remove('is-enter');
+        void p.offsetWidth;                       // restart the entrance
+        p.classList.add('is-enter');
+      }
+    });
+    markPane(panes[api.index()]);
+
+    /* the progress rule belongs to the automatic tour only */
+    BDH.onInteract(root, function () { x.classList.add('is-manual'); });
+    if (R) x.classList.add('is-manual');
+
+    /* ---------- frameworks strip: toggle buttons ---------------------------- */
+    var read = root.querySelector('[data-s24-read]');
+    var idle = read ? read.textContent : '';
+    var fbs = Array.prototype.slice.call(root.querySelectorAll('[data-s24-std]'));
+
+    function names(key) {
+      return tabs.filter(function (t) { return (' ' + t.getAttribute('data-std') + ' ').indexOf(' ' + key + ' ') > -1; });
+    }
+    function apply(key) {
+      active = key;
+      fbs.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-s24-std') === key ? 'true' : 'false'); });
+      var hits = key ? names(key) : [];
+      tabs.forEach(function (t) { t.classList.toggle('is-hit', hits.indexOf(t) > -1); });
+      x.classList.toggle('is-filter', !!key);
+      markPane(panes[api.index()]);
+      if (!read) return;
+      if (!key) { read.textContent = idle; return; }
+      var b = fbs.filter(function (f) { return f.getAttribute('data-s24-std') === key; })[0];
+      read.innerHTML = '';
+      var code = document.createElement('b');
+      code.textContent = b.getAttribute('data-code');
+      read.appendChild(code);
+      var list = hits.map(function (t) { return t.querySelector('.s24__tt').firstChild.textContent.trim(); });
+      read.appendChild(document.createTextNode(': ' + hits.length + ' of ' + tabs.length + ' capabilities are built to it — ' + list.join(', ') + '.'));
+      /* keep the open manifest relevant: jump to the first capability that uses it */
+      if (hits.length && hits.indexOf(tabs[api.index()]) === -1) api.show(tabs.indexOf(hits[0]), true);
+    }
+    var all = root.querySelector('.s24__all');
+    var fwl = root.querySelector('.s24__fwl');
+    if (all && fwl) {
+      all.hidden = false;
+      var label = all.textContent;
+      all.addEventListener('click', function () {
+        var open = !fwl.classList.contains('is-open');
+        fwl.classList.toggle('is-open', open);
+        all.setAttribute('aria-expanded', open ? 'true' : 'false');
+        all.textContent = open ? 'Show fewer frameworks' : label;
+      });
+    }
+
+    fbs.forEach(function (b) {
+      b.disabled = false;
+      b.addEventListener('click', function () {
+        var key = b.getAttribute('data-s24-std');
+        apply(active === key ? null : key);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+
+/* ===== 25-offer ===== */
+/* 25 — Offer: the brief builder.
+   The HTML is a complete POST form without this file. This adds: the six discipline lists as an ARIA
+   tablist (BDH.tabs), a pick count per discipline, the live summary bar, the chosen package's column,
+   and a "Likely fit" mark read from the typical length of the ticked services.
+   window.BDH loads after the bundled sections.js, so init waits for DOMContentLoaded. */
+(function () {
+  'use strict';
+
+  function init() {
+    var root = document.querySelector('[data-s25]');
+    if (!root || !window.XE) return;
+    var XE = window.XE, BDH = window.BDH;
+    var form = XE.$('[data-s25-form]', root);
+    var tablist = XE.$('[data-s25-tabs]', root);
+    var tabs = XE.$$('[data-s25-tab]', root);
+    var panes = XE.$$('[data-s25-pane]', root);
+    var svcs = XE.$$('[data-s25-svc]', root);
+    var pkgs = XE.$$('[data-s25-pkg]', root);
+    var cmp = XE.$('[data-s25-cmp]', root);
+    var fits = XE.$$('[data-s25-fit]', root);
+    var fitNote = XE.$('[data-s25-fitnote]', root);
+    var send = XE.$('[data-s25-send]', root);
+    var countEl = XE.$('[data-s25-count]', root);
+    var pkEl = XE.$('[data-s25-pkname]', root);
+    var namesEl = XE.$('[data-s25-names]', root);
+    var clearBtn = XE.$('[data-s25-clear]', root);
+    var live = XE.$('[data-s25-live]', root);
+    if (!form) return;
+    root.classList.add('is-js');
+
+    /* ---- tabs: only once JS is here; before that every list is shown in turn ---- */
+    if (tablist && tabs.length && panes.length === tabs.length && BDH && BDH.tabs) {
+      panes.forEach(function (p, i) {
+        p.setAttribute('role', 'tabpanel');
+        p.setAttribute('aria-labelledby', tabs[i].id);
+        p.setAttribute('tabindex', '0');
+      });
+      tablist.hidden = false;
+      BDH.tabs(tablist, { tabs: tabs, panes: panes, orientation: 'horizontal' });
+    }
+
+    function two(n) { return (n < 10 ? '0' : '') + n; }
+
+    /* The package that most often fits: read from the services' typical lengths.
+       Ongoing work → Retainer (or Squad for a team); three or more disciplines → Enterprise;
+       short, small asks → Sprint; up to ~12 weeks → Project; anything longer → Milestone. */
+    function weeks(t) {
+      var hi = 0, m, re = /(\d+)(?:\s*[–-]\s*(\d+))?\s*weeks?/gi;
+      while ((m = re.exec(t))) hi = Math.max(hi, parseInt(m[2] || m[1], 10));
+      return hi;
+    }
+    function isRun(t) { return /ongoing|monthly|then|start in|cycles/i.test(t); }
+    function suggest(picked) {
+      if (!picked.length) return '';
+      var ds = {}, nd = 0, hi = 0, run = false, team = false;
+      picked.forEach(function (el) {
+        var t = el.getAttribute('data-time') || '';
+        if (!ds[el.getAttribute('data-d')]) { ds[el.getAttribute('data-d')] = 1; nd++; }
+        if (isRun(t)) run = true; else hi = Math.max(hi, weeks(t));
+        if (/squad|engineers-by-role/.test(el.value)) team = true;
+      });
+      if (team) return 'squad';
+      if (nd >= 3) return 'enterprise';
+      if (run) return 'retainer';
+      if (hi && hi <= 3 && picked.length <= 2) return 'sprint';
+      if (hi <= 12 && picked.length <= 3) return 'project';
+      return 'milestone';
+    }
+
+    var lastMsg = '';
+    function sync(announce) {
+      var picked = svcs.filter(function (el) { return el.checked; });
+      var pk = pkgs.filter(function (el) { return el.checked; })[0];
+      var pkKey = pk ? pk.value : '';
+      var pkName = pk && pk.value ? pk.getAttribute('data-name') : 'Not sure yet';
+
+      /* per-discipline counts on the tabs */
+      tabs.forEach(function (t) {
+        var d = t.getAttribute('data-s25-tab');
+        var n = picked.filter(function (el) { return el.getAttribute('data-d') === d; }).length;
+        var b = XE.$('[data-s25-tabpick]', t);
+        if (!b) return;
+        b.hidden = !n;
+        b.textContent = n ? String(n) : '';
+        b.setAttribute('aria-label', n ? n + ' ticked' : '');
+      });
+
+      /* the chosen column */
+      if (cmp) { if (pkKey) cmp.setAttribute('data-pkg', pkKey); else cmp.removeAttribute('data-pkg'); }
+
+      /* likely fit */
+      var fit = suggest(picked);
+      fits.forEach(function (f) { f.hidden = f.closest('[data-col]').getAttribute('data-col') !== fit; });
+      if (fitNote) fitNote.hidden = !fit;
+
+      /* the bar */
+      var nd = {};
+      picked.forEach(function (el) { nd[el.getAttribute('data-d')] = 1; });
+      var ndc = Object.keys(nd).length;
+      countEl.textContent = picked.length
+        ? two(picked.length) + (picked.length === 1 ? ' service' : ' services') + (ndc > 1 ? ' · ' + ndc + ' disciplines' : '')
+        : 'Tick services above';
+      pkEl.textContent = pkName;
+      var names = picked.map(function (el) { return el.getAttribute('data-name'); });
+      namesEl.hidden = !names.length;
+      namesEl.textContent = names.length > 3 ? names.slice(0, 3).join(', ') + ' and ' + (names.length - 3) + ' more' : names.join(', ');
+      clearBtn.hidden = !picked.length && !pkKey;
+
+      if (announce) {
+        var fitName = '';
+        if (fit) { var fe = pkgs.filter(function (el) { return el.value === fit; })[0]; fitName = fe ? fe.getAttribute('data-name') : ''; }
+        var msg = (picked.length ? picked.length + (picked.length === 1 ? ' service' : ' services') + ' in your brief' : 'No services in your brief')
+          + '. Package: ' + pkName + '.' + (fitName && fit !== pkKey ? ' Likely fit: ' + fitName + '.' : '');
+        if (msg !== lastMsg) { live.textContent = msg; lastMsg = msg; }
+      }
+    }
+
+    function bump() {
+      if (!send || (BDH && BDH.reduced) || XE.reduced) return;
+      send.classList.remove('is-bump'); void send.offsetWidth; send.classList.add('is-bump');
+    }
+
+    svcs.forEach(function (el) { XE.on(el, 'change', function () { sync(true); bump(); }); });
+    pkgs.forEach(function (el) { XE.on(el, 'change', function () { sync(true); }); });
+    XE.on(clearBtn, 'click', function () {
+      svcs.forEach(function (el) { el.checked = false; });
+      pkgs.forEach(function (el) { el.checked = el.value === ''; });
+      sync(true);
+      var first = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0];
+      if (first) first.focus();
+    });
+    /* back from the contact page: the browser may restore ticked boxes */
+    window.addEventListener('pageshow', function () { sync(false); });
+    sync(false);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
