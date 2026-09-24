@@ -2050,9 +2050,10 @@
   transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io),color var(--d1) var(--e-io);
 }
 .s20__d:hover{border-color:var(--blue);background:var(--blue-wash-2)}
+.s20__mo{display:block;font-size:var(--t-lbl);line-height:1;letter-spacing:.08em;text-transform:uppercase;opacity:.75}   /* the 1st of a month: where the rolling grid turns */
+.s20__d:has(.s20__mo){align-content:center;gap:1px}
 
 .s20__d.is-off{background:transparent;color:var(--ghost);font-weight:400;cursor:default;pointer-events:none}
-.s20__d.is-off.is-before{color:transparent}                                       /* past days from the previous month read as blank */
 .s20__grid tr.is-quiet .s20__d{min-height:0;height:34px;aspect-ratio:auto}   /* weeks with nothing bookable are drawn short; not controls */
 .s20__d.is-sel{background:var(--blue);color:var(--on-ink);border-color:var(--blue)}
 .s20__d.is-today::after{
@@ -2062,6 +2063,9 @@
 .s20__d.is-sel.is-today::after{background:var(--on-ink)}
 .s20__grid tr.is-quiet .s20__d.is-today{color:var(--ink)}
 .s20__grid tr.is-quiet .s20__d.is-today::after{bottom:0}
+
+.s20__end{margin-top:18px;padding-top:14px;border-top:1px solid var(--line-2);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;line-height:1.6;text-transform:uppercase;color:var(--faint)}
+.s20__end[hidden]{display:none}
 
 /* slots */
 .s20__slots{display:flex;flex-direction:column;padding:clamp(22px,2.6vw,32px);min-height:440px;min-width:0}
@@ -2089,6 +2093,16 @@
 }
 .s20__time:hover{border-color:var(--blue);background:var(--blue-wash)}
 .s20__empty{font-size:var(--t-xs);color:var(--muted);line-height:1.6}
+.s20__soonl{margin:22px 0 10px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.s20__soon{display:flex;flex-direction:column;gap:8px}
+.s20__qd{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:44px;padding-inline:14px;
+  border-radius:var(--r-sm);border:1px solid var(--line);background:var(--blue-wash);
+  font-family:var(--f);font-size:var(--t-xs);color:var(--blue-d);font-variant-numeric:tabular-nums;text-decoration:none;cursor:pointer;
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io);
+}
+.s20__qd span{font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.s20__qd:hover{border-color:var(--blue);background:var(--blue-wash-2)}
 
 /* confirm */
 .s20__form{display:flex;flex-direction:column;gap:10px}
@@ -2130,6 +2144,7 @@
   .s20__cal + .s20__slots{border-top:1px solid var(--line-2)}
   .s20__times{max-height:none;overflow:visible;padding:0;-webkit-mask-image:none;mask-image:none}
   .s20__tlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr))}
+  .s20__soon{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
 }
 @media (max-width:600px){
   .s20__who{padding:22px 18px}

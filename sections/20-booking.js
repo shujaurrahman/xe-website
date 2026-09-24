@@ -1,7 +1,8 @@
 /* 20 — booking widget. Enhances the server-rendered calendar in 20-booking.php (which works
    on its own without JavaScript: days, month arrows and times are plain links there).
    Here: the grid re-renders in the visitor's own time zone as an ARIA grid with one roving tab
-   stop (arrows, Home/End, PageUp/PageDown); times become buttons with a 12h/24h toggle; the
+   stop (arrows, Home/End, PageUp/PageDown between six-week windows); the "next open days" shortcuts
+   and the times become buttons, with a 12h/24h toggle; the
    form still POSTs to the contact page, with the chosen slot written at the top of the message.
    HOOK 1: AVAILABLE(date)   which days can be offered  — keep in step with 20-booking.php
    HOOK 2: SLOTS(date)       which times can be offered — keep in step with 20-booking.php
@@ -24,15 +25,15 @@
   var nextM = XE.$('[data-s20-nextm]', root);
   var backEl = XE.$('[data-s20-back]', root);
   var fmtG = XE.$('[data-s20-fmtg]', root);
+  var endEl = XE.$('[data-s20-end]', root);
 
   var today = new Date(); today.setHours(0, 0, 0, 0);
   var selected = null, picked = null, h24 = false, focusDate = null;
   var tzName = '';
 
-  try {
-    tzName = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').replace(/_/g, ' ');
-    if (tzName) XE.$('[data-s20-tz]', root).textContent = tzName;
-  } catch (e) {}
+  /* with JS the times are the visitor's own; the no-JS label names the studios' zone instead */
+  try { tzName = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').replace(/_/g, ' '); } catch (e) {}
+  XE.$('[data-s20-tz]', root).textContent = 'Your local time' + (tzName ? ' (' + tzName + ')' : '');
 
   /* HOOK 1 — weekdays, from two days out, inside the next twelve weeks */
   function AVAILABLE(d) {
@@ -53,19 +54,38 @@
 
   function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); }
   function ymd(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
-  function ym(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2); }
   function parseYmd(s) {
     var m = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(s || '');
     return m ? new Date(+m[1], +m[2] - 1, m[3] ? +m[3] : 1) : null;
   }
-  function gridStart(v) { var f = new Date(v.getFullYear(), v.getMonth(), 1); return addDays(f, -((f.getDay() + 6) % 7)); }
-  function gridDays(v) { var s = gridStart(v), out = []; for (var i = 0; i < 42; i++) out.push(addDays(s, i)); return out; }
-  function openCount(v) { return gridDays(v).filter(AVAILABLE).length; }
+  /* the rolling six-week windows, as in 20-booking.php: window 0 starts on this week's Monday, each
+     later one six weeks on; the last stops after the week holding the last bookable day */
+  var mon0 = addDays(today, -((today.getDay() + 6) % 7));
+  var lastDay = addDays(today, 84);
+  while (!AVAILABLE(lastDay)) lastDay = addDays(lastDay, -1);
+  function dayDiff(a, b) { return Math.round((b - a) / 86400000); }
+  var wMax = Math.floor(dayDiff(mon0, lastDay) / 42);
+  function wStart(k) { return addDays(mon0, 42 * k); }
+  function wIdx(d) { return Math.max(0, Math.min(wMax, Math.floor(dayDiff(mon0, d) / 42))); }
+  function gridDays(k) {
+    var s = wStart(k), out = [];
+    for (var i = 0; i < 42; i++) {
+      var d = addDays(s, i);
+      if (k === wMax && i % 7 === 0 && d > lastDay) break;
+      out.push(d);
+    }
+    return out;
+  }
+  function openCount(k) { return gridDays(k).filter(AVAILABLE).length; }
 
-  var firstNow = new Date(today.getFullYear(), today.getMonth(), 1);
-  var lastOk = (function () { var l = addDays(today, 84); return new Date(l.getFullYear(), l.getMonth(), 1); })();
-
-  function fmtMonth(d) { return d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }); }
+  /* three-letter months, as PHP's 'M' writes them ("Sep", not en-GB's "Sept") */
+  var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function fmtShort(d) { return MON[d.getMonth()]; }
+  function fmtDM(d) { return d.getDate() + ' ' + fmtShort(d); }
+  function fmtRange(days) {
+    var a = days[0], b = days[days.length - 1];
+    return fmtDM(a) + (a.getFullYear() === b.getFullYear() ? '' : ' ' + a.getFullYear()) + ' – ' + fmtDM(b) + ' ' + b.getFullYear();
+  }
   function fmtDay(d) { return d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }); }
   function fmtTime(mins) {
     var h = Math.floor(mins / 60), m = mins % 60;
@@ -74,15 +94,14 @@
   }
   function sameDay(a, b) { return !!a && !!b && +a === +b; }
 
-  /* ---- starting state: honour what the server rendered (a shared ?s20d= link), else open where
-     at least eight days are bookable ---- */
+  /* ---- starting state: honour what the server rendered (a shared ?s20d= / ?s20w= link) ---- */
   var srvSel = parseYmd(root.getAttribute('data-s20-sel'));
   if (srvSel && AVAILABLE(srvSel)) selected = srvSel;
-  var view = selected ? new Date(selected.getFullYear(), selected.getMonth(), 1) : new Date(firstNow);
-  if (!selected) {
+  var view = 0;   /* the window index */
+  if (selected) view = wIdx(selected);
+  else {
     var srvView = parseYmd(root.getAttribute('data-s20-view'));
-    if (srvView && srvView >= firstNow && srvView <= lastOk) view = srvView;
-    else if (openCount(view) < 8) view = new Date(view.getFullYear(), view.getMonth() + 1, 1);
+    if (srvView) view = wIdx(srvView);
   }
   var srvPick = root.getAttribute('data-s20-pick');
   if (selected && srvPick !== '' && SLOTS(selected).indexOf(+srvPick) > -1) {
@@ -98,7 +117,7 @@
 
   function setNav(a, target) {
     if (target) {
-      a.setAttribute('href', '?s20m=' + ym(target) + '#book');
+      a.setAttribute('href', '?s20w=' + target.k + '#book');
       a.removeAttribute('aria-disabled');
     } else {
       a.removeAttribute('href');
@@ -109,11 +128,12 @@
   }
 
   function renderMonth(focusIt) {
-    monthEl.textContent = fmtMonth(view);
-    setNav(prevM, view > firstNow ? new Date(view.getFullYear(), view.getMonth() - 1, 1) : null);
-    setNav(nextM, view < lastOk ? new Date(view.getFullYear(), view.getMonth() + 1, 1) : null);
-
     var days = gridDays(view);
+    monthEl.textContent = fmtRange(days);
+    if (endEl) endEl.hidden = days.length === 42;   /* the last window is short: say why */
+    setNav(prevM, view > 0 ? { k: view - 1 } : null);
+    setNav(nextM, view < wMax ? { k: view + 1 } : null);
+
     /* the single tab stop: the focused day, else the selected one, else today/first open day in view */
     var inView = function (d) { return d && days.some(function (x) { return sameDay(x, d) && AVAILABLE(x); }); };
     var stop = inView(focusDate) ? focusDate : inView(selected) ? selected : (days.filter(AVAILABLE)[0] || null);
@@ -132,10 +152,14 @@
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 's20__d';
-      b.textContent = String(d.getDate());
+      if (d.getDate() === 1) {
+        /* the 1st carries its month, so the rolling grid shows where months turn */
+        var mo = document.createElement('span');
+        mo.className = 's20__mo'; mo.setAttribute('aria-hidden', 'true'); mo.textContent = fmtShort(d);
+        b.appendChild(mo);
+      }
+      b.appendChild(document.createTextNode(String(d.getDate())));
       b.setAttribute('data-iso', ymd(d));
-      if (d.getMonth() !== view.getMonth()) b.classList.add('is-out');
-      if (d < view) b.classList.add('is-before');
       var lab = fmtDay(d) + (sameDay(d, today) ? ', today' : '');
       if (sameDay(d, today)) b.classList.add('is-today');
       if (!AVAILABLE(d)) {
@@ -167,6 +191,27 @@
       p.className = 's20__empty';
       p.textContent = 'Choose a day to see open times.';
       timesEl.appendChild(p);
+      /* the next few open days as shortcuts, so the column is never an empty panel */
+      var sl = document.createElement('p');
+      sl.className = 's20__soonl'; sl.id = 's20-soon'; sl.textContent = 'Next open days';
+      timesEl.appendChild(sl);
+      var su = document.createElement('ul');
+      su.className = 's20__soon'; su.setAttribute('aria-labelledby', 's20-soon');
+      for (var d = new Date(today), n = 0; n < 4 && d <= lastDay; d = addDays(d, 1)) {
+        if (!AVAILABLE(d)) continue;
+        n++;
+        var li = document.createElement('li');
+        var qb = document.createElement('button');
+        qb.type = 'button'; qb.className = 's20__qd';
+        qb.setAttribute('data-iso', ymd(d));
+        qb.setAttribute('aria-label', fmtDay(d) + ' — choose this day');
+        var wd = document.createElement('span');
+        wd.textContent = d.toLocaleDateString('en-GB', { weekday: 'short' });
+        qb.appendChild(wd);
+        qb.appendChild(document.createTextNode(' ' + fmtDM(d)));
+        li.appendChild(qb); su.appendChild(li);
+      }
+      timesEl.appendChild(su);
       return;
     }
     dayLabel.textContent = fmtDay(selected);
@@ -198,7 +243,7 @@
   }
 
   function choose(d) {
-    selected = d; focusDate = d; picked = null;
+    selected = d; focusDate = d; picked = null; view = wIdx(d);
     renderMonth(true); renderTimes();
     live.textContent = fmtDay(selected) + ' selected. ' + SLOTS(selected).length + ' open times.';
   }
@@ -226,8 +271,8 @@
       for (var k = 0; k < 7 && !AVAILABLE(row); k++) row = addDays(row, dir);
       target = AVAILABLE(row) ? row : null;
     } else if (e.key === 'PageDown' || e.key === 'PageUp') {
-      var nv = new Date(view.getFullYear(), view.getMonth() + (e.key === 'PageDown' ? 1 : -1), 1);
-      if (nv < firstNow || nv > lastOk) { e.preventDefault(); return; }
+      var nv = view + (e.key === 'PageDown' ? 1 : -1);
+      if (nv < 0 || nv > wMax) { e.preventDefault(); return; }
       view = nv; focusDate = null;
       e.preventDefault();
       renderMonth(true);
@@ -237,11 +282,13 @@
     if (!target) return;
     focusDate = target;
     var inGrid = gridDays(view).some(function (x) { return sameDay(x, target); });
-    if (!inGrid) view = new Date(target.getFullYear(), target.getMonth(), 1);
+    if (!inGrid) view = wIdx(target);
     renderMonth(true);
   });
 
   XE.on(timesEl, 'click', function (e) {
+    var q = e.target.closest('.s20__qd');
+    if (q) { e.preventDefault(); choose(parseYmd(q.getAttribute('data-iso'))); return; }
     var b = e.target.closest('.s20__time');
     if (!b) return;
     e.preventDefault();
@@ -276,10 +323,10 @@
     XE.on(a, 'click', function (e) {
       e.preventDefault();
       if (a.getAttribute('aria-disabled') === 'true') return;
-      view = new Date(view.getFullYear(), view.getMonth() + dir, 1);
+      view = Math.max(0, Math.min(wMax, view + dir));
       focusDate = null;
       renderMonth(false);
-      live.textContent = fmtMonth(view) + ', ' + openCount(view) + ' days open.';
+      live.textContent = monthEl.textContent + ', ' + openCount(view) + ' days open.';
     });
     XE.on(a, 'keydown', function (e) {
       if (e.key === ' ') { e.preventDefault(); a.click(); }
