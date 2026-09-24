@@ -1054,87 +1054,127 @@
 @media (prefers-reduced-motion:reduce){.s07-lib__a.is-fresh{animation:none}}
 
 /* ===== 08-disciplines ===== */
-/* 08 — six disciplines. Split panel cloned from the reference "Build Anything":
-   ink column with a looping pill list, white column with the active discipline. */
-.s08__head{align-items:end;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
-.s08__headL{display:flex;flex-direction:column;gap:16px}
+/* 08 — six disciplines. Split panel: an ink index of six static tabs, and a white
+   pane with the active discipline. While on screen the active tab's rail fills and
+   hands on to the next tab (.is-auto, set by JS; never under reduced motion). */
 .s08__lead{max-width:52ch}
 
 .s08__panel{
-  display:grid;grid-template-columns:minmax(0,38fr) minmax(0,62fr);
+  display:grid;grid-template-columns:minmax(0,34fr) minmax(0,66fr);
   border:1px solid var(--line);border-radius:var(--r-xl);overflow:hidden;
   background:var(--paper);box-shadow:var(--sh-1);
 }
 
-/* ---- left: the ink column ---- */
-.s08__left{position:relative;background:var(--ink);overflow:hidden;min-height:512px}
-.s08__grain{
-  position:absolute;inset:0;pointer-events:none;
-  background-image:radial-gradient(rgba(255,255,255,.10) 1px,transparent 1px);
-  background-size:22px 22px;opacity:.55;
+/* ---- left: the ink index ---- */
+.s08__left{
+  position:relative;display:flex;flex-direction:column;gap:24px;
+  background:var(--ink);padding:clamp(24px,2.6vw,36px) clamp(18px,2vw,28px);
 }
-.s08__scroller{
-  position:absolute;inset:0;display:flex;align-items:center;padding-inline:clamp(16px,2vw,26px);
-  -webkit-mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent);
-  mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent);
+.s08__sticky{flex:1;display:flex;flex-direction:column;gap:24px;min-width:0}
+.s08__kick{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0 6px 16px;border-bottom:1px solid var(--on-ink-line);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--on-ink-3);
 }
-.s08__track{
-  display:flex;flex-direction:column;gap:10px;width:100%;will-change:transform;
-}
-/* the list drifts upward for ever; the pill crossing the centre is the active one */
-.s08__track.is-drift{animation:s08-drift var(--s08-dur,26s) linear infinite}
-@keyframes s08-drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,-50%,0)}}
-.s08__scroller:hover .s08__track,.s08__scroller:focus-within .s08__track{animation-play-state:paused}
+.s08__scroller{flex:1;display:flex;align-items:center}
+.s08__track{display:flex;flex-direction:column;gap:8px;width:100%}
 .s08__pill{
-  display:flex;align-items:center;gap:12px;width:100%;min-height:54px;
-  padding:12px 18px;border-radius:var(--r-pill);
-  border:1px solid var(--on-ink-line);background:var(--on-ink-card);
-  color:var(--on-ink-3);font-size:var(--t-sm);font-weight:500;letter-spacing:0;text-align:left;   /* 500 at rest too: the label never changes width */
-  transition:background var(--d2) var(--e),color var(--d2) var(--e),
-             border-color var(--d2) var(--e),opacity var(--d2) var(--e);
+  position:relative;display:flex;align-items:center;gap:14px;width:100%;min-height:56px;
+  padding:12px 20px;border-radius:var(--r-pill);overflow:hidden;
+  border:1px solid var(--on-ink-line);background:transparent;
+  color:var(--on-ink-2);font-size:var(--t-sm);font-weight:500;letter-spacing:0;text-align:left;text-decoration:none;
+  transition:background var(--d2) var(--e),color var(--d2) var(--e),border-color var(--d2) var(--e);
 }
-.s08__pn{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;opacity:.6;flex:none}
-.s08__pill:hover{color:var(--on-ink);border-color:rgba(255,255,255,.28)}
-.s08__pill.is-on{background:var(--paper);border-color:var(--paper);color:var(--ink);font-weight:500;box-shadow:0 10px 26px -12px rgba(0,130,251,.55)}
-.s08__pill.is-on .s08__pn{color:var(--blue);opacity:1}
+.s08__pn{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;color:var(--on-ink-3);flex:none;font-variant-numeric:tabular-nums}
+.s08__pl{min-width:0}
+.s08__pill:hover{color:var(--on-ink);border-color:var(--on-ink-3);background:var(--on-ink-card)}
+.s08__pill.is-on{background:var(--paper);border-color:var(--paper);color:var(--ink)}
+.s08__pill.is-on .s08__pn{color:var(--blue)}
+.s08__pill:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* the hand-on rail: a hairline along the bottom of the active tab */
+.s08__bar{
+  position:absolute;left:20px;right:20px;bottom:9px;height:2px;border-radius:2px;
+  background:var(--blue);transform:scaleX(0);transform-origin:left center;opacity:0;pointer-events:none;
+}
+.s08.is-auto .s08__pill.is-on .s08__bar{opacity:1;animation:s08-rail var(--s08-dur,5.2s) linear forwards;animation-play-state:paused}
+.s08.is-auto.is-live .s08__pill.is-on .s08__bar{animation-play-state:running}
+.s08.is-auto.is-live .s08__panel:hover .s08__pill.is-on .s08__bar{animation-play-state:paused}
+@keyframes s08-rail{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
 /* ---- right: the active discipline ---- */
-.s08__right{position:relative;background:var(--paper);padding:clamp(24px,3vw,40px)}
-/* pinned to the tallest discipline so the panel never resizes mid-animation */
-.s08__stack{position:relative;min-height:512px}
+.s08__right{position:relative;background:var(--paper);padding:clamp(28px,3.4vw,48px)}
+/* all panes share one cell: the stack is as tall as the longest pane, no magic height */
+.s08__stack{display:grid;height:100%}
 .s08__pane{
-  position:absolute;inset:0;opacity:0;visibility:hidden;transform:translateY(10px);
-  transition:opacity .38s var(--e),transform .38s var(--e),visibility .38s;
+  grid-area:1 / 1;display:flex;flex-direction:column;min-width:0;scroll-margin-top:120px;
+  opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity .38s var(--e),transform .38s var(--e),visibility 0s linear .38s;
 }
-.s08__pane.is-on{position:relative;opacity:1;visibility:visible;transform:none}
-.s08__n{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.16em;color:var(--blue);margin-bottom:10px}
-.s08__name{font-size:clamp(1.3rem,2vw,1.7rem);letter-spacing:-.024em;line-height:1.1;margin-bottom:12px}
-.s08__intro{font-size:var(--t-body);line-height:1.6;color:var(--muted);max-width:60ch;margin-bottom:22px}
+.s08__pane.is-on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.s08__meta{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.s08__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.16em;color:var(--blue);font-variant-numeric:tabular-nums}
+.s08__n i{font-style:normal;color:var(--faint)}
+.s08__count{
+  display:inline-flex;align-items:center;height:26px;padding:0 12px;border-radius:var(--r-pill);
+  background:var(--blue-wash);color:var(--blue-d);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;
+}
+.s08__name{font-size:clamp(1.4rem,2.2vw,1.9rem);letter-spacing:-.024em;line-height:1.1;margin-bottom:12px}
+.s08__intro{font-size:var(--t-body);line-height:1.65;color:var(--muted);max-width:60ch;margin-bottom:26px}
 .s08__caps{
   display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
   column-gap:clamp(18px,2.4vw,40px);border-top:1px solid var(--line-2);
 }
 .s08__cap{
-  display:flex;align-items:center;gap:.7em;padding:12px 0;
+  display:flex;align-items:center;gap:.75em;padding:12px 0;min-width:0;
   border-bottom:1px solid var(--line-2);
-  font-size:var(--t-sm);color:var(--txt);letter-spacing:0;
+  font-size:var(--t-sm);line-height:1.4;color:var(--txt);letter-spacing:0;
 }
-.s08__cap::before{
-  content:"";width:4px;height:4px;border-radius:50%;background:var(--line-3);flex:none;
+.s08__cap::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--blue);opacity:.55;flex:none}
+.s08__acts{
+  display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px;
+  margin-top:auto;padding-top:32px;
 }
-.s08__cta{margin-top:22px}
+.s08__cta{min-height:44px}
 
-@media (max-width:860px){.s08__head{grid-template-columns:1fr}}   /* let .head--row stack as core intends */
+@media (min-width:1180px){.s08__caps{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.s08__keys{
+  display:flex;align-items:center;gap:8px;padding:16px 6px 0;border-top:1px solid var(--on-ink-line);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3);
+}
+.s08__keys kbd{
+  display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 4px;border-radius:var(--r-xs);
+  border:1px solid var(--on-ink-line);font-family:var(--f);font-size:var(--t-lbl);color:var(--on-ink-2);
+}
+
 @media (max-width:900px){
-  .s08__panel{grid-template-columns:1fr}
-  .s08__left{min-height:0;padding:16px 0}
-  .s08__scroller{position:relative;inset:auto;padding:0 16px;overflow-x:auto;scrollbar-width:none;
-    -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);
-    mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+  .s08__panel{grid-template-columns:minmax(0,1fr)}
+  .s08__keys{display:none}
+  /* phones: only the active pane is in flow; the rest sit on top of it, hidden and clipped */
+  .s08__stack{display:block;position:relative;overflow:hidden}
+  .s08__pane{position:absolute;top:0;left:0;right:0}
+  .s08__pane.is-on{position:relative}
+  .s08__left{padding:14px 0}
+  .s08__kick{display:none}
+  .s08__scroller{
+    display:block;overflow-x:auto;scrollbar-width:none;padding:2px 16px;scroll-padding-inline:16px;
+    -webkit-mask-image:linear-gradient(90deg,transparent,var(--ink) 16px,var(--ink) calc(100% - 16px),transparent);
+    mask-image:linear-gradient(90deg,transparent,var(--ink) 16px,var(--ink) calc(100% - 16px),transparent);
+  }
   .s08__scroller::-webkit-scrollbar{display:none}
-  .s08__track{flex-direction:row;width:max-content;gap:8px;transform:none}
-  .s08__pill{width:auto;min-height:44px;padding:10px 16px;white-space:nowrap}
-  .s08__caps{grid-template-columns:1fr}
+  .s08__track{flex-direction:row;width:max-content;gap:8px}
+  .s08__pill{width:auto;min-height:44px;padding:10px 18px;white-space:nowrap}
+  .s08__bar{bottom:6px;left:18px;right:18px}
+}
+@media (max-width:600px){
+  .s08__right{padding:24px 20px 26px}
+  .s08__caps{grid-template-columns:minmax(0,1fr)}
+  .s08__acts{flex-direction:column;align-items:flex-start;gap:6px;padding-top:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  .s08__pane{transition:none;transform:none}
+  .s08__bar{display:none}
 }
 
 /* ===== 09-proof ===== */
