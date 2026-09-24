@@ -1,3 +1,4 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <section class="band band--ink band--rules bdh s16" id="why" aria-labelledby="s16-t">
   <div class="wrap">
     <div class="bdh-head bdh-head--row s16__head" data-rv>

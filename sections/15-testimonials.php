@@ -1,3 +1,4 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <noscript><style>.s15__panel{height:auto;overflow:visible}.s15__mark{display:none}.s15__btn{cursor:default}</style></noscript>
 <section class="band band--rules s15" id="testimonials" aria-labelledby="s15-t">
   <div class="wrap s15__grid">

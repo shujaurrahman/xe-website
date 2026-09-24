@@ -1,3 +1,4 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <section class="band band--ink band--rules bdh s11" id="clients" aria-labelledby="s11-t">
   <div class="wrap">
     <div class="bdh-head bdh-head--row s11__head" data-rv>

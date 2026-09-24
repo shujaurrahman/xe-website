@@ -1,3 +1,4 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <section class="band band--alt s02" id="showcase" aria-labelledby="s02-t">
   <div class="s02__bg" aria-hidden="true">
     <span class="aurora aurora--soft"><i></i><i></i><i></i><i></i></span>

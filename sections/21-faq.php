@@ -1,3 +1,4 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <noscript><style>.s21__panel{height:auto;overflow:visible}.s21__plus{display:none}</style></noscript>
 <section class="band band--rules s21" id="faq" aria-labelledby="s21-t">
   <div class="wrap">

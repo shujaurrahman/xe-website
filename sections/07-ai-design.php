@@ -1,3 +1,4 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <section class="band band--alt band--rules s07" id="ai-design" aria-labelledby="s07-t">
   <div class="wrap">
 

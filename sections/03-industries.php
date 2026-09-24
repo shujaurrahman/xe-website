@@ -1,3 +1,4 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <section class="band band--rules s03" id="industries" aria-labelledby="s03-t">
   <div class="wrap">
     <div class="s03__head" data-rv>

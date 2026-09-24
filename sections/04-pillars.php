@@ -1,3 +1,4 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <section class="band band--rules band--tight s04" id="pillars" aria-labelledby="s04-t">
   <div class="wrap">
     <div class="head s04__head" data-rv>

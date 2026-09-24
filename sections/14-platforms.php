@@ -1,3 +1,4 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <section class="band band--alt band--rules s14" id="platforms" aria-labelledby="s14-t">
   <div class="wrap">
     <div class="s14__head" data-rv>

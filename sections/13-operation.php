@@ -1,3 +1,4 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <section class="band band--rules s13" id="operation" aria-labelledby="s13-t">
   <div class="wrap">
     <div class="s13__grid">

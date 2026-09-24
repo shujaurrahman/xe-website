@@ -1,3 +1,4 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <section class="s01" id="hero" aria-labelledby="s01-t">
   <div class="s01__bg" aria-hidden="true">
     <span class="aurora aurora--soft"><i></i><i></i><i></i><i></i></span>

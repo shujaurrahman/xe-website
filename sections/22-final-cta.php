@@ -1,3 +1,4 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <section class="band band--ink s22" id="cta-final" aria-labelledby="s22-t">
   <span class="s22__dots dots-ink" aria-hidden="true"></span>
   <span class="s22__glow" aria-hidden="true"></span>

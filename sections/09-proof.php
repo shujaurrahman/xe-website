@@ -1,3 +1,4 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <section class="band band--rules s09" id="proof" aria-labelledby="s09-t">
   <div class="wrap">
     <!-- PLACEHOLDER: figures carried over from the previous site — confirm before launch -->

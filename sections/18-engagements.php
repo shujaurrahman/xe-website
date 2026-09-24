@@ -1,3 +1,4 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <section class="band band--alt band--rules s18" id="engagements" aria-labelledby="s18-t">
   <div class="wrap">
     <div class="s18__head" data-rv>
