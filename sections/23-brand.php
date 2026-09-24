@@ -1,44 +1,45 @@
 <?php /* DRAFT COPY — review before launch */
 /* 23 — Brand Design, in depth: what each of the six capabilities actually hands over.
-   08-disciplines names the six; this section opens one at a time and shows the artefact it
+   08-disciplines names the six; this section opens one at a time and shows one artefact it
    produces, the files handed over and how you know it worked.
 
    Data: names, one-liners and page links from data/site.php (the brand-design row, through
    xe_cap_url, which only links pages that exist); kicker, lead, meta, deliverables and outcomes
-   from data/brand-design.php. Only the artefact mocks are written here.
+   from data/brand-design.php. Only the artefact mocks are written here, and each one is a
+   different artefact from the mock the hub's capabilities section draws for that capability.
 
-   Without JavaScript every capability renders in full, one after another, and the selector stays
-   hidden. 23-brand.js turns the selector on, hides all but the current capability (hidden, so
-   only one pane is ever in flow) and adds .is-anim so artefacts can build in. */
+   Without JavaScript the selector is a row of #s23-<slug> links: the first capability shows by
+   default and a targeted one replaces it (CSS :target). 23-brand.js upgrades the links to ARIA
+   tabs, keeps one pane in flow ([hidden] on the rest), reserves the tallest pane's height and
+   builds an artefact in only when the visitor changes tab. */
 $s23_bd   = require __DIR__ . '/../data/brand-design.php';
 $s23_disc = null;
 foreach ($GLOBALS['SITE']['disciplines'] as $s23_row) { if ($s23_row['slug'] === 'brand-design') $s23_disc = $s23_row; }
 unset($s23_row);
 $s23_caps  = $s23_disc ? $s23_disc['caps'] : [];
 $s23_total = str_pad((string) count($s23_caps), 2, '0', STR_PAD_LEFT);
-$s23_path  = [
-    'growth-strategy'    => 'strategy / next-best-customer',
-    'brand-identity'     => 'identity / kit-v1',
-    'brand-foundation'   => 'foundation / on-a-page',
-    'brand-systems'      => 'system / tokens',
-    'brand-architecture' => 'portfolio / model',
-    'brand-ai-tools'     => 'ai-tools / brand-check',
-];
-$s23_fmt  = [   /* the formats this artefact ships in — from its row in data/brand-design.php 'deliver' */
-    'growth-strategy'    => 'Sheet · Deck',
-    'brand-identity'     => 'SVG · Figma · JSON',
-    'brand-foundation'   => 'PDF · Print',
-    'brand-systems'      => 'JSON · Figma · CSS',
-    'brand-architecture' => 'Figma · Sheet',
-    'brand-ai-tools'     => 'Plugin · API',
+/* window path · the format the artefact ships in (its row in data/brand-design.php 'deliver') */
+$s23_path = [
+    'growth-strategy'    => ['strategy / whitespace-map',   'Figma'],
+    'brand-identity'     => ['identity / touchpoint-email', 'Figma · Office'],
+    'brand-foundation'   => ['foundation / decision-log',   'Document'],
+    'brand-systems'      => ['system / flex-rules',         'Guidelines'],
+    'brand-architecture' => ['portfolio / migration-plan',  'Roadmap'],
+    'brand-ai-tools'     => ['ai-tools / generation-queue', 'Dashboard'],
 ];
 $s23_desc = [
-    'growth-strategy'    => 'Illustration: a ranked list of four customer segments with scores, each tagged now, next, later or park, above a one-line growth thesis.',
-    'brand-identity'     => 'Illustration: an identity kit showing a logo lockup inside its clearspace frame, four colour swatches, three typefaces and a voice rule of words to use and words to avoid.',
-    'brand-foundation'   => 'Illustration: a foundation on a page, with a fill-in positioning statement and three principles, each noting the kind of decision it settles.',
-    'brand-systems'      => 'Illustration: four design tokens feeding three surfaces, an app button, an email call to action and a social tile, which all read the same values.',
-    'brand-architecture' => 'Illustration: a portfolio tree with a master brand above two branded products and one endorsed product, and the naming rule they follow.',
-    'brand-ai-tools'     => 'Illustration: a generated campaign asset beside a brand check that passes palette, clearspace, type and tone, and routes a claim to a person for review before it is logged.',
+    'growth-strategy'    => 'Illustration: a whitespace map plotting competitors by how present they are against how well each space fits your brand. Your company sits mid-field, and two uncontested openings are outlined where presence is low and fit is high.',
+    'brand-identity'     => 'Illustration: the same email shown before and after the identity work. Before, it mixes marks, typefaces and button styles and opens with a generic headline. After, it uses one mark, two typefaces, one button style and a headline in the brand voice.',
+    'brand-foundation'   => 'Illustration: a decision log. Under a one-line positioning statement, two real decisions are recorded with the principle that settled each: a discount sub-brand declined, and a product name chosen for clarity.',
+    'brand-systems'      => 'Illustration: flex rules drawn as ranges. Signal colour share and headline scale may move inside set ranges, the logo minimum width is locked, and a partner deck using too much signal colour is flagged as out of range.',
+    'brand-architecture' => 'Illustration: a four-phase migration plan. The master brand runs throughout, Atlas moves from standalone to endorsed in phase two, Label B is retired into the master brand in phase three, and recognition is measured in phase four.',
+    'brand-ai-tools'     => 'Illustration: a generation queue of four market variants. One is approved, one waits for a person, one is rejected for an unapproved claim and one is still generating, with each outcome written to an approval log.',
+];
+$s23_fx = [   /* flex rules: label · allowed range (0–100 scale) · value · state · readout */
+    ['Signal share · campaign',   10, 30, 20, 'ok',   '20% · range 10–30'],
+    ['Headline scale · social',          40, 75, 62, 'ok',   '1.4× · range 1.25–1.5'],
+    ['Logo minimum width',               null, null, 30, 'lock', '24 px · locked'],
+    ['Signal share · partner deck', 10, 30, 42, 'out',  '42% · outside range'],
 ];
 ?>
 <section class="band band--alt s23 bdh" id="brand" aria-labelledby="s23-t">
@@ -46,27 +47,26 @@ $s23_desc = [
     <div class="bdh-head bdh-head--row s23__head" data-rv>
       <div>
         <p class="lbl lbl--blue"><span class="dot"></span>Brand Design, in depth</p>
-        <h2 class="h2" id="s23-t"><span class="g">What we make for a brand.</span> Six capabilities, each ending in files you own.</h2>
+        <h2 class="h2" id="s23-t"><span class="g">What we make for a brand.</span> Six capabilities, each ending in files you&nbsp;own.</h2>
       </div>
       <div>
-        <p class="lead">Strategy, identity and the systems that carry them. Every capability is scoped on its own, hands over named artefacts your teams can use, and plugs into the other five.</p>
-        <a class="tl" href="<?= xe_url('services/brand-design.php') ?>">Explore Brand Design <span class="i" aria-hidden="true">›</span></a>
+        <p class="lead">Strategy, identity and the systems that carry them. Every capability is scoped on its own, hands over named artefacts your teams can use, and plugs into the other&nbsp;five.</p>
+        <a class="tl s23__hub" href="<?= xe_url('services/brand-design.php') ?>">Explore Brand Design <span class="i" aria-hidden="true">›</span></a>
       </div>
     </div>
 
     <div class="s23__app" data-s23 data-rv data-rv-d="80">
-      <div class="s23__tabs" role="tablist" aria-label="Brand Design capabilities">
+      <nav class="s23__tabs" aria-label="Brand Design capabilities">
         <?php foreach ($s23_caps as $s23_i => $s23_cap):
                 $s23_slug = $s23_cap[2]; $s23_row = $s23_bd[$s23_slug]; ?>
-          <button class="s23__tab" type="button" role="tab" id="s23-tab-<?= e($s23_slug) ?>" aria-controls="s23-<?= e($s23_slug) ?>"
-                  aria-selected="<?= $s23_i === 0 ? 'true' : 'false' ?>" tabindex="<?= $s23_i === 0 ? '0' : '-1' ?>">
-            <i class="s23__prog" aria-hidden="true"><b></b></i>
+          <a class="s23__tab" href="#s23-<?= e($s23_slug) ?>" id="s23-tab-<?= e($s23_slug) ?>">
+            <i class="s23__rule" aria-hidden="true"></i>
             <span class="s23__tn" aria-hidden="true"><?= e($s23_row['n']) ?></span>
             <span class="s23__tname"><?= e($s23_cap[0]) ?></span>
-            <span class="s23__tk"><?= e($s23_row['kicker']) ?></span>
-          </button>
+            <span class="s23__tk" aria-hidden="true"><?= e($s23_row['kicker']) ?></span>
+          </a>
         <?php endforeach; ?>
-      </div>
+      </nav>
 
       <div class="s23__panes">
         <?php foreach ($s23_caps as $s23_i => $s23_cap):
@@ -77,108 +77,130 @@ $s23_desc = [
             <div class="bdh-ui s23__win" aria-hidden="true">
               <div class="bdh-ui__bar s23__bar">
                 <span class="bdh-ui__dots"><i></i><i></i><i></i></span>
-                <span class="s23__crumb">your-company / <?= e($s23_path[$s23_slug]) ?></span>
+                <?php $s23_seg = explode(' / ', $s23_path[$s23_slug][0]); ?><span class="s23__crumb"><span class="s23__org">your-company / <?= e($s23_seg[0]) ?> / </span><?= e($s23_seg[1]) ?></span>
                 <span class="s23__ver">v1.0</span>
               </div>
-              <div class="s23__canvas s23__canvas--<?= e($s23_slug) ?>">
+              <div class="s23__canvas dots">
               <?php if ($s23_slug === 'growth-strategy'): ?>
-                <!-- PLACEHOLDER: illustrative segments and scores — not client data -->
-                <p class="s23__cap s23-a">Next-best-customer ranking <span>fit · reach · margin</span></p>
-                <ol class="s23-gs__rank">
-                  <?php foreach ([['Segment A', 86, 'Now'], ['Segment B', 71, 'Next'], ['Segment C', 58, 'Later'], ['Segment D', 34, 'Park']] as $s23_k => $s23_seg): ?>
-                    <li class="s23-a<?= $s23_k === 0 ? ' is-top' : '' ?>" style="--i:<?= $s23_k + 1 ?>">
-                      <span class="s23-gs__name"><?= e($s23_seg[0]) ?></span>
-                      <span class="s23-gs__bar"><b class="s23-g" style="--w:<?= $s23_seg[1] / 100 ?>;--i:<?= $s23_k + 2 ?>"></b></span>
-                      <span class="s23-gs__score"><?= $s23_seg[1] ?></span>
-                      <span class="s23-gs__stage"><?= e($s23_seg[2]) ?></span>
-                    </li>
-                  <?php endforeach; ?>
-                </ol>
-                <div class="s23-gs__thesis s23-a" style="--i:6">
-                  <span class="s23__k">Growth thesis</span>
-                  <p>Growth comes from Segment A first, through the channel it already buys in, if onboarding time halves.</p>
+                <!-- PLACEHOLDER: illustrative market positions — not client or competitor data -->
+                <p class="s23__cap s23-a">Competitive whitespace <span>presence × fit</span></p>
+                <div class="s23-gs s23-a" style="--i:1">
+                  <span class="s23-gs__y">Fit with your brand</span>
+                  <div class="s23-gs__plot">
+                    <span class="s23-gs__q"></span>
+                    <span class="s23-gs__zone s23-a" style="--x:5%;--y:7%;--w:36%;--h:34%;--i:3"><b>A</b><span>Regulated mid&#8209;market</span></span>
+                    <span class="s23-gs__zone is-b s23-a" style="--x:7%;--y:52%;--w:26%;--h:24%;--i:4"><b>B</b><span>Partner&#8209;led buyers</span></span>
+                    <?php foreach ([[62, 22], [74, 34], [81, 58], [58, 70], [88, 16]] as $s23_k => $s23_pt): ?>
+                      <i class="s23-gs__dot s23-a" style="--x:<?= $s23_pt[0] ?>%;--y:<?= $s23_pt[1] ?>%;--i:<?= $s23_k + 2 ?>"></i>
+                    <?php endforeach; ?>
+                    <span class="s23-gs__you s23-a" style="--x:50%;--y:44%;--i:6">Your company</span>
+                  </div>
+                  <span class="s23-gs__x">Competitor presence</span>
                 </div>
-                <ul class="s23-gs__moves">
-                  <li class="s23-a" style="--i:7"><span class="s23__k">Now · owner set</span>Pilot offer for Segment A</li>
-                  <li class="s23-a" style="--i:8"><span class="s23__k">Next · Q+1</span>Partner channel for Segment B</li>
-                  <li class="s23-a" style="--i:9"><span class="s23__k">Later · gated</span>Enter Segment C once A converts</li>
+                <ul class="s23-gs__key s23-a" style="--i:7">
+                  <li><b>A</b>Uncontested · high fit<span>Now</span></li>
+                  <li><b>B</b>Thinly served · good fit<span>Next</span></li>
                 </ul>
               <?php elseif ($s23_slug === 'brand-identity'): ?>
+                <p class="s23__cap s23-a">Monthly update email <span>before · after</span></p>
                 <div class="s23-bi">
-                  <div class="s23-bi__logo s23-a" style="--i:1">
-                    <span class="s23__k">Lockup · clearspace</span>
-                    <div class="s23-bi__frame"><span class="s23-bi__mark"><i></i></span><b>Your company</b></div>
-                  </div>
-                  <div class="s23-bi__col s23-a" style="--i:2">
-                    <span class="s23__k">Colour</span>
-                    <ul class="s23-bi__sw"><li><i class="is-ink"></i>Ink</li><li><i class="is-blue"></i>Signal</li><li><i class="is-paper"></i>Paper</li><li><i class="is-line"></i>Line</li></ul>
-                  </div>
-                  <div class="s23-bi__col s23-a" style="--i:3">
-                    <span class="s23__k">Type</span>
-                    <ul class="s23-bi__type"><li><b class="is-h">Aa</b>Display</li><li><b class="is-b">Aa</b>Text</li><li><b class="is-m">Aa</b>Data</li></ul>
-                  </div>
-                  <div class="s23-bi__voice s23-a" style="--i:4">
-                    <span class="s23__k">Voice</span>
-                    <p><span class="is-yes">clear</span><span class="is-yes">direct</span><span class="is-yes">warm</span><span class="is-no">best-in-class</span><span class="is-no">synergy</span></p>
-                  </div>
+                  <figure class="s23-bi__tp is-before s23-a" style="--i:1">
+                    <figcaption><span class="s23__k">Before</span>four teams, four versions</figcaption>
+                    <div class="s23-bi__mail">
+                      <p class="s23-bi__from"><b class="s23-bi__old">YOUR CO.</b><span>Newsletter</span></p>
+                      <p class="s23-bi__hl">Exciting news: our Q3 newsletter</p>
+                      <i class="s23-bi__ln"></i><i class="s23-bi__ln is-s"></i>
+                      <p class="s23-bi__btns"><span class="s23-bi__b1">Click here</span><span class="s23-bi__b2">Learn more</span></p>
+                    </div>
+                  </figure>
+                  <figure class="s23-bi__tp is-after s23-a" style="--i:2">
+                    <figcaption><span class="s23__k">After</span>identity kit applied</figcaption>
+                    <div class="s23-bi__mail">
+                      <p class="s23-bi__from"><span class="s23-bi__mark"><i></i></span><b>Your company</b></p>
+                      <p class="s23-bi__hl">Your quarter, in three numbers.</p>
+                      <i class="s23-bi__ln"></i><i class="s23-bi__ln is-s"></i>
+                      <p class="s23-bi__btns"><span class="s23-bi__b">Read the update</span></p>
+                    </div>
+                  </figure>
                 </div>
+                <ul class="s23-bi__diff s23-a" style="--i:3"><li>One mark</li><li>Two typefaces</li><li>One button style</li><li>Voice rules</li></ul>
               <?php elseif ($s23_slug === 'brand-foundation'): ?>
-                <p class="s23__cap s23-a">Foundation on a page <span>signed by leadership</span></p>
-                <p class="s23-bf__pos s23-a" style="--i:1">For <u>enterprise teams</u> who <u>need one story in every market</u>, Your company is the <u>partner</u> that <u>keeps every market aligned</u>.</p>
-                <ol class="s23-bf__pr">
-                  <?php foreach ([['Clarity over cleverness', 'naming and copy calls'], ['One brand, many markets', 'local variations'], ['Prove, then promise', 'claims and launches']] as $s23_k => $s23_p): ?>
-                    <li class="s23-a" style="--i:<?= $s23_k + 2 ?>"><span class="s23-bf__n">0<?= $s23_k + 1 ?></span><b><?= e($s23_p[0]) ?></b><small>Settles <?= e($s23_p[1]) ?></small></li>
-                  <?php endforeach; ?>
+                <p class="s23__cap s23-a">Decision log <span>foundation v1 · in use</span></p>
+                <p class="s23-bf__pos s23-a" style="--i:1"><span class="s23__k">Positioning</span>For companies selling across borders, Your company is the brand partner that keeps one promise in every&nbsp;market.</p>
+                <ol class="s23-bf__log">
+                  <li class="s23-a" style="--i:2">
+                    <span class="s23-bf__id">D-014</span>
+                    <b>Launch a discount sub-brand for price-led markets?</b>
+                    <span class="s23-bf__by">Settled by principle 02 · One promise, every market</span>
+                    <span class="s23-bf__out is-no">Declined · local pricing inside the master brand</span>
+                  </li>
+                  <li class="s23-a" style="--i:3">
+                    <span class="s23-bf__id">D-015</span>
+                    <b>What do we call the new reporting product?</b>
+                    <span class="s23-bf__by">Settled by principle 01 · Clarity over cleverness</span>
+                    <span class="s23-bf__out">Chosen · “Your company Reports”</span>
+                  </li>
                 </ol>
               <?php elseif ($s23_slug === 'brand-systems'): ?>
-                <div class="s23-bs">
-                  <div class="s23-bs__tokens s23-a">
-                    <span class="s23__k">tokens.json</span>
-                    <ul>
-                      <li style="--t:0"><span>color.action</span><em>blue</em></li>
-                      <li style="--t:1"><span>radius.control</span><em>10</em></li>
-                      <li style="--t:2"><span>space.inset</span><em>16</em></li>
-                      <li style="--t:3"><span>type.label</span><em>13/20</em></li>
-                    </ul>
-                  </div>
-                  <span class="s23-bs__to s23-a" style="--i:2"><span>exports to</span></span>
-                  <ul class="s23-bs__out">
-                    <li class="s23-a" style="--i:3"><span class="s23__k">App</span><span class="s23-bs__btn">Continue</span></li>
-                    <li class="s23-a" style="--i:4"><span class="s23__k">Email</span><span class="s23-bs__line"></span><span class="s23-bs__btn">Read more</span></li>
-                    <li class="s23-a" style="--i:5"><span class="s23__k">Social</span><span class="s23-bs__tile"><i></i><span class="s23-bs__btn">Join</span></span></li>
-                  </ul>
-                </div>
+                <p class="s23__cap s23-a">Flex rules <span>ranges, not opinions</span></p>
+                <ul class="s23-bs">
+                  <?php foreach ($s23_fx as $s23_k => $s23_f): ?>
+                    <li class="s23-a is-<?= $s23_f[4] ?>" style="--i:<?= $s23_k + 1 ?>">
+                      <span class="s23-bs__l"><?= e($s23_f[0]) ?></span>
+                      <span class="s23-bs__st"><?= $s23_f[4] === 'ok' ? 'flexes' : ($s23_f[4] === 'lock' ? 'locked' : 'flagged') ?></span>
+                      <span class="s23-bs__track">
+                        <?php if ($s23_f[1] !== null): ?><i class="s23-bs__band" style="--a:<?= $s23_f[1] ?>%;--b:<?= $s23_f[2] ?>%"></i><?php endif; ?>
+                        <b class="s23-bs__thumb" style="--v:<?= $s23_f[3] ?>%;--i:<?= $s23_k + 2 ?>"></b>
+                      </span>
+                      <span class="s23-bs__v"><?= e($s23_f[5]) ?></span>
+                    </li>
+                  <?php endforeach; ?>
+                </ul>
+                <p class="s23-bs__note s23-a" style="--i:6">Out-of-range values are sent back with the nearest allowed value: 30%.</p>
               <?php elseif ($s23_slug === 'brand-architecture'): ?>
-                <p class="s23__cap s23-a">Portfolio model <span>branded house · one endorsed</span></p>
+                <p class="s23__cap s23-a">Migration plan <span>phased · nothing breaks</span></p>
                 <div class="s23-ba">
-                  <b class="s23-ba__master s23-a" style="--i:1">Your company</b>
-                  <ul class="s23-ba__kids">
-                    <li class="s23-a" style="--i:2"><b>Cloud</b><small>branded</small></li>
-                    <li class="s23-a" style="--i:3"><b>Studio</b><small>branded</small></li>
-                    <li class="s23-a is-end" style="--i:4"><b>Atlas</b><small>endorsed</small></li>
-                  </ul>
+                  <ol class="s23-ba__ph s23-a" style="--i:1"><li>01 Map</li><li>02 Endorse</li><li>03 Retire</li><li>04 Measure</li></ol>
+                  <?php foreach ([
+                      ['Your company', 'master brand throughout', [[1, 5, 'master']]],
+                      ['Atlas',        'standalone → endorsed',   [[1, 2, 'old'], [2, 5, 'new']]],
+                      ['Label B',      'retired into the master', [[1, 3, 'old'], [3, 4, 'end']]],
+                  ] as $s23_k => $s23_ln): ?>
+                    <div class="s23-ba__row s23-a" style="--i:<?= $s23_k + 2 ?>">
+                      <p><b><?= e($s23_ln[0]) ?></b><?= e($s23_ln[1]) ?></p>
+                      <span class="s23-ba__lane">
+                        <?php foreach ($s23_ln[2] as $s23_sg): ?><i class="is-<?= $s23_sg[2] ?>" style="grid-column:<?= $s23_sg[0] ?> / <?= $s23_sg[1] ?>"></i><?php endforeach; ?>
+                      </span>
+                    </div>
+                  <?php endforeach; ?>
                 </div>
-                <p class="s23-ba__rule s23-a" style="--i:5"><span class="s23__k">Naming rule</span><code>[master] + [plain descriptor]</code></p>
+                <p class="s23-ba__gate s23-a" style="--i:5"><span class="s23__k">Gate before each phase</span>Search, support and sales scripts checked for the old names.</p>
               <?php else: ?>
-                <div class="s23-ai">
-                  <div class="s23-ai__asset s23-a">
-                    <span class="s23__k">Variant 12 · 4:5 · DE</span>
-                    <div class="s23-ai__img"><span class="s23-ai__arc"></span><span class="s23-ai__mk"><span class="s23-bi__mark"><i></i></span>Your company</span><i class="s23-ai__h"></i><i class="s23-ai__s"></i><span class="s23-ai__cta"></span><span class="s23-ai__scan"></span></div>
-                  </div>
-                  <div class="s23-ai__chk">
-                    <span class="s23__k">Brand check</span>
-                    <ul>
-                      <?php foreach (['Palette', 'Clearspace', 'Type', 'Tone of voice'] as $s23_k => $s23_c): ?>
-                        <li class="s23-a" style="--i:<?= $s23_k + 1 ?>"><span><?= e($s23_c) ?></span><b class="bdh-ok">pass</b></li>
-                      <?php endforeach; ?>
-                      <li class="s23-a is-flag" style="--i:5"><span>Product claim</span><span class="bdh-flag">human review</span></li>
-                    </ul>
-                    <p class="s23-ai__log s23-a" style="--i:6">approved by brand lead · logged</p>
-                  </div>
-                </div>
+                <p class="s23__cap s23-a">Generation queue <span>one source · four markets</span></p>
+                <ul class="s23-ai">
+                  <?php foreach ([
+                      ['Variant 01', 'UK · 1:1',  [30, 30],  'ok',   'approved'],
+                      ['Variant 02', 'DE · 4:5',  [26, 32],  'wait', 'with a person'],
+                      ['Variant 03', 'FR · 9:16', [19, 34], 'no',   'rejected'],
+                      ['Variant 04', 'ES · 16:9', [34, 19], 'run',  'generating'],
+                  ] as $s23_k => $s23_q): ?>
+                    <li class="s23-a is-<?= $s23_q[3] ?>" style="--i:<?= $s23_k + 1 ?>">
+                      <span class="s23-ai__th"><i style="width:<?= $s23_q[2][0] ?>px;height:<?= $s23_q[2][1] ?>px"></i></span>
+                      <span class="s23-ai__n"><b><?= e($s23_q[0]) ?></b><?= e($s23_q[1]) ?></span>
+                      <span class="s23-ai__st"><?= e($s23_q[4]) ?></span>
+                      <?php if ($s23_q[3] === 'no'): ?><span class="s23-ai__why">Headline states a claim that has not been approved</span><?php endif; ?>
+                      <?php if ($s23_q[3] === 'run'): ?><span class="s23-ai__bar"><b></b></span><?php endif; ?>
+                    </li>
+                  <?php endforeach; ?>
+                </ul>
+                <ol class="s23-ai__log s23-a" style="--i:6">
+                  <li>V01 · approved by brand lead</li>
+                  <li>V03 · blocked by guardrail · reason sent to prompt owner</li>
+                  <li>V02 · held for review · regulated market</li>
+                </ol>
               <?php endif; ?>
               </div>
-              <div class="s23__status"><span class="s23__ready">Ready for handover</span><span><?= e($s23_fmt[$s23_slug]) ?></span></div>
+              <div class="s23__status"><span class="s23__ready">Ready for handover</span><span><?= e($s23_path[$s23_slug][1]) ?></span></div>
             </div>
             <p class="bdh-sr"><?= e($s23_desc[$s23_slug]) ?></p>
           </div>

@@ -1,8 +1,8 @@
-/* 23 — Brand Design, in depth. Turns the stacked capability panes into a tabbed viewer:
-   selector shown, inactive panes [hidden] (only one in flow), ARIA tabs + arrow keys via
-   BDH.tabs. While on screen, and until the visitor touches it, it steps through the six
-   with a progress line on the current tab. Each pane's artefact builds in when shown.
-   Reduced motion: tabs work, no auto-advance, no build-in, no loops.
+/* 23 — Brand Design, in depth. Upgrades the #s23-<slug> link row into ARIA tabs (BDH.tabs:
+   arrows, Home/End), keeps one pane in flow ([hidden] on the rest), reserves the tallest pane's
+   height so switching never moves the page, and builds an artefact in only when the visitor
+   changes tab. No auto-advance. A #s23-<slug> hash (on load or hashchange) opens that tab and
+   scrolls to the selector. Reduced motion: everything works, nothing animates.
    hub.js (window.BDH) loads after sections.js, so init waits for DOMContentLoaded. */
 (function () {
   'use strict';
@@ -12,16 +12,28 @@
     var BDH = window.BDH;
     if (!root || !BDH) return;
     var app = root.querySelector('[data-s23]');
+    var list = root.querySelector('.s23__tabs');
+    var wrap = root.querySelector('.s23__panes');
     var tabs = BDH.$$('.s23__tab', root);
     var panes = BDH.$$('.s23__pane', root);
-    if (!app || !tabs.length || tabs.length !== panes.length) return;
+    if (!app || !list || !wrap || !tabs.length || tabs.length !== panes.length) return;
+    var R = BDH.reduced;
 
-    var R = BDH.reduced, DUR = 7000, TICK = 100, elapsed = 0, auto = false;
+    function fromHash() {
+      var h = location.hash;
+      for (var i = 0; i < panes.length; i++) { if (h === '#' + panes[i].id) return i; }
+      return -1;
+    }
+    var start = Math.max(0, fromHash());
 
-    /* deep link: #s23-<slug> opens that capability */
-    var start = 0;
-    panes.forEach(function (p, i) { if (location.hash && location.hash === '#' + p.id) start = i; });
-
+    /* links → tabs */
+    list.setAttribute('role', 'tablist');
+    tabs.forEach(function (t, i) {
+      t.setAttribute('role', 'tab');
+      t.setAttribute('aria-controls', panes[i].id);
+      t.addEventListener('click', function (e) { e.preventDefault(); });
+      t.addEventListener('keydown', function (e) { if (e.key === ' ') { e.preventDefault(); t.click(); } });
+    });
     panes.forEach(function (p, i) {
       p.setAttribute('role', 'tabpanel');
       p.setAttribute('aria-labelledby', tabs[i].id);
@@ -30,44 +42,54 @@
     });
     root.classList.add('is-ready');
     if (!R) root.classList.add('is-anim');
+    panes[start].classList.add('is-run');          // the first view is the finished state
 
-    var seen = false;
     function run(p) {
-      if (R || !seen) return;
+      if (R) { p.classList.add('is-run'); return; }
       p.classList.remove('is-run');
-      void p.offsetWidth;                // restart the build-in
+      void p.offsetWidth;                          // restart the build-in
       p.classList.add('is-run');
     }
-    function paint() {
-      if (!auto) return;
-      var cur = api ? api.index() : start;
-      tabs.forEach(function (t, i) { t.style.setProperty('--p', i === cur ? String(Math.min(1, elapsed / DUR)) : '0'); });
-    }
 
-    var api = null;
-    api = BDH.tabs(app, {
+    var api = BDH.tabs(app, {
       tabs: tabs, panes: panes, initial: start,
-      onChange: function (i) { elapsed = 0; paint(); run(panes[i]); }
+      onChange: function (i) { run(panes[i]); }
     });
 
-    BDH.inView(app, function () { seen = true; run(panes[api.index()]); });
-    BDH.live(root, 0.15);
+    /* reserve the tallest pane, so a tab change never moves what follows */
+    function reserve() {
+      wrap.style.removeProperty('--s23-h');
+      var max = 0;
+      panes.forEach(function (p) {
+        var was = p.hidden;
+        p.hidden = false;
+        max = Math.max(max, p.offsetHeight);
+        p.hidden = was;
+      });
+      if (max) wrap.style.setProperty('--s23-h', max + 'px');
+    }
+    reserve();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(reserve);
+    window.addEventListener('load', reserve);
+    var lastW = window.innerWidth, raf = 0;
+    window.addEventListener('resize', function () {
+      if (window.innerWidth === lastW) return;     // ignore mobile toolbar height changes
+      lastW = window.innerWidth;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(reserve);
+    });
 
-    if (R) return;                        // progress lines stay full (--p unset → 1)
-    auto = true;
-    root.classList.add('is-auto');
-    paint();
-    var timer = BDH.loop(app, TICK, function () {
-      elapsed += TICK;
-      if (elapsed >= DUR) api.show(api.index() + 1, false);
-      else paint();
+    /* deep links */
+    function toSelector() {
+      list.scrollIntoView({ block: 'start', behavior: R ? 'auto' : 'smooth' });
+    }
+    window.addEventListener('hashchange', function () {
+      var i = fromHash();
+      if (i < 0) return;
+      if (i !== api.index()) api.show(i, true);
+      toSelector();
     });
-    BDH.onInteract(app, function () {
-      auto = false;
-      timer.stop();
-      root.classList.remove('is-auto');
-      tabs.forEach(function (t) { t.style.removeProperty('--p'); });
-    });
+    if (fromHash() >= 0) window.addEventListener('load', function () { setTimeout(toSelector, 0); });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
