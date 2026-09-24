@@ -1260,23 +1260,82 @@
 }
 
 /* ===== 10-production ===== */
-/* 10 — two rows of 9:16 creative drifting in opposite directions. */
-.s10{overflow:hidden}
-.s10__head{display:flex;flex-direction:column;gap:16px;margin-bottom:clamp(28px,3.2vw,44px);max-width:62ch}
-.s10__head .h2{max-width:20ch}
+/* 10 — global content production. Two contact-sheet strips; each tile keeps its
+   native aspect ratio at a fixed row height and carries a mono slate. Without JS
+   (or under reduced motion) the strips are static rows you can swipe sideways;
+   JS adds .is-anim and drifts them only while on screen (.is-live) and unpaused. */
+.s10{--s10-h:clamp(200px,22vw,320px);--s10-gap:clamp(12px,1.2vw,18px)}
 .s10__lead{max-width:52ch}
 
-.s10__rows{display:flex;flex-direction:column;gap:14px;padding-block:4px;border-block:1px dashed var(--line-3)}
-.s10__row{overflow:hidden;padding-block:10px}
-.s10__row + .s10__row{border-top:1px dashed var(--line-3)}
-.s10__c{
-  flex:none;width:clamp(150px,15vw,226px);aspect-ratio:9/16;margin-right:14px;
+.s10__pause{
+  display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 18px 0 6px;
+  border:1px solid var(--line-3);border-radius:var(--r-pill);background:var(--paper);color:var(--ink);
+  font-size:var(--t-sm);font-weight:500;letter-spacing:0;
+  transition:border-color var(--d1) var(--e-io),color var(--d1) var(--e-io);
+}
+.s10__pause[hidden]{display:none}
+.s10__pause:hover{border-color:var(--blue);color:var(--blue-d)}
+.s10__pause:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.s10__pi{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--blue-wash);color:var(--blue-d)}
+.s10__pi svg{width:14px;height:14px}
+.s10__ico-play{display:none}
+.s10__pause[aria-pressed="true"] .s10__ico-play{display:block}
+.s10__pause[aria-pressed="true"] .s10__ico-pause{display:none}
+
+.s10__rows{display:flex;flex-direction:column;gap:clamp(18px,2vw,28px);padding-block:clamp(22px,2.4vw,32px);border-block:1px solid var(--line-2)}
+.s10__row{
+  overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain;
+  -webkit-mask-image:linear-gradient(90deg,transparent,var(--ink) 6%,var(--ink) 94%,transparent);
+  mask-image:linear-gradient(90deg,transparent,var(--ink) 6%,var(--ink) 94%,transparent);
+}
+.s10__row::-webkit-scrollbar{display:none}
+.s10__track{display:flex;width:max-content;padding-inline:var(--gutter)}
+.s10.is-anim .s10__row{overflow:hidden}
+.s10.is-anim .s10__track{padding-inline:0;will-change:transform}
+
+.s10__c{flex:none;width:min-content;margin:0 var(--s10-gap) 0 0;display:flex;flex-direction:column;gap:10px}
+.s10__frame{
+  position:relative;height:var(--s10-h);aspect-ratio:var(--ar);
   overflow:hidden;border-radius:var(--r);border:1px solid var(--line);background:var(--paper-3);
 }
-.s10__c img,.s10__c video{width:100%;height:100%;object-fit:cover;display:block}
-.s10__c--v video{filter:grayscale(1) contrast(1.04)}
-/* UI cards from the reference carry a foreign accent colour — neutralise them */
-.s10__c--ui img{filter:grayscale(1) contrast(1.02)}
+.s10__frame img,.s10__frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+/* the UI stills are pale, mostly-empty reference captures: frame them as a close-up on the
+   interface (zoom to the centre panel, cropping the pale margins and the foreign accent tag) so they read as screens, not blanks */
+.s10__c--ui .s10__frame{background:var(--paper-2)}
+.s10__c--ui .s10__frame img{transform:scale(1.6);transform-origin:50% 55%}
+
+.s10__rec{
+  position:absolute;left:10px;top:10px;display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;
+  border-radius:var(--r-pill);background:var(--paper);box-shadow:var(--sh-1);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);
+}
+.s10__rec i{width:6px;height:6px;border-radius:50%;background:var(--blue)}
+
+.s10__slate{
+  display:grid;grid-template-columns:auto 1fr;column-gap:10px;row-gap:3px;padding-inline:2px;
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;line-height:1.35;text-transform:uppercase;
+  color:var(--muted);
+}
+.s10__slate b{font-weight:500;color:var(--blue);font-variant-numeric:tabular-nums}
+.s10__slate em{justify-self:end;font-style:normal;color:var(--faint)}
+.s10__slate span{grid-column:1 / -1;grid-row:2}
+
+/* the drift — distance and duration are set per row by JS (--s10-x, --s10-dur) */
+.s10.is-anim .s10__track{animation:s10-l var(--s10-dur,80s) linear infinite;animation-play-state:paused}
+.s10.is-anim .s10__row[data-dir="r"] .s10__track{animation-name:s10-r}
+.s10.is-anim.is-live:not(.is-paused) .s10__track{animation-play-state:running}
+.s10.is-anim.is-live:not(.is-paused) .s10__row:hover .s10__track{animation-play-state:paused}
+@keyframes s10-l{from{transform:translate3d(0,0,0)}to{transform:translate3d(calc(var(--s10-x,0px) * -1),0,0)}}
+@keyframes s10-r{from{transform:translate3d(calc(var(--s10-x,0px) * -1),0,0)}to{transform:translate3d(0,0,0)}}
+
+@media (max-width:600px){
+  .s10{--s10-h:220px}
+  .s10__rec{left:8px;top:8px}
+  .s10__slate{letter-spacing:.06em}
+}
+@media (prefers-reduced-motion:reduce){
+  .s10.is-anim .s10__track{animation:none}
+}
 
 /* ===== 11-clients ===== */
 /* 11 — the client wall, on ink. Head row, then a ruled 4×2 wall of mono marks beside one
