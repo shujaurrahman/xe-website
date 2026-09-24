@@ -1,5 +1,5 @@
 <?php /* DRAFT COPY — review before launch */ ?>
-<section class="band band--rules s13" id="operation" aria-labelledby="s13-t">
+<section class="band band--alt band--rules s13" id="operation" aria-labelledby="s13-t">
   <div class="wrap">
     <div class="s13__grid">
 
@@ -25,7 +25,7 @@
           <li><i class="chev" aria-hidden="true">›</i>Every model, dataset and system we build belongs to the client.</li>
           <li><i class="chev" aria-hidden="true">›</i>Judgement stays human. Repetition does not.</li>
         </ul>
-        <a class="tl s13__cta" href="#why">Read our approach <span class="i" aria-hidden="true">›</span></a>
+        <a class="tl s13__cta" href="<?= xe_url('approach.php') ?>">Read our approach <span class="i" aria-hidden="true">›</span></a>
       </div>
 
     </div>

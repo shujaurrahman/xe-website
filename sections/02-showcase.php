@@ -6,7 +6,7 @@
   </div>
   <div class="wrap s02__in">
 
-    <p class="lbl lbl--blue s02__eyebrow"><span class="dot"></span>From a brief</p>
+    <p class="lbl lbl--blue s02__eyebrow"><span class="dot"></span>Chapter 04 · The work</p>
     <h2 class="sr" id="s02-t">From a brief to a system that runs</h2>
 
     <!-- the reference's two-pill diagram, made into a real control:
@@ -159,7 +159,7 @@
     </style></noscript>
 
     <div class="s02__cta" data-rv data-rv-d="240">
-      <a class="btn btn--ink" href="#delivered">See what we have built <span class="i" aria-hidden="true">›</span></a>
+      <a class="btn btn--ink" href="<?= xe_url('work.php') ?>">See what we have built <span class="i" aria-hidden="true">›</span></a>
     </div>
 
   </div>

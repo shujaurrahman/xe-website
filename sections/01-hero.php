@@ -18,7 +18,7 @@
   </div>
 
   <div class="wrap s01__in">
-    <p class="s01__status"><span class="s01__dot" aria-hidden="true"></span>An independent creative company for the intelligence age</p>
+    <p class="s01__status"><span class="s01__dot" aria-hidden="true"></span><b class="s01__ch">Chapter 01 · The idea</b><i class="s01__sep" aria-hidden="true">/</i>An independent creative company for the intelligence age</p>
 
     <h1 class="s01__h" id="s01-t">
       We build things that matter — to businesses,
@@ -36,7 +36,7 @@
 
     <div class="s01__act">
       <a class="btn btn--ink btn--lg s01__go" href="#book">Schedule a call <span class="i" aria-hidden="true">›</span></a>
-      <a class="btn btn--out btn--lg" href="#delivered">See the work <span class="i" aria-hidden="true">›</span></a>
+      <a class="btn btn--out btn--lg" href="<?= xe_url('work.php') ?>">See the work <span class="i" aria-hidden="true">›</span></a>
     </div>
 
     <p class="s01__sub">

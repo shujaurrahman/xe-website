@@ -26,7 +26,7 @@ $s10_rows = [
 ];
 $s10_i = 0;
 ?>
-<section class="band band--rules bdh s10" id="production" aria-labelledby="s10-t">
+<section class="band band--alt band--rules bdh s10" id="production" aria-labelledby="s10-t">
   <div class="wrap">
     <div class="bdh-head bdh-head--row s10__head" data-rv>
       <div>

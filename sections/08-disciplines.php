@@ -25,6 +25,11 @@ $s08_items = [
    'intro' => 'We build the technology backbone that makes personalization, automation, and always-on marketing possible, and design the relationships that turn a single purchase into a lasting one.',
    'caps' => ['AI-Driven Marketing Automation', 'Content & Communication Infrastructure', 'AI Campaign Optimization', 'AI Creative Solutions', 'AI Lead Generation', 'Automated & Dynamic Sales', 'Customer Journey Mapping', 'Customer Segmentation & Insights', 'Customer Engagement Programs', 'Loyalty Strategy & Programs', 'Lifecycle Marketing']],
 ];
+/* Capability lists come from data/site.php, so the home page can never drift from the hubs and the nav. */
+$s08_site = [];
+foreach (($GLOBALS['SITE']['disciplines'] ?? []) as $s08_d) $s08_site[$s08_d['slug']] = array_map(static fn($s08_c) => is_array($s08_c) ? $s08_c[0] : (string) $s08_c, $s08_d['caps']);
+foreach ($s08_items as $s08_x => $s08_it) if (!empty($s08_site[$s08_it['slug']])) $s08_items[$s08_x]['caps'] = $s08_site[$s08_it['slug']];
+unset($s08_x, $s08_it, $s08_d);
 $s08_n = count($s08_items);
 $s08_h = static fn(string $t): string => htmlspecialchars($t, ENT_QUOTES, 'UTF-8');
 ?>
@@ -40,13 +45,13 @@ $s08_h = static fn(string $t): string => htmlspecialchars($t, ENT_QUOTES, 'UTF-8
   <div class="wrap">
     <div class="bdh-head bdh-head--row s08__head" data-rv>
       <div>
-        <p class="lbl lbl--blue"><span class="dot"></span>What we do</p>
+        <p class="lbl lbl--blue"><span class="dot"></span>Chapter 02 · What we do</p>
         <h2 class="h2" id="s08-t"><span class="g">One team,</span> six ways we help brands get ahead</h2>
       </div>
       <div>
         <p class="lead s08__lead">
-          We bring together strategy, craft, and technology to build intelligent brand systems —
-          the kind that create real differentiation, real customer value, and real growth.
+          The idea becomes six disciplines, run by one team on the same layer — strategy, craft and
+          technology building intelligent brand systems that create real differentiation and real growth.
         </p>
       </div>
     </div>

@@ -2,10 +2,9 @@
 <section class="band band--rules band--tight s04" id="pillars" aria-labelledby="s04-t">
   <div class="wrap">
     <div class="head s04__head" data-rv>
-      <p class="lbl lbl--blue"><span class="dot"></span>Why it compounds</p>
+      <p class="lbl lbl--blue"><span class="dot"></span>Why the layer matters</p>
       <h2 class="h2" id="s04-t"><span class="g">Win on</span> what compounds</h2>
-      <p class="lead">Strategy, craft and technology in one team — so the work gets sharper every week
-        instead of starting over.</p>
+      <p class="lead">Because everything feeds the same layer, strategy, craft and technology sharpen each other — the work gets better every week instead of starting over.</p>
     </div>
 
     <div class="s04__grid" data-rv-s data-rv-step="90">

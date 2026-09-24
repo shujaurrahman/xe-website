@@ -9,7 +9,7 @@
       <div>
         <p class="lead s11__sub">One team across brand, product and growth&nbsp;— so the system that ships
           on Monday is the same one that learns by Friday.</p>
-        <a class="tl s11__tl" href="#delivered">See the work <span class="i" aria-hidden="true">›</span></a>
+        <a class="tl s11__tl" href="<?= xe_url('work.php') ?>">See the work <span class="i" aria-hidden="true">›</span></a>
       </div>
     </div>
 

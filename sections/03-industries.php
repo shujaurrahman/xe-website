@@ -6,7 +6,7 @@
         <p class="lbl lbl--blue"><span class="dot"></span>Industries</p>
         <h2 class="h2 s03__h" id="s03-t"><span class="g">Helping brands win in</span> <span class="s03__swap" aria-live="polite"><span class="s03__word" data-s03-word>Consumer Health</span></span></h2>
       </div>
-      <a class="tl s03__more" href="#delivered">Explore case studies <span class="i" aria-hidden="true">›</span></a>
+      <a class="tl s03__more" href="<?= xe_url('industries.php') ?>">Explore industries <span class="i" aria-hidden="true">›</span></a>
     </div>
 
     <!-- PLACEHOLDER: imagery is from the reference sites — replace with Xterra Edze's own

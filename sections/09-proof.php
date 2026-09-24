@@ -1,11 +1,11 @@
 <?php /* DRAFT COPY — review before launch */ ?>
-<section class="band band--rules s09" id="proof" aria-labelledby="s09-t">
+<section class="band band--alt band--rules s09" id="proof" aria-labelledby="s09-t">
   <div class="wrap">
     <!-- PLACEHOLDER: figures carried over from the previous site — confirm before launch -->
     <div class="s09__top" data-rv>
       <div class="s09__side">
         <div class="s09__intro">
-          <p class="lbl lbl--blue"><span class="dot"></span>The company</p>
+          <p class="lbl lbl--blue"><span class="dot"></span>Who builds it</p>
           <h2 class="h2 s09__h" id="s09-t"><span class="g">The company built for</span> the intelligence age</h2>
         </div>
 
