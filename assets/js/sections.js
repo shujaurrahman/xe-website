@@ -612,42 +612,47 @@ try {
 
 /* ===== 20-booking ===== */
 try {
-/* 20 — booking widget.
-   HOOK 1: AVAILABLE(date)    — which days can be offered
-   HOOK 2: SLOTS(date)        — which times can be offered
-   HOOK 3: send(payload)      — currently composes a mailto; swap for a real endpoint.
+/* 20 — booking widget. Enhances the server-rendered calendar in 20-booking.php (which works
+   on its own without JavaScript: days, month arrows and times are plain links there).
+   Here: the grid re-renders in the visitor's own time zone as an ARIA grid with one roving tab
+   stop (arrows, Home/End, PageUp/PageDown); times become buttons with a 12h/24h toggle; the
+   form still POSTs to the contact page, with the chosen slot written at the top of the message.
+   HOOK 1: AVAILABLE(date)   which days can be offered  — keep in step with 20-booking.php
+   HOOK 2: SLOTS(date)       which times can be offered — keep in step with 20-booking.php
    Nothing here reserves anything; the UI never says a booking is confirmed. */
 (function () {
   'use strict';
   var root = document.querySelector('[data-s20]');
   if (!root || !window.XE) return;
 
-  var EMAIL = 'connect@xterraedze.com';
   var monthEl = XE.$('[data-s20-month]', root);
+  var gridEl = XE.$('[data-s20-grid]', root);
   var daysEl = XE.$('[data-s20-days]', root);
   var timesEl = XE.$('[data-s20-times]', root);
   var dayLabel = XE.$('[data-s20-daylabel]', root);
   var form = XE.$('[data-s20-form]', root);
-  var doneEl = XE.$('[data-s20-done]', root);
+  var brief = XE.$('[data-s20-brief]', root);
   var errEl = XE.$('[data-s20-err]', root);
   var live = XE.$('[data-s20-live]', root);
   var prevM = XE.$('[data-s20-prevm]', root);
   var nextM = XE.$('[data-s20-nextm]', root);
+  var backEl = XE.$('[data-s20-back]', root);
+  var fmtG = XE.$('[data-s20-fmtg]', root);
 
   var today = new Date(); today.setHours(0, 0, 0, 0);
-  var view = new Date(today.getFullYear(), today.getMonth(), 1);
-  var selected = null, picked = null, h24 = false;
+  var selected = null, picked = null, h24 = false, focusDate = null;
+  var tzName = '';
 
   try {
-    var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    if (tz) XE.$('[data-s20-tz]', root).textContent = tz.replace(/_/g, ' ');
+    tzName = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').replace(/_/g, ' ');
+    if (tzName) XE.$('[data-s20-tz]', root).textContent = tzName;
   } catch (e) {}
 
   /* HOOK 1 — weekdays, from two days out, inside the next twelve weeks */
   function AVAILABLE(d) {
     var day = d.getDay();
     if (day === 0 || day === 6) return false;
-    var diff = (d - today) / 86400000;
+    var diff = Math.round((d - today) / 86400000);
     return diff >= 2 && diff <= 84;
   }
   /* HOOK 2 — 09:00–17:30, half-hourly, no 13:00 hour */
@@ -660,170 +665,291 @@ try {
     return out;
   }
 
-  function fmtMonth(d) {
-    return d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+  function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); }
+  function ymd(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  function ym(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2); }
+  function parseYmd(s) {
+    var m = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(s || '');
+    return m ? new Date(+m[1], +m[2] - 1, m[3] ? +m[3] : 1) : null;
   }
-  function fmtDay(d) {
-    return d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
-  }
+  function gridStart(v) { var f = new Date(v.getFullYear(), v.getMonth(), 1); return addDays(f, -((f.getDay() + 6) % 7)); }
+  function gridDays(v) { var s = gridStart(v), out = []; for (var i = 0; i < 42; i++) out.push(addDays(s, i)); return out; }
+  function openCount(v) { return gridDays(v).filter(AVAILABLE).length; }
+
+  var firstNow = new Date(today.getFullYear(), today.getMonth(), 1);
+  var lastOk = (function () { var l = addDays(today, 84); return new Date(l.getFullYear(), l.getMonth(), 1); })();
+
+  function fmtMonth(d) { return d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }); }
+  function fmtDay(d) { return d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }); }
   function fmtTime(mins) {
     var h = Math.floor(mins / 60), m = mins % 60;
     if (h24) return ('0' + h).slice(-2) + ':' + ('0' + m).slice(-2);
-    var ap = h < 12 ? 'am' : 'pm', hh = h % 12 || 12;
-    return hh + ':' + ('0' + m).slice(-2) + ap;
+    return (h % 12 || 12) + ':' + ('0' + m).slice(-2) + (h < 12 ? 'am' : 'pm');
+  }
+  function sameDay(a, b) { return !!a && !!b && +a === +b; }
+
+  /* ---- starting state: honour what the server rendered (a shared ?s20d= link), else open where
+     at least eight days are bookable ---- */
+  var srvSel = parseYmd(root.getAttribute('data-s20-sel'));
+  if (srvSel && AVAILABLE(srvSel)) selected = srvSel;
+  var view = selected ? new Date(selected.getFullYear(), selected.getMonth(), 1) : new Date(firstNow);
+  if (!selected) {
+    var srvView = parseYmd(root.getAttribute('data-s20-view'));
+    if (srvView && srvView >= firstNow && srvView <= lastOk) view = srvView;
+    else if (openCount(view) < 8) view = new Date(view.getFullYear(), view.getMonth() + 1, 1);
+  }
+  var srvPick = root.getAttribute('data-s20-pick');
+  if (selected && srvPick !== '' && SLOTS(selected).indexOf(+srvPick) > -1) {
+    picked = { date: new Date(selected), mins: +srvPick };
   }
 
-  function renderMonth() {
-    monthEl.textContent = fmtMonth(view);
-    prevM.disabled = view.getFullYear() === today.getFullYear() && view.getMonth() === today.getMonth();
-    daysEl.innerHTML = '';
+  /* the no-JS slot line is written into the textarea; JS adds it on submit instead */
+  if (/^Requested discovery call: /.test(brief.value)) brief.value = brief.value.replace(/^Requested discovery call: [^\n]*\n*/, '');
 
-    var first = new Date(view.getFullYear(), view.getMonth(), 1);
-    var lead = (first.getDay() + 6) % 7;                    /* week starts Monday */
-    var total = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+  /* the links become controls */
+  gridEl.setAttribute('role', 'grid');
+  fmtG.hidden = false;
 
-    for (var i = 0; i < lead; i++) {
-      var pad = document.createElement('div');
-      pad.className = 's20__cell';
-      pad.setAttribute('role', 'gridcell');
-      daysEl.appendChild(pad);
+  function setNav(a, target) {
+    if (target) {
+      a.setAttribute('href', '?s20m=' + ym(target) + '#book');
+      a.removeAttribute('aria-disabled');
+    } else {
+      a.removeAttribute('href');
+      a.setAttribute('aria-disabled', 'true');
     }
-    for (var n = 1; n <= total; n++) {
-      var d = new Date(view.getFullYear(), view.getMonth(), n);
-      var cell = document.createElement('div');
-      cell.className = 's20__cell';
-      cell.setAttribute('role', 'gridcell');
+    a.setAttribute('role', 'button');
+    a.tabIndex = target ? 0 : -1;
+  }
+
+  function renderMonth(focusIt) {
+    monthEl.textContent = fmtMonth(view);
+    setNav(prevM, view > firstNow ? new Date(view.getFullYear(), view.getMonth() - 1, 1) : null);
+    setNav(nextM, view < lastOk ? new Date(view.getFullYear(), view.getMonth() + 1, 1) : null);
+
+    var days = gridDays(view);
+    /* the single tab stop: the focused day, else the selected one, else today/first open day in view */
+    var inView = function (d) { return d && days.some(function (x) { return sameDay(x, d) && AVAILABLE(x); }); };
+    var stop = inView(focusDate) ? focusDate : inView(selected) ? selected : (days.filter(AVAILABLE)[0] || null);
+    focusDate = stop;
+
+    daysEl.innerHTML = '';
+    var tr;
+    days.forEach(function (d, i) {
+      if (i % 7 === 0) {
+        tr = document.createElement('tr');
+        /* a week with nothing bookable is drawn short */
+        if (!days.slice(i, i + 7).some(AVAILABLE)) tr.className = 'is-quiet';
+        daysEl.appendChild(tr);
+      }
+      var td = document.createElement('td');
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 's20__d';
-      b.textContent = String(n);
-      /* local parts, never toISOString — that shifts the day across timezones */
-      b.setAttribute('data-iso', d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate());
-      if (+d === +today) b.classList.add('is-today');
-      if (!AVAILABLE(d)) { b.disabled = true; b.setAttribute('aria-disabled', 'true'); }
-      else b.setAttribute('aria-label', fmtDay(d) + ' — choose this day');
-      if (selected && +d === +selected) { b.classList.add('is-sel'); b.setAttribute('aria-current', 'date'); }
-      cell.appendChild(b);
-      daysEl.appendChild(cell);
+      b.textContent = String(d.getDate());
+      b.setAttribute('data-iso', ymd(d));
+      if (d.getMonth() !== view.getMonth()) b.classList.add('is-out');
+      if (d < view) b.classList.add('is-before');
+      var lab = fmtDay(d) + (sameDay(d, today) ? ', today' : '');
+      if (sameDay(d, today)) b.classList.add('is-today');
+      if (!AVAILABLE(d)) {
+        b.disabled = true;
+        b.classList.add('is-off');
+        b.setAttribute('aria-label', lab + ', unavailable');
+      } else {
+        b.setAttribute('aria-label', lab);
+      }
+      var isSel = sameDay(d, selected);
+      td.setAttribute('aria-selected', String(isSel));
+      if (isSel) b.classList.add('is-sel');
+      b.tabIndex = sameDay(d, stop) ? 0 : -1;
+      td.appendChild(b);
+      tr.appendChild(td);
+    });
+    if (focusIt && stop) {
+      var fb = XE.$('[data-iso="' + ymd(stop) + '"]', daysEl);
+      if (fb) fb.focus();
     }
   }
 
   function renderTimes() {
-    form.hidden = true; doneEl.hidden = true; timesEl.hidden = false;
+    form.hidden = true; timesEl.hidden = false; errEl.hidden = true;
     timesEl.innerHTML = '';
     if (!selected) {
       dayLabel.textContent = 'Pick a day';
       var p = document.createElement('p');
       p.className = 's20__empty';
-      p.textContent = 'Choose a day on the left to see open times.';
+      p.textContent = 'Choose a day to see open times.';
       timesEl.appendChild(p);
       return;
     }
     dayLabel.textContent = fmtDay(selected);
+    var ul = document.createElement('ul');
+    ul.className = 's20__tlist';
+    ul.setAttribute('aria-label', 'Open times, ' + fmtDay(selected));
     SLOTS(selected).forEach(function (mins) {
+      var li = document.createElement('li');
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 's20__time';
       b.textContent = fmtTime(mins);
       b.setAttribute('data-mins', String(mins));
-      timesEl.appendChild(b);
+      li.appendChild(b);
+      ul.appendChild(li);
     });
+    timesEl.appendChild(ul);
+  }
+
+  function showForm(focusIt) {
+    timesEl.hidden = true; form.hidden = false;
+    dayLabel.textContent = fmtDay(picked.date);
+    /* no-break before the dot, so a wrap never starts a line with it */
+    XE.$('[data-s20-picked]', root).textContent = fmtDay(picked.date) + ' · ' + fmtTime(picked.mins);
+    if (focusIt) {
+      var first = XE.$('[data-book-first]', form);
+      if (first) first.focus({ preventScroll: true });
+    }
+  }
+
+  function choose(d) {
+    selected = d; focusDate = d; picked = null;
+    renderMonth(true); renderTimes();
+    live.textContent = fmtDay(selected) + ' selected. ' + SLOTS(selected).length + ' open times.';
   }
 
   XE.on(daysEl, 'click', function (e) {
     var b = e.target.closest('.s20__d');
     if (!b || b.disabled) return;
-    var iso = b.getAttribute('data-iso').split('-');
-    selected = new Date(+iso[0], +iso[1] - 1, +iso[2]);
-    renderMonth(); renderTimes();
-    live.textContent = fmtDay(selected) + ' selected.';
+    choose(parseYmd(b.getAttribute('data-iso')));
   });
 
   XE.on(daysEl, 'keydown', function (e) {
     var b = e.target.closest('.s20__d');
     if (!b) return;
-    var map = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: 7, ArrowUp: -7 };
-    var d = map[e.key];
-    if (!d) return;
+    var cur = parseYmd(b.getAttribute('data-iso'));
+    var col = (cur.getDay() + 6) % 7;
+    var step = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: 7, ArrowUp: -7 }[e.key];
+    var target = null;
+    if (step) {
+      /* move by the step, skipping unavailable days, stopping at the bookable range */
+      var t = addDays(cur, step), guard = 0;
+      while (!AVAILABLE(t) && guard++ < 90) t = addDays(t, step > 0 ? 1 : -1);
+      target = AVAILABLE(t) ? t : null;
+    } else if (e.key === 'Home' || e.key === 'End') {
+      var row = addDays(cur, e.key === 'Home' ? -col : 6 - col), dir = e.key === 'Home' ? 1 : -1;
+      for (var k = 0; k < 7 && !AVAILABLE(row); k++) row = addDays(row, dir);
+      target = AVAILABLE(row) ? row : null;
+    } else if (e.key === 'PageDown' || e.key === 'PageUp') {
+      var nv = new Date(view.getFullYear(), view.getMonth() + (e.key === 'PageDown' ? 1 : -1), 1);
+      if (nv < firstNow || nv > lastOk) { e.preventDefault(); return; }
+      view = nv; focusDate = null;
+      e.preventDefault();
+      renderMonth(true);
+      return;
+    } else return;
     e.preventDefault();
-    var all = XE.$$('.s20__d', daysEl);
-    var idx = all.indexOf(b) + d;
-    while (idx >= 0 && idx < all.length && all[idx].disabled) idx += d > 0 ? 1 : -1;
-    if (all[idx]) all[idx].focus();
+    if (!target) return;
+    focusDate = target;
+    var inGrid = gridDays(view).some(function (x) { return sameDay(x, target); });
+    if (!inGrid) view = new Date(target.getFullYear(), target.getMonth(), 1);
+    renderMonth(true);
   });
 
   XE.on(timesEl, 'click', function (e) {
     var b = e.target.closest('.s20__time');
     if (!b) return;
-    picked = { date: new Date(selected), mins: +b.getAttribute('data-mins'), label: b.textContent };
-    timesEl.hidden = true; doneEl.hidden = true; form.hidden = false;
-    /* no-break before the dot, so a wrap never starts a line with it */
-    XE.$('[data-s20-picked]', root).textContent = fmtDay(picked.date) + '\u00a0· ' + picked.label;
-    live.textContent = 'Time selected: ' + picked.label + '. Complete the form to send your request.';
-    var first = XE.$('[data-book-first]', form);
-    if (first) first.focus({ preventScroll: true });
+    e.preventDefault();
+    picked = { date: new Date(selected), mins: +b.getAttribute('data-mins') };
+    showForm(true);
+    live.textContent = 'Time selected: ' + fmtTime(picked.mins) + '. Complete the form to send your request.';
   });
 
-  XE.$$('[data-s20-fmt]', root).forEach(function (b) {
-    XE.on(b, 'click', function () {
-      h24 = b.getAttribute('data-s20-fmt') === '24';
-      XE.$$('[data-s20-fmt]', root).forEach(function (o) {
-        var on = o === b;
-        o.classList.toggle('is-on', on);
-        o.setAttribute('aria-checked', String(on));
-      });
-      if (!form.hidden) return;
-      renderTimes();
+  /* 12h / 24h: a radio group — arrows move and select, one tab stop */
+  var fmtBtns = XE.$$('[data-s20-fmt]', root);
+  function setFmt(b, focusIt) {
+    h24 = b.getAttribute('data-s20-fmt') === '24';
+    fmtBtns.forEach(function (o) {
+      var on = o === b;
+      o.classList.toggle('is-on', on);
+      o.setAttribute('aria-checked', String(on));
+      o.tabIndex = on ? 0 : -1;
+    });
+    if (focusIt) b.focus();
+    if (!form.hidden && picked) showForm(false); else renderTimes();
+  }
+  fmtBtns.forEach(function (b, i) {
+    XE.on(b, 'click', function () { setFmt(b, false); });
+    XE.on(b, 'keydown', function (e) {
+      if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].indexOf(e.key) < 0) return;
+      e.preventDefault();
+      setFmt(fmtBtns[(i + 1) % fmtBtns.length], true);
     });
   });
 
-  XE.on(prevM, 'click', function () { view.setMonth(view.getMonth() - 1); renderMonth(); });
-  XE.on(nextM, 'click', function () { view.setMonth(view.getMonth() + 1); renderMonth(); });
-  XE.on(XE.$('[data-s20-back]', root), 'click', function () { renderTimes(); });
+  function monthNav(a, dir) {
+    XE.on(a, 'click', function (e) {
+      e.preventDefault();
+      if (a.getAttribute('aria-disabled') === 'true') return;
+      view = new Date(view.getFullYear(), view.getMonth() + dir, 1);
+      focusDate = null;
+      renderMonth(false);
+      live.textContent = fmtMonth(view) + ', ' + openCount(view) + ' days open.';
+    });
+    XE.on(a, 'keydown', function (e) {
+      if (e.key === ' ') { e.preventDefault(); a.click(); }
+    });
+  }
+  monthNav(prevM, -1);
+  monthNav(nextM, 1);
+
+  XE.on(backEl, 'click', function (e) {
+    e.preventDefault();
+    picked = null;
+    renderTimes();
+    var first = XE.$('.s20__time', timesEl);
+    if (first) first.focus({ preventScroll: true });
+  });
 
   XE.on(form, 'submit', function (e) {
-    e.preventDefault();
     var f = new FormData(form);
     var name = (f.get('name') || '').toString().trim();
     var email = (f.get('email') || '').toString().trim();
-    var company = (f.get('company') || '').toString().trim();
-    var brief = (f.get('brief') || '').toString().trim();
+    var text = brief.value.trim();
 
     var problems = [];
-    if (!name) problems.push('your name');
+    if (name.length < 2) problems.push('your name');
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) problems.push('a valid work email');
-    if (!brief) problems.push('a line about what you are building');
-    if (problems.length) {
+    if (!text) problems.push('a line about what you are building');
+    if (problems.length || !picked) {
+      e.preventDefault();
       errEl.hidden = false;
-      errEl.textContent = 'Please add ' + problems.join(', ') + '.';
-      live.textContent = errEl.textContent;
+      errEl.textContent = picked ? 'Please add ' + problems.join(', ') + '.' : 'Choose a day and a time first.';
       return;
     }
     errEl.hidden = true;
 
-    var when = fmtDay(picked.date) + ' at ' + picked.label;
-    /* HOOK 3 — replace this mailto with a POST to your booking endpoint */
-    var subject = 'Discovery call request — ' + when;
-    var body = [
-      'Requested slot: ' + when,
-      'Name: ' + name,
-      'Email: ' + email,
-      'Company: ' + (company || '—'),
-      '',
-      'Brief:',
-      brief
-    ].join('\n');
-    window.location.href = 'mailto:' + EMAIL +
-      '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-
-    form.hidden = true; timesEl.hidden = true; doneEl.hidden = false;
-    XE.$('[data-s20-donep]', root).textContent =
-      'We have opened an email to ' + EMAIL + ' with your brief and ' + when + '.';
-    live.textContent = 'Request prepared. Nothing is reserved yet.';
+    /* the slot goes at the top of the contact form's own message field */
+    var when = fmtDay(picked.date) + ' at ' + fmtTime(picked.mins) + (tzName ? ' (' + tzName + ')' : ' (my local time)');
+    var hid = XE.$('[data-s20-msg]', form);
+    if (!hid) {
+      hid = document.createElement('input');
+      hid.type = 'hidden'; hid.name = 'message'; hid.setAttribute('data-s20-msg', '');
+      form.appendChild(hid);
+    }
+    hid.value = 'Requested discovery call: ' + when + '\n\n' + text;
+    brief.removeAttribute('name');   /* one message field reaches the contact page */
+    live.textContent = 'Sending your request to the contact page. Nothing is reserved yet.';
   });
 
-  renderMonth();
-  renderTimes();
+  /* coming back from the contact page (back/forward cache): restore the textarea's name */
+  window.addEventListener('pageshow', function () {
+    brief.setAttribute('name', 'message');
+    var hid = XE.$('[data-s20-msg]', form);
+    if (hid) hid.parentNode.removeChild(hid);
+  });
+
+  renderMonth(false);
+  if (picked) showForm(false); else renderTimes();
 })();
 } catch (e) { console.error('[20-booking]', e); }
 
