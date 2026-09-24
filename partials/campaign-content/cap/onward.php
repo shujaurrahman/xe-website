@@ -9,12 +9,13 @@ $ccd_rest = array_values(array_filter(array_keys($CAPS), fn ($ccd_k) => $ccd_k !
   <div class="wrap">
     <div class="bdh-head bdh-head--row" data-rv>
       <div><p class="lbl"><span class="dot"></span>Works best with</p>
-        <h2 class="h2" id="next-t"><span class="g">One idea,</span> carried further.</h2></div>
+        <h2 class="h2" id="next-t"><?= ccd_h('on', 'One idea,', 'carried further.') ?></h2></div>
       <div><p class="lead">Each capability stands on its own. These two are the ones <?= e(strtolower($CAP['short'])) ?> most often runs alongside.</p></div>
     </div>
     <div class="ccd-on__pair">
       <?php foreach ($CAP['pairs'] as $ccd_k): $ccd_p = $CAPS[$ccd_k] ?? null; if (!$ccd_p) continue; ?>
       <a class="ccd-on__card" href="<?= e(xe_cap_url($DISC, $ccd_rows[$ccd_k])) ?>" data-rv>
+        <?php if ($ccd_im = ccd_img($ccd_k)): ?><span class="ccd-on__img" aria-hidden="true"><img src="<?= e(xe_url('assets/imgs/campaign-content/' . $ccd_im[0])) ?>" alt="" width="<?= (int) $ccd_im[1] ?>" height="<?= (int) $ccd_im[2] ?>" loading="lazy" decoding="async" style="object-position:<?= e($ccd_im[4]) ?>"></span><?php endif; ?>
         <span class="ccd-on__top"><span class="bdh-ro">Capability <?= e($ccd_p['n']) ?></span><span class="ccd-on__ico" aria-hidden="true"><?= xt_icon($ccd_p['icon']) ?></span></span>
         <span class="ccd-on__k"><?= e($ccd_p['kicker']) ?></span>
         <span class="ccd-on__t"><?= e($ccd_p['name']) ?></span>

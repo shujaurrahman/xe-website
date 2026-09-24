@@ -1,0 +1,59 @@
+/* Campaign & Content capability pages — topic showcase (#in-practice), offer plate, stack word-chips,
+   onward card photos. Tokens only. */
+.ccd-show__g{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,3fr);gap:var(--cch-gap,24px);align-items:start}
+.ccd-show__win{min-width:0;border:1px solid var(--line-2);border-radius:var(--r-lg);background:var(--paper);box-shadow:var(--sh-2);overflow:hidden}
+.ccd-show__bar{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);background:var(--paper-2)}
+.ccd-show__bar .bdh-ro{font-size:var(--t-lbl);color:var(--ink)}
+.ccd-show__sub{margin-left:auto;color:var(--muted)}
+.ccd-show .ccd-show__bar .ccd-show__sub{color:var(--muted)}
+.ccd-show__t{width:100%;border-collapse:collapse}
+.ccd-show__t thead th{padding:12px 16px;text-align:left;font:500 var(--t-lbl)/1.4 var(--f);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
+.ccd-show__t td,.ccd-show__t tbody th{padding:15px 16px;text-align:left;vertical-align:middle;border-top:1px solid var(--line);font:400 var(--t-sm)/1.45 var(--f-b);color:var(--txt)}
+.ccd-show__t tbody tr:first-child>*{border-top:0}
+.ccd-show__t tbody th{font:600 var(--t-sm)/1.35 var(--f-h);color:var(--ink);max-width:30ch}
+.ccd-show__t tbody tr:hover>*{background:var(--paper-2)}
+.ccd-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:var(--r-pill);font:500 var(--t-lbl)/1.35 var(--f);letter-spacing:.02em;white-space:nowrap}
+.ccd-chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.ccd-chip--ok{background:var(--blue-wash);color:var(--blue-d)}
+.ccd-chip--hold{background:var(--paper-3);color:var(--txt)}
+.ccd-chip--flag{background:var(--ink);color:var(--on-ink)}
+.ccd-show__kpi{margin:0;display:grid;gap:12px}
+.ccd-show__kpi>div{display:flex;flex-direction:column;justify-content:space-between;gap:14px;padding:20px 22px;border-top:2px solid var(--ink);background:var(--paper-2);border-radius:0 0 var(--r) var(--r)}
+.ccd-show__kpi dt{font:500 var(--t-lbl)/1.4 var(--f);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ccd-show__kpi dd{margin:0;display:flex;flex-direction:column;gap:6px}
+.ccd-show__v{font:500 clamp(28px,2.6vw,40px)/1 var(--f);color:var(--ink)}
+.ccd-show__n{font:400 var(--t-xs)/1.45 var(--f-b);color:var(--muted)}
+.ccd-show__note{margin:18px 0 0;font:400 var(--t-xs)/1.5 var(--f-b);color:var(--muted)}
+.ccd-show__note .bdh-ro{margin-right:8px;color:var(--blue-d)}
+@media (max-width:1100px){.ccd-show__g{grid-template-columns:1fr}.ccd-show__kpi{grid-template-rows:none;grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:600px){
+  .ccd-show__kpi{grid-template-columns:1fr}
+  .ccd-show__t thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .ccd-show__t,.ccd-show__t tbody,.ccd-show__t tr{display:block}
+  .ccd-show__t tr{padding:14px 16px;border-top:1px solid var(--line)}
+  .ccd-show__t tbody tr:first-child{border-top:0}
+  .ccd-show__t tbody th,.ccd-show__t td{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:5px 0;border:0;max-width:none}
+  .ccd-show__t tbody th{padding-bottom:8px}
+  .ccd-show__t td::before{content:attr(data-l);font:500 var(--t-lbl)/1.4 var(--f);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);flex:none;max-width:45%}
+  .ccd-show__t td{text-align:right}
+  .ccd-chip{white-space:normal}
+  .ccd-show__bar .ccd-show__sub{display:none}
+}
+
+/* offer plate */
+.ccd-offer__top{margin-bottom:var(--bdh-head-mb,48px)}
+.ccd-offer__top>.bdh-head{margin-bottom:0}
+.ccd-offer__top--img{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(32px,5vw,72px);align-items:end}
+.ccd-offer__img{margin:0}
+@media (max-width:860px){.ccd-offer__top--img{grid-template-columns:1fr}}
+
+/* stack: marks as tiles, word-only names as chips beneath */
+.ccd-stack__more{margin-top:22px;display:flex;flex-direction:column;gap:10px}
+.ccd-stack__more .bdh-ro{margin:0;font-size:var(--t-lbl);color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+
+/* onward: photo header on the paired cards */
+.ccd-on__card{overflow:hidden}
+.ccd-on__img{display:block;margin:-26px -26px 8px;aspect-ratio:16/7;overflow:hidden;background:var(--ink-2)}
+.ccd-on__img img{width:100%;height:100%;object-fit:cover;filter:saturate(.8) contrast(1.03);transition:transform .9s var(--e)}
+.ccd-on__card:hover .ccd-on__img img{transform:scale(1.03)}
+@media (prefers-reduced-motion:reduce){.ccd-on__card:hover .ccd-on__img img{transform:none}}

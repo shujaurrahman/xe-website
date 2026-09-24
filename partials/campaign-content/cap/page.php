@@ -24,6 +24,22 @@ foreach ($SITE['disciplines'] as $ccd_x) { if ($ccd_x['slug'] === 'campaign-cont
 $CAP_ROW = null;
 foreach ($DISC['caps'] as $ccd_x) { if (($ccd_x[2] ?? '') === $CCD_KEY) $CAP_ROW = $ccd_x; }
 unset($ccd_x);
+$CCD_T = (require __DIR__ . '/topic.php')[$CCD_KEY] ?? [];
+
+/** Section heading from topic.php (grey phrase, ink rest), falling back to the template default. */
+function ccd_h(string $k, string $g, string $ink): string {
+    global $CCD_T;
+    $ccd_v = $CCD_T['h'][$k] ?? [$g, $ink];
+    return '<span class="g">' . e($ccd_v[0]) . '</span> ' . e($ccd_v[1]);
+}
+/** Section lead from topic.php, falling back to the template default. */
+function ccd_lead(string $k, string $d): string { global $CCD_T; return e($CCD_T['h'][$k][2] ?? $d); }
+/** Offer plate for a capability, or null. */
+function ccd_img(string $slug): ?array {
+    static $ccd_all = null;
+    $ccd_all ??= require __DIR__ . '/topic.php';
+    return $ccd_all[$slug]['img'] ?? null;
+}
 
 /** Signature mock frame: the title bar and the real, labelled state buttons. */
 function ccd_sig_head(string $title, string $sub, array $opts, string $label, int $on = 1): string {
@@ -36,14 +52,14 @@ function ccd_sig_head(string $title, string $sub, array $opts, string $label, in
     return $h . '</div>';
 }
 
-$CCD_SECTIONS = ['hero', 'offer', 'process', 'deliver', 'outcomes', 'stack', 'standards', 'services', 'faq', 'onward'];
+$CCD_SECTIONS = ['hero', 'offer', 'process', 'show', 'deliver', 'outcomes', 'stack', 'standards', 'services', 'faq', 'onward'];
 
 $ccd_root = __DIR__ . '/../../../';
 $ccd_has  = fn (string $p): ?string => (is_file($ccd_root . $p) && filesize($ccd_root . $p) > 0) ? $p : null;
 $ccd_css  = array_values(array_filter([
     $ccd_has('assets/css/brand/hub.css'), $ccd_has('assets/css/tech/kit.css'), $ccd_has('assets/css/campaign-content.css'),
     $ccd_has('assets/css/campaign-content/faq.css'), $ccd_has('assets/css/campaign-content/cap.css'),
-    $ccd_has('assets/css/campaign-content/cap-sig.css'), $ccd_has('assets/css/services.css'),
+    $ccd_has('assets/css/campaign-content/cap-sig.css'), $ccd_has('assets/css/campaign-content/cap-show.css'), $ccd_has('assets/css/services.css'),
 ]));
 $ccd_js   = array_values(array_filter([
     $ccd_has('assets/js/brand/hub.js'), $ccd_has('assets/js/campaign-content/cap/sig.js'), $ccd_has('assets/js/services.js'),

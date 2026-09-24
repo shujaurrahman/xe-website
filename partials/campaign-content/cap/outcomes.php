@@ -3,8 +3,8 @@
   <div class="wrap">
     <div class="bdh-head bdh-head--row" data-rv>
       <div><p class="lbl lbl--blue"><span class="dot"></span>What changes</p>
-        <h2 class="h2" id="outcomes-t"><span class="g">Three things</span> you should notice.</h2></div>
-      <div><p class="lead">Outcomes we design for and measure against an agreed baseline. They are aims, not guarantees.</p></div>
+        <h2 class="h2" id="outcomes-t"><?= ccd_h('out', 'Three things', 'you should notice.') ?></h2></div>
+      <div><p class="lead"><?= ccd_lead('out', 'Outcomes we design for and measure against an agreed baseline. They are aims, not guarantees.') ?></p></div>
     </div>
     <ol class="ccd-out__g">
       <?php foreach ($CAP['outcomes'] as $ccd_i => $ccd_o): ?>

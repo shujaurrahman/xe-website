@@ -3,8 +3,8 @@
   <div class="wrap ccd-deliver__g">
     <div class="bdh-head ccd-deliver__h" data-rv>
       <p class="lbl lbl--blue"><span class="dot"></span>What you get</p>
-      <h2 class="h2" id="deliverables-t"><span class="g">Handed over,</span> not held back.</h2>
-      <p class="lead">Every <?= e(strtolower($CAP['short'])) ?> engagement ends with working files your team owns: source, templates, rights and the dashboard, in the tools you already use.</p>
+      <h2 class="h2" id="deliverables-t"><?= ccd_h('deliver', 'Handed over,', 'not held back.') ?></h2>
+      <p class="lead"><?= ccd_lead('deliver', 'Every ' . strtolower($CAP['short']) . ' engagement ends with working files your team owns: source, templates, rights and the dashboard, in the tools you already use.') ?></p>
     </div>
     <table class="ccd-tbl" data-rv>
       <caption class="bdh-sr"><?= e($CAP['name']) ?> deliverables and their formats</caption>

@@ -19,7 +19,7 @@ $cch_parts = [   // [pin x %, pin y %, name, rule]
     <div class="cch-kit__g">
       <figure class="cch-kit__fig" data-rv>
         <div class="cch-frame cch-frame--r45 cch-kit__frame">
-          <img src="<?= e(xe_url('assets/imgs/campaign-content/crowd.jpg')) ?>" alt="An aerial view of people crossing a busy intersection on diagonal zebra crossings" width="800" height="1200" loading="lazy" decoding="async" style="object-position:50% 40%">
+          <img src="<?= e(xe_url('assets/imgs/campaign-content/kit-billboard.jpg')) ?>" alt="A blank billboard frame standing on a terrace between apartment buildings" width="1200" height="1200" loading="lazy" decoding="async" style="object-position:50% 50%">
           <span class="cch-frame__hl cch-kit__hl" aria-hidden="true">Win the first<br>ten minutes.</span>
           <span class="cch-kit__dev" aria-hidden="true"><i></i><i></i><i></i></span>
           <span class="cch-kit__cta" aria-hidden="true">See how</span>

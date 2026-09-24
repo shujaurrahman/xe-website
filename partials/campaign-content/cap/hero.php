@@ -14,7 +14,7 @@
       <h1 class="d2 ccd-hero__h" id="ccd-h1"><?= $CAP['title'] ?></h1>
       <p class="lead ccd-hero__lead"><?= e($CAP['lead']) ?></p>
       <div class="ccd-hero__act">
-        <a class="btn btn--ink btn--lg" href="<?= e(svc_contact_url([], null, 'campaign-content')) ?>"><?= e($CAP['cta']) ?> <span class="i"></span></a>
+        <a class="btn btn--ink btn--lg" href="<?= e(svc_contact_url([], null, $CCD_KEY)) ?>"><?= e($CAP['cta']) ?> <span class="i"></span></a>
         <a class="btn btn--out btn--lg" href="#process">How it runs <span class="i"></span></a>
       </div>
       <!-- PLACEHOLDER: confirm typical timeframes before launch -->
