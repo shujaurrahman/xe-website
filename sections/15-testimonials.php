@@ -1,7 +1,10 @@
-<section class="band band--alt band--rules s15" id="testimonials" aria-labelledby="s15-t">
-  <div class="wrap-n">
-    <p class="lbl lbl--blue"><span class="dot"></span>In their words</p>
-    <h2 class="h2 s15__h" id="s15-t">Client Testimonials <sup class="s15__count">(6)</sup></h2>
+<noscript><style>.s15__panel{height:auto;overflow:visible}.s15__mark{display:none}.s15__btn{cursor:default}</style></noscript>
+<section class="band band--rules s15" id="testimonials" aria-labelledby="s15-t">
+  <div class="wrap s15__grid">
+    <div class="s15__head" data-rv>
+      <p class="lbl lbl--blue"><span class="dot"></span>In their words</p>
+      <h2 class="h2 s15__h" id="s15-t"><span class="g">Client</span> Testimonials <sup class="s15__count">(6)</sup></h2>
+    </div>
 
     <!--
       PLACEHOLDER TESTIMONIALS — written to show the layout. No real person or company is
@@ -12,6 +15,7 @@
 
       <div class="s15__row">
         <button class="s15__btn" type="button" data-acc-b aria-expanded="true" aria-controls="s15-a0">
+          <span class="s15__n" aria-hidden="true">01</span>
           <span class="s15__ava" aria-hidden="true"><img src="assets/imgs/6d416d49_DKLFlVJOjrg7ae74CIgL6PM.jpg" alt="" width="800" height="800" loading="lazy" decoding="async"></span>
           <span class="s15__who">
             <b>Chief Marketing Officer</b>
@@ -27,6 +31,7 @@
 
       <div class="s15__row">
         <button class="s15__btn" type="button" data-acc-b aria-expanded="false" aria-controls="s15-a1">
+          <span class="s15__n" aria-hidden="true">02</span>
           <span class="s15__ava" aria-hidden="true"><img src="assets/imgs/40945437_jFJX4gpC3KGsXPnpoimI4aUPo.jpg" alt="" width="800" height="800" loading="lazy" decoding="async"></span>
           <span class="s15__who">
             <b>Director of Digital</b>
@@ -42,6 +47,7 @@
 
       <div class="s15__row">
         <button class="s15__btn" type="button" data-acc-b aria-expanded="false" aria-controls="s15-a2">
+          <span class="s15__n" aria-hidden="true">03</span>
           <span class="s15__ava" aria-hidden="true"><img src="assets/imgs/c7f45e13_PETcp0nWKkYvNq2uw2sr9qd8Y.png" alt="" width="1010" height="998" loading="lazy" decoding="async"></span>
           <span class="s15__who">
             <b>VP Product</b>
@@ -57,6 +63,7 @@
 
       <div class="s15__row">
         <button class="s15__btn" type="button" data-acc-b aria-expanded="false" aria-controls="s15-a3">
+          <span class="s15__n" aria-hidden="true">04</span>
           <span class="s15__ava" aria-hidden="true"><img src="assets/imgs/a68b2593_oFNQRJrY4r6XzhrSjBC0PSFPA.png" alt="" width="1254" height="1254" loading="lazy" decoding="async"></span>
           <span class="s15__who">
             <b>Head of Growth</b>
@@ -72,6 +79,7 @@
 
       <div class="s15__row">
         <button class="s15__btn" type="button" data-acc-b aria-expanded="false" aria-controls="s15-a4">
+          <span class="s15__n" aria-hidden="true">05</span>
           <span class="s15__ava" aria-hidden="true"><img src="assets/imgs/f9aed7d9_vtNX9ytQZjNUzHOQVtMRd5Idk.png" alt="" width="512" height="512" loading="lazy" decoding="async"></span>
           <span class="s15__who">
             <b>Commercial Director</b>
@@ -87,6 +95,7 @@
 
       <div class="s15__row">
         <button class="s15__btn" type="button" data-acc-b aria-expanded="false" aria-controls="s15-a5">
+          <span class="s15__n" aria-hidden="true">06</span>
           <span class="s15__ava" aria-hidden="true"><img src="assets/imgs/e6ca4aba_07wXv6FrehN1SC8iZpWHSTBjI.webp" alt="" width="512" height="288" loading="lazy" decoding="async"></span>
           <span class="s15__who">
             <b>Group CTO</b>
