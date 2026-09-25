@@ -1,0 +1,78 @@
+/* Hub · ai-native — the decision table, the guardrails, and one agent run under a transport control. */
+.mth-ai__top{display:grid;grid-template-columns:minmax(0,7.5fr) minmax(0,4.5fr);gap:clamp(30px,3.6vw,60px);align-items:start}
+.mth-ai__h3{font-family:var(--f-h);font-size:1.1875rem;font-weight:500;letter-spacing:-.012em;line-height:1.25;color:var(--on-ink)}
+.mth-ai__scroll{margin:18px 0 16px}
+.mth-ai__table{width:100%;min-width:820px;border-collapse:collapse;text-align:left;table-layout:fixed}
+.mth-ai__table th:nth-child(1){width:15%}
+.mth-ai__table th:nth-child(2){width:13%}
+.mth-ai__table th:nth-child(3){width:23%}
+.mth-ai__table th:nth-child(4){width:19%}
+.mth-ai__table th:nth-child(5){width:15%}
+.mth-ai__table th:nth-child(6){width:15%}
+.mth-ai__table th,.mth-ai__table td{padding:13px 16px 13px 0;border-bottom:1px solid var(--on-ink-line);vertical-align:top}
+.mth-ai__table thead th{padding-top:0;border-bottom:1px solid var(--on-ink-line);font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3);white-space:nowrap}
+.mth-ai__table tbody th{font-family:var(--f-b);font-size:var(--t-sm);font-weight:500;line-height:1.45;color:var(--on-ink)}
+.mth-ai__table td{font-size:var(--t-xs);line-height:1.55;color:var(--on-ink-2)}
+
+.mth-ai__gl{display:grid;gap:0;margin-top:18px;border-top:1px solid var(--on-ink-line)}
+.mth-ai__gl>div{display:grid;gap:5px;padding-block:13px;border-bottom:1px solid var(--on-ink-line)}
+.mth-ai__gl dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
+.mth-ai__gl dd{font-size:var(--t-sm);line-height:1.55;color:var(--on-ink-2)}
+
+/* ---- the run ---- */
+.mth-ai__run{margin-top:clamp(44px,4.4vw,72px);padding:clamp(22px,2.6vw,38px);border:1px solid var(--on-ink-line);border-radius:var(--r-xl);background:var(--on-ink-card)}
+.mth-ai__runh{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px clamp(24px,3vw,48px);align-items:end;
+  padding-bottom:clamp(20px,2vw,28px);margin-bottom:clamp(20px,2vw,28px);border-bottom:1px solid var(--on-ink-line)}
+.mth-ai__runh .mth-ai__h3{margin-top:10px}
+.mth-ai__runl{margin-top:10px;font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-2);max-width:62ch}
+
+.mth-ai__ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.mth-ai__cb{display:inline-grid;place-items:center;min-width:44px;min-height:44px;padding:0 14px;border:1px solid var(--on-ink-line);border-radius:var(--r-pill);
+  font-family:var(--f);font-size:var(--t-xs);color:var(--on-ink);transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io)}
+.mth-ai__cb:hover{border-color:var(--blue);background:rgba(255,255,255,.06)}
+.mth-ai__cb--play{padding:0 18px}
+.mth-ai__cb[aria-pressed="true"]{border-color:var(--blue);background:rgba(0,130,251,.18)}
+.mth-ai__pos{margin-left:6px;font-family:var(--f);font-size:var(--mth-mono-s);letter-spacing:.08em;text-transform:uppercase;color:var(--on-ink-3);white-space:nowrap}
+.mth-ai__pos span{color:var(--on-ink);font-variant-numeric:tabular-nums}
+
+.mth-ai__steps{display:grid;gap:0;border-top:1px solid var(--on-ink-line)}
+.mth-ai__step{border-bottom:1px solid var(--on-ink-line)}
+.mth-ai__sb{display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;column-gap:14px;width:100%;min-height:52px;padding:12px 0;text-align:left}
+.mth-ai__sn{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;color:var(--on-ink-3);font-variant-numeric:tabular-nums}
+.mth-ai__st{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.01em;line-height:1.25;color:var(--on-ink)}
+.mth-ai__step.is-on .mth-ai__sn{color:var(--blue)}
+.mth-ai__sd{display:grid;gap:12px;padding:0 0 18px 48px}
+.mth-ai__sw{font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-2);max-width:72ch}
+.mth-ai__ss{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.mth-ai__ss code{padding:3px 9px;border-radius:var(--r-xs);background:rgba(255,255,255,.07);font-size:var(--mth-mono-s);letter-spacing:.02em;color:var(--on-ink)}
+.mth-ai__sl{font-family:var(--f);font-size:var(--mth-mono-s);letter-spacing:.02em;line-height:1.6;color:var(--on-ink-3);overflow-wrap:anywhere}
+.mth-ai__lp{margin-right:8px;color:var(--blue)}
+
+/* collapsed behaviour arrives with JavaScript: .is-run is added at init, so with JS off every step is open */
+.mth-ai__run.is-run .mth-ai__sb{cursor:pointer}
+.mth-ai__run.is-run .mth-ai__step:not(.is-on) .mth-ai__sd{display:none}
+.mth-ai__run.is-run .mth-ai__step:not(.is-on) .mth-ai__st{color:var(--on-ink-2)}
+.mth-ai__run.is-run .mth-ai__step.is-on{background:rgba(255,255,255,.03)}
+.mth-ai__run.is-run .mth-ai__sb{padding-inline:12px}
+.mth-ai__run.is-run .mth-ai__sd{padding-left:60px}
+
+.mth-ai__never{margin-top:clamp(24px,2.4vw,34px);padding-top:clamp(20px,2vw,26px);border-top:1px solid var(--on-ink-line)}
+.mth-ai__never .mth-k{margin-bottom:14px}
+.mth-ai__nl{columns:2;column-gap:clamp(24px,3vw,48px)}
+.mth-ai__nl>li{color:var(--on-ink-2);break-inside:avoid}
+
+@media (max-width:1023px){
+  .mth-ai__top{grid-template-columns:minmax(0,1fr)}
+  .mth-ai__runh{grid-template-columns:minmax(0,1fr);align-items:start}
+  .mth-ai__nl{columns:1}
+}
+@media (max-width:600px){
+  .mth-ai__table{min-width:660px}
+  .mth-ai__sb{grid-template-columns:30px minmax(0,1fr);row-gap:6px}
+  .mth-ai__sb .mth-flag{grid-column:2}
+  .mth-ai__sd{padding-left:0}
+  .mth-ai__run.is-run .mth-ai__sd{padding-left:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  .mth-ai__cb{transition:none}
+}

@@ -1,0 +1,60 @@
+/* Hub · faq — a full-width ledger of questions: the index and the capability on the left, the question
+   and its answer to the right. Several rows can be open at once, and the first ships open. */
+.pxh-faq__list{border-top:1px solid var(--line)}
+.pxh-faq__row{position:relative;display:grid;grid-template-columns:minmax(0,160px) minmax(0,1fr);column-gap:var(--bdh-gap);
+  border-bottom:1px solid var(--line)}
+.pxh-faq__row::before{content:"";position:absolute;left:0;top:-1px;width:100%;height:2px;background:var(--blue);
+  transform:scaleX(0);transform-origin:left center;transition:transform .4s var(--e)}
+.pxh-faq__row:has([aria-expanded="true"])::before{transform:none}
+
+.pxh-faq__side{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:26px 0 24px}
+.pxh-faq__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;color:var(--faint);font-variant-numeric:tabular-nums;line-height:1}
+
+.pxh-faq__hq{grid-column:2;font:inherit;letter-spacing:0}
+.pxh-faq__q{display:grid;grid-template-columns:minmax(0,1fr) 30px;align-items:center;gap:18px;width:100%;min-height:76px;
+  padding:22px 0;text-align:left;cursor:pointer}
+.pxh-faq__q:focus-visible{outline-offset:2px;border-radius:var(--r-xs)}
+.pxh-faq__t{font-family:var(--f-h);font-size:clamp(1.0625rem,1.5vw,1.25rem);font-weight:500;line-height:1.3;letter-spacing:-.012em;color:var(--ink);
+  transition:color var(--d1) var(--e-io)}
+.pxh-faq__q:hover .pxh-faq__t{color:var(--blue-d)}
+.pxh-faq__sign{position:relative;width:30px;height:30px;justify-self:end;border-radius:50%;box-shadow:inset 0 0 0 1px var(--line-3);
+  transition:box-shadow var(--d2) var(--e),background var(--d2) var(--e),transform .35s var(--e)}
+.pxh-faq__sign::before,.pxh-faq__sign::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:1.5px;margin:-.75px 0 0 -5.5px;
+  background:var(--ink);transition:background var(--d2) var(--e),opacity var(--d2) var(--e)}
+.pxh-faq__sign::after{transform:rotate(90deg)}
+.pxh-faq__q[aria-expanded="true"] .pxh-faq__sign{background:var(--ink);box-shadow:none}
+.pxh-faq__q[aria-expanded="true"] .pxh-faq__sign::before,.pxh-faq__q[aria-expanded="true"] .pxh-faq__sign::after{background:var(--on-ink)}
+.pxh-faq__q[aria-expanded="true"] .pxh-faq__sign::after{opacity:0}
+
+.pxh-faq__p{grid-column:2;height:0;overflow:hidden;transition:height .45s var(--e)}
+.pxh-faq__p.is-open{height:auto}
+.pxh-faq__a{padding:0 48px 28px 0;max-width:72ch;font-size:var(--t-body);line-height:1.75;color:var(--txt)}
+
+/* ---- the closing bar ---- */
+.pxh-faq__foot{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:var(--bdh-gap-l);align-items:start;
+  margin-top:var(--bdh-block)}
+.pxh-faq__ways{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+.pxh-faq__wt{font-family:var(--f-h);font-size:clamp(1.25rem,2vw,1.75rem);font-weight:500;letter-spacing:-.024em;line-height:1.14;
+  color:var(--ink);max-width:26ch}
+.pxh-faq__act{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:6px}
+.pxh-faq__facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--bdh-gap);border-top:1px solid var(--line)}
+.pxh-faq__facts>div{display:flex;flex-direction:column;gap:7px;padding:14px 0;border-bottom:1px solid var(--line-2)}
+.pxh-faq__facts dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.4}
+.pxh-faq__facts dd{font-size:var(--t-sm);line-height:1.5;color:var(--ink)}
+
+/* ---- responsive ---- */
+@media (max-width:860px){
+  .pxh-faq__row{grid-template-columns:minmax(0,1fr);row-gap:0}
+  .pxh-faq__side{flex-direction:row;align-items:center;gap:12px;padding:20px 0 0}
+  .pxh-faq__hq,.pxh-faq__p{grid-column:1}
+  .pxh-faq__q{min-height:60px;padding:14px 0 20px}
+  .pxh-faq__foot{grid-template-columns:minmax(0,1fr)}
+  .pxh-faq__wt{max-width:32ch}
+}
+@media (max-width:600px){
+  .pxh-faq__a{padding-right:0;font-size:var(--t-sm)}
+  .pxh-faq__facts{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  .pxh-faq__p,.pxh-faq__sign,.pxh-faq__row::before,.pxh-faq__t{transition:none}
+}

@@ -1,0 +1,52 @@
+/* Hub · research — the method matrix beside a synthesis photograph, then the four baseline measures
+   as bar cards. The bar-and-target pattern (.pxh-bars) is the data-viz idiom the subpages reuse. */
+.pxh-research__top{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:var(--bdh-gap-l);align-items:start}
+.pxh-research__tbl{min-width:0}
+.pxh-research__table{min-width:620px}
+.pxh-research__table tbody th{width:27%}
+.pxh-research__table td:nth-child(3),.pxh-research__table th:nth-child(3){width:19%}
+.pxh-research__table td:nth-child(4),.pxh-research__table th:nth-child(4){width:21%}
+
+.pxh-research__aside{display:flex;flex-direction:column;gap:22px;min-width:0}
+.pxh-research__fig{display:flex;flex-direction:column;gap:12px}
+.pxh-research__fig .bdh-img{display:block}
+.pxh-research__fig img{object-position:50% 50%}
+.pxh-research__figcap{font-family:var(--f);font-size:var(--pxh-mono-s);letter-spacing:.08em;text-transform:uppercase;line-height:1.55;color:var(--faint)}
+.pxh-research__q{display:flex;flex-direction:column;gap:9px;padding:18px;border-radius:var(--r-sm);background:var(--paper-3)}
+.pxh-research__q p:last-child{font-size:var(--t-sm);line-height:1.65;color:var(--txt)}
+
+/* ---- the baseline ---- */
+.pxh-research__bench{margin-top:var(--bdh-block);padding-top:clamp(28px,3vw,42px);border-top:1px solid var(--line)}
+.pxh-research__bh{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:18px var(--bdh-gap-l);align-items:end;
+  margin-bottom:clamp(24px,2.6vw,34px)}
+.pxh-research__bt{margin-top:12px;font-family:var(--f-h);font-size:clamp(1.25rem,2vw,1.75rem);font-weight:500;letter-spacing:-.024em;
+  line-height:1.12;color:var(--ink);max-width:26ch}
+.pxh-research__cards{grid-template-columns:repeat(4,minmax(0,1fr))}
+.pxh-research__card{gap:12px}
+.pxh-research__card .pxh-meter{margin-top:2px}
+.pxh-research__card .pxh-meter{flex-wrap:wrap;align-items:baseline;gap:4px 8px}
+.pxh-research__card .pxh-meter span{flex:1 0 100%;line-height:1.4}
+.pxh-research__bars{margin-top:6px}
+.pxh-research__def{display:flex;flex-direction:column;gap:6px;margin-top:auto;padding-top:14px;border-top:1px solid var(--line-2);
+  font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+.pxh-research__legend{display:flex;align-items:flex-start;gap:10px;margin-top:22px}
+.pxh-research__key{flex:none;width:2px;height:16px;margin-top:3px;border-radius:1px;background:var(--ink)}
+
+/* ---- responsive ---- */
+@media (max-width:1279px){
+  .pxh-research__cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:1023px){
+  .pxh-research__top{grid-template-columns:minmax(0,1fr);gap:var(--bdh-block)}
+  .pxh-research__aside{flex-direction:row;flex-wrap:wrap;align-items:flex-start;gap:24px var(--bdh-gap-l)}
+  .pxh-research__fig{flex:1 1 280px;max-width:420px}
+  .pxh-research__q{flex:1 1 280px}
+  .pxh-research__aside .pxh-note{flex:1 1 100%}
+  .pxh-research__bh{grid-template-columns:minmax(0,1fr);align-items:start}
+  .pxh-research__bt{max-width:32ch}
+}
+@media (max-width:600px){
+  .pxh-research__cards{grid-template-columns:minmax(0,1fr)}
+  .pxh-research__aside{flex-direction:column}
+  .pxh-research__fig{max-width:none}
+}

@@ -1,0 +1,294 @@
+/* ==========================================================================
+   AI DESIGN — discipline base layer (services/ai-design.php)
+   Shared .aih-* primitives only. Section styles live in assets/css/ai-design/<id>.css,
+   loaded after this file. Tokens from core.css :root only; no new colours; no gradients
+   except core .aurora/.dither and mask fades; no !important.
+
+   Loaded after assets/css/brand/hub.css (.bdh-*) and assets/css/tech/kit.css (.xt-*), so
+   everything here builds on those rather than repeating them.
+
+   THE IDIOM
+   This discipline's one object is a generation run: brief → direction → route → gate → record.
+   Every component below is a view of part of that run, and the four capability subpages are
+   meant to reuse them with their own content.
+
+     .aih-panel            instrument panel — a frame that reads as real software
+                           __bar (masthead: dots, title, chips) · __body · __foot (readout strip)
+                           .aih-panel--ink for the dark variant (sets --xt-accent so .xt-ico stays visible)
+     .aih-cards/.aih-card  the card system — __rail (index + icon) · __t · __d · __tags
+     .aih-gates/.aih-gate  the gate chain — named checks with pass / fail / queued states and
+                           connectors trimmed to the edge of each gate, never centre to centre
+     .aih-plot             the data-viz frame — banded grid, threshold rule, bars or points, axis
+     .aih-score            scorecard rows — criterion, meter, value, delta
+     .aih-steps/.aih-step  the stepper — numbered stages on a rail, each with outputs
+     .aih-ledger           a record table set in the label face, for logs and provenance rows
+     .aih-rows             label → value rows for dense definition lists
+     .aih-k / .aih-ro      mono key label / mono readout
+     .aih-mark             a technology named in type because it has no licence-clean mark in
+                           data/tech-stack.php. Deliberately typographic: never a drawn stand-in.
+   ========================================================================== */
+
+.aih{
+  --aih-panel-r:var(--r-xl);
+  --aih-gate:clamp(96px,11vw,132px);
+  --aih-rail:34px;
+}
+
+/* ---------- mono keys, readouts, illustrative marks ---------------------- */
+.aih-k{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;line-height:1.2;color:var(--faint)}
+.aih-k--blue{color:var(--blue)}
+.aih-k--ink{color:var(--ink)}
+.band--ink .aih-k,.aih-panel--ink .aih-k{color:var(--on-ink-3)}
+.aih-ro{font-family:var(--f);font-size:var(--t-xs);line-height:1.5;letter-spacing:0;color:var(--txt);font-variant-numeric:tabular-nums}
+.band--ink .aih-ro,.aih-panel--ink .aih-ro{color:var(--on-ink-2)}
+.aih-num{font-family:var(--f);font-variant-numeric:tabular-nums;letter-spacing:-.03em;color:var(--ink)}
+.band--ink .aih-num,.aih-panel--ink .aih-num{color:var(--on-ink)}
+
+/* a technology with no licence-clean mark: set in the label face, bordered, never a fake logo */
+.aih-mark{display:inline-flex;align-items:center;min-height:26px;padding:3px 10px;border:1px dashed var(--line-3);border-radius:var(--r-xs);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.06em;line-height:1.3;color:var(--txt);white-space:nowrap}
+.band--ink .aih-mark,.aih-panel--ink .aih-mark{border-color:var(--on-ink-line);color:var(--on-ink-2)}
+.aih-marks{display:flex;flex-wrap:wrap;gap:6px}
+@media (max-width:600px){.aih-mark{white-space:normal}}
+
+/* ---------- instrument panel -------------------------------------------- */
+.aih-panel{position:relative;display:flex;flex-direction:column;min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--aih-panel-r);box-shadow:var(--sh-2);overflow:hidden}
+.aih-panel--flat{box-shadow:none}
+.aih-panel--ink{--xt-accent:currentColor;background:var(--ink);border-color:var(--on-ink-line);color:var(--on-ink-2);box-shadow:none}
+.band--ink .aih-panel{--xt-accent:currentColor;background:var(--on-ink-card);border-color:var(--on-ink-line);color:var(--on-ink-2);box-shadow:none}
+
+.aih-panel__bar{display:flex;align-items:center;gap:10px 14px;min-height:46px;padding:9px 16px;border-bottom:1px solid var(--line-2);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;color:var(--muted)}
+.aih-panel--ink .aih-panel__bar,.band--ink .aih-panel .aih-panel__bar{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+.aih-panel__dots{display:inline-flex;gap:6px;flex:none}
+.aih-panel__dots i{width:8px;height:8px;border-radius:50%;background:var(--line-3)}
+.aih-panel--ink .aih-panel__dots i,.band--ink .aih-panel .aih-panel__dots i{background:var(--on-ink-line)}
+.aih-panel__title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink);text-transform:none;letter-spacing:.04em}
+.aih-panel--ink .aih-panel__title,.band--ink .aih-panel .aih-panel__title{color:var(--on-ink)}
+.aih-panel__title i{font-style:normal;color:var(--ghost);padding-inline:2px}
+.aih-panel--ink .aih-panel__title i,.band--ink .aih-panel .aih-panel__title i{color:var(--on-ink-3)}
+.aih-panel__sp{margin-left:auto}
+.aih-panel__ill{flex:none;padding:3px 8px;border:1px dashed var(--line-3);border-radius:var(--r-pill);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.aih-panel--ink .aih-panel__ill,.band--ink .aih-panel .aih-panel__ill{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+.aih-panel__live{display:inline-flex;align-items:center;gap:7px;flex:none;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.aih-panel__body{min-width:0;padding:clamp(18px,2.2vw,28px)}
+.aih-panel__body--flush{padding:0}
+.aih-panel__foot{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line-2)}
+.aih-panel--ink .aih-panel__foot,.band--ink .aih-panel .aih-panel__foot{border-color:var(--on-ink-line)}
+.aih-panel__foot>div{min-width:0;padding:14px 16px;border-left:1px solid var(--line-2)}
+.aih-panel--ink .aih-panel__foot>div,.band--ink .aih-panel .aih-panel__foot>div{border-color:var(--on-ink-line)}
+.aih-panel__foot>div:first-child{border-left:0}
+.aih-panel__foot dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.3}
+.aih-panel--ink .aih-panel__foot dt,.band--ink .aih-panel .aih-panel__foot dt{color:var(--on-ink-3)}
+.aih-panel__foot dd{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px;margin-top:6px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--muted)}
+.aih-panel--ink .aih-panel__foot dd,.band--ink .aih-panel .aih-panel__foot dd{color:var(--on-ink-3)}
+.aih-panel__foot dd b{font-size:clamp(1.0625rem,1.5vw,1.3125rem);font-weight:500;letter-spacing:-.035em;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.aih-panel--ink .aih-panel__foot dd b,.band--ink .aih-panel .aih-panel__foot dd b{color:var(--on-ink)}
+@media (max-width:760px){
+  .aih-panel__foot{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .aih-panel__foot>div:nth-child(odd){border-left:0}
+  .aih-panel__foot>div:nth-child(n+3){border-top:1px solid var(--line-2)}
+  .aih-panel--ink .aih-panel__foot>div:nth-child(n+3),.band--ink .aih-panel .aih-panel__foot>div:nth-child(n+3){border-top-color:var(--on-ink-line)}
+}
+@media (max-width:600px){.aih-panel__bar{flex-wrap:wrap}.aih-panel__sp{margin-left:0}}
+
+/* ---------- the card system --------------------------------------------- */
+.aih-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,264px),1fr));gap:var(--bdh-gap)}
+.aih-cards--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.aih-cards--2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:1023px){.aih-cards--3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:760px){.aih-cards--3,.aih-cards--2{grid-template-columns:minmax(0,1fr)}}
+
+.aih-card{position:relative;display:flex;flex-direction:column;gap:12px;min-width:0;padding:clamp(20px,2.2vw,28px);
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);
+  transition:border-color var(--d2) var(--e),box-shadow var(--d2) var(--e),transform var(--d2) var(--e)}
+.aih-card--lift:hover{transform:translateY(-2px);box-shadow:var(--sh-2);border-color:var(--line-3)}
+.band--ink .aih-card{--xt-accent:currentColor;background:var(--on-ink-card);border-color:var(--on-ink-line)}
+.aih-card--soft{background:var(--paper-2);border-color:transparent}
+.aih-card__rail{display:flex;align-items:center;gap:12px;min-height:var(--aih-rail)}
+.aih-card__ico{display:grid;place-items:center;flex:none;width:var(--aih-rail);height:var(--aih-rail);border-radius:9px;background:var(--blue-wash);color:var(--blue-d)}
+.band--ink .aih-card__ico{background:var(--on-ink-card);color:var(--on-ink);box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+.aih-card__n{margin-left:auto;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;line-height:1;color:var(--blue);font-variant-numeric:tabular-nums}
+.aih-card__t{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;line-height:1.25;letter-spacing:-.008em;color:var(--ink)}
+.band--ink .aih-card__t{color:var(--on-ink)}
+.aih-card__d{font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+.band--ink .aih-card__d{color:var(--on-ink-2)}
+.aih-card__f{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:auto;padding-top:4px}
+
+/* ---------- the gate chain ---------------------------------------------- */
+/* <ol class="aih-gates"><li class="aih-gate" data-state="pass"> … Connectors are drawn on the item, from
+   its own right edge to the next gate's left edge with a gap either side, so a line never crosses a box. */
+.aih-gates{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(var(--aih-gate),1fr);gap:0;min-width:0}
+.aih-gate{position:relative;display:flex;flex-direction:column;gap:8px;min-width:0;padding:14px 12px 14px 0}
+/* the connector starts 8px past this gate's dot and stops 8px short of the next one, so it never
+   crosses either box (brief §2, defect class 4) */
+.aih-gate:not(:last-child)::after{content:"";position:absolute;left:30px;top:25px;width:calc(100% - 38px);height:1px;background:var(--line);z-index:0}
+.aih-gate__dot{position:relative;z-index:1;display:grid;place-items:center;flex:none;width:22px;height:22px;border-radius:50%;
+  background:var(--paper);box-shadow:inset 0 0 0 1px var(--line-3);color:var(--faint);font-family:var(--f);font-size:var(--t-lbl);font-weight:500;line-height:1}
+.aih-gate__dot svg{width:12px;height:12px}
+.aih-gate__t{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.08em;text-transform:uppercase;line-height:1.35;color:var(--ink)}
+.aih-gate__v{font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+.aih-gate__s{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.aih-gate[data-state="pass"] .aih-gate__dot{background:var(--blue);box-shadow:none;color:var(--paper)}
+.aih-gate[data-state="pass"] .aih-gate__s{color:var(--blue-d)}
+.aih-gate[data-state="fail"] .aih-gate__dot{background:var(--ink);box-shadow:none;color:var(--paper)}
+.aih-gate[data-state="fail"] .aih-gate__t{color:var(--ink)}
+.aih-gate[data-state="fail"] .aih-gate__s{color:var(--ink)}
+.aih-gate[data-state="human"] .aih-gate__dot{background:var(--paper);box-shadow:inset 0 0 0 2px var(--blue);color:var(--blue-d)}
+/* held: the gate was never reached, because an earlier one stopped the run */
+.aih-gate[data-state="held"]{opacity:.5}
+.aih-gate[data-state="held"] .aih-gate__dot{background:transparent;box-shadow:inset 0 0 0 1px var(--line-3)}
+/* on ink */
+.band--ink .aih-gate:not(:last-child)::after,.aih-panel--ink .aih-gate:not(:last-child)::after{background:var(--on-ink-line)}
+.band--ink .aih-gate__dot,.aih-panel--ink .aih-gate__dot{background:var(--ink);box-shadow:inset 0 0 0 1px var(--on-ink-line);color:var(--on-ink-3)}
+.band--ink .aih-gate__t,.aih-panel--ink .aih-gate__t{color:var(--on-ink)}
+.band--ink .aih-gate__v,.aih-panel--ink .aih-gate__v{color:var(--on-ink-2)}
+.band--ink .aih-gate__s,.aih-panel--ink .aih-gate__s{color:var(--on-ink-3)}
+.band--ink .aih-gate[data-state="pass"] .aih-gate__dot,.aih-panel--ink .aih-gate[data-state="pass"] .aih-gate__dot{background:var(--blue);box-shadow:none;color:var(--on-ink)}
+.band--ink .aih-gate[data-state="pass"] .aih-gate__s,.aih-panel--ink .aih-gate[data-state="pass"] .aih-gate__s{color:var(--blue)}
+.band--ink .aih-gate[data-state="fail"] .aih-gate__dot,.aih-panel--ink .aih-gate[data-state="fail"] .aih-gate__dot{background:var(--on-ink);box-shadow:none;color:var(--ink)}
+.band--ink .aih-gate[data-state="fail"] .aih-gate__s,.aih-panel--ink .aih-gate[data-state="fail"] .aih-gate__s{color:var(--on-ink)}
+.band--ink .aih-gate[data-state="human"] .aih-gate__dot,.aih-panel--ink .aih-gate[data-state="human"] .aih-gate__dot{background:var(--ink);box-shadow:inset 0 0 0 2px var(--blue);color:var(--blue)}
+.band--ink .aih-gate[data-state="held"] .aih-gate__dot,.aih-panel--ink .aih-gate[data-state="held"] .aih-gate__dot{background:transparent;box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+/* queued: only while a script is stepping through (.is-run on the component root) */
+.is-run .aih-gate.is-wait{opacity:.42}
+.is-run .aih-gate.is-wait .aih-gate__s{color:var(--faint)}
+.is-run .aih-gate.is-at .aih-gate__dot{box-shadow:0 0 0 4px var(--blue-wash)}
+@media (max-width:860px){
+  .aih-gates{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:minmax(0,1fr)}
+  .aih-gate{flex-direction:row;align-items:flex-start;gap:12px;padding:12px 0 12px 0;border-top:1px solid var(--line-2);flex-wrap:wrap}
+  .aih-gate:first-child{border-top:0}
+  .band--ink .aih-gate,.aih-panel--ink .aih-gate{border-top-color:var(--on-ink-line)}
+  .aih-gate:not(:last-child)::after{display:none}
+  .aih-gate__t{flex:1 1 40%;min-width:0}
+  .aih-gate__s{flex:none;margin-left:auto}
+  .aih-gate__v{flex:1 1 100%;padding-left:34px}
+}
+
+/* ---------- the data-viz frame ------------------------------------------ */
+/* <div class="aih-plot"><div class="aih-plot__grid">…4 bands…</div><div class="aih-plot__cols">…</div></div> */
+.aih-plot{position:relative;min-width:0}
+.aih-plot__grid{position:absolute;inset:0;z-index:0;display:grid;grid-template-rows:repeat(var(--aih-bands,4),1fr);pointer-events:none}
+.aih-plot__grid i{border-top:1px solid var(--line-2)}
+.band--ink .aih-plot__grid i,.aih-panel--ink .aih-plot__grid i{border-top-color:var(--on-ink-line)}
+.aih-plot__rule{position:absolute;left:0;right:0;bottom:calc(var(--p,.5) * 100%);z-index:2;height:0;border-top:1px dashed var(--line-3);pointer-events:none}
+.band--ink .aih-plot__rule,.aih-panel--ink .aih-plot__rule{border-top-color:var(--on-ink-3)}
+.aih-plot__rule b{position:absolute;left:0;top:0;transform:translateY(-100%);padding:0 0 3px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.band--ink .aih-plot__rule b,.aih-panel--ink .aih-plot__rule b{color:var(--on-ink-3)}
+.aih-plot__cols{position:relative;z-index:1;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);align-items:end;gap:clamp(8px,1.4vw,20px);height:100%}
+.aih-bar{position:relative;display:block;width:100%;height:calc(var(--v,.5) * 100%);min-height:2px;border-radius:3px 3px 0 0;background:var(--blue-wash-2);box-shadow:inset 0 0 0 1px var(--blue-line)}
+.aih-bar--solid{background:var(--blue);box-shadow:none}
+.aih-bar--ghost{background:var(--paper-4);box-shadow:inset 0 0 0 1px var(--line)}
+.band--ink .aih-bar--ghost,.aih-panel--ink .aih-bar--ghost{background:var(--on-ink-card);box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+.aih-plot__ax{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:clamp(8px,1.4vw,20px);margin-top:10px;
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);text-align:center}
+.band--ink .aih-plot__ax,.aih-panel--ink .aih-plot__ax{color:var(--on-ink-3)}
+
+/* ---------- scorecard rows ---------------------------------------------- */
+.aih-score{display:flex;flex-direction:column}
+.aih-score__r{display:grid;grid-template-columns:minmax(120px,1.1fr) minmax(0,2fr) auto;align-items:center;gap:10px 16px;padding-block:12px;border-top:1px solid var(--line-2)}
+.aih-score__r:first-child{border-top:0}
+.band--ink .aih-score__r,.aih-panel--ink .aih-score__r{border-top-color:var(--on-ink-line)}
+.aih-score__n{min-width:0;font-size:var(--t-sm);line-height:1.4;color:var(--ink)}
+.band--ink .aih-score__n,.aih-panel--ink .aih-score__n{color:var(--on-ink)}
+.aih-score__n small{display:block;margin-top:3px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.band--ink .aih-score__n small,.aih-panel--ink .aih-score__n small{color:var(--on-ink-3)}
+/* the track carries the fill (i), the release threshold above it (span) and the version being
+   compared against below it (em). Both marks sit outside the bar so neither disappears into the fill. */
+.aih-meter{position:relative;min-width:0;height:8px;border-radius:var(--r-pill);background:var(--paper-4)}
+.band--ink .aih-meter,.aih-panel--ink .aih-meter{background:var(--on-ink-card)}
+.aih-meter i{position:absolute;inset:0 auto 0 0;width:calc(var(--v,.5) * 100%);border-radius:var(--r-pill);background:var(--blue)}
+.aih-meter i.is-under{background:var(--faint)}
+.band--ink .aih-meter i.is-under,.aih-panel--ink .aih-meter i.is-under{background:var(--on-ink-3)}
+.aih-meter span{position:absolute;left:calc(var(--t,.85) * 100%);bottom:calc(100% + 3px);width:1px;height:7px;background:var(--ink)}
+.band--ink .aih-meter span,.aih-panel--ink .aih-meter span{background:var(--on-ink)}
+.aih-meter em{position:absolute;left:calc(var(--p,0) * 100%);top:calc(100% + 3px);width:2px;height:6px;border-radius:1px;background:var(--faint)}
+.band--ink .aih-meter em,.aih-panel--ink .aih-meter em{background:var(--on-ink-3)}
+.aih-score__v{display:flex;align-items:baseline;gap:8px;justify-self:end;font-family:var(--f);font-size:var(--t-sm);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+.band--ink .aih-score__v,.aih-panel--ink .aih-score__v{color:var(--on-ink)}
+.aih-score__v small{font-size:var(--t-lbl);color:var(--faint)}
+.band--ink .aih-score__v small,.aih-panel--ink .aih-score__v small{color:var(--on-ink-3)}
+@media (max-width:600px){
+  .aih-score__r{grid-template-columns:minmax(0,1fr) auto}
+  .aih-meter{grid-column:1 / -1;order:3}
+}
+
+/* ---------- the stepper ------------------------------------------------- */
+.aih-steps{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:0;min-width:0}
+.aih-step{position:relative;display:flex;flex-direction:column;gap:10px;min-width:0;padding:26px 20px 0 0}
+/* the rail runs from just past this stage's dot to just short of the next one */
+.aih-step::before{content:"";position:absolute;left:17px;top:12px;width:calc(100% - 25px);height:1px;background:var(--line)}
+.aih-step:last-child::before{display:none}
+.band--ink .aih-step::before{background:var(--on-ink-line)}
+.aih-step::after{content:"";position:absolute;left:0;top:8px;width:9px;height:9px;border-radius:50%;background:var(--line-3)}
+.band--ink .aih-step::after{background:var(--on-ink-line)}
+.aih-step.is-on::after,.aih-step[aria-selected="true"]::after{background:var(--blue)}
+.aih-step__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;line-height:1;color:var(--blue);font-variant-numeric:tabular-nums}
+.aih-step__t{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;line-height:1.2;letter-spacing:-.01em;color:var(--ink)}
+.band--ink .aih-step__t{color:var(--on-ink)}
+.aih-step__d{font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+.band--ink .aih-step__d{color:var(--on-ink-2)}
+.aih-step__o{display:flex;flex-direction:column;gap:6px;margin-top:auto;padding-top:12px}
+.aih-step__o li{display:flex;gap:8px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;line-height:1.4;color:var(--txt)}
+.aih-step__o li::before{content:"\203A";color:var(--blue);flex:none}
+.band--ink .aih-step__o li{color:var(--on-ink-2)}
+@media (max-width:860px){
+  .aih-steps{grid-auto-flow:row;grid-auto-columns:auto}
+  .aih-step{padding:0 0 22px 24px}
+  .aih-step::before{left:4px;top:17px;bottom:9px;width:1px;height:auto}
+  .aih-step::after{left:0;top:4px}
+}
+
+/* ---------- record / log table ----------------------------------------- */
+.aih-ledger{width:100%;border-collapse:collapse;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.aih-ledger caption{text-align:left;padding-bottom:10px;font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.band--ink .aih-ledger caption{color:var(--on-ink-3)}
+.aih-ledger th,.aih-ledger td{padding:10px 14px 10px 0;text-align:left;vertical-align:top;line-height:1.45;border-bottom:1px solid var(--line-2)}
+.band--ink .aih-ledger th,.band--ink .aih-ledger td,.aih-panel--ink .aih-ledger th,.aih-panel--ink .aih-ledger td{border-bottom-color:var(--on-ink-line)}
+.aih-ledger thead th{font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.band--ink .aih-ledger thead th,.aih-panel--ink .aih-ledger thead th{color:var(--on-ink-3)}
+.aih-ledger tbody th{font-weight:500;color:var(--ink);white-space:nowrap}
+.band--ink .aih-ledger tbody th,.aih-panel--ink .aih-ledger tbody th{color:var(--on-ink)}
+.aih-ledger td{color:var(--txt)}
+.band--ink .aih-ledger td,.aih-panel--ink .aih-ledger td{color:var(--on-ink-2)}
+.aih-ledger tbody tr:last-child th,.aih-ledger tbody tr:last-child td{border-bottom:0}
+.aih-ledger b{font-weight:500;color:var(--blue-d)}
+.band--ink .aih-ledger b,.aih-panel--ink .aih-ledger b{color:var(--blue)}
+
+/* ---------- label → value rows ----------------------------------------- */
+.aih-rows{display:flex;flex-direction:column}
+.aih-rows>div{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;padding-block:11px;border-top:1px solid var(--line-2)}
+.aih-rows>div:first-child{border-top:0}
+.band--ink .aih-rows>div,.aih-panel--ink .aih-rows>div{border-top-color:var(--on-ink-line)}
+.aih-rows dt{font-size:var(--t-sm);line-height:1.45;color:var(--ink)}
+.band--ink .aih-rows dt,.aih-panel--ink .aih-rows dt{color:var(--on-ink)}
+.aih-rows dd{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;text-transform:uppercase;text-align:right;color:var(--faint);margin-left:auto}
+.band--ink .aih-rows dd,.aih-panel--ink .aih-rows dd{color:var(--on-ink-3)}
+
+/* ---------- small shared pieces ---------------------------------------- */
+.aih-note{display:flex;gap:10px;font-size:var(--t-xs);line-height:1.6;color:var(--faint)}
+.aih-note::before{content:"\203A";flex:none;color:var(--blue);font-family:var(--f)}
+.band--ink .aih-note{color:var(--on-ink-3)}
+.aih-caplink{display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:0 12px 0 10px;border:1px solid var(--line);border-radius:var(--r-pill);
+  font-size:var(--t-xs);font-weight:500;color:var(--ink);background:var(--paper);white-space:nowrap;max-width:100%;
+  transition:border-color var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.aih-caplink b{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;color:var(--blue)}
+.aih-caplink span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.aih-caplink i{font-family:var(--f);font-style:normal;color:var(--blue)}
+.aih-caplink:hover{border-color:var(--blue);color:var(--blue-d)}
+.band--ink .aih-caplink{background:var(--on-ink-card);border-color:var(--on-ink-line);color:var(--on-ink)}
+.band--ink .aih-caplink:hover{border-color:var(--blue)}
+.aih-caplinks{display:flex;flex-wrap:wrap;gap:6px}
+
+/* ---------- phone tap targets ------------------------------------------- */
+/* Every link and button this discipline authors gets a 44px hit area on a phone. The selectors are
+   enumerated rather than written as ".aih .tl", because a descendant selector from .aih would reach
+   into the shared services catalogue, which is never restyled from here. */
+@media (max-width:600px){
+  .aih-caplink{min-height:44px}
+  .aih-caps__cta,.aih-ev__side .tl,.aih-dv__cl,.aih-ln__l,.aih-ln__all .tl,.aih-fq__act .tl,.aih-hero__act .tl{min-height:44px}
+}
+
+/* NOTE on the shared services catalogue: every selector in this file and in assets/css/ai-design/*.css
+   is scoped to an .aih-* class, and none of them is a descendant selector reaching down from .aih or
+   .band, so nothing here can style .svc-*. The catalogue stays byte-identical to every other page. */

@@ -1,0 +1,30 @@
+/* Hub · process — the five-stage rail. Horizontal above 1023px, a vertical timeline below it. */
+.aih-pc__wrap{padding-top:clamp(20px,2.4vw,30px)}
+.aih-pc__steps{gap:0}
+.aih-pc__step{gap:9px;padding-right:clamp(16px,2vw,26px)}
+.aih-pc__step .aih-step__n{letter-spacing:.1em}
+.aih-pc__step .aih-step__d{font-size:var(--t-xs);line-height:1.6}
+.aih-pc__risk{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-3);font-size:var(--t-xs);line-height:1.55;color:var(--faint)}
+.aih-pc__lead{margin-top:12px;align-self:flex-start;max-width:100%}
+.aih-pc__lead b{letter-spacing:.1em;text-transform:uppercase}
+
+.aih-pc__foot{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,5fr) auto;align-items:start;
+  gap:20px clamp(24px,3vw,48px);margin-top:var(--bdh-block);padding-top:clamp(24px,2.6vw,36px);border-top:1px solid var(--line)}
+.aih-pc__ways{display:flex;flex-direction:column;gap:12px}
+.aih-pc__ways>li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.aih-pc__ways>li b{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);white-space:nowrap;padding-top:2px}
+.aih-pc__cta{justify-self:end}
+
+@media (max-width:1023px){
+  .aih-pc__steps{grid-auto-flow:row;grid-auto-columns:auto}
+  .aih-pc__step{padding:0 0 26px 26px}
+  .aih-pc__step::before{left:4px;top:17px;bottom:9px;width:1px;height:auto}
+  .aih-pc__step::after{left:0;top:4px}
+  .aih-pc__step .aih-step__d{font-size:var(--t-sm)}
+  .aih-pc__step .aih-step__o{margin-top:0}
+  .aih-pc__foot{grid-template-columns:minmax(0,1fr)}
+  .aih-pc__cta{justify-self:start}
+}
+@media (max-width:600px){
+  .aih-pc__ways>li{grid-template-columns:minmax(0,1fr);gap:4px}
+}

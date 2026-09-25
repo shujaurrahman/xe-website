@@ -1,0 +1,62 @@
+/* Hub · FAQ — a horizontal facts strip, then full-width accordion rows (core [data-acc]). */
+.cch-fq__act{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px}
+
+.cch-fq__facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  margin-bottom:clamp(28px,3vw,40px)}
+.cch-fq__facts>div{min-width:0;padding:18px 22px 20px;border-left:1px solid var(--line-2)}
+.cch-fq__facts>div:first-child{border-left:0;padding-left:0}
+.cch-fq__facts dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1}
+.cch-fq__facts dd{margin-top:10px;font-size:var(--t-sm);line-height:1.5;color:var(--ink)}
+
+.cch-fq__list{display:grid;gap:10px}
+.cch-fq__row{position:relative;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);
+  transition:border-color var(--d2) var(--e),box-shadow var(--d2) var(--e)}
+.cch-fq__row::before{content:"";position:absolute;left:-1px;top:18px;bottom:18px;width:2px;border-radius:2px;background:var(--blue);
+  transform:scaleY(0);transition:transform .35s var(--e)}
+.cch-fq__row:has([aria-expanded="true"]){border-color:var(--line-3);box-shadow:var(--sh-1)}
+.cch-fq__row:has([aria-expanded="true"])::before{transform:none}
+.cch-fq__hq{font:inherit;letter-spacing:0}
+.cch-fq__q{display:grid;grid-template-columns:52px minmax(0,1fr) 28px;align-items:center;gap:16px;width:100%;min-height:72px;
+  padding:18px 24px;text-align:left;border-radius:inherit}
+.cch-fq__q:focus-visible{outline-offset:-2px}
+.cch-fq__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.08em;color:var(--faint);transition:color var(--d1) var(--e-io)}
+.cch-fq__t{font-family:var(--f-h);font-size:1.125rem;font-weight:500;line-height:1.32;letter-spacing:-.01em;color:var(--ink)}
+.cch-fq__plus{position:relative;width:28px;height:28px;border-radius:50%;background:var(--paper-3);
+  transition:background var(--d2) var(--e),transform .35s var(--e)}
+.cch-fq__plus::before,.cch-fq__plus::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:1.5px;margin:-.75px 0 0 -5px;
+  background:var(--ink);transition:background var(--d2) var(--e)}
+.cch-fq__plus::after{transform:rotate(90deg)}
+.cch-fq__q:hover .cch-fq__plus{background:var(--paper-4)}
+.cch-fq__q[aria-expanded="true"] .cch-fq__n{color:var(--ink)}
+.cch-fq__q[aria-expanded="true"] .cch-fq__plus{background:var(--ink);transform:rotate(45deg)}
+.cch-fq__q[aria-expanded="true"] .cch-fq__plus::before,.cch-fq__q[aria-expanded="true"] .cch-fq__plus::after{background:var(--on-ink)}
+
+/* the first answer ships open; core.js takes the height over from aria-expanded="true" */
+.cch-fq__p{height:0;overflow:hidden;transition:height .45s var(--e)}
+.cch-fq__p.is-open{height:auto}
+.cch-fq__a{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px clamp(24px,4vw,64px);align-items:start;
+  padding:0 24px 24px 92px}
+.cch-fq__a>p:first-child{font-size:var(--t-body);line-height:1.7;color:var(--txt);max-width:62ch}
+.cch-fq__rel{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding-top:4px}
+.cch-fq__rel .cch-k{flex-basis:100%;margin-bottom:4px}
+
+@media (max-width:860px){
+  .cch-fq__facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cch-fq__facts>div:nth-child(3){border-left:0;padding-left:0}
+  .cch-fq__facts>div:nth-child(n+3){border-top:1px solid var(--line-2)}
+  .cch-fq__a{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:600px){
+  .cch-fq__facts{grid-template-columns:minmax(0,1fr)}
+  .cch-fq__facts>div{border-left:0;padding:16px 0}
+  .cch-fq__facts>div:nth-child(n+2){border-top:1px solid var(--line-2)}
+  .cch-fq__q{grid-template-columns:minmax(0,1fr) 28px;row-gap:6px;padding:16px 18px;min-height:64px}
+  .cch-fq__n{grid-column:1 / -1}
+  .cch-fq__plus{grid-column:2;grid-row:2}
+  .cch-fq__t{font-size:1rem}
+  .cch-fq__a{padding:0 18px 20px}
+  .cch-fq__a>p:first-child{font-size:var(--t-sm)}
+}
+@media (prefers-reduced-motion:reduce){
+  .cch-fq__p,.cch-fq__plus,.cch-fq__row,.cch-fq__row::before{transition:none}
+}

@@ -1,0 +1,75 @@
+/* Hub · stakes — the cost-of-change chart (four stages, bars in the markup at their heights) beside a
+   photograph, then the four failure modes as cards. Bars grow in once revealed; horizontal on phones. */
+.pxh-stakes__top{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:var(--bdh-gap-l);align-items:start}
+
+/* ---- the chart ---- */
+.pxh-stakes__chart{position:relative;display:flex;flex-direction:column;gap:18px}
+.pxh-stakes__cap{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 18px}
+.pxh-stakes__axis{color:var(--ghost)}
+/* the bracket sits over the first two columns of the grid below, so "this end" points at the right end */
+.pxh-stakes__zone{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:clamp(10px,1.4vw,20px)}
+.pxh-stakes__here{grid-column:1 / span 2;display:flex;align-items:center;gap:9px;padding-bottom:9px;
+  border-bottom:1px dashed var(--blue-line);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-d);line-height:1.2}
+.pxh-stakes__here::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--blue)}
+
+.pxh-stakes__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:clamp(10px,1.4vw,20px)}
+.pxh-stakes__col{display:flex;flex-direction:column;gap:12px;min-width:0}
+.pxh-stakes__track{position:relative;display:block;height:clamp(190px,21vw,290px);border-bottom:1px solid var(--line-3)}
+.pxh-stakes__fill{position:absolute;left:0;right:0;bottom:0;height:calc(var(--h,0) * 1%);border-radius:var(--r-xs) var(--r-xs) 0 0;
+  background:var(--blue-wash-2);box-shadow:inset 0 0 0 1px var(--blue-line);
+  transform:scaleY(0);transform-origin:center bottom;transition:transform .85s var(--e) calc(var(--i,0) * 110ms)}
+.pxh-stakes__fill::after{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--blue)}
+.is-in .pxh-stakes__fill{transform:none}
+.pxh-stakes__col:last-child .pxh-stakes__fill{background:var(--blue)}
+.pxh-stakes__col:last-child .pxh-stakes__fill::after{background:var(--ink)}
+.pxh-stakes__stage{display:flex;align-items:baseline;gap:8px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink);line-height:1.2}
+.pxh-stakes__stage b{font-weight:500;color:var(--blue);font-variant-numeric:tabular-nums}
+.pxh-stakes__cost{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.01em;line-height:1.2;color:var(--ink)}
+.pxh-stakes__what{font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+
+/* ---- the aside ---- */
+.pxh-stakes__aside{display:flex;flex-direction:column;gap:22px}
+.pxh-stakes__fig{display:flex;flex-direction:column;gap:12px}
+.pxh-stakes__fig .bdh-img{display:block}
+.pxh-stakes__fig img{object-position:52% 42%}
+.pxh-stakes__figcap{font-family:var(--f);font-size:var(--pxh-mono-s);letter-spacing:.08em;text-transform:uppercase;line-height:1.55;color:var(--faint)}
+
+/* ---- the four failure modes ---- */
+.pxh-stakes__modes{margin-top:var(--bdh-block)}
+.pxh-stakes__mk{margin-bottom:20px;padding-top:20px;border-top:1px solid var(--line)}
+.pxh-stakes__cards{grid-template-columns:repeat(4,minmax(0,1fr))}
+.pxh-stakes__card{background:var(--paper)}
+.pxh-stakes__tell{display:flex;flex-direction:column;gap:5px}
+.pxh-stakes__tell b{font-family:var(--f);font-size:var(--t-xs);font-weight:500;letter-spacing:.02em;color:var(--ink)}
+
+/* ---- responsive ---- */
+@media (max-width:1279px){
+  .pxh-stakes__cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:1023px){
+  .pxh-stakes__top{grid-template-columns:minmax(0,1fr);gap:var(--bdh-block)}
+  .pxh-stakes__aside{flex-direction:row;align-items:flex-start;gap:var(--bdh-gap-l)}
+  .pxh-stakes__fig{flex:0 0 clamp(180px,26vw,260px)}
+  .pxh-stakes__aside .pxh-note{flex:1 1 auto}
+}
+@media (max-width:759px){
+  /* the chart turns on its side: one row per stage, the bar growing from the left */
+  .pxh-stakes__zone{display:none}
+  .pxh-stakes__grid{grid-template-columns:minmax(0,1fr);row-gap:20px}
+  .pxh-stakes__col{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+  .pxh-stakes__track{order:2;height:10px;border-bottom:0;border-radius:var(--r-pill);background:var(--paper-4)}
+  .pxh-stakes__fill{top:0;right:auto;height:auto;width:calc(var(--h,0) * 1%);border-radius:var(--r-pill);
+    transform:scaleX(0);transform-origin:left center}
+  .pxh-stakes__fill::after{display:none}
+  .pxh-stakes__stage{order:1}
+  .pxh-stakes__cost{order:3}
+  .pxh-stakes__what{order:4}
+  .pxh-stakes__aside{flex-direction:column;gap:20px}
+  .pxh-stakes__fig{flex:none;max-width:320px}
+}
+@media (max-width:600px){
+  .pxh-stakes__cards{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){.pxh-stakes__fill{transform:none;transition:none}}

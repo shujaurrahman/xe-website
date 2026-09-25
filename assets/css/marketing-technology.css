@@ -1,0 +1,202 @@
+/* ==========================================================================
+   Marketing Technology hub — BASE LAYER (services/marketing-technology.php)
+   Loaded after assets/css/brand/hub.css (.bdh-*) and assets/css/tech/kit.css (.xt-*).
+   Only .mth-* primitives shared by several sections live here; each section styles itself in
+   assets/css/marketing-technology/<id>.css. Tokens from core.css :root only; no new colours;
+   no gradients except core .aurora/.dither and mask fades; no !important.
+
+   CONVENTIONS
+   • Root: <section class="band [band--alt|band--ink] mth-<id>" id="<id>" aria-labelledby="<id>-t">
+     > .wrap. Inner ids prefixed "<id>-"; a capability card's id is its bare slug, because every
+     capability on this page links to #<capability-slug>.
+   • Heads reuse .bdh-head / --row / --c. Cards reuse .bdh-card; mock software reuses .bdh-ui.
+   • THE FOUR IDIOMS the seven capability subpages reuse (see the report):
+       .mth-stage + .mth-node  a fixed-ratio diagram stage with absolutely placed nodes; the SVG
+                               under it carries the connectors, routed and trimmed by mth_edge()
+                               in partials/marketing-technology/_lib.php
+       .mth-card / .mth-card__* the capability card system (index, icon, name, kicker, body, foot)
+       .mth-steps              the stepper: phase, timing, body, outputs, with a drawn rail
+       .mth-spark / .mth-meter the data-viz idiom: sparkline against a target, and a bar
+   • .mth-k mono key label · .mth-note footnote · .mth-capl capability anchor chip ·
+     .mth-flag consent/state chip · .mth-kbd keyboard hint · .mth-on-ink a dark panel on paper.
+   • Fonts: var(--f-h) headings · var(--f) keys, figures, readouts · var(--f-b) reading text.
+     Blue never inside a heading.
+   • Motion: loops only under .is-live (BDH.live / BDH.loop / BDH.seq). Reduced motion = final state.
+     The shipped HTML is always the finished state; JavaScript only animates it.
+   ========================================================================== */
+
+.mth{
+  --mth-bleed:max(var(--gutter),calc((100vw - var(--wrap)) / 2));   /* .wrap edge → viewport edge */
+  --mth-mono-s:.625rem;
+  --mth-node-r:12px;
+}
+
+/* ---------- keys, notes, hints --------------------------------------------- */
+.mth-k{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;line-height:1.3;color:var(--faint)}
+.band--ink .mth-k,.mth-on-ink .mth-k{color:var(--on-ink-3)}
+.mth-k--blue{color:var(--blue-d)}
+.mth-note{font-size:var(--t-xs);line-height:1.55;color:var(--muted);max-width:74ch}
+.mth-note b{font-weight:500;color:var(--ink)}
+.band--ink .mth-note{color:var(--on-ink-3)}
+.band--ink .mth-note b{color:var(--on-ink-2)}
+.mth-ro{font-family:var(--f);font-size:var(--mth-mono-s);letter-spacing:.02em;line-height:1.5;font-variant-numeric:tabular-nums}
+.mth-kbd{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:5px;border:1px solid var(--line-3);
+  font-family:var(--f);font-size:var(--mth-mono-s);color:var(--muted);line-height:1}
+.band--ink .mth-kbd,.mth-on-ink .mth-kbd{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+.mth-hint{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:10px;font-family:var(--f);font-size:var(--mth-mono-s);letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.band--ink .mth-hint{color:var(--on-ink-3)}
+.mth-live{display:inline-flex;align-items:center;gap:8px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.band--ink .mth-live,.mth-on-ink .mth-live{color:var(--on-ink-2)}
+
+/* a dark panel sitting on a paper band (the kit's .xt-on-ink handles the .xt-* pieces inside) */
+.mth-on-ink{background:var(--ink);color:var(--on-ink-2);border-color:var(--on-ink-line)}
+.mth-on-ink :is(h3,h4,b){color:var(--on-ink)}
+
+/* ---------- capability anchor chip ----------------------------------------- */
+/* <a class="mth-capl" href="#ai-lead-generation"><b>05</b>Lead Gen<i>›</i></a> */
+.mth-capl{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 12px 0 6px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--paper);
+  font-size:var(--t-xs);font-weight:500;line-height:1.25;color:var(--ink);white-space:nowrap;
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.mth-capl b{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 6px;border-radius:var(--r-pill);background:var(--paper-3);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.04em;color:var(--blue-d)}
+.mth-capl i{font-family:var(--f);font-style:normal;color:var(--blue);transition:transform var(--d2) var(--e)}
+.mth-capl:hover,.mth-capl:focus-visible{border-color:var(--blue-line);background:var(--blue-wash)}
+.mth-capl:hover i,.mth-capl:focus-visible i{transform:translateX(3px)}
+.band--ink .mth-capl,.mth-on-ink .mth-capl{background:var(--on-ink-card);border-color:var(--on-ink-line);color:var(--on-ink)}
+.band--ink .mth-capl b,.mth-on-ink .mth-capl b{background:rgba(255,255,255,.08);color:var(--on-ink)}
+.band--ink .mth-capl:hover,.band--ink .mth-capl:focus-visible,.mth-on-ink .mth-capl:hover{border-color:var(--blue);background:rgba(255,255,255,.1)}
+.mth-capls{display:flex;flex-wrap:wrap;gap:6px}
+@media (max-width:600px){.mth-capl{white-space:normal;padding-block:5px}}
+
+/* ---------- state chip (consent, gates, results) --------------------------- */
+.mth-flag{display:inline-flex;align-items:center;gap:6px;min-height:22px;padding:2px 9px;border-radius:var(--r-pill);background:var(--paper-3);
+  font-family:var(--f);font-size:var(--mth-mono-s);font-weight:500;letter-spacing:.08em;text-transform:uppercase;line-height:1.4;color:var(--muted);white-space:nowrap}
+.mth-flag::before{content:"";width:6px;height:6px;flex:none;border-radius:50%;background:var(--faint)}
+.mth-flag--on{background:var(--blue-wash);color:var(--blue-d)}
+.mth-flag--on::before{background:var(--blue)}
+.mth-flag--off{background:var(--paper-4);color:var(--ink)}
+.mth-flag--off::before{background:var(--ink);border-radius:1px}
+.mth-flag--wait{background:transparent;box-shadow:inset 0 0 0 1px var(--line-3)}
+.mth-flag--wait::before{background:transparent;box-shadow:inset 0 0 0 1.5px var(--line-3)}
+.band--ink .mth-flag,.mth-on-ink .mth-flag{background:var(--on-ink-card);color:var(--on-ink-2)}
+.band--ink .mth-flag::before,.mth-on-ink .mth-flag::before{background:var(--on-ink-3)}
+.band--ink .mth-flag--on,.mth-on-ink .mth-flag--on{background:rgba(0,130,251,.18);color:var(--on-ink)}
+.band--ink .mth-flag--on::before,.mth-on-ink .mth-flag--on::before{background:var(--blue)}
+.band--ink .mth-flag--off,.mth-on-ink .mth-flag--off{background:rgba(255,255,255,.1);color:var(--on-ink)}
+.band--ink .mth-flag--off::before,.mth-on-ink .mth-flag--off::before{background:var(--on-ink);border-radius:1px}
+.band--ink .mth-flag--wait,.mth-on-ink .mth-flag--wait{background:transparent;box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+
+/* ---------- IDIOM 1 · diagram stage + nodes -------------------------------- */
+/* <div class="mth-stage" style="--ar:1000/420"><svg viewBox="0 0 1000 420">…connectors…</svg>
+     <span class="mth-node" style="--x:12.5;--y:14;--w:22">…</span> … </div>
+   --x / --y are percentages of the stage, --w the node width in percent. The SVG holds only the
+   connectors, each routed by mth_edge() so it stops at the box edge instead of the box centre. */
+.mth-stage{position:relative;width:100%;aspect-ratio:var(--ar,1000 / 420)}
+.mth-stage>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.mth-edge{fill:none;stroke:var(--line-3);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.band--ink .mth-edge,.mth-on-ink .mth-edge{stroke:var(--on-ink-line)}
+.mth-edge--soft{stroke-dasharray:4 5}
+.mth-edge--live{stroke:var(--blue);stroke-width:1.8}
+.mth-pk{fill:none;stroke:var(--blue);stroke-width:3;stroke-linecap:round;stroke-dasharray:.045 .955;stroke-dashoffset:0;opacity:0}
+
+.mth-node{position:absolute;left:calc(var(--x) * 1%);top:calc(var(--y) * 1%);width:calc(var(--w,20) * 1%);translate:-50% -50%;z-index:2;
+  display:flex;flex-direction:column;gap:3px;padding:9px 11px;border-radius:var(--mth-node-r);
+  border:1px solid var(--line-3);background:var(--paper);box-shadow:var(--sh-1);text-align:left;
+  transition:border-color var(--d2) var(--e),background var(--d2) var(--e),box-shadow var(--d2) var(--e),opacity var(--d2) var(--e)}
+.mth-node__t{display:flex;align-items:center;gap:6px;font-size:var(--t-xs);font-weight:500;line-height:1.25;color:var(--ink)}
+.mth-node__t b{font-family:var(--f);font-size:var(--mth-mono-s);font-weight:500;letter-spacing:.06em;color:var(--blue-d)}
+.mth-node__s{font-family:var(--f);font-size:var(--mth-mono-s);letter-spacing:.02em;line-height:1.4;color:var(--faint)}
+.mth-node--dim{opacity:.4}
+.mth-node--on{border-color:var(--blue);box-shadow:0 0 0 4px var(--blue-wash),var(--sh-1)}
+.mth-node--gate{border-style:dashed}
+.mth-node.is-hit{border-color:var(--blue);background:var(--blue-wash)}
+.mth-on-ink .mth-node,.band--ink .mth-node{background:var(--ink-2);border-color:var(--on-ink-line);box-shadow:none}
+.mth-on-ink .mth-node__t,.band--ink .mth-node__t{color:var(--on-ink)}
+.mth-on-ink .mth-node__t b,.band--ink .mth-node__t b{color:var(--blue)}
+.mth-on-ink .mth-node__s,.band--ink .mth-node__s{color:var(--on-ink-3)}
+.mth-on-ink .mth-node--on,.band--ink .mth-node--on{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,130,251,.16)}
+.mth-on-ink .mth-node.is-hit,.band--ink .mth-node.is-hit{background:rgba(0,130,251,.18)}
+
+/* ---------- IDIOM 2 · the capability card system --------------------------- */
+.mth-card{position:relative;display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);
+  scroll-margin-top:calc(var(--nav-h) + 32px);overflow:hidden}
+.mth-card__top{display:flex;align-items:flex-start;gap:clamp(14px,1.4vw,20px);padding:clamp(22px,2.4vw,32px) clamp(22px,2.6vw,36px) 0}
+.mth-card__ico{display:grid;place-items:center;width:44px;height:44px;flex:none;border-radius:var(--r);background:var(--blue-wash);color:var(--ink)}
+.mth-card__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;line-height:1;color:var(--blue);font-variant-numeric:tabular-nums}
+.mth-card__t{margin-top:9px;font-family:var(--f-h);font-size:clamp(1.25rem,1.7vw,1.5rem);font-weight:500;letter-spacing:-.018em;line-height:1.16;color:var(--ink)}
+.mth-card__kick{margin-top:6px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.mth-card__body{padding:clamp(18px,2vw,26px) clamp(22px,2.6vw,36px) clamp(22px,2.4vw,32px)}
+.mth-card__foot{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;padding:18px clamp(22px,2.6vw,36px);border-top:1px solid var(--line-2);background:var(--paper-2)}
+.mth-card__foot .btn{margin-left:auto}
+@media (max-width:600px){
+  .mth-card__ico{width:38px;height:38px}
+  .mth-card__foot .btn{margin-left:0;width:100%}
+}
+
+/* ---------- IDIOM 3 · the stepper ------------------------------------------ */
+/* <ol class="mth-steps"><li class="mth-step"><p class="mth-step__h">…  — a drawn rail joins the dots. */
+.mth-steps{display:grid;grid-template-columns:repeat(var(--cols,4),minmax(0,1fr));gap:var(--bdh-gap)}
+.mth-step{position:relative;padding-top:26px;min-width:0}
+.mth-step::before{content:"";position:absolute;left:0;right:calc(var(--bdh-gap) * -1);top:5px;height:1px;background:var(--line)}
+.mth-step:last-child::before{right:0}
+.mth-step::after{content:"";position:absolute;left:0;top:1px;width:9px;height:9px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 1.5px var(--blue)}
+.mth-step.is-on::after{background:var(--blue);box-shadow:0 0 0 4px var(--blue-wash)}
+.mth-step__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;color:var(--blue);font-variant-numeric:tabular-nums}
+.mth-step__t{margin-top:8px;font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.01em;line-height:1.24;color:var(--ink)}
+.mth-step__w{margin-top:5px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.mth-step__d{margin-top:10px;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+.mth-step__o{margin-top:12px;display:flex;flex-direction:column;gap:5px}
+.mth-step__o span{position:relative;padding-left:15px;font-family:var(--f);font-size:var(--mth-mono-s);letter-spacing:.04em;line-height:1.5;color:var(--txt)}
+.mth-step__o span::before{content:"\203A";position:absolute;left:0;top:0;color:var(--blue)}
+.band--ink .mth-step::before{background:var(--on-ink-line)}
+.band--ink .mth-step::after{background:var(--ink)}
+.band--ink .mth-step__t{color:var(--on-ink)}
+.band--ink .mth-step__d{color:var(--on-ink-2)}
+.band--ink .mth-step__o span{color:var(--on-ink-2)}
+.band--ink .mth-step__w{color:var(--on-ink-3)}
+@media (max-width:1023px){.mth-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){
+  .mth-steps{grid-template-columns:minmax(0,1fr);gap:0}
+  .mth-step{padding:22px 0 22px 22px}
+  .mth-step::before{left:4px;right:auto;top:0;bottom:0;width:1px;height:auto}
+  .mth-step:last-child::before{bottom:auto;height:26px}
+  .mth-step::after{left:0;top:26px}
+}
+
+/* ---------- IDIOM 4 · sparkline + meter ------------------------------------ */
+.mth-spark{display:block;width:100%;height:auto;overflow:visible}
+.mth-spark__grid{fill:none;stroke:var(--line-2);stroke-width:1}
+.mth-spark__target{fill:none;stroke:var(--line-3);stroke-width:1;stroke-dasharray:3 4}
+.mth-spark__line{fill:none;stroke:var(--blue);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mth-spark__dot{fill:var(--blue)}
+.mth-spark__base{fill:none;stroke:var(--faint);stroke-width:1.4;stroke-dasharray:2 4}
+.band--ink .mth-spark__grid{stroke:rgba(255,255,255,.08)}
+.band--ink .mth-spark__target{stroke:var(--on-ink-line)}
+.band--ink .mth-spark__base{stroke:var(--on-ink-3)}
+
+.mth-meter{position:relative;height:6px;border-radius:var(--r-pill);background:var(--paper-4);overflow:hidden}
+.mth-meter>i{position:absolute;inset:0 auto 0 0;width:calc(var(--v,0) * 1%);border-radius:var(--r-pill);background:var(--blue);transform-origin:left center}
+.band--ink .mth-meter,.mth-on-ink .mth-meter{background:rgba(255,255,255,.12)}
+
+/* ---------- shared list of item + format ----------------------------------- */
+.mth-rows{display:grid;gap:0}
+.mth-rows>li{display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding-block:12px;border-top:1px solid var(--line-2);
+  font-size:var(--t-sm);line-height:1.45;color:var(--ink)}
+.mth-rows>li:last-child{border-bottom:1px solid var(--line-2)}
+.mth-rows small{flex:none;font-family:var(--f);font-size:var(--mth-mono-s);letter-spacing:.06em;text-transform:uppercase;text-align:right;color:var(--faint)}
+.band--ink .mth-rows>li{border-color:var(--on-ink-line);color:var(--on-ink)}
+.band--ink .mth-rows small{color:var(--on-ink-3)}
+
+/* ---------- terminal-style log --------------------------------------------- */
+.mth-log{display:flex;flex-direction:column;gap:4px;font-family:var(--f);font-size:var(--mth-mono-s);line-height:1.6;letter-spacing:.01em}
+.mth-log>li{display:flex;align-items:baseline;gap:9px;min-width:0}
+.mth-log>li>b{flex:none;min-width:62px;font-weight:500;color:var(--blue)}
+.mth-log>li>span{min-width:0;color:var(--on-ink-2);overflow-wrap:anywhere}
+.mth-on-ink .mth-log>li>span,.band--ink .mth-log>li>span{color:var(--on-ink-2)}
+
+/* ---------- the one-copy mark sprite the shell writes at the top of <main> -- */
+.mth-sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+@media (prefers-reduced-motion:reduce){
+  .mth-node,.mth-capl,.mth-capl i,.mth-meter>i{transition:none}
+}

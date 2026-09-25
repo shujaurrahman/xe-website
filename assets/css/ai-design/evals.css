@@ -1,0 +1,40 @@
+/* Hub · evals — three scorecards behind an ARIA tablist, with the release rule beside them. */
+.aih-ev__grid{align-items:start}
+.aih-ev__main{display:flex;flex-direction:column;gap:18px;min-width:0}
+.aih-ev__tabs{gap:4px}
+.aih-ev__tab{gap:10px;min-height:44px;padding:0 16px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--line)}
+.aih-ev__tab b{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;color:var(--blue);font-variant-numeric:tabular-nums}
+.aih-ev__tab[aria-selected="true"]{background:var(--ink);color:var(--on-ink);box-shadow:none}
+.aih-ev__tab[aria-selected="true"] b{color:var(--blue)}
+.aih-ev__panes{min-width:0}
+.aih-ev__pane{min-width:0}
+.aih-ev__pane:focus-visible{outline:2px solid var(--blue);outline-offset:6px;border-radius:var(--r-lg)}
+.aih-ev__card{background:var(--paper)}
+
+.aih-ev__legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-bottom:16px;
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.aih-ev__legend span{display:inline-flex;align-items:center;gap:8px}
+.aih-ev__lk{flex:none;width:16px;height:8px;border-radius:var(--r-pill)}
+.aih-ev__lk--cand{background:var(--blue)}
+.aih-ev__lk--prev{width:2px;height:10px;border-radius:1px;background:var(--faint)}
+.aih-ev__lk--th{width:1px;height:14px;border-radius:0;background:var(--ink)}
+
+.aih-ev__score .aih-score__r{grid-template-columns:minmax(150px,1.5fr) minmax(0,2fr) auto}
+.aih-ev__verdict{display:flex;flex-direction:column;gap:7px;padding:16px clamp(18px,2.2vw,28px);border-top:1px solid var(--line-2);
+  background:var(--paper-3);font-size:var(--t-sm);line-height:1.65;color:var(--txt)}
+
+.aih-ev__side{display:flex;flex-direction:column;align-items:flex-start;gap:16px;min-width:0}
+.aih-ev__sh{font-family:var(--f-h);font-size:clamp(1.125rem,1.5vw,1.375rem);font-weight:500;line-height:1.2;letter-spacing:-.018em;color:var(--ink)}
+.aih-ev__rules{display:flex;flex-direction:column;width:100%}
+.aih-ev__rules>div{padding-block:13px;border-top:1px solid var(--line)}
+.aih-ev__rules>div:first-child{border-top:0;padding-top:0}
+.aih-ev__rules dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.aih-ev__rules dd{margin-top:6px;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+
+@media (max-width:860px){
+  .aih-ev__tab{flex:1 1 11rem;justify-content:flex-start}
+}
+@media (max-width:600px){
+  .aih-ev__legend{gap:6px 16px}
+  .aih-ev__score .aih-score__r{grid-template-columns:minmax(0,1fr) auto}
+}

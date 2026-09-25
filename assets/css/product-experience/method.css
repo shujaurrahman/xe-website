@@ -1,0 +1,73 @@
+/* Hub · method — the four gates on ink. A schematic of one gate, then the four real ones as columns
+   with a rail that fills in order. Every rail is filled in the shipped markup; the marker is an extra. */
+.pxh-method__schema{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--bdh-gap-l);align-items:center;
+  padding-bottom:var(--bdh-block);border-bottom:1px solid var(--on-ink-line)}
+.pxh-method__dia{min-width:0;padding:clamp(16px,2vw,26px);border:1px solid var(--on-ink-line);border-radius:var(--r-lg);
+  background:var(--on-ink-card)}
+.pxh-method__dia svg{display:block;width:100%;height:auto;aspect-ratio:640 / 190}
+.pxh-method__dk{margin-bottom:14px}
+.pxh-method__box rect{fill:var(--on-ink-card);stroke:var(--on-ink-line);stroke-width:1.2}
+.pxh-method__box rect.is-gate{fill:var(--ink);stroke:var(--blue);stroke-width:1.4}
+.pxh-method__tx text{font-family:var(--f-b);font-size:13px;fill:var(--on-ink)}
+.pxh-method__tx text.is-k{font-family:var(--f);font-size:8.5px;letter-spacing:1.2px;fill:var(--on-ink-3)}
+.pxh-method__tx text.is-blue{fill:var(--blue)}
+.pxh-method__snote{max-width:44ch}
+
+/* ---- the four gates ---- */
+.pxh-method__gates{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--bdh-gap);row-gap:var(--bdh-gap);
+  margin-top:var(--bdh-block)}
+.pxh-method__gate{position:relative;display:flex;flex-direction:column;gap:14px;min-width:0;padding-top:24px;
+  border-top:2px solid var(--on-ink-line);transition:border-color var(--d2) var(--e)}
+.pxh-method__gate::before{content:"";position:absolute;left:0;top:-2px;width:100%;height:2px;background:var(--blue);
+  transform:scaleX(0);transform-origin:left center;transition:transform .8s var(--e) calc(var(--i,0) * 170ms)}
+.is-in .pxh-method__gate::before{transform:none}
+.pxh-method__gate::after{content:"";position:absolute;left:0;top:-5px;width:8px;height:8px;border-radius:50%;background:var(--blue);
+  opacity:0;transition:opacity .3s var(--e),transform .4s var(--e)}
+.pxh-method__gate.is-at::after{opacity:1}
+.pxh-method__gate.is-at{border-top-color:var(--blue)}
+
+.pxh-method__gh{display:flex;align-items:baseline;gap:10px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;line-height:1}
+.pxh-method__gn{color:var(--blue);font-variant-numeric:tabular-nums}
+.pxh-method__gname{color:var(--on-ink-2)}
+.pxh-method__gq{font-family:var(--f-h);font-size:1.125rem;font-weight:500;letter-spacing:-.012em;line-height:1.25;color:var(--on-ink);max-width:22ch}
+
+.pxh-method__rows{display:grid;margin-top:2px;border-top:1px solid var(--on-ink-line)}
+.pxh-method__rows>div{display:flex;flex-direction:column;gap:6px;padding:13px 0;border-bottom:1px solid var(--on-ink-line)}
+.pxh-method__rows dt{font-family:var(--f);font-size:var(--pxh-mono-s);letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3);line-height:1}
+.pxh-method__rows dd{font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-2)}
+
+.pxh-method__fail{display:flex;flex-direction:column;gap:7px;margin-top:auto;padding:14px;border-radius:var(--r-sm);
+  background:var(--on-ink-card);box-shadow:inset 0 0 0 1px var(--on-ink-line);
+  font-size:var(--t-sm);line-height:1.55;color:var(--on-ink-2)}
+.pxh-method__fail .pxh-k{color:var(--blue)}
+.pxh-method__who{display:flex;flex-wrap:wrap;gap:6px;padding-top:6px}
+
+/* ---- the handoff ---- */
+.pxh-method__hand{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;align-items:center;column-gap:clamp(16px,2vw,28px);row-gap:12px;
+  margin-top:var(--bdh-block);padding-top:clamp(22px,2.4vw,30px);border-top:1px solid var(--on-ink-line)}
+.pxh-method__hb{display:inline-flex;align-items:center;height:34px;padding:0 16px;border-radius:var(--r-pill);background:var(--blue);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink);line-height:1}
+.pxh-method__hd{font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-2);max-width:62ch}
+.pxh-method__hl{white-space:nowrap}
+
+/* ---- responsive ---- */
+@media (max-width:1279px){
+  .pxh-method__gates{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:var(--bdh-block)}
+  .pxh-method__gq{max-width:26ch}
+}
+@media (max-width:1023px){
+  .pxh-method__schema{grid-template-columns:minmax(0,1fr);gap:var(--bdh-gap-l);align-items:start}
+  .pxh-method__snote{max-width:64ch}
+  .pxh-method__hand{grid-template-columns:minmax(0,1fr);align-items:flex-start}
+}
+@media (max-width:760px){
+  /* the schematic carries labels: on phones it scrolls sideways rather than shrinking them away */
+  .pxh-method__dia svg{width:560px;flex:none}
+}
+@media (max-width:600px){
+  .pxh-method__gates{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  .pxh-method__gate,.pxh-method__gate::before,.pxh-method__gate::after{transition:none}
+}

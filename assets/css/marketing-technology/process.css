@@ -1,0 +1,54 @@
+/* Hub · process — the five-phase spine, then each capability's own four phases behind a tablist. */
+.mth-pro__spine{position:relative;display:grid;gap:0;--mth-pro-pad:clamp(22px,2.4vw,32px)}
+.mth-pro__ph{position:relative;display:grid;grid-template-columns:minmax(150px,200px) minmax(0,1.5fr) minmax(0,1fr) minmax(0,1.25fr);
+  column-gap:clamp(20px,2.6vw,44px);row-gap:16px;padding:var(--mth-pro-pad) 0 var(--mth-pro-pad) clamp(26px,2.6vw,38px);border-top:1px solid var(--line)}
+.mth-pro__ph:last-child{border-bottom:1px solid var(--line)}
+/* the rail and its dot, drawn so the line never crosses a dot */
+.mth-pro__ph::before{content:"";position:absolute;left:4px;top:0;bottom:0;width:1px;background:var(--line)}
+.mth-pro__ph:first-child::before{top:calc(var(--mth-pro-pad) + 7px)}
+.mth-pro__ph:last-child::before{bottom:auto;height:calc(var(--mth-pro-pad) + 7px)}
+.mth-pro__ph::after{content:"";position:absolute;left:0;top:calc(var(--mth-pro-pad) + 2px);width:9px;height:9px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 1.5px var(--line-3)}
+.mth-pro__ph.is-on::after{background:var(--blue);box-shadow:0 0 0 4px var(--blue-wash)}
+
+.mth-pro__lead{min-width:0}
+.mth-pro__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;color:var(--blue);font-variant-numeric:tabular-nums}
+.mth-pro__t{margin-top:8px;font-family:var(--f-h);font-size:clamp(1.125rem,1.5vw,1.375rem);font-weight:500;letter-spacing:-.018em;line-height:1.15;color:var(--ink)}
+.mth-pro__w{margin-top:7px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.mth-pro__d{font-size:var(--t-sm);line-height:1.62;color:var(--txt)}
+.mth-pro__out .mth-k,.mth-pro__gate .mth-k{margin-bottom:10px}
+.mth-pro__gate{display:grid;gap:0;padding-left:clamp(16px,1.8vw,24px);border-left:1px solid var(--line-2)}
+.mth-pro__gt{margin-bottom:16px;font-size:var(--t-sm);line-height:1.55;color:var(--ink)}
+.mth-pro__you{font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+
+/* ---- each capability's own four ---- */
+.mth-pro__caps{margin-top:clamp(44px,4.4vw,72px)}
+.mth-pro__ch{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:20px clamp(24px,3vw,48px);align-items:end;margin-bottom:clamp(26px,2.6vw,36px)}
+.mth-pro__cht{margin-top:10px;font-family:var(--f-h);font-size:clamp(1.125rem,1.6vw,1.5rem);font-weight:500;letter-spacing:-.02em;line-height:1.14;color:var(--ink)}
+.mth-pro__tabs{justify-content:flex-start}
+.mth-pro__tab{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--paper);
+  font-size:var(--t-xs);font-weight:500;color:var(--muted);white-space:nowrap;
+  transition:border-color var(--d1) var(--e-io),color var(--d1) var(--e-io),background var(--d1) var(--e-io)}
+.mth-pro__tab b{font-family:var(--f);font-size:var(--mth-mono-s);font-weight:500;letter-spacing:.06em;color:var(--faint)}
+.mth-pro__tab:hover{border-color:var(--line-3);color:var(--ink)}
+.mth-pro__tab[aria-selected="true"]{border-color:var(--blue);background:var(--blue-wash);color:var(--blue-d)}
+.mth-pro__tab[aria-selected="true"] b{color:var(--blue-d)}
+
+.mth-pro__pane{min-width:0;padding:clamp(22px,2.4vw,34px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper-2)}
+.mth-pro__pane:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.mth-pro__ph2{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px clamp(24px,3vw,48px);padding-bottom:clamp(20px,2vw,28px);margin-bottom:clamp(22px,2.2vw,30px);border-bottom:1px solid var(--line)}
+.mth-pro__pt{font-family:var(--f-h);font-size:clamp(1.0625rem,1.5vw,1.375rem);font-weight:500;letter-spacing:-.02em;line-height:1.16;color:var(--ink);max-width:26ch}
+.mth-pro__pl{flex:1 1 320px;font-size:var(--t-sm);line-height:1.6;color:var(--muted);max-width:60ch}
+
+@media (max-width:1100px){
+  .mth-pro__ph{grid-template-columns:minmax(140px,180px) minmax(0,1fr)}
+  .mth-pro__out{grid-column:2}
+  .mth-pro__gate{grid-column:2;padding-left:0;border-left:0;padding-top:16px;border-top:1px solid var(--line-2)}
+  .mth-pro__ch{grid-template-columns:minmax(0,1fr);align-items:start}
+}
+@media (max-width:620px){
+  .mth-pro__ph{grid-template-columns:minmax(0,1fr)}
+  .mth-pro__out,.mth-pro__gate{grid-column:1}
+}
+@media (prefers-reduced-motion:reduce){
+  .mth-pro__tab{transition:none}
+}

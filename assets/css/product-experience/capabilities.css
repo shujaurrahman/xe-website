@@ -1,0 +1,55 @@
+/* Hub · capabilities — the index of the five, as full-width rows. Each row is the anchor target for
+   that capability (#<slug>), because the five subpages do not exist yet. */
+.pxh-caps{border-top:1px solid var(--line-2)}
+.pxh-caps__list{border-top:1px solid var(--line)}
+.pxh-caps__row{position:relative;display:grid;grid-template-columns:minmax(0,3fr) minmax(0,5fr) minmax(0,4fr);
+  column-gap:var(--bdh-gap);row-gap:22px;padding:clamp(26px,3vw,40px) 0;border-bottom:1px solid var(--line)}
+.pxh-caps__row::before{content:"";position:absolute;left:0;right:0;top:-1px;height:2px;background:var(--blue);
+  transform:scaleX(0);transform-origin:left center;transition:transform var(--d3) var(--e)}
+.pxh-caps__row:target::before,.pxh-caps__row:focus-within::before{transform:none}
+.pxh-caps__row:target{scroll-margin-top:calc(var(--nav-h) + 32px)}
+
+.pxh-caps__id{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:14px;row-gap:0;align-content:start;min-width:0}
+.pxh-caps__n{grid-row:1;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;line-height:1;color:var(--blue);font-variant-numeric:tabular-nums}
+.pxh-caps__ico{grid-row:1;grid-column:1;display:none}
+.pxh-caps__kick{grid-column:2;grid-row:1;color:var(--faint)}
+.pxh-caps__t{grid-column:1 / -1;margin-top:16px;font-family:var(--f-h);font-size:clamp(1.25rem,1.7vw,1.5rem);font-weight:500;letter-spacing:-.02em;line-height:1.15;color:var(--ink)}
+.pxh-caps__line{grid-column:1 / -1;margin-top:12px;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+.pxh-caps__oc{grid-column:1 / -1;display:flex;flex-direction:column;gap:7px;margin-top:22px;padding-top:16px;border-top:1px dashed var(--line)}
+.pxh-caps__oc b{font-family:var(--f-h);font-size:1rem;font-weight:500;letter-spacing:-.006em;line-height:1.25;color:var(--ink)}
+.pxh-caps__oc>span:last-child{font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+
+.pxh-caps__body{display:flex;flex-direction:column;gap:20px;min-width:0}
+.pxh-caps__lead{font-size:var(--t-body);line-height:1.7;color:var(--txt)}
+.pxh-caps__del{display:flex;flex-direction:column;gap:10px;padding-top:16px;border-top:1px dashed var(--line)}
+.pxh-caps__del ul{display:flex;flex-direction:column;gap:8px}
+.pxh-caps__del li{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 14px;min-width:0}
+.pxh-caps__del b{font-weight:500;font-size:var(--t-sm);line-height:1.45;color:var(--ink);min-width:0}
+.pxh-caps__del small{flex:none;font-family:var(--f);font-size:var(--pxh-mono-s);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+
+.pxh-caps__side{display:flex;flex-direction:column;gap:22px;min-width:0}
+.pxh-caps__meta{display:grid;border-top:1px solid var(--line-2)}
+.pxh-caps__meta>div{display:grid;grid-template-columns:minmax(0,11ch) minmax(0,1fr);align-items:baseline;gap:14px;padding:11px 0;border-bottom:1px solid var(--line-2)}
+.pxh-caps__meta dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.4}
+.pxh-caps__meta dd{font-family:var(--f);font-size:var(--t-xs);letter-spacing:.02em;line-height:1.45;color:var(--ink)}
+.pxh-caps__act{display:flex;flex-direction:column;align-items:flex-start;gap:16px;margin-top:auto}
+
+.pxh-caps__note{margin-top:clamp(28px,3vw,40px)}
+
+@media (max-width:1023px){
+  .pxh-caps__row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .pxh-caps__side{grid-column:1 / -1;flex-direction:row;flex-wrap:wrap;align-items:flex-start;gap:24px 40px}
+  .pxh-caps__meta{flex:1 1 320px}
+  .pxh-caps__act{flex-direction:row;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:0;flex:1 1 260px}
+}
+@media (max-width:760px){
+  .pxh-caps__row{grid-template-columns:minmax(0,1fr);row-gap:18px}
+  .pxh-caps__id{grid-template-columns:40px minmax(0,1fr);column-gap:14px}
+  .pxh-caps__ico{display:grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);background:var(--paper-3);color:var(--ink);grid-row:1 / span 2}
+  .pxh-caps__n{grid-column:2;grid-row:1}
+  .pxh-caps__kick{grid-column:2;grid-row:2;margin-top:6px}
+  .pxh-caps__t{margin-top:14px}
+  .pxh-caps__side{flex-direction:column;gap:20px}
+  .pxh-caps__act{flex-direction:column;align-items:flex-start;gap:14px}
+}
+@media (prefers-reduced-motion:reduce){.pxh-caps__row::before{transition:none}}

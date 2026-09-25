@@ -1,0 +1,25 @@
+/* Hub · outcomes — six outcome cards on ink, then the measures table and the three points at which
+   each measure is taken. */
+.aih-oc__cards{margin-bottom:var(--bdh-block)}
+.aih-oc__card{gap:11px}
+
+.aih-oc__hint{display:none;margin-bottom:12px}
+.aih-oc__wrap{padding-bottom:2px}
+.aih-oc__tbl{min-width:720px}
+.aih-oc__tbl thead th:last-child,.aih-oc__tbl td:last-child{white-space:nowrap}
+.aih-oc__tbl tbody th{white-space:normal;max-width:22ch}
+
+.aih-oc__when{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--on-ink-line)}
+.aih-oc__w{display:flex;flex-direction:column;gap:7px;min-width:0;padding:18px clamp(18px,2.2vw,28px);border-left:1px solid var(--on-ink-line)}
+.aih-oc__w:first-child{border-left:0}
+.aih-oc__wt{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;line-height:1.22;letter-spacing:-.012em;color:var(--on-ink)}
+.aih-oc__wd{font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-2)}
+
+@media (max-width:1023px){
+  .aih-oc__hint{display:flex}
+}
+@media (max-width:760px){
+  .aih-oc__when{grid-template-columns:minmax(0,1fr)}
+  .aih-oc__w{border-left:0;border-top:1px solid var(--on-ink-line)}
+  .aih-oc__w:first-child{border-top:0}
+}

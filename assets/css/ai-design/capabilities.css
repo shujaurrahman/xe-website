@@ -1,0 +1,62 @@
+/* Hub · capabilities — four dossiers, each a sticky left rail (index, kicker, facts, enquiry) beside a
+   body (name, statement, lead, the six things it covers, the stack and the standards). Each dossier is
+   an anchor target, so it keeps clear of the fixed nav via core.css scroll-padding. */
+.aih-caps__set{display:flex;flex-direction:column}
+.aih-caps__i{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,8fr);column-gap:clamp(28px,4vw,72px);row-gap:22px;
+  padding-block:clamp(34px,4vw,56px);border-top:1px solid var(--line)}
+.aih-caps__i:first-child{border-top:0;padding-top:0}
+.aih-caps__i:last-child{padding-bottom:0}
+
+.aih-caps__rail{display:flex;flex-direction:column;align-items:flex-start;gap:16px;min-width:0}
+.aih-caps__id{display:flex;align-items:center;gap:12px}
+.aih-caps__ico{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:11px;background:var(--blue-wash);color:var(--blue-d)}
+.aih-caps__k{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;line-height:1.45;color:var(--muted);max-width:22ch}
+.aih-caps__meta{display:flex;flex-direction:column;width:100%;max-width:26rem}
+.aih-caps__meta>div{padding-block:10px;border-top:1px solid var(--line-2)}
+.aih-caps__meta>div:first-child{border-top:0}
+.aih-caps__meta dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.3}
+.aih-caps__meta dd{margin-top:4px;font-size:var(--t-sm);line-height:1.45;color:var(--ink)}
+.aih-caps__cta{margin-top:auto}
+
+.aih-caps__body{display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-width:0}
+.aih-caps__n{font-family:var(--f-h);font-size:clamp(1.45rem,2.1vw,1.9rem);font-weight:500;line-height:1.1;letter-spacing:-.026em;color:var(--ink)}
+.aih-caps__st{font-family:var(--f-h);font-size:clamp(1.0625rem,1.35vw,1.25rem);font-weight:500;line-height:1.3;letter-spacing:-.014em;color:var(--ink);max-width:36ch}
+.aih-caps__lead{font-size:var(--t-body);line-height:1.68;color:var(--muted);max-width:66ch}
+.aih-caps__ok{margin-top:10px}
+
+.aih-caps__offers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;width:100%;background:var(--line-2)}
+.aih-caps__o{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:11px;row-gap:8px;align-content:start;
+  min-width:0;padding:18px 18px 18px 0;background:var(--paper)}
+.aih-caps__o:nth-child(3n+1){padding-left:0}
+.aih-caps__o:nth-child(3n+2),.aih-caps__o:nth-child(3n){padding-left:18px}
+.aih-caps__oi{display:grid;place-items:center;flex:none;width:28px;height:28px;border-radius:8px;background:var(--paper-3);color:var(--ink)}
+.aih-caps__ot{align-self:center;min-width:0;font-family:var(--f-h);font-size:1rem;font-weight:500;line-height:1.25;letter-spacing:-.008em;color:var(--ink)}
+.aih-caps__od{grid-column:1 / -1;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+.aih-caps__og{grid-column:1 / -1;justify-self:start}
+
+.aih-caps__foot{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:22px clamp(24px,3vw,44px);width:100%;
+  margin-top:20px;padding-top:22px;border-top:1px solid var(--line)}
+.aih-caps__fb{display:flex;flex-direction:column;gap:14px;min-width:0}
+.aih-caps__logos{gap:16px clamp(18px,2.2vw,30px)}
+.aih-caps__std{display:flex;flex-wrap:wrap;gap:6px;list-style:none}
+.aih-caps__note{margin-top:clamp(28px,3vw,44px)}
+
+@media (min-width:1024px){
+  .aih-caps__rail{position:sticky;top:var(--bdh-sticky);align-self:start;max-height:calc(100vh - var(--bdh-sticky) - 24px)}
+}
+@media (max-width:1023px){
+  .aih-caps__i{grid-template-columns:minmax(0,1fr)}
+  .aih-caps__rail{flex-direction:row;flex-wrap:wrap;align-items:flex-start;gap:16px 26px}
+  .aih-caps__k{flex:1 1 14rem;max-width:34ch}
+  .aih-caps__meta{flex:1 1 100%;max-width:none;flex-direction:row;flex-wrap:wrap;gap:0 26px}
+  .aih-caps__meta>div{flex:1 1 12rem;border-top:1px solid var(--line-2)}
+  .aih-caps__cta{margin-top:0}
+  .aih-caps__offers{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .aih-caps__o:nth-child(3n+1),.aih-caps__o:nth-child(3n+2),.aih-caps__o:nth-child(3n){padding-left:18px}
+  .aih-caps__o:nth-child(odd){padding-left:0}
+}
+@media (max-width:760px){
+  .aih-caps__offers{grid-template-columns:minmax(0,1fr)}
+  .aih-caps__o,.aih-caps__o:nth-child(odd),.aih-caps__o:nth-child(3n+2),.aih-caps__o:nth-child(3n){padding-left:0;padding-right:0}
+  .aih-caps__foot{grid-template-columns:minmax(0,1fr)}
+}

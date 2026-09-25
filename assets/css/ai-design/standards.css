@@ -1,0 +1,31 @@
+/* Hub · standards — a wall of code-built badges, then the capability matrix. */
+.aih-std__wall{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(22px,2.6vw,34px) clamp(28px,3.4vw,56px);--xt-badge:58px}
+.aih-std__b{padding-bottom:clamp(20px,2.2vw,28px);border-bottom:1px solid var(--line)}
+.aih-std__b .xt-badge__name{font-size:var(--t-sm);line-height:1.4}
+.aih-std__b .xt-badge__covers,.aih-std__b .xt-badge__apply{max-width:52ch}
+
+.aih-std__matrix{margin-top:var(--bdh-block)}
+.aih-std__mh{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:14px clamp(24px,3vw,56px);align-items:end;margin-bottom:20px}
+.aih-std__mt{font-family:var(--f-h);font-size:clamp(1.125rem,1.5vw,1.375rem);font-weight:500;line-height:1.2;letter-spacing:-.018em;color:var(--ink)}
+.aih-std__md{font-size:var(--t-sm);line-height:1.6;color:var(--muted);max-width:62ch}
+.aih-std__panel{margin-top:4px}
+.aih-std__hint{display:none;margin-bottom:12px}
+.aih-std__wrap{padding-bottom:2px}
+.aih-std__tbl{min-width:760px}
+.aih-std__tbl thead th{white-space:nowrap}
+.aih-std__tbl tbody th{white-space:nowrap;letter-spacing:.04em}
+.aih-std__c{text-align:center;width:9%}
+.aih-std__on{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--blue);vertical-align:middle}
+.aih-std__off{color:var(--ghost)}
+.aih-std__also{display:flex;flex-direction:column;gap:7px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:var(--t-sm);line-height:1.68;color:var(--txt);max-width:88ch}
+
+@media (max-width:1023px){
+  .aih-std__wall{grid-template-columns:minmax(0,1fr)}
+  .aih-std__mh{grid-template-columns:minmax(0,1fr);align-items:start}
+  .aih-std__hint{display:flex}
+}
+@media (max-width:600px){
+  .aih-std__wall{--xt-badge:46px}
+  .aih-std__tbl{font-size:var(--t-lbl)}
+}

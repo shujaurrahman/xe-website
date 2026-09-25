@@ -1,0 +1,35 @@
+/* Hub · premise — a four-row ledger read left to right. The column heads show once, above the rows, and
+   each cell repeats its own label for phones, where the heads are dropped and the cells stack. */
+.aih-pr{--aih-pr-cols:minmax(140px,1.5fr) minmax(0,2.4fr) minmax(0,2.4fr) minmax(0,2.9fr);
+  display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.aih-pr__head{display:grid;grid-template-columns:var(--aih-pr-cols);column-gap:clamp(18px,2.2vw,34px);padding-block:14px;border-bottom:1px solid var(--line)}
+
+.aih-pr__r{display:grid;grid-template-columns:var(--aih-pr-cols);column-gap:clamp(18px,2.2vw,34px);row-gap:16px;
+  padding-block:clamp(22px,2.4vw,30px);border-bottom:1px solid var(--line)}
+.aih-pr__s{display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:0}
+.aih-pr__h{font-family:var(--f-h);font-size:1.125rem;font-weight:500;line-height:1.2;letter-spacing:-.014em;color:var(--ink);max-width:14ch}
+.aih-pr__l{margin-top:auto}
+.aih-pr__c{position:relative;min-width:0;padding-left:16px}
+.aih-pr__ck{display:none}
+.aih-pr__c::before{content:"";position:absolute;left:0;top:3px;bottom:3px;width:1px;background:var(--line-3)}
+.aih-pr__c--then::before{width:0;background:none;border-left:1px dashed var(--line-3)}
+.aih-pr__c--now::before{background:var(--blue)}
+.aih-pr__c--ask::before{background:var(--ink)}
+.aih-pr__t{font-size:var(--t-sm);line-height:1.65;color:var(--txt)}
+.aih-pr__c--then .aih-pr__t{color:var(--muted)}
+.aih-pr__c--now .aih-pr__t{color:var(--ink)}
+
+@media (max-width:1023px){
+  .aih-pr{--aih-pr-cols:minmax(0,1fr) minmax(0,1fr)}
+  .aih-pr__head{display:none}
+  .aih-pr__r{row-gap:20px}
+  .aih-pr__s{grid-column:1 / -1;flex-direction:row;align-items:center;flex-wrap:wrap;gap:12px 14px}
+  .aih-pr__h{max-width:none}
+  .aih-pr__l{margin-top:0;margin-left:auto}
+  .aih-pr__ck{display:block;margin-bottom:8px}
+  .aih-pr__c--ask{grid-column:1 / -1}
+}
+@media (max-width:600px){
+  .aih-pr{--aih-pr-cols:minmax(0,1fr)}
+  .aih-pr__c--ask{grid-column:auto}
+}

@@ -1,0 +1,86 @@
+/* Hub · run — the run inspector. A vertical brief list on the left, the selected run on the right, and a
+   step-through bar across the foot. The panel sits on an ink band, so it picks up .band--ink .aih-panel
+   from assets/css/ai-design.css. */
+.aih-run__ui{--aih-panel-r:var(--r-xl)}
+.aih-run__grid{display:grid;grid-template-columns:minmax(0,3.1fr) minmax(0,8.9fr);column-gap:clamp(22px,2.6vw,40px);row-gap:22px}
+
+.aih-run__side{display:flex;flex-direction:column;align-self:start;gap:12px;min-width:0}
+.aih-run__briefs{flex-direction:column;align-items:stretch;gap:2px}
+.aih-run__b{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:10px;min-height:52px;padding:12px 14px;
+  border-radius:var(--r-sm);text-align:left;line-height:1.35;color:var(--on-ink-3);
+  transition:background var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.aih-run__b b{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;line-height:1.5;color:var(--blue);font-variant-numeric:tabular-nums}
+.aih-run__b span{min-width:0;font-size:var(--t-sm);font-weight:500}
+.aih-run__b:hover{color:var(--on-ink)}
+.aih-run__sn{padding-top:12px}
+
+.aih-run__panes{min-width:0}
+.aih-run__pane{display:flex;flex-direction:column;gap:22px;min-width:0}
+.aih-run__pane:focus-visible{outline:2px solid var(--blue);outline-offset:6px;border-radius:var(--r-sm)}
+
+.aih-run__ph{display:flex;flex-direction:column;align-items:flex-start;gap:9px;min-width:0}
+.aih-run__pt{display:flex;align-items:baseline;gap:12px;font-family:var(--f-h);font-size:clamp(1.25rem,1.8vw,1.6rem);font-weight:500;line-height:1.14;letter-spacing:-.024em;color:var(--on-ink)}
+.aih-run__pt b{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;color:var(--blue);font-variant-numeric:tabular-nums}
+.aih-run__ps{letter-spacing:.06em;text-transform:uppercase;font-size:var(--t-lbl)}
+.aih-run__pl{font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-2);max-width:62ch}
+
+.aih-run__block{display:flex;flex-direction:column;gap:12px;min-width:0;padding-top:20px;border-top:1px solid var(--on-ink-line)}
+
+/* ---- route rows ---- */
+.aih-run__route{display:flex;flex-direction:column;min-width:0}
+.aih-run__route>li{display:grid;grid-template-columns:70px minmax(112px,auto) minmax(0,1fr) minmax(0,auto);
+  align-items:center;gap:6px 16px;min-width:0;padding-block:10px;border-top:1px solid var(--on-ink-line)}
+.aih-run__route>li:first-child{border-top:0;padding-top:0}
+.aih-run__rk{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--blue)}
+.aih-run__rm{display:inline-flex;align-items:center;gap:8px;min-width:0;color:var(--on-ink)}
+.aih-run__rm .xt-lg__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.04em;white-space:nowrap}
+.aih-run__rm .xt-lg--word .xt-lg__n{padding:3px 9px;border:1px dashed var(--on-ink-line);border-radius:var(--r-xs)}
+.aih-run__rd{min-width:0;font-size:var(--t-sm);line-height:1.5;color:var(--on-ink-2)}
+.aih-run__rw{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;line-height:1.4;color:var(--on-ink-3);text-align:right}
+
+/* ---- gates ---- */
+.aih-run__gates{--aih-gate:clamp(104px,10.4vw,150px)}
+.aih-run__back{display:flex;flex-direction:column;gap:7px;margin-top:4px;padding:14px 16px;border-radius:var(--r-sm);
+  background:var(--on-ink);font-size:var(--t-sm);line-height:1.6;color:var(--ink)}
+.aih-run__back .aih-k{color:var(--ink)}
+
+/* ---- record ---- */
+.aih-run__rec{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(20px,2.6vw,40px)}
+.aih-run__rec>div{display:flex;flex-direction:column;gap:4px;padding-block:10px;border-top:1px solid var(--on-ink-line)}
+.aih-run__rec>div:nth-child(-n+2){border-top:0;padding-top:0}
+.aih-run__rec dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-3);line-height:1.3}
+.aih-run__rec dd{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.02em;line-height:1.5;color:var(--on-ink);overflow-wrap:anywhere}
+
+.aih-run__foot{margin-top:4px;border-top:1px solid var(--on-ink-line)}
+.aih-run__foot>div{padding-inline:0 16px}
+.aih-run__foot>div+div{padding-left:16px}
+
+/* ---- the step-through ---- */
+.aih-run__step{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:14px clamp(18px,2.2vw,28px);border-top:1px solid var(--on-ink-line)}
+.aih-run__sc{display:flex;flex-wrap:wrap;gap:6px}
+.aih-run__sb{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:0 14px;border-radius:var(--r-pill);
+  box-shadow:inset 0 0 0 1px var(--on-ink-line);font-size:var(--t-xs);font-weight:500;color:var(--on-ink-2);white-space:nowrap;
+  transition:box-shadow var(--d1) var(--e-io),color var(--d1) var(--e-io),background var(--d1) var(--e-io)}
+.aih-run__sb:hover{color:var(--on-ink);background:var(--on-ink-card)}
+.aih-run__sb span{font-family:var(--f);color:var(--blue)}
+.aih-run__sb--r{box-shadow:none;color:var(--blue)}
+.aih-run__st{margin-left:auto;font-size:var(--t-lbl);letter-spacing:.06em;text-transform:uppercase;color:var(--on-ink-3);min-width:0}
+
+@media (max-width:1023px){
+  .aih-run__grid{grid-template-columns:minmax(0,1fr)}
+  .aih-run__briefs{flex-direction:row;flex-wrap:wrap}
+  .aih-run__b{flex:1 1 13rem;min-width:0}
+}
+@media (max-width:760px){
+  .aih-run__route>li{grid-template-columns:70px minmax(0,1fr)}
+  .aih-run__rd,.aih-run__rw{grid-column:2 / -1;text-align:left}
+  .aih-run__rec{grid-template-columns:minmax(0,1fr)}
+  .aih-run__rec>div:nth-child(2){border-top:1px solid var(--on-ink-line);padding-top:10px}
+  .aih-run__st{margin-left:0}
+}
+@media (max-width:600px){
+  .aih-run__sb{min-height:44px}
+  .aih-run__b{flex:1 1 100%}
+  .aih-run__route>li{grid-template-columns:minmax(0,1fr);gap:5px}
+  .aih-run__rd,.aih-run__rw{grid-column:auto}
+}

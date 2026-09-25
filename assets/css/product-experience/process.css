@@ -1,0 +1,50 @@
+/* Hub · process — the four phases as the stepper idiom, then the fortnightly loop as a cycle and what
+   the engagement needs from the client's side. The arc only turns while the figure is on screen. */
+.pxh-process__steps{margin-bottom:var(--bdh-block)}
+
+.pxh-process__cols{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--bdh-gap-l);align-items:start;
+  padding-top:clamp(28px,3vw,42px);border-top:1px solid var(--line)}
+.pxh-process__stops{display:grid;margin-top:4px;border-top:1px solid var(--line)}
+.pxh-process__stops li{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:baseline;column-gap:12px;row-gap:4px;
+  padding:12px 0;border-bottom:1px solid var(--line-2)}
+.pxh-process__sn{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.08em;color:var(--blue);font-variant-numeric:tabular-nums}
+.pxh-process__stops b{font-weight:500;font-size:var(--t-sm);line-height:1.4;color:var(--ink)}
+.pxh-process__stops li>span:last-child{grid-column:2;font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
+
+/* ---- the loop ---- */
+.pxh-process__loop{display:flex;flex-direction:column;gap:14px;min-width:0}
+.pxh-process__ring{min-width:0}
+.pxh-process__ring>svg{display:block;width:100%;height:auto}
+.pxh-process__track{stroke:var(--line-3);stroke-width:1.4;stroke-dasharray:3 5}
+.pxh-process__arc{stroke:var(--blue);stroke-width:2.5;stroke-linecap:round}
+.pxh-process__spin{transform-box:view-box;transform-origin:290px 165px}
+.is-live .pxh-process__spin{animation:pxh-proc-spin 9s linear infinite}
+@keyframes pxh-proc-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.pxh-process__node{fill:var(--paper);stroke:var(--line-3);stroke-width:1.4}
+.pxh-process__node.is-first{stroke:var(--blue)}
+.pxh-process__nn{font-family:var(--f);font-size:8.5px;font-weight:500;letter-spacing:.4px;fill:var(--muted)}
+.pxh-process__nl{font-family:var(--f-b);font-size:13px;font-weight:500;fill:var(--ink)}
+.pxh-process__cl{font-family:var(--f-h);font-size:16px;font-weight:500;letter-spacing:-.3px;fill:var(--ink)}
+.pxh-process__cs{font-family:var(--f);font-size:8.5px;letter-spacing:1.2px;fill:var(--faint)}
+
+/* ---- what we need ---- */
+.pxh-process__need{display:flex;flex-direction:column;gap:clamp(20px,2.4vw,28px);min-width:0}
+.pxh-process__nh{display:flex;flex-direction:column;gap:12px}
+.pxh-process__nt{font-family:var(--f-h);font-size:clamp(1.25rem,1.9vw,1.6rem);font-weight:500;letter-spacing:-.022em;line-height:1.14;
+  color:var(--ink);max-width:26ch}
+.pxh-process__cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+/* ---- responsive ---- */
+@media (max-width:1023px){
+  .pxh-process__cols{grid-template-columns:minmax(0,1fr);gap:var(--bdh-block)}
+  .pxh-process__ring{max-width:520px}
+}
+@media (max-width:600px){
+  .pxh-process__cards{grid-template-columns:minmax(0,1fr)}
+  .pxh-process__nl{font-size:15px}
+  .pxh-process__cl{font-size:18px}
+  .pxh-process__cs{font-size:9.5px}
+}
+@media (prefers-reduced-motion:reduce){
+  .is-live .pxh-process__spin{animation:none}
+}

@@ -1,0 +1,114 @@
+/* Hub · hero — "Decide what to build. Prove it before you build it."
+   Text on paper with a 21:9 plate under it; on the right an ink panel holding a prototype with one
+   participant's session traced across it. The trace, the hesitation ring and the readouts are all in
+   the shipped markup; hero.js only animates them. */
+.pxh-hero{position:relative;overflow:hidden;isolation:isolate;padding-block:var(--bdh-hero-t) clamp(48px,5vw,72px);background:var(--paper)}
+.pxh-hero__bg{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.pxh-hero__grid{position:absolute;inset:0;opacity:.7;
+  -webkit-mask-image:radial-gradient(58% 70% at 100% 6%,#000 0%,transparent 74%);mask-image:radial-gradient(58% 70% at 100% 6%,#000 0%,transparent 74%)}
+
+.pxh-hero__in{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--bdh-gap);align-items:center}
+
+/* ---- text ---- */
+.pxh-hero__text{grid-column:1 / span 5;display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.pxh-hero__text>.lbl{margin-bottom:24px}
+.pxh-hero__h{font-size:clamp(2.3rem,4.2vw,3.7rem);line-height:1.03;letter-spacing:-.034em;max-width:14ch;margin-bottom:clamp(22px,2.2vw,30px)}
+.pxh-hero__lead{max-width:46ch;margin-bottom:clamp(30px,2.8vw,38px)}
+.pxh-hero__act{display:flex;flex-wrap:wrap;gap:10px 12px;margin-bottom:clamp(32px,3.2vw,44px)}
+.pxh-hero__proof{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;width:100%;max-width:520px;padding-top:20px;border-top:1px solid var(--line-2)}
+.pxh-hero__proof>div{padding-right:22px;margin-right:22px;border-right:1px solid var(--line-2)}
+.pxh-hero__proof>div:last-child{padding-right:0;margin-right:0;border-right:0}
+.pxh-hero__proof dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);line-height:1}
+.pxh-hero__proof dd{margin-top:10px;font-family:var(--f);font-size:var(--t-xs);font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);line-height:1.2;white-space:nowrap}
+
+/* ---- the panel ---- */
+.pxh-hero__vis{grid-column:6 / -1;position:relative;min-width:0}
+.pxh-hero__panel{border-radius:var(--r-xl)}
+.pxh-hero__stage{position:relative;padding:clamp(14px,1.6vw,22px) clamp(14px,1.8vw,24px) 0}
+.pxh-hero__stage>svg{display:block;width:100%;height:auto;aspect-ratio:640 / 250;overflow:visible}
+
+.pxh-hero__rail path{stroke:var(--on-ink-line);stroke-width:1.4}
+.pxh-hero__rail circle{fill:var(--ink);stroke:var(--on-ink-line);stroke-width:1.4}
+.pxh-hero__rail circle.is-last{fill:var(--blue);stroke:var(--blue)}
+.pxh-hero__screens rect{fill:rgba(255,255,255,.028);stroke:var(--on-ink-line);stroke-width:1}
+.pxh-hero__screens rect.is-ghost{fill:none;stroke-dasharray:3 4}
+.pxh-hero__ui rect{fill:rgba(255,255,255,.07)}
+.pxh-hero__ui rect.is-lbl{fill:rgba(255,255,255,.28)}
+.pxh-hero__ui rect.is-ghost{fill:rgba(255,255,255,.035)}
+.pxh-hero__ui rect.is-cta{fill:var(--blue)}
+.pxh-hero__ui rect.is-hot{fill:rgba(255,255,255,.07);stroke:var(--blue);stroke-width:1.2}
+
+.pxh-hero__trace{stroke:var(--on-ink-2);stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round;fill:none;
+  transition:stroke-dashoffset 1.6s var(--e) .25s}
+.pxh-hero__mark{stroke:var(--blue);stroke-width:8;stroke-linecap:round;fill:none;stroke-dasharray:.004 1;opacity:0}
+.pxh-hero__dwell circle{fill:var(--on-ink-2);stroke:none}
+.pxh-hero__dwell circle.is-end{fill:var(--blue)}
+.pxh-hero__ring{fill:none;stroke:var(--blue);stroke-width:1.5;opacity:.85}
+.is-live .pxh-hero__ring{animation:pxh-hero-ring 3.2s var(--e-io) infinite}
+@keyframes pxh-hero-ring{0%,72%,100%{opacity:.85;r:19}84%{opacity:.3;r:24}}
+
+.pxh-hero__legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;padding:12px 0 14px;
+  font-family:var(--f);font-size:var(--pxh-mono-s);letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-3);line-height:1.4}
+.pxh-hero__legend span{display:inline-flex;align-items:center;gap:7px}
+.pxh-hero__legend span::before{content:"";flex:none;width:12px;height:12px;border-radius:50%}
+.pxh-hero__legend .is-trace::before{height:2px;border-radius:1px;background:var(--on-ink-2)}
+.pxh-hero__legend .is-ring::before{box-shadow:inset 0 0 0 1.5px var(--blue)}
+.pxh-hero__legend .is-n::before{display:none}
+.pxh-hero__legend .is-n{color:var(--on-ink-3);margin-left:auto}
+
+/* ---- the session tape: one moderator note at a time, typed ---- */
+.pxh-hero__tape{display:flex;align-items:center;gap:10px;min-width:0;height:40px;padding:0 18px;border-top:1px solid var(--on-ink-line);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.02em;line-height:1;white-space:nowrap;color:var(--on-ink-2)}
+.pxh-hero__tp{color:var(--blue);flex:none}
+.pxh-hero__tw{flex:none;min-width:34px;padding:4px 6px;border-radius:5px;background:var(--on-ink-card);box-shadow:inset 0 0 0 1px var(--on-ink-line);color:var(--on-ink);text-align:center}
+.pxh-hero__tt{flex:none;color:var(--on-ink-3);font-variant-numeric:tabular-nums}
+.pxh-hero__tx{display:flex;align-items:center;min-width:0;overflow:hidden}
+.pxh-hero__txt{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.pxh-hero__tape .bdh-caret{flex:none;width:.55em;height:1.1em;color:var(--blue)}
+
+/* ---- entrance ---- */
+@media (prefers-reduced-motion:no-preference){
+  .pxh-hero__up{animation:pxh-hero-up .7s var(--e) both;animation-delay:calc(var(--i,0) * 70ms + 80ms)}
+  .pxh-hero__panel{animation:pxh-hero-in .9s var(--e) .22s both}
+}
+@keyframes pxh-hero-up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes pxh-hero-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* ---- the capability rail under the fold line ---- */
+.pxh-hero__foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:clamp(40px,4.4vw,64px);padding-top:clamp(22px,2.4vw,30px);border-top:1px solid var(--line-2)}
+.pxh-hero__fk{flex:none}
+.pxh-hero__caps{flex:1 1 auto}
+.pxh-hero__caps .pxh-capl{font-size:var(--t-xs)}
+
+/* ---- responsive ---- */
+@media (max-width:1279px){
+  .pxh-hero__h{font-size:clamp(2.1rem,3.7vw,2.9rem)}
+  .pxh-hero__legend .is-n{display:none}
+}
+@media (min-width:960px) and (max-width:1199px){
+  .pxh-hero__text{grid-column:1 / span 5}
+  .pxh-hero__lead{font-size:var(--t-sm);max-width:40ch}
+  .pxh-hero__proof>div{padding-right:14px;margin-right:14px}
+  .pxh-hero__tape{height:36px;padding:0 14px}
+}
+@media (max-width:959px){
+  .pxh-hero__text{grid-column:1 / -1}
+  .pxh-hero__h{max-width:17ch}
+  .pxh-hero__lead{max-width:56ch}
+  .pxh-hero__vis{grid-column:1 / -1;margin-top:clamp(40px,6vw,64px)}
+}
+@media (max-width:600px){
+  .pxh-hero__h{font-size:clamp(2rem,9vw,2.45rem)}
+  .pxh-hero__proof{grid-template-columns:minmax(0,1fr);row-gap:12px}
+  .pxh-hero__proof>div{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:0;margin:0;border:0}
+  .pxh-hero__proof dd{margin-top:0}
+  .pxh-hero__stage{padding:12px 12px 0}
+  .pxh-hero__tape{padding:0 14px;gap:8px}
+  .pxh-hero__tt{display:none}
+  .pxh-hero__legend{gap:4px 14px;padding:10px 0 12px}
+  .pxh-hero__foot{gap:10px 16px}
+}
+@media (prefers-reduced-motion:reduce){
+  .pxh-hero__trace{transition:none}
+  .pxh-hero__ring{animation:none}
+}

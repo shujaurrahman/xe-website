@@ -1,0 +1,123 @@
+/* Hub · navigator — the index of seven. Tiles are links to each capability's card on this page; the mini
+   glyph of each signature animates on hover and focus only, so nothing loops on the page at rest. */
+.mth-nav__head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--bdh-gap);row-gap:20px;align-items:end;margin-bottom:clamp(26px,2.6vw,36px)}
+.mth-nav__head>:first-child{grid-column:1 / span 5;display:flex;flex-direction:column;gap:18px}
+.mth-nav__side{grid-column:7 / -1;display:flex;flex-direction:column;gap:14px}
+@media (max-width:1023px){
+  .mth-nav__head>:first-child,.mth-nav__side{grid-column:1 / -1}
+}
+
+.mth-nav__legend{display:flex;flex-wrap:wrap;gap:8px 6px;margin-bottom:clamp(24px,2.4vw,34px);padding-bottom:clamp(20px,2vw,26px);border-bottom:1px solid var(--line-2)}
+.mth-nav__legend>li{display:inline-flex;align-items:center;gap:8px;padding:5px 12px 5px 6px;border-radius:var(--r-pill);background:var(--paper-3);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.4}
+.mth-nav__legend b{display:inline-grid;place-items:center;min-width:24px;height:20px;border-radius:var(--r-pill);background:var(--paper);color:var(--blue-d);font-weight:500;letter-spacing:.04em}
+
+/* ---- tiles ---- */
+.mth-nav__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--bdh-gap)}
+/* the seventh capability is one practice with five parts, so it takes the width its story needs */
+.mth-nav__cell:nth-child(5),.mth-nav__cell:nth-child(6){grid-column-end:span 1}
+.mth-nav__cell:nth-child(7){grid-column:3 / span 2}
+.mth-nav__cell{min-width:0}
+
+.mth-nav__tile{display:flex;flex-direction:column;height:100%;min-width:0;padding:clamp(20px,1.9vw,26px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);
+  transition:border-color var(--d2) var(--e),transform var(--d2) var(--e),box-shadow var(--d2) var(--e)}
+.mth-nav__tile:hover,.mth-nav__tile:focus-visible{border-color:var(--blue-line);transform:translateY(-2px);box-shadow:var(--sh-2)}
+
+.mth-nav__top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.mth-nav__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;color:var(--blue);font-variant-numeric:tabular-nums}
+.mth-nav__stage{font-family:var(--f);font-size:var(--mth-mono-s);letter-spacing:.09em;text-transform:uppercase;color:var(--faint);text-align:right}
+
+.mth-nav__art{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:18px 0 20px;color:var(--ink)}
+.mth-nav__ico{display:grid;place-items:center;width:40px;height:40px;flex:none;border-radius:var(--r);background:var(--blue-wash)}
+.mth-nav__glyph{width:64px;height:40px;flex:none;color:var(--line-3)}
+.mth-nav__tile:hover .mth-nav__glyph,.mth-nav__tile:focus-visible .mth-nav__glyph{color:var(--faint)}
+.mth-nav__glyph .a{stroke:var(--blue)}
+
+/* the wide (seventh) tile lays its story and its deliverables side by side */
+.mth-nav__tile--wide{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);column-gap:clamp(24px,2.6vw,44px);align-content:start}
+.mth-nav__tile--wide .mth-nav__top{grid-column:1 / -1}
+.mth-nav__tile--wide .mth-nav__art{grid-column:1 / -1}
+.mth-nav__tile--wide .mth-nav__say{grid-column:1}
+.mth-nav__tile--wide .mth-nav__del{grid-column:2;grid-row:3;margin-top:18px;border-top:1px solid var(--line-2)}
+.mth-nav__tile--wide .mth-nav__foot{grid-column:1 / -1}
+.mth-nav__parts{display:flex;flex-direction:column;gap:8px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line-2)}
+
+.mth-nav__t{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.01em;line-height:1.25;color:var(--ink)}
+.mth-nav__d{margin-top:9px;font-size:var(--t-sm);line-height:1.55;color:var(--muted)}
+
+.mth-nav__del{display:flex;flex-direction:column;gap:6px;margin:18px 0 0;padding-top:16px;border-top:1px solid var(--line-2)}
+.mth-nav__del .mth-k{margin-bottom:2px}
+.mth-nav__di{display:flex;align-items:baseline;gap:8px;min-width:0}
+.mth-nav__di i{flex:none;width:4px;height:4px;margin-top:6px;border-radius:50%;background:var(--blue-line)}
+.mth-nav__di b{font-size:var(--t-xs);font-weight:500;line-height:1.45;color:var(--txt)}
+
+.mth-nav__foot{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:auto;padding-top:18px}
+.mth-nav__len{display:flex;flex-direction:column;gap:5px;min-width:0}
+.mth-nav__len b{font-family:var(--f);font-size:var(--t-xs);font-weight:500;letter-spacing:.02em;line-height:1.4;color:var(--ink)}
+.mth-nav__go{display:inline-flex;align-items:center;gap:7px;font-size:var(--t-xs);font-weight:500;color:var(--blue-d);white-space:nowrap}
+.mth-nav__go i{font-family:var(--f);font-style:normal;transition:transform var(--d2) var(--e)}
+.mth-nav__tile:hover .mth-nav__go i,.mth-nav__tile:focus-visible .mth-nav__go i{transform:translateX(4px)}
+
+/* ---- glyph motion: the finished picture at rest, one run on hover / focus ---- */
+.mth-nav__glyph :is(.w,.c){stroke-dasharray:1;stroke-dashoffset:0}
+.mth-nav__glyph :is(.b,.d,.r,.t,.s,.p,.h){transform-box:fill-box;transform-origin:center}
+.mth-nav__glyph .r{transform-origin:center bottom}
+.mth-nav__glyph .a{stroke:var(--blue)}
+.mth-nav__glyph--customer-relationship-strategy .h{fill:var(--blue-wash)}
+.mth-nav__glyph--ai-creative-solutions .t4{stroke:var(--blue)}
+
+@media (prefers-reduced-motion:no-preference){
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph :is(.w,.c){animation:mth-nav-draw .9s var(--e) both}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .d{animation:mth-nav-pop .6s var(--e) both}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .d2{animation-delay:.1s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .d3{animation-delay:.2s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .d4{animation-delay:.3s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .r{animation:mth-nav-rise .7s var(--e) both}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .r2{animation-delay:.08s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .r3{animation-delay:.16s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .r4{animation-delay:.24s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .t{animation:mth-nav-fade .55s var(--e) both}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .t2{animation-delay:.09s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .t3{animation-delay:.18s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .t4{animation-delay:.27s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .t5{animation-delay:.36s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .s{animation:mth-nav-step .5s var(--e) both}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .s2{animation-delay:.2s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .s3{animation-delay:.4s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .b{animation:mth-nav-step .5s var(--e) both}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .b2{animation-delay:.22s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .b3{animation-delay:.34s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .p{animation:mth-nav-pop .6s var(--e) both}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .p2{animation-delay:.08s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .p3{animation-delay:.16s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .p4{animation-delay:.24s}
+  :is(.mth-nav__tile:hover,.mth-nav__tile:focus-visible) .mth-nav__glyph .p5{animation-delay:.32s}
+}
+@keyframes mth-nav-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes mth-nav-pop{0%{transform:scale(.3);opacity:.2}70%{transform:scale(1.14)}100%{transform:none;opacity:1}}
+@keyframes mth-nav-rise{from{transform:scaleY(.25)}to{transform:none}}
+@keyframes mth-nav-fade{from{opacity:.25;transform:scale(.94)}to{opacity:1;transform:none}}
+@keyframes mth-nav-step{from{opacity:.3;transform:translateX(-5px)}to{opacity:1;transform:none}}
+
+/* ---- responsive ---- */
+@media (max-width:1279px){
+  .mth-nav__grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .mth-nav__cell:nth-child(7){grid-column:2 / span 2}
+}
+@media (max-width:900px){
+  .mth-nav__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mth-nav__cell:nth-child(7){grid-column:1 / span 2}
+}
+@media (max-width:760px){
+  .mth-nav__tile--wide{grid-template-columns:minmax(0,1fr)}
+  .mth-nav__tile--wide .mth-nav__del{grid-column:1;grid-row:auto}
+}
+@media (max-width:620px){
+  .mth-nav__grid{grid-template-columns:minmax(0,1fr)}
+  .mth-nav__cell:nth-child(7){grid-column:1 / -1}
+  .mth-nav__glyph{width:52px;height:33px}
+}
+@media (prefers-reduced-motion:reduce){
+  .mth-nav__tile,.mth-nav__go i{transition:none}
+  .mth-nav__tile:hover,.mth-nav__tile:focus-visible{transform:none}
+}
