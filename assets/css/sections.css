@@ -1963,3 +1963,332 @@
 @media (prefers-reduced-motion:reduce){
   .s22__o{animation:none}
 }
+
+/* ===== 23-brand ===== */
+/* ==========================================================================
+   23-brand — what we make for a brand.
+
+   Six capability rows, each a whole-row link into its own page. A ledger rather
+   than another card grid, so it does not repeat 08-disciplines (tab panel) or
+   04-pillars (cards). The shipped state is final: reveals are handled by the
+   shared [data-rv]/[data-rv-s] in core.js, and the site-wide <noscript> block in
+   partials/head.php resolves them when JavaScript is off.
+
+   Tokens from core.css only. No new colours, no gradients, no !important.
+   ========================================================================== */
+
+.s23__head .h2{max-width:24ch}
+
+.s23__list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+
+.s23__row{border-bottom:1px solid var(--line)}
+
+/* the whole row is the link — one target, 44px+ tall at every width */
+.s23__link{
+  display:grid;
+  /* proportional, not a fixed deliverables column: at 1440 a fixed column left the
+     text column two-thirds empty */
+  grid-template-columns:auto minmax(0,7fr) minmax(0,5fr) auto;
+  align-items:start;
+  column-gap:clamp(18px,2.4vw,40px);
+  padding:clamp(22px,2.4vw,30px) 0;
+  text-decoration:none;color:inherit;
+  transition:background var(--d2) var(--e),padding var(--d2) var(--e);
+}
+.s23__link:hover,.s23__link:focus-visible{background:var(--paper-3)}
+.s23__link:hover{padding-inline:clamp(10px,1.2vw,18px)}
+.s23__link:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+
+.s23__n{
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;
+  letter-spacing:.12em;color:var(--faint);
+  padding-top:.5em;min-width:2.25em;
+}
+
+.s23__body{display:flex;flex-direction:column;gap:7px;min-width:0}
+
+.s23__kicker{
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+}
+
+.s23__name{margin:0;font-family:var(--f-h);font-size:var(--t-h3);color:var(--ink)}
+.s23__link:hover .s23__name,.s23__link:focus-visible .s23__name{color:var(--blue-d)}
+
+.s23__lead{
+  font-family:var(--f-b);font-size:var(--t-sm);line-height:1.6;color:var(--txt);
+  max-width:64ch;
+}
+
+/* what the capability hands over — the reason this section exists */
+.s23__gets{display:flex;flex-direction:column;gap:9px;min-width:0;padding-top:2px}
+
+.s23__getsk{
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+}
+
+.s23__chips{display:flex;flex-wrap:wrap;gap:6px}
+
+.s23__chip{
+  display:inline-block;padding:4px 9px;border-radius:var(--r-xs);
+  background:var(--paper);border:1px solid var(--line-2);
+  font-family:var(--f);font-size:var(--t-xs);line-height:1.35;color:var(--txt);
+}
+
+.s23__more{
+  align-self:center;
+  font-family:var(--f);font-size:var(--t-xs);color:var(--faint);
+}
+
+.s23__go{
+  font-size:1.25rem;line-height:1;color:var(--faint);
+  padding-top:.35em;
+  transition:transform var(--d2) var(--e),color var(--d2) var(--e);
+}
+.s23__link:hover .s23__go,.s23__link:focus-visible .s23__go{color:var(--blue);transform:translateX(4px)}
+
+/* ---------- 1024: the deliverables column drops under the text ----------- */
+@media (max-width:1023px){
+  .s23__link{grid-template-columns:auto minmax(0,1fr) auto;row-gap:16px}
+  .s23__gets{grid-column:2 / 3;grid-row:2}
+  .s23__go{grid-column:3;grid-row:1}
+}
+
+/* ---------- 600: single column, index inline with the kicker ------------- */
+@media (max-width:600px){
+  .s23__link{
+    grid-template-columns:minmax(0,1fr) auto;
+    column-gap:14px;row-gap:14px;
+    padding-block:22px;
+  }
+  .s23__link:hover{padding-inline:0}          /* no inset shift on touch */
+  .s23__n{grid-column:1;grid-row:1;padding-top:0;min-width:0}
+  .s23__body{grid-column:1 / -1;grid-row:2}
+  .s23__gets{grid-column:1 / -1;grid-row:3}
+  .s23__go{grid-column:2;grid-row:1;padding-top:0}
+  .s23__lead{font-size:var(--t-body)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .s23__link,.s23__go{transition:none}
+  .s23__link:hover{padding-inline:0}
+}
+
+/* ===== 24-technology ===== */
+/* ==========================================================================
+   24-technology — what we build and run. The one ink band in the body.
+
+   A ten-cell capability grid over a derived "built on" marquee and the frameworks
+   delivery is held to. Core already inverts h2/.g/.lbl/.lead/.tl on .band--ink, and
+   assets/css/tech/kit.css inverts .xt-* marks there, so this file only lays out.
+
+   The marquee is the section's only loop. xt_stack(marquee) emits [data-bdh-live],
+   and assets/js/brand/hub.js toggles .is-live on it while it is on screen — and
+   never under reduced motion. Nothing here starts hidden, so the section is
+   complete with JavaScript off.
+
+   Tokens from core.css only. No new colours, no gradients beyond the core dot
+   pattern and mask fades, no !important.
+   ========================================================================== */
+
+.s24{position:relative;overflow:hidden}
+
+.s24__dots{
+  position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.75;
+  -webkit-mask-image:radial-gradient(120% 120% at 88% 0%,#000 0%,rgba(0,0,0,.45) 46%,transparent 84%);
+  mask-image:radial-gradient(120% 120% at 88% 0%,#000 0%,rgba(0,0,0,.45) 46%,transparent 84%);
+}
+
+.s24 .wrap{position:relative;z-index:1}
+
+.s24__head .h2{max-width:24ch}
+
+/* ---------- the ten capabilities ---------------------------------------- */
+.s24__grid{
+  list-style:none;margin:0 0 var(--bdh-block);padding:0;
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:clamp(10px,1vw,14px);
+}
+
+.s24__cell{min-width:0}
+
+.s24__card{
+  position:relative;display:flex;flex-direction:column;gap:8px;height:100%;
+  padding:clamp(16px,1.5vw,22px);
+  background:var(--on-ink-card);
+  border:1px solid var(--on-ink-line);border-radius:var(--r-sm);
+  text-decoration:none;color:var(--on-ink-2);
+  transition:transform var(--d2) var(--e),border-color var(--d2) var(--e),background var(--d2) var(--e);
+}
+.s24__card:hover,.s24__card:focus-visible{transform:translateY(-2px);border-color:var(--on-ink-3)}
+.s24__card:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+.s24__top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+
+/* .xt-ico's blue accent reads correctly on ink, so the kit default is kept here */
+.s24__ico{display:inline-flex;color:var(--on-ink)}
+
+.s24__n{
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;
+  letter-spacing:.12em;color:var(--on-ink-3);
+}
+
+.s24__name{
+  margin:0;font-family:var(--f-h);font-size:var(--t-h4);line-height:1.3;
+  color:var(--on-ink);
+}
+
+.s24__kicker{
+  font-family:var(--f-b);font-size:var(--t-xs);line-height:1.55;color:var(--on-ink-3);
+}
+
+.s24__go{
+  margin-top:auto;padding-top:10px;
+  font-size:1.05rem;line-height:1;color:var(--on-ink-3);
+  transition:transform var(--d2) var(--e),color var(--d2) var(--e);
+}
+.s24__card:hover .s24__go,.s24__card:focus-visible .s24__go{color:var(--on-ink);transform:translateX(3px)}
+
+/* ---------- built on / built to ----------------------------------------- */
+.s24__foot{
+  display:grid;grid-template-columns:minmax(0,1fr);
+  gap:var(--bdh-block);
+  padding-top:clamp(28px,3vw,44px);
+  border-top:1px solid var(--on-ink-line);
+}
+
+.s24__k{
+  margin:0 0 14px;
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3);
+}
+
+/* the marquee masks at both edges so technologies fade rather than clip */
+.s24__marquee{
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+}
+
+.s24__badges{
+  list-style:none;margin:0;padding:0;
+  display:flex;flex-wrap:wrap;gap:8px;
+}
+
+.s24__note{
+  margin:14px 0 0;max-width:62ch;
+  font-family:var(--f-b);font-size:var(--t-xs);line-height:1.6;color:var(--on-ink-3);
+}
+
+/* ---------- 1240 / 1023 / 600 -------------------------------------------- */
+@media (max-width:1240px){
+  .s24__grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media (max-width:1023px){
+  .s24__grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:720px){
+  .s24__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:420px){
+  .s24__grid{grid-template-columns:minmax(0,1fr)}
+  .s24__card{flex-direction:row;align-items:center;gap:12px;padding:14px 16px}
+  .s24__top{flex-direction:column;align-items:flex-start;gap:4px;order:1}
+  .s24__name{order:2;flex:1 1 auto;font-size:var(--t-body)}
+  .s24__kicker{display:none}          /* the name alone carries the row at this width */
+  .s24__go{order:3;margin-top:0;padding-top:0}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .s24__card,.s24__go{transition:none}
+  .s24__card:hover,.s24__card:focus-visible{transform:none}
+}
+
+/* ===== 25-offer ===== */
+/* ==========================================================================
+   25-offer — the route into the catalogue.
+
+   Six rows and two buttons. No tabs, no tray, no stat wall. The restraint is the
+   point: the operable catalogue lives on the discipline pages, and putting a second
+   one here is what made this part of the page feel crowded.
+
+   No JavaScript at all beyond the shared [data-rv] reveals, so the shipped HTML is
+   the finished state.
+
+   Tokens from core.css only. No new colours, no gradients, no !important.
+   ========================================================================== */
+
+.s25__head{max-width:62ch}
+.s25__head .h2{max-width:22ch}
+.s25__lead{max-width:56ch}
+
+.s25__list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+
+.s25__row{border-bottom:1px solid var(--line)}
+
+.s25__link{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto auto;
+  align-items:baseline;
+  column-gap:clamp(14px,2vw,28px);
+  padding:clamp(16px,1.8vw,22px) 0;
+  text-decoration:none;color:inherit;
+  transition:background var(--d2) var(--e);
+}
+.s25__link:hover,.s25__link:focus-visible{background:var(--paper-3)}
+.s25__link:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+
+.s25__n{
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;
+  letter-spacing:.12em;color:var(--faint);min-width:2.25em;
+}
+
+.s25__name{
+  font-family:var(--f-h);font-size:var(--t-h3);line-height:1.3;color:var(--ink);
+  min-width:0;
+}
+.s25__link:hover .s25__name,.s25__link:focus-visible .s25__name{color:var(--blue-d)}
+
+.s25__c{
+  font-family:var(--f);font-size:var(--t-xs);color:var(--muted);
+  white-space:nowrap;
+}
+
+.s25__go{
+  font-size:1.25rem;line-height:1;color:var(--faint);
+  transition:transform var(--d2) var(--e),color var(--d2) var(--e);
+}
+.s25__link:hover .s25__go,.s25__link:focus-visible .s25__go{color:var(--blue);transform:translateX(4px)}
+
+/* ---------- the close ---------------------------------------------------- */
+.s25__foot{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:clamp(16px,2vw,28px);
+  margin-top:clamp(28px,3vw,40px);
+}
+
+.s25__sum{
+  margin:0;max-width:34ch;
+  font-family:var(--f);font-size:var(--t-sm);line-height:1.6;color:var(--muted);
+}
+
+.s25__acts{display:flex;flex-wrap:wrap;gap:10px}
+
+/* ---------- 760: the count drops under the name ------------------------- */
+@media (max-width:760px){
+  .s25__link{grid-template-columns:auto minmax(0,1fr) auto;row-gap:4px;align-items:center}
+  .s25__name{grid-column:2;grid-row:1}
+  .s25__c{grid-column:2;grid-row:2;white-space:normal}
+  .s25__go{grid-column:3;grid-row:1 / span 2}
+}
+
+@media (max-width:520px){
+  .s25__cs{display:none}          /* "in N categories" is detail the phone does not need */
+  .s25__acts .btn{width:100%;justify-content:center}
+  .s25__foot{gap:18px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .s25__link,.s25__go{transition:none}
+  .s25__link:hover .s25__go,.s25__link:focus-visible .s25__go{transform:none}
+}

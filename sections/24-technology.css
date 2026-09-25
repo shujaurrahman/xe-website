@@ -1,0 +1,127 @@
+/* ==========================================================================
+   24-technology — what we build and run. The one ink band in the body.
+
+   A ten-cell capability grid over a derived "built on" marquee and the frameworks
+   delivery is held to. Core already inverts h2/.g/.lbl/.lead/.tl on .band--ink, and
+   assets/css/tech/kit.css inverts .xt-* marks there, so this file only lays out.
+
+   The marquee is the section's only loop. xt_stack(marquee) emits [data-bdh-live],
+   and assets/js/brand/hub.js toggles .is-live on it while it is on screen — and
+   never under reduced motion. Nothing here starts hidden, so the section is
+   complete with JavaScript off.
+
+   Tokens from core.css only. No new colours, no gradients beyond the core dot
+   pattern and mask fades, no !important.
+   ========================================================================== */
+
+.s24{position:relative;overflow:hidden}
+
+.s24__dots{
+  position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.75;
+  -webkit-mask-image:radial-gradient(120% 120% at 88% 0%,#000 0%,rgba(0,0,0,.45) 46%,transparent 84%);
+  mask-image:radial-gradient(120% 120% at 88% 0%,#000 0%,rgba(0,0,0,.45) 46%,transparent 84%);
+}
+
+.s24 .wrap{position:relative;z-index:1}
+
+.s24__head .h2{max-width:24ch}
+
+/* ---------- the ten capabilities ---------------------------------------- */
+.s24__grid{
+  list-style:none;margin:0 0 var(--bdh-block);padding:0;
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:clamp(10px,1vw,14px);
+}
+
+.s24__cell{min-width:0}
+
+.s24__card{
+  position:relative;display:flex;flex-direction:column;gap:8px;height:100%;
+  padding:clamp(16px,1.5vw,22px);
+  background:var(--on-ink-card);
+  border:1px solid var(--on-ink-line);border-radius:var(--r-sm);
+  text-decoration:none;color:var(--on-ink-2);
+  transition:transform var(--d2) var(--e),border-color var(--d2) var(--e),background var(--d2) var(--e);
+}
+.s24__card:hover,.s24__card:focus-visible{transform:translateY(-2px);border-color:var(--on-ink-3)}
+.s24__card:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+.s24__top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+
+/* .xt-ico's blue accent reads correctly on ink, so the kit default is kept here */
+.s24__ico{display:inline-flex;color:var(--on-ink)}
+
+.s24__n{
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;
+  letter-spacing:.12em;color:var(--on-ink-3);
+}
+
+.s24__name{
+  margin:0;font-family:var(--f-h);font-size:var(--t-h4);line-height:1.3;
+  color:var(--on-ink);
+}
+
+.s24__kicker{
+  font-family:var(--f-b);font-size:var(--t-xs);line-height:1.55;color:var(--on-ink-3);
+}
+
+.s24__go{
+  margin-top:auto;padding-top:10px;
+  font-size:1.05rem;line-height:1;color:var(--on-ink-3);
+  transition:transform var(--d2) var(--e),color var(--d2) var(--e);
+}
+.s24__card:hover .s24__go,.s24__card:focus-visible .s24__go{color:var(--on-ink);transform:translateX(3px)}
+
+/* ---------- built on / built to ----------------------------------------- */
+.s24__foot{
+  display:grid;grid-template-columns:minmax(0,1fr);
+  gap:var(--bdh-block);
+  padding-top:clamp(28px,3vw,44px);
+  border-top:1px solid var(--on-ink-line);
+}
+
+.s24__k{
+  margin:0 0 14px;
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3);
+}
+
+/* the marquee masks at both edges so technologies fade rather than clip */
+.s24__marquee{
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+}
+
+.s24__badges{
+  list-style:none;margin:0;padding:0;
+  display:flex;flex-wrap:wrap;gap:8px;
+}
+
+.s24__note{
+  margin:14px 0 0;max-width:62ch;
+  font-family:var(--f-b);font-size:var(--t-xs);line-height:1.6;color:var(--on-ink-3);
+}
+
+/* ---------- 1240 / 1023 / 600 -------------------------------------------- */
+@media (max-width:1240px){
+  .s24__grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media (max-width:1023px){
+  .s24__grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:720px){
+  .s24__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:420px){
+  .s24__grid{grid-template-columns:minmax(0,1fr)}
+  .s24__card{flex-direction:row;align-items:center;gap:12px;padding:14px 16px}
+  .s24__top{flex-direction:column;align-items:flex-start;gap:4px;order:1}
+  .s24__name{order:2;flex:1 1 auto;font-size:var(--t-body)}
+  .s24__kicker{display:none}          /* the name alone carries the row at this width */
+  .s24__go{order:3;margin-top:0;padding-top:0}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .s24__card,.s24__go{transition:none}
+  .s24__card:hover,.s24__card:focus-visible{transform:none}
+}

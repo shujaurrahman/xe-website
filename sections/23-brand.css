@@ -1,0 +1,109 @@
+/* ==========================================================================
+   23-brand — what we make for a brand.
+
+   Six capability rows, each a whole-row link into its own page. A ledger rather
+   than another card grid, so it does not repeat 08-disciplines (tab panel) or
+   04-pillars (cards). The shipped state is final: reveals are handled by the
+   shared [data-rv]/[data-rv-s] in core.js, and the site-wide <noscript> block in
+   partials/head.php resolves them when JavaScript is off.
+
+   Tokens from core.css only. No new colours, no gradients, no !important.
+   ========================================================================== */
+
+.s23__head .h2{max-width:24ch}
+
+.s23__list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+
+.s23__row{border-bottom:1px solid var(--line)}
+
+/* the whole row is the link — one target, 44px+ tall at every width */
+.s23__link{
+  display:grid;
+  /* proportional, not a fixed deliverables column: at 1440 a fixed column left the
+     text column two-thirds empty */
+  grid-template-columns:auto minmax(0,7fr) minmax(0,5fr) auto;
+  align-items:start;
+  column-gap:clamp(18px,2.4vw,40px);
+  padding:clamp(22px,2.4vw,30px) 0;
+  text-decoration:none;color:inherit;
+  transition:background var(--d2) var(--e),padding var(--d2) var(--e);
+}
+.s23__link:hover,.s23__link:focus-visible{background:var(--paper-3)}
+.s23__link:hover{padding-inline:clamp(10px,1.2vw,18px)}
+.s23__link:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+
+.s23__n{
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;
+  letter-spacing:.12em;color:var(--faint);
+  padding-top:.5em;min-width:2.25em;
+}
+
+.s23__body{display:flex;flex-direction:column;gap:7px;min-width:0}
+
+.s23__kicker{
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+}
+
+.s23__name{margin:0;font-family:var(--f-h);font-size:var(--t-h3);color:var(--ink)}
+.s23__link:hover .s23__name,.s23__link:focus-visible .s23__name{color:var(--blue-d)}
+
+.s23__lead{
+  font-family:var(--f-b);font-size:var(--t-sm);line-height:1.6;color:var(--txt);
+  max-width:64ch;
+}
+
+/* what the capability hands over — the reason this section exists */
+.s23__gets{display:flex;flex-direction:column;gap:9px;min-width:0;padding-top:2px}
+
+.s23__getsk{
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+}
+
+.s23__chips{display:flex;flex-wrap:wrap;gap:6px}
+
+.s23__chip{
+  display:inline-block;padding:4px 9px;border-radius:var(--r-xs);
+  background:var(--paper);border:1px solid var(--line-2);
+  font-family:var(--f);font-size:var(--t-xs);line-height:1.35;color:var(--txt);
+}
+
+.s23__more{
+  align-self:center;
+  font-family:var(--f);font-size:var(--t-xs);color:var(--faint);
+}
+
+.s23__go{
+  font-size:1.25rem;line-height:1;color:var(--faint);
+  padding-top:.35em;
+  transition:transform var(--d2) var(--e),color var(--d2) var(--e);
+}
+.s23__link:hover .s23__go,.s23__link:focus-visible .s23__go{color:var(--blue);transform:translateX(4px)}
+
+/* ---------- 1024: the deliverables column drops under the text ----------- */
+@media (max-width:1023px){
+  .s23__link{grid-template-columns:auto minmax(0,1fr) auto;row-gap:16px}
+  .s23__gets{grid-column:2 / 3;grid-row:2}
+  .s23__go{grid-column:3;grid-row:1}
+}
+
+/* ---------- 600: single column, index inline with the kicker ------------- */
+@media (max-width:600px){
+  .s23__link{
+    grid-template-columns:minmax(0,1fr) auto;
+    column-gap:14px;row-gap:14px;
+    padding-block:22px;
+  }
+  .s23__link:hover{padding-inline:0}          /* no inset shift on touch */
+  .s23__n{grid-column:1;grid-row:1;padding-top:0;min-width:0}
+  .s23__body{grid-column:1 / -1;grid-row:2}
+  .s23__gets{grid-column:1 / -1;grid-row:3}
+  .s23__go{grid-column:2;grid-row:1;padding-top:0}
+  .s23__lead{font-size:var(--t-body)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .s23__link,.s23__go{transition:none}
+  .s23__link:hover{padding-inline:0}
+}

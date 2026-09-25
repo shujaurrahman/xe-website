@@ -1,0 +1,87 @@
+/* ==========================================================================
+   25-offer — the route into the catalogue.
+
+   Six rows and two buttons. No tabs, no tray, no stat wall. The restraint is the
+   point: the operable catalogue lives on the discipline pages, and putting a second
+   one here is what made this part of the page feel crowded.
+
+   No JavaScript at all beyond the shared [data-rv] reveals, so the shipped HTML is
+   the finished state.
+
+   Tokens from core.css only. No new colours, no gradients, no !important.
+   ========================================================================== */
+
+.s25__head{max-width:62ch}
+.s25__head .h2{max-width:22ch}
+.s25__lead{max-width:56ch}
+
+.s25__list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+
+.s25__row{border-bottom:1px solid var(--line)}
+
+.s25__link{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto auto;
+  align-items:baseline;
+  column-gap:clamp(14px,2vw,28px);
+  padding:clamp(16px,1.8vw,22px) 0;
+  text-decoration:none;color:inherit;
+  transition:background var(--d2) var(--e);
+}
+.s25__link:hover,.s25__link:focus-visible{background:var(--paper-3)}
+.s25__link:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+
+.s25__n{
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;
+  letter-spacing:.12em;color:var(--faint);min-width:2.25em;
+}
+
+.s25__name{
+  font-family:var(--f-h);font-size:var(--t-h3);line-height:1.3;color:var(--ink);
+  min-width:0;
+}
+.s25__link:hover .s25__name,.s25__link:focus-visible .s25__name{color:var(--blue-d)}
+
+.s25__c{
+  font-family:var(--f);font-size:var(--t-xs);color:var(--muted);
+  white-space:nowrap;
+}
+
+.s25__go{
+  font-size:1.25rem;line-height:1;color:var(--faint);
+  transition:transform var(--d2) var(--e),color var(--d2) var(--e);
+}
+.s25__link:hover .s25__go,.s25__link:focus-visible .s25__go{color:var(--blue);transform:translateX(4px)}
+
+/* ---------- the close ---------------------------------------------------- */
+.s25__foot{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:clamp(16px,2vw,28px);
+  margin-top:clamp(28px,3vw,40px);
+}
+
+.s25__sum{
+  margin:0;max-width:34ch;
+  font-family:var(--f);font-size:var(--t-sm);line-height:1.6;color:var(--muted);
+}
+
+.s25__acts{display:flex;flex-wrap:wrap;gap:10px}
+
+/* ---------- 760: the count drops under the name ------------------------- */
+@media (max-width:760px){
+  .s25__link{grid-template-columns:auto minmax(0,1fr) auto;row-gap:4px;align-items:center}
+  .s25__name{grid-column:2;grid-row:1}
+  .s25__c{grid-column:2;grid-row:2;white-space:normal}
+  .s25__go{grid-column:3;grid-row:1 / span 2}
+}
+
+@media (max-width:520px){
+  .s25__cs{display:none}          /* "in N categories" is detail the phone does not need */
+  .s25__acts .btn{width:100%;justify-content:center}
+  .s25__foot{gap:18px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .s25__link,.s25__go{transition:none}
+  .s25__link:hover .s25__go,.s25__link:focus-visible .s25__go{transform:none}
+}
