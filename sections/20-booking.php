@@ -1,7 +1,15 @@
 <!--
-  BOOKING — this is a front-end request form, not a live calendar. Selecting a slot and
-  submitting composes an email to connect@xterraedze.com; nothing is reserved. Wire the
-  three marked hooks in 20-booking.js to the real calendar (Cal.com / Google) before launch.
+  BOOKING — the route to the real scheduler.
+
+  This used to hold a front-end mock calendar: it invented its own availability
+  (weekdays, 09:00–17:30), and picking a slot composed an email that reserved
+  nothing. Once /book carried the real Cal.com scheduler, the site was offering a
+  fake calendar here and a real one there, with two different sets of "open"
+  times. So the invented calendar is gone and this section sends people to the
+  real one.
+
+  Kept exactly as it was: the section, its id="book" (every #book anchor on this
+  page still lands here), the heading, and the discovery-call panel and its copy.
 -->
 <section class="band band--alt band--rules s20" id="book" aria-labelledby="s20-t">
   <div class="wrap">
@@ -38,72 +46,22 @@
         <p class="s20__note">We reply to every brief within one working day.</p>
       </div>
 
-      <!-- when -->
-      <div class="s20__cal">
-        <div class="s20__calhead">
-          <p class="s20__month" data-s20-month>—</p>
-          <div class="s20__navs">
-            <button class="s20__nav" type="button" data-s20-prevm aria-label="Previous month">
-              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3 5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <button class="s20__nav" type="button" data-s20-nextm aria-label="Next month">
-              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
+      <!-- the route to the real calendar -->
+      <div class="s20__route">
+        <p class="s20__rk">Live calendar</p>
+        <p class="s20__rt">Pick a time on our real calendar. It shows the times that are
+          actually open, in your own time zone.</p>
+
+        <ol class="s20__steps">
+          <li><span class="s20__sn" aria-hidden="true">01</span><span>Choose a day and a time that suits you.</span></li>
+          <li><span class="s20__sn" aria-hidden="true">02</span><span>Add a line about what you're building.</span></li>
+          <li><span class="s20__sn" aria-hidden="true">03</span><span>The invite arrives in your inbox.</span></li>
+        </ol>
+
+        <div class="s20__acts">
+          <a class="btn btn--ink" href="<?= xe_url('book.php') ?>">Pick a time <span class="i" aria-hidden="true">›</span></a>
+          <a class="tl" href="<?= xe_url('contact.php') ?>">Or send a written brief <span class="i" aria-hidden="true">›</span></a>
         </div>
-        <div class="s20__dow" aria-hidden="true">
-          <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
-        </div>
-        <div class="s20__days" role="grid" aria-label="Choose a day" data-s20-days></div>
-      </div>
-
-      <!-- slots / confirm -->
-      <div class="s20__slots">
-        <div class="s20__slotshead">
-          <p class="s20__day" data-s20-daylabel>Pick a day</p>
-          <div class="s20__fmt" role="radiogroup" aria-label="Time format">
-            <button class="s20__fmtb is-on" type="button" role="radio" aria-checked="true" data-s20-fmt="12">12h</button>
-            <button class="s20__fmtb" type="button" role="radio" aria-checked="false" data-s20-fmt="24">24h</button>
-          </div>
-        </div>
-
-        <div class="s20__times" data-s20-times></div>
-
-        <form class="s20__form" data-s20-form hidden novalidate>
-          <p class="s20__picked" data-s20-picked></p>
-          <label class="s20__field">
-            <span>Name</span>
-            <input type="text" name="name" autocomplete="name" data-book-first required>
-          </label>
-          <label class="s20__field">
-            <span>Work email</span>
-            <input type="email" name="email" autocomplete="email" required>
-          </label>
-          <label class="s20__field">
-            <span>Company</span>
-            <input type="text" name="company" autocomplete="organization">
-          </label>
-          <label class="s20__field">
-            <span>What are you building?</span>
-            <textarea id="book-brief" name="brief" rows="3" required></textarea>
-          </label>
-          <p class="s20__err" data-s20-err hidden></p>
-          <div class="s20__actions">
-            <button class="s20__back" type="button" data-s20-back>Back</button>
-            <button class="btn btn--ink" type="submit">Request this time <span class="i" aria-hidden="true">›</span></button>
-          </div>
-        </form>
-
-        <div class="s20__done" data-s20-done hidden>
-          <span class="s20__tick" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-          </span>
-          <p class="s20__donet">Request sent</p>
-          <p class="s20__donep" data-s20-donep></p>
-          <p class="s20__donen">Nothing is reserved yet — we'll confirm by email within one working day.</p>
-        </div>
-
-        <p class="sr" aria-live="polite" data-s20-live></p>
       </div>
 
     </div>
