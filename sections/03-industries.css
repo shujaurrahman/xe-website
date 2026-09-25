@@ -8,9 +8,9 @@
 .s03__intro{display:flex;flex-direction:column;gap:14px}
 .s03__h{max-width:22ch}
 .s03__swap{display:inline-block;vertical-align:baseline}
+/* the sector is the ink half of the two-tone heading; it swaps in place, no chip */
 .s03__word{
-  display:inline-block;padding:.06em .3em .12em;border-radius:.28em;
-  background:var(--paper-3);color:var(--ink);
+  display:inline-block;color:var(--ink);
   transition:opacity .28s var(--e-io),transform .28s var(--e-io);
 }
 .s03__word.is-out{opacity:0;transform:translateY(-.18em)}
@@ -31,9 +31,11 @@
   transition:transform .9s var(--e),filter .5s var(--e);
 }
 .s03__card.is-on .s03__img{filter:none;transform:scale(1.02)}
-.s03__scrim{
+.s03__scrim{                          /* a solid ink plate, mask-faded in from 40% down */
   position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,rgba(25,25,29,.10) 0%,rgba(25,25,29,.12) 42%,rgba(25,25,29,.86) 100%);
+  background:var(--ink);opacity:.88;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.12) 0%,rgba(0,0,0,.16) 30%,#000 78%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.12) 0%,rgba(0,0,0,.16) 30%,#000 78%);
 }
 .s03__hit{
   position:absolute;inset:0;z-index:2;display:flex;align-items:end;justify-content:center;
@@ -48,24 +50,33 @@
 .s03__body{
   position:absolute;left:0;right:0;bottom:0;z-index:3;pointer-events:none;
   padding:clamp(18px,2vw,26px);color:var(--on-ink);
-  opacity:0;transform:translateY(10px);transition:opacity .45s var(--e) .12s,transform .45s var(--e) .12s;
+  transition:opacity .45s var(--e) .12s,transform .45s var(--e) .12s;
 }
-.s03__card.is-on .s03__body{opacity:1;transform:none}
-.s03__sector{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:10px}
+/* a closed card hides its line only once JS is running (03-industries.js adds .is-anim) */
+.s03.is-anim .s03__card:not(.is-on) .s03__body{opacity:0;transform:translateY(10px)}
+.s03__sector{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink-2);margin-bottom:10px}
 .s03__line{font-family:var(--f-h);font-size:clamp(1.02rem,1.35vw,1.25rem);line-height:1.28;letter-spacing:-.012em;font-weight:500;color:var(--on-ink);max-width:32ch}   /* the card's title line — same role as .s17__line / .bd-work__line */
-.s03__credit{margin-top:12px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.s03__credit{margin-top:12px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-2)}
 .s03__credit span{white-space:nowrap}   /* a discipline never splits; the line breaks after the chevron */
 .s03__credit i{color:var(--blue);font-style:normal;padding:0 .25em}
 
 @media (max-width:860px){
+  /* the rail bleeds to the viewport edge so the peek card is cut by the screen, not the wrap */
   .s03__rail{
     height:auto;overflow-x:auto;scroll-snap-type:x mandatory;
+    margin-inline:calc(-1 * var(--gutter));padding-inline:var(--gutter);scroll-padding-inline:var(--gutter);
     padding-bottom:8px;scrollbar-width:none;
+    /* the mask-x fade, tuned to the gutter the rail bleeds into */
+    -webkit-mask-image:linear-gradient(90deg,transparent,var(--ink) var(--gutter),var(--ink) calc(100% - var(--gutter)),transparent);
+    mask-image:linear-gradient(90deg,transparent,var(--ink) var(--gutter),var(--ink) calc(100% - var(--gutter)),transparent);
   }
+  .s03__rail:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
   .s03__rail::-webkit-scrollbar{display:none}
   .s03__card{flex:0 0 78%;height:380px;scroll-snap-align:center}
   .s03__card.is-on{flex:0 0 78%}
   .s03__spine{writing-mode:horizontal-tb;transform:none;opacity:0}
-  .s03__body{opacity:1;transform:none}
+  .s03.is-anim .s03__card:not(.is-on) .s03__body{opacity:1;transform:none}
   .s03__img{filter:none}
+  .s03__card{scroll-snap-align:start}
 }
+.s03__more{min-height:44px}             /* a full tap target at every width */

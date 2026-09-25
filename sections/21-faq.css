@@ -1,7 +1,10 @@
 /* 21 — FAQ. Title block left, plus-icon accordion right. */
 .s21__grid{display:grid;grid-template-columns:minmax(240px,.85fr) minmax(0,1.6fr);gap:clamp(28px,5vw,90px);align-items:start}
 .s21__side{display:flex;flex-direction:column;gap:18px;position:sticky;top:calc(var(--nav-h) + 40px)}
-.s21__h{margin-bottom:6px}
+.s21__h{margin-bottom:6px;max-width:11em}
+/* the text link keeps a 44px hit area without changing how it reads */
+.s21__tl{min-height:44px;align-self:flex-start}
+.s21__btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:var(--r-xs)}
 .s21__ask{display:flex;flex-direction:column;gap:6px;margin-top:clamp(20px,3vw,44px)}
 
 .s21__list{display:flex;flex-direction:column}
@@ -26,4 +29,8 @@
   .s21__grid{grid-template-columns:1fr}
   .s21__side{position:static}
   .s21__ask{margin-top:4px;flex-direction:row;align-items:center;gap:12px}
+  .s21__tl{align-self:center}
+}
+@media (prefers-reduced-motion:reduce){
+  .s21__panel,.s21__plus::before,.s21__plus::after{transition:none}
 }

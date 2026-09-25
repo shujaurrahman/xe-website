@@ -1,8 +1,9 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <section class="s01" id="hero" aria-labelledby="s01-t">
   <div class="s01__bg" aria-hidden="true">
     <span class="aurora aurora--soft"><i></i><i></i><i></i><i></i></span>
     <span class="dither dither--wide s01__dither"></span>
-    <span class="s01__grain"></span>
+    <span class="s01__grain dots"></span>
   </div>
 
   <!-- PLACEHOLDER: work thumbnails are reference imagery — swap for Xterra Edze projects -->

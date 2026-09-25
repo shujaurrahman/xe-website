@@ -1,4 +1,5 @@
 /* ===== 01-hero ===== */
+try {
 /* 01 — the floating work drifts with the pointer; everything fades in once. */
 (function () {
   'use strict';
@@ -6,7 +7,8 @@
   if (!sec || !window.XE) return;
 
   /* reveal + start the ambient loops */
-  requestAnimationFrame(function () { sec.classList.add('is-in'); });
+  if (!XE.reduced) sec.classList.add('is-anim');   /* floats start hidden only when JS runs */
+  requestAnimationFrame(function () { requestAnimationFrame(function () { sec.classList.add('is-in'); }); });
   if (!XE.reduced) {
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) {
@@ -49,8 +51,10 @@
     raf = (Math.abs(tx - cx) > .002 || Math.abs(ty - cy) > .002) ? requestAnimationFrame(loop) : null;
   }
 })();
+} catch (e) { console.error('[01-hero]', e); }
 
 /* ===== 02-showcase ===== */
+try {
 /* 02 — Brief ⇄ Delivered. It runs itself: the rule fills across, then the pane
    turns over. Clicking a pill takes control. */
 (function () {
@@ -86,11 +90,11 @@
 
   /* one leg of the loop: fill the rule, then turn the pane over */
   function travel() {
-    if (pinned) return;
+    if (pinned || !live) return;
     var forward = i === 0;
     toggle.classList.add(forward ? 'is-travel' : 'is-back');
     t1 = setTimeout(function () {
-      if (pinned) return;
+      if (pinned || !live) return;
       toggle.classList.remove('is-travel', 'is-back');
       paint(forward ? 1 : 0);
       t2 = setTimeout(travel, 4200);
@@ -115,13 +119,31 @@
   });
 
   paint(0);
+
+  /* the loop (and the wash behind it) only runs while the section is on screen */
   if (!XE.reduced) {
-    sec.classList.add('is-live');
-    XE.inView(sec, function () { t2 = setTimeout(travel, 2200); });
+    var live = false;
+    function setLive(on) {
+      on = on && !document.hidden;
+      if (on === live) return;
+      live = on;
+      sec.classList.toggle('is-live', on);
+      if (on) { if (!pinned) t2 = setTimeout(travel, 2200); }
+      else clear();
+    }
+    if ('IntersectionObserver' in window) {
+      var seen = false;
+      new IntersectionObserver(function (es) {
+        seen = es[0].isIntersecting; setLive(seen);
+      }, { threshold: 0.15 }).observe(sec);
+      XE.on(document, 'visibilitychange', function () { setLive(seen); });
+    } else { setLive(true); }
   }
 })();
+} catch (e) { console.error('[02-showcase]', e); }
 
 /* ===== 03-industries ===== */
+try {
 /* 03 — hovering or focusing a card opens it and swaps the word in the heading. */
 (function () {
   'use strict';
@@ -134,6 +156,40 @@
   var fine = window.matchMedia('(pointer:fine)').matches;
   var wide = window.matchMedia('(min-width:861px)');
   var pinned = false, cur = 0, timer = null;
+  var rail = XE.$('[data-s03-rail]', sec);
+  sec.classList.add('is-anim');   /* closed cards hide their line only once JS runs */
+
+  /* wide: an accordion tablist. Narrow: a plain scroll rail where every card is a
+     reachable button and every line is visible, so the tab roles come off. */
+  function mode() {
+    var tabsOn = wide.matches;
+    if (tabsOn) {
+      rail.setAttribute('role', 'tablist'); rail.removeAttribute('aria-roledescription');
+      rail.removeAttribute('tabindex');
+      rail.setAttribute('aria-label', 'Industries we work in');
+    } else {
+      /* a sideways scroller: focusable so arrow keys scroll it, named as one */
+      rail.setAttribute('role', 'region');
+      rail.setAttribute('tabindex', '0');
+      rail.setAttribute('aria-label', 'Industries we work in, scroll sideways');
+    }
+    tabs.forEach(function (t, k) {
+      var body = cards[k].querySelector('.s03__body');
+      if (tabsOn) {
+        t.setAttribute('role', 'tab');
+        t.setAttribute('aria-selected', String(k === cur));
+        t.setAttribute('aria-controls', body.id);
+        t.setAttribute('tabindex', k === cur ? '0' : '-1');
+        body.setAttribute('role', 'tabpanel');
+      } else {
+        t.removeAttribute('role'); t.removeAttribute('aria-selected'); t.removeAttribute('aria-controls');
+        t.setAttribute('tabindex', '0');
+        body.removeAttribute('role');
+      }
+    });
+  }
+  mode();
+  if (wide.addEventListener) wide.addEventListener('change', mode);
 
   /* hold the widest word so the heading never reflows */
   var longest = cards.reduce(function (a, c) {
@@ -146,7 +202,7 @@
     if (i === cur) return;
     cur = i;
     cards.forEach(function (c, k) { c.classList.toggle('is-on', k === i); });
-    tabs.forEach(function (t, k) {
+    if (wide.matches) tabs.forEach(function (t, k) {
       t.setAttribute('aria-selected', String(k === i));
       t.setAttribute('tabindex', k === i ? '0' : '-1');
     });
@@ -165,6 +221,7 @@
     XE.on(hit, 'focus', function () { open(i); });
     XE.on(hit, 'click', function () { pinned = true; if (timer) timer.stop(); open(i); });
     XE.on(hit, 'keydown', function (e) {
+      if (!wide.matches) return;
       var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
       if (!d) return;
       e.preventDefault();
@@ -182,8 +239,10 @@
     XE.on(sec, 'mouseleave', function () { if (!pinned && timer) timer.start(); });
   }
 })();
+} catch (e) { console.error('[03-industries]', e); }
 
 /* ===== 05-flow ===== */
+try {
 /* 05 — the diagram only animates while it is on screen, and never under
    reduced motion. Everything else is CSS. */
 (function () {
@@ -198,43 +257,122 @@
     if (document.hidden) d.classList.remove('is-live');
   });
 })();
+} catch (e) { console.error('[05-flow]', e); }
 
 /* ===== 06-equip ===== */
-/* 06 — the rail loops for ever; the arrows nudge it and hovering holds it. */
+try {
+/* 06 — capability rail. The rail is a native scroll-snap row; this script only
+   drives it. Arrows and ←/→ on the focused rail move one card; Home/End jump.
+   Auto-advance runs only while the rail is on screen, pauses while the pointer or
+   focus is on it, and stops for good after any manual move or the pause button.
+   Nothing auto-advances or loops under reduced motion. */
 (function () {
   'use strict';
   var sec = document.querySelector('.s06');
   if (!sec || !window.XE) return;
+  var rail = XE.$('[data-s06-rail]', sec);
   var track = XE.$('[data-s06-track]', sec);
-  if (!track) return;
+  var nav = XE.$('[data-s06-nav]', sec);
+  if (!rail || !track || !nav) return;
+  var slides = XE.$$('.s06__slide', track);
+  var n = slides.length;
+  var play = XE.$('[data-s06-play]', sec);
+  var count = XE.$('[data-s06-count]', sec);
+  nav.hidden = false;
 
-  /* core's marquee has already cloned the cards for a seamless -50% loop */
-  var paused = false, nudge = 0;
-  function hold(on) {
-    paused = on;
-    track.style.animationPlayState = on ? 'paused' : 'running';
-    track.classList.toggle('is-held', on);
+  function pad(v) { return (v < 10 ? '0' : '') + v; }
+  function padL() { return parseFloat(getComputedStyle(track).paddingLeft) || 0; }
+  function maxX() { return rail.scrollWidth - rail.clientWidth; }
+
+  /* first card whose start is at (or past) the scroll edge, and last fully visible card */
+  function range() {
+    var x = rail.scrollLeft + padL(), w = rail.clientWidth - 2 * padL();
+    var first = 0, best = Infinity, last = 0;
+    slides.forEach(function (s, k) {
+      var d = Math.abs(s.offsetLeft - x);
+      if (d < best) { best = d; first = k; }
+      if (s.offsetLeft + s.offsetWidth <= x + w + 4) last = k;
+    });
+    if (rail.scrollLeft >= maxX() - 2) last = n - 1;
+    return [first, Math.max(first, last)];
   }
-  /* the loop only holds while the pointer is on a card — not the whole section */
-  XE.$$('.s06__card', track).forEach(function (card) {
-    XE.on(card, 'mouseenter', function () { hold(true); });
-    XE.on(card, 'mouseleave', function () { hold(false); });
-    XE.on(card, 'focusin', function () { hold(true); });
-    XE.on(card, 'focusout', function () { hold(false); });
+  function paint() {
+    var r = range();
+    count.textContent = (r[0] === r[1] ? pad(r[0] + 1) : pad(r[0] + 1) + '–' + pad(r[1] + 1)) + ' / ' + pad(n);
+  }
+  var ticking = false;
+  XE.on(rail, 'scroll', function () {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function () { ticking = false; paint(); });
+  }, { passive: true });
+
+  function go(k) {
+    k = Math.max(0, Math.min(n - 1, k));
+    rail.scrollTo({ left: Math.min(maxX(), slides[k].offsetLeft - padL()), behavior: XE.reduced ? 'auto' : 'smooth' });
+  }
+  function step(d) {
+    var r = range(), atEnd = rail.scrollLeft >= maxX() - 2;
+    if (d > 0) go(atEnd ? 0 : r[0] + 1);
+    else go(r[0] === 0 && rail.scrollLeft < 2 ? n - 1 : r[0] - 1);
+  }
+
+  /* ---- auto-advance ---- */
+  var auto = !XE.reduced, onScreen = false, held = false, timer = null;
+  function sync() {
+    var run = auto && onScreen && !held && !document.hidden;
+    if (run && timer === null) timer = setInterval(function () { step(1); }, 4200);
+    if (!run && timer !== null) { clearInterval(timer); timer = null; }
+    sec.classList.toggle('is-live', onScreen && !XE.reduced && !document.hidden);
+    sec.classList.toggle('is-held', held);
+  }
+  function stopAuto() {
+    if (!auto) return;
+    auto = false; sync();
+    if (play) { play.classList.add('is-paused'); play.setAttribute('aria-pressed', 'true'); }
+  }
+  function startAuto() {
+    auto = true; sync();
+    if (play) { play.classList.remove('is-paused'); play.setAttribute('aria-pressed', 'false'); }
+  }
+
+  if (XE.reduced && play) { play.hidden = true; auto = false; }
+  if (play) XE.on(play, 'click', function () { auto ? stopAuto() : startAuto(); });
+  XE.on(XE.$('[data-s06-prev]', sec), 'click', function () { stopAuto(); step(-1); });
+  XE.on(XE.$('[data-s06-next]', sec), 'click', function () { stopAuto(); step(1); });
+
+  XE.on(rail, 'keydown', function (e) {
+    var k = e.key;
+    if (k === 'ArrowRight') step(1);
+    else if (k === 'ArrowLeft') step(-1);
+    else if (k === 'Home') go(0);
+    else if (k === 'End') go(n - 1);
+    else return;
+    e.preventDefault(); stopAuto();
+  });
+  /* a swipe, drag or sideways wheel is a manual move too */
+  XE.on(rail, 'pointerdown', stopAuto);
+  XE.on(rail, 'wheel', function (e) { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) stopAuto(); }, { passive: true });
+
+  /* hovering or focusing the rail or its controls holds everything in place */
+  [rail, nav].forEach(function (el) {
+    XE.on(el, 'mouseenter', function () { held = true; sync(); });
+    XE.on(el, 'mouseleave', function () { held = false; sync(); });
+    XE.on(el, 'focusin', function () { held = true; sync(); });
+    XE.on(el, 'focusout', function (e) { if (!el.contains(e.relatedTarget)) { held = false; sync(); } });
   });
 
-  function step(dir) {
-    nudge += dir * 344;                       /* one card + gap */
-    track.style.transform = 'translate3d(' + (-nudge % (track.scrollWidth / 2)) + 'px,0,0)';
-    hold(true);
-    clearTimeout(step.t);
-    step.t = setTimeout(function () { track.style.transform = ''; hold(false); nudge = 0; }, 2600);
-  }
-  XE.on(XE.$('[data-s06-prev]', sec), 'click', function () { step(-1); });
-  XE.on(XE.$('[data-s06-next]', sec), 'click', function () { step(1); });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { onScreen = es[es.length - 1].isIntersecting; sync(); },
+      { threshold: 0.3 }).observe(rail);
+  } else { onScreen = true; }
+  document.addEventListener('visibilitychange', sync);
+  XE.on(window, 'resize', paint);
+  paint(); sync();
 })();
+} catch (e) { console.error('[06-equip]', e); }
 
 /* ===== 07-ai-design ===== */
+try {
 /* 07 — ai design bento: two live details only. The render rule runs while the
    studio card is on screen, and the routed model chip moves on a slow tick.
    The cards themselves are static — no hover lift, no parallax. */
@@ -299,81 +437,82 @@
     });
   }
 })();
+} catch (e) { console.error('[07-ai-design]', e); }
 
 /* ===== 08-disciplines ===== */
-/* 08 — the discipline list drifts for ever. Whichever pill is crossing the
-   centre line is the active one, and it drives the panel on the right. */
+try {
+/* 08 — six disciplines. A static ARIA tablist. While the panel is on screen the
+   active tab's rail fills (CSS) and, when it ends, hands on to the next tab. Any
+   pointer, key or focus inside the panel — or a #d-<slug> deep link — stops that
+   for good. Nothing auto-advances under reduced motion. */
 (function () {
   'use strict';
   var sec = document.querySelector('.s08');
   if (!sec || !window.XE) return;
 
-  var panel = XE.$('.s08__panel', sec);
-  var scroller = XE.$('.s08__scroller', sec);
-  var track = XE.$('[data-s08-track]', sec);
-  var pills = XE.$$('.s08__pill', track);
+  var panel = XE.$('[data-s08-panel]', sec);
+  var scroller = XE.$('[data-s08-scroller]', sec);
+  var list = XE.$('[data-s08-track]', sec);
+  var tabs = XE.$$('.s08__pill', list);
   var panes = XE.$$('.s08__pane', sec);
-  var n = pills.length;
+  var n = tabs.length;
   if (!n) return;
 
-  var desktop = window.matchMedia('(min-width:901px)');
-  var cur = -1, pinned = false, raf = null;
+  var cur = 0, auto = false;
+  var narrow = window.matchMedia('(max-width:900px)');
 
-  /* a second copy so the -50% loop is seamless */
-  pills.forEach(function (p) {
-    var c = p.cloneNode(true);
-    c.setAttribute('aria-hidden', 'true');
-    c.setAttribute('tabindex', '-1');
-    c.removeAttribute('id');
-    c.removeAttribute('role');
-    track.appendChild(c);
-  });
-  var all = XE.$$('.s08__pill', track);
+  function orient() {
+    list.setAttribute('aria-orientation', narrow.matches ? 'horizontal' : 'vertical');
+    /* the phone/tablet strip scrolls sideways: make the region itself reachable by keyboard */
+    if (narrow.matches && scroller.scrollWidth > scroller.clientWidth + 1) scroller.setAttribute('tabindex', '0');
+    else scroller.removeAttribute('tabindex');
+  }
+  orient();
+  var ot = null;
+  XE.on(window, 'resize', function () { clearTimeout(ot); ot = setTimeout(orient, 150); });
+  if (narrow.addEventListener) narrow.addEventListener('change', function () { orient(); stop(); });
 
-  function paint(k) {
-    if (k === cur) return;
+  /* keep the active pill in view inside the horizontal strip (phones) without moving the page */
+  function reveal(k) {
+    if (!narrow.matches) return;
+    var t = tabs[k], l = t.offsetLeft - 16, r = t.offsetLeft + t.offsetWidth + 16;
+    if (l < scroller.scrollLeft) scroller.scrollTo({ left: l, behavior: XE.reduced ? 'auto' : 'smooth' });
+    else if (r > scroller.scrollLeft + scroller.clientWidth) scroller.scrollTo({ left: r - scroller.clientWidth, behavior: XE.reduced ? 'auto' : 'smooth' });
+  }
+
+  function show(k) {
+    k = ((k % n) + n) % n;
     cur = k;
-    all.forEach(function (p, x) { p.classList.toggle('is-on', (x % n) === k); });
-    pills.forEach(function (p, x) {
-      p.setAttribute('aria-selected', String(x === k));
-      p.setAttribute('tabindex', x === k ? '0' : '-1');
+    tabs.forEach(function (t, x) {
+      var on = x === k;
+      t.classList.toggle('is-on', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.setAttribute('tabindex', on ? '0' : '-1');
     });
     panes.forEach(function (p, x) { p.classList.toggle('is-on', x === k); });
+    reveal(k);
   }
 
-  /* read the pill nearest the centre of the column */
-  function watch() {
-    raf = null;
-    if (!desktop.matches || pinned) return;
-    var r = scroller.getBoundingClientRect();
-    if (r.bottom < 0 || r.top > window.innerHeight) { schedule(); return; }
-    var mid = r.top + r.height / 2;
-    var best = 0, bestD = Infinity;
-    all.forEach(function (p, x) {
-      var b = p.getBoundingClientRect();
-      var d = Math.abs(b.top + b.height / 2 - mid);
-      if (d < bestD) { bestD = d; best = x % n; }
-    });
-    paint(best);
-    schedule();
-  }
-  function schedule() { if (raf === null) raf = requestAnimationFrame(watch); }
-
-  function pin(k) {
-    pinned = true;
-    track.classList.remove('is-drift');
-    track.style.transform = 'none';
-    paint(k);
+  function stop() {
+    if (!auto) return;
+    auto = false;
+    sec.classList.remove('is-auto');
+    ['pointerdown', 'keydown', 'focusin'].forEach(function (ev) { panel.removeEventListener(ev, stop); });
   }
 
-  all.forEach(function (p, x) { XE.on(p, 'click', function () { pin(x % n); }); });
-  pills.forEach(function (p, k) {
-    XE.on(p, 'keydown', function (e) {
-      var d = e.key === 'ArrowDown' ? 1 : e.key === 'ArrowUp' ? -1 : 0;
-      if (!d) return;
-      e.preventDefault();
-      var t = ((k + d) % n + n) % n;
-      pin(t); pills[t].focus();
+  tabs.forEach(function (t, k) {
+    XE.on(t, 'click', function (e) { e.preventDefault(); stop(); show(k); });
+    XE.on(t, 'keydown', function (e) {
+      var key = e.key, j = -1;
+      if (key === 'ArrowDown' || key === 'ArrowRight') j = k + 1;
+      else if (key === 'ArrowUp' || key === 'ArrowLeft') j = k - 1;
+      else if (key === 'Home') j = 0;
+      else if (key === 'End') j = n - 1;
+      else if (key === ' ' || key === 'Spacebar') { e.preventDefault(); stop(); show(k); return; }
+      if (j === -1) return;
+      e.preventDefault(); stop();
+      j = ((j % n) + n) % n;
+      show(j); tabs[j].focus();
     });
   });
 
@@ -385,41 +524,108 @@
     if (h.indexOf('d-') !== 0) return false;
     var k = slugs.indexOf(h.slice(2));
     if (k < 0) return false;
-    pin(k);
+    stop(); show(k);
     if (scroll) sec.scrollIntoView({ behavior: XE.reduced ? 'auto' : 'smooth', block: 'start' });
     return true;
   }
   XE.on(window, 'hashchange', function () { fromHash(true); });
 
-  paint(0);
-  if (!fromHash(false) && !XE.reduced && desktop.matches) {
-    track.style.setProperty('--s08-dur', (n * 4.4) + 's');
-    track.classList.add('is-drift');
-    schedule();
-  }
+  show(0);
+  /* phones: panes change height, so never switch one under the reader */
+  if (fromHash(false) || XE.reduced || narrow.matches) return;
+
+  /* auto hand-on: the rail animation ending is the clock, so it pauses with the
+     section off screen, the tab hidden, or the pointer resting on the panel */
+  auto = true;
+  sec.classList.add('is-auto');
+  ['pointerdown', 'keydown', 'focusin'].forEach(function (ev) { panel.addEventListener(ev, stop); });
+  XE.on(list, 'animationend', function (e) {
+    if (auto && e.animationName === 's08-rail') show(cur + 1);
+  });
+  function live(on) { sec.classList.toggle('is-live', on && !document.hidden); }
+  if ('IntersectionObserver' in window) {
+    var vis = false;
+    new IntersectionObserver(function (es) { vis = es[es.length - 1].isIntersecting; live(vis); },
+      { threshold: 0.35 }).observe(panel);
+    document.addEventListener('visibilitychange', function () { live(vis); });
+  } else { live(true); }
 })();
+} catch (e) { console.error('[08-disciplines]', e); }
 
 /* ===== 10-production ===== */
-/* 10 — the marquee videos only load and play while the section is on screen. */
+try {
+/* 10 — the production strips. Without JS (and under reduced motion) they are static
+   rows you can swipe. Otherwise this clones each strip once, adds .is-anim, and the
+   drift plus the videos run only while the section is on screen and not paused.
+   Videos keep preload="none" and their poster until then. */
 (function () {
   'use strict';
   var sec = document.querySelector('.s10');
-  if (!sec || !window.XE) return;
-  if (XE.reduced || !('IntersectionObserver' in window)) return;
+  if (!sec || !window.XE || XE.reduced) return;
 
-  new IntersectionObserver(function (es) {
-    var on = es[0].isIntersecting;
-    XE.$$('[data-s10-v]', sec).forEach(function (v) {
-      if (on) {
+  var rows = XE.$$('[data-s10-row]', sec);
+  var btn = XE.$('[data-s10-pause]', sec);
+  var SPEED = 26;                                   /* px per second */
+
+  rows.forEach(function (row) {
+    var track = XE.$('[data-s10-track]', row);
+    XE.$$('.s10__c', track).forEach(function (c) {
+      var k = c.cloneNode(true);
+      k.setAttribute('aria-hidden', 'true');
+      XE.$$('img', k).forEach(function (im) { im.loading = 'eager'; });   /* same files: served from cache */
+      track.appendChild(k);
+    });
+  });
+  sec.classList.add('is-anim');
+
+  /* one set's width, measured after .is-anim drops the static padding */
+  function measure() {
+    rows.forEach(function (row) {
+      var track = XE.$('[data-s10-track]', row);
+      var half = track.scrollWidth / 2;
+      track.style.setProperty('--s10-x', half + 'px');
+      track.style.setProperty('--s10-dur', Math.round(half / SPEED) + 's');
+    });
+  }
+  measure();
+  var rt = null;
+  XE.on(window, 'resize', function () { clearTimeout(rt); rt = setTimeout(measure, 150); });
+  XE.$$('img', sec).forEach(function (im) { if (!im.complete) XE.on(im, 'load', measure, { once: true }); });
+
+  var vids = XE.$$('[data-s10-v]', sec);
+  var onScreen = false, paused = false;
+  function sync() {
+    var run = onScreen && !paused && !document.hidden;
+    sec.classList.toggle('is-live', onScreen && !document.hidden);
+    sec.classList.toggle('is-paused', paused);
+    vids.forEach(function (v) {
+      if (run) {
         if (v.preload !== 'auto') { v.preload = 'auto'; v.load(); }
         var pr = v.play();
         if (pr && pr.catch) pr.catch(function () {});
-      } else { v.pause(); }
+      } else if (!v.paused) { v.pause(); }
     });
-  }, { threshold: 0.05 }).observe(sec);
+  }
+
+  if (btn) {
+    btn.hidden = false;
+    XE.on(btn, 'click', function () {
+      paused = !paused;
+      btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      sync();
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { onScreen = es[es.length - 1].isIntersecting; sync(); },
+      { threshold: 0.05 }).observe(sec);
+  } else { onScreen = true; }
+  document.addEventListener('visibilitychange', sync);
+  sync();
 })();
+} catch (e) { console.error('[10-production]', e); }
 
 /* ===== 12-process ===== */
+try {
 /* 12 — the three steps advance on a 6s dwell; clicking one pins it. */
 (function () {
   'use strict';
@@ -461,14 +667,21 @@
 
   show(0);
   if (!XE.reduced) {
-    panel.classList.add('is-live');
+    /* the ping only loops while the panel is on screen */
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        panel.classList.toggle('is-live', es[0].isIntersecting);
+      }, { threshold: 0 }).observe(panel);
+    } else { panel.classList.add('is-live'); }
     timer = XE.liveTimer(panel, 6000, function () { if (!pinned) show(i + 1); });
     XE.on(panel, 'mouseenter', function () { if (timer) timer.stop(); });
     XE.on(panel, 'mouseleave', function () { if (!pinned && timer) timer.start(); });
   }
 })();
+} catch (e) { console.error('[12-process]', e); }
 
 /* ===== 13-operation ===== */
+try {
 /* 13 — the two photographs drift a few pixels apart as the section passes. */
 (function () {
   'use strict';
@@ -497,8 +710,48 @@
   }, { passive: true });
   tick();
 })();
+} catch (e) { console.error('[13-operation]', e); }
+
+/* ===== 15-testimonials ===== */
+try {
+/* 15 — the index in the sticky column. Each entry is a plain #s15-bN link (without JS it jumps to
+   the row, whose panel the noscript rule already shows open); here it opens that row through the
+   accordion's own button and keeps aria-current on the entry whose row is open. */
+(function () {
+  'use strict';
+  var root = document.querySelector('.s15');
+  if (!root || !window.XE) return;
+  var links = XE.$$('[data-s15-go]', root);
+  if (!links.length) return;
+  var btns = links.map(function (a) { return document.getElementById('s15-b' + a.getAttribute('data-s15-go')); });
+
+  function sync() {
+    links.forEach(function (a, i) {
+      if (btns[i] && btns[i].getAttribute('aria-expanded') === 'true') a.setAttribute('aria-current', 'true');
+      else a.removeAttribute('aria-current');
+    });
+  }
+  links.forEach(function (a, i) {
+    XE.on(a, 'click', function (e) {
+      var b = btns[i];
+      if (!b) return;
+      e.preventDefault();
+      if (b.getAttribute('aria-expanded') !== 'true') b.click();
+      b.focus({ preventScroll: true });
+      var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      b.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+    });
+  });
+  if ('MutationObserver' in window) {
+    var mo = new MutationObserver(sync);
+    btns.forEach(function (b) { if (b) mo.observe(b, { attributes: true, attributeFilter: ['aria-expanded'] }); });
+  }
+  sync();
+})();
+} catch (e) { console.error('[15-testimonials]', e); }
 
 /* ===== 17-delivered ===== */
+try {
 /* 17 — case slider: arrows, keyboard, swipe, and a slow auto-advance. */
 (function () {
   'use strict';
@@ -540,8 +793,10 @@
     timer = XE.liveTimer(root, 7000, function () { if (!stopped) show(i + 1); });
   }
 })();
+} catch (e) { console.error('[17-delivered]', e); }
 
 /* ===== 20-booking ===== */
+try {
 /* 20 — booking. Writes the reader's own time zone into the discovery-call panel.
 
    This used to drive a mock calendar (invented availability, a mailto "booking" that
@@ -558,8 +813,10 @@
     if (tz) el.textContent = tz.replace(/_/g, ' ');
   } catch (e) {}
 })();
+} catch (e) { console.error('[20-booking]', e); }
 
 /* ===== 22-final-cta ===== */
+try {
 /* 22 — the orbit dots only travel while the band is on screen and the tab is
    visible. Everything else in the section is CSS. */
 (function () {
@@ -574,3 +831,268 @@
     if (document.hidden) sec.classList.remove('is-live');
   });
 })();
+} catch (e) { console.error('[22-final-cta]', e); }
+
+/* ===== 23-brand ===== */
+try {
+/* 23 — Brand Design, in depth. Upgrades the #s23-<slug> link row into ARIA tabs (BDH.tabs:
+   arrows, Home/End), keeps one pane in flow ([hidden] on the rest), reserves the tallest pane's
+   height so switching never moves the page, and builds an artefact in only when the visitor
+   changes tab. No auto-advance. A #s23-<slug> hash (on load or hashchange) opens that tab and
+   scrolls to the selector. Reduced motion: everything works, nothing animates.
+   hub.js (window.BDH) loads after sections.js, so init waits for DOMContentLoaded. */
+(function () {
+  'use strict';
+
+  function init() {
+    var root = document.querySelector('.s23');
+    var BDH = window.BDH;
+    if (!root || !BDH) return;
+    var app = root.querySelector('[data-s23]');
+    var list = root.querySelector('.s23__tabs');
+    var wrap = root.querySelector('.s23__panes');
+    var tabs = BDH.$$('.s23__tab', root);
+    var panes = BDH.$$('.s23__pane', root);
+    if (!app || !list || !wrap || !tabs.length || tabs.length !== panes.length) return;
+    var R = BDH.reduced;
+
+    function fromHash() {
+      var h = location.hash;
+      for (var i = 0; i < panes.length; i++) { if (h === '#' + panes[i].id) return i; }
+      return -1;
+    }
+    var start = Math.max(0, fromHash());
+
+    /* links → tabs */
+    list.setAttribute('role', 'tablist');
+    tabs.forEach(function (t, i) {
+      t.setAttribute('role', 'tab');
+      t.setAttribute('aria-controls', panes[i].id);
+      t.addEventListener('click', function (e) { e.preventDefault(); });
+      t.addEventListener('keydown', function (e) { if (e.key === ' ') { e.preventDefault(); t.click(); } });
+    });
+    panes.forEach(function (p, i) {
+      p.setAttribute('role', 'tabpanel');
+      p.setAttribute('aria-labelledby', tabs[i].id);
+      p.setAttribute('tabindex', '0');
+      p.hidden = i !== start;
+    });
+    root.classList.add('is-ready');
+    if (!R) root.classList.add('is-anim');
+    panes[start].classList.add('is-run');          // the first view is the finished state
+
+    function run(p) {
+      if (R) { p.classList.add('is-run'); return; }
+      p.classList.remove('is-run');
+      void p.offsetWidth;                          // restart the build-in
+      p.classList.add('is-run');
+    }
+
+    var api = BDH.tabs(app, {
+      tabs: tabs, panes: panes, initial: start,
+      onChange: function (i) { run(panes[i]); }
+    });
+
+    /* reserve the tallest pane, so a tab change never moves what follows */
+    function reserve() {
+      wrap.style.removeProperty('--s23-h');
+      var max = 0;
+      panes.forEach(function (p) {
+        var was = p.hidden;
+        p.hidden = false;
+        max = Math.max(max, p.offsetHeight);
+        p.hidden = was;
+      });
+      if (max) wrap.style.setProperty('--s23-h', max + 'px');
+    }
+    reserve();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(reserve);
+    window.addEventListener('load', reserve);
+    var lastW = window.innerWidth, raf = 0;
+    window.addEventListener('resize', function () {
+      if (window.innerWidth === lastW) return;     // ignore mobile toolbar height changes
+      lastW = window.innerWidth;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(reserve);
+    });
+
+    /* deep links */
+    function toSelector() {
+      list.scrollIntoView({ block: 'start', behavior: R ? 'auto' : 'smooth' });
+    }
+    window.addEventListener('hashchange', function () {
+      var i = fromHash();
+      if (i < 0) return;
+      if (i !== api.index()) api.show(i, true);
+      toSelector();
+    });
+    if (fromHash() >= 0) window.addEventListener('load', function () { setTimeout(toSelector, 0); });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+} catch (e) { console.error('[23-brand]', e); }
+
+/* ===== 24-technology ===== */
+try {
+/* 24 — Technology & Intelligence: "the system diagram".
+   The HTML is the finished, readable state: every capability is a node linking to its detail, and the
+   framework rows are plain content. Here:
+   · .is-js at once, so the details share one reserved cell (no shift) and the hint shows;
+   · choosing a node (click, Enter, focus, or hover on hover-capable devices) opens its detail in place;
+   · framework rows become toggle buttons that light the capabilities built to each, in the diagram
+     and in a readout of fixed height directly above the rows (so nothing moves under the pointer);
+   · one faint pulse per stratum while on screen (BDH.live); nothing moves under reduced motion.
+   hub.js (window.BDH) loads after sections.js, so init waits for DOMContentLoaded. */
+(function () {
+  'use strict';
+  var root = document.querySelector('.s24');
+  if (!root) return;
+  root.classList.add('is-js');
+
+  function $$(sel, el) { return Array.prototype.slice.call((el || root).querySelectorAll(sel)); }
+
+  function init() {
+    var BDH = window.BDH;
+    var sys = root.querySelector('[data-s24]');
+    var dets = root.querySelector('.s24__dets');
+    if (!sys || !dets) return;
+    var R = BDH ? !!BDH.reduced : window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (BDH) BDH.live(sys, 0.15);
+
+    var nodes = $$('[data-s24-node]');
+    var active = null;   // the framework key currently pressed
+    var current = null;
+
+    function markBadges() {
+      $$('.s24__stds > .xt-badge').forEach(function (b) {
+        b.classList.toggle('is-hit', !!active && b.classList.contains('s24__std-' + active));
+      });
+    }
+
+    function select(slug) {
+      if (!slug || slug === current) return;
+      current = slug;
+      nodes.forEach(function (n) {
+        var on = n.getAttribute('data-s24-node') === slug;
+        n.classList.toggle('is-on', on);
+        if (on) n.setAttribute('aria-current', 'true'); else n.removeAttribute('aria-current');
+      });
+      $$('.s24__det').forEach(function (d) { d.classList.toggle('is-on', d.id === 's24-d-' + slug); });
+    }
+
+    var canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+    var hoverT = null;
+    nodes.forEach(function (n) {
+      var slug = n.getAttribute('data-s24-node');
+      n.addEventListener('click', function (e) {
+        e.preventDefault();
+        select(slug);
+        /* on narrow screens the detail sits below the diagram: bring it into view if it is off screen */
+        var r = dets.getBoundingClientRect();
+        if (r.top > window.innerHeight - 120) dets.scrollIntoView({ behavior: R ? 'auto' : 'smooth', block: 'nearest' });
+      });
+      n.addEventListener('focus', function () { select(slug); });
+      n.addEventListener('pointerenter', function () {
+        if (!canHover.matches) return;
+        clearTimeout(hoverT);
+        hoverT = setTimeout(function () { select(slug); }, 90);
+      });
+      n.addEventListener('pointerleave', function () { clearTimeout(hoverT); });
+    });
+
+    var first = nodes.filter(function (n) { return n.classList.contains('is-on'); })[0] || nodes[0];
+    var fromHash = location.hash.indexOf('#s24-d-') === 0 ? location.hash.slice(7) : null;
+    select(fromHash && root.querySelector('#s24-d-' + fromHash) ? fromHash : first.getAttribute('data-s24-node'));
+
+    /* ---------- frameworks index: rows become toggle buttons --------------- */
+    var read = root.querySelector('[data-s24-read]');
+    var rows = $$('.s24__fr');
+    var fbs = [];
+    rows.forEach(function (li) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 's24__fb';
+      b.setAttribute('aria-pressed', 'false');
+      while (li.firstChild) b.appendChild(li.firstChild);
+      li.appendChild(b);
+      li.classList.add('is-up');
+      b.s24key = li.getAttribute('data-s24-std');
+      b.s24code = li.getAttribute('data-code');
+      fbs.push(b);
+    });
+
+    function hitsFor(key) {
+      return nodes.filter(function (n) { return (' ' + n.getAttribute('data-std') + ' ').indexOf(' ' + key + ' ') > -1; });
+    }
+    var caps = $$('[data-s24-cap]');
+    var capList = root.querySelector('.s24__fwc');
+    function paintRead(key) {
+      if (!read) return;
+      read.textContent = '';
+      if (!key) { read.textContent = 'Choose a framework to light the capabilities built to it.'; return; }
+      var b = fbs.filter(function (f) { return f.s24key === key; })[0];
+      var hits = hitsFor(key);
+      var code = document.createElement('b');
+      code.textContent = b ? b.s24code : key;
+      read.appendChild(code);
+      read.appendChild(document.createTextNode(' — ' + hits.length + ' of ' + nodes.length + ' capabilities are built to it'));
+      var names = document.createElement('span');
+      names.className = 'sr';
+      names.textContent = ': ' + hits.map(function (n) { return n.querySelector('.s24__nn').textContent; }).join(', ');
+      read.appendChild(names);
+      read.appendChild(document.createTextNode('.'));
+    }
+    /* reserve the tallest sentence, so pressing a framework never moves the rows under the pointer */
+    function reserve() {
+      if (!read) return;
+      read.style.minHeight = '';
+      var max = 0;
+      [null].concat(fbs.map(function (f) { return f.s24key; })).forEach(function (k) {
+        paintRead(k); max = Math.max(max, read.offsetHeight);
+      });
+      read.style.minHeight = max + 'px';
+      paintRead(active);
+    }
+
+    function apply(key) {
+      active = key;
+      fbs.forEach(function (b) { b.setAttribute('aria-pressed', b.s24key === key ? 'true' : 'false'); });
+      var hits = key ? hitsFor(key) : [];
+      nodes.forEach(function (n) { n.classList.toggle('is-hit', hits.indexOf(n) > -1); });
+      sys.classList.toggle('is-filter', !!key);
+      if (capList) capList.classList.toggle('is-filter', !!key);
+      var hitSlugs = hits.map(function (n) { return n.getAttribute('data-s24-node'); });
+      caps.forEach(function (c) { c.classList.toggle('is-hit', hitSlugs.indexOf(c.getAttribute('data-s24-cap')) > -1); });
+      markBadges();
+      paintRead(key);
+    }
+    fbs.forEach(function (b) {
+      b.addEventListener('click', function () { apply(active === b.s24key ? null : b.s24key); });
+    });
+    reserve();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(reserve);
+    window.addEventListener('load', reserve);
+    var rt = null;
+    window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(reserve, 150); });
+
+    /* show all frameworks (the list is cut to eight up to 1180px) */
+    var all = root.querySelector('.s24__all');
+    var fwl = root.querySelector('.s24__fwl');
+    if (all && fwl) {
+      all.hidden = false;
+      var label = all.textContent;
+      all.addEventListener('click', function () {
+        var open = !fwl.classList.contains('is-open');
+        fwl.classList.toggle('is-open', open);
+        all.setAttribute('aria-expanded', open ? 'true' : 'false');
+        all.textContent = open ? 'Show fewer frameworks' : label;
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+} catch (e) { console.error('[24-technology]', e); }

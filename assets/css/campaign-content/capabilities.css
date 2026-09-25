@@ -1,73 +1,8 @@
-/* Hub · capabilities — the eight panels. This is the card system the capability subpages reuse. */
-.cch-caps__list{display:grid;gap:clamp(20px,2.2vw,28px)}
-
-.cch-cap{position:relative;border-radius:var(--r-xl);border:1px solid var(--line);background:var(--paper);overflow:hidden;
-  scroll-margin-top:calc(var(--nav-h) + 40px)}
-
-/* ---- header: identity rail (index, stage, facts, action) beside the statement ---- */
-.cch-cap__hd{display:grid;grid-template-columns:minmax(0,236px) minmax(0,1fr);grid-template-rows:auto 1fr;
-  column-gap:clamp(28px,3.4vw,56px);row-gap:22px;padding:clamp(24px,2.6vw,36px);border-bottom:1px solid var(--line-2)}
-.cch-cap__rail{grid-column:1;grid-row:1}
-.cch-cap__main{grid-column:2;grid-row:1 / span 2}
-.cch-cap__facts{grid-column:1;grid-row:2;display:flex;flex-direction:column;align-items:flex-start;min-width:0}
-
-.cch-cap__rail{display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-width:0}
-.cch-cap__id{display:flex;align-items:center;gap:14px}
-.cch-cap__n{font-family:var(--f);font-size:1.5rem;font-weight:500;letter-spacing:-.02em;line-height:1;color:var(--blue);font-variant-numeric:tabular-nums}
-.cch-cap__ico{display:grid;place-items:center;width:46px;height:46px;border-radius:13px;background:var(--paper-3);color:var(--ink)}
-.cch-cap__kick{font-family:var(--f);font-size:var(--cch-mono-s);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1.5}
-
-.cch-cap__meta{display:grid;gap:12px;width:100%;padding-top:18px;border-top:1px solid var(--line-2)}
-.cch-cap__meta>div{display:grid;gap:4px}
-.cch-cap__meta dt{font-family:var(--f);font-size:var(--cch-mono-s);letter-spacing:.11em;text-transform:uppercase;color:var(--faint);line-height:1.4}
-.cch-cap__meta dd{font-size:var(--t-xs);line-height:1.5;color:var(--ink);font-weight:500}
-.cch-cap__cta{margin-top:20px}
-
-.cch-cap__main{min-width:0}
-.cch-cap__t{font-family:var(--f-h);font-size:clamp(1.35rem,2vw,1.75rem);font-weight:500;line-height:1.14;letter-spacing:-.022em;color:var(--ink)}
-.cch-cap__st{margin-top:16px;font-family:var(--f-h);font-size:clamp(1.15rem,1.7vw,1.5rem);font-weight:500;line-height:1.22;letter-spacing:-.018em;color:var(--ink);max-width:30ch}
-.cch-cap__lead{margin-top:18px;font-size:var(--t-sm);line-height:1.65;color:var(--muted);max-width:66ch}
-
-.cch-cap__ok{margin-top:26px;padding-top:18px;border-top:1px solid var(--line-2)}
-.cch-cap__out{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px clamp(20px,2.4vw,36px);margin-top:14px}
-.cch-cap__out li{display:grid;gap:5px;min-width:0}
-.cch-cap__out b{font-size:var(--t-xs);font-weight:600;line-height:1.4;color:var(--ink)}
-.cch-cap__out span{font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
-
-/* ---- the six parts ---- */
-.cch-cap__offer{padding:clamp(22px,2.4vw,32px) clamp(24px,2.6vw,36px);background:var(--paper-2);border-bottom:1px solid var(--line-2)}
-.cch-cap__oh{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin-bottom:18px}
-.cch-cap__oh>span:last-child{font-size:var(--t-sm);line-height:1.55;color:var(--muted);max-width:76ch}
-.cch-cap__tiles{grid-template-columns:repeat(3,minmax(0,1fr))}
-
-/* ---- footer: what is handed over, frameworks, platforms, pairs ---- */
-.cch-cap__ft{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1fr) minmax(0,1.24fr) minmax(0,.94fr);column-gap:clamp(20px,2.4vw,36px);row-gap:22px;
-  padding:clamp(20px,2.2vw,28px) clamp(24px,2.6vw,36px)}
-.cch-cap__fc{display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:0}
-.cch-cap__dl{display:inline-flex;align-items:center;gap:6px;font-size:var(--t-xs);font-weight:500;color:var(--ink)}
-.cch-cap__dl i{font-family:var(--f);font-style:normal;color:var(--blue);transition:transform var(--d2) var(--e)}
-.cch-cap__dl:hover i,.cch-cap__dl:focus-visible i{transform:translateX(3px)}
-.cch-cap__std{display:flex;flex-wrap:wrap;gap:5px}
-.cch-cap__stack{gap:8px}
-
-.cch-caps__note{margin-top:clamp(28px,3vw,40px)}
-
-@media (max-width:1180px){
-  .cch-cap__hd{grid-template-columns:minmax(0,210px) minmax(0,1fr);column-gap:32px}
-  .cch-cap__tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .cch-cap__ft{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media (max-width:860px){
-  .cch-cap__hd{grid-template-columns:minmax(0,1fr);grid-template-rows:none}
-  .cch-cap__rail,.cch-cap__main,.cch-cap__facts{grid-column:1;grid-row:auto}
-  .cch-cap__out{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media (max-width:600px){
-  .cch-cap__tiles{grid-template-columns:minmax(0,1fr)}
-  .cch-cap__ft{grid-template-columns:minmax(0,1fr)}
-  .cch-cap__out{grid-template-columns:minmax(0,1fr)}
-  .cch-cap__cta{width:100%}
-}
-@media (prefers-reduced-motion:reduce){
-  .cch-cap__dl i{transition:none}
-}
+.cch-caps__lanes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--cch-gap)}
+.cch-caps__lane{display:flex;flex-direction:column;gap:14px}
+.cch-caps__lh{padding:0 2px 14px;border-bottom:2px solid var(--ink)}
+.cch-caps__lt{font:600 var(--t-h3)/1.15 var(--f-h);color:var(--ink);margin:6px 0 6px}
+.cch-caps__lh .sm{color:var(--muted);margin:0;min-height:3.2em}
+.cch-caps__lane .cch-card{flex:1}
+@media (max-width:1180px){.cch-caps__lanes{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:48px}}
+@media (max-width:640px){.cch-caps__lanes{grid-template-columns:1fr}.cch-caps__lh .sm{min-height:0}}

@@ -157,12 +157,12 @@
     ts.forEach(function (t, n) {
       XE.on(t, 'click', function () { stop(); show(n, true); });
       XE.on(t, 'keydown', function (e) {
-        var k = e.key, j = -1;
+        var k = e.key, j = null;   /* null = not our key; -1 is a real target (ArrowLeft on the first tab wraps) */
         if (k === 'ArrowRight' || k === 'ArrowDown') j = n + 1;
         else if (k === 'ArrowLeft' || k === 'ArrowUp') j = n - 1;
         else if (k === 'Home') j = 0;
         else if (k === 'End') j = ts.length - 1;
-        if (j === -1) return;
+        if (j === null) return;
         e.preventDefault(); stop();
         j = ((j % ts.length) + ts.length) % ts.length;
         ts[j].focus(); show(j, true);

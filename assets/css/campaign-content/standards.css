@@ -1,37 +1,11 @@
-/* Hub · standards — a table of frameworks, then the advertising codes. */
-.cch-std__wrap{border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);padding:clamp(20px,2.4vw,32px)}
-.cch-std__tbl caption{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.cch-std__tbl{table-layout:fixed}
-.cch-std__tbl thead th:nth-child(1){width:20%}
-.cch-std__tbl thead th:nth-child(2){width:28%}
-.cch-std__tbl thead th:nth-child(3){width:30%}
-.cch-std__tbl thead th:nth-child(4){width:22%}
-.cch-std__tbl tbody th{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
-.cch-std__badge{display:block}
-.cch-std__name{font-family:var(--f-b);font-size:var(--t-xs);font-weight:500;line-height:1.4;color:var(--ink)}
-.cch-std__body{font-family:var(--f);font-size:var(--cch-mono-s);letter-spacing:.09em;text-transform:uppercase;color:var(--faint);line-height:1.4}
-.cch-std__caps{gap:5px}
-
-.cch-std__codes{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:var(--bdh-gap-l);margin-top:var(--bdh-block)}
-.cch-std__ch{min-width:0}
-.cch-std__h3{font-family:var(--f-h);font-size:clamp(1.15rem,1.8vw,1.5rem);font-weight:500;line-height:1.2;letter-spacing:-.018em;color:var(--ink);max-width:22ch}
-.cch-std__cd{margin-top:14px;font-size:var(--t-sm);line-height:1.65;color:var(--muted);max-width:52ch}
-.cch-std__clist{display:grid;align-content:start}
-.cch-std__clist li{padding-block:16px;border-top:1px solid var(--line-3)}
-.cch-std__clist li:last-child{border-bottom:1px solid var(--line-3)}
-.cch-std__cn{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px;font-family:var(--f-h);font-size:1.0625rem;font-weight:500;
-  letter-spacing:-.01em;line-height:1.24;color:var(--ink)}
-.cch-std__cn span{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;color:var(--blue);line-height:1.4}
-.cch-std__cn em{font-style:normal;font-family:var(--f);font-size:var(--cch-mono-s);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.4}
-.cch-std__ct{margin-top:8px;font-size:var(--t-sm);line-height:1.6;color:var(--muted);max-width:62ch}
-
-.cch-std__note{margin-top:clamp(28px,3vw,40px);max-width:88ch}
-
-@media (max-width:980px){
-  .cch-std__codes{grid-template-columns:minmax(0,1fr)}
-}
-@media (max-width:760px){
-  .cch-std__wrap{padding:18px}
-  .cch-std__tbl{table-layout:auto}
-  .cch-std__tbl tbody th{gap:6px;padding-bottom:10px}
-}
+.cch-std__g{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--cch-gap)}
+.cch-std__i{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:22px;border:1px solid var(--line);border-radius:var(--r);background:var(--paper)}
+.cch-std__t{font:600 var(--t-body)/1.3 var(--f-h);color:var(--ink);margin:4px 0 0}
+.cch-std__i .sm{margin:0;color:var(--muted)}
+.cch-std__codes{display:grid;grid-template-columns:220px minmax(0,1fr);gap:16px 32px;margin-top:var(--cch-gap);padding:22px;border:1px dashed var(--line-3);border-radius:var(--r)}
+.cch-std__codes .bdh-ro{margin:0;color:var(--blue-d)}
+.cch-std__codes ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 24px}
+.cch-std__codes li{font:400 var(--t-sm)/1.5 var(--f-b);color:var(--txt)}
+.cch-std__codes strong{font-weight:600;color:var(--ink)}
+@media (max-width:1023px){.cch-std__g{grid-template-columns:repeat(2,minmax(0,1fr))}.cch-std__codes{grid-template-columns:1fr}}
+@media (max-width:640px){.cch-std__g,.cch-std__codes ul{grid-template-columns:1fr}}

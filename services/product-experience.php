@@ -1,118 +1,84 @@
 <?php
 /**
- * Product & Experience Design — the discipline hub. "Ahead of the build."
+ * Product & Experience Design — the discipline hub. "From signal to shipped".
  *
- * The concept: this discipline is the work that happens *before* anything expensive is built —
- * deciding what to build, and proving it before it is built. Every section is a view of that one
- * idea: the cost of deciding late (#stakes), the four gates a bet has to pass (#method), the
- * signature Proving Ground that puts a bet through the cheapest proof that could break it
- * (#proving), the evidence we gather (#research), and the system that makes the second screen
- * cheaper than the first (#system).
+ * Concept: every product decision is a claim about people that can be tested. The page follows one idea
+ * from a raw signal to a measured release, and every section is a view of that same loop
+ * (evidence → journey → wireframe → prototype → release, with the assumptions tracked throughout).
+ * Sections: partials/product-experience/<id>.php (+ assets/css/product-experience/<id>.css,
+ * assets/js/product-experience/<id>.js, loaded automatically once they hold anything).
  *
- * The page is a shell: every section is its own partial in partials/product-experience/<id>.php,
- * with assets/css/product-experience/<id>.css and assets/js/product-experience/<id>.js loaded
- * automatically once they hold anything.
+ * Base layers: assets/css/brand/hub.css (.bdh-*), assets/css/tech/kit.css (.xt-*), then
+ * assets/css/product-experience.css — the discipline's reusable visual language (.pxh-*):
  *
- * Base layers (in order): assets/css/brand/hub.css (.bdh-* primitives, window.BDH helpers in
- * assets/js/brand/hub.js), assets/css/tech/kit.css (.xt-* logos, icons, badges), then
- * assets/css/product-experience.css (.pxh-* primitives for this discipline).
+ *   CARD SYSTEM   .pxh-card (+ __top __idx __ico __t __d __list __foot, --ink)  a spec card with a
+ *                 five-step fidelity rail .pxh-fid[data-fid="1..5"] showing how far an idea has travelled.
+ *                 Capability pages: offer cards, outcome cards, pairs.
+ *   DIAGRAM       .pxh-flow (+ __col __node __lbl __gate)  columns of nodes; connectors are drawn in the
+ *                 gaps between columns (::after), never through a node, and turn vertical ≤860.
+ *                 Capability pages: token pipeline, research ops, eval loop, operating model.
+ *   DATA VIZ      .pxh-db dumbbell rows (baseline dot → result dot, target tick; values in %) and
+ *                 .pxh-curve SVG line chart with mono axes. Always labelled "illustrative".
+ *   STEPPER       .pxh-steps (+ __i __n __gate) numbered stages with a gate question between each;
+ *                 horizontal ≥1024, vertical below. Capability pages: their process from data.
+ *   TRACKER       .pxh-as assumption rows (state pill + confidence bar), reusable for any evidence list.
  *
- * Variables available to every section partial (never reassign):
- *   $SITE   data/site.php                     $DISC   the product-experience discipline row
- *   $CAPS   data/product-experience.php       $STACK  data/tech-stack.php (slug => name, category, file)
- *   $page   page meta
- * partials/nav.php, cta.php and footer.php loop with $c $d $i $k $item $url $current $disc $col $l $s,
- * so section partials prefix their own locals (pxh_*, hero_*, pg_* …) and never use those names.
- *
- * The five capability subpages do not exist yet, so every capability link on this page is an
- * anchor to that capability's card in #capabilities (id = the capability slug).
+ * Variables for every partial: $SITE, $DISC (this discipline's row in $SITE['disciplines']),
+ * $CAPS (data/product-experience.php), $STACK (data/tech-stack.php), $page.
+ * nav/cta/footer use $c $d $i $k $item $url $current $disc $col $l $s — partial locals are prefixed pxh_.
  */
 $BASE = '../';
 require __DIR__ . '/../partials/init.php';
 require_once __DIR__ . '/../partials/tech/kit.php';
-require_once __DIR__ . '/../partials/services/lib.php';   // svc_contact_url(): enquiries arrive tagged with the page and service
-
-$CAPS  = require __DIR__ . '/../data/product-experience.php';
+require_once __DIR__ . '/../partials/services/lib.php';
 $STACK = require __DIR__ . '/../data/tech-stack.php';
+$CAPS  = require __DIR__ . '/../data/product-experience.php';
 $DISC  = null;
-foreach ($SITE['disciplines'] as $pxh_disc) { if ($pxh_disc['slug'] === 'product-experience') $DISC = $pxh_disc; }
-unset($pxh_disc);
+foreach ($SITE['disciplines'] as $pxh_x) { if ($pxh_x['slug'] === 'product-experience') $DISC = $pxh_x; }
+unset($pxh_x);
 
-/* Running order: the promise → why it matters → how we decide → the proof → what we do →
-   the evidence → the system → AI → the standards → the tools → how we work → what you get →
-   what changes → buy → questions.
-   Bands: P P A I P A P I A P I P A P A P, then the shared ink CTA.
-   'services' is the shared Services & packages catalogue (partials/services/catalogue.php, data key
-   'product-experience'). Its packages row is this page's one set of engagement models, so there is no
-   separate engagement section — the same call the Brand Design and Technology hubs made. */
-$PXH_SECTIONS = [
-    'hero', 'capabilities', 'stakes', 'method', 'proving', 'offer', 'research', 'system', 'ai',
-    'standards', 'stack', 'process', 'deliverables', 'measures', 'services', 'faq',
-];
+$SECTIONS = ['hero', 'capabilities', 'shift', 'signal', 'process', 'ai', 'system', 'stack', 'standards', 'deliverables', 'outcomes', 'services', 'faq'];
 
-/* Base layers first, then each section's own file once it has content. head/footer stamp ?v= on every path. */
-$pxh_root  = __DIR__ . '/../';
-$pxh_asset = function (string $path) use ($pxh_root): ?string {
-    $f = $pxh_root . $path;
-    return (is_file($f) && filesize($f) > 0) ? $path : null;
-};
-$pxh_css = array_filter([
-    $pxh_asset('assets/css/brand/hub.css'),
-    $pxh_asset('assets/css/tech/kit.css'),
-    $pxh_asset('assets/css/product-experience.css'),
-]);
-$pxh_js = array_filter([$pxh_asset('assets/js/brand/hub.js')]);
-foreach ($PXH_SECTIONS as $pxh_id) {
-    if ($pxh_x = $pxh_asset('assets/css/product-experience/' . $pxh_id . '.css')) $pxh_css[] = $pxh_x;
-    if ($pxh_x = $pxh_asset('assets/js/product-experience/' . $pxh_id . '.js'))   $pxh_js[]  = $pxh_x;
+$pp_root = __DIR__ . '/../';
+$pp_has  = fn (string $p): ?string => (is_file($pp_root . $p) && filesize($pp_root . $p) > 0) ? $p : null;
+$pp_css  = array_filter([$pp_has('assets/css/brand/hub.css'), $pp_has('assets/css/tech/kit.css'), $pp_has('assets/css/product-experience.css')]);
+$pp_js   = array_filter([$pp_has('assets/js/brand/hub.js')]);
+foreach ($SECTIONS as $pp_id) {
+    if ($pxh_f = $pp_has("assets/css/product-experience/$pp_id.css")) $pp_css[] = $pxh_f;
+    if ($pxh_f = $pp_has("assets/js/product-experience/$pp_id.js"))   $pp_js[]  = $pxh_f;
 }
-/* the shared services & packages catalogue (.svc-*), after the page's own files, as on every other hub */
-if ($pxh_x = $pxh_asset('assets/css/services.css')) $pxh_css[] = $pxh_x;
-if ($pxh_x = $pxh_asset('assets/js/services.js'))   $pxh_js[]  = $pxh_x;
+if ($pxh_f = $pp_has('assets/css/services.css')) $pp_css[] = $pxh_f;
+if ($pxh_f = $pp_has('assets/js/services.js'))   $pp_js[]  = $pxh_f;
 
 $page = [
     'key'   => 'services',
-    'title' => $DISC['name'],
+    'title' => 'Product & Experience Design',
     'desc'  => $DISC['intro'],
-    'css'   => array_values($pxh_css),
-    'js'    => array_values($pxh_js),
+    'css'   => array_values($pp_css),
+    'js'    => array_values($pp_js),
 ];
-
 include __DIR__ . '/../partials/head.php';
 include __DIR__ . '/../partials/nav.php';
 ?>
-
-<!-- The shipped HTML is the finished state. Reveals and entrance motion are an enhancement, and every one of
-     them waits for an .is-in class that only JavaScript adds, so with JavaScript off they are all resolved to
-     their finished state here. Tab panes keep their own hidden/shown logic: one pane is meant to be on. -->
-
 <main id="main" class="bdh pxh">
-<?php foreach ($PXH_SECTIONS as $pxh_id):
-    $pxh_file = __DIR__ . '/../partials/product-experience/' . $pxh_id . '.php'; ?>
-<!-- ===== product & experience hub · <?= e($pxh_id) ?> ===== -->
-<?php if (is_file($pxh_file)) { include $pxh_file; } else { echo "<!-- missing hub section: " . e($pxh_id) . " -->\n"; } ?>
-<?php endforeach; ?>
-
+<?php foreach ($SECTIONS as $pp_id) include __DIR__ . "/../partials/product-experience/$pp_id.php"; ?>
 <?php include __DIR__ . '/../partials/cta.php'; ?>
 </main>
-
-<script type="application/ld+json">
-<?= json_encode([
+<script type="application/ld+json"><?= json_encode([
     '@context'    => 'https://schema.org',
     '@type'       => 'Service',
     'name'        => $DISC['name'],
+    'serviceType' => 'Product and experience design',
     'description' => $DISC['intro'],
-    'provider'    => ['@type' => 'Organization', 'name' => $SITE['company']['name']],
-    'serviceType' => array_map(fn ($pxh_c) => $pxh_c[0], $DISC['caps']),
+    'url'         => xe_url('services/product-experience.php'),
+    'provider'    => ['@type' => 'Organization', 'name' => 'Xterra Edze'],
     'hasOfferCatalog' => [
-        '@type'           => 'OfferCatalog',
-        'name'            => $DISC['name'] . ' capabilities',
+        '@type' => 'OfferCatalog',
+        'name'  => $DISC['name'],
         'itemListElement' => array_values(array_map(fn ($pxh_c) => [
-            '@type'       => 'Offer',
-            'itemOffered' => ['@type' => 'Service', 'name' => $pxh_c['name'], 'description' => $pxh_c['lead']],
+            '@type' => 'Offer',
+            'itemOffered' => ['@type' => 'Service', 'name' => $pxh_c['name'], 'description' => strip_tags($pxh_c['lead'])],
         ], $CAPS)),
     ],
-], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?>
-</script>
-
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?></script>
 <?php include __DIR__ . '/../partials/footer.php'; ?>

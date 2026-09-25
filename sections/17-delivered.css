@@ -3,10 +3,10 @@
 .s17__ghost{
   position:absolute;left:50%;top:clamp(24px,5vw,72px);transform:translateX(-50%);
   font-family:var(--f-h);font-size:clamp(4.4rem,17vw,14rem);line-height:.82;letter-spacing:-.045em;font-weight:500;
-  color:var(--paper-3);white-space:nowrap;pointer-events:none;user-select:none;z-index:0;
+  color:var(--paper-4);white-space:nowrap;pointer-events:none;user-select:none;z-index:0;
 }
 .s17__in{position:relative;z-index:1}
-.s17__eyebrow{display:block;text-align:center;margin-bottom:clamp(56px,7vw,110px);color:var(--faint)}
+.s17__eyebrow{display:flex;margin-bottom:clamp(56px,7vw,110px)}
 
 .s17__grid{display:grid;grid-template-columns:minmax(260px,.82fr) minmax(0,1.6fr);gap:clamp(16px,2.4vw,28px);align-items:stretch}
 
@@ -23,7 +23,7 @@
 .s17__l{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.13em;text-transform:uppercase;color:var(--on-ink-3)}
 .s17__cta{align-self:flex-start}
 
-.s17__slider{display:flex;flex-direction:column;gap:14px}
+.s17__slider{display:flex;flex-direction:column;gap:14px;min-width:0}
 .s17__viewport{position:relative;border-radius:var(--r-lg);overflow:hidden;background:var(--paper-3);flex:1;min-height:clamp(300px,36vw,470px)}
 .s17__slide{
   position:absolute;inset:0;opacity:0;visibility:hidden;
@@ -33,13 +33,19 @@
 .s17__slide img{width:100%;height:100%;object-fit:cover}
 .s17__cap{
   position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;gap:10px;
-  padding:clamp(20px,2.6vw,32px);color:var(--on-ink);
-  background:linear-gradient(180deg,rgba(25,25,29,0),rgba(25,25,29,.82) 58%,rgba(25,25,29,.92));
+  padding:clamp(56px,7vw,112px) clamp(20px,2.6vw,32px) clamp(20px,2.6vw,32px);color:var(--on-ink);
+  isolation:isolate;
 }
-.s17__sector{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.66)}
+/* the scrim: a solid ink plate faded in by a mask, not a colour gradient */
+.s17__cap::before{
+  content:"";position:absolute;inset:0;z-index:-1;background:var(--ink);opacity:.92;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 52%);
+          mask-image:linear-gradient(180deg,transparent,#000 52%);
+}
+.s17__sector{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink-2)}
 .s17__line{font-family:var(--f-h);font-size:clamp(1.08rem,1.6vw,1.45rem);line-height:1.26;letter-spacing:-.016em;font-weight:500;max-width:32ch}
 .s17__tags{display:flex;flex-wrap:wrap;gap:6px}
-.s17__tags .pill{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.86)}
+.s17__tags .pill{background:var(--on-ink-card);border-color:var(--on-ink-line);color:var(--on-ink-2)}
 
 .s17__bar{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .s17__count{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.16em;color:var(--faint)}
@@ -50,10 +56,30 @@
   transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io);
 }
 .s17__arrow svg{width:16px;height:16px}
+.s17__viewport:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 .s17__arrow:hover{border-color:var(--blue);color:var(--blue-d);background:var(--paper)}
 
 @media (max-width:900px){
-  .s17__grid{grid-template-columns:1fr}
+  .s17__grid{grid-template-columns:minmax(0,1fr)}
   .s17__ghost{top:clamp(16px,6vw,40px)}
   .s17__eyebrow{margin-bottom:clamp(40px,14vw,80px)}
+}
+@media (max-width:900px){
+  /* stacked, the caption leaves the picture: it sits below it on a solid ink plate,
+     so it can never land on type baked into a screenshot. Only the current slide
+     stays in flow; the others are stacked absolutely and clipped to it. */
+  .s17__viewport{min-height:0;background:var(--ink)}
+  .s17__slide{display:flex;flex-direction:column}
+  .s17__slide.is-on{position:relative}
+  .s17__slide img{height:auto;aspect-ratio:16/10}
+  .s17__cap{position:static;padding:clamp(18px,3vw,26px) clamp(20px,3vw,28px) clamp(22px,3vw,28px);background:var(--ink)}
+  .s17__cap::before{content:none}
+}
+@media (max-width:600px){
+  /* the eyebrow clears the watermark instead of sitting on its strokes */
+  .s17__eyebrow{margin-top:24px}
+  .s17__slide img{aspect-ratio:4/3}
+}
+@media (prefers-reduced-motion:reduce){
+  .s17__slide{transition:none}
 }

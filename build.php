@@ -20,7 +20,11 @@ foreach ([['css', 'assets/css/sections.css'], ['js', 'assets/js/sections.js']] a
         $name = basename($f, ".$ext");
         $body = trim(file_get_contents($f));
         if ($body === '') continue;
-        $parts[] = ($ext === 'css' ? "/* ===== $name ===== */" : "/* ===== $name ===== */") . "\n" . $body . "\n";
+        if ($ext === 'js') {
+            /* One concatenated file: a throw in one section's init must not stop every section after it. */
+            $body = "try {\n$body\n} catch (e) { console.error('[$name]', e); }";
+        }
+        $parts[] = "/* ===== $name ===== */\n" . $body . "\n";
     }
     $bundle = implode("\n", $parts);
     // Rewrite only on a real change: the file time is the ?v= cache stamp and what deploy.sh compares.

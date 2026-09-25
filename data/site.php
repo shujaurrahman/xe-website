@@ -78,14 +78,14 @@ return [
         'short'    => 'Campaign',
         'intro'    => 'We build campaigns and content systems that earn a place in culture — using storytelling that pulls technology, media, and design into one thread.',
         'caps'     => [
-            ['Content Marketing', 'Editorial and content built to earn attention on its own, not just fill a calendar.'],
-            ['Social Media Marketing', 'Always-on presence and community management built for each platform\'s native voice.'],
-            ['Public Relations', 'Earned coverage and reputation management that builds credibility beyond paid media.'],
-            ['Social & Influencer Activation', 'Placing brands inside real conversations through the right creators and platforms.'],
-            ['Performance Marketing', 'Paid media built and optimized against the numbers that actually matter.'],
-            ['Omnichannel Marketing Strategy', 'Defining who to reach, where and when, and how we\'ll know it worked.'],
-            ['Campaign Design Systems', 'One visual and messaging framework that holds together across every execution.'],
-            ['Global Content Production', 'Original photography and videography produced at scale through a global network of creators.'],
+            ['Content Marketing', 'Editorial and content built to earn attention on its own, not just fill a calendar.', 'content-marketing'],
+            ['Social Media Marketing', 'Always-on presence and community management built for each platform\'s native voice.', 'social-media-marketing'],
+            ['Public Relations', 'Earned coverage and reputation management that builds credibility beyond paid media.', 'public-relations'],
+            ['Social & Influencer Activation', 'Placing brands inside real conversations through the right creators and platforms.', 'social-influencer-activation'],
+            ['Performance Marketing', 'Paid media built and optimized against the numbers that actually matter.', 'performance-marketing'],
+            ['Omnichannel Marketing Strategy', 'Defining who to reach, where and when, and how we\'ll know it worked.', 'omnichannel-marketing-strategy'],
+            ['Campaign Design Systems', 'One visual and messaging framework that holds together across every execution.', 'campaign-design-systems'],
+            ['Global Content Production', 'Original photography and videography produced at scale through a global network of creators.', 'global-content-production'],
         ],
     ],
     [
@@ -95,10 +95,10 @@ return [
         'short'    => 'AI',
         'intro'    => 'Using AI well under the hood is table stakes now. We go further — designing brand experiences that simply weren\'t possible before AI existed.',
         'caps'     => [
-            ['AI Application Design', 'Assistants and multimodal, agentic experiences built across Gemini, OpenAI, Anthropic, and beyond.'],
-            ['AI Content Studio', 'Personalized, dynamic content — model selection, automation, and creative direction, powered by tools like Runway, Veo, and ElevenLabs.'],
-            ['Brand AI Tools', 'Custom-tuned models, via Flux, Adobe Firefly, ComfyUI and more, that keep brand delivery consistent at scale.'],
-            ['AI Strategy & Consulting', 'Bringing AI into the brand and marketing ecosystem through pilots and adoption roadmaps built to stick.'],
+            ['AI Application Design', 'Assistants and multimodal, agentic experiences built across Gemini, OpenAI, Anthropic, and beyond.', 'ai-application-design'],
+            ['AI Content Studio', 'Personalized, dynamic content — model selection, automation, and creative direction, powered by tools like Runway, Veo, and ElevenLabs.', 'ai-content-studio'],
+            ['Brand AI Tools', 'Custom-tuned models, via Flux, Adobe Firefly, ComfyUI and more, that keep brand delivery consistent at scale.', 'brand-ai-tools'],
+            ['AI Strategy & Consulting', 'Bringing AI into the brand and marketing ecosystem through pilots and adoption roadmaps built to stick.', 'ai-strategy-consulting'],
         ],
     ],
     [
@@ -108,11 +108,11 @@ return [
         'short'    => 'Product',
         'intro'    => 'We rethink how people actually use what a brand builds — shaping the strategy and design that sits ahead of every build.',
         'caps'     => [
-            ['Design Consulting & Solutioning', 'Turning new capabilities into a technology strategy teams can actually ship.'],
-            ['Product Strategy & Vision', 'Spotting the product experiences worth building next to meet real business ambitions.'],
-            ['Experience Design & Development', 'Fast, rigorous iterations that shape and validate an experience before big bets get made.'],
-            ['AI Product Strategy & Development', 'Brand-led AI integrations, models, and agents built for speed and scale.'],
-            ['System Design', 'Structuring how a product\'s parts fit together so it can grow without breaking.'],
+            ['Design Consulting & Solutioning', 'Turning new capabilities into a technology strategy teams can actually ship.', 'design-consulting-solutioning'],
+            ['Product Strategy & Vision', 'Spotting the product experiences worth building next to meet real business ambitions.', 'product-strategy-vision'],
+            ['Experience Design & Development', 'Fast, rigorous iterations that shape and validate an experience before big bets get made.', 'experience-design-development'],
+            ['AI Product Strategy & Development', 'Brand-led AI integrations, models, and agents built for speed and scale.', 'ai-product-strategy-development'],
+            ['System Design', 'Structuring how a product\'s parts fit together so it can grow without breaking.', 'system-design'],
         ],
     ],
     [
@@ -124,16 +124,16 @@ return [
         /* No 'group' heading any more: it used to introduce the five customer capabilities below it,
            and those are now the single "Customer Relationship Strategy" capability at the end. */
         'caps'     => [
-            ['AI-Driven Marketing Automation', 'Automating the repetitive work so marketing teams can focus on what actually needs a human.'],
-            ['Content & Communication Infrastructure', 'Infrastructure that gets the right message to the right channel without extra manual work.'],
-            ['AI Campaign Optimization', 'Models that tune targeting, spend, and creative while a campaign runs, not just after it ends.'],
-            ['AI Creative Solutions', 'AI-assisted creative production built to move at the pace martech demands.'],
-            ['AI Lead Generation', 'Identifying and qualifying the leads that are actually worth a sales team\'s time.'],
-            ['Automated & Dynamic Sales', 'Sales workflows that adapt in real time to wherever a prospect actually is.'],
+            ['AI-Driven Marketing Automation', 'Automating the repetitive work so marketing teams can focus on what actually needs a human.', 'ai-driven-marketing-automation'],
+            ['Content & Communication Infrastructure', 'Infrastructure that gets the right message to the right channel without extra manual work.', 'content-communication-infrastructure'],
+            ['AI Campaign Optimization', 'Models that tune targeting, spend, and creative while a campaign runs, not just after it ends.', 'ai-campaign-optimization'],
+            ['AI Creative Solutions', 'AI-assisted creative production built to move at the pace martech demands.', 'ai-creative-solutions'],
+            ['AI Lead Generation', 'Identifying and qualifying the leads that are actually worth a sales team\'s time.', 'ai-lead-generation'],
+            ['Automated & Dynamic Sales', 'Sales workflows that adapt in real time to wherever a prospect actually is.', 'automated-dynamic-sales'],
             /* One capability, not five: journey mapping, segmentation, engagement programmes, loyalty
                and lifecycle marketing are the parts of a single customer relationship practice, and
                they are sold and delivered together. They are the sections of this one page. */
-            ['Customer Relationship Strategy', 'Journey mapping, segmentation, engagement, loyalty and lifecycle marketing as one connected practice that raises retention and lifetime value.'],
+            ['Customer Relationship Strategy', 'Journey mapping, segmentation, engagement, loyalty and lifecycle marketing as one connected practice that raises retention and lifetime value.', 'customer-relationship-strategy'],
         ],
     ],
     ],

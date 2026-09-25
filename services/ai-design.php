@@ -1,73 +1,53 @@
 <?php
 /**
- * AI Design — the discipline hub. "Direction at the scale of a machine."
+ * AI Design — the discipline hub. "The Studio Floor": one request, routed across models, checked, scored and
+ * approved by a person before anything ships. Every section is a view of that same working studio.
  *
- * The concept, deliberately not the Technology hub's control plane: this discipline is about the brand
- * experiences that only exist because the medium generates. So the spine of the page is one object — a
- * generation run. A brief goes in; direction, a routed model, an eval, a guardrail and a named approver
- * shape it; what comes out is on brand, rights-clear, disclosed and logged. Every section is a closer
- * look at one part of that run.
+ * Sections: partials/ai-design/<id>.php (+ assets/css/ai-design/<id>.css, assets/js/ai-design/<id>.js, loaded
+ * when non-empty). Base layers: brand/hub.css (.bdh-*, window.BDH), tech/kit.css (.xt-*), ai-design.css (.aih-*).
  *
- * The page is a shell: each section is its own partial in partials/ai-design/<id>.php, with
- * assets/css/ai-design/<id>.css and assets/js/ai-design/<id>.js loaded automatically once they hold
- * anything.
+ * Variables for every partial (never reassign): $SITE, $DISC (this discipline's row in $SITE['disciplines']),
+ * $CAPS (data/ai-design.php, keyed by capability slug), $STACK (data/tech-stack.php), $AIH_URL (this hub's URL).
+ * Partials prefix their locals with aih_ — nav/cta/footer use $c $d $i $k $item $url $current $disc $col $l $s.
  *
- * Base layers (in order): assets/css/brand/hub.css (.bdh-* primitives, window.BDH helpers in
- * assets/js/brand/hub.js), assets/css/tech/kit.css (.xt-* logos, icons, badges), then
- * assets/css/ai-design.css (.aih-* primitives for this discipline — the capability subpages reuse them).
- *
- * Variables available to every section partial (never reassign):
- *   $SITE   data/site.php                 $DISC   the ai-design row of $SITE['disciplines']
- *   $CAPS   data/ai-design.php            $STACK  data/tech-stack.php (slug => name, category, file)
- *   $page   page meta
- * partials/nav.php, cta.php and footer.php loop with $c $d $i $k $item $url $current $disc $col $l $s,
- * so section partials prefix their own locals (aih_*, hero_*, run_* …) and never use those names.
- *
- * The four capability subpages do not exist yet, so every capability link on this page is an anchor on
- * this page (#<capability-slug>), set on the dossier cards in partials/ai-design/capabilities.php.
+ * VISUAL LANGUAGE FOR THE FOUR CAPABILITY PAGES — reuse these (all in assets/css/ai-design.css, prefix .aih-):
+ *   Card system   .aih-card (+ --ink, --flat) with .aih-card__media / __body / __idx / __t / __d / __foot;
+ *                 .aih-cards (auto grid, 1→2→4 columns). Stable id on each card = the capability slug.
+ *   Diagram idiom .aih-flow > .aih-node (+ --blue, --ghost) joined by .aih-edge (CSS connector that starts and
+ *                 stops at the box edges — never centre-to-centre); horizontal ≥861px, vertical below.
+ *   Data-viz      .aih-bars > .aih-bar (label, track, fill via --v 0–1, value) with an optional
+ *                 .aih-bars__thr threshold line at --t; finished widths in the HTML, JS only animates.
+ *   Stepper       .aih-steps > .aih-step (index, name, timing, text, outputs); horizontal rail ≥1024px with a
+ *                 progress line JS fills on scroll; plain ordered list without JS.
+ *   Record chip   .aih-rec (mono key/value readout used in the hero, studio log and states mocks).
+ * The signature showcase (partials/ai-design/studio.php) is the hub's own and is not reused on subpages.
  */
 $BASE = '../';
 require __DIR__ . '/../partials/init.php';
 require_once __DIR__ . '/../partials/tech/kit.php';
-require_once __DIR__ . '/../partials/services/lib.php';   // svc_contact_url(): enquiries arrive tagged with the page and service
+require_once __DIR__ . '/../partials/services/lib.php';
 
 $CAPS  = require __DIR__ . '/../data/ai-design.php';
 $STACK = require __DIR__ . '/../data/tech-stack.php';
 $DISC  = null;
-foreach ($SITE['disciplines'] as $aih_disc) { if ($aih_disc['slug'] === 'ai-design') $DISC = $aih_disc; }
-unset($aih_disc);
+foreach ($SITE['disciplines'] as $aih_d) { if ($aih_d['slug'] === 'ai-design') $DISC = $aih_d; }
+unset($aih_d);
+$AIH_URL = xe_url('services/ai-design.php');
 
-/* Running order: the claim → what changed → what we do → the run itself → the mechanism inside it
-   (route, evals, control, provenance) → how we work → what we work to → what lands → what moves → the
-   lines between disciplines → buy → ask.
-   Bands: hero P, then A P I P A P I P A P A I P A(catalogue) P.
-   'services' is the shared Services & packages catalogue (partials/services/catalogue.php, data key
-   'ai-design'). Its packages row is this page's one set of engagement models, so there is no separate
-   engagement section — the same call the Brand Design and Technology hubs made. */
-$AIH_SECTIONS = [
-    'hero', 'premise', 'capabilities', 'run', 'routing', 'evals', 'control', 'provenance',
-    'process', 'stack', 'standards', 'deliverables', 'outcomes', 'lines', 'services', 'faq',
-];
+/* Bands: P A I P A P A P A P I A(catalogue) P, then the shared ink CTA. */
+$AIH_SECTIONS = ['hero', 'capabilities', 'studio', 'states', 'models', 'two-tools', 'process', 'stack',
+                 'standards', 'deliverables', 'outcomes', 'services', 'faq'];
 
-/* Base layers first, then each section's own file once it has content. head/footer stamp ?v= on every path. */
-$aih_root  = __DIR__ . '/../';
-$aih_asset = function (string $path) use ($aih_root): ?string {
-    $f = $aih_root . $path;
-    return (is_file($f) && filesize($f) > 0) ? $path : null;
-};
-$aih_css = array_filter([
-    $aih_asset('assets/css/brand/hub.css'),
-    $aih_asset('assets/css/tech/kit.css'),
-    $aih_asset('assets/css/ai-design.css'),
-]);
-$aih_js = array_filter([$aih_asset('assets/js/brand/hub.js')]);
+$aih_root = __DIR__ . '/../';
+$aih_has  = fn (string $p): ?string => (is_file($aih_root . $p) && filesize($aih_root . $p) > 0) ? $p : null;
+$aih_css  = array_filter([$aih_has('assets/css/brand/hub.css'), $aih_has('assets/css/tech/kit.css'), $aih_has('assets/css/ai-design.css')]);
+$aih_js   = array_filter([$aih_has('assets/js/brand/hub.js')]);
 foreach ($AIH_SECTIONS as $aih_id) {
-    if ($aih_x = $aih_asset('assets/css/ai-design/' . $aih_id . '.css')) $aih_css[] = $aih_x;
-    if ($aih_x = $aih_asset('assets/js/ai-design/' . $aih_id . '.js'))   $aih_js[]  = $aih_x;
+    if ($aih_x = $aih_has("assets/css/ai-design/$aih_id.css")) $aih_css[] = $aih_x;
+    if ($aih_x = $aih_has("assets/js/ai-design/$aih_id.js"))   $aih_js[]  = $aih_x;
 }
-/* the shared services & packages catalogue (.svc-*), after the page's own files, as on every other page */
-if ($aih_x = $aih_asset('assets/css/services.css')) $aih_css[] = $aih_x;
-if ($aih_x = $aih_asset('assets/js/services.js'))   $aih_js[]  = $aih_x;
+if ($aih_x = $aih_has('assets/css/services.css')) $aih_css[] = $aih_x;
+if ($aih_x = $aih_has('assets/js/services.js'))   $aih_js[]  = $aih_x;
 
 $page = [
     'key'   => 'services',
@@ -81,37 +61,27 @@ include __DIR__ . '/../partials/head.php';
 include __DIR__ . '/../partials/nav.php';
 ?>
 
-<!-- The shipped HTML is the finished state: every run resolved, every score at its value, every gate
-     marked. Entrance and step-through motion is an enhancement — each section's script adds its own
-     starting class at init, so with JavaScript off nothing is hidden and nothing is half-drawn. -->
-
 <main id="main" class="bdh aih">
-<?php foreach ($AIH_SECTIONS as $aih_id):
-    $aih_file = __DIR__ . '/../partials/ai-design/' . $aih_id . '.php'; ?>
-<!-- ===== ai-design hub · <?= e($aih_id) ?> ===== -->
-<?php if (is_file($aih_file)) { include $aih_file; } else { echo "<!-- missing hub section: " . e($aih_id) . " -->\n"; } ?>
-<?php endforeach; ?>
-
+<?php foreach ($AIH_SECTIONS as $aih_id) include __DIR__ . "/../partials/ai-design/$aih_id.php"; ?>
 <?php include __DIR__ . '/../partials/cta.php'; ?>
 </main>
 
-<script type="application/ld+json">
-<?= json_encode([
+<script type="application/ld+json"><?= json_encode([
     '@context'    => 'https://schema.org',
     '@type'       => 'Service',
-    'name'        => $DISC['name'],
+    'name'        => 'AI Design',
+    'serviceType' => 'AI experience design, generative content production, custom brand models and AI adoption consulting',
     'description' => $DISC['intro'],
-    'provider'    => ['@type' => 'Organization', 'name' => $SITE['company']['name']],
-    'serviceType' => array_map(fn ($aih_c) => $aih_c[0], $DISC['caps']),
+    'provider'    => ['@type' => 'Organization', 'name' => 'Xterra Edze'],
+    'areaServed'  => 'Worldwide',
     'hasOfferCatalog' => [
-        '@type'           => 'OfferCatalog',
-        'name'            => $DISC['name'] . ' capabilities',
-        'itemListElement' => array_values(array_map(fn ($aih_c) => [
-            '@type'       => 'Offer',
-            'itemOffered' => ['@type' => 'Service', 'name' => $aih_c['name'], 'description' => $aih_c['lead']],
-        ], $CAPS)),
+        '@type' => 'OfferCatalog',
+        'name'  => 'AI Design capabilities',
+        'itemListElement' => array_map(fn ($aih_cp) => [
+            '@type' => 'Offer',
+            'itemOffered' => ['@type' => 'Service', 'name' => $aih_cp[0], 'description' => $aih_cp[1]],
+        ], $DISC['caps']),
     ],
-], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?>
-</script>
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?></script>
 
 <?php include __DIR__ . '/../partials/footer.php'; ?>

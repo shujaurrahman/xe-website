@@ -1,0 +1,84 @@
+/* Product & Experience capability pages — polish-pass additions: offer photograph, second showcase (#working),
+   stack chip row, "pairs well" card images, system-design diagram as stacked layers on phones. */
+
+/* Offer head: heading and lead beside a photograph */
+.pxd-offer__head { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: var(--bdh-gap-l); align-items: end; margin-bottom: var(--bdh-head-mb); }
+.pxd-offer__head .bdh-head { margin: 0; }
+.pxd-offer__head .h2 { margin: 14px 0 18px; }
+.pxd-offer__img { border-radius: var(--r-xl); }
+@media (max-width: 860px) { .pxd-offer__head { grid-template-columns: minmax(0, 1fr); gap: 28px; } }
+
+/* Second showcase */
+.pxd-x__win .pxh-win__bar { color: var(--txt); }
+.pxd-x__scroll { padding: 6px 4px 2px; }
+.pxd-x__t { width: 100%; min-width: 720px; border-collapse: collapse; font-size: var(--t-sm); }
+.pxd-x__t th, .pxd-x__t td { text-align: left; vertical-align: top; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+.pxd-x__t thead th { font-family: var(--f); font-size: var(--t-lbl); font-weight: 400; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border-bottom-color: var(--line-2); }
+.pxd-x__t tbody th { font-family: var(--f-b); font-weight: 600; color: var(--ink); width: 26%; }
+.pxd-x__t tbody tr:last-child > * { border-bottom: 0; }
+.pxd-x__t .is-hl { background: var(--blue-wash); }
+.pxd-x__t thead .is-hl { color: var(--blue-d); }
+.pxd-x__s { display: inline-flex; align-items: baseline; gap: 8px; color: var(--txt); }
+.pxd-x__s i { width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--line-3); transform: translateY(-1px); }
+.pxd-x__s--ok i { background: var(--blue); }
+.pxd-x__s--warn i { background: var(--paper); box-shadow: inset 0 0 0 2px var(--blue); }
+.pxd-x__s--bad i { background: var(--ink); border-radius: 2px; }
+.pxd-x__s--bad { color: var(--ink); font-weight: 600; }
+.pxd-x__none { color: var(--faint); }
+
+.pxd-x__board { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; padding: 18px; background: var(--paper-2); }
+.pxd-x__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.pxd-x__ch { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; font-family: var(--f); font-size: var(--t-lbl); font-weight: 400; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+.pxd-x__ch i { width: 8px; height: 8px; border-radius: 50%; background: var(--line-3); }
+.pxd-x__col--ok .pxd-x__ch i { background: var(--blue); }
+.pxd-x__col--warn .pxd-x__ch i { background: var(--paper); box-shadow: inset 0 0 0 2px var(--blue); }
+.pxd-x__col--bad .pxd-x__ch i { background: var(--ink); border-radius: 2px; }
+.pxd-x__n { margin-left: auto; color: var(--muted); }
+.pxd-x__card { padding: 14px 14px 12px; border-radius: var(--r); background: var(--paper); border: 1px solid var(--line); box-shadow: var(--sh-1); }
+.pxd-x__col--bad .pxd-x__card { border-left: 3px solid var(--ink); }
+.pxd-x__col--ok .pxd-x__card { border-left: 3px solid var(--blue); }
+.pxd-x__ct { margin: 0 0 10px; font-size: var(--t-sm); line-height: 1.5; color: var(--ink); font-weight: 500; }
+.pxd-x__cm, .pxd-x__cf { margin: 0; font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .04em; color: var(--muted); line-height: 1.6; }
+.pxd-x__cf { color: var(--blue-d); }
+.pxd-x__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding: 14px 18px; border-top: 1px solid var(--line); }
+.pxd-x__tag { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: var(--r-pill); background: var(--ink); color: var(--on-ink); font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .04em; --xt-accent: var(--on-ink); }
+.pxd-x__tag .xt-ico { width: 14px; height: 14px; }
+.pxd-x__note { font-size: var(--t-xs); color: var(--muted); flex: 1 1 280px; }
+@media (max-width: 1023px) { .pxd-x__board { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .pxd-x__board { grid-template-columns: minmax(0, 1fr); padding: 12px; } .pxd-x__foot { padding: 14px; } }
+
+/* Stack: names without logo artwork */
+.pxd-stack__more { margin-top: 18px; }
+
+/* "Pairs well" cards with a photograph */
+.pxd-next__img { margin: -1px -1px 6px; border-radius: var(--r) var(--r) 0 0; }
+.pxd-next__card .tl { display: inline-flex; align-items: center; min-height: 44px; }
+.pxd-next__idx a { min-height: 44px; }
+
+/* System design diagram: layers as stacked rows on phones instead of a sideways-scrolling SVG */
+.pxd-ar__list { display: none; list-style: none; margin: 0; padding: 0; }
+@media (max-width: 600px) {
+  .pxd-ar { display: none; }
+  .pxd-ar__list { display: grid; gap: 0; }
+  .pxd-ar__list li { position: relative; padding: 12px 0 14px; border-top: 1px solid var(--line); }
+  .pxd-ar__list li:first-child { border-top: 0; padding-top: 2px; }
+  .pxd-ar__lh { display: block; margin-bottom: 8px; font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .08em; text-transform: uppercase; color: var(--blue-d); }
+  .pxd-ar__chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pxd-ar__chip { padding: 6px 10px; border-radius: var(--r-sm); border: 1px solid var(--line-2); background: var(--paper); font-family: var(--f); font-size: var(--t-lbl); color: var(--ink); transition: background .35s var(--e), border-color .35s var(--e), color .35s var(--e); }
+  .pxd-sig[data-state="a"] .pxd-ar__chip[data-hi~="a"], .pxd-sig[data-state="b"] .pxd-ar__chip[data-hi~="b"], .pxd-sig[data-state="c"] .pxd-ar__chip[data-hi~="c"] { border-color: var(--blue); background: var(--blue-wash); }
+  .pxd-sig[data-state="a"] .pxd-ar__chip[data-sel~="a"], .pxd-sig[data-state="b"] .pxd-ar__chip[data-sel~="b"], .pxd-sig[data-state="c"] .pxd-ar__chip[data-sel~="c"] { background: var(--blue); color: var(--paper); }
+}
+
+/* Matrix on phones: each row becomes a card with labelled values, so nothing scrolls sideways */
+@media (max-width: 600px) {
+  .pxd-x__scroll { padding: 0; }
+  .pxd-x__t { min-width: 0; }
+  .pxd-x__t thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .pxd-x__t, .pxd-x__t tbody, .pxd-x__t tr, .pxd-x__t th, .pxd-x__t td { display: block; width: auto; }
+  .pxd-x__t tr { padding: 16px; border-bottom: 1px solid var(--line-2); }
+  .pxd-x__t tbody tr:last-child { border-bottom: 0; }
+  .pxd-x__t tbody th { padding: 0 0 10px; border: 0; width: auto; }
+  .pxd-x__t td { display: grid; grid-template-columns: minmax(0, 11ch) minmax(0, 1fr); gap: 12px; padding: 7px 0; border: 0; border-top: 1px dashed var(--line); }
+  .pxd-x__t td::before { content: attr(data-h); font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .04em; color: var(--muted); line-height: 1.5; }
+  .pxd-x__t td.is-hl { background: var(--blue-wash); margin: 0 -8px; padding-left: 8px; padding-right: 8px; border-radius: var(--r-xs); }
+}

@@ -1,46 +1,42 @@
 <?php /* DRAFT COPY — review before launch */
-/* Deliverables — everything that is handed over, with the form it arrives in, straight from each
-   capability's 'deliver' list in data/marketing-technology.php. A capability filter narrows the grid; with
-   JavaScript off every block is printed, so nothing is hidden behind a control that never arrives. */
-$del_total = 0;
-foreach ($CAPS as $del_c) { $del_total += count($del_c['deliver']); }
+/* Deliverables: what the client owns at the end, drawn from each capability's hand-over list, plus the ownership
+   terms that apply to all of it. */
+$mth_dv_own = [
+    ['Built in your accounts', 'Journeys, models, dashboards and templates live in your platforms, your warehouse and your repositories. Nothing sits in an account we control.'],
+    ['Documented to be run',   'Runbooks, admin guides, metric definitions and model cards written for the people who will operate the system.'],
+    ['No black boxes',         'Every decision rule, prompt and scoring feature is readable, versioned and can be switched off.'],
+];
 ?>
-<section class="band band--alt mth-deliverables" id="deliverables" aria-labelledby="deliverables-t">
+<section class="band band--alt mth-dlv" id="deliverables" aria-labelledby="deliverables-t">
   <div class="wrap">
     <div class="bdh-head bdh-head--row" data-rv>
       <div>
-        <p class="lbl lbl--blue"><span class="dot"></span>Deliverables</p>
-        <h2 class="h2" id="deliverables-t"><span class="g"><?= $del_total ?> things</span> that end up in your hands.</h2>
+        <p class="lbl lbl--blue"><span class="dot"></span>What you own</p>
+        <h2 class="h2" id="deliverables-t"><span class="g">Working systems,</span> not slide decks about them.</h2>
       </div>
-      <div>
-        <p class="lead">Not slides about the work: the work. Models, configured platforms, tracking, templates, dashboards and the documentation that lets your team run it after we leave.</p>
-        <p class="mth-note"><b>Built in your accounts, handed to your team.</b> Models, pipelines, prompts, eval sets and documentation live in your platforms and your repositories from the first week, so the asset stays yours if the engagement ends.</p>
-      </div>
+      <div><p class="lead">Every module ends in something running in your stack, with the documents that let your team change it. Two hand-overs from each capability, as a sample of the full list.</p></div>
     </div>
 
-    <div class="mth-del" data-cap="all" data-rv data-rv-d="50">
-      <div class="mth-del__filter" role="group" aria-label="Filter deliverables by capability">
-        <button type="button" class="mth-del__f" data-cap="all" aria-pressed="true">All capabilities <b><?= $del_total ?></b></button>
-        <?php foreach ($CAPS as $del_cs => $del_c): ?>
-          <button type="button" class="mth-del__f" data-cap="<?= e($del_cs) ?>" aria-pressed="false"><?= e($del_c['short']) ?> <b><?= count($del_c['deliver']) ?></b></button>
-        <?php endforeach; ?>
+    <div class="mth-dlv__wrap">
+      <div class="mth-dlv__tbl bdh-scroll-x mask-x" tabindex="0" role="region" aria-label="Deliverables by capability">
+        <table>
+          <thead><tr><th scope="col">Deliverable</th><th scope="col">Format</th><th scope="col">From</th></tr></thead>
+          <tbody>
+          <?php foreach ($CAPS as $mth_dv_slug => $mth_dv): foreach (array_slice($mth_dv['deliver'], 0, 2) as $mth_dv_i => $mth_dv_d): ?>
+            <tr>
+              <th scope="row"><?= e($mth_dv_d[0]) ?></th>
+              <td><span class="mth-dlv__fmt"><?= e($mth_dv_d[1]) ?></span></td>
+              <td><?php if ($mth_dv_i === 0): ?><a class="mth-dlv__from" href="<?= e(xe_cap_url($DISC, [2 => $mth_dv_slug])) ?>"><span class="bdh-idx"><?= e($mth_dv['n']) ?></span><?= e($mth_dv['short']) ?></a><?php else: ?><span class="mth-dlv__same"><span class="bdh-idx"><?= e($mth_dv['n']) ?></span><?= e($mth_dv['short']) ?></span><?php endif; ?></td>
+            </tr>
+          <?php endforeach; endforeach; ?>
+          </tbody>
+        </table>
       </div>
-
-      <div class="mth-del__grid">
-        <?php foreach ($CAPS as $del_cs => $del_c): ?>
-          <div class="mth-del__block" data-cap="<?= e($del_cs) ?>">
-            <p class="mth-del__bh">
-              <span class="mth-del__bn"><?= e($del_c['n']) ?></span>
-              <a class="mth-del__bt" href="<?= e(($MTH['cap_href'])($del_cs)) ?>"><?= e($del_c['name']) ?> <i aria-hidden="true">›</i></a>
-            </p>
-            <ul class="mth-rows mth-del__rows">
-              <?php foreach ($del_c['deliver'] as $del_d): ?>
-                <li><span><?= e($del_d[0]) ?></span><small><?= e($del_d[1]) ?></small></li>
-              <?php endforeach; ?>
-            </ul>
-          </div>
+      <ul class="mth-dlv__own">
+        <?php foreach ($mth_dv_own as $mth_dv_o): ?>
+        <li><h3 class="bdh-t"><?= e($mth_dv_o[0]) ?></h3><p class="bdh-d"><?= e($mth_dv_o[1]) ?></p></li>
         <?php endforeach; ?>
-      </div>
+      </ul>
     </div>
   </div>
 </section>

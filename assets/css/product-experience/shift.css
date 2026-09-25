@@ -1,0 +1,27 @@
+.pxh-shift__g { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); align-items: start; }
+.pxh-shift__chart { margin: 0; }
+.pxh-curve { position: relative; margin: 28px 28px 0; aspect-ratio: 600 / 260; }
+.pxh-curve__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.pxh-curve__grid { stroke: var(--line); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.pxh-curve__zone { fill: var(--blue-wash); }
+.pxh-curve__line { fill: none; stroke: var(--blue); stroke-width: 2.5; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.pxh-curve__pt { position: absolute; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--paper); border: 2px solid var(--blue); }
+.pxh-curve__pt.is-zone { background: var(--blue); }
+.pxh-curve__pt b { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); font-family: var(--f); font-size: var(--t-xs); font-weight: 500; color: var(--ink); white-space: nowrap; }
+.pxh-curve__tag { position: absolute; left: 8px; top: 8px; font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .08em; text-transform: uppercase; color: var(--blue-d); }
+.pxh-curve__x { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); list-style: none; margin: 14px 0 0; padding: 12px 0 18px; border-top: 1px solid var(--line); }
+.pxh-curve__x li { font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); text-align: center; min-width: 0; overflow-wrap: anywhere; }
+.pxh-shift__list { list-style: none; margin: 0; padding: 0; }
+.pxh-shift__list li { padding: 20px 0; border-bottom: 1px solid var(--line); }
+.pxh-shift__list li:first-child { padding-top: 0; }
+.pxh-shift__list .h3 { margin: 8px 0 6px; }
+.pxh-shift__list .p { margin: 0; }
+.pxh-shift__fix { border-bottom: 0; }
+.pxh-shift__fix .p { color: var(--ink); font-weight: 500; margin-top: 8px; }
+@media (max-width: 1023px) { .pxh-shift__g { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 600px) {
+  .pxh-curve { margin: 26px 14px 0; }
+  .pxh-curve__x li { white-space: nowrap; overflow-wrap: normal; letter-spacing: 0; text-transform: none; justify-self: center; }
+  .pxh-curve__x li:nth-child(even) { padding-top: 18px; }
+  .pxh-curve__pt b { font-size: var(--t-lbl); }
+}

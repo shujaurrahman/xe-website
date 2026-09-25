@@ -1,264 +1,125 @@
-/* ==========================================================================
-   Product & Experience Design hub — BASE LAYER (services/product-experience.php)
-   Loaded after assets/css/brand/hub.css (.bdh-*) and assets/css/tech/kit.css (.xt-*).
-   Only .pxh-* primitives shared by several sections live here; each section styles itself in
-   assets/css/product-experience/<id>.css. Tokens from core.css :root only; no new colours;
-   no gradients except core .aurora/.dither and mask fades; no !important.
+/* Product & Experience Design — the discipline's shared visual language (.pxh-*).
+   Reused by the five capability pages: card system, flow diagram, dumbbell + curve data viz,
+   stepper and assumption tracker. Tokens only. */
 
-   THE FOUR REUSABLE IDIOMS — the five capability subpages build on these
-   • CARD SYSTEM   .pxh-cards > .pxh-card  (+ --lift --ink --flat)
-                   .pxh-card__top (index + icon) · __t (h3) · __d · .bdh-tags · __foot
-   • DIAGRAM       .pxh-dia  a fixed-ratio stage: one <svg> plus absolutely placed .pxh-dnode
-                   labels at --x / --y (0–100). Edges are trimmed to the box edge plus a gap —
-                   never centre to centre.
-   • DATA-VIZ      .pxh-bars > .pxh-bar  a labelled horizontal bar with an optional target line
-                   (.pxh-bar--tgt sets --tgt as a percentage) and a figure. .pxh-meter for a
-                   single value. Grows from the left once an ancestor gets .is-in.
-   • STEPPER       .pxh-steps > .pxh-step  numbered phases with timing, body and outputs; a rail
-                   on desktop, a vertical spine on phones.
+.pxh { --pxh-mono: var(--f); }
+.pxh .pxh-mono { font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .08em; text-transform: uppercase; }
 
-   CONVENTIONS
-   • Root: <section class="band [band--alt|band--ink] pxh-<id>" id="<id>" aria-labelledby="<id>-t">
-   • Heads reuse .bdh-head / --row / --c. Mock software reuses .bdh-ui, or .pxh-panel here.
-   • .pxh-k mono key label · .pxh-note footnote · .pxh-on-ink for a dark panel on paper
-   • .pxh-capl links to a capability's card in #capabilities (the subpages do not exist yet).
-   • Motion: loops only under .is-live (BDH.live / BDH.loop / BDH.seq); reduced motion = final state.
-   ========================================================================== */
+/* ---------- CARD SYSTEM ---------- */
+.pxh-cards { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--bdh-gap); }
+.pxh-card {
+  position: relative; display: flex; flex-direction: column; gap: 14px; min-width: 0;
+  padding: 26px; border-radius: var(--r-lg); background: var(--paper); border: 1px solid var(--line);
+  transition: border-color .3s var(--e), box-shadow .3s var(--e), transform .3s var(--e);
+  scroll-margin-top: calc(var(--nav-h) + 24px);
+}
+.pxh-card:hover { border-color: var(--blue-line); box-shadow: var(--sh-1); }
+.pxh-card:target { border-color: var(--blue); box-shadow: var(--sh-2); }
+.pxh-card__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.pxh-card__idx { font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .1em; color: var(--blue); text-transform: uppercase; }
+.pxh-card__ico { width: 44px; height: 44px; display: grid; place-items: center; border-radius: var(--r-sm); background: var(--blue-wash); color: var(--ink); flex: none; }
+.pxh-card__ico .xt-ico { width: 22px; height: 22px; }
+.pxh-card__k { font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.pxh-card__t { font-family: var(--f-h); font-size: var(--t-h3); line-height: 1.15; letter-spacing: -.01em; color: var(--ink); margin: 0; }
+.pxh-card__d { font-size: var(--t-sm); line-height: 1.6; color: var(--muted); margin: 0; }
+.pxh-card__list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.pxh-card__list li { display: flex; gap: 10px; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: var(--t-sm); color: var(--txt); }
+.pxh-card__list li::before { content: ""; width: 6px; height: 6px; border-radius: 1px; background: var(--blue); flex: none; transform: translateY(-2px); }
+.pxh-card__foot { margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding-top: 6px; }
+.pxh-card__meta { font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .06em; color: var(--muted); text-transform: uppercase; }
+.pxh-card--ink { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+.pxh-card--ink .pxh-card__t { color: var(--on-ink); }
+.pxh-card--ink .pxh-card__d, .pxh-card--ink .pxh-card__meta, .pxh-card--ink .pxh-card__k { color: var(--on-ink-2); }
+.pxh-card--ink .pxh-card__ico { background: var(--on-ink-card); color: var(--on-ink); --xt-accent: var(--on-ink); }
+.pxh-card--ink .pxh-card__list, .pxh-card--ink .pxh-card__list li { border-color: var(--on-ink-line); color: var(--on-ink); }
 
-.pxh{
-  --pxh-mono-s:.625rem;
-  --pxh-bleed:max(var(--gutter),calc((100vw - var(--wrap)) / 2));   /* .wrap edge → viewport edge */
-  --pxh-rail:2px;
+/* fidelity rail: how far an idea has travelled (1 signal … 5 shipped) */
+.pxh-fid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin: 0; padding: 0; list-style: none; }
+.pxh-fid li { height: 4px; border-radius: 2px; background: var(--line-2); }
+.pxh-fid li.on { background: var(--blue); }
+.pxh-fid__k { display: flex; justify-content: space-between; font-family: var(--f); font-size: var(--t-lbl); color: var(--faint); letter-spacing: .06em; text-transform: uppercase; margin-top: 6px; }
+
+/* ---------- STATE PILLS + TRACKER ---------- */
+.pxh-st { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: var(--r-pill); font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; border: 1px solid var(--line-2); color: var(--muted); background: var(--paper); }
+.pxh-st::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.pxh-st[data-st="testing"] { color: var(--blue-d); border-color: var(--blue-line); background: var(--blue-wash); }
+.pxh-st[data-st="validated"] { color: var(--paper); background: var(--blue); border-color: var(--blue); }
+.pxh-st[data-st="invalidated"] { color: var(--ink); border-color: var(--ink); background: var(--paper); text-decoration: line-through; text-decoration-thickness: 1px; }
+.pxh-st[data-st="measuring"] { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.pxh-bar { height: 4px; border-radius: 2px; background: var(--line-2); overflow: hidden; }
+.pxh-bar > i { display: block; height: 100%; width: var(--v, 0%); background: var(--blue); border-radius: inherit; transition: width .6s var(--e-io); }
+
+/* ---------- FLOW DIAGRAM ---------- */
+.pxh-flow { display: grid; grid-template-columns: repeat(var(--pxh-cols, 4), minmax(0, 1fr)); gap: 44px; position: relative; }
+.pxh-flow__col { position: relative; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.pxh-flow__col + .pxh-flow__col::before {           /* connector lives in the gap: never through a node */
+  content: ""; position: absolute; left: -38px; top: 58px; width: 32px; height: 1px; background: var(--blue);
+}
+.pxh-flow__col + .pxh-flow__col::after {
+  content: ""; position: absolute; left: -12px; top: 55px; border: 3.5px solid transparent; border-left: 6px solid var(--blue); border-right: 0;
+}
+.pxh-flow__lbl { font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .1em; text-transform: uppercase; color: var(--blue); margin: 0 0 4px; }
+.pxh-flow__node { padding: 14px 16px; border-radius: var(--r); background: var(--paper); border: 1px solid var(--line-2); min-width: 0; }
+.pxh-flow__node--key { border-color: var(--ink); box-shadow: var(--sh-1); }
+.pxh-flow__node b { display: block; font-family: var(--f-h); font-weight: 500; font-size: var(--t-body); color: var(--ink); }
+.pxh-flow__node span { display: block; font-size: var(--t-sm); color: var(--muted); line-height: 1.5; margin-top: 2px; }
+.pxh-flow__gate { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: var(--r-sm); border: 1px dashed var(--blue-line); font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .06em; text-transform: uppercase; color: var(--blue-d); }
+.pxh-flow__gate .xt-ico { width: 16px; height: 16px; flex: none; }
+@media (max-width: 860px) {
+  .pxh-flow { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .pxh-flow__col + .pxh-flow__col::before { left: 24px; top: -34px; width: 1px; height: 26px; }
+  .pxh-flow__col + .pxh-flow__col::after { left: 20.5px; top: -12px; border: 4px solid transparent; border-top: 6px solid var(--blue); border-bottom: 0; }
 }
 
-/* ---------- labels, notes, small type ------------------------------------- */
-.pxh-k{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;line-height:1.3;color:var(--faint)}
-.pxh-k--blue{color:var(--blue-d)}
-.band--ink .pxh-k,.pxh-on-ink .pxh-k{color:var(--on-ink-3)}
-.band--ink .pxh-k--blue,.pxh-on-ink .pxh-k--blue{color:var(--blue)}
-.pxh-note{font-size:var(--t-xs);line-height:1.6;color:var(--muted);max-width:74ch}
-.pxh-note b{font-weight:500;color:var(--ink)}
-.band--ink .pxh-note{color:var(--on-ink-3)}
-.band--ink .pxh-note b{color:var(--on-ink-2)}
-.pxh-kbd{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:5px;border:1px solid var(--line-3);
-  font-family:var(--f);font-size:var(--pxh-mono-s);color:var(--muted);line-height:1}
-.band--ink .pxh-kbd,.pxh-on-ink .pxh-kbd{border-color:var(--on-ink-line);color:var(--on-ink-2)}
-.pxh-fig{font-family:var(--f);font-weight:500;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--ink)}
-.band--ink .pxh-fig,.pxh-on-ink .pxh-fig{color:var(--on-ink)}
-
-/* ---------- capability anchor chip ---------------------------------------- */
-/* <a class="pxh-capl" href="#system-design"><b>05</b>Systems<i>›</i></a> */
-.pxh-capl{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 12px 0 6px;border-radius:var(--r-pill);
-  border:1px solid var(--line);background:var(--paper);font-size:var(--t-xs);font-weight:500;line-height:1.25;color:var(--ink);
-  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io)}
-.pxh-capl b{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 6px;border-radius:var(--r-pill);background:var(--paper-3);
-  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.04em;color:var(--blue-d)}
-.pxh-capl i{font-family:var(--f);font-style:normal;color:var(--blue);transition:transform var(--d2) var(--e)}
-.pxh-capl:hover,.pxh-capl:focus-visible{border-color:var(--blue-line);background:var(--blue-wash)}
-.pxh-capl:hover i,.pxh-capl:focus-visible i{transform:translateX(3px)}
-.band--ink .pxh-capl,.pxh-on-ink .pxh-capl{background:var(--on-ink-card);border-color:var(--on-ink-line);color:var(--on-ink)}
-.band--ink .pxh-capl b,.pxh-on-ink .pxh-capl b{background:rgba(255,255,255,.08);color:var(--on-ink)}
-.band--ink .pxh-capl:hover,.band--ink .pxh-capl:focus-visible{border-color:var(--blue);background:rgba(255,255,255,.1)}
-@media (max-width:600px){.pxh-capl{padding-block:5px}.pxh-capl span{white-space:normal}}
-.pxh-capls{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
-
-/* ---------- IDIOM 1 · the card system ------------------------------------- */
-.pxh-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,272px),1fr));gap:var(--bdh-gap)}
-.pxh-cards--4{grid-template-columns:repeat(4,minmax(0,1fr))}
-.pxh-cards--3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.pxh-cards--2{grid-template-columns:repeat(2,minmax(0,1fr))}
-.pxh-card{position:relative;display:flex;flex-direction:column;gap:14px;min-width:0;padding:clamp(20px,2.2vw,28px);
-  border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);
-  transition:border-color var(--d2) var(--e),box-shadow var(--d2) var(--e),transform var(--d2) var(--e)}
-.pxh-card--flat{border-radius:var(--r);padding:clamp(18px,1.9vw,22px)}
-.pxh-card--soft{background:var(--paper-2)}
-.pxh-card--lift:hover,.pxh-card--lift:focus-within{border-color:var(--line-3);box-shadow:var(--sh-1);transform:translateY(-2px)}
-.band--ink .pxh-card,.pxh-card--ink{background:var(--on-ink-card);border-color:var(--on-ink-line)}
-.pxh-card__top{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:40px}
-.pxh-card__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;line-height:1;color:var(--blue);font-variant-numeric:tabular-nums}
-.band--ink .pxh-card__n{color:var(--blue)}
-.pxh-card__ico{display:grid;place-items:center;width:40px;height:40px;flex:none;border-radius:var(--r-sm);background:var(--paper-3);color:var(--ink);
-  transition:background var(--d2) var(--e)}
-.band--ink .pxh-card__ico,.pxh-card--ink .pxh-card__ico{background:rgba(255,255,255,.08);color:var(--on-ink)}
-.pxh-card--lift:hover .pxh-card__ico{background:var(--blue-wash)}
-.pxh-card__t{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.008em;line-height:1.28;color:var(--ink)}
-.pxh-card__t--l{font-size:1.1875rem}
-.band--ink .pxh-card__t{color:var(--on-ink)}
-.pxh-card__d{font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
-.band--ink .pxh-card__d{color:var(--on-ink-2)}
-.pxh-card__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 14px;margin-top:auto;padding-top:14px;
-  border-top:1px solid var(--line-2)}
-.band--ink .pxh-card__foot{border-color:var(--on-ink-line)}
-
-/* ---------- IDIOM 2 · the diagram stage ----------------------------------- */
-/* <div class="pxh-dia" style="--ar:1000/420"><svg viewBox="0 0 1000 420">…</svg>
-     <span class="pxh-dnode" style="--x:12;--y:50">…</span> … </div>
-   Every edge in the svg stops at the box edge plus a gap, so no line runs through a box. */
-.pxh-dia{position:relative;width:100%;aspect-ratio:var(--ar,1000 / 420)}
-.pxh-dia>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.pxh-dnode{position:absolute;left:calc(var(--x) * 1%);top:calc(var(--y) * 1%);z-index:2;translate:-50% -50%;
-  display:flex;flex-direction:column;gap:3px;align-items:flex-start;min-width:0;padding:9px 13px;border-radius:var(--r-sm);
-  border:1px solid var(--line-3);background:var(--paper);box-shadow:var(--sh-1);line-height:1.2;white-space:nowrap}
-.pxh-dnode b{font-family:var(--f-h);font-size:var(--t-sm);font-weight:500;letter-spacing:-.004em;color:var(--ink)}
-.pxh-dnode span{font-family:var(--f);font-size:var(--pxh-mono-s);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
-.pxh-dnode--blue{border-color:var(--blue-line);background:var(--blue-wash)}
-.pxh-on-ink .pxh-dnode,.band--ink .pxh-dnode{background:var(--ink-2);border-color:var(--on-ink-line);box-shadow:none}
-.pxh-on-ink .pxh-dnode b,.band--ink .pxh-dnode b{color:var(--on-ink)}
-.pxh-on-ink .pxh-dnode span,.band--ink .pxh-dnode span{color:var(--on-ink-3)}
-.pxh-edge{fill:none;stroke:var(--line-3);stroke-width:1.4;stroke-linecap:round}
-.band--ink .pxh-edge,.pxh-on-ink .pxh-edge{stroke:var(--on-ink-line)}
-.pxh-edge--dash{stroke-dasharray:4 5}
-/* the live edge stays blue on ink too, so the ink override above is restated at equal weight */
-.pxh-edge--live,.band--ink .pxh-edge--live,.pxh-on-ink .pxh-edge--live{stroke:var(--blue);stroke-width:1.8}
-.pxh-arrow{fill:var(--line-3);stroke:none}
-.band--ink .pxh-arrow,.pxh-on-ink .pxh-arrow{fill:var(--on-ink-line)}
-.pxh-arrow--blue,.band--ink .pxh-arrow--blue,.pxh-on-ink .pxh-arrow--blue{fill:var(--blue)}
-
-/* ---------- IDIOM 3 · bars, meters, target lines -------------------------- */
-.pxh-bars{display:flex;flex-direction:column;gap:14px}
-.pxh-bar{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;column-gap:14px;row-gap:7px;min-width:0}
-.pxh-bar__n{font-size:var(--t-sm);line-height:1.4;color:var(--txt);min-width:0}
-.band--ink .pxh-bar__n{color:var(--on-ink-2)}
-.pxh-bar__v{font-family:var(--f);font-size:var(--t-xs);font-weight:500;letter-spacing:.02em;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
-.band--ink .pxh-bar__v{color:var(--on-ink)}
-.pxh-bar__track{position:relative;grid-column:1 / -1;height:8px;border-radius:var(--r-pill);background:var(--paper-4);overflow:hidden}
-.band--ink .pxh-bar__track{background:rgba(255,255,255,.08)}
-.pxh-bar__fill{position:absolute;inset:0 auto 0 0;width:calc(var(--p,0) * 1%);border-radius:var(--r-pill);background:var(--blue);
-  transform:scaleX(0);transform-origin:left center;transition:transform .9s var(--e) calc(var(--i,0) * 70ms)}
-.is-in .pxh-bar__fill{transform:none}
-.pxh-bar__fill--quiet{background:var(--line-3)}
-.band--ink .pxh-bar__fill--quiet{background:var(--on-ink-3)}
-.pxh-bar--tgt .pxh-bar__track{overflow:visible}
-.pxh-bar__tgt{position:absolute;left:calc(var(--tgt,0) * 1%);top:-5px;bottom:-5px;width:1.5px;background:var(--ink);border-radius:1px}
-.band--ink .pxh-bar__tgt{background:var(--on-ink)}
-.pxh-meter{display:flex;align-items:baseline;gap:10px;min-width:0}
-.pxh-meter b{font-family:var(--f);font-size:clamp(1.75rem,2.4vw,2.25rem);font-weight:500;letter-spacing:-.045em;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
-.band--ink .pxh-meter b{color:var(--on-ink)}
-.pxh-meter small{font-family:var(--f);font-size:var(--t-body);font-weight:500;color:var(--muted);line-height:1}
-.pxh-meter span{font-family:var(--f);font-size:var(--t-xs);color:var(--muted)}
-.band--ink .pxh-meter small{color:var(--on-ink-2)}
-.band--ink .pxh-meter span{color:var(--on-ink-3)}
-@media (prefers-reduced-motion:reduce){.pxh-bar__fill{transform:none;transition:none}}
-
-/* ---------- IDIOM 4 · the stepper ---------------------------------------- */
-.pxh-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--bdh-gap)}
-.pxh-step{position:relative;display:flex;flex-direction:column;gap:12px;min-width:0;padding-top:26px;border-top:var(--pxh-rail) solid var(--line)}
-.pxh-step::before{content:"";position:absolute;left:0;top:calc(var(--pxh-rail) * -1);width:100%;height:var(--pxh-rail);background:var(--blue);
-  transform:scaleX(0);transform-origin:left center;transition:transform .8s var(--e) calc(var(--i,0) * 160ms)}
-.is-in .pxh-step::before{transform:none}
-.band--ink .pxh-step{border-color:var(--on-ink-line)}
-.pxh-step__h{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-.pxh-step__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;color:var(--blue);font-variant-numeric:tabular-nums}
-.pxh-step__w{font-family:var(--f);font-size:var(--pxh-mono-s);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
-.band--ink .pxh-step__w{color:var(--on-ink-3)}
-.pxh-step__t{font-family:var(--f-h);font-size:1.1875rem;font-weight:500;letter-spacing:-.01em;line-height:1.2;color:var(--ink)}
-.band--ink .pxh-step__t{color:var(--on-ink)}
-.pxh-step__d{font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
-.band--ink .pxh-step__d{color:var(--on-ink-2)}
-.pxh-step__out{display:flex;flex-direction:column;gap:8px;margin-top:auto;padding-top:14px;border-top:1px dashed var(--line)}
-.band--ink .pxh-step__out{border-color:var(--on-ink-line)}
-.pxh-step__out li{display:flex;align-items:flex-start;gap:9px;font-size:var(--t-xs);line-height:1.45;color:var(--txt)}
-.band--ink .pxh-step__out li{color:var(--on-ink-2)}
-.pxh-step__out li::before{content:"";flex:none;width:4px;height:4px;margin-top:7px;border-radius:50%;background:var(--blue)}
-@media (max-width:1023px){.pxh-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:600px){
-  .pxh-steps{grid-template-columns:minmax(0,1fr);gap:0}
-  .pxh-step{padding:0 0 26px 26px;border-top:0;border-left:var(--pxh-rail) solid var(--line)}
-  .pxh-step:last-child{border-left-color:transparent}
-  .pxh-step::before{left:calc(var(--pxh-rail) * -1);top:0;width:var(--pxh-rail);height:100%;transform:scaleY(0);transform-origin:center top;
-    transition:transform .8s var(--e) calc(var(--i,0) * 160ms)}
-  .is-in .pxh-step::before{transform:none}
-  .pxh-step::after{content:"";position:absolute;left:-7px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--paper);
-    box-shadow:inset 0 0 0 2px var(--blue)}
-  .band--ink .pxh-step::after{background:var(--ink)}
-  .pxh-step:last-child::before{height:14px}
-}
-@media (prefers-reduced-motion:reduce){.pxh-step::before{transform:none;transition:none}}
-
-/* ---------- mock software panel ------------------------------------------ */
-/* .pxh-panel is .bdh-ui with a working title bar: a name, a state pill and a live dot. */
-.pxh-panel{position:relative;display:flex;flex-direction:column;min-width:0;border:1px solid var(--line);border-radius:var(--r-xl);
-  background:var(--paper);box-shadow:var(--sh-2);overflow:hidden}
-.pxh-panel--ink{background:var(--ink);border-color:var(--on-ink-line);color:var(--on-ink-2);box-shadow:0 30px 80px -40px rgba(25,25,29,.55)}
-.pxh-panel__bar{display:flex;align-items:center;gap:12px;min-height:48px;padding:0 18px;border-bottom:1px solid var(--line-2);
-  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--muted);white-space:nowrap;min-width:0}
-.pxh-panel--ink .pxh-panel__bar{border-color:var(--on-ink-line);color:var(--on-ink-3)}
-.pxh-panel--ink .bdh-ui__dots i{background:var(--on-ink-line)}
-.pxh-panel__name{min-width:0;overflow:hidden;text-overflow:ellipsis;color:var(--txt)}
-.pxh-panel--ink .pxh-panel__name{color:var(--on-ink-2)}
-.pxh-panel__name i{font-style:normal;color:var(--ghost)}
-.pxh-panel--ink .pxh-panel__name i{color:var(--on-ink-3)}
-.pxh-panel__pill{flex:none;padding:3px 8px;border-radius:var(--r-pill);border:1px solid var(--line);color:var(--txt)}
-.pxh-panel--ink .pxh-panel__pill{border-color:var(--on-ink-line);color:var(--on-ink-2)}
-.pxh-panel__ill{margin-left:auto;flex:none;padding:3px 8px;border-radius:var(--r-pill);border:1px dashed var(--line-3);
-  text-transform:uppercase;letter-spacing:.12em;color:var(--faint)}
-.pxh-panel--ink .pxh-panel__ill{border-color:var(--on-ink-line);color:var(--on-ink-3)}
-.pxh-live{display:inline-flex;align-items:center;gap:8px;flex:none;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;
-  text-transform:uppercase;color:var(--muted);white-space:nowrap}
-.band--ink .pxh-live,.pxh-panel--ink .pxh-live,.pxh-on-ink .pxh-live{color:var(--on-ink-2)}
-.pxh-panel__foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;padding:12px 18px;border-top:1px solid var(--line-2);
-  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--muted)}
-.pxh-panel--ink .pxh-panel__foot{border-color:var(--on-ink-line);color:var(--on-ink-3)}
-.pxh-panel__foot b{font-weight:500;color:var(--ink)}
-.pxh-panel--ink .pxh-panel__foot b{color:var(--on-ink)}
-/* the title bar is one nowrap line inside an overflow:hidden panel, so the least useful parts of it
-   are dropped before they can be clipped */
-@media (max-width:760px){
-  .pxh-panel__ill{display:none}
-  .pxh-panel__pill{margin-left:auto}
-}
-@media (max-width:600px){
-  .pxh-panel__bar{padding:0 14px}
-  .pxh-panel__foot{padding:12px 14px}
-  .pxh-panel__name{display:none}
+/* ---------- DATA VIZ: dumbbell ---------- */
+.pxh-db { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.pxh-db__row { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) 5.5rem; gap: 20px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.pxh-db__k b { display: block; font-family: var(--f-h); font-weight: 500; color: var(--ink); font-size: var(--t-body); }
+.pxh-db__k span { display: block; font-size: var(--t-xs); color: var(--muted); line-height: 1.5; margin-top: 2px; }
+.pxh-db__track { position: relative; height: 28px; }
+.pxh-db__track::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--line-2); }
+.pxh-db__seg { position: absolute; top: calc(50% - 1.5px); height: 3px; background: var(--blue); left: var(--a); width: calc(var(--b) - var(--a)); border-radius: 2px; transform-origin: left; }
+.pxh-db__dot { position: absolute; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; }
+.pxh-db__dot--a { left: var(--a); background: var(--paper); border: 2px solid var(--faint); }
+.pxh-db__dot--b { left: var(--b); background: var(--blue); box-shadow: 0 0 0 4px var(--blue-wash); }
+.pxh-db__tgt { position: absolute; left: var(--t); top: 2px; bottom: 2px; width: 0; border-left: 2px dashed var(--ink); }
+.pxh-db__v { font-family: var(--f); font-size: var(--t-sm); color: var(--ink); text-align: right; white-space: nowrap; }
+.pxh-db__v small { display: block; font-size: var(--t-lbl); color: var(--faint); letter-spacing: .04em; }
+.pxh-db__legend { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--f); font-size: var(--t-lbl); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-top: 16px; }
+.pxh-db__legend i { display: inline-block; vertical-align: middle; margin-right: 8px; }
+.pxh-db__legend .a { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--faint); }
+.pxh-db__legend .b { width: 10px; height: 10px; border-radius: 50%; background: var(--blue); }
+.pxh-db__legend .t { width: 0; height: 12px; border-left: 2px dashed var(--ink); }
+.pxh-db.is-anim .pxh-db__seg { transform: scaleX(0); }
+.pxh-db.is-anim.is-in .pxh-db__seg { transform: scaleX(1); transition: transform .9s var(--e-io); }
+@media (max-width: 700px) {
+  .pxh-db__row { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 16px; }
+  .pxh-db__track { grid-column: 1 / -1; grid-row: 2; }
 }
 
-/* ---------- a readout row (dt/dd figures under a panel) ------------------- */
-.pxh-read{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line-2)}
-.pxh-read>div{min-width:0;padding:14px 18px 16px;border-left:1px solid var(--line-2)}
-.pxh-read>div:first-child{border-left:0}
-.pxh-read dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1.3}
-.pxh-read dd{margin-top:8px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.02em;color:var(--muted);line-height:1.2;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pxh-read b{font-size:1rem;font-weight:500;letter-spacing:-.01em;color:var(--ink);font-variant-numeric:tabular-nums;transition:opacity .25s var(--e)}
-.pxh-read b.is-tick{opacity:.45}
-.pxh-panel--ink .pxh-read,.pxh-panel--ink .pxh-read>div{border-color:var(--on-ink-line)}
-.pxh-panel--ink .pxh-read dt{color:var(--on-ink-3)}
-.pxh-panel--ink .pxh-read dd{color:var(--on-ink-3)}
-.pxh-panel--ink .pxh-read b{color:var(--on-ink)}
-@media (max-width:760px){
-  .pxh-read{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .pxh-read>div:nth-child(odd){border-left:0}
-  .pxh-read>div:nth-child(n+3){border-top:1px solid var(--line-2)}
-  .pxh-panel--ink .pxh-read>div:nth-child(n+3){border-top-color:var(--on-ink-line)}
-  .pxh-read>div{padding:12px 14px}
-}
-@media (prefers-reduced-motion:reduce){.pxh-read b{transition:none}}
+/* ---------- STEPPER ---------- */
+.pxh-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: pxhs; }
+.pxh-steps__i { position: relative; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 0 18px; padding-bottom: 28px; }
+.pxh-steps__i::before { content: ""; position: absolute; left: 21.5px; top: 50px; bottom: 6px; width: 1px; background: var(--line-2); }
+.pxh-steps__i:last-child::before { display: none; }
+.pxh-steps__n { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--ink); font-family: var(--f); font-size: var(--t-sm); color: var(--ink); background: var(--paper); }
+.pxh-steps__i.is-key .pxh-steps__n { background: var(--ink); color: var(--paper); }
+.pxh-steps__b { min-width: 0; padding-top: 8px; }
+.pxh-steps__t { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 0; font-family: var(--f-h); font-size: var(--t-h4); font-weight: 500; color: var(--ink); }
+.pxh-steps__t small { font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .08em; color: var(--muted); text-transform: uppercase; font-weight: 400; }
+.pxh-steps__d { margin: 8px 0 0; font-size: var(--t-sm); color: var(--muted); line-height: 1.6; }
+.pxh-steps__out { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; padding: 0; list-style: none; }
+.pxh-steps__out li { font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .04em; padding: 4px 9px; border-radius: var(--r-pill); background: var(--paper-2); color: var(--txt); }
+.pxh-steps__gate { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .06em; color: var(--blue-d); text-transform: uppercase; }
+.pxh-steps__gate::before { content: ""; width: 9px; height: 9px; border: 1.5px solid var(--blue); transform: rotate(45deg); flex: none; }
 
-/* ---------- wide content on phones --------------------------------------- */
-/* .pxh-wide — a table or a text-bearing diagram that needs a minimum width to stay legible.
-   <div class="bdh-scroll-x mask-x pxh-wide" tabindex="0" role="group" aria-label="…, scroll sideways">
-   On phones it scrolls. Above 760px the content fits, so the sideways fade is switched off: a fade
-   over a fully visible first column only clips its first and last letters. */
-@media (min-width:761px){
-  .pxh-wide{-webkit-mask-image:none;mask-image:none}
-}
+/* shared frame for app-like mocks */
+.pxh-win { border-radius: var(--r-lg); background: var(--paper); border: 1px solid var(--line); box-shadow: var(--sh-2); overflow: hidden; min-width: 0; }
+.pxh-win__bar { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); font-family: var(--f); font-size: var(--t-lbl); letter-spacing: .06em; color: var(--muted); text-transform: uppercase; }
+.pxh-win__bar .dots3 { display: inline-flex; gap: 5px; }
+.pxh-win__bar .dots3 i { width: 7px; height: 7px; border-radius: 50%; background: var(--line-3); }
+.pxh-win__bar .sp { margin-left: auto; }
+.pxh-note { font-size: var(--t-xs); color: var(--muted); margin-top: 14px; }
 
-.pxh-tbl{width:100%;border-collapse:collapse;min-width:720px}
-.pxh-tbl th,.pxh-tbl td{padding:13px 16px 13px 0;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-2)}
-.pxh-tbl thead th{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
-  border-bottom:1px solid var(--line-3);white-space:nowrap}
-.pxh-tbl tbody th{font-family:var(--f-h);font-size:var(--t-sm);font-weight:500;letter-spacing:-.004em;color:var(--ink);width:24%}
-.pxh-tbl td{font-size:var(--t-sm);line-height:1.55;color:var(--muted)}
-.pxh-tbl td:last-child,.pxh-tbl th:last-child{padding-right:0}
-.pxh-tbl .pxh-tbl__m{font-family:var(--f);font-size:var(--t-xs);letter-spacing:.02em;color:var(--txt);white-space:nowrap}
-.band--ink .pxh-tbl th,.band--ink .pxh-tbl td{border-color:var(--on-ink-line)}
-.band--ink .pxh-tbl tbody th{color:var(--on-ink)}
-.band--ink .pxh-tbl td{color:var(--on-ink-2)}
-
-/* ---------- helpers ------------------------------------------------------- */
-.pxh-rule{display:block;height:1px;border:0;background:var(--line)}
-.band--ink .pxh-rule{background:var(--on-ink-line)}
-/* a container filled with --blue must hand the icon accent back to currentColor, or the accent
-   half of an .xt-ico disappears into the fill (brief §2, defect class 3) */
-.pxh-onblue{--xt-accent:currentColor}
+/* text links inside cards and answers meet the 44px tap target */
+.pxh .pxh-card__foot .tl, .pxh .pxh-faq__a .tl { display: inline-flex; align-items: center; min-height: 44px; }

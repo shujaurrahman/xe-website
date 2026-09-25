@@ -20,7 +20,10 @@
 .s22__glow{
   position:absolute;right:-14%;top:50%;translate:0 -50%;z-index:0;pointer-events:none;
   width:min(58%,720px);aspect-ratio:1.15;border-radius:50%;filter:blur(44px);
-  background:radial-gradient(closest-side,rgba(0,130,251,.26),rgba(0,130,251,0) 74%);
+  /* a solid token fill, faded by a mask — no colour gradient */
+  background:var(--blue-line);opacity:.8;
+  -webkit-mask-image:radial-gradient(closest-side,#000,transparent 74%);
+          mask-image:radial-gradient(closest-side,#000,transparent 74%);
 }
 /* Ground layer: the chevron from the mark, blown up and centred on the same
    point as the orbits, so it is cropped by the right edge and the rings read as
@@ -41,14 +44,14 @@
   height:min(170%,780px);aspect-ratio:1;
 }
 .s22__rings circle{fill:none;stroke-width:1;vector-effect:non-scaling-stroke}
-.s22__rings circle:nth-child(1){stroke:rgba(255,255,255,.18)}
+.s22__rings circle:nth-child(1){stroke:var(--on-ink-line)}
 /* the one lit ring — it passes behind the button, which is the point */
-.s22__rings circle:nth-child(2){stroke:rgba(0,130,251,.3)}
-.s22__rings circle:nth-child(3){stroke:rgba(255,255,255,.1)}
-.s22__rings circle:nth-child(4){stroke:rgba(255,255,255,.07)}
+.s22__rings circle:nth-child(2){stroke:var(--blue-line)}
+.s22__rings circle:nth-child(3){stroke:var(--on-ink-line);stroke-opacity:.7}
+.s22__rings circle:nth-child(4){stroke:var(--on-ink-line);stroke-opacity:.5}
 .s22__o{transform-origin:520px 260px}
 .s22__o--1 circle{fill:var(--blue)}
-.s22__o--2 circle{fill:rgba(255,255,255,.28)}
+.s22__o--2 circle{fill:var(--on-ink-3);fill-opacity:.6}
 .s22.is-live .s22__o--1{animation:s22-spin 30s linear infinite}
 .s22.is-live .s22__o--2{animation:s22-spin 48s linear infinite reverse}
 @keyframes s22-spin{to{transform:rotate(360deg)}}
@@ -64,11 +67,11 @@
 
 .s22__go{
   justify-self:end;height:58px;padding-inline:30px;
-  box-shadow:0 0 0 1px rgba(255,255,255,.10),0 14px 34px -16px rgba(0,0,0,.85);
+  box-shadow:0 0 0 1px var(--on-ink-line),var(--sh-2);
 }
 .s22__go:hover{
   transform:translateY(-2px);
-  box-shadow:0 0 0 8px rgba(0,130,251,.13),0 22px 46px -16px rgba(0,0,0,.9);
+  box-shadow:0 0 0 8px var(--blue-wash-2),var(--sh-2);
 }
 .s22__go:active{transform:translateY(0)}
 
@@ -93,6 +96,11 @@
 .s22__links a:hover::after,.s22__links a:focus-visible::after{transform:scaleX(1)}
 .s22__links i{font-family:var(--f);font-style:normal;color:var(--blue);transition:transform var(--d2) var(--e)}
 .s22__links a:hover i,.s22__links a:focus-visible i{transform:translateX(3px)}
+/* shown, not linked: no destination exists yet */
+.s22__links .s22__soon{cursor:default;color:var(--on-ink-3)}
+.s22__links .s22__soon:hover{color:var(--on-ink-3)}
+.s22__links .s22__soon::after{content:none}
+.s22__tag{flex:none;padding:3px 8px;border:1px solid var(--on-ink-line);border-radius:var(--r-pill);font-family:var(--f);font-size:var(--t-lbl);font-weight:400;line-height:1.2;letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3)}   /* no chevron: it goes nowhere yet */
 
 @media (min-width:1200px){
   .s22__links{grid-template-columns:repeat(6,minmax(0,1fr))}
@@ -121,4 +129,5 @@
 }
 @media (prefers-reduced-motion:reduce){
   .s22__o{animation:none}
+  .s22__links a,.s22__links a::after,.s22__links i,.s22__go{transition:none}
 }

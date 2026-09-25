@@ -135,16 +135,18 @@ judge with your eyes, not from the file list. Give every parallel agent its own 
 
 | Area | State |
 |---|---|
-| Brand Design hub + 6 capability pages | done, reviewed, polished |
+| Brand Design hub + 6 capability pages | done, reviewed, polished (the benchmark) |
 | Technology & Intelligence hub + 10 capability pages | done, independently reviewed, 186 fixes applied |
-| Services catalogue + lead-tagged contact | done; selection POSTs to `/contact` and pre-fills; GET still works |
-| Clean URLs | done and verified in all three environments |
-| Site-wide no-JS reveal fix | done in `partials/head.php` |
-| `data/` for the 4 new disciplines | **done** — content + catalogue data written and linting clean |
-| The 4 new discipline pages | **stubs (55 lines each)** — this is the next job |
-| Home page showcase sections | `index.php` prepped, `23-brand` / `24-technology` / `25-offer` listed in `$SECTIONS` but **files not built** |
+| Home page | 25 sections as a five-chapter story with a chapter rail; 23/24/25 built; reviewed + polished. Sections 11, 15, 18, 19 are kept as files but not rendered (real logos / fake testimonials / duplicate CTAs) — `index.php` `$HX_CHAPTERS` |
+| Industries, Work, Approach, Careers, What we do (`/services/`), 404, Contact | built → critiqued → polished → verified, on `cloud/index-rebuild` |
+| Legal suite (`legal/` — hub, privacy, terms, cookies + working preferences, accessibility, commercial policy, IP & trademarks, responsible AI, security, `.well-known/security.txt`) | built → critiqued → polished → verified; every identifier and legal judgement is a PLACEHOLDER for counsel |
+| The 4 new discipline hubs + 24 capability pages (one template per discipline, topic-specific showcases) | built → critiqued → polished → verified, on `cloud/discipline-pages` |
+| Services catalogue + lead-tagged contact | done; careers applications and the home booking form also post to `/contact` |
+| Clean URLs + designed 404 | done (router.php + .htaccess final rule) |
 
-Nothing is committed. Nothing is deployed. `deploy.sh` targets `xe.shujaurrahman.com`.
+Nothing is deployed. `docs/KIT.md` is the compact build reference agents read instead of the benchmark source.
+Open owner items: real logos (s11), testimonials (s15), stock/placeholder photography, illustrative figures, legal entity details,
+® registration, careers openings and benefits, response times.
 
 ---
 
@@ -247,3 +249,105 @@ Useful practices learned here:
 - When a defect is found, fix its **root cause in the shared file** and sweep the whole site for other
   instances, rather than patching the one page it was reported on.
 - Report anything skipped or capped **by name** — never drop work silently.
+
+---
+
+## 8. The four-agent strategy
+
+This is the exact pipeline that produced the quality on this site. Run it **per page**, and run
+pages **in parallel** — one set of four agents per page, each set with its own dev port.
+
+**The benchmark is the Brand Design pages**: `services/brand-design.php` and, above all,
+`services/brand-design/brand-identity.php` and `services/brand-design/brand-ai-tools.php`. Every
+agent below screenshots them and judges against them. `services/technology-intelligence.php` and its
+ten capability pages are the second reference — they were built to beat Brand Design and were
+independently reviewed.
+
+### Agent 1 — Builder
+**Owns** only its own page's files: the shell, `partials/<page>/`, `assets/css/<page>.css`,
+`assets/css/<page>/`, `assets/js/<page>/`, `assets/imgs/<page>/`. Touches nothing else.
+
+Reads the benchmark partials, CSS and JS **in full** before designing, and screenshots the benchmark
+so its judgement is visual. Builds every section: partial + its own CSS + its own JS wherever it
+moves. Sources and credits its own photography. Then verifies: `php -l`, `node --check`, screenshots
+at 1440, 1024, 768 and 390 plus `--live`, `--reduced` and a JavaScript-disabled load. Fixes every PHP
+warning, console error, failed request and overflow. **Does at least two full look-and-fix passes, one
+of them entirely at 390.** Proves with `git diff --stat` that it touched only its own files.
+
+### Agent 2 — Critic
+**A different agent. Edits nothing** — scratch scripts only. Adversarial by instruction: its job is to
+find what is weak, generic, wrong, broken, template-like or below the benchmark, and it assumes there
+are real defects to find.
+
+Every finding carries evidence — a screenshot path, a `file:line`, a grep hit, or a Playwright result
+— a severity, and a concrete fix:
+- **critical** — broken, false, a design-system breach, or blank without JavaScript
+- **major** — clearly below benchmark, or a requested element missing
+- **minor** — polish
+
+It must run, as separate passes:
+1. **Visual** — the page at 1440, 1024, 768, 390, `--live`, `--reduced`, read section by section,
+   against screenshots of the Brand Design benchmark taken in the same run.
+2. **Mobile at 390** — its own pass,each problem filed separately: overflow, clipped or truncated text,
+   overlapping elements, columns that did not collapse, broken reading order, tap targets under 44px,
+   type below the site's smallest size, wide tables or diagrams that neither scroll nor reflow.
+3. **No-JavaScript** — every section complete and readable with JS disabled; `--reduced` shows the
+   finished state, not a frozen mid-animation one.
+4. **Depth and distinctness** — is every section world-class? Is the signature showcase real software?
+   Has it borrowed a hero layout, showcase mechanic or card pattern from a sibling or the benchmark?
+5. **Rules** — grep the page CSS for non-token colours, gradients other than mask fades, `!important`,
+   stray `font-family`; one `h1`, an `h2` per section; `aria-hidden` + `.bdh-sr` on mocks; `th scope`;
+   keyboard operation; duplicate ids; hrefs ending `.php`; console errors; PHP warnings.
+6. **Truthfulness** — unmarked claims about certifications, partnerships, headcount, clients or
+   results; real company names as clients; photo credits that do not match their photograph.
+7. **Links and catalogue** — follow every link (must return 200); the services catalogue renders and
+   an Enquire link pre-fills the contact page.
+8. **Weight** — HTML size and DOM node count, with the cause of anything disproportionate.
+
+It ends with a score out of 10 against the benchmark and names the weakest sections plainly.
+
+### Agent 3 — Polisher
+**Owns the same files as the builder.** Applies every critical and major finding, and the minors
+unless there is a good reason not to — recorded with the reason.
+
+Order of work: critical defects first, then **mobile findings**, then the sections the critic called
+weakest — those need real design work, not a tweak: rebuild the component, deepen the content, fix
+spacing and hierarchy until the section stands beside the benchmark's best. If a finding needs a
+shared file it does not own, it does not change it — it records what that file needs.
+
+**A critic finding can be wrong.** Verify before changing, and record a declined finding with the
+evidence rather than adding dead code. Then re-verify the whole page exactly as the builder did,
+including the 390 pass and the JavaScript-disabled load.
+
+`pass` = no PHP warnings, no console errors, no failed requests, no overflow at any width, no section
+blank without JS, and no remaining critical or major finding.
+
+### Agent 4 — Verifier
+Runs once across **all** the pages in the batch, after their polishers finish. Mechanical and
+adversarial about regressions:
+- every page returns 200, with exactly one `h1` and no duplicate ids
+- PHP warnings, console errors, failed requests, overflow at 1440 and 390
+- JavaScript disabled: list by id any section that renders blank or half-drawn
+- crawl every internal link on every page: none may 404, none may contain `.php` or `index`
+- nav, mega menu and mobile sheet list every page and all resolve
+- no page-level CSS has leaked into the shared services catalogue or the onward aid
+- `git status` / `git diff --stat`: confirm no file outside the intended set changed, and nothing was
+  deleted
+
+It fixes only small, obvious breakages; anything larger it reports.
+
+### Rules that make the parallelism safe
+- One page per agent set. **Each agent gets its own dev port** and its own files.
+- Every agent proves with `git diff --stat` that it touched only what it owns.
+- Never edit `data/site.php`, `partials/init.php`, `partials/head.php`, `partials/nav.php`,
+  `partials/footer.php`, `partials/cta.php`, `partials/tech/kit.php`, `partials/services/*`,
+  `assets/css/core.css`, `assets/js/core.js`, `assets/css/tech/kit.css`, or anything under
+  `/brand/` — the Brand Design files are the read-only benchmark.
+- Report anything skipped or capped **by name**. Never drop work silently.
+
+### Why it is worth the tokens
+On the ten Technology pages, the independent critic found **186 real defects** the builders' own
+self-checks had passed as clean — including nine sections on one page that rendered blank without
+JavaScript, a photograph credited to the wrong photographer, contradictory figures between two
+sections of the same page, and a filter that silently showed all 174 items instead of the selected
+layer. A builder reviewing its own work does not find these.

@@ -105,10 +105,10 @@
 .svc-card:hover{transform:translateY(-3px);border-color:var(--line-3);box-shadow:var(--sh-2)}
 .svc-card.is-picked{border-color:var(--blue-line)}
 .svc-card.is-picked::before{transform:none}
-.svc-card__top{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:28px}
+.svc-card__top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;min-height:28px}
 .svc-card__code{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;color:var(--faint);font-variant-numeric:tabular-nums}
 .svc-card__time{display:inline-flex;align-items:center;gap:7px;min-height:28px;padding:0 11px 0 9px;border-radius:var(--r-pill);background:var(--paper-3);
-  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.04em;color:var(--txt);white-space:nowrap}
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.04em;color:var(--txt);max-width:100%}   /* wraps on narrow cards instead of pushing the page sideways */
 .svc-card__time .svc-ico{width:14px;height:14px;color:var(--muted)}
 .svc-card__t{margin-top:18px;font-family:var(--f-h);font-size:clamp(1.125rem,1.3vw,1.3125rem);font-weight:500;letter-spacing:-.014em;line-height:1.22;color:var(--ink)}
 .svc-card__d{margin-top:10px;font-size:var(--t-sm);line-height:1.62;color:var(--muted)}

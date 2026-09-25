@@ -1,86 +1,36 @@
 <?php /* DRAFT COPY — review before launch */
-/* FAQ — twelve questions, taken verbatim from the capability data so the hub and the capability pages
-   can never answer the same question two different ways. Each row carries the capability it came from,
-   as a link to that capability's card in #capabilities.
-   The core [data-acc] accordion does the work — this page allows several rows open at once — and the
-   <noscript> rule below leaves every answer open when there is no JavaScript. */
-$faq_pick = [
-    ['design-consulting-solutioning', 0],
-    ['design-consulting-solutioning', 1],
-    ['product-strategy-vision', 0],
-    ['product-strategy-vision', 2],
-    ['experience-design-development', 0],
-    ['experience-design-development', 2],
-    ['experience-design-development', 3],
-    ['experience-design-development', 4],
-    ['ai-product-strategy-development', 0],
-    ['system-design', 0],
-    ['system-design', 2],
-    ['design-consulting-solutioning', 4],
+/* FAQ — native <details>, so every answer opens without JavaScript. Two hub questions, then the first question
+   of each capability (data 'faq'), each linking to the capability it belongs to. */
+$pxh_fq = [
+    ['Do we have to start with research?', 'No. Most engagements enter where the product already is: a strategy question, a design that needs testing, a front end to build or a system to consolidate. We check which assumptions are still open and test only the ones that matter to the next decision.', null],
+    ['Will you work with our designers and engineers?', 'Yes, and we plan for it. We work in your Figma, your repositories and your ticketing, pair with your people, and hand over the working files and the decision record so the team can carry on without us.', null],
 ];
-$faq_items = [];
-foreach ($faq_pick as $faq_p) {
-    $faq_c = $CAPS[$faq_p[0]] ?? null;
-    if (!$faq_c || !isset($faq_c['faq'][$faq_p[1]])) continue;
-    $faq_items[] = ['q' => $faq_c['faq'][$faq_p[1]][0], 'a' => $faq_c['faq'][$faq_p[1]][1], 'cap' => $faq_c];
+foreach ($CAPS as $pxh_slug => $pxh_cap) {
+    if (!empty($pxh_cap['faq'][0])) $pxh_fq[] = [$pxh_cap['faq'][0][0], $pxh_cap['faq'][0][1], [$pxh_slug, $pxh_cap['name'], array_values(array_filter($DISC['caps'], fn ($pxh_dc) => $pxh_dc[2] === $pxh_slug))[0] ?? [$pxh_cap['name'], '', $pxh_slug]]];
 }
-/* the commercial facts people want before they write in.
-   PLACEHOLDER: confirm response times, the first-call format and the NDA position before launch */
-$faq_facts = [
-    ['First reply',    'One working day, from a designer'],
-    ['First call',     '45 minutes, and we will ask about the decision, not the budget'],
-    ['Under NDA',      'Signed before anything of yours is shared'],
-    ['Outline plan',   'Scope, shape and a price range within a week'],
-];
 ?>
-<noscript><style>.pxh-faq__p{height:auto;overflow:visible}.pxh-faq__sign{display:none}</style></noscript>
 <section class="band pxh-faq" id="faq" aria-labelledby="faq-t">
   <div class="wrap">
-    <div class="bdh-head bdh-head--row" data-rv>
-      <div>
-        <p class="lbl lbl--blue"><span class="dot"></span>Questions</p>
-        <h2 class="h2" id="faq-t"><span class="g">Product and experience design,</span> asked directly.</h2>
+    <div class="bdh-grid">
+      <div class="bdh-c4">
+        <div class="bdh-sticky bdh-head" data-rv>
+          <p class="lbl lbl--blue"><span class="dot"></span>Questions</p>
+          <h2 class="h2" id="faq-t"><span class="g">Asked before</span> the first workshop.</h2>
+          <p class="lead">Anything else goes to the team that would do the work.</p>
+          <a class="btn btn--ink" href="<?= e(svc_contact_url([], null, 'product-experience')) ?>">Ask a question <span class="i" aria-hidden="true"></span></a>
+        </div>
       </div>
-      <div>
-        <p class="lead">Twelve questions we are asked most, answered in the same words on every page of this discipline. Each one says which capability it belongs to.</p>
-      </div>
-    </div>
-
-    <div class="pxh-faq__list" data-acc="multi" data-rv data-rv-d="60">
-      <?php foreach ($faq_items as $faq_i => $faq_q): $faq_open = $faq_i === 0; ?>
-        <div class="pxh-faq__row">
-          <p class="pxh-faq__side">
-            <span class="pxh-faq__n" aria-hidden="true">Q<?= str_pad((string) ($faq_i + 1), 2, '0', STR_PAD_LEFT) ?></span>
-            <a class="pxh-capl" href="#<?= e($faq_q['cap']['slug']) ?>"><b><?= e($faq_q['cap']['n']) ?></b><span><?= e($faq_q['cap']['short']) ?></span><i aria-hidden="true">›</i></a>
-          </p>
-          <h3 class="pxh-faq__hq">
-            <button class="pxh-faq__q" type="button" data-acc-b aria-expanded="<?= $faq_open ? 'true' : 'false' ?>" aria-controls="faq-a<?= $faq_i ?>" id="faq-q<?= $faq_i ?>">
-              <span class="pxh-faq__t"><?= e($faq_q['q']) ?></span>
-              <span class="pxh-faq__sign" aria-hidden="true"></span>
-            </button>
-          </h3>
-          <div class="pxh-faq__p<?= $faq_open ? ' is-open' : '' ?>" id="faq-a<?= $faq_i ?>" role="region" aria-labelledby="faq-q<?= $faq_i ?>" data-acc-p>
-            <p class="pxh-faq__a"><?= e($faq_q['a']) ?></p>
+      <div class="bdh-c7 bdh-s6 pxh-faq__list">
+        <?php foreach ($pxh_fq as $pxh_i => $pxh_q): ?>
+        <details class="pxh-faq__i"<?= $pxh_i === 0 ? ' open' : '' ?>>
+          <summary><span class="pxh-faq__n">Q<?= str_pad((string) ($pxh_i + 1), 2, '0', STR_PAD_LEFT) ?></span><span class="pxh-faq__q"><?= e($pxh_q[0]) ?></span><span class="pxh-faq__p" aria-hidden="true"></span></summary>
+          <div class="pxh-faq__a">
+            <p><?= e($pxh_q[1]) ?></p>
+            <?php if ($pxh_q[2]): ?><a class="tl" href="<?= e(xe_cap_url($DISC, $pxh_q[2][2])) ?>"><?= e($pxh_q[2][1]) ?> <span class="i" aria-hidden="true"></span></a><?php endif; ?>
           </div>
-        </div>
-      <?php endforeach; ?>
-    </div>
-
-    <div class="pxh-faq__foot" data-rv>
-      <div class="pxh-faq__ways">
-        <p class="pxh-k">Two ways forward</p>
-        <p class="pxh-faq__wt">Ask the designers who would run it, or put your own bet through the proof first.</p>
-        <div class="pxh-faq__act">
-          <a class="btn btn--ink" href="<?= e(svc_contact_url([], null, 'product-experience')) ?>">Start a product brief <span class="i" aria-hidden="true">›</span></a>
-          <a class="tl" href="#proving">Try the Proving Ground <span class="i" aria-hidden="true">›</span></a>
-        </div>
-      </div>
-      <!-- PLACEHOLDER: confirm response times, the first-call format and the NDA position before launch -->
-      <dl class="pxh-faq__facts">
-        <?php foreach ($faq_facts as $faq_f): ?>
-          <div><dt><?= e($faq_f[0]) ?></dt><dd><?= e($faq_f[1]) ?></dd></div>
+        </details>
         <?php endforeach; ?>
-      </dl>
+      </div>
     </div>
   </div>
 </section>

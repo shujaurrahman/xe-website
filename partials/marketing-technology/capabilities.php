@@ -1,115 +1,55 @@
 <?php /* DRAFT COPY — review before launch */
-/* Capabilities — THE CARD SYSTEM, and the page's anchor targets. One card per capability, each with its
-   bare slug as its id, because every capability link on this page (and in the mega menu, once the
-   capability pages exist) points at #<slug> here. Copy is the approved content in
-   data/marketing-technology.php: the lead, the three meta values, the six parts of the offer, the three
-   outcomes, the technologies and the frameworks.
-   No JavaScript: the cards are static, always in flow, never stacked in one grid cell, so nothing can
-   ghost through anything else (defect class 5) and nothing depends on a class JavaScript adds. */
-$cap_page = svc_page('marketing-technology');
-/* which hub services belong to each capability, so its button arrives at the contact page pre-tagged */
-$cap_buy = [];
-foreach (($cap_page['categories'] ?? []) as $cap_cat) {
-    foreach ($cap_cat['offers'] as $cap_o) {
-        if (!empty($cap_o['cap'])) $cap_buy[$cap_o['cap']][] = $cap_o['key'];
-    }
-}
-$cap_url = fn (string $cap_s): string => svc_contact_url(
-    array_map(fn ($cap_k) => 'marketing-technology:' . $cap_k, array_slice($cap_buy[$cap_s] ?? [], 0, 2)),
-    null,
-    'marketing-technology'
-);
+/* The seven capabilities as module cards (.mth-mod). Each card links to its capability page via xe_cap_url() (the hub itself until that page exists).
+   Customer Relationship Strategy is one capability:
+   its card is the wide one, listing its five practices as one loop. */
+$mth_cp_desc = array_column($DISC['caps'], 1, 2);
 ?>
-<section class="band mth-capabilities" id="capabilities" aria-labelledby="capabilities-t">
+<section class="band band--alt mth-caps" id="capabilities" aria-labelledby="capabilities-t">
   <div class="wrap">
     <div class="bdh-head bdh-head--row" data-rv>
       <div>
-        <p class="lbl lbl--blue"><span class="dot"></span>In depth</p>
-        <h2 class="h2" id="capabilities-t"><span class="g">Seven capabilities,</span> in their own words.</h2>
+        <p class="lbl lbl--blue"><span class="dot"></span><?= count($CAPS) ?> capabilities</p>
+        <h2 class="h2" id="capabilities-t"><span class="g">Seven modules.</span> One engine underneath.</h2>
       </div>
-      <div>
-        <p class="lead">Each card is the whole of one capability: what it offers, what it changes, how long a first release usually takes, the technologies it runs on and the frameworks it is built to. Nothing is held back for a sales call.</p>
-        <!-- PLACEHOLDER: every timeframe below is a typical range from data/marketing-technology.php — confirm before launch -->
-        <p class="mth-note">Timeframes are typical ranges for work of this shape, not commitments, and are agreed per engagement.</p>
-      </div>
+      <div><p class="lead">Each one is scoped and delivered on its own, and each one plugs into the same data, consent and measurement layer, so the second module costs less than the first.</p></div>
     </div>
 
-    <div class="mth-cap__list">
-      <?php foreach ($CAPS as $cap_slug => $cap_c):
-          $cap_stage = $MTH['stages'][$MTH['stage_of'][$cap_slug]];
-          $cap_n = count($cap_buy[$cap_slug] ?? []); ?>
-        <article class="mth-card mth-cap__card" id="<?= e($cap_slug) ?>" aria-labelledby="<?= e($cap_slug) ?>-t" data-rv data-rv-d="40">
-          <div class="mth-card__top">
-            <span class="mth-card__ico" aria-hidden="true"><?= xt_icon($cap_c['icon'], ['size' => 24]) ?></span>
-            <div class="mth-cap__name">
-              <p class="mth-card__n"><?= e($cap_c['n']) ?></p>
-              <h3 class="mth-card__t" id="<?= e($cap_slug) ?>-t"><?= e($cap_c['name']) ?></h3>
-              <p class="mth-card__kick"><?= e($cap_c['kicker']) ?></p>
-            </div>
-            <span class="mth-cap__stage"><span class="mth-k">In the loop</span><b><?= e($cap_stage['code']) ?> · <?= e($cap_stage['name']) ?></b></span>
-          </div>
-
-          <div class="mth-card__body">
-            <div class="mth-cap__grid">
-              <div class="mth-cap__say">
-                <p class="mth-cap__lead"><?= e($cap_c['lead']) ?></p>
-                <dl class="mth-cap__meta">
-                  <?php foreach ($cap_c['meta'] as $cap_mi => $cap_mv): ?>
-                    <div><dt><?= e($cap_c['meta_k'][$cap_mi]) ?></dt><dd><?= e($cap_mv) ?></dd></div>
-                  <?php endforeach; ?>
-                </dl>
-                <div class="mth-cap__out">
-                  <p class="mth-k">What changes</p>
-                  <ul class="mth-cap__outs">
-                    <?php foreach ($cap_c['outcomes'] as $cap_o2): ?>
-                      <li><b><?= e($cap_o2[0]) ?></b><span><?= e($cap_o2[1]) ?></span></li>
-                    <?php endforeach; ?>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="mth-cap__offers">
-                <p class="mth-cap__olead"><span class="mth-k">What it covers · six parts</span><?= e($cap_c['offer_lead']) ?></p>
-                <ul class="mth-cap__ol">
-                  <?php foreach ($cap_c['offer'] as $cap_oi => $cap_of): ?>
-                    <li class="mth-cap__o" style="--i:<?= $cap_oi ?>">
-                      <span class="mth-cap__oi" aria-hidden="true"><?= xt_icon($cap_of[3], ['size' => 18]) ?></span>
-                      <span class="mth-cap__ot"><?= e($cap_of[0]) ?></span>
-                      <span class="mth-cap__og"><?= e($cap_of[2]) ?></span>
-                      <span class="mth-cap__od"><?= e($cap_of[1]) ?></span>
-                    </li>
-                  <?php endforeach; ?>
-                </ul>
-              </div>
-            </div>
-
-            <div class="mth-cap__rail">
-              <div class="mth-cap__rw">
-                <p class="mth-k">Technologies we work with</p>
-                <?= xt_stack(array_slice($cap_c['stack'], 0, 8), ['variant' => 'chips', 'size' => 16, 'label' => 'Technologies used in ' . $cap_c['name'], 'class' => 'mth-cap__stk']) ?>
-              </div>
-              <div class="mth-cap__rw">
-                <p class="mth-k">Frameworks it is built to</p>
-                <ul class="mth-cap__std" role="list" aria-label="Frameworks <?= e($cap_c['name']) ?> is built to">
-                  <?php foreach ($cap_c['standards'] as $cap_st) { echo xt_badge($cap_st, ['variant' => 'chip', 'tag' => 'li']); } ?>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="mth-card__foot">
-            <span class="mth-cap__pairs">
-              <span class="mth-k">Works closely with</span>
-              <?php foreach ($cap_c['pairs'] as $cap_p): $cap_pc = $CAPS[$cap_p] ?? null; if (!$cap_pc) continue; ?>
-                <a class="mth-capl" href="<?= e(($MTH['cap_href'])($cap_p)) ?>"><b><?= e($cap_pc['n']) ?></b><?= e($cap_pc['short']) ?><i aria-hidden="true">›</i></a>
+    <div class="mth-caps__grid">
+      <?php foreach ($CAPS as $mth_cp_slug => $mth_cp):
+        $mth_cp_wide = $mth_cp_slug === 'customer-relationship-strategy'; ?>
+      <article class="mth-mod<?= $mth_cp_wide ? ' mth-mod--wide' : '' ?>" id="<?= e($mth_cp_slug) ?>" aria-labelledby="<?= e($mth_cp_slug) ?>-t">
+        <div class="mth-mod__bar">
+          <span class="bdh-idx"><?= e($mth_cp['n']) ?></span><?= xt_icon($mth_cp['icon']) ?><span><?= e($mth_cp['kicker']) ?></span>
+        </div>
+        <figure class="mth-mod__img">
+          <img src="<?= e(xe_url('assets/imgs/marketing-technology/' . $mth_cp_slug . '.jpg')) ?>" width="1200" height="800" loading="lazy" decoding="async"
+               alt="<?= e($mth_cp['img']['alt']) ?>" style="object-position:<?= e($mth_cp['img']['pos']) ?>">
+        </figure>
+        <div class="mth-mod__main">
+          <div class="mth-mod__body">
+            <h3 class="bdh-t bdh-t--l" id="<?= e($mth_cp_slug) ?>-t"><?= e($mth_cp['name']) ?></h3>
+            <p class="bdh-d"><?= e($mth_cp_desc[$mth_cp_slug] ?? '') ?></p>
+            <?php if ($mth_cp_wide): ?>
+            <p class="mth-caps__one">One practice, five parts, sold and measured together.</p>
+            <ol class="mth-caps__loop">
+              <?php foreach (array_slice($mth_cp['offer'], 0, 5) as $mth_cp_i => $mth_cp_o): ?>
+              <li><span class="mth-caps__ln"><?= sprintf('%02d', $mth_cp_i + 1) ?></span><?= xt_icon($mth_cp_o[3]) ?><span class="mth-caps__lt"><?= e($mth_cp_o[0]) ?></span><span class="mth-caps__ld"><?= e($mth_cp_o[2]) ?></span></li>
               <?php endforeach; ?>
-            </span>
-            <?php if ($cap_n): ?>
-              <a class="tl mth-cap__svc" href="#services"><?= $cap_n ?> service<?= $cap_n === 1 ? '' : 's' ?> in the catalogue <span class="i" aria-hidden="true">›</span></a>
+            </ol>
+            <?php else: ?>
+            <ul class="mth-caps__runs" aria-label="What it runs">
+              <?php foreach (array_slice($mth_cp['offer'], 0, 3) as $mth_cp_o): ?>
+              <li><?= xt_icon($mth_cp_o[3]) ?><span><?= e($mth_cp_o[0]) ?></span></li>
+              <?php endforeach; ?>
+            </ul>
             <?php endif; ?>
-            <a class="btn btn--ink btn--sm" href="<?= e($cap_url($cap_slug)) ?>"><?= e($cap_c['cta']) ?> <span class="i" aria-hidden="true">›</span></a>
           </div>
-        </article>
+          <div class="mth-mod__foot">
+            <p class="mth-caps__meta"><span><?= e($mth_cp['meta_k'][0]) ?></span><!-- PLACEHOLDER: confirm timeframe before launch --><?= e($mth_cp['meta'][0]) ?></p>
+            <a class="tl" href="<?= e(xe_cap_url($DISC, [2 => $mth_cp_slug])) ?>" aria-label="<?= e($mth_cp['name']) ?>: <?= e($mth_cp['short']) ?> in detail">Explore <?= e($mth_cp['short']) ?> <span class="i" aria-hidden="true">›</span></a>
+          </div>
+        </div>
+      </article>
       <?php endforeach; ?>
     </div>
   </div>

@@ -1,121 +1,61 @@
-<?php /* DRAFT COPY — review before launch */
-/* AI-native — the division of labour, stated plainly, and the record that proves it. Where a model
-   does the work, where a person decides, the six guardrails, and an illustrative production record
-   showing what is written down for every AI-assisted asset. Every line here is the position already
-   set out in the AI answers in data/campaign-content.php: a person writes or rewrites the substance,
-   a named editor approves every piece, disclosure follows platform and policy rules, provenance is
-   recorded, and anything mistakable for a real person, place or event is labelled.
-   PLACEHOLDER: the production record below is illustrative, not a real client's log. */
-$ai_does = [
-    ['Demand research',      'Search demand, sales objections and support tickets clustered into the questions customers actually ask.', 'search'],
-    ['Drafts and variants',  'Outlines, headline and copy variants, metadata and translation first drafts, from a brief a person wrote.', 'prompt'],
-    ['Adaptation at volume', 'Resizing, background extension, versioning and previsualisation inside the campaign system\'s rules.', 'layers'],
-    ['Accessibility drafts', 'Alt text, subtitles, captions and audio-description drafts, for a person to correct rather than write.', 'accessibility'],
-    ['Triage',               'First-pass moderation and comment classification, so the queue is sorted before anyone reads it.', 'filter'],
-    ['Anomaly detection',    'Performance changes flagged the day they happen instead of at the monthly review.', 'radar'],
+<?php /* DRAFT COPY — review before launch */ ?>
+<?php
+/* AI in the production loop, shown as a flow (.cch-flow) and an audit log. */
+$cch_flow = [   // [icon, name, who, detail]
+    ['doc',            'Brief',            'Person',   'Idea, kit rules, claims and audience'],
+    ['agent',          'Draft variants',   'Agent',    'Copy lengths, crops and languages'],
+    ['eval',           'Brand check',      'Eval',     'Type, lockup, contrast, tone'],
+    ['shield',         'Claims & disclosure', 'Guardrail', 'Substantiation, #ad, AI label'],
+    ['approve',        'Approval',         'Person',   'A named editor signs off'],
+    ['log',            'Publish & log',    'System',   'Every asset traceable'],
 ];
-$ai_person = [
-    ['The claim',            'What the business is willing to say, and whether the evidence behind it holds.'],
-    ['The idea and the cast','The campaign idea, the art direction and who appears in the work.'],
-    ['The reply',            'Any answer to a complaint, a safety issue or anything legal or medical.'],
-    ['What ships',           'A named editor approves every piece before it publishes. Nothing goes out unreviewed.'],
+$cch_log = [
+    ['09:02:14', 'agent',  'variants.generate', 'kv-v3 → 48 drafts · en, hi, ar'],
+    ['09:02:51', 'eval',   'brand.check',       '46 pass · 2 fail (headline overflow 9:16)'],
+    ['09:03:05', 'guard',  'claims.check',      '“saves ten minutes” → evidence ref #C-12 attached'],
+    ['09:03:06', 'guard',  'disclosure.check',  'creator cut-downs → “#ad” + paid-partnership label'],
+    ['09:41:30', 'human',  'approve',           'Editor approved 44 · rejected 2 · note left'],
+    ['09:41:31', 'system', 'publish.queue',     '44 assets → ad platforms · audit id a7f3…'],
 ];
-$ai_rules = [
-    ['A named approver',        'Every asset has one person who signed it off, recorded against the asset rather than remembered.'],
-    ['Claims checked',          'Copy is checked against the message house, and nothing runs that your legal team has not passed.'],
-    ['Disclosure by default',   'AI assistance is disclosed where a platform, a market code or your own policy requires it.'],
-    ['Provenance recorded',     'Model, prompt version, approver and date are kept beside the asset for its whole life.'],
-    ['Synthetic content labelled', 'Anything that could be mistaken for a real person, place or event is labelled and logged.'],
-    ['Rights still apply',      'Training data, stock licences and model terms are checked before a tool enters the pipeline.'],
-];
-$ai_log = [
-    ['Cluster 02 article',        'Outline and metadata drafted',            'Named editor, before publish',   'Noted in the editorial standard', 'Prompt version recorded'],
-    ['Reel 07, six sizes',        'Resize and background extension',         'Art director, per size',         'Not required · no likeness',      'Model and prompt recorded'],
-    ['Regional subtitle file',    'First-draft translation',                 'In-market reviewer',             'Machine-assisted noted in file',  'Source and model recorded'],
-    ['Product hero, 3D',          'Scene generated, not photographed',       'Producer and your sign-off',     'Labelled computer-generated',     'Model, seed and prompt recorded'],
-    ['Twenty-four ad variants',   'Copy variants from a winning pattern',    'Performance lead, before spend', 'Platform policy check',           'Test log linked to each variant'],
-    ['Comment triage, one week',  'Sentiment and intent classified',         'Community manager answers',      'Internal only · no output',       'Classifier version recorded'],
-];
-$ai_cols = ['Asset', 'What the model did', 'Who approved it', 'Disclosure', 'Provenance'];
-$ai_std  = ['eu-ai-act', 'nist-ai-rmf', 'wcag22', 'dpdp', 'gdpr'];
 ?>
-<section class="band band--ink cch-ai" id="ai-native" aria-labelledby="ai-native-t">
+<section class="band band--alt cch-ai" id="ai-native" aria-labelledby="ai-native-t">
   <div class="wrap">
     <div class="bdh-head bdh-head--row" data-rv>
-      <div>
-        <p class="lbl lbl--blue"><span class="dot"></span>AI-native, stated plainly</p>
-        <h2 class="h2" id="ai-native-t"><span class="g">AI makes more work possible.</span> It does not decide what to say.</h2>
-      </div>
-      <div>
-        <p class="lead">The useful question is not whether we use AI. It is which steps it does, who signs off, and what is written down afterwards. All three are answered here, and the same answer is in every contract.</p>
-      </div>
+      <div><p class="lbl lbl--blue"><span class="dot"></span>AI-native production</p>
+        <h2 class="h2" id="ai-native-t"><span class="g">Agents draft the variants.</span> People approve every one that ships.</h2></div>
+      <div><p class="lead">Generative tools make the forty-eighth version cheap. We use them for the repetitive work — lengths, crops, languages, metadata — inside a pipeline with automated checks, a guardrail for claims and disclosure, and a human sign-off that is logged.</p></div>
     </div>
 
-    <div class="cch-ai__split" data-rv data-rv-d="60">
-      <div class="cch-ai__col">
-        <p class="cch-ai__ck"><span class="cch-k">Where a model does the work</span><span class="cch-ai__cn"><?= count($ai_does) ?></span></p>
-        <ul class="cch-tiles cch-ai__tiles" role="list">
-          <?php foreach ($ai_does as $ai_d): ?>
-            <li class="cch-tile">
-              <span class="cch-tile__top">
-                <span class="cch-tile__ico" aria-hidden="true"><?= xt_icon($ai_d[2], ['size' => 18]) ?></span>
-                <span class="cch-tile__t"><?= e($ai_d[0]) ?></span>
-              </span>
-              <span class="cch-tile__d"><?= e($ai_d[1]) ?></span>
-            </li>
+    <ol class="cch-flow" data-bdh-stagger data-bdh-in>
+      <?php foreach ($cch_flow as $cch_i => $cch_f): ?>
+      <li class="cch-flow__n bdh-up<?= $cch_f[2] === 'Person' ? ' is-human' : '' ?>">
+        <span class="cch-flow__ico"><?= xt_icon($cch_f[0]) ?></span>
+        <span class="cch-flow__who bdh-ro"><?= e($cch_f[2]) ?></span>
+        <span class="cch-flow__t"><?= e($cch_f[1]) ?></span>
+        <span class="cch-flow__d"><?= e($cch_f[3]) ?></span>
+      </li>
+      <?php endforeach; ?>
+    </ol>
+
+    <div class="cch-ai__g">
+      <div class="cch-ai__log bdh-ui bdh-ui--ink" aria-hidden="true">
+        <div class="cch-ai__lh bdh-ro"><span><i class="cch-dot"></i>Production log · Your brand · launch</span><span>Illustrative</span></div>
+        <ol>
+          <?php foreach ($cch_log as $cch_r): ?>
+          <li class="cch-ai__lr is-<?= $cch_r[1] ?>"><span class="cch-ai__ts"><?= e($cch_r[0]) ?></span><span class="cch-ai__ev"><?= e($cch_r[2]) ?></span><span class="cch-ai__msg"><?= e($cch_r[3]) ?></span></li>
           <?php endforeach; ?>
-        </ul>
+        </ol>
       </div>
-
-      <div class="cch-ai__col cch-ai__col--person">
-        <p class="cch-ai__ck"><span class="cch-k">Where a person decides</span><span class="cch-ai__cn"><?= count($ai_person) ?></span></p>
-        <ul class="cch-ai__plist" role="list">
-          <?php foreach ($ai_person as $ai_p): ?>
-            <li><b><?= e($ai_p[0]) ?></b><span><?= e($ai_p[1]) ?></span></li>
-          <?php endforeach; ?>
-        </ul>
-        <p class="cch-note cch-ai__pn">A model can produce a hundred versions of a sentence. It cannot tell you which one your company is prepared to defend.</p>
-      </div>
-    </div>
-
-    <div class="cch-ai__rules" data-rv data-rv-d="90">
-      <h3 class="cch-ai__h3">Six rules that hold whatever the tool is</h3>
-      <ol class="cch-ai__rlist">
-        <?php foreach ($ai_rules as $ai_ri => $ai_r): ?>
-          <li><span class="cch-ai__rn"><?= str_pad((string) ($ai_ri + 1), 2, '0', STR_PAD_LEFT) ?></span><b><?= e($ai_r[0]) ?></b><span><?= e($ai_r[1]) ?></span></li>
-        <?php endforeach; ?>
-      </ol>
-    </div>
-
-    <div class="cch-ai__record" data-rv data-rv-d="60">
-      <p class="cch-ai__rh">
-        <span class="cch-k">The production record · one week, illustrative</span>
-        <span class="cch-ill">Illustrative</span>
-      </p>
-      <div class="bdh-scroll-x cch-ai__scroll" tabindex="0" role="group" aria-label="An illustrative production record of AI-assisted assets. Scroll sideways for the remaining columns.">
-        <table class="cch-tbl cch-ai__tbl">
-          <caption>What is written down for every AI-assisted asset</caption>
-          <thead>
-            <tr><?php foreach ($ai_cols as $ai_c): ?><th scope="col"><?= e($ai_c) ?></th><?php endforeach; ?></tr>
-          </thead>
-          <tbody>
-            <?php foreach ($ai_log as $ai_row): ?>
-              <tr>
-                <th scope="row"><?= e($ai_row[0]) ?></th>
-                <?php for ($ai_i = 1; $ai_i < 5; $ai_i++): ?>
-                  <td data-h="<?= e($ai_cols[$ai_i]) ?>"><?= e($ai_row[$ai_i]) ?></td>
-                <?php endfor; ?>
-              </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
-      </div>
-      <div class="cch-ai__ft">
-        <div>
-          <p class="cch-k">Frameworks this is built to</p>
-          <ul class="cch-ai__std" role="list"><?php foreach ($ai_std as $ai_s) { echo xt_badge($ai_s, ['variant' => 'chip', 'tag' => 'li']); } ?></ul>
+      <p class="bdh-sr">Illustrative production log: an agent drafts 48 variants from the master key visual; a brand check passes 46 and fails 2; guardrails attach evidence to a product claim and add advertising disclosure to creator cut-downs; an editor approves 44 and rejects 2; 44 assets are queued to publish with an audit id.</p>
+      <div class="cch-ai__rules">
+        <div class="cch-card cch-card--flat">
+          <h3 class="cch-card__t">What AI does here</h3>
+          <ul class="cch-card__l"><li>Drafts copy lengths, crops and language versions from an approved master</li><li>Checks every variant against the kit before a person sees it</li><li>Writes alt text, captions and metadata for review</li><li>Summarises comments, search and social listening for the brief</li></ul>
         </div>
-        <p class="cch-note">Advertising disclosure follows the code of the market the work runs in: the ASCI guidelines for influencer advertising in India, the FTC endorsement guides in the United States, and the platform's own paid-partnership label. Other markets are checked before launch. None of this is a certification we hold.</p>
+        <div class="cch-card cch-card--flat">
+          <h3 class="cch-card__t">What it never does</h3>
+          <ul class="cch-card__l"><li>Publish without a named person's approval</li><li>Invent a claim, a quote, a statistic or a customer</li><li>Generate a real person's likeness or voice without written consent</li><li>Hide that content is AI-generated where law, platform or your policy requires a label</li></ul>
+        </div>
       </div>
     </div>
   </div>

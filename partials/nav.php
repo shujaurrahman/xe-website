@@ -31,6 +31,8 @@ $disc    = $SITE['disciplines'];
       <button class="nav__burger" type="button" aria-expanded="false" aria-controls="sheet" aria-label="Open menu">
         <svg width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.4"/></svg>
       </button>
+      <!-- without JS the button above does nothing: this link opens the sheet through :target (partials/head.php) -->
+      <noscript><a class="nav__burger nav__burger--nojs" href="#sheet" aria-label="Open menu"><svg width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.4"/></svg></a></noscript>
     </div>
 
     <div class="mega" id="mega">
@@ -79,6 +81,7 @@ $disc    = $SITE['disciplines'];
     <button class="nav__burger" type="button" data-sheet-x aria-label="Close menu">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M1 1l14 14M15 1L1 15" stroke="currentColor" stroke-width="1.4"/></svg>
     </button>
+    <noscript><a class="nav__burger nav__burger--nojs" href="#main" aria-label="Close menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M1 1l14 14M15 1L1 15" stroke="currentColor" stroke-width="1.4"/></svg></a></noscript>
   </div>
   <div class="sheet__body">
     <p class="lbl" style="padding:18px 0 6px">What we do</p>

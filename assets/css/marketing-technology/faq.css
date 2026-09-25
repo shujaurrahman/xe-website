@@ -1,53 +1,14 @@
-/* Hub · faq — a sticky rail of the two ways forward and the commercial facts, with the questions as a
-   divided list (not cards) on the right, opened by the core [data-acc] accordion. */
-.mth-faq__grid{align-items:start}
-.mth-faq__head{display:flex;flex-direction:column;align-items:flex-start;gap:18px}
-.mth-faq__head .h2{max-width:14ch}
-.mth-faq__more{margin-top:4px;max-width:34ch;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
-.mth-faq__act{display:flex;flex-direction:column;align-items:flex-start;gap:16px;margin-top:6px}
-/* the rail carries the commercial facts too, so the column is not a button over a void */
-.mth-faq__facts{display:grid;width:100%;margin-top:14px;border-top:1px solid var(--line)}
-.mth-faq__facts>div{display:grid;grid-template-columns:minmax(0,11ch) minmax(0,1fr);align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid var(--line-2)}
-.mth-faq__facts dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.4}
-.mth-faq__facts dd{font-size:var(--t-sm);line-height:1.5;color:var(--ink)}
-
-.mth-faq__list{display:grid;gap:0;border-top:1px solid var(--line)}
-.mth-faq__row{position:relative;border-bottom:1px solid var(--line)}
-.mth-faq__hq{font:inherit;letter-spacing:0}
-.mth-faq__q{display:grid;grid-template-columns:46px minmax(0,1fr) 26px;align-items:center;gap:16px;width:100%;min-height:68px;padding:18px 4px;text-align:left;cursor:pointer}
-.mth-faq__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.08em;color:var(--faint);transition:color var(--d1) var(--e-io);font-variant-numeric:tabular-nums}
-.mth-faq__t{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;line-height:1.35;letter-spacing:-.008em;color:var(--ink);transition:color var(--d1) var(--e-io)}
-.mth-faq__q:hover .mth-faq__t{color:var(--blue-d)}
-.mth-faq__plus{position:relative;width:26px;height:26px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--line-3);transition:box-shadow var(--d2) var(--e),background var(--d2) var(--e),transform .35s var(--e)}
-.mth-faq__plus::before,.mth-faq__plus::after{content:"";position:absolute;left:50%;top:50%;width:9px;height:1.5px;margin:-.75px 0 0 -4.5px;background:var(--ink);transition:background var(--d2) var(--e)}
-.mth-faq__plus::after{transform:rotate(90deg)}
-.mth-faq__q[aria-expanded="true"] .mth-faq__n{color:var(--blue)}
-.mth-faq__q[aria-expanded="true"] .mth-faq__plus{background:var(--blue);box-shadow:none;transform:rotate(45deg)}
-.mth-faq__q[aria-expanded="true"] .mth-faq__plus::before,.mth-faq__q[aria-expanded="true"] .mth-faq__plus::after{background:var(--on-ink)}
-
-/* the first answer ships open, so the column reads as answers rather than ten shut bars; core.js picks
-   the open row up from aria-expanded="true" and takes the height over from there */
-.mth-faq__p{height:0;overflow:hidden;transition:height .45s var(--e)}
-.mth-faq__p.is-open{height:auto}
-.mth-faq__a{display:flex;flex-direction:column;gap:16px;padding:0 40px 26px 62px}
-.mth-faq__a>p:first-child{max-width:64ch;font-size:var(--t-body);line-height:1.7;color:var(--txt)}
-.mth-faq__rel{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding-top:14px;border-top:1px dashed var(--line)}
-.mth-faq__rel .mth-k{margin-right:6px}
-
-@media (max-width:860px){
-  .mth-faq__side{margin-bottom:28px}
-  .mth-faq__facts{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--bdh-gap)}
-  .mth-faq__head .h2{max-width:none}
-  .mth-faq__act{flex-direction:row;flex-wrap:wrap;align-items:center;gap:14px 22px}
-}
-@media (max-width:600px){
-  .mth-faq__q{grid-template-columns:minmax(0,1fr) 26px;row-gap:6px;padding:16px 2px;min-height:62px}
-  .mth-faq__n{grid-column:1 / -1}
-  .mth-faq__plus{grid-column:2;grid-row:2}
-  .mth-faq__t{font-size:1rem}
-  .mth-faq__a{padding:0 2px 22px}
-  .mth-faq__a>p:first-child{font-size:var(--t-sm)}
-}
-@media (prefers-reduced-motion:reduce){
-  .mth-faq__p,.mth-faq__plus,.mth-faq__t,.mth-faq__n{transition:none}
-}
+.mth-faq__grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--bdh-gap-l);align-items:start}
+.mth-faq__list{border-top:1px solid var(--line)}
+.mth-faq__q{border-bottom:1px solid var(--line)}
+.mth-faq__q summary{display:grid;grid-template-columns:36px minmax(0,1fr) 20px;align-items:center;gap:14px;min-height:64px;padding:14px 0;cursor:pointer;list-style:none}
+.mth-faq__q summary::-webkit-details-marker{display:none}
+.mth-faq__q summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:var(--r-xs)}
+.mth-faq__t{font-family:var(--f-h);font-size:clamp(1rem,1.3vw,1.1875rem);font-weight:500;line-height:1.35;color:var(--ink)}
+.mth-faq__pm{position:relative;width:14px;height:14px}
+.mth-faq__pm::before,.mth-faq__pm::after{content:"";position:absolute;left:0;top:6px;width:14px;height:2px;background:var(--ink);transition:transform .25s var(--e)}
+.mth-faq__pm::after{transform:rotate(90deg)}
+.mth-faq__q[open] .mth-faq__pm::after{transform:rotate(0)}
+.mth-faq__q .p{padding:0 34px 22px 50px;max-width:72ch}
+@media (max-width:1023px){ .mth-faq__grid{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:600px){ .mth-faq__q .p{padding:0 0 20px 0} .mth-faq__q summary{grid-template-columns:28px minmax(0,1fr) 16px;gap:10px} }

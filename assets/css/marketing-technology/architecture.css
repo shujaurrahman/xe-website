@@ -1,0 +1,26 @@
+.mth-arch__fig{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:20px;align-items:stretch}
+.mth-arch__stack{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.mth-arch__layer{position:relative;display:grid;grid-template-columns:220px minmax(0,1fr);grid-template-areas:"k parts" "d parts";column-gap:28px;row-gap:6px;
+  padding:20px 22px;border:1px solid var(--on-ink-line);border-radius:var(--r);background:var(--on-ink-card)}
+.mth-arch__layer:not(:last-child)::after{content:"";position:absolute;left:50%;top:calc(100% + 2px);width:1px;height:10px;background:var(--on-ink-3)}
+.mth-arch__layer:last-child{border-color:var(--blue)}
+.mth-arch__k{grid-area:k;display:flex;align-items:center;gap:10px;font-family:var(--f-h);font-size:1.0625rem;font-weight:500;color:var(--on-ink)}
+.mth-arch__d{grid-area:d;font-size:var(--t-xs);line-height:1.55;color:var(--on-ink-3)}
+.mth-arch__parts{grid-area:parts;display:flex;flex-wrap:wrap;align-content:center;gap:8px}
+.mth-arch__cap{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:var(--r-pill);background:var(--blue);color:var(--on-ink);
+  font-family:var(--f-b);font-size:var(--t-xs);font-weight:500;--xt-accent:currentColor;transition:background .2s var(--e)}
+.mth-arch__cap:hover{background:var(--blue-d)}
+.mth-arch__cap:focus-visible{outline:2px solid var(--on-ink);outline-offset:2px}
+.mth-arch__el{display:inline-flex;align-items:center;min-height:32px;padding:0 12px;border-radius:var(--r-pill);border:1px solid var(--on-ink-line);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--on-ink-2)}
+.mth-arch__rail{display:flex;flex-direction:column;gap:12px;align-items:flex-start;padding:22px;border:1px dashed var(--on-ink-3);border-radius:var(--r)}
+.mth-arch__rail .mth-arch__k,.mth-arch__rail .mth-arch__d{grid-area:auto}
+.mth-arch__ms{list-style:none;margin:auto 0 0;padding:0;width:100%}
+.mth-arch__ms li{padding:9px 0;border-top:1px solid var(--on-ink-line);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;text-transform:uppercase;color:var(--on-ink-2)}
+.mth-arch__note{margin-top:22px;font-family:var(--f);font-size:var(--t-xs);line-height:1.6;color:var(--on-ink-3)}
+.mth-arch__arrow{color:var(--on-ink)}
+@media (max-width:1023px){
+  .mth-arch__fig{grid-template-columns:minmax(0,1fr)}
+  .mth-arch__layer{grid-template-columns:minmax(0,1fr);grid-template-areas:"k" "d" "parts";padding:18px}
+  .mth-arch__parts{margin-top:8px}
+}

@@ -267,9 +267,13 @@
     if (burger && sheet) {
       var close2 = XE.$('[data-sheet-x]', sheet);
       function toggleSheet(on) {
+        var was = sheet.classList.contains('is-open');
         sheet.classList.toggle('is-open', on);
         burger.setAttribute('aria-expanded', String(on));
         document.documentElement.style.overflow = on ? 'hidden' : '';
+        /* move focus with the sheet so keyboard users land inside it and return to the burger */
+        if (on && !was && close2) close2.focus();
+        else if (!on && was) burger.focus();
       }
       XE.on(burger, 'click', function () { toggleSheet(!sheet.classList.contains('is-open')); });
       XE.on(close2, 'click', function () { toggleSheet(false); });

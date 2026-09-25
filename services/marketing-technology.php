@@ -1,74 +1,60 @@
 <?php
 /**
- * Marketing Technology — the discipline hub. "The customer system."
+ * Marketing Technology — the discipline hub. "The always-on engine".
  *
- * The concept: one consented customer record and everything that acts on it. Every section is a
- * view of the same loop — collect, resolve, decide, produce, activate, measure — so the seven
- * capabilities read as one running system rather than seven products. Deliberately NOT the
- * Technology hub's control plane: this page is about customer data (identity, consent, segments,
- * journeys, measurement), not about shipping and running software.
+ * The seven capabilities shown as the machinery that keeps marketing running between campaigns: signals in,
+ * consent checked, a decision made, guardrails applied, a person approving what is sensitive, a message out,
+ * and every step logged and measured against a holdout. Each section is its own partial in
+ * partials/marketing-technology/<id>.php, with assets/css/marketing-technology/<id>.css and
+ * assets/js/marketing-technology/<id>.js loaded automatically once they hold anything.
  *
- * The page is a shell: each section is its own partial in partials/marketing-technology/<id>.php,
- * with assets/css/marketing-technology/<id>.css and assets/js/marketing-technology/<id>.js loaded
- * automatically once they hold anything.
+ * Base layers: assets/css/brand/hub.css (.bdh-* primitives, window.BDH), assets/css/tech/kit.css (.xt-*),
+ * then assets/css/marketing-technology.css — the discipline's own visual language, which the seven
+ * capability pages should reuse with their own content:
+ *   .mth-mod     card system    module card: header strip (index · icon · status), photo, title, body, footer
+ *                               (variants --wide for a full-width feature card, --flat without photo)
+ *   .mth-flow    diagram idiom  a chain of .mth-node boxes whose connectors start and stop at the box edges
+ *                               (gap-drawn, never centre-to-centre); horizontal ≥861px, vertical below
+ *   .mth-viz     data-viz idiom framed chart: head (title · legend · ILLUSTRATIVE), inline SVG with
+ *                               .mth-viz__a (solid blue) / .mth-viz__b (dashed ghost) / .mth-viz__gap (lift area), axis row
+ *   .mth-steps   stepper        numbered rail of tab buttons over .mth-steps__pane panels; every pane is shown
+ *                               until assets/js/marketing-technology/process.js adds .is-tabs (finished state without JS)
+ *   .mth-chip    status chips   mono chips: --ok (passed/sent) --hold (queued/held) --stop (suppressed/exited) --wait (approval)
+ *   .mth-ledger  log idiom      mono audit-log rows: time · subject · step · detail · state
  *
- * Base layers (in order): assets/css/brand/hub.css (.bdh-* primitives, window.BDH helpers in
- * assets/js/brand/hub.js), assets/css/tech/kit.css (.xt-* logos, icons, badges), then
- * assets/css/marketing-technology.css (.mth-* primitives for this page).
- *
- * Variables available to every section partial (never reassign):
- *   $SITE   data/site.php                      $DISC   the marketing-technology discipline row
- *   $CAPS   data/marketing-technology.php      $STACK  data/tech-stack.php (slug => name, category, file)
- *   $MTH    partials/marketing-technology/_lib.php   the loop stages, the capability map, the diagram router
- *   $page   page meta
- * partials/nav.php, cta.php and footer.php loop with $c $d $i $k $item $url $current $disc $col $l $s,
- * so section partials prefix their own locals (mth_*, hero_*, std_* …) and never use those names.
- *
- * Capability subpages do not exist yet: every capability links to its card anchor on this page
- * (#<capability-slug>), never to a file.
+ * Variables for every partial (never reassign): $SITE, $DISC (this discipline's row in $SITE['disciplines']),
+ * $CAPS (data/marketing-technology.php), $STACK (data/tech-stack.php), $page.
+ * nav/cta/footer use $c $d $i $k $item $url $current $disc $col $l $s, so partials prefix locals with mth_.
  */
 $BASE = '../';
 require __DIR__ . '/../partials/init.php';
 require_once __DIR__ . '/../partials/tech/kit.php';
-require_once __DIR__ . '/../partials/services/lib.php';   // svc_contact_url(): enquiries arrive tagged with the page and service
+require_once __DIR__ . '/../partials/services/lib.php';
 
 $CAPS  = require __DIR__ . '/../data/marketing-technology.php';
 $STACK = require __DIR__ . '/../data/tech-stack.php';
 $DISC  = null;
-foreach ($SITE['disciplines'] as $mth_disc) { if ($mth_disc['slug'] === 'marketing-technology') $DISC = $mth_disc; }
-unset($mth_disc);
-$MTH = require __DIR__ . '/../partials/marketing-technology/_lib.php';
+foreach ($SITE['disciplines'] as $mth_row) { if ($mth_row['slug'] === 'marketing-technology') $DISC = $mth_row; }
+unset($mth_row);
 
-/* Running order: the record → why it leaks → the loop that fixes it → the machinery → the seven →
-   what we build to → how we work → what it returns → buy → ask.
-   Bands: hero, P A I P A P I A P I P A I, then the shared alt catalogue and a paper FAQ, then the ink CTA.
-   'services' is the shared Services & packages catalogue (partials/services/catalogue.php, data key
-   'marketing-technology'). Its packages row is this page's one set of engagement models, so there is no
-   separate engagement section — the same call the other two finished hubs made. */
+/* Running order: the claim → why now → the engine running → the seven parts → how they fit → the stack →
+   AI with limits → the rules it keeps → how it is measured → how we get there → what you own → buy → ask. */
 $MTH_SECTIONS = [
-    'hero', 'navigator', 'seams', 'loop', 'identity', 'studio', 'capabilities', 'crs',
-    'stack', 'standards', 'ai-native', 'process', 'deliverables', 'measures', 'services', 'faq',
+    'hero', 'shift', 'engine', 'capabilities', 'architecture', 'stack', 'ai-native',
+    'standards', 'measures', 'process', 'deliverables', 'services', 'faq',
 ];
 
-/* Base layers first, then each section's own file once it has content. head/footer stamp ?v= on every path. */
-$mth_root  = __DIR__ . '/../';
-$mth_asset = function (string $path) use ($mth_root): ?string {
-    $f = $mth_root . $path;
-    return (is_file($f) && filesize($f) > 0) ? $path : null;
-};
-$mth_css = array_filter([
-    $mth_asset('assets/css/brand/hub.css'),
-    $mth_asset('assets/css/tech/kit.css'),
-    $mth_asset('assets/css/marketing-technology.css'),
-]);
-$mth_js = array_filter([$mth_asset('assets/js/brand/hub.js')]);
+$mth_root = __DIR__ . '/../';
+$mth_has  = fn (string $p): ?string => (is_file($mth_root . $p) && filesize($mth_root . $p) > 0) ? $p : null;
+$mth_css  = array_filter([$mth_has('assets/css/brand/hub.css'), $mth_has('assets/css/tech/kit.css'), $mth_has('assets/css/marketing-technology.css')]);
+$mth_js   = array_filter([$mth_has('assets/js/brand/hub.js')]);
 foreach ($MTH_SECTIONS as $mth_id) {
-    if ($mth_x = $mth_asset('assets/css/marketing-technology/' . $mth_id . '.css')) $mth_css[] = $mth_x;
-    if ($mth_x = $mth_asset('assets/js/marketing-technology/' . $mth_id . '.js'))   $mth_js[]  = $mth_x;
+    if ($mth_x = $mth_has("assets/css/marketing-technology/$mth_id.css")) $mth_css[] = $mth_x;
+    if ($mth_x = $mth_has("assets/js/marketing-technology/$mth_id.js"))   $mth_js[]  = $mth_x;
 }
-/* the shared services & packages catalogue (.svc-*), after the page's own files, as on every other hub */
-if ($mth_x = $mth_asset('assets/css/services.css')) $mth_css[] = $mth_x;
-if ($mth_x = $mth_asset('assets/js/services.js'))   $mth_js[]  = $mth_x;
+/* the shared services catalogue last, so nothing on this page can win over .svc-* */
+if ($mth_x = $mth_has('assets/css/services.css')) $mth_css[] = $mth_x;
+if ($mth_x = $mth_has('assets/js/services.js'))   $mth_js[]  = $mth_x;
 
 $page = [
     'key'   => 'services',
@@ -81,55 +67,32 @@ $page = [
 include __DIR__ . '/../partials/head.php';
 include __DIR__ . '/../partials/nav.php';
 ?>
-
-<!-- The shipped HTML is the finished state. Reveals and entrance motion are an enhancement and every one of
-     them waits for a class only JavaScript adds, so with JavaScript off they are all already resolved here.
-     Tab and radio panes keep their own shown/hidden logic: one pane is always meant to be on. -->
-
 <main id="main" class="bdh mth">
 <?php
-/* The page is rendered into a buffer so every brand mark can be inlined once. xt_logo() inlines a complete
-   <svg> at each instance, and the stack wall, the loop panes, the capability cards and the services
-   catalogue between them repeat about fifty distinct marks several hundred times. Each distinct mark is
-   lifted into one <symbol> at the top of <main> and every instance becomes a <use> of it: same rendering,
-   same attributes, a fraction of the bytes and DOM nodes. The proper home for this is xt_logo() in
-   partials/tech/kit.php, which is shared and not ours to change. */
+/* Rendered into a buffer so each brand mark or icon drawn more than once is inlined once as a <symbol> and
+   reused with <use> (the stack and the services catalogue repeat the same logos many times). Same approach as
+   services/technology-intelligence.php; drawings with url(#…) references or <animate> are left alone. */
 ob_start();
-foreach ($MTH_SECTIONS as $mth_id):
-    $mth_file = __DIR__ . '/../partials/marketing-technology/' . $mth_id . '.php'; ?>
-<!-- ===== marketing technology hub · <?= e($mth_id) ?> ===== -->
-<?php if (is_file($mth_file)) { include $mth_file; } else { echo "<!-- missing hub section: " . e($mth_id) . " -->\n"; } ?>
-<?php endforeach;
+foreach ($MTH_SECTIONS as $mth_id) include __DIR__ . "/../partials/marketing-technology/$mth_id.php";
 include __DIR__ . '/../partials/cta.php';
 $mth_body = (string) ob_get_clean();
 $mth_re   = '~<svg\b([^>]*\bviewBox="([^"]+)"[^>]*)>((?:(?!</?svg\b).)*)</svg>~s';
-/* only drawings that repeat, and only plain ones: nothing with an internal url(#…) reference or an
-   <animate>, which would not survive being moved into a <symbol>'s shadow tree */
-$mth_reuse = function (string $mth_d): bool {
-    return strlen($mth_d) >= 120 && strpos($mth_d, 'url(#') === false && strpos($mth_d, '<animate') === false;
-};
+$mth_ok   = fn (string $mth_d): bool => strlen($mth_d) >= 120 && strpos($mth_d, 'url(#') === false && strpos($mth_d, '<animate') === false;
 $mth_seen = [];
 if (preg_match_all($mth_re, $mth_body, $mth_all, PREG_SET_ORDER)) {
-    foreach ($mth_all as $mth_m) {
-        if ($mth_reuse($mth_m[3])) {
-            $mth_k = md5($mth_m[2] . '|' . $mth_m[3]);
-            $mth_seen[$mth_k] = ($mth_seen[$mth_k] ?? 0) + 1;
-        }
-    }
+    foreach ($mth_all as $mth_m) if ($mth_ok($mth_m[3])) { $mth_h = md5($mth_m[2] . '|' . $mth_m[3]); $mth_seen[$mth_h] = ($mth_seen[$mth_h] ?? 0) + 1; }
 }
 $mth_syms = [];
-$mth_body = preg_replace_callback($mth_re, function (array $mth_m) use (&$mth_syms, $mth_seen, $mth_reuse): string {
-    $mth_k = md5($mth_m[2] . '|' . $mth_m[3]);
-    if (!$mth_reuse($mth_m[3]) || ($mth_seen[$mth_k] ?? 0) < 2) return $mth_m[0];
-    if (!isset($mth_syms[$mth_k])) {
-        $mth_syms[$mth_k] = '<symbol id="mth-s' . count($mth_syms) . '" viewBox="' . $mth_m[2] . '">' . $mth_m[3] . '</symbol>';
-    }
-    preg_match('~ id="(mth-s\d+)"~', $mth_syms[$mth_k], $mth_sid);
-    return '<svg' . $mth_m[1] . '><use href="#' . $mth_sid[1] . '"/></svg>';
+$mth_body = preg_replace_callback($mth_re, function (array $mth_m) use (&$mth_syms, $mth_seen, $mth_ok): string {
+    $mth_h = md5($mth_m[2] . '|' . $mth_m[3]);
+    if (!$mth_ok($mth_m[3]) || ($mth_seen[$mth_h] ?? 0) < 2) return $mth_m[0];
+    if (!isset($mth_syms[$mth_h])) $mth_syms[$mth_h] = ['mth-s' . count($mth_syms), $mth_m[2], $mth_m[3]];
+    return '<svg' . $mth_m[1] . '><use href="#' . $mth_syms[$mth_h][0] . '"/></svg>';
 }, $mth_body);
 if ($mth_syms) {
-    echo '<svg class="mth-sprite" aria-hidden="true" focusable="false" width="0" height="0"><defs>'
-       . implode('', $mth_syms) . '</defs></svg>' . "\n";
+    echo '<svg class="mth-sprite" aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute"><defs>';
+    foreach ($mth_syms as $mth_sy) echo '<symbol id="' . $mth_sy[0] . '" viewBox="' . $mth_sy[1] . '">' . $mth_sy[2] . '</symbol>';
+    echo "</defs></svg>\n";
 }
 echo $mth_body;
 ?>
@@ -151,7 +114,6 @@ echo $mth_body;
             'itemOffered' => ['@type' => 'Service', 'name' => $mth_c['name'], 'description' => $mth_c['lead']],
         ], $CAPS)),
     ],
-], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?>
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>
 </script>
-
 <?php include __DIR__ . '/../partials/footer.php'; ?>

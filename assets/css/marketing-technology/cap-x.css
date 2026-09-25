@@ -1,0 +1,129 @@
+/* Marketing Technology capability pages — polish-pass additions: offer photograph, second showcase (#working),
+   practice switcher (Customer Relationship Strategy), stack chip row, onward card images, standards grid, tap targets. */
+
+/* Offer head: heading and lead beside a photograph */
+.mtd-offer__head{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:var(--bdh-gap-l);align-items:end;margin-bottom:var(--bdh-head-mb)}
+.mtd-offer__head .bdh-head{margin:0}
+.mtd-offer__head .h2{margin:14px 0 18px}
+.mtd-offer__img{border-radius:var(--r-xl)}
+@media (max-width:860px){ .mtd-offer__head{grid-template-columns:minmax(0,1fr);gap:28px} }
+
+/* Matrix (showcase + practice mocks) */
+.mtd-x__win{overflow:hidden}
+.mtd-x__win .mth-mod__bar .bdh-ro{color:var(--ink)}
+.mtd-x__ill{margin-left:auto}
+.mtd-x__scroll{padding:4px 0}
+.mtd-x__t{width:100%;min-width:720px;border-collapse:collapse;font-size:var(--t-sm)}
+.mtd-x__t th,.mtd-x__t td{text-align:left;vertical-align:middle;padding:15px 18px;border-bottom:1px solid var(--line-2)}
+.mtd-x__t thead th{font-family:var(--f);font-size:var(--t-lbl);font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mtd-x__t tbody th{font-family:var(--f-b);font-weight:600;color:var(--ink)}
+.mtd-x__t tbody tr:last-child>*{border-bottom:0}
+.mtd-x__t tbody tr:hover>*{background:var(--paper-2)}
+.mtd-x__s{white-space:normal;min-height:26px;padding:3px 10px;line-height:1.35}
+.mtd-x__s--warn{background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 1px var(--blue-line)}
+.mtd-x__s--bad{background:var(--ink);color:var(--on-ink)}
+.mtd-x__s--bad::before{border-radius:1px}
+.mtd-x__none{color:var(--faint)}
+.mtd-x__foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
+.mtd-x__foot .mth-chip{white-space:normal;min-height:28px;padding:4px 12px;line-height:1.35}
+.mtd-x__note{flex:1 1 280px;font-size:var(--t-xs);color:var(--muted)}
+.mtd-x__board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;padding:18px;background:var(--paper-2)}
+.mtd-x__col ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.mtd-x__ch{display:flex;justify-content:space-between;margin:0 0 12px;font-family:var(--f);font-size:var(--t-lbl);font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.mtd-x__card{padding:14px;border-radius:var(--r);background:var(--paper);border:1px solid var(--line);box-shadow:var(--sh-1)}
+.mtd-x__col--ok .mtd-x__card{border-top:3px solid var(--blue)}
+.mtd-x__col--bad .mtd-x__card{border-top:3px solid var(--ink)}
+.mtd-x__col--warn .mtd-x__card{border-top:3px solid var(--blue-line)}
+.mtd-x__ct{margin:0 0 10px;font-size:var(--t-sm);font-weight:500;color:var(--ink);line-height:1.5}
+.mtd-x__cm,.mtd-x__cf{margin:0;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--muted);line-height:1.6}
+.mtd-x__cf{color:var(--blue-d)}
+@media (max-width:1023px){ .mtd-x__board{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:600px){
+  .mtd-x__board{grid-template-columns:minmax(0,1fr);padding:12px}
+  .mtd-x__scroll{padding:0}
+  .mtd-x__t{min-width:0}
+  .mtd-x__t thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .mtd-x__t,.mtd-x__t tbody,.mtd-x__t tr,.mtd-x__t th,.mtd-x__t td{display:block;width:auto}
+  .mtd-x__t tr{padding:14px 16px;border-bottom:1px solid var(--line-2)}
+  .mtd-x__t tbody tr:last-child{border-bottom:0}
+  .mtd-x__t tbody th{padding:0 0 8px;border:0}
+  .mtd-x__t td{display:grid;grid-template-columns:minmax(0,11ch) minmax(0,1fr);gap:12px;align-items:center;padding:6px 0;border:0;border-top:1px dashed var(--line)}
+  .mtd-x__t td::before{content:attr(data-h);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;color:var(--muted)}
+  .mtd-x__t td>*{justify-self:start}
+  .mtd-x__t tbody tr:hover>*{background:none}
+}
+
+/* Practice switcher (Customer Relationship Strategy) */
+.mtd-prac{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--bdh-gap);align-items:start}
+.mtd-prac:not(.is-tabs){grid-template-columns:minmax(0,1fr)}
+.mtd-prac:not(.is-tabs) .mtd-prac__rail{display:none}
+.mtd-prac:not(.is-tabs) .mtd-prac__panes{display:grid;gap:var(--bdh-gap)}
+.mtd-prac__rail{display:grid;gap:6px;position:sticky;top:calc(var(--nav-h) + 24px)}
+.mtd-prac__tab{display:grid;grid-template-columns:auto auto minmax(0,1fr);align-items:center;gap:12px;width:100%;min-height:64px;padding:12px 16px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);text-align:left;cursor:pointer;color:var(--ink);transition:border-color .2s var(--e),box-shadow .2s var(--e)}
+.mtd-prac__tab .xt-ico{width:18px;height:18px}
+.mtd-prac__tt{display:flex;flex-direction:column;gap:4px;min-width:0}
+.mtd-prac__tn{font-family:var(--f-h);font-size:1rem;font-weight:500;line-height:1.25}
+.mtd-prac__tt .bdh-ro{color:var(--muted)}
+.mtd-prac__tab:hover{border-color:var(--line-3)}
+.mtd-prac__tab[aria-selected="true"]{border-color:var(--blue);box-shadow:var(--sh-1),inset 3px 0 0 var(--blue)}
+.mtd-prac__tab:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.mtd-prac__pane[hidden]{display:none}
+.mtd-prac__pane .mth-mod__bar .bdh-ro{color:var(--muted)}
+.mtd-prac__out{margin-left:auto}
+.mtd-prac__body{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;padding:26px 28px 28px}
+.mtd-prac__tx{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 32px}
+.mtd-prac__tx .h3,.mtd-prac__tx .p{grid-column:1}
+.mtd-prac__tx .mtd-part__list{grid-column:2;grid-row:1 / span 3}
+.mtd-prac__tx .mtd-prac__prod{grid-column:1}
+.mtd-prac__tx .h3{margin:0 0 12px}
+.mtd-prac__tx .p{margin:0 0 14px}
+.mtd-prac__prod{margin:14px 0 0;font-size:var(--t-sm);color:var(--ink);font-weight:500}
+.mtd-prac__prod .bdh-ro{color:var(--blue-d);margin-right:6px}
+.mtd-prac__mock{margin:0;align-self:start;padding:16px;border-radius:var(--r-lg);background:var(--paper-2);border:1px solid var(--line)}
+.mtd-prac__mock figcaption{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;color:var(--ink)}
+.mtd-prac__mock .mtd-x__ill{color:var(--muted)}
+.mtd-x__t--sm{min-width:0;font-size:var(--t-xs);background:var(--paper);border-radius:var(--r)}
+.mtd-x__t--sm th,.mtd-x__t--sm td{padding:10px 10px}
+.mtd-prac__thread{margin-top:var(--bdh-gap-l);padding:28px 32px;border-radius:var(--r-xl);background:var(--ink);color:var(--on-ink)}
+.mtd-prac__thread .h3{color:var(--on-ink);margin:12px 0}
+.mtd-prac__thread .g{color:var(--on-ink-3)}
+.mtd-prac__thread .p{color:var(--on-ink-2);max-width:62ch}
+.mtd-prac__thread .lbl{color:var(--on-ink-2)}
+.mtd-prac__thread .mth-chip{background:var(--on-ink-card);color:var(--on-ink-2)}
+.mtd-prac__thread .mth-chip--ok{color:var(--on-ink);box-shadow:inset 0 0 0 1px var(--blue)}
+@media (max-width:1180px){ .mtd-prac__tx{grid-template-columns:minmax(0,1fr)} .mtd-prac__tx .mtd-part__list{grid-column:1;grid-row:auto} }
+@media (max-width:860px){
+  .mtd-prac{grid-template-columns:minmax(0,1fr)}
+  .mtd-prac__rail{position:static;grid-auto-flow:column;grid-auto-columns:minmax(170px,1fr);overflow-x:auto;padding-bottom:4px}
+}
+@media (max-width:600px){
+  .mtd-prac__rail{grid-auto-flow:row;grid-auto-columns:auto;overflow:visible}
+  .mtd-prac__tab{min-height:52px;padding:10px 12px}
+  .mtd-prac__body{padding:18px 16px}
+  .mtd-prac__mock{padding:8px}
+  .mtd-x__t--sm tr{padding:12px 10px}
+  .mtd-prac__thread{padding:22px 18px}
+  .mtd-prac .mth-mod__bar{flex-wrap:wrap}
+}
+
+/* Stack: names without logo artwork */
+.mtd-stack__more{margin-top:16px}
+
+/* Onward cards with a photograph */
+.mtd-on__img{border-radius:0}
+.mtd-on__card{overflow:hidden}
+.mtd-on__go,.mtd-on__all a{display:inline-flex;align-items:center;min-height:44px}
+
+/* Standards: grid sized to the number of cards (no empty slot) */
+.mtd-std__g{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+@media (max-width:1023px){ .mtd-std__g{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))} }
+@media (max-width:600px){ .mtd-std__g{grid-template-columns:minmax(0,1fr)} }
+
+/* Phones: long hero CTAs wrap instead of running past the column; mock title bars and state buttons wrap
+   instead of truncating mid-word or scrolling out of view. */
+@media (max-width:600px){
+  .mtd-hero__act .btn{white-space:normal;text-align:center;height:auto;min-height:52px;padding-top:12px;padding-bottom:12px}
+  .mtd-sig__bar{flex-wrap:wrap}
+  .mtd-sig__bar .bdh-ro{white-space:normal;overflow:visible;text-overflow:clip;min-width:0}
+  .mtd-sig__ctl{flex-wrap:wrap;overflow-x:visible}
+}

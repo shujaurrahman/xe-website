@@ -1,20 +1,16 @@
-/* Hub · process — two small jobs. The capability tablist (BDH.tabs: click, arrow keys, Home and End)
-   switches which capability's four phases are shown. And as the reader passes each phase of the spine,
-   that phase's dot lights, so the rail reads as progress rather than decoration. Phase one is already lit
-   in the markup, so nothing depends on this running. */
+/* Process stepper: every phase is visible in the shipped HTML; with JS the rail becomes an ARIA tablist and
+   phases before the current one are marked done. */
 (function () {
   'use strict';
   if (!window.BDH) return;
-
-  var caps = document.querySelector('.mth-pro__caps');
-  if (caps) {
-    BDH.tabs(caps, { tabs: '.mth-pro__tab', panes: '.mth-pro__pane', orientation: 'horizontal' });
-  }
-
-  var phases = BDH.$$('.mth-pro__ph');
-  if (!phases.length || BDH.reduced) return;
-  BDH.spy(phases, function (el) {
-    var i = phases.indexOf(el);
-    phases.forEach(function (p, n) { p.classList.toggle('is-on', n <= i); });
-  }, '-40% 0px -45% 0px');
+  var root = document.querySelector('[data-mth-steps]');
+  if (!root) return;
+  var tabs = root.querySelectorAll('.mth-steps__tab');
+  root.classList.add('is-tabs');
+  function done(i) { tabs.forEach(function (t, n) { t.classList.toggle('is-done', n < i); }); }
+  BDH.tabs(root, {
+    panes: '.mth-steps__pane',
+    onChange: function (i) { done(i); }
+  });
+  done(0);
 })();

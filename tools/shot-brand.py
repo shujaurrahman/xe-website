@@ -51,6 +51,7 @@ with sync_playwright() as p:
         pg.on("pageerror", lambda e: errs.append("pageerror: " + str(e)))
         pg.on("requestfailed", lambda r: fails.append(r.url))
         pg.on("response", lambda r: fails.append(f"{r.status} {r.url}") if r.status >= 400 else None)
+        pg.add_init_script("document.addEventListener('DOMContentLoaded',()=>document.documentElement.style.scrollBehavior='auto')")
         pg.goto(BASEURL + "/" + path.lstrip("/"), wait_until="load")
         html = pg.content()
         php = re.findall(r"(?:Warning|Notice|Deprecated|Fatal error|Parse error)</b>:[^<]*<b>[^<]*</b>[^<]*<b>\d+</b>", html) + \
@@ -67,7 +68,7 @@ with sync_playwright() as p:
             f = OUT / f"{stem}-full-{TAG}.png"; pg.screenshot(path=str(f), full_page=True); print(f)
         else:
             sels = [SEL] if SEL else pg.evaluate("""()=>[...document.querySelectorAll('main > section, main > nav')].map((s,i)=>{
-                const c=[...s.classList].find(c=>/^(bd|bg|bi|bf|bs|ba|bt|xt|tih|twa|tcs|tas|tap|tic|tsc|tis|tsv|taa|ttw|cch|ccd|aih|aid|pxh|pxd|mth|mtd)-[a-z0-9-]+$/.test(c)||c==='s22'); return c?'.'+c:null}).filter(Boolean)""")
+                const c=[...s.classList].find(c=>/^(bd|bg|bi|bf|bs|ba|bt|xt|tih|twa|tcs|tas|tap|tic|tsc|tis|tsv|taa|ttw|cch|ccd|aih|aid|pxh|pxd|mth|mtd|ind|wrk|apr|car|lgl|svx|ct|e404|bdh|cbi|cat|cbf|cbs|cba|cgs)-[a-z0-9-]+$/.test(c)||/^s\d\d$/.test(c)); return c?'.'+c:null}).filter(Boolean)""")
             seen = {}
             for sel in sels:
                 els = pg.query_selector_all(sel)

@@ -1,14 +1,16 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <section class="band band--alt band--rules s18" id="engagements" aria-labelledby="s18-t">
   <div class="wrap">
     <div class="s18__head" data-rv>
       <p class="lbl lbl--blue"><span class="dot"></span>Working together</p>
-      <h2 class="h2" id="s18-t">Engagement models <sup class="s18__count">(3)</sup></h2>
+      <h2 class="h2" id="s18-t"><span class="g">Engagement</span> models <sup class="s18__count">(3)</sup></h2>
       <p class="lead s18__sub">Three ways to work with one team. Scope is fixed before we start, and
         everything we build is transferred to you.</p>
     </div>
 
     <div class="s18__grid" data-rv-s data-rv-step="90">
 
+      <!-- PLACEHOLDER: confirm the typical start times (~2 / ~4 / ~3 weeks) and the "Most popular" flag before launch -->
       <article class="s18__card">
         <div class="s18__top">
           <span class="s18__ico" aria-hidden="true">

@@ -1,8 +1,9 @@
-<section class="band band--rules s14" id="platforms" aria-labelledby="s14-t">
+<?php /* DRAFT COPY — review before launch */ ?>
+<section class="band band--alt band--rules s14" id="platforms" aria-labelledby="s14-t">
   <div class="wrap">
     <div class="s14__head" data-rv>
       <p class="lbl lbl--blue"><span class="dot"></span>Platforms</p>
-      <h2 class="h2" id="s14-t"><span class="g">Fluent in the platforms</span><br>that matter.</h2>
+      <h2 class="h2 s14__h" id="s14-t"><span class="g">Fluent in the platforms</span> that matter.</h2>
       <p class="lead s14__sub">We are not a reseller and we hold no partner badges. We pick the tool
         that wins the job, and we tell you why.</p>
     </div>
@@ -19,8 +20,9 @@
           habit — and swapped the moment the evidence changes.</p>
       </div>
 
+      <!-- PLACEHOLDER: illustrative figures — confirm before launch -->
       <div class="s14__panel" aria-hidden="true">
-        <p class="s14__plbl">Model selection · this brief</p>
+        <p class="s14__plbl">Model selection · this brief <span class="s14__tag">Illustrative</span></p>
         <ul class="s14__rows">
           <li><span>Long-context synthesis</span><i>Model A</i><b class="s14__pick">picked</b></li>
           <li><span>Structured extraction</span><i>Model B</i><b></b></li>

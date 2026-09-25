@@ -1,103 +1,60 @@
-<?php /* DRAFT COPY — review before launch */
-/* Measures — outcomes and how they are measured, as a ladder: did anyone notice, did it change what
-   they think, did it pay. Each rung names the metric and how the number is produced, because a metric
-   without a method is an opinion. Then the things we refuse to report as success, and the review
-   rhythm. Every metric here is one the eight capabilities in data/campaign-content.php already
-   commit to; no figure or result is claimed. */
-$ms_tiers = [
-    [
-        'n' => '01', 'name' => 'Attention', 'q' => 'Did anyone notice?',
-        'rows' => [
-            ['Share of voice in your category', 'Coverage and mentions against a named competitor set, tracked monthly against a baseline taken in week one.'],
-            ['Saves and shares',                'The engagement that signals intent, reported instead of impressions, by format and by pillar.'],
-            ['Branded search volume',           'From Search Console: the cleanest signal that the work reached people who then went looking for you.'],
-            ['Named in AI answers',             'Whether answer engines name you when asked about the category, run against a fixed prompt panel each month.'],
-        ],
-    ],
-    [
-        'n' => '02', 'name' => 'Persuasion', 'q' => 'Did it change what they think?',
-        'rows' => [
-            ['Message pull-through',            'Whether your key messages survive into the article, scored per piece of coverage rather than counted.'],
-            ['Engaged sessions and returns',    'Whether the content earns the next click, by topic and by buying stage, not by pageview total.'],
-            ['Assisted conversations',          'Replies and community threads that turn into a sales or support conversation, logged at the handover.'],
-            ['Creator incrementality',          'Holdout or matched-market tests on activations, so borrowed reach and real lift are never confused.'],
-        ],
-    ],
-    [
-        'n' => '03', 'name' => 'Business', 'q' => 'Did it pay?',
-        'rows' => [
-            ['Qualified demand',                'Pipeline measured on consented first-party data and reconciled with the finance view, not with a platform dashboard.'],
-            ['Cost per customer',               'Margin-aware, with offline and CRM conversions imported, so the platforms optimise towards customers.'],
-            ['Incremental revenue',             'What stopped happening when the spend stopped, read from a geo holdout designed before the budget moved.'],
-            ['Retention and repeat rate',       'Tracked alongside acquisition, because the cheapest revenue is a customer you already have.'],
-        ],
-    ],
+<?php /* DRAFT COPY — review before launch */ ?>
+<?php
+/* Outcomes and how each is measured. Data-viz idiom: .cch-viz (response curve). */
+$cch_rows = [   // [outcome, question, metrics, method, cadence]
+    ['Attention', 'Did the right people see it, enough times?', 'Reach at effective frequency · attention time · share of voice', 'Platform and panel data, de-duplicated across channels', 'Weekly'],
+    ['Memory',    'Do they remember it, and the brand?',        'Ad recall · brand awareness · message association', 'Brand lift studies with exposed and control groups', 'Per flight'],
+    ['Action',    'Did it change what people did?',             'Qualified visits · leads · conversions · search demand for the brand', 'Server-side tracking and CRM match, not platform claims alone', 'Weekly'],
+    ['Business',  'What did it cause, and was it worth it?',    'Incremental conversions · cost per incremental customer · payback', 'Geo holdouts and, at scale, media-mix modelling', 'Per flight · quarterly'],
 ];
-$ms_not = [
-    ['Impressions on their own',   'A number that grows with budget and says nothing about whether anyone noticed.'],
-    ['Follower count',             'A stock, not a flow. What a feed earns is measured in saves, shares and returns.'],
-    ['Last-click ROAS as a decision', 'Useful as a diagnostic. As a budget decision it rewards the channel that closed the door.'],
-    ['Engagement rate with no denominator', 'A percentage of what? Reported with the base, or not reported.'],
-    ['Earned media value',         'An advertising price attached to coverage nobody bought. We report the coverage instead.'],
-];
-$ms_rhythm = [
-    ['Week 01',  'Baseline agreed',   'Every metric defined with sales and finance, and its starting value written down before work begins.'],
-    ['Day 30',   'First read',        'Enough to correct the plan: what is landing, what is not, and what we stopped doing as a result.'],
-    ['Day 90',   'First decision',    'The first reallocation made on evidence, with the reasoning recorded against the numbers that prompted it.'],
-    ['Quarterly','Plan corrected',    'Budget moved between channel roles, the content refresh backlog reordered, and the next quarter set.'],
-];
+/* diminishing-returns curve: spend (x) against incremental outcome (y) */
+$cch_curve = [];
+for ($cch_x = 0; $cch_x <= 20; $cch_x++) {
+    $cch_y = 1 - exp(-$cch_x / 6);
+    $cch_curve[] = round(32 + $cch_x * 22, 1) . ',' . round(170 - $cch_y * 140, 1);
+}
 ?>
-<section class="band band--ink cch-measures" id="measures" aria-labelledby="measures-t">
+<section class="band cch-meas" id="measures" aria-labelledby="measures-t">
   <div class="wrap">
     <div class="bdh-head bdh-head--row" data-rv>
-      <div>
-        <p class="lbl lbl--blue"><span class="dot"></span>Outcomes and how they are measured</p>
-        <h2 class="h2" id="measures-t"><span class="g">Three questions,</span> in the order they matter.</h2>
-      </div>
-      <div>
-        <p class="lead">Did anyone notice, did it change what they think, and did it pay. Every metric below comes with the method that produces it, because a metric without a method is an opinion with a decimal point.</p>
-      </div>
+      <div><p class="lbl lbl--blue"><span class="dot"></span>Outcomes, and how we measure them</p>
+        <h2 class="h2" id="measures-t"><span class="g">Agreed before launch.</span> Measured by what the campaign caused.</h2></div>
+      <div><p class="lead">Platforms each claim credit for the same customer. We separate what a campaign caused from what would have happened anyway, and report it in four layers.</p></div>
     </div>
-
-    <div class="cch-ms__ladder" data-rv data-rv-d="60">
-      <?php foreach ($ms_tiers as $ms_t): ?>
-        <div class="cch-ms__tier">
-          <p class="cch-ms__th"><span class="cch-ms__tn"><?= e($ms_t['n']) ?></span><b><?= e($ms_t['name']) ?></b></p>
-          <p class="cch-ms__tq"><?= e($ms_t['q']) ?></p>
-          <ul class="cch-ms__rows" role="list">
-            <?php foreach ($ms_t['rows'] as $ms_r): ?>
-              <li><b><?= e($ms_r[0]) ?></b><span><?= e($ms_r[1]) ?></span></li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
-      <?php endforeach; ?>
+    <div class="bdh-scroll-x mask-x cch-meas__wrap" tabindex="0" role="region" aria-label="Campaign outcomes, metrics, methods and cadence">
+      <table class="cch-meas__t">
+        <thead><tr><th scope="col">Outcome</th><th scope="col">What we track</th><th scope="col">How it is measured</th><th scope="col">Read</th></tr></thead>
+        <tbody>
+          <?php foreach ($cch_rows as $cch_i => $cch_r): ?>
+          <tr>
+            <th scope="row"><span class="bdh-idx"><?= sprintf('%02d', $cch_i + 1) ?></span><span class="cch-meas__o"><?= e($cch_r[0]) ?></span><span class="cch-meas__q"><?= e($cch_r[1]) ?></span></th>
+            <td data-k="What we track"><?= e($cch_r[2]) ?></td><td data-k="How it is measured"><?= e($cch_r[3]) ?></td><td class="bdh-ro" data-k="Read"><?= e($cch_r[4]) ?></td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
     </div>
-
-    <div class="cch-ms__not" data-rv data-rv-d="80">
-      <div class="cch-ms__nh">
-        <h3 class="cch-ms__h3">Five numbers we will not report as success</h3>
-        <p class="cch-ms__nd">Not because they are always meaningless, but because none of them answers one of the three questions above. If one appears in a report, it will be as context with its base attached.</p>
+    <div class="cch-meas__g">
+      <figure class="cch-viz" data-rv>
+        <figcaption class="bdh-ro"><span><i class="cch-viz__k cch-viz__k--t"></i>Incremental outcome</span><span>Response curve · illustrative</span></figcaption>
+        <svg viewBox="0 0 496 200" aria-hidden="true" focusable="false">
+          <?php foreach ([30, 100, 170] as $cch_y): ?><line class="cch-viz__grid" x1="32" x2="472" y1="<?= $cch_y ?>" y2="<?= $cch_y ?>"/><?php endforeach; ?>
+          <rect class="cch-viz__band" x="164" y="22" width="110" height="150"/>
+          <polyline class="cch-viz__t" points="<?= implode(' ', $cch_curve) ?>"/>
+          <circle class="cch-viz__pt" cx="230" cy="<?= round(170 - (1 - exp(-9 / 6)) * 140, 1) ?>" r="5"/>
+        </svg>
+        <div class="cch-viz__x bdh-ro" aria-hidden="true"><span>Spend →</span><span class="cch-viz__eff">Efficient range</span><span>Diminishing returns</span></div>
+        <p class="bdh-sr">An illustrative response curve: incremental outcome rises quickly with spend, then flattens. A shaded band marks the efficient range where the plan is set.</p>
+      </figure>
+      <div class="cch-meas__side" data-rv>
+        <h3 class="h3">Where the next pound, dollar or rupee works hardest</h3>
+        <p class="p">Holdouts and lift studies tell us what a campaign caused. Response curves built from them show where extra budget stops paying back, so the next flight is planned on evidence rather than last year's split.</p>
+        <ul class="cch-meas__l">
+          <li><strong>Before launch</strong> — baseline, holdout design and the one number that decides success</li>
+          <li><strong>In flight</strong> — weekly optimisation on leading signals, never on clicks alone</li>
+          <li><strong>After</strong> — incremental result, cost per incremental customer and what to change</li>
+        </ul>
       </div>
-      <ol class="cch-ms__nlist">
-        <?php foreach ($ms_not as $ms_ni => $ms_n): ?>
-          <li><span class="cch-ms__nn"><?= str_pad((string) ($ms_ni + 1), 2, '0', STR_PAD_LEFT) ?></span><b><?= e($ms_n[0]) ?></b><span><?= e($ms_n[1]) ?></span></li>
-        <?php endforeach; ?>
-      </ol>
-    </div>
-
-    <div class="cch-ms__rhythm" data-rv data-rv-d="60">
-      <p class="cch-k cch-ms__rk">The review rhythm</p>
-      <ol class="cch-ms__rlist">
-        <?php foreach ($ms_rhythm as $ms_ri => $ms_r): ?>
-          <li class="cch-ms__step">
-            <p class="cch-ms__sw"><?= e($ms_r[0]) ?></p>
-            <h3 class="cch-ms__st"><?= e($ms_r[1]) ?></h3>
-            <p class="cch-ms__sd"><?= e($ms_r[2]) ?></p>
-          </li>
-        <?php endforeach; ?>
-      </ol>
-      <!-- PLACEHOLDER: confirm the review cadence and the first-read timing before launch -->
-      <p class="cch-note cch-ms__rn">Timings are the rhythm we recommend and are agreed per engagement. No result, ranking, placement or coverage volume is promised anywhere on this page.</p>
     </div>
   </div>
 </section>

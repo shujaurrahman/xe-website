@@ -1,0 +1,9 @@
+.pxh-outcomes__how { list-style: none; margin: 28px 0 0; padding: 0; counter-reset: pxho; }
+.pxh-outcomes__how li { counter-increment: pxho; display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 2px 12px; padding: 14px 0; border-top: 1px solid var(--line-2); }
+.pxh-outcomes__how li::before { content: "0" counter(pxho); grid-row: span 2; font-family: var(--f); font-size: var(--t-lbl); color: var(--blue); padding-top: 3px; }
+.pxh-outcomes__how b { font-family: var(--f-h); font-weight: 500; color: var(--ink); }
+.pxh-outcomes__how span { font-size: var(--t-sm); color: var(--muted); }
+.pxh-outcomes__fig { margin: 0; }
+.pxh-outcomes__body { padding: 8px 24px 22px; }
+@media (max-width: 860px) { .pxh-outcomes__fig { margin-top: 32px; } }
+@media (max-width: 600px) { .pxh-outcomes__body { padding: 4px 16px 18px; } }

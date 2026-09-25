@@ -1,9 +1,12 @@
+<?php /* DRAFT COPY — review before launch */ ?>
 <section class="band band--alt band--rules s07" id="ai-design" aria-labelledby="s07-t">
   <div class="wrap">
 
-    <header class="head head--c s07__head" data-rv>
-      <p class="lbl lbl--blue"><span class="dot"></span>AI Design</p>
-      <h2 class="h2" id="s07-t">Not just automated. Designed.</h2>
+    <header class="head head--row s07__head" data-rv>
+      <div class="s07__hl">
+        <p class="lbl lbl--blue"><span class="dot"></span>AI Design</p>
+        <h2 class="h2" id="s07-t"><span class="g">Not just automated.</span> Designed.</h2>
+      </div>
       <p class="lead">
         Using AI well under the hood is table stakes now. We go further — designing brand
         experiences that simply weren't possible before AI existed.
@@ -73,7 +76,7 @@
         </div>
       </article>
 
-      <!-- 3 · Brand AI Tools — the asset library, cropped at the fold so it reads as longer -->
+      <!-- 3 · Brand AI Tools — an example brand's asset library ("Your company", monogram Yc) -->
       <article class="s07__card s07__card--4">
         <div class="s07__mock s07-tools" aria-hidden="true">
           <div class="s07-tools__row">
@@ -92,12 +95,12 @@
             <div class="s07-lib__list">
               <p class="s07-lib__rh">Assets</p>
               <p class="s07-lib__a">
-                <span class="s07-lib__sw s07-lib__sw--ink">XE</span>
+                <span class="s07-lib__sw s07-lib__sw--ink">Yc</span>
                 <span class="s07-lib__nm">Wordmark</span><span class="s07-lib__v">v2.4</span>
               </p>
               <p class="s07-lib__a">
-                <span class="s07-lib__sw s07-lib__sw--chev">›</span>
-                <span class="s07-lib__nm">Chevron</span><span class="s07-lib__v">v2.4</span>
+                <span class="s07-lib__sw s07-lib__sw--sym"><i></i></span>
+                <span class="s07-lib__nm">Symbol</span><span class="s07-lib__v">v2.4</span>
               </p>
               <p class="s07-lib__a">
                 <span class="s07-lib__sw s07-lib__sw--box"><i></i></span>
