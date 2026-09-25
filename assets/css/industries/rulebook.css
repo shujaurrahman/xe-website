@@ -1,0 +1,58 @@
+/* Industries · rulebook — the applicability grid and the per-sector scope plates. */
+
+.ind-rbk__wrap{margin:0;padding:clamp(18px,2vw,28px);background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh-1)}
+.ind-rbk__cap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 20px;padding-bottom:16px;border-bottom:1px solid var(--line-2)}
+.ind-rbk__key{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.ind-rbk__key>span{display:inline-flex;align-items:center;gap:8px}
+
+/* the three marks: filled, half, hollow — code-built, no glyph fonts */
+.ind-rbk__m{position:relative;display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle;flex:none}
+.ind-rbk__m--y{background:var(--blue)}
+.ind-rbk__m--c{background:var(--paper-3);box-shadow:inset 0 0 0 1.5px var(--blue-line);overflow:hidden}
+.ind-rbk__m--c::after{content:"";position:absolute;left:0;top:0;bottom:0;width:50%;background:var(--blue)}
+.ind-rbk__m--n{background:transparent;box-shadow:inset 0 0 0 1.5px var(--line-3)}
+
+.ind-rbk__scroll{margin-top:8px}
+.ind-rbk__tbl{min-width:900px}
+.ind-rbk__tbl thead th{padding-top:16px;text-align:center}
+.ind-rbk__tbl thead th:first-child{text-align:left;width:13em}
+.ind-rbk__tbl thead th.ind-rbk__wc{text-align:left;width:26em}
+.ind-rbk__cn{display:block;font-size:var(--t-lbl);color:var(--blue);margin-bottom:3px}
+.ind-rbk__tbl td{text-align:center;vertical-align:top;padding:18px 8px 14px}
+.ind-rbk__tbl tbody th{vertical-align:top;padding-top:16px}
+.ind-rbk__fc{display:block;font-family:var(--f-h);font-size:var(--t-sm);font-weight:500;color:var(--ink);line-height:1.25}
+.ind-rbk__fk{display:block;margin-top:3px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.ind-rbk__when{text-align:left;vertical-align:top;padding-top:16px;font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+.ind-rbk__not{display:block;margin-top:8px;padding-left:12px;border-left:2px solid var(--line-3);color:var(--txt)}
+.ind-rbk__note{margin-top:14px}
+.ind-rbk__swipe{display:none}
+
+/* ---------- per-sector scope plates ---------- */
+.ind-rbk__scopes{margin-top:clamp(36px,4vw,64px)}
+.ind-rbk__sh{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px 28px;margin-bottom:22px}
+.ind-rbk__plates{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap)}
+.ind-rbk__pn{font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;color:var(--ink);text-decoration:none}
+.ind-rbk__pn:hover{color:var(--blue-d)}
+.ind-rbk__sl{margin:0;display:grid;gap:0}
+.ind-rbk__sl>div{padding:12px 0;border-bottom:1px solid var(--line)}
+.ind-rbk__sl>div:first-child{padding-top:0}
+.ind-rbk__sl>div:last-child{border-bottom:0;padding-bottom:0}
+.ind-rbk__sl dt{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:6px}
+.ind-rbk__sn{font-family:var(--f-h);font-size:var(--t-sm);font-weight:500;color:var(--ink)}
+.ind-rbk__sl dd{margin:0;font-size:var(--t-xs);line-height:1.65;color:var(--muted)}
+.ind-rbk__badges{display:grid;gap:8px;padding-top:12px;border-top:1px solid var(--line-2)}
+.ind-rbk__badges>div{display:flex;flex-wrap:wrap;gap:6px}
+
+@media (min-width:1101px){ .ind-rbk__scroll{-webkit-mask-image:none;mask-image:none} }
+@media (max-width:1100px){
+  .ind-rbk__plates{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ind-rbk__swipe{display:inline}
+  .ind-rbk__tbl tbody th,.ind-rbk__tbl thead th:first-child{position:sticky;left:0;z-index:1;background:var(--paper);box-shadow:1px 0 0 var(--line)}
+}
+@media (max-width:700px){
+  .ind-rbk__plates{grid-template-columns:minmax(0,1fr)}
+  .ind-rbk__tbl{min-width:760px}
+  .ind-rbk__tbl thead th:first-child{width:10em}
+  .ind-rbk__tbl thead th.ind-rbk__wc{width:20em}
+  .ind-rbk__tbl td{padding:12px 4px}
+}

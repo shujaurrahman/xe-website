@@ -1,0 +1,25 @@
+/* Work · measures — four measure families, then the four fields a measure is agreed with. */
+.wrk-meas__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,2vw,26px)}
+.wrk-fam{gap:10px}
+.wrk-fam__top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:4px}
+.wrk-fam__i{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);background:var(--blue-wash);color:var(--ink)}
+.wrk-fam__dl{display:grid;gap:0;margin-top:4px;padding-top:10px}
+.wrk-fam__dl>div{padding:12px 0;border-top:1px solid var(--line-2)}
+.wrk-fam__dl dt{font-size:var(--t-sm);font-weight:500;line-height:1.4;color:var(--ink)}
+.wrk-fam__dl dd{margin-top:5px;color:var(--muted);letter-spacing:.02em;line-height:1.5}
+.wrk-fam__src{margin-top:4px;color:var(--faint);text-transform:uppercase;letter-spacing:.1em;font-size:var(--t-lbl)}
+
+.wrk-meas__plan{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(24px,3.4vw,56px);align-items:start;
+  margin-top:clamp(32px,3.6vw,52px);padding-top:clamp(32px,3.6vw,52px);border-top:1px solid var(--line)}
+.wrk-meas__say{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+.wrk-plan{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2vw,24px)}
+.wrk-plan>li{display:grid;grid-template-columns:2.4rem minmax(0,1fr);gap:4px 12px;padding:18px 20px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.wrk-plan__n{color:var(--blue);letter-spacing:.1em;padding-top:2px}
+.wrk-plan .bdh-d{margin-top:6px}
+
+@media (max-width:1180px){.wrk-meas__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:1023px){.wrk-meas__plan{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:600px){
+  .wrk-meas__grid{grid-template-columns:minmax(0,1fr)}
+  .wrk-plan{grid-template-columns:minmax(0,1fr)}
+}

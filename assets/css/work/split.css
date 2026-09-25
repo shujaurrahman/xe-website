@@ -1,0 +1,82 @@
+/* Work · before / after — the reveal is driven by :checked on a real radio group, so the comparison
+   works with JavaScript off and from the keyboard alone. split.js only adds the drag handle. */
+.wrk-split__grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(28px,4vw,60px);align-items:start}
+.wrk-split__say{display:flex;flex-direction:column;gap:clamp(18px,2.2vw,26px);min-width:0}
+.wrk-split__stats{display:grid;gap:0;border-top:1px solid var(--ink)}
+.wrk-split__stats>div{display:grid;grid-template-columns:5.5em minmax(0,1fr);gap:6px 16px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--line)}
+.wrk-split__stats dt{color:var(--faint);text-transform:uppercase;letter-spacing:.1em}
+.wrk-split__stats dd{font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+.wrk-split__fig{display:block;font-family:var(--f-h);font-size:2.1rem;font-weight:500;line-height:1;letter-spacing:-.03em;color:var(--ink);margin-bottom:6px;font-variant-numeric:tabular-nums}
+.wrk-split__ph{margin-top:2px}
+.wrk-split__cap{position:absolute;left:14px;bottom:14px;z-index:3;max-width:calc(100% - 28px)}
+
+/* ---- the comparison ---------------------------------------------------- */
+.wrk-split{min-width:0}
+.wrk-split__bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin-bottom:14px}
+.wrk-split__ttl{display:inline-flex;align-items:center;gap:9px;color:var(--muted);letter-spacing:.06em}
+.wrk-split__ttl .bdh-ill{margin-left:4px}
+
+.wrk-split__stage{position:relative;--split:50%;border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);overflow:hidden;box-shadow:var(--sh-1)}
+.wrk-split__pane{min-width:0}
+.wrk-split__pane--before{position:absolute;inset:0;background:var(--paper);clip-path:inset(0 calc(100% - var(--split)) 0 0);transition:clip-path var(--d2) var(--e)}
+#wrk-split-b:checked~.wrk-split__stage{--split:100%}
+#wrk-split-s:checked~.wrk-split__stage{--split:50%}
+#wrk-split-a:checked~.wrk-split__stage{--split:0%}
+.wrk-split__line{position:absolute;left:var(--split);top:0;bottom:0;width:2px;background:var(--blue);z-index:4;pointer-events:none;transition:left var(--d2) var(--e)}
+.wrk-split__line i{position:absolute;left:50%;top:50%;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;background:var(--blue);box-shadow:var(--sh-1)}
+#wrk-split-b:checked~.wrk-split__stage .wrk-split__line,#wrk-split-a:checked~.wrk-split__stage .wrk-split__line{opacity:0}
+
+.wrk-wall{list-style:none;margin:0;padding:clamp(16px,1.9vw,22px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.wrk-wall>li{display:grid;gap:5px;min-width:0;padding:13px 14px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--paper-2)}
+.wrk-wall__k{color:var(--faint);letter-spacing:.1em;text-transform:uppercase}
+.wrk-wall__n{font-family:var(--f-h);font-size:.95rem;font-weight:500;line-height:1.25;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wrk-wall__s{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wrk-wall__s--ok{color:var(--blue-d)}
+.wrk-wall__s--bad{color:var(--ink);font-weight:500}
+.wrk-wall--pre>li{border-style:dashed;border-color:var(--line-3);background:var(--paper-3)}
+.wrk-split__foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;padding:12px clamp(16px,1.9vw,22px);border-top:1px solid var(--line-2);
+  background:var(--paper);color:var(--muted);letter-spacing:.06em}
+.wrk-split__pane--before .wrk-split__foot{background:var(--paper-2)}
+
+/* the drag handle only exists once split.js unhides it */
+.wrk-split__grab{position:absolute;left:var(--split);top:50%;z-index:5;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:var(--blue);
+  color:var(--on-ink);font-family:var(--f);font-size:var(--t-xs);letter-spacing:.06em;cursor:ew-resize;touch-action:none;box-shadow:var(--sh-1);
+  transition:left var(--d2) var(--e)}
+.wrk-split__grab[hidden]{display:none}
+.wrk-split.is-drag .wrk-split__grab,.wrk-split.is-drag .wrk-split__line,.wrk-split.is-drag .wrk-split__pane--before{transition:none}
+
+/* focus rings for the visually hidden radios, on their labels */
+.wrk-split__seg label{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 14px;border-radius:var(--r-pill);
+  font-size:var(--t-xs);font-weight:500;color:var(--muted);white-space:nowrap;cursor:pointer;
+  transition:background var(--d1) var(--e-io),color var(--d1) var(--e-io),box-shadow var(--d2) var(--e)}
+.wrk-split__seg label:hover{color:var(--ink)}
+#wrk-split-b:checked~.wrk-split__bar label[for="wrk-split-b"],
+#wrk-split-s:checked~.wrk-split__bar label[for="wrk-split-s"],
+#wrk-split-a:checked~.wrk-split__bar label[for="wrk-split-a"]{background:var(--paper);color:var(--ink);box-shadow:var(--sh-1)}
+#wrk-split-b:focus-visible~.wrk-split__bar label[for="wrk-split-b"],
+#wrk-split-s:focus-visible~.wrk-split__bar label[for="wrk-split-s"],
+#wrk-split-a:focus-visible~.wrk-split__bar label[for="wrk-split-a"]{outline:2px solid var(--blue);outline-offset:3px}
+
+@media (max-width:1023px){
+  .wrk-split__grid{grid-template-columns:minmax(0,1fr)}
+  .wrk-split__ph{max-width:520px}
+}
+@media (max-width:600px){
+  /* one column of tiles, so the divider turns horizontal: above the line is before, below is after.
+     A vertical divider here would cut every tile's status text in half. */
+  .wrk-wall{grid-template-columns:minmax(0,1fr);gap:8px}
+  .wrk-wall>li{padding:11px 12px}
+  .wrk-split__pane--before{clip-path:inset(0 0 calc(100% - var(--split)) 0)}
+  .wrk-split__line{left:0;right:0;top:var(--split);bottom:auto;width:auto;height:2px;transition:top var(--d2) var(--e)}
+  .wrk-split__grab{left:50%;top:var(--split);cursor:ns-resize;transition:top var(--d2) var(--e)}
+  .wrk-split__grab span{display:inline-block;transform:rotate(90deg)}
+  .wrk-split__foot{display:none}
+  .wrk-split__bar{gap:10px}
+  .wrk-split__seg{width:100%;justify-content:space-between}
+  .wrk-split__seg label{flex:1 1 0;padding:0 8px}
+  .wrk-split__stats>div{grid-template-columns:minmax(0,1fr)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .wrk-split__pane--before,.wrk-split__line,.wrk-split__grab,.wrk-split__seg label{transition:none}
+}

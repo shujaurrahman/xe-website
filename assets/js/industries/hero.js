@@ -3,7 +3,7 @@
   var map = document.querySelector('.ind-hero [data-ind-map]'); if (!map) return;
   if (BDH.reduced) return;
   var rows = map.querySelectorAll('tbody tr');
-  for (var r = 0; r < rows.length; r++) rows[r].style.setProperty('--ri', r);
+  for (var r = 0; r < rows.length; r++) rows[r].style.setProperty('--s', r);
   map.classList.add('is-anim');
   BDH.inView(map, function () { requestAnimationFrame(function () { map.classList.add('is-in'); }); });
 })();

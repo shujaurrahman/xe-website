@@ -35,7 +35,7 @@ require_once __DIR__ . '/artefacts.php';
               <p class="ind-case__lbl bdh-ro">Anonymised example</p>
               <!-- PLACEHOLDER: anonymised composite — confirm against a real engagement, and client approval, before launch -->
               <p class="ind-case__txt"><?= e($ind_s['example']) ?></p>
-              <a class="tl" href="<?= xe_url('work.php') ?>?i=<?= e($ind_s['id']) ?>#programmes">See related work <span class="i" aria-hidden="true">›</span></a>
+              <a class="tl" href="<?= xe_url('work.php') ?>?i=<?= e($ind_s['id']) ?>">See related work <span class="i" aria-hidden="true">›</span></a>
             </div>
           </div>
 
@@ -76,6 +76,23 @@ require_once __DIR__ . '/artefacts.php';
                 <ul class="ind-prog"><?php foreach ($ind_s['programmes'] as $ind_x): ?><li><?= e($ind_x) ?></li><?php endforeach; ?></ul></div>
               <div><p class="ind-blk__t">How success is measured</p>
                 <ul class="ind-meas"><?php foreach ($ind_s['measure'] as $ind_x): ?><li><?= xt_icon('gauge') ?><span><?= e($ind_x) ?></span></li><?php endforeach; ?></ul></div>
+            </div>
+
+            <div class="ind-blk ind-dos__caps">
+              <p class="ind-blk__t">Capability pages this sector usually needs</p>
+              <div class="ind-capls">
+                <?php foreach ($ind_s['caps'] as $ind_ds => $ind_cs): $ind_dd = $ind_disc[$ind_ds];
+                    foreach ($ind_cs as $ind_cp):
+                        $ind_cn = '';
+                        foreach ($ind_dd['caps'] as $ind_row) { if (($ind_row[2] ?? '') === $ind_cp) $ind_cn = $ind_row[0]; } ?>
+                  <a class="ind-capl" href="<?= xe_url('services/' . $ind_ds . '/' . $ind_cp . '.php') ?>"><b><?= e($ind_dd['n']) ?></b><?= e($ind_cn) ?><i aria-hidden="true">›</i></a>
+                <?php endforeach; endforeach; ?>
+              </div>
+              <p class="ind-dos__more">
+                <a class="tl" href="#systems-<?= e($ind_s['id']) ?>">What it runs on <span class="i" aria-hidden="true">›</span></a>
+                <a class="tl" href="#console">Build a brief <span class="i" aria-hidden="true">›</span></a>
+                <a class="tl" href="#rulebook">What applies here <span class="i" aria-hidden="true">›</span></a>
+              </p>
             </div>
           </div>
         </div>

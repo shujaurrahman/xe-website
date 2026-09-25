@@ -1,0 +1,57 @@
+/* Industries · lens — job-first comparison. A five-way tablist over one ledger per job. */
+
+.ind-lns__app{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh-1);overflow:hidden}
+.ind-lns__tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;background:var(--line-2);border-bottom:1px solid var(--line-2)}
+.ind-lns__tabs [role="tab"]{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;gap:4px 10px;align-content:start;min-height:76px;padding:14px 16px;text-align:left;
+  background:var(--paper-2);color:var(--muted);cursor:pointer;transition:background var(--d1) var(--e-io),color var(--d1) var(--e-io),box-shadow var(--d2) var(--e)}
+.ind-lns__tabs [role="tab"]:hover{background:var(--paper);color:var(--ink)}
+.ind-lns__tabs [role="tab"]:focus-visible{outline:2px solid var(--blue);outline-offset:-3px;z-index:1}
+.ind-lns__tabs [role="tab"][aria-selected="true"]{background:var(--paper);color:var(--ink);box-shadow:inset 0 2px 0 var(--blue)}
+.ind-lns__tn{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--blue);align-self:center}
+.ind-lns__ti{display:grid;place-items:center;width:20px;height:20px;color:var(--ink);grid-row:1;grid-column:2;justify-self:start}
+.ind-lns__tabs [role="tab"] .xt-ico{width:18px;height:18px}
+.ind-lns__tt{grid-column:1 / -1;grid-row:2;font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;line-height:1.2;color:inherit}
+
+.ind-lns__panes{padding:clamp(18px,2.2vw,32px)}
+.ind-lns__pane{display:grid;gap:clamp(16px,2vw,24px)}
+.ind-lns__pane:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:var(--r)}
+.ind-lns__q{display:grid;gap:8px;max-width:64ch}
+.ind .ind-lns__qt{margin:0;font-family:var(--f-h);font-size:var(--t-h3);font-weight:500;line-height:1.2;letter-spacing:-.012em;color:var(--ink)}
+.ind-lns__qd{font-size:var(--t-sm);line-height:1.65;color:var(--muted)}
+.ind-lns__tbl{min-width:680px}
+.ind-lns__tbl thead th:first-child{width:15em}
+.ind-lns__tbl thead th:last-child{width:11em}
+.ind-lns__tbl tbody th a{display:inline-flex;align-items:center;gap:10px;min-height:32px;color:var(--ink);text-decoration:none}
+.ind-lns__tbl tbody th a:hover{color:var(--blue-d);text-decoration:underline}
+.ind-lns__sn{font-family:var(--f);font-size:var(--t-lbl);color:var(--blue);flex:none}
+.ind-lns__tbl td{color:var(--txt);line-height:1.6}
+.ind-lns__tbl td .bdh-tag{height:auto;min-height:24px;padding-block:4px;white-space:normal}
+.ind-lns__note{margin-top:18px}
+.ind-lns__swipe{display:none}
+.ind-lns__note .tl{margin-left:4px}
+
+@media (min-width:1101px){ .ind-lns__scroll{-webkit-mask-image:none;mask-image:none} }
+@media (max-width:1100px){
+  .ind-lns__tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .ind-lns__tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ind-lns__tabs [role="tab"]{min-height:64px;padding:12px 14px}
+  .ind-lns__tt{font-size:var(--t-sm)}
+  .ind-lns__swipe{display:inline}
+  .ind-lns__tbl{min-width:560px}
+  .ind-lns__tbl thead th:first-child{width:10em}
+  .ind-lns__tbl thead th:last-child{width:8em}
+  .ind-lns__tbl tbody th,.ind-lns__tbl thead th:first-child{position:sticky;left:0;z-index:1;background:var(--paper);box-shadow:1px 0 0 var(--line)}
+}
+@media (max-width:480px){
+  .ind-lns__tbl{min-width:520px}
+  .ind-lns__tbl thead th:last-child{width:7em}
+  .ind-lns__tabs{grid-template-columns:minmax(0,1fr)}
+  .ind-lns__tabs [role="tab"]{min-height:52px;grid-template-rows:auto;align-items:center}
+  .ind-lns__tt{grid-column:3;grid-row:1}
+  .ind-lns__tabs [role="tab"]{grid-template-columns:auto auto 1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  .ind-lns__tabs [role="tab"]{transition:none}
+}

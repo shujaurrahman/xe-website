@@ -1,0 +1,59 @@
+/* Work · shape — the portfolio read as data, on ink. Bars are CSS; the entrance uses .bdh-grow, so
+   the shipped HTML is already the finished chart when JavaScript never runs. */
+.wrk-shape__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,2.2vw,28px)}
+.wrk-panel{display:flex;flex-direction:column;min-width:0;padding:clamp(20px,2.4vw,30px);border:1px solid var(--on-ink-line);border-radius:var(--r-xl);background:var(--on-ink-card)}
+.wrk-panel--wide{grid-column:1 / -1}
+.wrk-panel__h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 14px;padding-bottom:14px;margin-bottom:18px;
+  border-bottom:1px solid var(--on-ink-line);color:var(--on-ink);text-transform:uppercase;letter-spacing:.12em}
+.wrk-panel__h span{color:var(--on-ink-3);text-transform:none;letter-spacing:.06em}
+.wrk-panel__f{margin-top:auto;padding-top:18px;font-size:var(--t-xs);line-height:1.6;color:var(--on-ink-3)}
+
+/* discipline bars */
+.wrk-bars{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.wrk-bars>li{display:grid;grid-template-columns:minmax(0,9em) minmax(0,1fr) 2.2em;align-items:center;gap:14px}
+.wrk-bars__l{font-size:var(--t-sm);color:var(--on-ink-2);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wrk-bars__l:hover{color:var(--on-ink);text-decoration:underline;text-underline-offset:3px}
+.wrk-bars__t{display:block;height:10px;border-radius:var(--r-pill);background:var(--on-ink-line);overflow:hidden}
+.wrk-bars__f{display:block;height:100%;width:var(--w);border-radius:var(--r-pill);background:var(--blue)}
+.wrk-bars__v{text-align:right;color:var(--on-ink);font-variant-numeric:tabular-nums}
+
+/* pairs */
+.wrk-pairs{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.wrk-pairs>li{display:grid;grid-template-columns:2.1em minmax(0,1fr);grid-template-rows:auto auto;gap:6px 12px;align-items:center}
+.wrk-pairs__n{grid-row:1 / 3;display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--blue-wash-2);color:var(--on-ink);
+  font-weight:500;font-variant-numeric:tabular-nums}
+.wrk-pairs__l{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:var(--t-sm);color:var(--on-ink-2)}
+.wrk-pairs__l b{font-weight:500;color:var(--on-ink)}
+.wrk-pairs__l i{color:var(--blue);font-style:normal}
+.wrk-pairs__t{display:block;height:6px;border-radius:var(--r-pill);background:var(--on-ink-line);overflow:hidden}
+.wrk-pairs__f{display:block;height:100%;width:var(--w);border-radius:var(--r-pill);background:var(--blue)}
+
+/* duration */
+.wrk-gantt{display:grid;gap:12px}
+.wrk-gantt__rows{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.wrk-gantt__rows>li{display:grid;grid-template-columns:minmax(0,19em) minmax(0,1fr) minmax(0,10.5em);align-items:center;gap:8px 16px}
+.wrk-gantt__l{font-size:var(--t-sm);line-height:1.35;color:var(--on-ink-2)}
+.wrk-gantt__t{position:relative;display:block;height:16px;border-radius:var(--r-xs);background:var(--on-ink-line)}
+.wrk-gantt__b{position:absolute;left:0;top:0;height:100%;width:var(--w);border-radius:var(--r-xs);background:var(--blue-wash-2);overflow:hidden}
+.wrk-gantt__b i{position:absolute;left:0;top:0;height:100%;width:var(--s);border-radius:var(--r-xs);background:var(--blue)}
+.wrk-gantt__b em{position:absolute;right:4px;top:0;line-height:16px;font-style:normal;font-family:var(--f);font-size:var(--t-lbl);color:var(--on-ink);letter-spacing:.1em}
+.wrk-gantt__v{text-align:right;line-height:1.45;color:var(--on-ink-3)}
+.wrk-gantt__axis{position:relative;height:18px;margin-left:calc(19em + 16px);margin-right:calc(10.5em + 16px);border-top:1px solid var(--on-ink-line);color:var(--on-ink-3)}
+.wrk-gantt__axis span{position:absolute;left:var(--p);top:4px;transform:translateX(-50%);letter-spacing:.06em}
+.wrk-gantt__axis span:first-child{transform:none}
+.wrk-gantt__axis span:last-child{transform:translateX(-100%)}
+
+@media (max-width:1023px){
+  .wrk-shape__grid{grid-template-columns:minmax(0,1fr)}
+  .wrk-gantt__rows>li{grid-template-columns:minmax(0,13em) minmax(0,1fr) minmax(0,8.5em);gap:8px 12px}
+  .wrk-gantt__axis{margin-left:calc(13em + 12px);margin-right:calc(8.5em + 12px)}
+}
+@media (max-width:700px){
+  /* the discipline label is a link: give it a 44px row on touch */
+  .wrk-bars__l{display:flex;align-items:center;min-height:44px}
+  .wrk-bars>li{grid-template-columns:minmax(0,7.5em) minmax(0,1fr) 2em;gap:10px}
+  .wrk-gantt__rows>li{grid-template-columns:minmax(0,1fr);gap:5px}
+  .wrk-gantt__v{text-align:left}
+  .wrk-gantt__axis{margin-inline:0}
+  .wrk-pairs>li{grid-template-columns:2.6em minmax(0,1fr)}
+}

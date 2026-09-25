@@ -1,0 +1,41 @@
+/* Careers · FAQ — two labelled groups side by side, each its own core [data-acc] accordion, so a
+   question opening in one column does not shut one in the other. The <noscript> rule in the partial
+   restores height:auto and hides the plus marks, which is the readable finished state. */
+
+.car-faq__cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,3.4vw,56px);align-items:start}
+.car-faq__col{min-width:0}
+.car .car-faq__gt{display:flex;align-items:baseline;gap:12px;margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid var(--line-3);
+  font-family:var(--f-h);font-weight:500;font-size:var(--t-h4);line-height:1.2;color:var(--ink)}
+.car-faq__gn{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;color:var(--faint);font-variant-numeric:tabular-nums}
+.car-faq__list{display:flex;flex-direction:column;gap:8px}
+.car-faq__row{position:relative;border:1px solid var(--line);border-radius:var(--r);background:var(--paper);
+  transition:border-color var(--d2) var(--e),box-shadow var(--d2) var(--e)}
+.car-faq__row::before{content:"";position:absolute;left:-1px;top:16px;bottom:16px;width:2px;border-radius:2px;background:var(--blue);transform:scaleY(0);transition:transform .35s var(--e)}
+.car-faq__row:has([aria-expanded="true"]){border-color:var(--line-3);box-shadow:var(--sh-1)}
+.car-faq__row:has([aria-expanded="true"])::before{transform:none}
+.car .car-faq__hq{margin:0;font:inherit;letter-spacing:0}
+.car-faq__q{display:grid;grid-template-columns:minmax(0,1fr) 26px;align-items:center;gap:14px;width:100%;min-height:62px;padding:15px 18px;
+  text-align:left;cursor:pointer;border:0;background:transparent;border-radius:inherit}
+.car-faq__q:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+.car-faq__t{font-family:var(--f-h);font-weight:500;font-size:1.0625rem;line-height:1.35;letter-spacing:-.008em;color:var(--ink)}
+.car-faq__plus{position:relative;width:26px;height:26px;border-radius:50%;background:var(--paper-3);transition:background var(--d2) var(--e),transform .35s var(--e)}
+.car-faq__plus::before,.car-faq__plus::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:1.5px;margin:-.75px 0 0 -5px;background:var(--ink);transition:background var(--d2) var(--e)}
+.car-faq__plus::after{transform:rotate(90deg)}
+.car-faq__q:hover .car-faq__plus{background:var(--paper-4)}
+.car-faq__q[aria-expanded="true"] .car-faq__plus{background:var(--ink);transform:rotate(45deg)}
+.car-faq__q[aria-expanded="true"] .car-faq__plus::before,.car-faq__q[aria-expanded="true"] .car-faq__plus::after{background:var(--on-ink)}
+.car-faq__p{height:0;overflow:hidden;transition:height .45s var(--e)}
+.car-faq__p.is-open{height:auto}
+.car-faq__a{margin:0;padding:0 18px 20px;max-width:58ch;font-size:var(--t-sm);line-height:1.75;color:var(--txt)}
+
+@media (max-width:860px){
+  .car-faq__cols{grid-template-columns:minmax(0,1fr);gap:36px}
+}
+@media (max-width:600px){
+  .car-faq__t{font-size:1rem}
+  .car-faq__q{padding:14px 15px;min-height:58px}
+  .car-faq__a{padding:0 15px 18px}
+}
+@media (prefers-reduced-motion:reduce){
+  .car-faq__p,.car-faq__plus,.car-faq__row,.car-faq__row::before{transition:none}
+}

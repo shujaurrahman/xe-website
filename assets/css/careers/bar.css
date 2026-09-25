@@ -1,0 +1,46 @@
+/* Careers · the bar — what we read for, in order, beside how an application is read, then the list
+   of things we refuse to screen on. The apply page links straight to #bar. Tokens only. */
+
+.car-bar__grid{align-items:start}
+.car-bar__look{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.car-look{display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:16px;row-gap:6px;padding:22px 0;border-top:1px solid var(--line)}
+.car-look:first-child{border-top:0;padding-top:0}
+.car-look__n{grid-row:1 / span 3;padding-top:6px}
+.car .car-look__t{margin:0;font-family:var(--f-h);font-weight:500;font-size:var(--t-h4);line-height:1.2;color:var(--ink)}
+.car-look__p{margin:0;font-size:var(--t-sm);line-height:1.7;color:var(--txt);max-width:58ch}
+.car-look__w{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin:2px 0 0;font-size:var(--t-xs);line-height:1.5;color:var(--ink)}
+.car-look__w span{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+
+.car-bar__side{min-width:0}
+.car-bar__fig{margin:0}
+.car-read{margin-top:18px;padding:22px 24px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.car-read__k{margin:0 0 6px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--blue-d)}
+.car-read__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.car-read__list li{display:grid;grid-template-columns:26px minmax(0,1fr);column-gap:12px;row-gap:3px;padding:14px 0;border-top:1px solid var(--line-2)}
+.car-read__n{grid-row:1 / span 2;display:grid;place-items:center;width:26px;height:26px;margin-top:2px;border-radius:50%;background:var(--paper-3);
+  font-family:var(--f);font-size:var(--t-xs);color:var(--ink)}
+.car-read__list b{font-family:var(--f-h);font-weight:500;font-size:var(--t-sm);line-height:1.3;color:var(--ink)}
+.car-read__list li>span:last-child{font-size:var(--t-xs);line-height:1.6;color:var(--txt)}
+
+.car-bar__not{margin-top:var(--bdh-block);padding-top:clamp(28px,3.4vw,48px);border-top:1px solid var(--line-2)}
+.car-bar__notk{margin:0 0 20px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.car-not{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap)}
+.car-not__i{display:grid;grid-template-columns:22px minmax(0,1fr);column-gap:12px;row-gap:5px;padding:20px 22px;border:1px solid var(--line);border-radius:var(--r);background:var(--paper-2)}
+.car-not__x{grid-row:1 / span 2;position:relative;width:22px;height:22px;margin-top:2px;border-radius:50%;border:1px solid var(--line-3)}
+.car-not__x::before{content:"";position:absolute;left:50%;top:50%;width:10px;height:1.5px;background:var(--ink);transform:translate(-50%,-50%)}
+.car-not__i b{font-family:var(--f-h);font-weight:500;font-size:var(--t-body);line-height:1.3;color:var(--ink)}
+.car-not__i>span:last-child{font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.car-bar__foot{margin:24px 0 0;font-size:var(--t-sm);line-height:1.7;color:var(--muted);max-width:74ch}
+.car-bar__foot a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--line-3);text-underline-offset:3px;overflow-wrap:anywhere}
+.car-bar__foot a:hover{text-decoration-color:var(--blue)}
+
+@media (max-width:1023px){
+  .car-bar__side .bdh-sticky{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--bdh-gap);align-items:start}
+  .car-read{margin-top:0}
+  .car-not{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .car-bar__side .bdh-sticky{grid-template-columns:minmax(0,1fr)}
+  .car-not{grid-template-columns:minmax(0,1fr)}
+  .car-look{grid-template-columns:36px minmax(0,1fr);column-gap:12px}
+}

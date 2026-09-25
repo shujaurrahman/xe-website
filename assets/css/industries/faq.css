@@ -1,0 +1,45 @@
+/* Industries · faq — a wide accordion with a closing card beside it. Core [data-acc] drives it. */
+
+.ind-faq__wrap{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:clamp(24px,3vw,56px);align-items:start}
+.ind-faq__list{border-top:1px solid var(--line-2)}
+.ind-faq__row{border-bottom:1px solid var(--line-2)}
+.ind .ind-faq__hq{margin:0;font-size:inherit;font-weight:inherit}
+.ind-faq__q{display:grid;grid-template-columns:3.4em minmax(0,1fr) 32px;gap:10px 16px;align-items:center;width:100%;min-height:68px;padding:16px 0;text-align:left;background:transparent;border:0;cursor:pointer;color:var(--ink);
+  transition:color var(--d1) var(--e-io)}
+.ind-faq__q:hover .ind-faq__plus{border-color:var(--line-3)}
+.ind-faq__q:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+/* the index is never blue: blue is not allowed inside a heading, and this span sits in the h3 */
+.ind-faq__n{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--faint);transition:color var(--d1) var(--e-io)}
+.ind-faq__q[aria-expanded="true"] .ind-faq__n,.ind-faq__q:hover .ind-faq__n{color:var(--ink)}
+.ind-faq__t{font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;line-height:1.3;color:inherit}
+.ind-faq__plus{position:relative;width:32px;height:32px;border:1px solid var(--line-2);border-radius:50%;justify-self:end}
+.ind-faq__plus::before,.ind-faq__plus::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1.5px;margin:-.75px 0 0 -6px;background:var(--ink);transition:transform var(--d1) var(--e-io)}
+.ind-faq__plus::after{transform:rotate(90deg)}
+.ind-faq__q[aria-expanded="true"] .ind-faq__plus{background:var(--ink);border-color:var(--ink)}
+.ind-faq__q[aria-expanded="true"] .ind-faq__plus::before,.ind-faq__q[aria-expanded="true"] .ind-faq__plus::after{background:var(--on-ink)}
+.ind-faq__q[aria-expanded="true"] .ind-faq__plus::after{transform:rotate(0)}
+.ind-faq__p{height:0;overflow:hidden;transition:height var(--d2) var(--e-io)}
+.ind-faq__p.is-open{height:auto}
+.ind-faq__a{padding:0 0 22px;display:grid;gap:12px;max-width:72ch;margin-left:calc(3.4em + 16px)}
+.ind-faq__a p{font-size:var(--t-sm);line-height:1.7;color:var(--txt)}
+.ind-faq__rel{display:flex;flex-wrap:wrap;gap:8px 22px}
+
+.ind-faq__aside{position:sticky;top:var(--bdh-sticky);display:grid;gap:12px;padding:clamp(22px,2.4vw,32px);background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-lg)}
+.ind-faq__ask{font-family:var(--f-h);font-size:var(--t-h4);line-height:1.4;color:var(--ink)}
+.ind-faq__acts{display:grid;gap:12px;justify-items:start;margin-top:4px}
+
+@media (max-width:1023px){
+  .ind-faq__wrap{grid-template-columns:minmax(0,1fr)}
+  .ind-faq__aside{position:static}
+}
+@media (max-width:640px){
+  .ind-faq__q{grid-template-columns:minmax(0,1fr) 32px;row-gap:4px}
+  .ind-faq__n{grid-column:1}
+  .ind-faq__t{grid-column:1}
+  .ind-faq__plus{grid-column:2;grid-row:1 / span 2}
+  .ind-faq__a{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .ind-faq__p{transition:none}
+  .ind-faq__plus::before,.ind-faq__plus::after{transition:none}
+}

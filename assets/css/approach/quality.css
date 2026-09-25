@@ -1,0 +1,31 @@
+/* Approach · Quality — the enforcement table under the four bar cards. The cards themselves keep their
+   rules in assets/css/approach.css. Tokens only. */
+
+.apr-q__checks{margin-top:var(--bdh-block)}
+.apr-q__ch{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:10px clamp(24px,4vw,64px);align-items:end;margin-bottom:22px}
+.apr-q__ch .apr-k{grid-column:1;margin:0}
+.apr .apr-q__h{grid-column:1;margin:0;font-family:var(--f-h);font-weight:500;font-size:var(--t-h2);letter-spacing:-.02em;line-height:1.12;color:var(--ink);max-width:26ch}
+.apr-q__hd{grid-column:2;grid-row:1 / span 2;align-self:end;margin:0;font-size:var(--t-sm);line-height:1.6;color:var(--muted);max-width:56ch}
+.apr-q__checks .bdh-scroll-x{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.apr-q__tbl{width:100%;min-width:940px;border-collapse:collapse;font-size:var(--t-sm)}
+.apr-q__tbl caption{text-align:left;padding:16px 18px 0;margin:0}
+.apr-q__tbl th,.apr-q__tbl td{text-align:left;padding:13px 18px;border-bottom:1px solid var(--line-2);vertical-align:top;color:var(--txt);line-height:1.5}
+.apr-q__tbl thead th{font-family:var(--f);font-weight:500;font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
+.apr-q__tbl tbody th{font-family:var(--f-h);font-weight:500;font-size:var(--t-body);color:var(--ink);width:24%}
+.apr-q__tbl tbody tr:last-child>*{border-bottom:0}
+.apr-q__who,.apr-q__when{font-family:var(--f);font-size:var(--t-xs);color:var(--muted)}
+.apr-q__blk{display:inline-flex;align-items:center;min-height:24px;padding:3px 11px;border-radius:var(--r-pill);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;line-height:1.3;white-space:nowrap}
+.apr-q__blk.is-yes{background:var(--blue);color:var(--on-ink)}
+.apr-q__blk.is-part{background:var(--blue-wash);color:var(--blue-d)}
+.apr-q__dod{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:8px clamp(18px,3vw,40px);margin:24px 0 0;
+  font-size:var(--t-sm);line-height:1.65;color:var(--txt);max-width:110ch}
+.apr-q__dod .apr-k{margin:0}
+
+@media (max-width:1023px){
+  .apr-q__ch{grid-template-columns:minmax(0,1fr)}
+  .apr-q__hd{grid-column:1;grid-row:auto;margin-top:8px}
+}
+@media (max-width:600px){
+  .apr-q__dod{grid-template-columns:minmax(0,1fr)}
+}

@@ -1,0 +1,30 @@
+/* Industries · transfer — six mechanism cards, each headed by a from → to route rail. */
+
+.ind-trf__list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap)}
+.ind-trf__card{display:flex;flex-direction:column;gap:12px;padding:clamp(22px,2.4vw,32px);background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);min-width:0;
+  transition:border-color var(--d2) var(--e),box-shadow var(--d2) var(--e)}
+.ind-trf__card:hover{border-color:var(--line-3);box-shadow:var(--sh-1)}
+
+.ind-trf__route{display:flex;flex-wrap:wrap;align-content:flex-start;align-items:flex-start;gap:8px;min-height:60px;padding-bottom:14px;border-bottom:1px solid var(--line-2)}
+.ind-trf__chip{display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 10px;border-radius:var(--r-pill);background:var(--paper-3);color:var(--muted);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;text-transform:uppercase;text-decoration:none;white-space:nowrap;
+  transition:background var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.ind-trf__chip b{font-weight:500;color:var(--blue)}
+.ind-trf__chip:hover{background:var(--blue-wash);color:var(--ink)}
+.ind-trf__chip.is-from{background:var(--blue);color:var(--on-ink)}
+.ind-trf__chip.is-from b{color:var(--on-ink-2)}
+.ind-trf__chip.is-from:hover{background:var(--blue-d);color:var(--on-ink)}
+.ind-trf__arrow{position:relative;display:inline-block;width:22px;height:1px;background:var(--line-3);flex:none}
+.ind-trf__arrow::after{content:"";position:absolute;right:0;top:-3px;width:7px;height:7px;border-top:1px solid var(--line-3);border-right:1px solid var(--line-3);transform:rotate(45deg)}
+
+.ind-trf__top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:2px}
+.ind-trf__ico{display:grid;place-items:center;width:34px;height:34px;border-radius:var(--r-sm);background:var(--paper-2);color:var(--ink)}
+.ind-trf__ico .xt-ico{width:20px;height:20px}
+.ind .ind-trf__t{margin:0}
+.ind-trf__d{font-size:var(--t-sm);color:var(--muted);max-width:none}
+.ind-trf__ch{margin-top:auto;padding-top:14px;border-top:1px solid var(--line-2);display:grid;gap:6px}
+.ind-trf__ch p{font-size:var(--t-xs);line-height:1.65;color:var(--ink)}
+
+@media (max-width:1100px){ .ind-trf__list{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:700px){ .ind-trf__list{grid-template-columns:minmax(0,1fr)} }
+@media (prefers-reduced-motion:reduce){ .ind-trf__card,.ind-trf__chip{transition:none} }

@@ -1,0 +1,39 @@
+/* Careers · equal opportunity — the statement on the left, the adjustments we make and the
+   mechanics that take bias out of the process on the right. Tokens only. */
+
+.car-eo__grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,4vw,72px);align-items:stretch}
+.car-eo__stmt{display:flex;flex-direction:column;align-items:flex-start;gap:16px;min-width:0;
+  padding:clamp(24px,2.8vw,36px);border-left:2px solid var(--blue);border-radius:0 var(--r-lg) var(--r-lg) 0;background:var(--paper-2)}
+.car-eo__lead{margin:0;font-family:var(--f-h);font-weight:500;font-size:var(--t-h4);line-height:1.45;letter-spacing:-.012em;color:var(--ink)}
+.car-eo__p{margin:0;font-size:var(--t-sm);line-height:1.75;color:var(--txt)}
+.car-eo__links{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-direction:column;align-self:stretch;border-top:1px solid var(--line)}
+.car-eo__links li{border-bottom:1px solid var(--line)}
+.car-eo__links .tl{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:48px;gap:12px}
+.car-eo__btn{margin-top:auto}
+.car-eo__note{margin:0;font-size:var(--t-xs);line-height:1.6;color:var(--faint);overflow-wrap:anywhere}
+
+.car-eo__cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--bdh-gap);min-width:0}
+.car-eo__card{display:flex;flex-direction:column;min-width:0;padding:clamp(22px,2.4vw,30px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.car-eo__card--fair{background:var(--paper-2)}
+.car-eo__k{display:flex;align-items:center;gap:9px;margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid var(--line);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+.car-eo__k .xt-ico{flex:none;width:18px;height:18px;color:var(--blue-d)}
+.car-eo__sub{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line-2);font-size:var(--t-xs);line-height:1.6;color:var(--faint)}
+
+.car-adj,.car-fair{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.car-adj li{display:grid;grid-template-columns:28px minmax(0,1fr);column-gap:12px;row-gap:3px;padding:12px 0;border-top:1px solid var(--line-2)}
+.car-adj li:first-child{border-top:0;padding-top:0}
+.car-adj__ico{grid-row:1 / span 2;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--paper-3);color:var(--ink);margin-top:1px}
+.car-adj b,.car-fair b{font-family:var(--f-h);font-weight:500;font-size:var(--t-sm);line-height:1.3;color:var(--ink)}
+.car-adj li>span:last-child,.car-fair li>span:last-child{font-size:var(--t-xs);line-height:1.6;color:var(--txt)}
+.car-fair li{display:grid;grid-template-columns:30px minmax(0,1fr);column-gap:12px;row-gap:3px;padding:12px 0;border-top:1px solid var(--line-2)}
+.car-fair li:first-child{border-top:0;padding-top:0}
+.car-fair__n{grid-row:1 / span 2;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;color:var(--blue);padding-top:3px;font-variant-numeric:tabular-nums}
+
+@media (max-width:1100px){
+  .car-eo__grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:760px){
+  .car-eo__cols{grid-template-columns:minmax(0,1fr)}
+  .car-eo__btn{align-self:stretch;justify-content:center}
+}

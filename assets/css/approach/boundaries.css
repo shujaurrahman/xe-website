@@ -1,0 +1,37 @@
+/* Approach · Boundaries — eight refusals, set as a ledger. Typographic only; no mock, no motion. Tokens only. */
+
+.apr-wn__list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-3)}
+.apr-wn__row{display:grid;grid-template-columns:72px minmax(0,6fr) minmax(0,5fr);column-gap:var(--bdh-gap);row-gap:14px;
+  align-items:start;padding:clamp(26px,3vw,40px) 0;border-bottom:1px solid var(--line)}
+.apr-wn__n{grid-column:1;grid-row:1 / span 2;display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin:0;
+  font-family:var(--f);font-size:var(--t-sm);letter-spacing:.1em;color:var(--faint)}
+.apr-wn__x{position:relative;display:block;width:24px;height:24px;border-radius:50%;background:var(--paper-3)}
+.apr-wn__x::before,.apr-wn__x::after{content:"";position:absolute;left:6px;right:6px;top:11px;height:1.5px;background:var(--ink)}
+.apr-wn__x::before{rotate:45deg}
+.apr-wn__x::after{rotate:-45deg}
+.apr .apr-wn__t{grid-column:2;grid-row:1;margin:0;font-family:var(--f-h);font-weight:500;font-size:clamp(1.15rem,1.9vw,1.6rem);
+  letter-spacing:-.018em;line-height:1.2;color:var(--ink);max-width:22ch}
+.apr-wn__pre{color:var(--muted)}
+.apr-wn__why{grid-column:2;grid-row:2}
+.apr-wn__do{grid-column:3;grid-row:1 / span 2;padding-left:clamp(0px,2vw,28px);border-left:1px solid var(--line)}
+.apr-wn__row .apr-k{margin:0 0 7px}
+.apr-wn__p{margin:0;font-size:var(--t-sm);line-height:1.65;color:var(--txt);max-width:56ch}
+.apr-wn__lk{display:inline-flex;align-items:center;gap:6px;min-height:44px;margin-top:6px;font-family:var(--f);font-size:var(--t-lbl);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+.apr-wn__lk .i{color:var(--blue)}
+.apr-wn__lk:hover{color:var(--ink)}
+
+@media (max-width:1023px){
+  .apr-wn__row{grid-template-columns:56px minmax(0,1fr)}
+  .apr .apr-wn__t,.apr-wn__why{grid-column:2}
+  .apr-wn__do{grid-column:2;grid-row:3;padding-left:0;padding-top:16px;border-left:0;border-top:1px solid var(--line-2)}
+  .apr .apr-wn__t{max-width:30ch}
+}
+@media (max-width:600px){
+  .apr-wn__row{grid-template-columns:minmax(0,1fr);row-gap:12px}
+  .apr-wn__n{grid-column:1;grid-row:1;flex-direction:row;align-items:center;gap:10px}
+  .apr .apr-wn__t,.apr-wn__why,.apr-wn__do{grid-column:1}
+  .apr .apr-wn__t{grid-row:2}
+  .apr-wn__why{grid-row:3}
+  .apr-wn__do{grid-row:4}
+}

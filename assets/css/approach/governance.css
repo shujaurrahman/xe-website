@@ -1,0 +1,35 @@
+/* Approach · Governance — the responsibility table and the escalation ladder. The decision-log block and
+   the access list keep their rules in assets/css/approach.css. Tokens only. */
+
+.apr-gv__own{margin-bottom:var(--bdh-block)}
+.apr-gv__own .apr-k{margin:0 0 12px}
+.apr-gv__own .bdh-scroll-x{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.apr-gv__otbl{width:100%;min-width:760px;border-collapse:collapse;font-size:var(--t-sm)}
+.apr-gv__otbl th,.apr-gv__otbl td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line-2);vertical-align:middle;color:var(--txt);line-height:1.45}
+.apr-gv__otbl thead th{font-family:var(--f);font-weight:500;font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
+.apr-gv__otbl tbody th{font-family:var(--f-h);font-weight:500;font-size:var(--t-body);color:var(--ink);width:33%}
+.apr-gv__otbl tbody tr:last-child>*{border-bottom:0}
+.apr-gv__you,.apr-gv__us{display:inline-flex;align-items:center;min-height:26px;padding:3px 11px;border-radius:var(--r-pill);font-family:var(--f);font-size:var(--t-xs);line-height:1.3}
+.apr-gv__you{background:var(--blue-wash);color:var(--blue-d)}
+.apr-gv__us{background:var(--paper-3);color:var(--ink)}
+.apr-gv__cad{font-family:var(--f);font-size:var(--t-xs);color:var(--muted)}
+.apr-gv__foot{margin:14px 0 0;font-size:var(--t-xs);line-height:1.6;color:var(--muted);max-width:70ch}
+
+.apr-gv__esc{margin-top:var(--bdh-block);padding-top:clamp(28px,3.4vw,44px);border-top:1px solid var(--line);
+  display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(24px,4vw,64px);align-items:start}
+.apr-gv__esc .apr-k{margin:0 0 10px}
+.apr-gv__ed{margin:10px 0 0;font-size:var(--t-sm);line-height:1.6;color:var(--muted);max-width:42ch}
+.apr-gv__el{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap)}
+.apr-gv__el li{display:flex;flex-direction:column;gap:9px;padding:22px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);min-width:0}
+.apr-gv__en{font-family:var(--f);font-size:var(--t-sm);color:var(--blue)}
+.apr .apr-gv__et{margin:0;font-family:var(--f-h);font-weight:500;font-size:var(--t-h3);color:var(--ink)}
+.apr-gv__ew{margin:0;font-size:var(--t-sm);line-height:1.55;color:var(--txt)}
+.apr-gv__er{margin:auto 0 0;padding-top:12px;border-top:1px solid var(--line-2);font-size:var(--t-sm);line-height:1.55;color:var(--muted)}
+.apr-gv__er .apr-k{display:block;margin:0 0 5px}
+
+@media (max-width:1023px){
+  .apr-gv__esc{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:760px){
+  .apr-gv__el{grid-template-columns:minmax(0,1fr)}
+}

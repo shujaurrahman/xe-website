@@ -1,0 +1,17 @@
+/* Approach · Principle — the three failure modes under the controls ledger. The ledger itself keeps its
+   rules in assets/css/approach.css. Tokens only. */
+
+.apr-pr__fail{margin-top:var(--bdh-block);padding-top:clamp(28px,3.4vw,44px);border-top:1px solid var(--line)}
+.apr-pr__fh .apr-k{margin:0 0 8px}
+.apr .apr-pr__fht{margin:0 0 26px;font-family:var(--f-h);font-weight:500;font-size:var(--t-h2);letter-spacing:-.02em;line-height:1.12;color:var(--ink);max-width:34ch}
+.apr-pr__fl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap)}
+.apr-pr__fl li{display:flex;flex-direction:column;gap:12px;padding:clamp(20px,2.2vw,28px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);min-width:0}
+.apr-pr__fq{margin:0;font-family:var(--f-h);font-weight:500;font-size:var(--t-h3);line-height:1.3;color:var(--ink)}
+.apr-pr__fd{margin:0;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.apr-pr__fc{display:grid;grid-template-columns:auto minmax(0,1fr);gap:11px;align-items:start;margin:auto 0 0;padding-top:14px;border-top:1px solid var(--line-2);
+  font-size:var(--t-sm);line-height:1.55;color:var(--muted)}
+.apr-pr__fi{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--blue-wash);color:var(--blue-d)}
+
+@media (max-width:860px){
+  .apr-pr__fl{grid-template-columns:minmax(0,1fr)}
+}

@@ -1,3 +1,108 @@
+/* ==========================================================================
+   Industries — BASE LAYER (industries.php)
+   Loaded after assets/css/brand/hub.css (.bdh-*) and assets/css/tech/kit.css (.xt-*).
+   Only .ind-* primitives shared by several sections live here; each new section styles itself in
+   assets/css/industries/<id>.css. Tokens from core.css :root only; no new colours; no gradients
+   except core .aurora/.dither and mask fades; no !important.
+
+   CONVENTIONS
+   • Root: <section class="band [band--alt|band--ink] ind-<id>" id="<id>" aria-labelledby="<id>-t">
+   • Heads reuse .bdh-head / --row / --c. Cards reuse .bdh-card, mock UI reuses .bdh-ui.
+   • The page's own idiom is the PLATE and the LEDGER, not the node map the Technology hub uses:
+     .ind-plate   a panel with a hairline head rule that turns blue when it is the selected one
+     .ind-rail    a left index rail: the sector number in mono blue against a hairline
+     .ind-meter   a three-step meter (lead · core · supports, or often · usually · always) — the
+                  page's one chart primitive, reused by the explorer, the matrix and the pressure grid
+     .ind-ledger  the ruled table idiom used wherever the subject is a rule, a scope or a number
+   • .ind-capl    a capability link: <a class="ind-capl"><b>05</b>Experience Design<i>›</i></a>
+   • .ind-k       mono key label · .ind-note small footnote · .ind-on-ink for dark panels on paper
+   • Motion: loops only under .is-live (BDH.live / BDH.loop / BDH.seq); reduced motion = final state.
+   ========================================================================== */
+
+.ind{
+  --ind-bleed:max(var(--gutter),calc((100vw - var(--wrap)) / 2));
+}
+
+/* ---------- labels + notes -------------------------------------------------- */
+.ind-k{display:block;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;line-height:1.3;color:var(--faint)}
+.band--ink .ind-k,.ind-on-ink .ind-k{color:var(--on-ink-3)}
+.ind-note{font-size:var(--t-xs);line-height:1.55;color:var(--muted);max-width:74ch}
+.band--ink .ind-note{color:var(--on-ink-3)}
+.ind-note b{font-weight:500;color:var(--ink)}
+.band--ink .ind-note b{color:var(--on-ink-2)}
+.ind-kbd{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 5px;border-radius:5px;border:1px solid var(--line-3);font-family:var(--f);font-size:var(--t-lbl);color:var(--muted);line-height:1}
+.band--ink .ind-kbd{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+
+/* ---------- capability link (square-shouldered, not the Technology hub's pill) -- */
+.ind-capl{display:inline-flex;align-items:center;gap:9px;min-height:36px;padding:5px 12px 5px 8px;border-radius:var(--r-sm);
+  border:1px solid var(--line);border-left:2px solid var(--line-3);background:var(--paper);
+  font-size:var(--t-xs);font-weight:500;line-height:1.3;color:var(--ink);
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io)}
+.ind-capl b{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.04em;color:var(--blue);flex:none}
+.ind-capl i{font-family:var(--f);font-style:normal;color:var(--blue);margin-left:auto;padding-left:4px;transition:transform var(--d2) var(--e)}
+.ind-capl:hover,.ind-capl:focus-visible{border-color:var(--blue-line);border-left-color:var(--blue);background:var(--blue-wash)}
+.ind-capl:hover i,.ind-capl:focus-visible i{transform:translateX(3px)}
+.band--ink .ind-capl,.ind-on-ink .ind-capl{background:var(--on-ink-card);border-color:var(--on-ink-line);border-left-color:var(--on-ink-line);color:var(--on-ink)}
+.band--ink .ind-capl:hover,.band--ink .ind-capl:focus-visible,.ind-on-ink .ind-capl:hover,.ind-on-ink .ind-capl:focus-visible{border-color:var(--blue);border-left-color:var(--blue);color:var(--on-ink)}
+.ind-capls{display:flex;flex-wrap:wrap;gap:8px}
+
+/* ---------- the three-step meter -------------------------------------------- */
+.ind-meter{display:inline-flex;align-items:center;gap:3px;vertical-align:middle}
+.ind-meter i{display:block;width:9px;height:16px;border-radius:2px;background:var(--paper-3);box-shadow:inset 0 0 0 1px var(--line-2);transform-origin:center bottom;
+  transition:opacity .45s var(--e) calc(var(--i,0) * 60ms + var(--s,0) * 90ms),transform .45s var(--e) calc(var(--i,0) * 60ms + var(--s,0) * 90ms)}
+/* the count is the value: one, two or three filled segments. The top step is solid blue so a lead
+   reads at a glance; the lower steps share one lighter fill so nothing looks like a fade. */
+.ind-meter[data-v="1"] i:nth-child(1),
+.ind-meter[data-v="2"] i:nth-child(-n+2){background:var(--blue-line);box-shadow:none}
+.ind-meter[data-v="3"] i{background:var(--blue);box-shadow:none}
+.ind-meter--sm i{width:7px;height:12px}
+.band--ink .ind-meter i{background:var(--on-ink-card);box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+/* start state for the fill-in: added by the section's JS only, so the shipped HTML is the filled grid */
+.is-anim .ind-meter i{opacity:0;transform:scale(.4)}
+.is-anim.is-in .ind-meter i{opacity:1;transform:none}
+
+/* ---------- plate ------------------------------------------------------------ */
+.ind-plate{position:relative;display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);min-width:0}
+.ind-plate::before{content:"";position:absolute;left:-1px;right:-1px;top:-1px;height:2px;border-radius:var(--r-lg) var(--r-lg) 0 0;background:var(--line-2);transition:background var(--d2) var(--e)}
+.ind-plate.is-on::before{background:var(--blue)}
+.ind-plate__h{display:flex;align-items:baseline;gap:10px;padding:16px clamp(16px,1.8vw,24px) 0}
+.ind-plate__n{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--blue);flex:none}
+.ind-plate__b{padding:10px clamp(16px,1.8vw,24px) clamp(18px,2vw,24px);display:grid;gap:12px;min-width:0}
+
+/* ---------- ledger table ----------------------------------------------------- */
+.ind-ledger{width:100%;border-collapse:collapse;font-size:var(--t-sm)}
+.ind-ledger th,.ind-ledger td{padding:14px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.ind-ledger thead th{padding-top:0;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);white-space:nowrap;border-bottom-color:var(--line-2)}
+.ind-ledger tbody th{font-family:var(--f-h);font-size:var(--t-sm);font-weight:500;color:var(--ink)}
+.ind-ledger tbody tr:last-child>*{border-bottom:0}
+.ind-ledger th:first-child,.ind-ledger td:first-child{padding-left:0}
+.ind-ledger th:last-child,.ind-ledger td:last-child{padding-right:0}
+.band--ink .ind-ledger th,.band--ink .ind-ledger td{border-bottom-color:var(--on-ink-line)}
+.band--ink .ind-ledger tbody th{color:var(--on-ink)}
+.band--ink .ind-ledger thead th{color:var(--on-ink-3);border-bottom-color:var(--on-ink-line)}
+
+/* ---------- sector index rail ------------------------------------------------ */
+.ind-rail{display:inline-flex;align-items:center;gap:10px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ind-rail b{font-weight:500;color:var(--blue)}
+.ind-rail::after{content:"";flex:1;height:1px;background:var(--line-2);min-width:24px}
+
+/* ---------- misc ------------------------------------------------------------- */
+.ind-live{display:inline-flex;align-items:center;gap:8px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.band--ink .ind-live,.ind-on-ink .ind-live{color:var(--on-ink-2)}
+.ind-on-ink{background:var(--ink);color:var(--on-ink-2);border-radius:var(--r-lg)}
+.ind-on-ink .xt-ico{--xt-accent:var(--blue)}
+.ind-sprite{position:absolute;width:0;height:0;overflow:hidden}
+.ind-scope{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:var(--r-pill);font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.ind-scope--y{background:var(--blue-wash);color:var(--blue-d)}
+.ind-scope--c{background:var(--paper-3);color:var(--muted)}
+.ind-scope--n{background:var(--paper-2);color:var(--faint);box-shadow:inset 0 0 0 1px var(--line-2)}
+.band--ink .ind-scope--c{background:var(--on-ink-card);color:var(--on-ink-2)}
+.band--ink .ind-scope--n{background:transparent;color:var(--on-ink-3);box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+
+@media (prefers-reduced-motion:reduce){
+  .ind-capl,.ind-capl i,.ind-plate::before,.ind-meter i{transition:none}
+}
+
 /* Industries page (prefix ind). Tokens only. */
 
 /* ---------- hero: constraint map ---------- */
@@ -9,8 +114,8 @@
 .ind-map{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh-2);padding:clamp(16px,2vw,28px);min-width:0}
 .ind-map__cap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px;padding-bottom:14px;border-bottom:1px solid var(--line);color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
 .ind-map__cap .bdh-ro{color:var(--ink)}
-.ind-map__key{display:inline-flex;align-items:center;gap:6px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em}
-.ind-map__key .ind-lv{margin-left:8px}
+.ind-map__key{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 18px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em}
+.ind-map__key>span{display:inline-flex;align-items:center;gap:8px}
 .ind-map__scroll{margin-top:8px}
 .ind-map__t{width:100%;min-width:600px;border-collapse:collapse}
 .ind-map__t th,.ind-map__t td{padding:12px 6px;border-bottom:1px solid var(--line);text-align:center;vertical-align:middle}
@@ -24,12 +129,9 @@
 .ind-map__t tbody th a:hover{color:var(--blue-d)}
 .ind-map__n{font-family:var(--f);font-size:var(--t-lbl);color:var(--blue)}
 .ind-map__note{margin-top:12px;color:var(--faint)}
-.ind-lv{display:inline-block;width:14px;height:14px;border-radius:50%;border:1.5px solid var(--blue);vertical-align:middle;transition:transform .5s var(--e),opacity .5s var(--e);transition-delay:calc(var(--ci,0) * 90ms + var(--ri,0) * 40ms)}
-.ind-lv--1{border-color:var(--line-3);background:transparent}
-.ind-lv--2{background:var(--blue-wash-2);border-color:var(--blue-line)}
-.ind-lv--3{background:var(--blue)}
-.ind-map.is-anim .ind-lv{transform:scale(0);opacity:0}
-.ind-map.is-anim.is-in .ind-lv{transform:none;opacity:1}
+/* the constraint map, the pressure grid, the matrix, the console ladder and the explorer all encode the
+   same 1–3 scale, so they all use one primitive: .ind-meter. Counting segments carries the value, which
+   a colour-only scale would not for a reader who cannot separate the two blues. */
 
 /* ---------- explorer ---------- */
 .ind-exp__app{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--bdh-gap);align-items:start}
@@ -52,14 +154,11 @@
 .ind-exp__line{color:var(--muted);font-size:var(--t-body)}
 .ind-exp__sub{margin-top:6px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em}
 .ind-mix{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.ind-mix__row{display:grid;grid-template-columns:minmax(0,15em) minmax(40px,1fr) 5.5em;gap:12px;align-items:center;font-size:var(--t-sm)}
+.ind-mix__row{display:grid;grid-template-columns:minmax(0,15em) minmax(0,1fr) 5.5em;gap:12px;align-items:center;font-size:var(--t-sm)}
+.ind-mix__row .ind-meter{justify-self:start}
 .ind-mix__row a{color:var(--ink);text-decoration:none;min-height:28px;display:flex;align-items:center}
 .ind-mix__row a:hover{color:var(--blue-d);text-decoration:underline}
-.ind-mix__bar{height:8px;border-radius:var(--r-pill);background:var(--paper-3);overflow:hidden}
-.ind-mix__bar i{display:block;height:100%;width:calc(var(--w) * 33.333%);border-radius:inherit;background:var(--ink-2);transform-origin:left;transition:transform .7s var(--e)}
-.ind-mix__row[style*="--w:3"] .ind-mix__bar i{background:var(--blue)}
 .ind-mix__lv{color:var(--muted);text-align:right}
-.ind-exp__pane.is-anim .ind-mix__bar i{transform:scaleX(0)}
 .ind-exp__rules{display:flex;flex-wrap:wrap;gap:6px}
 .ind-exp__rules .bdh-tag{height:auto;min-height:24px;padding-block:4px}
 
@@ -125,13 +224,13 @@
   .ind-exp__pane{grid-template-columns:minmax(0,1fr)}
   .ind-exp__img{aspect-ratio:16/9;min-height:0}
   .ind-mix__row{grid-template-columns:minmax(0,1fr) 5.5em;row-gap:6px}
-  .ind-mix__bar{grid-column:1 / -1;grid-row:2}
+  .ind-mix__row .ind-meter{grid-column:1 / -1;grid-row:2}
   .ind-x__row{grid-template-columns:44px minmax(0,1fr);gap:8px 16px}
   .ind-x__row>*{grid-column:2}
   .ind-x__n{display:none}.ind-x__ico{grid-column:1;grid-row:1}
 }
 @media (prefers-reduced-motion:reduce){
-  .ind-lv,.ind-mix__bar i{transition:none}
+  .ind-meter i{transition:none}
 }
 @media (min-width:1101px){ .ind-map__scroll{-webkit-mask-image:none;mask-image:none} }
 @media (max-width:1100px){
@@ -283,3 +382,66 @@
   .ind-mix__row a,.ind-case .tl,.ind-exp__body>.tl{display:inline-flex;align-items:center;min-height:44px}
 }
 @media (max-width:760px){ .ind-rules__dl{grid-template-columns:minmax(0,1fr)} }
+
+/* ---------- hero additions: proof strip + map tally ---------- */
+.ind-hero__proof{display:flex;flex-wrap:wrap;gap:14px 36px;margin:32px 0 0;padding-top:22px;border-top:1px solid var(--line-2)}
+.ind-hero__proof dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.ind-hero__proof dd{margin:5px 0 0;font-family:var(--f-h);font-size:var(--t-h3);font-weight:500;line-height:1;letter-spacing:-.012em;color:var(--ink);font-variant-numeric:tabular-nums}
+.ind-map__tally{display:flex;flex-wrap:wrap;gap:0 4px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);color:var(--faint);text-transform:uppercase;letter-spacing:.06em}
+.ind-map__tally b{font-weight:500;color:var(--ink)}
+.ind-map__note .tl{margin-left:2px}
+@media (max-width:600px){
+  .ind-hero__proof{gap:14px 24px}
+  .ind-hero__proof dd{font-size:var(--t-h4)}
+}
+
+/* ---------- explorer additions: at-a-glance strip + paired links ---------- */
+.ind-exp__at{display:flex;flex-wrap:wrap;gap:12px 32px;margin:2px 0 4px;padding:14px 0;border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2)}
+.ind-exp__at dt{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.ind-exp__at dd{margin:4px 0 0;font-size:var(--t-sm);font-weight:500;color:var(--ink)}
+.ind-exp__links{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:2px}
+
+/* ---------- dossier additions: capability chips + onward links ---------- */
+.ind-dos__caps .ind-capls{margin-bottom:16px}
+.ind-dos__more{display:flex;flex-wrap:wrap;gap:8px 28px;padding-top:14px;border-top:1px solid var(--line-2)}
+
+/* ---------- cross-industry addition: how each baseline is checked ---------- */
+.ind-x__chk{grid-column:4 / -1;display:grid;gap:6px;margin-top:6px;padding-top:12px;border-top:1px solid var(--on-ink-line);font-size:var(--t-xs);line-height:1.6;color:var(--on-ink-2)}
+@media (max-width:1100px){ .ind-x__chk{grid-column:3} }
+@media (max-width:760px){ .ind-x__chk{grid-column:2} }
+
+/* ---------- scroll containers own their absolutely positioned descendants ----------
+   .sr / .bdh-sr are position:absolute. Inside a .bdh-scroll-x that is not itself positioned, their
+   containing block is the initial containing block, so they are NOT clipped by the scroller and their
+   static position (out at the far end of a 650px-wide table) extends the document's scrollable width —
+   a horizontal scrollbar on the whole page at 390. Making each scroller a containing block fixes it.
+   The root cause is that .bdh-scroll-x in assets/css/brand/hub.css is not position:relative; that file
+   is shared and not ours to change, so this page fixes it for its own scrollers. */
+.ind .bdh-scroll-x{position:relative}
+
+/* ---------- ledgers with a sticky first column ----------
+   Core .mask-x fades both edges. On a table whose row header is position:sticky at left:0 that fade
+   lands on the header itself and eats the first characters of the sector or framework name. These
+   four scrollers keep the right-hand fade (where content continues) and drop the left one. */
+.ind-prs__scroll.mask-x,.ind-mtx__scroll.mask-x,.ind-rbk__scroll.mask-x,.ind-lns__scroll.mask-x,.ind-map__scroll.mask-x{
+  -webkit-mask-image:linear-gradient(90deg,#000 0,#000 93%,transparent);
+  mask-image:linear-gradient(90deg,#000 0,#000 93%,transparent)}
+@media (min-width:1101px){
+  .ind-prs__scroll.mask-x,.ind-mtx__scroll.mask-x,.ind-rbk__scroll.mask-x,.ind-lns__scroll.mask-x,.ind-map__scroll.mask-x{
+    -webkit-mask-image:none;mask-image:none}
+}
+
+/* ---------- phones: every control clears 44px ----------
+   Prefixed with .ind because each section's own stylesheet loads after this file. */
+@media (max-width:760px){
+  .ind .ind-capl{min-height:44px}
+  .ind .ind-prs__hard a,.ind .ind-trf__chip,.ind .ind-rbk__pn,.ind .ind-mkt__pn,.ind .ind-mea__pn,
+  .ind .ind-ain__sec,.ind .ind-sys__id h3 a,.ind .ind-mtx__cs a,.ind .ind-mtx__tbl tbody th a,
+  .ind .ind-mtx__tbl thead th a,.ind .ind-lns__tbl tbody th a,.ind .ind-map__t tbody th a,
+  .ind .ind-prs__tbl tbody th a,.ind .ind-con__ladder a,.ind .ind-dos__more .tl,.ind .ind-exp__links .tl,
+  .ind .ind-faq__rel .tl,.ind .ind-lns__note .tl,.ind .ind-sys__foot .tl,.ind .ind-ain__note .tl,
+  .ind .ind-map__note .tl,.ind .ind-mkt__intro .tl{display:inline-flex;align-items:center;min-height:44px}
+  .ind .ind-trf__chip{height:auto;padding-inline:14px}
+  .ind .ind-con__foot .btn,.ind .ind-faq__acts .btn{min-height:44px}
+}
+.ind-hero__mk{font-family:var(--f)}

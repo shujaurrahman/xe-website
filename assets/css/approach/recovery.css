@@ -1,0 +1,88 @@
+/* Approach · Recovery — the gates that stop a change, the severity ladder, a worked incident and the
+   review that follows. Ink band: any blue fill sets --xt-accent so icon accents stay visible. Tokens only. */
+
+.apr-rc__k{color:var(--on-ink-3)}
+.apr-rc__k .bdh-ill{margin-left:10px;vertical-align:middle}
+
+/* ---- before release ---- */
+.apr-rc__bl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--bdh-gap)}
+.apr-rc__bl li{display:flex;flex-direction:column;gap:10px;padding:20px;border:1px solid var(--on-ink-line);border-radius:var(--r-lg);background:var(--on-ink-card);min-width:0}
+.apr-rc__bi{display:grid;place-items:center;width:36px;height:36px;border-radius:var(--r-xs);border:1px solid var(--on-ink-line);color:var(--on-ink)}
+.apr-rc__ov{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start;margin:20px 0 0;padding:16px 18px;
+  border:1px dashed var(--on-ink-line);border-radius:var(--r);font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-2);max-width:96ch}
+.apr-rc__ov b{color:var(--on-ink);font-weight:600}
+
+/* ---- severity ladder ---- */
+.apr-rc__sev{margin-top:var(--bdh-block)}
+.apr-rc__sev .bdh-scroll-x{border:1px solid var(--on-ink-line);border-radius:var(--r-lg);background:var(--on-ink-card)}
+.apr-rc__tbl{width:100%;min-width:1000px;border-collapse:collapse;font-size:var(--t-sm)}
+.apr-rc__tbl th,.apr-rc__tbl td{text-align:left;padding:15px 18px;border-bottom:1px solid var(--on-ink-line);vertical-align:top;color:var(--on-ink-2);line-height:1.5}
+.apr-rc__tbl thead th{font-family:var(--f);font-weight:500;font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3)}
+.apr-rc__tbl tbody th{width:104px}
+.apr-rc__tbl tbody tr:last-child>*{border-bottom:0}
+.apr-rc__lv{display:inline-flex;align-items:center;height:26px;padding:0 12px;border-radius:var(--r-pill);background:var(--on-ink-card);
+  box-shadow:inset 0 0 0 1px var(--on-ink-line);font-family:var(--f);font-size:var(--t-xs);color:var(--on-ink)}
+.apr-rc__tbl tr.is-hot .apr-rc__lv{background:var(--blue);box-shadow:none;color:var(--on-ink)}
+.apr-rc__tbl tr.is-hot td:first-of-type{color:var(--on-ink)}
+
+/* ---- the worked incident ---- */
+.apr-rc__run{margin-top:var(--bdh-block);padding:clamp(22px,2.6vw,34px);border:1px solid var(--on-ink-line);border-radius:var(--r-xl);background:var(--on-ink-card)}
+.apr-rc__rh .apr-k{color:var(--on-ink-3);margin:0 0 8px}
+.apr-rc__rh .bdh-ill{margin-left:10px;vertical-align:middle}
+.apr .apr-rc__rt{margin:0 0 26px;font-family:var(--f-h);font-weight:500;font-size:var(--t-h3);line-height:1.25;color:var(--on-ink);max-width:56ch}
+.apr-rc__tl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0}
+.apr-rc__tl>li{position:relative;padding:0 14px 0 0;min-width:0}
+.apr-rc__node{position:relative;display:block;height:24px}
+.apr-rc__node::before{content:"";position:absolute;left:0;right:-14px;top:7px;height:1px;background:var(--on-ink-line)}
+.apr-rc__tl>li:last-child .apr-rc__node::before{right:0}
+.apr-rc__node i{position:absolute;left:0;top:2px;width:11px;height:11px;border-radius:50%;background:var(--ink);border:1px solid var(--on-ink-line);
+  transition:background var(--d2) var(--e),border-color var(--d2) var(--e),box-shadow var(--d2) var(--e)}
+.apr-rc__tl>li.is-done .apr-rc__node i{background:var(--blue);border-color:var(--blue)}
+.apr-rc__tl>li.is-done .apr-rc__node::before{background:var(--blue-line)}
+.apr-rc__t{margin:8px 0 0;font-family:var(--f);font-size:var(--t-xs);letter-spacing:.06em;color:var(--on-ink)}
+.apr-rc__who{display:flex;align-items:center;gap:6px;margin:6px 0 0;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--on-ink-3)}
+.apr-rc__who .xt-ico{flex:none}
+.apr-rc__who.is-agent{color:var(--on-ink-2)}
+.apr-rc__d{margin:8px 0 0;font-size:var(--t-xs);line-height:1.55;color:var(--on-ink-2)}
+.apr-rc__run.is-anim .apr-rc__tl>li{opacity:.34;transition:opacity .5s var(--e)}
+.apr-rc__run.is-anim .apr-rc__tl>li.is-done{opacity:1}
+
+/* ---- the review and the bill ---- */
+.apr-rc__after{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,4vw,64px);margin-top:var(--bdh-block);
+  padding-top:clamp(28px,3.4vw,44px);border-top:1px solid var(--on-ink-line)}
+.apr-rc__after .apr-k{color:var(--on-ink-3);margin:0 0 8px}
+.apr-rc__rl{list-style:none;margin:0;padding:0}
+.apr-rc__rl li{padding:15px 0;border-top:1px solid var(--on-ink-line)}
+.apr-rc__rl li:first-child{border-top:0;padding-top:0}
+.apr-rc__rl b{display:block;font-family:var(--f-h);font-weight:500;font-size:var(--t-body);color:var(--on-ink);margin-bottom:4px}
+.apr-rc__rl span{display:block;font-size:var(--t-sm);line-height:1.55;color:var(--on-ink-2);max-width:60ch}
+.apr-rc__cl{margin:0}
+.apr-rc__cl>div{padding:15px 0;border-top:1px solid var(--on-ink-line)}
+.apr-rc__cl>div:first-child{border-top:0;padding-top:0}
+.apr-rc__cl dt{font-family:var(--f-h);font-weight:500;font-size:var(--t-body);color:var(--on-ink)}
+.apr-rc__cl dd{margin:4px 0 0;font-size:var(--t-sm);line-height:1.55;color:var(--on-ink-2)}
+.apr-rc__leg{margin:18px 0 0;font-size:var(--t-sm);line-height:1.6;color:var(--on-ink-3)}
+.apr-rc__leg a{color:var(--on-ink);text-decoration:underline;text-underline-offset:3px}
+
+@media (max-width:1100px){
+  .apr-rc__bl{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .apr-rc__tl{grid-template-columns:minmax(0,1fr)}
+  .apr-rc__tl>li{display:grid;grid-template-columns:22px minmax(0,96px) minmax(0,1fr);column-gap:14px;padding:0 0 18px}
+  .apr-rc__node{grid-row:1 / span 3;height:100%}
+  .apr-rc__node::before{left:5px;right:auto;top:6px;bottom:-18px;width:1px;height:auto}
+  .apr-rc__tl>li:last-child .apr-rc__node::before{bottom:0}
+  .apr-rc__t{grid-column:2;margin:0}
+  .apr-rc__who{grid-column:2;grid-row:2;margin:6px 0 0}
+  .apr-rc__d{grid-column:3;grid-row:1 / span 3;margin:0}
+  .apr-rc__after{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:700px){
+  .apr-rc__bl{grid-template-columns:minmax(0,1fr)}
+  .apr-rc__tl>li{grid-template-columns:22px minmax(0,1fr)}
+  .apr-rc__node{grid-row:1 / span 3}
+  .apr-rc__who{grid-row:2}
+  .apr-rc__d{grid-column:2;grid-row:3;margin:8px 0 0}
+}
+@media (prefers-reduced-motion:reduce){
+  .apr-rc__node i,.apr-rc__run.is-anim .apr-rc__tl>li{transition:none}
+}

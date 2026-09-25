@@ -1,0 +1,36 @@
+/* Industries · systems — six full-width rows: the estate on the left, the facts and the stack right. */
+
+.ind-sys__list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-2)}
+.ind-sys__row{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(20px,3vw,56px);padding:clamp(26px,3vw,44px) 0;border-bottom:1px solid var(--line-2);scroll-margin-top:calc(var(--nav-h) + 16px)}
+.ind-sys__id{display:grid;gap:12px;align-content:start}
+.ind-sys__id .ind-rail{max-width:8em}
+.ind .ind-sys__id h3{margin:0}
+.ind-sys__id h3 a{color:var(--ink);text-decoration:none}
+.ind-sys__id h3 a:hover{color:var(--blue-d)}
+.ind-sys__note{font-size:var(--t-sm);line-height:1.65;color:var(--muted);max-width:40ch}
+.ind-sys__count{display:grid;gap:4px;margin-top:4px;padding-top:12px;border-top:1px solid var(--line)}
+.ind-sys__count>span:last-child{font-size:var(--t-xs);color:var(--muted)}
+.ind-sys__count b{font-family:var(--f);font-size:var(--t-h4);font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums;margin-right:6px}
+
+.ind-sys__body{display:grid;gap:clamp(18px,2vw,26px);min-width:0}
+.ind-sys__facts{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px}
+.ind-sys__facts>div{padding:16px 18px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg)}
+.ind-sys__facts dt{display:flex;align-items:center;gap:9px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--line-2)}
+.ind-sys__fi{display:grid;place-items:center;width:18px;height:18px;color:var(--ink);flex:none}
+.ind-sys__fi .xt-ico{width:18px;height:18px}
+.ind-sys__facts dd{margin:0;font-size:var(--t-sm);line-height:1.65;color:var(--txt)}
+.ind-sys__stack{display:grid;gap:10px}
+.ind-sys__chips{margin-top:2px}
+.ind-sys__foot{margin-top:clamp(24px,3vw,36px)}
+.ind-sys__foot .tl{margin-left:4px}
+
+@media (max-width:1023px){
+  .ind-sys__row{grid-template-columns:minmax(0,1fr)}
+  .ind-sys__id{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}
+  .ind-sys__id .ind-rail,.ind-sys__id h3{grid-column:1 / -1}
+  .ind-sys__count{border-top:0;padding-top:0}
+}
+@media (max-width:700px){
+  .ind-sys__facts{grid-template-columns:minmax(0,1fr)}
+  .ind-sys__id{grid-template-columns:minmax(0,1fr)}
+}

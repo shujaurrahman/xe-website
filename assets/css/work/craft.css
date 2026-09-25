@@ -1,0 +1,25 @@
+/* Work · craft — a horizontal strip of detail plates. Native overflow scroll with scroll-snap, so it
+   works with a keyboard and with JavaScript off; craft.js only unhides the arrows. */
+.wrk-craft__ctl{display:flex;gap:8px}
+.wrk-craft__arw{display:inline-grid;place-items:center;width:44px;height:44px;border:1px solid var(--line-3);border-radius:50%;background:var(--paper);color:var(--ink);
+  font-size:1.1rem;line-height:1;transition:border-color var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.wrk-craft__arw:hover:not(:disabled){border-color:var(--blue);color:var(--blue-d)}
+.wrk-craft__arw:disabled{color:var(--ghost);border-color:var(--line-2)}
+.wrk-craft__arw[hidden]{display:none}
+
+.wrk-craft__rail{margin-top:clamp(28px,3.4vw,44px);padding-block:4px;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter)}
+/* these plates carry strong warm casts (brick, timber); hold them to the page's cool register */
+.wrk-craft__img img{filter:saturate(.5) contrast(1.05)}
+.wrk-craft__strip{list-style:none;margin:0;padding-inline:var(--gutter);display:flex;gap:clamp(12px,1.5vw,20px);width:max-content}
+.wrk-craft__i{flex:0 0 clamp(200px,20vw,272px);scroll-snap-align:start;min-width:0}
+.wrk-craft__img{border-radius:var(--r-lg)}
+.wrk-craft__n{position:absolute;left:10px;top:9px;z-index:2;color:var(--on-ink);opacity:.9;letter-spacing:.12em}
+.wrk-craft__k{margin-top:12px;color:var(--blue-d);text-transform:uppercase;letter-spacing:.12em}
+.wrk-craft__c{margin-top:5px;font-size:var(--t-sm);line-height:1.55;color:var(--muted)}
+.wrk-craft__foot{margin-top:clamp(22px,2.6vw,34px);display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-size:var(--t-xs);color:var(--faint)}
+
+@media (max-width:860px){
+  .wrk-craft__ctl{display:none}
+  .wrk-craft__i{flex-basis:clamp(184px,52vw,240px)}
+}
+@media (prefers-reduced-motion:reduce){.wrk-craft__arw{transition:none}}

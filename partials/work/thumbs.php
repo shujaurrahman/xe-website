@@ -1,26 +1,48 @@
-<?php /* DRAFT COPY — review before launch */ ?>
-<?php
-/* Programme thumbnails — one code-built artefact per programme (the thing the work left behind), aria-hidden with a
-   .bdh-sr sentence. Figures on them are illustrative, never client results. */
+<?php /* DRAFT COPY — review before launch */
+/**
+ * Programme artefacts — one code-built illustration per programme: the thing the work left behind,
+ * drawn in HTML and CSS rather than screenshotted from a client system. Every figure on them is
+ * illustrative and never a client result.
+ *
+ *   wrk_thumb_label(string $slug): string   the short readout printed on the artefact's title bar
+ *   wrk_thumb(string $slug, array $o): string  the artefact itself, aria-hidden, with a .bdh-sr sentence
+ *
+ * To add an artefact for a new programme, add a row to $wrk_art below with the same key as the
+ * programme's 'slug' in data/work.php, then a `case` for it in the switch. A programme with no
+ * artefact simply renders without one.
+ */
 if (!function_exists('wrk_thumb')) {
-function wrk_thumb(string $wrk_id): string
+
+function wrk_art_set(): array
 {
-    $wrk_t = [
-        'nine-markets-one-brand' => ['Token sheet · 9 markets', 'A token sheet: four locked brand colours and nine market columns, all synced.'],
-        'crm-that-remembers' => ['Customer timeline', 'A customer timeline where the next message is chosen from the last event.'],
-        'assistant-sales-trusts' => ['Eval scorecard', 'An evaluation scorecard for a sales assistant: grounded answers, refusals and escalations, each against a target.'],
-        'visible-in-ai-answers' => ['AI answer · citations', 'An AI answer panel citing the brand as one of three sources.'],
-        'season-in-days' => ['Season run sheet', 'A season run sheet: brief, master assets, adaptations and live, compressed into days.'],
-        'direct-booking-product' => ['Booking path', 'A four-step direct booking path with the all-in price shown from the first step.'],
-        'one-intelligence-layer' => ['One data layer', 'Network, marketing and care sources feeding one shared intelligence layer.'],
-        'global-content-production' => ['Master → adaptations', 'One master asset adapted into six market versions.'],
-        'onboarding-with-disclosures' => ['KYC stepper', 'A five-step onboarding stepper with the disclosure step logged.'],
+    return [
+        'nine-markets-one-brand'      => ['Token sheet · 9 markets', 'a token sheet: four locked brand colours and nine market columns, all synced.'],
+        'crm-that-remembers'          => ['Customer timeline',       'a customer timeline where the next message is chosen from the last event.'],
+        'assistant-sales-trusts'      => ['Eval scorecard',          'an evaluation scorecard for a sales assistant: grounded answers, refusals and escalations, each against a target.'],
+        'visible-in-ai-answers'       => ['AI answer · citations',   'an AI answer panel citing the brand as one of three sources.'],
+        'season-in-days'              => ['Season run sheet',        'a season run sheet: brief, master assets, adaptations and live, compressed into days.'],
+        'direct-booking-product'      => ['Booking path',            'a four-step direct booking path with the all-in price shown from the first step.'],
+        'one-intelligence-layer'      => ['One data layer',          'network, marketing and care sources feeding one shared intelligence layer.'],
+        'global-content-production'   => ['Master → adaptations',    'one master asset adapted into six market versions.'],
+        'onboarding-with-disclosures' => ['KYC stepper',             'a five-step onboarding stepper with the disclosure step logged.'],
     ];
+}
+
+function wrk_thumb_label(string $wrk_id): string
+{
+    $wrk_t = wrk_art_set();
+    return $wrk_t[$wrk_id][0] ?? '';
+}
+
+function wrk_thumb(string $wrk_id, array $wrk_o = []): string
+{
+    $wrk_t = wrk_art_set();
     if (!isset($wrk_t[$wrk_id])) return '';
+    $wrk_cls = trim('wrk-th wrk-th--' . $wrk_id . ' ' . ($wrk_o['class'] ?? ''));
     ob_start(); ?>
-<div class="wrk-th wrk-th--<?= e($wrk_id) ?>">
+<div class="<?= e($wrk_cls) ?>">
   <div class="wrk-th__ui" aria-hidden="true">
-    <span class="wrk-th__bar bdh-ro"><?= e($wrk_t[$wrk_id][0]) ?></span>
+    <span class="wrk-th__bar bdh-ro"><span class="bdh-pulse"></span><?= e($wrk_t[$wrk_id][0]) ?><b class="bdh-ill">Illustrative</b></span>
     <div class="wrk-th__body">
 <?php switch ($wrk_id):
 case 'nine-markets-one-brand': ?>
@@ -48,7 +70,7 @@ case 'nine-markets-one-brand': ?>
       <span class="wrk-th__layer">One intelligence layer</span>
 <?php break; case 'global-content-production': ?>
       <span class="wrk-th__master">Master</span>
-      <span class="wrk-th__grid"><?php foreach (['IN','SG','AE','UK','ID','ZA'] as $wrk_m): ?><b><?= $wrk_m ?></b><?php endforeach; ?></span>
+      <span class="wrk-th__grid"><?php foreach (['IN', 'SG', 'AE', 'UK', 'ID', 'ZA'] as $wrk_m): ?><b><?= e($wrk_m) ?></b><?php endforeach; ?></span>
 <?php break; default: ?>
       <ol class="wrk-th__steps wrk-th__steps--5"><li class="is-done">PAN</li><li class="is-done">Video KYC</li><li class="is-on">KFS</li><li>e-sign</li><li>Fund</li></ol>
       <span class="wrk-th__price"><span>Disclosure</span><b>shown · logged</b></span>
@@ -60,4 +82,5 @@ case 'nine-markets-one-brand': ?>
 <?php
     return (string) ob_get_clean();
 }
+
 }

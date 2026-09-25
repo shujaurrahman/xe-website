@@ -1,0 +1,51 @@
+/* Industries · matrix — the 6 × 6 grid, its readouts, and the capability index under it. */
+
+.ind-mtx__wrap{margin:0;padding:clamp(18px,2vw,28px);background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh-1)}
+.ind-mtx__cap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 20px;padding-bottom:16px;border-bottom:1px solid var(--line-2)}
+.ind-mtx__key{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.ind-mtx__key>span{display:inline-flex;align-items:center;gap:8px}
+.ind-mtx__scroll{margin-top:8px}
+.ind-mtx__swipe{display:none;margin-top:12px}
+.ind-mtx__tbl{min-width:760px}
+.ind-mtx__tbl thead th{padding-top:16px;text-align:center;vertical-align:bottom;white-space:normal}
+.ind-mtx__tbl thead th:first-child{text-align:left;width:14em}
+.ind-mtx__tbl thead th a{display:inline-grid;gap:3px;justify-items:center;color:var(--ink);text-decoration:none;min-height:44px;align-content:end}
+.ind-mtx__tbl thead th a:hover .ind-mtx__dnm{color:var(--blue-d);text-decoration:underline}
+.ind-mtx__dn{font-family:var(--f);font-size:var(--t-lbl);color:var(--blue)}
+.ind-mtx__dnm{font-family:var(--f-h);font-size:var(--t-xs);font-weight:500;line-height:1.2;color:var(--ink);text-transform:none;letter-spacing:0;max-width:9em}
+.ind-mtx__tbl td{text-align:center;vertical-align:middle;padding:14px 8px}
+.ind-mtx__tbl td.is-lead{background:var(--blue-wash)}
+.ind-mtx__tbl tbody th a{display:inline-flex;align-items:center;gap:10px;min-height:36px;color:var(--ink);text-decoration:none}
+.ind-mtx__tbl tbody th a:hover{color:var(--blue-d);text-decoration:underline}
+.ind-mtx__sn{font-family:var(--f);font-size:var(--t-lbl);color:var(--blue);flex:none}
+.ind-mtx__tbl tfoot th,.ind-mtx__tbl tfoot td{border-bottom:0;border-top:1px solid var(--line-2);padding-top:14px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);text-align:center}
+.ind-mtx__tbl tfoot th{text-align:left;font-weight:400}
+.ind-mtx__tbl tfoot td b{font-weight:500;color:var(--ink);font-size:var(--t-sm)}
+
+.ind-mtx__read{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap);margin-top:clamp(28px,3vw,44px)}
+.ind-mtx__r{font-size:var(--t-sm);line-height:1.65;color:var(--txt);padding-top:16px;border-top:1px solid var(--line-2)}
+.ind-mtx__r .ind-k{margin-bottom:8px}
+
+.ind-mtx__caps{margin-top:clamp(36px,4vw,64px);padding-top:clamp(28px,3vw,40px);border-top:1px solid var(--line-2)}
+.ind-mtx__ch{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px 28px;margin-bottom:22px}
+.ind-mtx__clist{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.ind-mtx__clist>li{display:grid;grid-template-columns:minmax(0,13em) minmax(0,1fr);gap:12px 28px;padding:18px 0;border-bottom:1px solid var(--line)}
+.ind-mtx__clist>li:last-child{border-bottom:0}
+.ind-mtx__cs a{display:inline-flex;align-items:center;gap:10px;min-height:36px;font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;color:var(--ink);text-decoration:none}
+.ind-mtx__cs a:hover{color:var(--blue-d)}
+
+@media (min-width:1101px){ .ind-mtx__scroll{-webkit-mask-image:none;mask-image:none} }
+@media (max-width:1100px){
+  .ind-mtx__swipe{display:block}
+  .ind-mtx__read{grid-template-columns:minmax(0,1fr)}
+  .ind-mtx__tbl tbody th,.ind-mtx__tbl thead th:first-child,.ind-mtx__tbl tfoot th{position:sticky;left:0;z-index:1;background:var(--paper);box-shadow:1px 0 0 var(--line)}
+}
+@media (max-width:860px){
+  .ind-mtx__clist>li{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:600px){
+  .ind-mtx__tbl{min-width:600px}
+  .ind-mtx__tbl thead th:first-child{width:9em}
+  .ind-mtx__dnm{font-size:var(--t-lbl);max-width:6.5em}
+  .ind-mtx__tbl td{padding:12px 4px}
+}

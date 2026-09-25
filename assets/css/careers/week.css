@@ -1,0 +1,60 @@
+/* Careers · a week here — an ink band holding a five-day calendar. Block height follows the
+   duration in --min with a floor, so a 25-minute block is still legible. Every colour is a token;
+   on an ink band that means --on-ink*, --blue and --blue-wash only. */
+
+.car-week__cap{margin:0;font-family:var(--f);font-size:var(--t-xs);line-height:1.5;color:var(--on-ink-3);max-width:44ch}
+.car-week__scroll{padding-bottom:6px}
+/* the edge fade is there to signal a sideways scroll; above 1024px nothing scrolls, so it would
+   only dim Monday and Friday */
+@media (min-width:1024px){.car-week__scroll{-webkit-mask-image:none;mask-image:none}}
+/* below that it does scroll, but fading the left edge as well would hide the first column
+   before anyone has scrolled anywhere, so only the right edge signals there is more */
+@media (max-width:1023px){.car-week__scroll{-webkit-mask-image:linear-gradient(90deg,#000 0,#000 92%,transparent);mask-image:linear-gradient(90deg,#000 0,#000 92%,transparent)}}
+/* width:100% keeps the five columns sized by the container, not by their max-content, which is
+   what a bare grid inside an overflow box would do; min-width forces the scroll only on phones */
+.car-week__grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;width:100%;min-width:880px}
+.car-week__day{display:flex;flex-direction:column;gap:10px;min-width:0}
+.car .car-week__dn{margin:0;padding-bottom:10px;border-bottom:1px solid var(--on-ink-line);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--on-ink-3)}
+.car-week__dn abbr{text-decoration:none;border-bottom:0}
+.car-week__blocks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+
+.car-blk{position:relative;display:flex;flex-direction:column;gap:4px;min-height:max(58px,calc(var(--min) * .34px));
+  padding:12px 14px 12px 16px;border-radius:var(--r-sm);border:1px solid var(--on-ink-line);background:var(--on-ink-card);overflow:hidden}
+.car-blk::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--on-ink-line)}
+.car-blk__t{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;color:var(--on-ink-3);font-variant-numeric:tabular-nums}
+.car-blk__l{font-family:var(--f-h);font-weight:500;font-size:var(--t-sm);line-height:1.25;color:var(--on-ink)}
+.car-blk__d{font-size:var(--t-xs);line-height:1.5;color:var(--on-ink-2)}
+.car-blk__m{margin-top:auto;padding-top:6px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;color:var(--on-ink-3);font-variant-numeric:tabular-nums}
+.car-blk--make{background:transparent;border-style:dashed}
+.car-blk--make::before{background:transparent}
+.car-blk--review::before{background:var(--on-ink)}
+.car-blk--client::before{background:var(--blue)}
+.car-blk--client{background:var(--blue-wash-2)}
+.car-blk--craft::before{background:var(--on-ink-3)}
+
+.car-week__foot{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(28px,4vw,72px);align-items:start;
+  margin-top:clamp(32px,4vw,56px);padding-top:clamp(26px,3vw,44px);border-top:1px solid var(--on-ink-line)}
+.car-week__key{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 28px}
+.car-key{display:grid;grid-template-columns:16px minmax(0,1fr);column-gap:12px;row-gap:3px;min-width:0}
+.car-key__sw{grid-row:1 / span 3;width:16px;height:16px;margin-top:3px;border-radius:var(--r-xs);border:1px solid var(--on-ink-line)}
+.car-key--make .car-key__sw{border-style:dashed}
+.car-key--review .car-key__sw{background:var(--on-ink)}
+.car-key--client .car-key__sw{background:var(--blue);border-color:var(--blue)}
+.car-key--craft .car-key__sw{background:var(--on-ink-3)}
+.car-key__t{font-family:var(--f-h);font-weight:500;font-size:var(--t-body);line-height:1.25;color:var(--on-ink)}
+.car-key__n{font-family:var(--f);font-size:var(--t-xs);color:var(--blue)}
+.car-key__d{font-size:var(--t-xs);line-height:1.55;color:var(--on-ink-2)}
+.car-week__note{min-width:0}
+.car-week__k{margin:0 0 10px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-3)}
+.car-week__big{margin:0 0 12px;font-family:var(--f-h);font-weight:500;font-size:var(--t-h3);line-height:1.2;letter-spacing:-.02em;color:var(--on-ink)}
+.car-week__big b{font-weight:500;color:var(--blue)}
+.car-week__p{margin:0;font-size:var(--t-sm);line-height:1.7;color:var(--on-ink-2);max-width:56ch}
+
+@media (max-width:1023px){
+  .car-week__foot{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .car-week__grid{grid-template-columns:repeat(5,minmax(172px,1fr))}
+  .car-week__key{grid-template-columns:minmax(0,1fr)}
+}

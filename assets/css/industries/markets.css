@@ -1,0 +1,31 @@
+/* Industries · markets — a tall photograph beside the two lists, then six plates of market deltas. */
+
+.ind-mkt__top{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(24px,3vw,56px);align-items:start;margin-bottom:clamp(36px,4vw,64px)}
+.ind-mkt__img{border-radius:var(--r-xl)}
+.ind-mkt__chip{position:absolute;left:16px;right:16px;bottom:16px;z-index:2;width:auto}
+.ind-mkt__intro{display:grid;gap:18px;min-width:0}
+.ind-mkt__pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,2.4vw,40px)}
+.ind-mkt__pair>div{display:grid;gap:12px;align-content:start;padding-top:16px;border-top:1px solid var(--line-2)}
+
+.ind-mkt__list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap)}
+.ind-mkt__pn{font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;color:var(--ink);text-decoration:none}
+.ind-mkt__pn:hover{color:var(--blue-d)}
+.ind-mkt__rows{margin:0;display:grid;gap:0}
+.ind-mkt__rows>div{padding:12px 0;border-bottom:1px solid var(--line)}
+.ind-mkt__rows>div:first-child{padding-top:0}
+.ind-mkt__rows>div:last-child{border-bottom:0;padding-bottom:0}
+.ind-mkt__rows dt{display:flex;align-items:center;gap:9px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.ind-mkt__code{display:inline-grid;place-items:center;min-width:26px;height:20px;padding:0 6px;border-radius:var(--r-xs);background:var(--blue-wash);color:var(--blue-d);font-size:var(--t-lbl);letter-spacing:.06em}
+.ind-mkt__rows dd{margin:0;font-size:var(--t-xs);line-height:1.65;color:var(--txt)}
+
+@media (max-width:1023px){
+  .ind-mkt__top{grid-template-columns:minmax(0,1fr)}
+  .ind-mkt__img{aspect-ratio:21/9;max-height:320px}
+  .ind-mkt__list{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:700px){
+  .ind-mkt__pair{grid-template-columns:minmax(0,1fr)}
+  .ind-mkt__list{grid-template-columns:minmax(0,1fr)}
+  .ind-mkt__img{aspect-ratio:16/9}
+  .ind-mkt__chip{left:12px;right:12px;bottom:12px}
+}

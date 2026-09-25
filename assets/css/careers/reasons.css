@@ -1,0 +1,92 @@
+/* Careers · why here — a tablist of four claims, each with a code-built visual.
+   Without JavaScript the <noscript> rule in partials/careers/reasons.php hides the tab strip and
+   every panel stays in flow, so nothing here may depend on a class the script adds. Tokens only. */
+
+.car-rsn__box{border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);overflow:hidden}
+.car-rsn__tabs{display:flex;flex-wrap:wrap;gap:0;border-bottom:1px solid var(--line);background:var(--paper-2)}
+.car-rsn__tab{flex:1 1 0;min-width:150px;min-height:64px;display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 18px;
+  border:0;border-right:1px solid var(--line);background:transparent;cursor:pointer;color:var(--muted);text-align:left;
+  transition:background var(--d1) var(--e-io),color var(--d1) var(--e-io)}
+.car-rsn__tab:last-child{border-right:0}
+.car-rsn__tab:hover{background:var(--paper-3);color:var(--ink)}
+.car-rsn__tn{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;color:var(--blue);font-variant-numeric:tabular-nums}
+.car-rsn__tl{font-family:var(--f-h);font-weight:500;font-size:var(--t-body);line-height:1.2}
+.car-rsn__tab.is-on{background:var(--paper);color:var(--ink);box-shadow:inset 0 -2px 0 var(--blue)}
+.car-rsn__tab.is-on .car-rsn__tn{color:var(--ink)}
+
+.car-rsn__pane{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(28px,4vw,72px);align-items:start;padding:clamp(26px,3.2vw,48px)}
+/* display:grid would otherwise beat the [hidden] the tab script sets */
+.car-rsn__pane[hidden]{display:none}
+/* only when the panels are stacked (no script) do they need a rule between them */
+.car-rsn__box:not(.is-tabs) .car-rsn__pane+.car-rsn__pane{border-top:1px solid var(--line)}
+.car-rsn__pane:focus-visible{outline:2px solid var(--blue);outline-offset:-4px;border-radius:var(--r-lg)}
+.car-rsn__copy{display:flex;flex-direction:column;gap:14px;min-width:0}
+.car-rsn__n{margin:0;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.car .car-rsn__t{margin:0;font-family:var(--f-h);font-weight:500;font-size:var(--t-h3);line-height:1.15;letter-spacing:-.02em;color:var(--ink);max-width:22ch}
+.car-rsn__p{margin:0;font-size:var(--t-body);line-height:1.65;color:var(--txt);max-width:56ch}
+.car-rsn__ev{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column}
+.car-rsn__ev li{display:grid;grid-template-columns:30px minmax(0,1fr);column-gap:12px;row-gap:4px;padding:15px 0;border-top:1px solid var(--line)}
+.car-rsn__eico{grid-row:1 / span 2;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--paper-3);color:var(--ink)}
+.car-rsn__ev b{font-family:var(--f-h);font-weight:500;font-size:var(--t-body);line-height:1.3;color:var(--ink)}
+.car-rsn__ev li>span:last-child{font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.car-rsn__vis{position:relative;min-width:0}
+
+/* ---- 01 the ring ------------------------------------------------------- */
+.car-ring{display:flex;flex-direction:column;gap:18px}
+.car-ring__svg{display:block;width:100%;max-width:340px;height:auto;margin-inline:auto;stroke-width:1.25}
+.car-ring__orbit{stroke:var(--line-2)}
+.car-ring__spoke{stroke:var(--line-3)}
+.car-ring__hub{fill:var(--ink);stroke:var(--ink)}
+.car-ring__hubt{fill:var(--on-ink);font-family:var(--f);font-size:11px;letter-spacing:.14em;stroke:none}
+.car-ring__disc{fill:var(--paper-2);stroke:var(--line-3)}
+.car-ring__glow{fill:none;stroke:var(--blue);opacity:0}
+.car-ring__nt{fill:var(--ink);font-family:var(--f);font-size:12.5px;font-weight:500;letter-spacing:.08em;stroke:none}
+.car-ring.is-live .car-ring__glow{animation:car-ring-p 5.4s var(--e) infinite;animation-delay:calc(var(--i) * .9s)}
+@keyframes car-ring-p{0%,88%,100%{opacity:0}6%{opacity:1}}
+.car-ring__key{list-style:none;margin:0;padding:16px 0 0;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 18px}
+.car-ring__key li{display:flex;align-items:baseline;gap:9px;font-size:var(--t-xs);line-height:1.45;color:var(--txt)}
+.car-ring__key b{flex:none;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;color:var(--blue-d)}
+
+/* ---- 02 the agent readout ---------------------------------------------- */
+.car-ai__rows{list-style:none;margin:0;padding:6px 18px}
+.car-ai__rows li{display:flex;flex-direction:column;gap:5px;padding:13px 0;border-bottom:1px solid var(--line)}
+.car-ai__rows li:last-child{border-bottom:0}
+.car-ai__rows .bdh-ro{color:var(--faint);letter-spacing:.1em;text-transform:uppercase;font-size:var(--t-lbl)}
+.car-ai__rows b{font-family:var(--f-b);font-weight:500;font-size:var(--t-sm);line-height:1.5;color:var(--ink)}
+.car-ai__bar{display:block;height:6px;border-radius:var(--r-pill);background:var(--paper-3);overflow:hidden}
+.car-ai__fill{display:block;width:var(--p);height:100%;border-radius:var(--r-pill);background:var(--blue)}
+.car-ai__foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:var(--paper-2)}
+.car-ai__foot .bdh-ro{color:var(--muted)}
+
+/* ---- 03 the handover manifest ------------------------------------------ */
+.car-hand__list{list-style:none;margin:0;padding:6px 18px}
+.car-hand__list li{display:grid;grid-template-columns:26px minmax(0,1fr);column-gap:12px;row-gap:3px;padding:14px 0;border-bottom:1px solid var(--line)}
+.car-hand__list li:last-child{border-bottom:0}
+.car-hand__tick{grid-row:1 / span 2;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--blue-wash);color:var(--blue-d);margin-top:1px}
+.car-hand__list b{font-family:var(--f-h);font-weight:500;font-size:var(--t-sm);line-height:1.3;color:var(--ink)}
+.car-hand__list li>span:last-child{font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+
+/* ---- 04 the location plates -------------------------------------------- */
+.car-plates{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.car-plate{display:flex;flex-direction:column;gap:6px;padding:20px 22px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper-2)}
+.car-plate:first-child{background:var(--blue-wash);border-color:var(--blue-line)}
+.car-plate__k{display:flex;align-items:center;gap:8px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.car-plate__k .xt-ico{flex:none;width:16px;height:16px;color:var(--ink)}
+.car-plate__t{font-family:var(--f-h);font-weight:500;font-size:var(--t-h4);line-height:1.2;color:var(--ink)}
+.car-plate__n{font-family:var(--f);font-size:var(--t-xs);color:var(--muted)}
+
+@media (max-width:1023px){
+  .car-rsn__pane{grid-template-columns:minmax(0,1fr)}
+  .car-ring__svg{max-width:300px}
+}
+@media (max-width:760px){
+  .car-rsn__tabs{flex-direction:column}
+  .car-rsn__tab{min-width:0;border-right:0;border-bottom:1px solid var(--line);justify-content:flex-start;min-height:56px}
+  .car-rsn__tab:last-child{border-bottom:0}
+  .car-rsn__tab.is-on{box-shadow:inset 3px 0 0 var(--blue)}
+  .car-ring__key{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  .car-rsn__tab{transition:none}
+  .car-ring.is-live .car-ring__glow{animation:none}
+}

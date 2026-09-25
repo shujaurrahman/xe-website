@@ -2,6 +2,12 @@
 <?php
 /* Which delivery stages (the #delivery section above) each contract usually spans — the part home s25 does not show. */
 $apr_stg = ['Discover', 'Define', 'Design', 'Build', 'Run', 'Improve'];
+$apr_same = [
+  ['approve', 'The gates', 'Six of them, or the subset the contract spans. A named person on your side signs each one.'],
+  ['log',     'The evals and the logs', 'The same thresholds, the same audit log, the same export. There is no cheaper tier of care.'],
+  ['users',   'The named team', 'The statement of work names the people. A change is asked, not announced.'],
+  ['key',     'The handover manifest', 'Accounts in your name from day one, and the same exit test at the end of any of the six.'],
+];
 $apr_cov = [
   'sprint'     => [[0, 1], 'Ends at the “Problem framed” or “Scope signed” gate, with a decision in hand.'],
   'project'    => [[1, 2, 3], 'Scope signed up front; ends when the release gate is approved.'],
@@ -46,5 +52,14 @@ $apr_cov = [
       </li>
       <?php endforeach; ?>
     </ol>
+
+    <div class="apr-ct__same">
+      <p class="apr-k">What does not change, whichever you choose</p>
+      <ul class="apr-ct__sl" data-rv-s data-rv-step="60">
+        <?php foreach ($apr_same as $apr_s2): ?>
+        <li><span class="apr-ct__si" aria-hidden="true"><?= xt_icon($apr_s2[0], ['size' => 18]) ?></span><h3 class="bdh-t bdh-t--s"><?= e($apr_s2[1]) ?></h3><p class="bdh-d"><?= e($apr_s2[2]) ?></p></li>
+        <?php endforeach; ?>
+      </ul>
+    </div>
   </div>
 </section>

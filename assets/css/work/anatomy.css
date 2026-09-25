@@ -1,0 +1,42 @@
+/* Work · anatomy — the seven parts of an entry, explained beside a numbered sample card. */
+.wrk-anat__grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,5vw,76px);align-items:start}
+
+.wrk-anat__list{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.wrk-anat__list>li{display:grid;grid-template-columns:2.6rem minmax(0,1fr);gap:4px 14px;padding:16px 0;border-top:1px solid var(--line)}
+.wrk-anat__list>li:last-child{border-bottom:1px solid var(--line)}
+.wrk-anat__n{color:var(--blue);letter-spacing:.1em;padding-top:2px}
+.wrk-anat__list .bdh-d{max-width:48ch;margin-top:6px}
+
+.wrk-anat__spec{position:sticky;top:var(--bdh-sticky);min-width:0}
+.wrk-anat__cap{margin-bottom:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.1em}
+.wrk-anat__img{border-radius:0}
+.wrk-anat__body{display:grid;gap:14px;padding:clamp(18px,2.2vw,28px)}
+.wrk-anat__row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;color:var(--faint)}
+.wrk-anat__brief{position:relative;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.wrk-anat__chips{position:relative;display:flex;flex-wrap:wrap;gap:6px}
+.wrk-anat__chips b{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:var(--r-pill);background:var(--paper-3);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--txt)}
+.wrk-anat__dl{display:grid;gap:0;margin-top:2px}
+.wrk-anat__dl>div{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr);gap:4px 14px;padding:11px 0;border-top:1px solid var(--line-2)}
+.wrk-anat__dl dt{position:relative;color:var(--faint);text-transform:uppercase;letter-spacing:.08em}
+.wrk-anat__dl dd{font-size:var(--t-xs);line-height:1.6;color:var(--txt)}
+.wrk-anat__blank dd{color:var(--muted)}
+
+/* the numbered pins */
+.wrk-pin{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--blue);color:var(--on-ink);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;line-height:1;flex:none;--xt-accent:currentColor}
+.wrk-anat__img .wrk-pin{position:absolute;left:14px;top:14px;z-index:3}
+/* everywhere else the pin leads its line, so nothing can sit outside the card at any width */
+.wrk-anat__brief .wrk-pin,.wrk-anat__chips .wrk-pin,.wrk-anat__dl dt .wrk-pin{margin-right:9px;vertical-align:-.36em}
+.wrk-anat__dl dt .wrk-pin{vertical-align:-.5em}
+
+@media (max-width:1023px){
+  .wrk-anat__grid{grid-template-columns:minmax(0,1fr);gap:clamp(28px,5vw,44px)}
+  .wrk-anat__spec{position:static}
+}
+@media (max-width:760px){
+  .wrk-anat__dl>div{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:600px){
+  .wrk-anat__list>li{grid-template-columns:2.2rem minmax(0,1fr);gap:4px 10px}
+}

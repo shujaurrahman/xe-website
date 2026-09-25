@@ -1,4 +1,21 @@
-<?php /* DRAFT COPY — review before launch */ ?>
+<?php /* DRAFT COPY — review before launch */
+/* Quality — the four bars written into acceptance criteria, then the checks that enforce them on every
+   change. The table is the part people ask for: what runs, who runs it, when, and whether it stops the
+   merge. Standards here are frameworks delivery is built to, never certifications held. */
+$q_checks = [
+  // [check, what it proves, who runs it, when, blocks?]
+  ['Unit and contract tests', 'The change does what the criteria say, and nothing else broke.', 'code.pair writes them · CI runs them', 'Every commit', 'yes'],
+  ['Performance budgets', 'LCP, INP, CLS and bundle size stay inside the budget on a throttled profile.', 'CI', 'Every pull request', 'yes'],
+  ['Automated accessibility checks', 'Contrast, target size, labels and focus order on every changed view.', 'make.variants · axe in CI', 'Every commit', 'yes'],
+  ['The eval suite', 'The AI route still answers the golden set at the agreed thresholds.', 'guard.release', 'Every change to a prompt, model or retrieval', 'yes'],
+  ['Security scans', 'No known critical dependency, container, image or secret issue.', 'guard.release', 'Every commit', 'yes'],
+  ['Prompt-injection suite', 'OWASP LLM01 cases are refused rather than followed.', 'guard.release', 'Every AI release', 'yes'],
+  ['Human code review', 'A named person understands the change and signs for it.', 'A named engineer', 'Every merge', 'yes'],
+  ['Keyboard and screen-reader pass', 'The key journeys work without a mouse and read correctly.', 'Accessibility reviewer', 'Every release', 'partial'],
+  ['Content and claims review', 'Nothing is published that we cannot source.', 'Your brand or legal reviewer', 'Before publication', 'yes'],
+];
+$q_blocks = ['yes' => ['Blocks the merge', 'is-yes'], 'partial' => ['Blocks the key journeys', 'is-part']];
+?>
 <section class="band band--alt apr-q" id="quality" aria-labelledby="quality-t">
   <div class="wrap">
     <div class="bdh-head bdh-head--row" data-rv>
@@ -51,6 +68,32 @@
         </dl>
         <p class="apr-qc__b"><?= xt_badge('sci', ['variant' => 'chip']) ?></p>
       </article>
+    </div>
+
+    <div class="apr-q__checks">
+      <div class="apr-q__ch">
+        <p class="apr-k">How the bars are enforced</p>
+        <h3 class="apr-q__h">Nine checks on every change, not an audit at the end</h3>
+        <p class="apr-q__hd">A bar that is only measured before launch is a hope. These run on the change itself, and eight of the nine stop the merge when they fail.</p>
+      </div>
+      <div class="bdh-scroll-x mask-x apr-nomask" tabindex="0" role="region" aria-labelledby="apr-q-chk">
+        <table class="apr-q__tbl">
+          <caption class="apr-k" id="apr-q-chk">Every check that runs on a change</caption>
+          <thead><tr><th scope="col">Check</th><th scope="col">What it proves</th><th scope="col">Who runs it</th><th scope="col">When</th><th scope="col">If it fails</th></tr></thead>
+          <tbody>
+            <?php foreach ($q_checks as $q_c): ?>
+            <tr>
+              <th scope="row"><?= e($q_c[0]) ?></th>
+              <td><?= e($q_c[1]) ?></td>
+              <td class="apr-q__who"><?= e($q_c[2]) ?></td>
+              <td class="apr-q__when"><?= e($q_c[3]) ?></td>
+              <td><span class="apr-q__blk <?= e($q_blocks[$q_c[4]][1]) ?>"><?= e($q_blocks[$q_c[4]][0]) ?></span></td>
+            </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+      <p class="apr-q__dod"><span class="apr-k">Definition of done</span>Written into the acceptance criteria in Define, not agreed afterwards: the feature works, the tests and evals pass, the budgets hold, the scans are clean, a person has reviewed it, the runbook is updated, and the words have been read by whoever answers for them.</p>
     </div>
   </div>
 </section>

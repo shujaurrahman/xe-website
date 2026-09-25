@@ -1,0 +1,45 @@
+/* Work · hero — the statement beside a contact sheet of five plates, over the page ledger. */
+.wrk-hero{padding-top:var(--bdh-hero-t)}
+.wrk-hero__grid{display:grid;grid-template-columns:minmax(0,27fr) minmax(0,25fr);gap:clamp(32px,5vw,72px);align-items:center}
+.wrk-hero__say{display:flex;flex-direction:column;align-items:flex-start;gap:20px}
+.wrk-hero__say .d1{max-width:13ch}
+.wrk-hero__lead{max-width:50ch}
+.wrk-hero__cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+
+/* ---- contact sheet ----------------------------------------------------- */
+.wrk-sheet-wrap{min-width:0}
+.wrk-sheet__bar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid var(--line);
+  color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
+.wrk-sheet__bar>span{display:inline-flex;align-items:center;gap:8px}
+.wrk-sheet{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:clamp(58px,6.1vw,88px);gap:clamp(8px,.9vw,12px)}
+.wrk-sheet__p{border-radius:var(--r);min-width:0}
+.wrk-sheet__p--a{grid-column:1 / 2;grid-row:1 / 4}
+.wrk-sheet__p--b{grid-column:2 / 4;grid-row:1 / 3}
+.wrk-sheet__p--c{grid-column:2 / 3;grid-row:3 / 5}
+.wrk-sheet__p--d{grid-column:3 / 4;grid-row:3 / 5}
+.wrk-sheet__p--e{grid-column:1 / 2;grid-row:4 / 5}
+.wrk-sheet__n{position:absolute;left:8px;top:7px;z-index:2;color:var(--on-ink);opacity:.9;letter-spacing:.1em}
+.wrk-sheet__cap{position:absolute;left:8px;bottom:7px;z-index:2;padding:2px 7px;border-radius:var(--r-xs);background:var(--ink);color:var(--on-ink-2);
+  font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;max-width:calc(100% - 16px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wrk-sheet__foot{margin-top:12px;color:var(--faint)}
+.wrk-sheet__foot .tl{font-family:var(--f-b);font-size:var(--t-xs)}
+
+/* ---- ledger ------------------------------------------------------------ */
+.wrk-led--wide dd{max-width:44ch}
+
+@media (max-width:1100px){
+  .wrk-hero__grid{grid-template-columns:minmax(0,1fr);gap:clamp(32px,6vw,52px)}
+  .wrk-hero__say .d1{max-width:16ch}
+  .wrk-hero__lead{max-width:62ch}
+  .wrk-sheet{grid-auto-rows:clamp(72px,9vw,104px)}
+}
+@media (max-width:600px){
+  .wrk-sheet{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:clamp(62px,17vw,92px);gap:8px}
+  .wrk-sheet__p--a{grid-column:1 / 2;grid-row:1 / 4}
+  .wrk-sheet__p--b{grid-column:2 / 3;grid-row:1 / 3}
+  .wrk-sheet__p--c{grid-column:2 / 3;grid-row:3 / 5}
+  .wrk-sheet__p--d{grid-column:1 / 2;grid-row:4 / 6}
+  .wrk-sheet__p--e{grid-column:2 / 3;grid-row:5 / 6}
+  .wrk-sheet__cap{display:none}
+  .wrk-hero__cta .btn{width:100%;justify-content:space-between}
+}

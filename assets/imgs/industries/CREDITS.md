@@ -1,6 +1,6 @@
 # industries — image credits
 
-PLACEHOLDER reference imagery for industries.php, free under the Unsplash License (credited anyway). Replace with Xterra Edze's own photography before launch. No photograph shows an Xterra Edze office, team or client. All files are copies of photos already credited under assets/imgs/brand/hub/industries/ and assets/imgs/tech/.
+PLACEHOLDER reference imagery for industries.php, free under the Unsplash License (credited anyway). Replace with Xterra Edze's own photography before launch. No photograph shows an Xterra Edze office, team or client. All files are copies of photos already credited under assets/imgs/brand/hub/industries/, assets/imgs/brand/hub/global/ and assets/imgs/tech/, verified byte-identical to the file they are credited from with `cmp`.
 
 | File | Used in | Unsplash user | Unsplash page |
 |---|---|---|---|
@@ -10,3 +10,4 @@ PLACEHOLDER reference imagery for industries.php, free under the Unsplash Licens
 | technology.jpg | Industries · B2B technology sector | kier-in-sight-archives | https://unsplash.com/photos/3Nwt6w-KU3E |
 | hospitality.jpg | Industries · Hospitality sector | aalo-lens | https://unsplash.com/photos/pt0nGH-NvoA |
 | telecom.jpg | Industries · Telecom & media sector | scottrodgerson | https://unsplash.com/photos/PSpf_XgOM5w |
+| markets-crowd.jpg | Industries · Markets section, the "same sector, different market" photograph | ryoji-iwata | https://unsplash.com/photos/TRJjPc0wss0 |

@@ -9,15 +9,16 @@ $an_steps = [
     ['A person reads it',        'Target: 5 working days',  'The lead for the practice you applied to. Not a keyword filter, not an agency, not a scoring model.'],
     ['You hear back either way', 'Always in writing',       'A yes, a no, or a question. If a target passes and you have heard nothing, that is our mistake — write and we will answer the same week.'],
     ['A thirty-minute call',     'Video, no slide deck',    'Your work, our work, and the pay range for the role, so you are not guessing before you invest more time.'],
-    ['Then the craft conversation', '60–75 minutes',        'One thing you have made, in depth, with two people you would actually work with. The full five stages are set out on the careers page.'],
+    ['Then the craft conversation', '60–75 minutes',        'One thing you have made, in depth, with two people you would actually work with. All five stages, and what each one tests, are set out on the careers page.'],
 ];
 
 $an_mech = [
-    ['Where it goes',  'It emails your answers, and your CV if you attached one, to ' . $SITE['company']['email'] . ', with Reply-To set to your address so a reply goes straight back to you.'],
-    ['What is stored here', 'Nothing. This website has no database and no file store. The page keeps nothing after the email leaves.'],
+    ['Where it goes',  'It emails your answers to ' . $SITE['company']['email'] . ', with your CV attached to that email and Reply-To set to your address, so a reply goes straight back to you.'],
+    ['What the CV does',    'It is read once from the upload, checked against its own bytes to confirm it really is a PDF or a Word document, renamed under our reference, attached, and dropped. It is never written into this website and never published.'],
+    ['What is stored here', 'Nothing. This website has no database and no file store. The page keeps nothing at all after the email leaves.'],
     ['Who sees it',         'The practice lead for the role and, at the offer stage, one founder. It is not circulated further and it is never shared outside the company.'],
-    ['How long we keep it', 'In the mailbox while the role is open, and for a while after in case something closer opens. Ask us to delete it and we will, at any point.'],
-    ['If sending fails',    'The page says so, keeps everything you typed, and hands you the same application as an email you can send yourself. It never pretends to have sent something it did not.'],
+    ['How long we keep it', 'In the mailbox while the role is open. Longer only if you ticked the box asking us to keep you on file. Ask us to delete it and we will, at any point.'],
+    ['If sending fails',    'The page says so, keeps every word you typed, and hands you the same application as an email you can send yourself. It never pretends to have sent something it did not.'],
 ];
 ?>
 <section class="band band--alt apl-nextb" id="what-happens" aria-labelledby="what-happens-t">

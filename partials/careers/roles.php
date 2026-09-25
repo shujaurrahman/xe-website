@@ -23,8 +23,8 @@ $car_sel = ['dept' => $car_fd, 'loc' => $car_fl, 'type' => $car_ft];
   <div class="wrap">
     <div class="bdh-head bdh-head--row" data-rv>
       <div><p class="lbl lbl--blue"><span class="dot"></span>Open roles</p>
-        <h2 class="h2" id="roles-t"><span class="g">Find your role.</span> Apply in two minutes.</h2></div>
-      <div><p class="lead">Search, filter, open a role for the detail, then apply on a short form with the role already filled in. No account, no cover-letter portal.</p></div>
+        <h2 class="h2" id="roles-t"><span class="g">Find your role.</span> Then read the whole listing.</h2></div>
+      <div><p class="lead">Search and filter by team, location and type, open a role for the full detail, then apply on a form with the role already filled in. No account, no portal, no re-typing your CV into boxes.</p></div>
     </div>
     <!-- PLACEHOLDER: openings are to be confirmed before launch -->
     <p class="car-roles__tbc"><?= xt_icon('alert') ?> Openings listed here are to be confirmed. Apply anyway; we keep strong applications on file for the next opening.</p>
@@ -70,8 +70,15 @@ $car_sel = ['dept' => $car_fd, 'loc' => $car_fl, 'type' => $car_ft];
                    travels in ?role=, which that page validates against this same data file. */ ?>
           <div class="car-apply">
             <p class="car-apply__h">Apply for this role</p>
-            <p class="car-apply__note">A short form on its own page, with this role already filled in: your details, a link to your work, and why this role.</p>
+            <p class="car-apply__note">The application form on its own page, with this role already filled in: your details, links to your work, your CV, and two questions worth answering properly.</p>
+            <ul class="car-apply__facts">
+              <li><?= xt_icon('clock', ['size' => 17]) ?><span>About ten minutes</span></li>
+              <li><?= xt_icon('doc', ['size' => 17]) ?><span>CV as PDF, DOC or DOCX</span></li>
+              <li><?= xt_icon('users', ['size' => 17]) ?><span>Read by <?= e($car_r['dept']) ?>, not a filter</span></li>
+            </ul>
             <a class="btn btn--ink car-apply__go" href="<?= e(xe_url('careers/apply.php') . '?role=' . rawurlencode($car_id)) ?>">Apply for this role <span class="i" aria-hidden="true">›</span><span class="sr">: <?= e($car_r['title']) ?></span></a>
+            <!-- PLACEHOLDER: confirm that the pay range is stated on the first call before launch -->
+            <p class="car-apply__fine">The pay range is stated on the first call, unprompted. What happens to what you send is in our <a class="tl" href="<?= e(xe_url('legal/privacy.php')) ?>">privacy notice</a>.</p>
           </div>
         </div>
       </details>

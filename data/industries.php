@@ -1,12 +1,19 @@
 <?php
 /* DRAFT COPY — review before launch.
- * Industries page data. Discipline keys are slugs from data/site.php.
- * 'mix' = how much each discipline leads in a typical programme: 3 lead · 2 core · 1 support.
+ * Industries page data. Discipline keys are slugs from data/site.php; capability keys are the
+ * capability slugs under services/<discipline>/ (every one below has a page — checked with ls).
+ *
+ * 'mix'  = how much each discipline leads in a typical programme: 3 lead · 2 core · 1 support.
+ * 'caps' = the capability pages that sector most often needs, per discipline.
  * Frameworks are "frameworks we build to" — never a claim of certification or registration.
- * Examples are anonymised composites: PLACEHOLDER until confirmed against real engagements. */
+ * 'scope' names what genuinely applies AND what does not: naming a regulation that does not apply
+ *          to a sector is a factual error, so each row says when it switches on.
+ * Examples are anonymised composites: PLACEHOLDER until confirmed against real engagements.
+ * Lengths in 'entry' are typical ranges, not quotes: PLACEHOLDER until confirmed.
+ */
 return [
   [
-    'id' => 'consumer-health', 'n' => '01', 'name' => 'Consumer health', 'img' => 'healthcare.jpg',
+    'id' => 'consumer-health', 'n' => '01', 'name' => 'Consumer health', 'short' => 'Health', 'img' => 'healthcare.jpg',
     'line' => 'Claims are regulated. Trust is earned on the shelf, the search result and the pharmacist’s counter.',
     'shifts' => [
       'Buyers research symptoms in search and AI answers before they reach a pharmacy.',
@@ -27,7 +34,7 @@ return [
     'rules' => [
       ['ASCI Code', 'Self-regulatory code for Indian advertising: substantiated claims, honest comparisons, influencer disclosure labels.'],
       ['Drugs & Magic Remedies Act, 1954', 'Bars advertising that promises to cure or prevent the conditions in its Schedule — copy is screened against it.'],
-      ['Drugs & Cosmetics Act, 1940 · Schedule J', 'Lists diseases a drug may not claim to prevent or cure; prescription drugs are not advertised to the public.'],
+      ['Drugs & Cosmetics Rules, 1945 · Schedule J', 'Lists the diseases a product may not claim to prevent or cure; prescription drugs are not advertised to the public.'],
       ['CCPA misleading-ads guidelines, 2022', 'Consumer Protection Act guidance on substantiation, disclaimers and endorsements.'],
     ],
     'badges' => ['dpdp', 'wcag22'],
@@ -36,9 +43,56 @@ return [
     'example' => 'A consumer-health portfolio across nine markets moved to one brand system and one approved-claims library, so every market ships from the same rules.',
     'mix' => ['brand-design' => 3, 'campaign-content' => 3, 'ai-design' => 2, 'marketing-technology' => 2, 'product-experience' => 1, 'technology-intelligence' => 1],
     'kpi' => 'First-time claims approval',
+    'kpi_def'  => 'The share of assets that clear medical, legal and regulatory review without a rewrite.',
+    'kpi_base' => 'Counted from your own review log for the two quarters before we start, so the comparison is like for like.',
+    'cadence'  => 'Weekly during a campaign wave, monthly in the service report.',
+
+    'systems' => [
+      ['Systems of record', 'A digital asset library, a product information system and a regulatory-affairs archive, bought separately and never joined. Artwork lives in one, approved claims in another, and each market keeps a third copy on a shared drive.'],
+      ['Where people meet you', 'A search result or an AI answer first, then a quick-commerce listing the size of a thumbnail, then a pharmacist. The pack is often the last thing seen, not the first.'],
+      ['The data reality', 'Symptom searches, basket contents and pharmacist interactions are personal data under the DPDP Act. Health interest inferred from behaviour deserves the same care as a declared condition.'],
+      ['What usually breaks', 'A market team rewrites an approved claim to fit a 40-character listing title, and the qualifier that made it lawful disappears. Nothing catches it until a regulator does.'],
+    ],
+    'stack' => ['figma', 'contentful', 'sanity', 'shopify', 'algolia', 'schemaorg', 'googleanalytics', 'googletagmanager', 'hubspot', 'openai', 'anthropic', 'postgresql'],
+    'stack_note' => 'The joins that matter here are asset library → listing feed → claims record, so an approved claim can be traced from evidence to shelf.',
+    'scope' => [
+      ['dpdp', 'Applies', 'Symptom searches, purchase history and pharmacist contact are personal data. Notice, purpose limitation and a withdrawal route as easy as the consent are designed into every form.'],
+      ['pci-dss', 'Only if you hold card data', 'An e-pharmacy checkout that hands off to a payment gateway keeps most of the estate out of scope. An embedded card field on your own page does not.'],
+      ['hipaa', 'Not in scope', 'HIPAA binds US covered entities and their business associates handling electronic protected health information. A retail pack, a claims library or a symptom article is none of those. It applies only if you process US patient records.'],
+    ],
+    'ai' => [
+      'name'    => 'Claims-safe drafting agent',
+      'does'    => 'Drafts market copy from the approved claims library, with the evidence reference attached to every sentence it produces.',
+      'never'   => 'Never invents a claim, never edits an approved one, never writes for a prescription product aimed at the public.',
+      'guard'   => 'A blocked-claims list built from Schedule J and the Drugs & Magic Remedies Act, applied before a human sees the draft.',
+      'eval'    => 'A fixed set of briefs with known-good and known-bad outputs, re-run on every prompt, model or claims-library change.',
+      'approve' => 'Medical, legal and regulatory sign-off by a named reviewer before anything is published.',
+      'log'     => 'Prompt, model version, source claim, evidence reference, reviewer and decision, retained beside the asset.',
+    ],
+    'entry' => [
+      ['Claims library and approval trail', 'Campaigns, listings, packs and AI drafting all depend on one list of what may be said and the evidence behind it. Build it first and everything downstream gets faster.', '6–10 weeks', 'AI-assisted drafting, then market rollout', [['campaign-content', 'campaign-design-systems'], ['ai-design', 'ai-content-studio']]],
+      ['Brand and pack system across markets', 'When nine markets each hold their own artwork, the brand drifts a little every quarter. One system with rules for flex stops the drift without slowing anyone down.', '10–16 weeks', 'Pack refresh, then retail and shelf', [['brand-design', 'brand-systems'], ['brand-design', 'brand-architecture']]],
+      ['Symptom-led content and AI visibility', 'The question is asked in a search box or an assistant long before a pack is picked up. Answering it accurately is both a marketing job and a compliance job.', '8–12 weeks', 'Content system, then pharmacist programmes', [['technology-intelligence', 'search-ai-visibility'], ['campaign-content', 'content-marketing']]],
+    ],
+    'caps' => [
+      'brand-design' => ['brand-systems', 'brand-architecture'],
+      'technology-intelligence' => ['search-ai-visibility', 'websites-apps'],
+      'campaign-content' => ['campaign-design-systems', 'content-marketing'],
+      'ai-design' => ['ai-content-studio', 'brand-ai-tools'],
+      'product-experience' => ['experience-design-development'],
+      'marketing-technology' => ['content-communication-infrastructure', 'customer-relationship-strategy'],
+    ],
+    'markets' => [
+      ['India', 'ASCI, the Drugs & Magic Remedies Act and Schedule J decide what may be claimed. The DPDP Act governs the data, and it has no separate “sensitive” category — health data is protected as personal data, with added duties for anyone under 18.'],
+      ['European Union', 'Health claims on foods and supplements are pre-authorised under Regulation (EC) No 1924/2006. GDPR treats health data as a special category under Article 9, so a lawful basis alone is not enough.'],
+      ['United States', 'FTC substantiation rules for health claims and FDA rules for the product class. HIPAA enters only if you handle patient records, not because the category is health.'],
+    ],
+    'risk' => 'A claim approved for a leaflet is reused in a marketplace title, and the qualifier that made it lawful is cut for length.',
+    'transfer' => 'The claims trail — evidence, blocked list, human approval, audit log — is the same machine a lender needs for disclosures.',
   ],
+
   [
-    'id' => 'financial-services', 'n' => '02', 'name' => 'Financial services', 'img' => 'financial.jpg',
+    'id' => 'financial-services', 'n' => '02', 'name' => 'Financial services', 'short' => 'Finance', 'img' => 'financial.jpg',
     'line' => 'Trust is the product. Every screen is a disclosure, and every message is on the record.',
     'shifts' => [
       'Onboarding, lending and investing moved to the phone, with KYC done by video.',
@@ -57,7 +111,7 @@ return [
       ['brand-design', 'A brand that signals safety and clarity at the size of an app icon.'],
     ],
     'rules' => [
-      ['RBI Digital Lending Directions', 'Key Fact Statement before contract, all-in APR, cooling-off period and disclosure of lending service providers.'],
+      ['RBI Digital Lending Directions', 'Key Fact Statement before contract, all-in annual percentage rate, a cooling-off period and disclosure of lending service providers.'],
       ['RBI Master Direction — KYC', 'Customer due diligence, including video-based customer identification (V-CIP) flows.'],
       ['SEBI advertisement codes', 'Rules for mutual fund, adviser and research-analyst advertising, including no assured-return claims.'],
       ['PCI DSS v4.0.1', 'Card-data security standard for any page or system that touches payment cards.'],
@@ -68,9 +122,56 @@ return [
     'example' => 'A lender rebuilt its CRM around the customer journey, so every message knows what happened last and every disclosure is logged.',
     'mix' => ['product-experience' => 3, 'marketing-technology' => 3, 'technology-intelligence' => 3, 'brand-design' => 2, 'campaign-content' => 1, 'ai-design' => 1],
     'kpi' => 'Onboarding completion',
+    'kpi_def'  => 'The share of applicants who start an application and finish it, measured per product and per channel.',
+    'kpi_base' => 'Taken from four weeks of your own funnel data before any change ships, split by step so a fix can be attributed.',
+    'cadence'  => 'Daily on the funnel dashboard, monthly against target in the service report.',
+
+    'systems' => [
+      ['Systems of record', 'A core banking or loan origination system, a KYC and AML stack, a card or payments processor and a CRM. Each holds a customer identifier, and no two agree on which one is the truth.'],
+      ['Where people meet you', 'Your app, an aggregator, a partner’s checkout and a regulated intermediary — often all four for the same customer inside one week.'],
+      ['The data reality', 'Every screen is a disclosure and every message is on the record. Consent, purpose and retention have to be provable in an audit, not asserted in a policy.'],
+      ['What usually breaks', 'The disclosure is present but arrives after the decision. The funnel converts and the audit fails, and the fix is a journey change, not a copy change.'],
+    ],
+    'stack' => ['react', 'nextdotjs', 'kotlin', 'swift', 'postgresql', 'apachekafka', 'redis', 'amazonwebservices', 'kubernetes', 'vault', 'okta', 'razorpay', 'stripe', 'datadog', 'opentelemetry', 'salesforce'],
+    'stack_note' => 'Nothing here is chosen for novelty: the constraints are an audit trail, an India data boundary for payment-system data, and a p99 a regulator could read.',
+    'scope' => [
+      ['pci-dss', 'Applies', 'Wherever card data is stored, processed or transmitted. The v4 requirements on payment-page scripts and change detection have been mandatory since 31 March 2025, not advisory.'],
+      ['dpdp', 'Applies', 'To customer data throughout. Separately, RBI’s 2018 direction requires payment-system data to be stored in India, which is a residency question rather than a consent one.'],
+      ['hipaa', 'Not in scope', 'HIPAA is a United States health-data regulation. It has nothing to say about a lender, a broker, an insurer’s general marketing or a bank, and naming it here would be wrong.'],
+    ],
+    'ai' => [
+      'name'    => 'Servicing and collections assistant',
+      'does'    => 'Answers account, statement and repayment questions from your own records, and drafts the next best action for a human agent.',
+      'never'   => 'Never makes a credit decision, never quotes a rate it has not been given, never agrees a settlement.',
+      'guard'   => 'Retrieval scoped to the customer in session; hard refusals for advice, eligibility and pricing; prompt-injection tests from the OWASP LLM list run before release.',
+      'eval'    => 'A golden set of real question shapes with expected answers, scored for faithfulness and for the refusals that should have happened but did not.',
+      'approve' => 'A named person approves anything that changes a balance, a rate or a repayment plan.',
+      'log'     => 'Inputs, retrieved documents, model version, the answer given and the reviewer, retained for the audit period.',
+    ],
+    'entry' => [
+      ['Onboarding and video-KYC journey', 'It is the step that loses the most people and the step a regulator reads most closely, so improving it pays twice.', '8–14 weeks', 'Lending journey, then lifecycle messaging', [['product-experience', 'experience-design-development'], ['technology-intelligence', 'websites-apps']]],
+      ['Journey-led CRM with consent built in', 'Messages that do not know what happened last are the fastest route to an opt-out and a complaint.', '12–18 weeks', 'Servicing assistant, then collections', [['marketing-technology', 'customer-relationship-strategy'], ['technology-intelligence', 'custom-software-data-platforms']]],
+      ['Security, privacy and AI-readiness audit', 'When an estate has grown by acquisition, the first useful deliverable is an honest map of what exists and what it is costing.', '3–5 weeks', 'A prioritised remediation plan', [['technology-intelligence', 'audits-assessments'], ['technology-intelligence', 'cybersecurity-ai-trust']]],
+    ],
+    'caps' => [
+      'brand-design' => ['brand-identity', 'brand-systems'],
+      'technology-intelligence' => ['websites-apps', 'cybersecurity-ai-trust'],
+      'campaign-content' => ['performance-marketing'],
+      'ai-design' => ['ai-application-design'],
+      'product-experience' => ['experience-design-development', 'system-design'],
+      'marketing-technology' => ['customer-relationship-strategy', 'ai-driven-marketing-automation'],
+    ],
+    'markets' => [
+      ['India', 'RBI directions on digital lending and KYC set what the screen must show and when. Payment-system data is stored in India. SEBI codes govern anything that looks like investment advertising.'],
+      ['European Union', 'PSD2 strong customer authentication in the payment flow, GDPR for the data, and the EU Accessibility Act has applied to consumer banking services since 28 June 2025.'],
+      ['United States', 'State money-transmission licensing shapes the product, Regulation Z governs credit disclosure, and card data still falls under PCI DSS.'],
+    ],
+    'risk' => 'A disclosure is technically present but placed after the decision point, so the journey passes usability testing and fails the audit.',
+    'transfer' => 'The disclosure trail — what was shown, when, to whom, with which version — is the same machine a health brand needs for claims.',
   ],
+
   [
-    'id' => 'retail-commerce', 'n' => '03', 'name' => 'Retail & commerce', 'img' => 'retail.jpg',
+    'id' => 'retail-commerce', 'n' => '03', 'name' => 'Retail & commerce', 'short' => 'Retail', 'img' => 'retail.jpg',
     'line' => 'A season ships in days. The brand has to hold at the speed of the calendar.',
     'shifts' => [
       'Discovery moved from search results to AI answers, marketplaces and social feeds.',
@@ -89,10 +190,10 @@ return [
       ['ai-design', 'Generative variant production with brand checks and a human approval step.'],
     ],
     'rules' => [
-      ['DPDP Act, 2023 and Rules', 'Clear consent notices, purpose limitation and withdrawal as easy as consent.'],
-      ['CCPA dark-patterns guidelines, 2023', 'Names practices such as false urgency, basket sneaking, drip pricing and confirm-shaming.'],
-      ['Consumer Protection (E-Commerce) Rules, 2020', 'Seller, price, return and grievance information shown to the buyer.'],
-      ['PCI DSS v4.0.1', 'Including the v4 requirements on scripts running on payment pages.'],
+      ['DPDP Act, 2023 and the DPDP Rules', 'Clear consent notices, purpose limitation and withdrawal as easy as consent.'],
+      ['CCPA dark-patterns guidelines, 2023', 'Names thirteen practices, including false urgency, basket sneaking, drip pricing and confirm-shaming.'],
+      ['Consumer Protection (E-Commerce) Rules, 2020', 'Seller, price, return and grievance information shown to the buyer before purchase.'],
+      ['Legal Metrology (Packaged Commodities) Rules, 2011', 'Mandatory declarations on a listing: net quantity, maximum retail price, country of origin and consumer-care contact.'],
     ],
     'badges' => ['dpdp', 'gdpr', 'pci-dss', 'cwv', 'wcag22'],
     'programmes' => ['Seasonal campaign production system', 'Product data and search/AI visibility', 'Checkout and consent redesign', 'Retail media and marketplace content'],
@@ -100,9 +201,56 @@ return [
     'example' => 'A retailer moved to a campaign system that ships a season in days instead of weeks, without losing the brand.',
     'mix' => ['campaign-content' => 3, 'technology-intelligence' => 3, 'product-experience' => 2, 'ai-design' => 2, 'marketing-technology' => 2, 'brand-design' => 1],
     'kpi' => 'Time to ship a season',
+    'kpi_def'  => 'Working days from an approved seasonal brief to every channel asset live, across sizes, languages and marketplaces.',
+    'kpi_base' => 'Measured on the last two seasons from your own production tracker, including rework.',
+    'cadence'  => 'Per wave during a season, monthly across the year.',
+
+    'systems' => [
+      ['Systems of record', 'A commerce platform, a product information system, an order management system and a warehouse system. The product title exists in four of them and matches in none.'],
+      ['Where people meet you', 'A marketplace listing, an AI answer, a social feed, a retail-media placement and, last, your own storefront.'],
+      ['The data reality', 'Consent is collected at the banner and ignored by six tags. Product attributes decide whether an assistant can answer a question about you at all.'],
+      ['What usually breaks', 'Traffic arrives on sale day, the third-party scripts on the checkout page double the interaction delay, and the conversion loss is blamed on the creative.'],
+    ],
+    'stack' => ['shopify', 'woocommerce', 'nextdotjs', 'react', 'contentful', 'algolia', 'elasticsearch', 'apachekafka', 'postgresql', 'cloudflare', 'fastly', 'stripe', 'razorpay', 'googleanalytics', 'googletagmanager', 'schemaorg', 'lighthouse', 'openai'],
+    'stack_note' => 'Speed and structured data are the two levers. A catalogue that is machine-readable is the difference between being cited in an answer and being invisible in one.',
+    'scope' => [
+      ['pci-dss', 'Applies', 'Even with a hosted gateway. Requirement 6.4.3 covers every script that runs on a payment page, which for most retailers means the tag manager, not the checkout code.'],
+      ['cwv', 'Applies', 'Good at the 75th percentile of real visits: LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1. Lab scores are not the measure.'],
+      ['hipaa', 'Not in scope', 'Selling a wellness product does not make you a US health provider. HIPAA applies to covered entities and business associates handling patient records, which a retailer is not.'],
+    ],
+    'ai' => [
+      'name'    => 'Variant production and catalogue agent',
+      'does'    => 'Generates channel and size variants from an approved master, and writes listing attributes from the product record.',
+      'never'   => 'Never invents a price, a stock level, a discount or a product attribute that is not in the catalogue.',
+      'guard'   => 'Brand checks on colour, logo clear space and typography; a price and stock lookup that refuses rather than guesses; banned-phrase list for urgency language.',
+      'eval'    => 'A fixed sample of products scored for attribute accuracy against the catalogue, and a brand panel scored against the system rules.',
+      'approve' => 'A human approves the master and spot-checks a sample of variants. Nothing goes live from the model alone.',
+      'log'     => 'Source master, prompt, model version, catalogue snapshot and approver, kept with each generated asset.',
+    ],
+    'entry' => [
+      ['Checkout and consent redesign', 'It is the shortest path to revenue, and the same work removes the dark patterns the CCPA guidelines name.', '6–10 weeks', 'Account journeys, then loyalty', [['product-experience', 'experience-design-development'], ['technology-intelligence', 'websites-apps']]],
+      ['Seasonal campaign production system', 'When a season takes weeks to produce, the calendar dictates the work. A template system gives the calendar back.', '10–14 weeks', 'AI variant production with brand checks', [['campaign-content', 'campaign-design-systems'], ['ai-design', 'ai-content-studio']]],
+      ['Product data and AI visibility', 'An assistant can only recommend what it can read. Structured product data is now a merchandising decision.', '8–12 weeks', 'Retail media and marketplace content', [['technology-intelligence', 'search-ai-visibility'], ['technology-intelligence', 'custom-software-data-platforms']]],
+    ],
+    'caps' => [
+      'brand-design' => ['brand-systems'],
+      'technology-intelligence' => ['websites-apps', 'search-ai-visibility'],
+      'campaign-content' => ['campaign-design-systems', 'performance-marketing'],
+      'ai-design' => ['ai-content-studio', 'brand-ai-tools'],
+      'product-experience' => ['experience-design-development'],
+      'marketing-technology' => ['ai-campaign-optimization', 'ai-creative-solutions'],
+    ],
+    'markets' => [
+      ['India', 'The E-Commerce Rules, the dark-patterns guidelines and Legal Metrology declarations all land on the same listing page. DPDP governs the consent banner behind it.'],
+      ['European Union', 'The Omnibus Directive requires prior-price disclosure on discounts, GDPR and ePrivacy govern the banner, and the EU Accessibility Act has applied to e-commerce since 28 June 2025.'],
+      ['United States', 'FTC rules on endorsements and on negative-option billing, plus state privacy laws with opt-out signals the site has to honour.'],
+    ],
+    'risk' => 'A tag added by marketing on Friday runs on the payment page and quietly takes the checkout back into PCI DSS scope.',
+    'transfer' => 'The season calendar — plan, produce, live, with a gate between each — is the same machine a telecom needs for monthly offers.',
   ],
+
   [
-    'id' => 'b2b-technology', 'n' => '04', 'name' => 'B2B technology', 'img' => 'technology.jpg',
+    'id' => 'b2b-technology', 'n' => '04', 'name' => 'B2B technology', 'short' => 'B2B tech', 'img' => 'technology.jpg',
     'line' => 'Buyers self-educate for months. The product, the site and the assistant do the selling first.',
     'shifts' => [
       'Buying committees research through AI assistants and peer communities before talking to sales.',
@@ -122,7 +270,7 @@ return [
     ],
     'rules' => [
       ['SOC 2 and ISO/IEC 27001', 'The security evidence buyers ask for; we build systems and documentation that support your audit.'],
-      ['EU AI Act', 'Risk-based obligations phasing in from 2025, including transparency for AI that talks to people.'],
+      ['EU AI Act', 'Risk-based obligations phasing in from 2025, including transparency where an AI system interacts with people.'],
       ['OWASP Top 10 for LLM Applications', 'Prompt injection (LLM01) and the other risks we test assistants against.'],
       ['GDPR and DPDP Act', 'Data-processing terms, consent and cross-border transfer for customer data.'],
     ],
@@ -132,9 +280,56 @@ return [
     'example' => 'A software company launched a product experience and an assistant that answers the questions sales kept repeating.',
     'mix' => ['product-experience' => 3, 'brand-design' => 3, 'ai-design' => 3, 'technology-intelligence' => 2, 'marketing-technology' => 2, 'campaign-content' => 1],
     'kpi' => 'Qualified pipeline',
+    'kpi_def'  => 'Opportunities that pass your own qualification bar, attributed to organic search, AI answers and the product experience.',
+    'kpi_base' => 'Two quarters of CRM history, with the qualification definition written down before the baseline is drawn.',
+    'cadence'  => 'Monthly, with the assistant eval reported on every release.',
+
+    'systems' => [
+      ['Systems of record', 'A CRM, a product analytics tool, a documentation site, a support desk and a billing system. The account is a different shape in each, and marketing sees only one of them.'],
+      ['Where people meet you', 'An AI answer, a peer community thread, a review site, your docs, and a security questionnaire — usually in that order and usually before a call.'],
+      ['The data reality', 'Per-tenant boundaries are a product requirement, not an infrastructure detail. An AI feature that can see across tenants is a breach waiting for a demo.'],
+      ['What usually breaks', 'The security questionnaire arrives at the end of a good sales cycle and stalls it for six weeks, because nobody owns the answers.'],
+    ],
+    'stack' => ['typescript', 'react', 'nextdotjs', 'nodedotjs', 'postgresql', 'amazonwebservices', 'kubernetes', 'terraform', 'okta', 'auth0', 'openai', 'anthropic', 'langgraph', 'pgvector', 'opentelemetry', 'sentry', 'hubspot', 'posthog'],
+    'stack_note' => 'Model choice is per task and reversible: one gateway, one eval set, so switching a model is a configuration change you can demonstrate.',
+    'scope' => [
+      ['eu-ai-act', 'Applies if you sell into the EU', 'Risk tier decides the obligation. A support assistant that talks to people carries transparency duties; a system used for employment or credit decisions is a different tier entirely.'],
+      ['soc2', 'Expected, not required by law', 'Enterprise buyers ask for the report. We build the evidence — change approvals, access logs, incident records — as delivery runs. The attestation comes from your auditor, never from us.'],
+      ['pci-dss', 'Usually minimal', 'If billing runs through a hosted checkout, your scope is the scripts on that page and the reconciliation, not the card data itself.'],
+    ],
+    'ai' => [
+      'name'    => 'Product and support assistant',
+      'does'    => 'Answers product questions from your documentation, changelog and the customer’s own tenant data, and drafts replies for support.',
+      'never'   => 'Never reads across tenants, never promises a roadmap date, never performs a destructive action without confirmation.',
+      'guard'   => 'Tenant scoping enforced at retrieval, not in the prompt; tool calls allow-listed; red-team suites for prompt injection and data leakage run in CI.',
+      'eval'    => 'A golden set per release, scored for faithfulness, citation accuracy and refusal behaviour, with the pass threshold agreed before launch.',
+      'approve' => 'A person approves any answer that changes an account, and any new tool the agent is allowed to call.',
+      'log'     => 'Tenant, prompt, retrieved documents, tool calls, model version and outcome, available to the customer as well as to you.',
+    ],
+    'entry' => [
+      ['Positioning and the category story', 'When five competitors describe themselves the same way, the site cannot do its job. Positioning is the cheapest lever on the whole funnel.', '6–10 weeks', 'Brand system, then the site', [['brand-design', 'brand-foundation'], ['brand-design', 'growth-strategy']]],
+      ['Product-led site and demo experience', 'Buyers want to see it work before they will book a call, and the site is where that has to happen.', '10–16 weeks', 'Docs, then the assistant', [['technology-intelligence', 'websites-apps'], ['product-experience', 'product-strategy-vision']]],
+      ['Assistant with evals and guardrails', 'Every product now ships AI. The difference is whether it can be governed, demonstrated and sold to a security team.', '8–14 weeks', 'In-product AI features', [['ai-design', 'ai-application-design'], ['technology-intelligence', 'ai-strategy-agents']]],
+    ],
+    'caps' => [
+      'brand-design' => ['brand-foundation', 'growth-strategy'],
+      'technology-intelligence' => ['websites-apps', 'ai-strategy-agents'],
+      'campaign-content' => ['content-marketing'],
+      'ai-design' => ['ai-application-design', 'ai-strategy-consulting'],
+      'product-experience' => ['product-strategy-vision', 'system-design'],
+      'marketing-technology' => ['ai-lead-generation', 'automated-dynamic-sales'],
+    ],
+    'markets' => [
+      ['India', 'DPDP data-processing duties, CERT-In incident reporting within six hours and 180-day log retention in India for anything you host here.'],
+      ['European Union', 'GDPR processing terms and transfer mechanism, the EU AI Act risk tier for any AI feature, and NIS2 where your customer is an essential or important entity.'],
+      ['United States', 'SOC 2 Type II is the de facto entry ticket, plus state privacy laws and sector rules inherited from whichever customers you serve.'],
+    ],
+    'risk' => 'An AI feature ships without an eval set, and the first time anyone measures it is when a customer reports a wrong answer.',
+    'transfer' => 'Tenant-scoped retrieval — the customer only ever sees their own records — is the same control a bank needs for account servicing.',
   ],
+
   [
-    'id' => 'hospitality', 'n' => '05', 'name' => 'Hospitality', 'img' => 'hospitality.jpg',
+    'id' => 'hospitality', 'n' => '05', 'name' => 'Hospitality', 'short' => 'Hospitality', 'img' => 'hospitality.jpg',
     'line' => 'Direct booking is a product, not a discount — from first search to the day after checkout.',
     'shifts' => [
       'Travellers plan with AI assistants and compare on aggregators before they ever see your site.',
@@ -156,17 +351,64 @@ return [
       ['PCI DSS v4.0.1', 'Card data in booking engines, deposits and stored payment methods.'],
       ['DPDP Act, 2023 and GDPR', 'Guest data from many markets, with purpose-bound consent.'],
       ['CCPA dark-patterns guidelines, 2023', 'Drip pricing and false urgency (“only 1 room left”) in booking flows.'],
-      ['WCAG 2.2 AA', 'Accessible booking for every guest; the EU Accessibility Act applies to e-commerce from June 2025.'],
+      ['WCAG 2.2 AA', 'Accessible booking for every guest; the EU Accessibility Act has applied to e-commerce since June 2025.'],
     ],
     'badges' => ['pci-dss', 'dpdp', 'gdpr', 'wcag22', 'cwv'],
     'programmes' => ['Direct-booking experience', 'Guest data and lifecycle programme', 'Portfolio brand architecture', 'Pre-stay and in-stay digital services'],
-    'measure' => ['Direct share of bookings', 'Booking-flow conversion by step', 'Repeat-stay rate', 'Guest satisfaction after digital touchpoints'],
+    'measure' => ['Share of bookings by channel', 'Booking-flow conversion by step', 'Repeat-stay rate', 'Guest satisfaction after digital touchpoints'],
     'example' => 'A hotel group treated direct booking as a product, redesigning search-to-checkout and the messages that follow the stay.',
     'mix' => ['product-experience' => 3, 'marketing-technology' => 3, 'brand-design' => 2, 'technology-intelligence' => 2, 'campaign-content' => 2, 'ai-design' => 1],
     'kpi' => 'Direct booking share',
+    'kpi_def'  => 'Room nights booked on your own channels as a share of all room nights, net of cancellations.',
+    'kpi_base' => 'Twelve months of channel-mix data, so seasonality is visible and a good month is not mistaken for a trend.',
+    'cadence'  => 'Weekly on the channel dashboard, monthly against target.',
+
+    'systems' => [
+      ['Systems of record', 'A property management system per property, a central reservation system, a channel manager, a point-of-sale and a loyalty database. The same guest exists five times.'],
+      ['Where people meet you', 'An AI trip plan, an aggregator, a metasearch result, then your booking engine — and after arrival, the front desk and a messaging app.'],
+      ['The data reality', 'Guest identity is the hard problem. Joining a booking, a stay, a restaurant bill and a loyalty number into one consented profile is most of the work.'],
+      ['What usually breaks', 'Taxes and resort fees appear on the final step, the guest returns to the aggregator, and the discount that follows costs more than the fee earned.'],
+    ],
+    'stack' => ['nextdotjs', 'react', 'reactnative', 'postgresql', 'redis', 'elasticsearch', 'cloudflare', 'amazonwebservices', 'stripe', 'razorpay', 'twilio', 'whatsapp', 'salesforce', 'googleanalytics', 'schemaorg', 'lighthouse'],
+    'stack_note' => 'The integration surface is the project: property, channel and payment systems are rarely modern, and the booking engine has to stay fast anyway.',
+    'scope' => [
+      ['pci-dss', 'Applies', 'Deposits, stored cards for incidentals and phone bookings taken at the desk all bring card data into scope, even when the booking engine is hosted.'],
+      ['wcag22', 'Applies', 'Booking is a consumer service. WCAG 2.2 AA sets the floor — visible focus that is never obscured, 24 × 24 CSS px targets, and no drag-only date pickers.'],
+      ['hipaa', 'Not in scope', 'A spa intake form is not a US medical record. It is personal data under DPDP or GDPR, handled with purpose limits and retention rules, not under HIPAA.'],
+    ],
+    'ai' => [
+      'name'    => 'Pre-stay and concierge assistant',
+      'does'    => 'Answers questions about the booking, the property and the area, and takes requests through to the property system.',
+      'never'   => 'Never changes a rate, never confirms an upgrade that inventory has not released, never handles a card number in chat.',
+      'guard'   => 'Live inventory and rate lookups that refuse rather than estimate; payment always handed to the hosted flow; requests written to the property system only through an allow-listed action.',
+      'eval'    => 'A golden set of real guest questions per property type, scored for accuracy against live inventory and for correct escalation.',
+      'approve' => 'A person confirms anything that costs money or moves a room, and any request the assistant flags as unclear.',
+      'log'     => 'Booking reference, question, retrieved records, action taken and the staff member who confirmed it.',
+    ],
+    'entry' => [
+      ['Direct-booking experience', 'The aggregator wins on clarity, not on price. Fixing search-to-confirmation is the fastest move on the only number that matters here.', '10–16 weeks', 'Guest data, then lifecycle', [['product-experience', 'experience-design-development'], ['technology-intelligence', 'websites-apps']]],
+      ['Guest data and lifecycle programme', 'Until the same guest is one record, every message is a guess and every offer is a discount.', '12–20 weeks', 'Loyalty, then in-stay services', [['marketing-technology', 'customer-relationship-strategy'], ['technology-intelligence', 'custom-software-data-platforms']]],
+      ['Portfolio brand architecture', 'When a group grows by acquisition, the guest cannot tell which brand promises what, and neither can the marketing team.', '8–14 weeks', 'Property rollout and standards', [['brand-design', 'brand-architecture'], ['brand-design', 'brand-systems']]],
+    ],
+    'caps' => [
+      'brand-design' => ['brand-architecture', 'brand-systems'],
+      'technology-intelligence' => ['websites-apps', 'integration-support'],
+      'campaign-content' => ['global-content-production', 'performance-marketing'],
+      'ai-design' => ['ai-application-design'],
+      'product-experience' => ['experience-design-development', 'design-consulting-solutioning'],
+      'marketing-technology' => ['customer-relationship-strategy', 'content-communication-infrastructure'],
+    ],
+    'markets' => [
+      ['India', 'GST shown correctly by slab in the booking flow, DPDP consent for guest data, and the dark-patterns guidelines on drip pricing and false scarcity.'],
+      ['European Union', 'The Package Travel Directive where a stay is bundled with transport, GDPR for guest profiles, and the EU Accessibility Act for the booking journey.'],
+      ['United States', 'FTC rules on total-price display in short-term lodging, plus state privacy laws with opt-out preference signals.'],
+    ],
+    'risk' => 'Loyalty is joined to the booking engine but not to the point-of-sale, so a guest who eats there twice a week is treated as a stranger.',
+    'transfer' => 'The booking funnel — step-by-step drop-off with a named owner per step — is the same instrument a lender uses on onboarding.',
   ],
+
   [
-    'id' => 'telecom-media', 'n' => '06', 'name' => 'Telecom & media', 'img' => 'telecom.jpg',
+    'id' => 'telecom-media', 'n' => '06', 'name' => 'Telecom & media', 'short' => 'Telecom', 'img' => 'telecom.jpg',
     'line' => 'Coverage, content and care — millions of customers, one intelligence layer.',
     'shifts' => [
       'Plans, content bundles and devices change monthly; messaging has to keep up.',
@@ -185,9 +427,9 @@ return [
       ['campaign-content', 'Offer and content production that updates every channel from one source.'],
     ],
     'rules' => [
-      ['TRAI TCCCPR, 2018', 'Commercial SMS and calls: registered headers and templates on DLT, consent and customer preferences.'],
-      ['Cable TV Programme and Advertising Codes', 'Content and advertising rules for broadcast inventory.'],
-      ['IT Rules, 2021 — Digital Media Ethics Code', 'Classification and grievance obligations for online curated content.'],
+      ['TRAI TCCCPR, 2018', 'Commercial SMS and calls: headers and content templates registered on DLT, with consent and customer preferences scrubbed before every send.'],
+      ['Cable Television Networks Rules — Programme & Advertising Codes', 'Content and advertising rules for broadcast inventory.'],
+      ['IT Rules, 2021 — Digital Media Ethics Code', 'Age classification and a three-tier grievance mechanism for online curated content.'],
       ['DPDP Act, 2023', 'Consent and purpose limits for subscriber data at very large scale.'],
     ],
     'badges' => ['dpdp', 'cert-in', 'wcag22'],
@@ -196,5 +438,51 @@ return [
     'example' => 'A network operator rebuilt coverage, content and care on one intelligence layer the network teams actually use.',
     'mix' => ['technology-intelligence' => 3, 'ai-design' => 3, 'marketing-technology' => 3, 'campaign-content' => 2, 'product-experience' => 2, 'brand-design' => 1],
     'kpi' => 'Self-service resolution',
+    'kpi_def'  => 'The share of contacts that end without a human, counted only when the customer does not return on the same intent within 72 hours.',
+    'kpi_base' => 'Thirty days of contact data with intents labelled, so deflection is never mistaken for resolution.',
+    'cadence'  => 'Daily on the care dashboard, monthly in the service report.',
+
+    'systems' => [
+      ['Systems of record', 'A billing and charging system, a CRM, an order management stack, a network inventory and a content rights database. Most predate the app and none of them were built to be read in real time.'],
+      ['Where people meet you', 'The self-care app, a chat window, a retail counter, an IVR and a message that has to clear DLT registration before it can be sent at all.'],
+      ['The data reality', 'Subscriber data at a scale where a five-second query is a design failure, and where consent and preference are checked on every single send.'],
+      ['What usually breaks', 'The offer changes on the first of the month, four channels update and two do not, and care spends the month explaining a price that no longer exists.'],
+    ],
+    'stack' => ['apachekafka', 'apachespark', 'clickhouse', 'postgresql', 'databricks', 'apacheairflow', 'dbt', 'kubernetes', 'amazonwebservices', 'openai', 'anthropic', 'langgraph', 'qdrant', 'twilio', 'whatsapp', 'zendesk', 'grafana', 'prometheus'],
+    'stack_note' => 'Everything here is chosen for throughput and for an answer a care agent can trust while the customer is still on the line.',
+    'scope' => [
+      ['dpdp', 'Applies', 'At a scale that usually brings the significant-data-fiduciary duties with it: a data protection officer in India, impact assessments and independent audit.'],
+      ['cert-in', 'Applies', 'Specified cyber incidents reported within six hours, logs retained for 180 days within India, and clocks synchronised to NIC or NPL time.'],
+      ['pci-dss', 'Applies at the recharge', 'Prepaid top-ups and bill payments take cards. The rest of the estate stays out of scope only if the card flow is properly segmented.'],
+    ],
+    'ai' => [
+      'name'    => 'Care assistant with agent hand-off',
+      'does'    => 'Resolves balance, recharge, billing and coverage questions from your own systems, and hands the agent a summary when it stops.',
+      'never'   => 'Never processes a port-out, never issues a credit, never continues when confidence is low — it escalates with the transcript attached.',
+      'guard'   => 'Retrieval scoped to the subscriber in session; no promotional content inside a service conversation; every outbound message scrubbed against DLT registration and customer preference.',
+      'eval'    => 'A golden set per intent, scored for resolution rather than deflection: a case only passes if the customer does not return on the same intent.',
+      'approve' => 'A person approves credits, plan changes and anything that touches a contract.',
+      'log'     => 'Subscriber reference, intent, retrieved records, the answer, the escalation and the agent who took it.',
+    ],
+    'entry' => [
+      ['Care assistant and self-service', 'It is the largest cost line and the loudest brand signal at the same time, which is rare.', '10–16 weeks', 'Intelligence layer, then proactive care', [['ai-design', 'ai-application-design'], ['technology-intelligence', 'ai-product-automation']]],
+      ['Customer data and intelligence layer', 'Network, marketing and care each have a version of the customer. One layer they all read is the precondition for everything else.', '16–24 weeks', 'Targeted retention, then personalisation', [['technology-intelligence', 'custom-software-data-platforms'], ['technology-intelligence', 'ai-infrastructure-cloud']]],
+      ['Offer and plan content system', 'When plans change monthly, accuracy across channels is a production problem, not a copy problem.', '8–12 weeks', 'Registered messaging and preferences', [['campaign-content', 'campaign-design-systems'], ['marketing-technology', 'content-communication-infrastructure']]],
+    ],
+    'caps' => [
+      'brand-design' => ['brand-systems'],
+      'technology-intelligence' => ['custom-software-data-platforms', 'ai-infrastructure-cloud'],
+      'campaign-content' => ['campaign-design-systems', 'omnichannel-marketing-strategy'],
+      'ai-design' => ['ai-application-design', 'ai-strategy-consulting'],
+      'product-experience' => ['experience-design-development'],
+      'marketing-technology' => ['content-communication-infrastructure', 'ai-driven-marketing-automation'],
+    ],
+    'markets' => [
+      ['India', 'TCCCPR registration on DLT for every header and template, DPDP at significant-data-fiduciary scale, and CERT-In reporting inside six hours.'],
+      ['European Union', 'The European Electronic Communications Code for subscriber contracts and switching, ePrivacy for traffic data, and NIS2 for operators as essential entities.'],
+      ['United States', 'FCC rules on customer proprietary network information, and the TCPA on consent for calls and texts.'],
+    ],
+    'risk' => 'An assistant is measured on deflection, so it closes conversations it did not resolve and the contact rate stays exactly where it was.',
+    'transfer' => 'The intent-level care model — resolve, escalate with context, never deflect — is the same design a SaaS support assistant needs.',
   ],
 ];

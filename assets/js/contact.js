@@ -1,12 +1,20 @@
 /* ==========================================================================
    Contact — behaviour for contact.php. The page works without it (a plain POST
-   form with server-side validation); this adds:
-   • a live "Your brief": selected services and the package, each removable
+   form with server-side validation, <details> blocks a reader can open, and a
+   server-rendered preview); this adds:
+
+   • the depth chooser: opening and closing the optional blocks as the choice
+     changes, and never closing one that holds an answer or an error
+   • a live "Your brief": selected services and the engagement model, removable
+   • a completeness meter over the same questions the email carries
+   • #inbox rebuilt as you type — read from the data-pv labels in the form, which
+     are exactly the labels ct_blocks() puts in the email, so the two cannot drift
    • search across every service, with discipline groups opening on a match
-   • the services still in the catalogue brief (sessionStorage 'xe-brief')
-     offered back when the visitor arrived through a single "Enquire" link
-   • a character counter, focus on the error or failure message, a light
-     client check before sending, and no double submits
+   • the capability pages' services loaded on demand (?ct_more=1)
+   • the chosen file's real name and size on the upload control
+   • the six discipline tabs in #needs, and the jump from one to the brief
+   • a character counter, focus on the error or failure message, a light client
+     check before sending, and no double submits
    • after a successful send, the catalogue brief is cleared
    ========================================================================== */
 (function () {
@@ -53,7 +61,7 @@
       .then(function (data) {
         lazies.forEach(function (u) {
           var rows = data[u.getAttribute('data-ct-lazy')] || [];
-                    rows.forEach(function (x) {
+          rows.forEach(function (x) {
             var li = document.createElement('li'); li.setAttribute('data-ct-item', ''); li.setAttribute('data-s', x[3]);
             var lb = document.createElement('label'); lb.className = 'ct-chip';
             var inp = document.createElement('input'); inp.type = 'checkbox'; inp.name = 'service[]'; inp.value = x[0]; inp.setAttribute('data-meta', x[2]);
@@ -78,10 +86,152 @@
   function checked() { return boxes.filter(function (b) { return b.checked; }); }
   function pkgRadio() { return radios.filter(function (r) { return r.checked; })[0] || null; }
 
+  /* ======================================================================
+     The brief, as the email will carry it. One walk of the form, reading the
+     data-pv labels — the same labels ct_blocks() writes into the email.
+     ====================================================================== */
+  function fieldValue(el) {
+    var kind = el.getAttribute('data-pv-kind');
+    if (kind === 'services') {
+      return checked().map(function (b) {
+        var parts = mt(b).split(' · ');
+        var disc = parts[0] || '';
+        var page = parts[1] === 'Overview' ? 'Overview' : (parts[1] || '');
+        return nm(b) + (disc ? '  [' + disc + (page ? ' › ' + page : '') + ']' : '');
+      }).join('\n');
+    }
+    if (kind === 'package') {
+      var r = pkgRadio();
+      if (!r || !r.value) return '';
+      return r.getAttribute('data-name') + ' · ' + (r.getAttribute('data-meta') || '').split(' · ')[0];
+    }
+    if (kind === 'check') return el.checked ? (el.getAttribute('data-pv-yes') || 'Yes') : '';
+    if (el.tagName === 'SELECT') {
+      if (!el.value) return '';
+      var o = el.options[el.selectedIndex];
+      return o ? o.text.trim() : '';
+    }
+    return (el.value || '').trim();
+  }
+
+  function collect() {
+    var out = [];
+    $$('[data-pv-block]', form).forEach(function (blk) {
+      var rows = [];
+      $$('[data-pv],[data-pv-join]', blk).forEach(function (el) {
+        var join = el.getAttribute('data-pv-join');
+        var v = fieldValue(el);
+        if (join) {
+          if (!v) return;
+          for (var i = 0; i < rows.length; i++) {
+            if (rows[i].label === join) { rows[i].value = rows[i].value ? rows[i].value + ' — ' + v : v; return; }
+          }
+          return;
+        }
+        var label = el.getAttribute('data-pv');
+        if (el.getAttribute('data-pv-kind') === 'services') label = 'Services (' + checked().length + ')';
+        rows.push({ label: label, value: v, long: el.hasAttribute('data-pv-long') || el.getAttribute('data-pv-kind') === 'services' });
+      });
+      out.push({ title: blk.getAttribute('data-pv-block'), rows: rows });
+    });
+    return out;
+  }
+
+  var pvBody = $('[data-ct-pvbody]');
+  var pvLive = $('[data-ct-pvlive]');
+  if (pvLive) pvLive.hidden = false;
+  var fileIn  = $('[data-ct-file]');
+  var fileTxt = $('[data-ct-filename]');
+  var fileTxt0 = fileTxt ? fileTxt.textContent : '';
+
+  function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+  function fileSize(b) {
+    if (b >= 1048576) { var m = b / 1048576; return (m < 10 ? m.toFixed(1).replace(/\.0$/, '') : Math.round(m)) + ' MB'; }
+    return Math.max(1, Math.round(b / 1024)) + ' KB';
+  }
+
+  function renderPreview(blocks) {
+    if (!pvBody) return;
+    var frag = document.createDocumentFragment();
+
+    var dep = form.querySelector('input[name="depth"]:checked');
+    var depName = 'Send a brief';
+    if (dep) { var dn = dep.parentNode.querySelector('.ct-depth__n'); if (dn) depName = dn.textContent.trim(); }
+    var top = document.createElement('p');
+    top.className = 'ct-pv__top';
+    [(dep && dep.value === 'rfq' ? 'New RFQ' : 'New brief') + ' from the ' + (pvBody.getAttribute('data-site') || '') + ' website',
+     null, 'Depth:     ' + depName].forEach(function (t, i) {
+      var s = document.createElement('span');
+      if (i === 1) { s.appendChild(document.createTextNode('Reference: ')); var it = document.createElement('i'); it.textContent = 'assigned when you send'; s.appendChild(it); }
+      else { s.textContent = t; }
+      top.appendChild(s);
+    });
+    frag.appendChild(top);
+
+    var n = 0;
+    blocks.forEach(function (b) {
+      n++;
+      frag.appendChild(blockEl(pad2(n), b.title, b.rows));
+    });
+
+    var f = fileIn && fileIn.files && fileIn.files[0];
+    frag.appendChild(blockEl(pad2(n + 1), 'ATTACHMENT', [{
+      label: 'Document',
+      value: f ? f.name + ' · ' + fileSize(f.size) : '',
+      empty: 'none attached'
+    }]));
+
+    var sc = pvBody.parentNode, y = sc ? sc.scrollTop : 0;
+    pvBody.textContent = '';
+    pvBody.appendChild(frag);
+    if (sc) sc.scrollTop = y;
+  }
+
+  function blockEl(num, title, rows) {
+    var wrap = document.createElement('div'); wrap.className = 'ct-pv__blk';
+    var h = document.createElement('p'); h.className = 'ct-pv__bt';
+    var b = document.createElement('span'); b.className = 'ct-pv__bn'; b.textContent = num;
+    h.appendChild(b); h.appendChild(document.createTextNode('— ' + title.toUpperCase()));
+    wrap.appendChild(h);
+    var dl = document.createElement('dl'); dl.className = 'ct-pv__rows';
+    rows.forEach(function (r) {
+      var row = document.createElement('div');
+      row.className = 'ct-pv__r' + (r.value ? '' : ' is-empty');
+      var dt = document.createElement('dt'); dt.textContent = r.label;
+      var dd = document.createElement('dd');
+      if (r.long) dd.className = 'ct-pv__v--long';
+      dd.textContent = r.value || r.empty || 'not answered';
+      row.appendChild(dt); row.appendChild(dd); dl.appendChild(row);
+    });
+    wrap.appendChild(dl);
+    return wrap;
+  }
+
+  /* ---- the completeness meter, over the same questions ---- */
+  var mFill = $('[data-ct-mfill]');
+  var mCount = $('[data-ct-mcount]');
+  var mNote = $('[data-ct-mnote]');
+  function renderMeter(blocks) {
+    if (!mFill && !mCount) return;
+    var on = 0, all = 0;
+    blocks.forEach(function (b) { b.rows.forEach(function (r) { all++; if (r.value) on++; }); });
+    if (mCount) mCount.textContent = on + ' of ' + all;
+    if (mFill) mFill.style.width = (all ? Math.round(on / all * 100) : 0) + '%';
+    if (mNote) {
+      mNote.textContent = on < 3
+        ? 'Two answers are enough to send. Every extra one takes a question out of the first call.'
+        : (on < 10
+          ? 'Enough to reply to. Add budget and timing and we can propose a shape as well.'
+          : (on < 18
+            ? 'Enough to propose a scope against. The rest saves a round of email.'
+            : 'This is a brief we can price without asking you anything first.'));
+    }
+  }
+
   function renderBrief(persist) {
     var on = checked();
     if (list) {
-      list.innerHTML = '';
+      list.textContent = '';
       on.forEach(function (b) {
         var li = document.createElement('li'); li.className = 'ct-bi';
         var n = document.createElement('span'); n.className = 'ct-bi__n'; n.textContent = nm(b); li.appendChild(n);
@@ -110,6 +260,10 @@
       if (c) c.textContent = k ? k + ' selected' : '';
     });
 
+    var blocks = collect();
+    renderPreview(blocks);
+    renderMeter(blocks);
+
     /* keep the catalogue brief in step with what will be sent (only once the visitor edits it) */
     if (!persist) return;
     var s = load() || { items: [], package: '', packageName: '' };
@@ -121,6 +275,42 @@
     s.packageName = r && r.value ? r.getAttribute('data-name') + ' · ' + (r.getAttribute('data-meta') || '').split(' · ')[0] : '';
     save(s);
   }
+
+  /* ---- the depth chooser opens and closes the optional blocks ---- */
+  var folds = {
+    detail: $('[data-ct-fold="detail"]'),
+    money:  $('[data-ct-fold="money"]'),
+    prac:   $('[data-ct-fold="prac"]')
+  };
+  var DEPTH_OPEN = {
+    hello: { detail: false, money: false, prac: false },
+    brief: { detail: false, money: true,  prac: false },
+    rfq:   { detail: true,  money: true,  prac: true }
+  };
+  /* a block that already carries an answer or an error is never closed under the reader */
+  function foldHasContent(d) {
+    if (!d) return false;
+    if ($('.ct-err', d)) return true;
+    return $$('input, select, textarea', d).some(function (el) {
+      if (el.type === 'checkbox' || el.type === 'radio') return el.checked && el.value !== '';
+      return (el.value || '').trim() !== '';
+    });
+  }
+  function applyDepth() {
+    var r = form.querySelector('input[name="depth"]:checked');
+    var want = DEPTH_OPEN[r ? r.value : 'brief'] || DEPTH_OPEN.brief;
+    Object.keys(folds).forEach(function (k) {
+      var d = folds[k];
+      if (!d) return;
+      d.open = want[k] || foldHasContent(d);
+    });
+    $$('[data-ct-depth]', form).forEach(function (i) {
+      i.closest('.ct-depth').classList.toggle('is-on', i.checked);
+    });
+  }
+  $$('[data-ct-depth]', form).forEach(function (i) {
+    i.addEventListener('change', function () { applyDepth(); renderBrief(false); });
+  });
 
   /* the aside's remove controls are links without JS; here they just untick */
   var side = $('[data-ct-brief]');
@@ -143,11 +333,49 @@
   }
   form.addEventListener('change', function (e) {
     if (e.target.name === 'service[]' || e.target.name === 'package') renderBrief(true);
+    else if (e.target.name !== 'depth') renderBrief(false);
     if (e.target.name === 'service[]') {
       var fs = $('#ct-service');
       if (fs && fs.classList.contains('is-bad') && checked().length) clearErr('service');
     }
   });
+  var raf = 0;
+  form.addEventListener('input', function (e) {
+    if (!e.target.hasAttribute || !(e.target.hasAttribute('data-pv') || e.target.hasAttribute('data-pv-join'))) return;
+    if (raf) return;
+    raf = (window.requestAnimationFrame || setTimeout)(function () { raf = 0; renderBrief(false); }, 16);
+  });
+
+  /* ---- the chosen document, named and sized on the control ---- */
+  if (fileIn && fileTxt) {
+    fileIn.addEventListener('change', function () {
+      var f = fileIn.files && fileIn.files[0];
+      fileTxt.textContent = f ? f.name + ' · ' + fileSize(f.size) : fileTxt0;
+      renderBrief(false);
+    });
+  }
+
+  /* ---- copy the brief as plain text ---- */
+  var copyBtn = $('[data-ct-copy]');
+  if (copyBtn && navigator.clipboard && navigator.clipboard.writeText) {
+    copyBtn.hidden = false;
+    copyBtn.addEventListener('click', function () {
+      var lines = [];
+      collect().forEach(function (b) {
+        lines.push('', '— ' + b.title.toUpperCase());
+        b.rows.forEach(function (r) {
+          if (!r.value) return;
+          if (r.long && r.value.indexOf('\n') !== -1) { lines.push(r.label + ':'); r.value.split('\n').forEach(function (l) { lines.push('  ' + l); }); }
+          else lines.push(r.label + ': ' + r.value);
+        });
+      });
+      navigator.clipboard.writeText(lines.join('\n').replace(/^\n/, '') + '\n').then(function () {
+        var was = copyBtn.textContent;
+        copyBtn.textContent = 'Copied';
+        setTimeout(function () { copyBtn.textContent = was; }, 1800);
+      }, function () { copyBtn.textContent = 'Select and copy'; });
+    });
+  }
 
   /* ---- services the catalogue brief still holds ---- */
   (function offerBack() {
@@ -157,12 +385,12 @@
     var missing = s.items.filter(function (it) { return byId[it.id] && !byId[it.id].checked; });
     if (!missing.length) return;
     var box = document.createElement('div');
-    box.className = 'ct-note ct-back';
+    box.className = 'ct-note ct-back-add';
     var p = document.createElement('p');
     p.textContent = (missing.length === 1 ? 'One more service' : missing.length + ' more services') + ' from your brief: ' +
       missing.map(function (it) { return it.name; }).join(', ') + '.';
     var btn = document.createElement('button');
-    btn.type = 'button'; btn.className = 'tl ct-back__go';
+    btn.type = 'button'; btn.className = 'tl';
     btn.innerHTML = 'Add ' + (missing.length === 1 ? 'it' : 'them') + ' <span class="i" aria-hidden="true">›</span>';
     btn.addEventListener('click', function () {
       missing.forEach(function (it) { byId[it.id].checked = true; var d = byId[it.id].closest('details'); while (d) { d.open = true; d = d.parentElement.closest('details'); } });
@@ -217,6 +445,16 @@
     if (none) none.hidden = n > 0;
   }
 
+  /* ---- "Start a <discipline> brief" from #needs ---- */
+  $$('[data-ct-jump]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var slug = a.getAttribute('data-ct-jump');
+      var target = null;
+      discs.forEach(function (d) { if (d.getAttribute('data-slug') === slug) target = d; });
+      if (target) discs.forEach(function (d) { d.open = d === target; });
+    });
+  });
+
   /* ---- message counter ---- */
   var msg = $('[data-ct-msg]');
   var cnt = $('[data-ct-count]');
@@ -240,16 +478,25 @@
       else { el.parentNode.appendChild(p); el.closest('.ct-field').classList.add('is-bad'); }
     }
     p.textContent = text;
-    if (el && key !== 'service') { el.setAttribute('aria-invalid', 'true'); el.setAttribute('aria-describedby', id); }
+    if (el && key !== 'service') {
+      el.setAttribute('aria-invalid', 'true');
+      var d = el.getAttribute('aria-describedby') || '';
+      if (d.split(/\s+/).indexOf(id) === -1) el.setAttribute('aria-describedby', (d ? d + ' ' : '') + id);
+    }
   }
   function clearErr(key) {
     var p = document.getElementById('ct-e-' + key);
     if (p) p.parentNode.removeChild(p);
     if (key === 'service') { var fs = $('#ct-service'); if (fs) fs.classList.remove('is-bad'); return; }
     var el = fieldOf(key);
-    if (el) { el.removeAttribute('aria-invalid'); el.removeAttribute('aria-describedby'); var f = el.closest('.ct-field'); if (f) f.classList.remove('is-bad'); }
+    if (el) {
+      el.removeAttribute('aria-invalid');
+      var d = (el.getAttribute('aria-describedby') || '').split(/\s+/).filter(function (x) { return x && x !== 'ct-e-' + key; }).join(' ');
+      if (d) el.setAttribute('aria-describedby', d); else el.removeAttribute('aria-describedby');
+      var f = el.closest('.ct-field'); if (f) f.classList.remove('is-bad');
+    }
   }
-  ['name', 'email', 'phone'].forEach(function (k) {
+  ['name', 'email', 'phone', 'website', 'message'].forEach(function (k) {
     var el = fieldOf(k);
     if (el) el.addEventListener('input', function () { if (el.getAttribute('aria-invalid') === 'true') clearErr(k); });
   });
@@ -259,16 +506,43 @@
   form.addEventListener('submit', function (e) {
     if (sending) { e.preventDefault(); return; }
     var bad = [];
-    var name = fieldOf('name'), email = fieldOf('email'), phone = fieldOf('phone');
+    var name = fieldOf('name'), email = fieldOf('email'), phone = fieldOf('phone'), site = fieldOf('website');
+    var depth = form.querySelector('input[name="depth"]:checked');
     if (name.value.trim().length < 2) { setErr('name', name, 'Enter your name.'); bad.push(name); } else clearErr('name');
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { setErr('email', email, 'Enter an email address we can reply to, like name@company.com.'); bad.push(email); } else clearErr('email');
-    if (phone.value.trim() && !/^[0-9+().\s-]{6,40}$/.test(phone.value.trim())) { setErr('phone', phone, 'Use digits, spaces and + ( ) - only.'); bad.push(phone); } else clearErr('phone');
+    if (phone && phone.value.trim() && !/^[0-9+().\s-]{6,40}$/.test(phone.value.trim())) { setErr('phone', phone, 'Use digits, spaces and + ( ) - only.'); bad.push(phone); } else clearErr('phone');
+    if (site && site.value.trim() && !/^(https?:\/\/)?[^\s./]+(\.[^\s./]+)+(\/\S*)?$/i.test(site.value.trim())) { setErr('website', site, 'That does not look like a web address. Something like yourcompany.com.'); bad.push(site); } else clearErr('website');
     if (!checked().length && (!msg || msg.value.trim().length < 10)) { setErr('service', null, 'Choose at least one service, or tell us what you need in the message.'); bad.push($('#ct-q') && !$('#ct-q').closest('[hidden]') ? $('#ct-q') : msg); } else clearErr('service');
+    if (depth && depth.value === 'rfq' && msg && msg.value.trim().length < 60) {
+      setErr('message', msg, 'A full RFQ needs the problem in your own words — at least a couple of sentences. Switch to “Send a brief” if you would rather keep it short.');
+      bad.push(msg);
+    } else if (msg) clearErr('message');
     if (bad.length) { e.preventDefault(); bad[0].focus(); return; }
     sending = true;
     var btn = $('[data-ct-send]');
     if (btn) { btn.setAttribute('aria-busy', 'true'); btn.firstChild.nodeValue = 'Sending… '; }
   });
 
+  applyDepth();
   renderBrief();
+})();
+
+/* ==========================================================================
+   #needs — the six discipline tabs. Every pane carries its own heading, so the
+   <noscript> rule in the partial simply stacks them when this never runs.
+   ========================================================================== */
+(function () {
+  'use strict';
+  if (!window.BDH) return;
+  var root = document.querySelector('.ct-needs');
+  if (!root) return;
+  var tabs = root.querySelector('[data-ct-ndtabs]');
+  var panes = root.querySelector('[data-ct-ndpanes]');
+  if (!tabs || !panes) return;
+  var api = BDH.tabs(root, {
+    tabs: '[data-ct-ndtabs] [role="tab"]',
+    panes: '[data-ct-ndpanes] .bdh-pane',
+    initial: 0
+  });
+  if (!api) return;
 })();

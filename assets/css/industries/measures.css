@@ -1,0 +1,30 @@
+/* Industries · measures — three rules, then one plate per sector. */
+
+.ind-mea__rules{list-style:none;margin:0 0 clamp(32px,4vw,56px);padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap)}
+.ind-mea__rules>li{display:grid;gap:10px;align-content:start;padding-top:18px;border-top:2px solid var(--ink)}
+.ind-mea__ri{display:grid;place-items:center;width:32px;height:32px;border-radius:var(--r-sm);background:var(--paper);border:1px solid var(--line);color:var(--ink)}
+.ind-mea__ri .xt-ico{width:18px;height:18px}
+.ind .ind-mea__rt{margin:0}
+
+.ind-mea__board{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap)}
+.ind-mea__pn{font-family:var(--f-h);font-size:var(--t-h4);font-weight:500;color:var(--ink);text-decoration:none}
+.ind-mea__pn:hover{color:var(--blue-d)}
+.ind-mea__kpi{font-family:var(--f-h);font-size:clamp(1.25rem,1.7vw,1.5rem);font-weight:500;line-height:1.15;letter-spacing:-.012em;color:var(--ink);padding-bottom:12px;border-bottom:1px solid var(--line-2)}
+.ind-mea__def{margin:0;display:grid;gap:0}
+.ind-mea__def>div{display:grid;grid-template-columns:6.5em minmax(0,1fr);gap:4px 14px;padding:9px 0;border-bottom:1px solid var(--line)}
+.ind-mea__def>div:last-child{border-bottom:0}
+.ind-mea__def dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.ind-mea__def dd{margin:0;font-size:var(--t-xs);line-height:1.65;color:var(--txt)}
+.ind-mea__also{display:grid;gap:10px;padding-top:12px;border-top:1px solid var(--line-2)}
+.ind-mea__also ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ind-mea__also li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:9px;align-items:start;font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+.ind-mea__also li .xt-ico{width:16px;height:16px;color:var(--blue);margin-top:1px}
+
+@media (max-width:1100px){
+  .ind-mea__rules{grid-template-columns:minmax(0,1fr)}
+  .ind-mea__board{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:700px){
+  .ind-mea__board{grid-template-columns:minmax(0,1fr)}
+  .ind-mea__def>div{grid-template-columns:minmax(0,1fr)}
+}

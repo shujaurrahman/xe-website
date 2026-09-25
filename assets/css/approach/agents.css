@@ -1,0 +1,84 @@
+/* Approach · Agents — the permission matrix, six agent cards and what a person always signs. Tokens only. */
+
+.apr-ag__matrix{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);overflow:hidden}
+.apr-ag__top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.apr-ag__top .apr-k{margin:0}
+.apr-ag__filter{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.apr-ag__filter[hidden]{display:none}
+.apr-ag__scroll{padding:4px 20px 0}
+
+.apr-ag__tbl{width:100%;min-width:1040px;border-collapse:collapse;font-size:var(--t-sm)}
+.apr-ag__tbl thead th{vertical-align:bottom;padding:16px 10px;font-family:var(--f);font-weight:500;font-size:var(--t-lbl);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);
+  text-align:center;line-height:1.4;border-bottom:1px solid var(--line)}
+.apr-ag__tbl thead .apr-ag__rh{text-align:left;width:212px;padding-left:0}
+.apr-ag__tbl tbody th{text-align:left;padding:12px 10px 12px 0;border-bottom:1px solid var(--line-2);vertical-align:middle}
+.apr-ag__who{display:flex;align-items:center;gap:9px;color:var(--muted)}
+.apr-ag__who .xt-ico{flex:none;color:var(--ink)}
+.apr-ag__who code{font-family:var(--f);font-size:var(--t-xs);color:var(--ink);overflow-wrap:anywhere}
+.apr-ag__r.is-human th{border-top:1px solid var(--line-3)}
+.apr-ag__r.is-human .apr-ag__who code{color:var(--blue-d)}
+.apr-ag__c{padding:12px 10px;text-align:center;border-bottom:1px solid var(--line-2);transition:opacity var(--d2) var(--e)}
+.apr-ag__r.is-human .apr-ag__c{border-top:1px solid var(--line-3)}
+.apr-ag__mk{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;font-family:var(--f);font-size:var(--t-xs);line-height:1}
+.apr-ag__c.is-yes .apr-ag__mk{background:var(--blue-wash);color:var(--blue-d)}
+.apr-ag__c.is-gate .apr-ag__mk{background:var(--blue);color:var(--on-ink)}
+.apr-ag__c.is-no .apr-ag__mk{background:var(--paper-3);color:var(--faint)}
+.apr-ag__c.is-na .apr-ag__mk{color:var(--ghost)}
+.apr-ag__matrix[data-filter="solo"] .apr-ag__c:not(.is-yes),
+.apr-ag__matrix[data-filter="gate"] .apr-ag__c:not(.is-gate){opacity:.22}
+
+.apr-ag__legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin:0;padding:16px 20px 0;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.apr-ag__legend span{display:inline-flex;align-items:center;gap:8px}
+.apr-ag__legend i{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;font-style:normal;font-size:var(--t-xs)}
+.apr-ag__legend .is-yes i{background:var(--blue-wash);color:var(--blue-d)}
+.apr-ag__legend .is-gate i{background:var(--blue);color:var(--on-ink)}
+.apr-ag__legend .is-no i{background:var(--paper-3);color:var(--faint)}
+.apr-ag__legend .is-na i{color:var(--ghost)}
+.apr-ag__note{margin:0;padding:14px 20px 18px;font-size:var(--t-sm);line-height:1.55;color:var(--muted);max-width:86ch}
+
+/* ---- the six agent cards ---- */
+.apr-ag__cards{list-style:none;margin:var(--bdh-block) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap)}
+.apr-agc{display:flex;flex-direction:column;gap:12px;padding:clamp(20px,2.2vw,28px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);min-width:0}
+.apr-agc__k{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0}
+.apr-agc__i{display:grid;place-items:center;width:32px;height:32px;border-radius:var(--r-xs);background:var(--paper-3);color:var(--ink);flex:none}
+.apr-agc__k code{font-family:var(--f);font-size:var(--t-xs);color:var(--blue-d);overflow-wrap:anywhere}
+.apr-agc__st{margin-left:auto;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.apr .apr-agc__t{margin:0;font-family:var(--f-h);font-weight:500;font-size:var(--t-h3);color:var(--ink)}
+.apr-agc__d{margin:0;font-size:var(--t-sm);line-height:1.55;color:var(--txt)}
+.apr-agc__dl{margin:4px 0 0;display:grid;gap:0;border-top:1px solid var(--line)}
+.apr-agc__dl>div{padding:11px 0;border-bottom:1px solid var(--line-2)}
+.apr-agc__dl dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.apr-agc__dl dd{margin:5px 0 0;font-size:var(--t-sm);line-height:1.5;color:var(--txt)}
+.apr-agc__log{margin:auto 0 0;padding-top:6px}
+.apr-agc__log code{display:block;font-family:var(--f);font-size:var(--t-lbl);line-height:1.6;color:var(--muted);background:var(--paper-2);border:1px solid var(--line-2);border-radius:var(--r-xs);padding:8px 10px;overflow-wrap:anywhere}
+
+/* ---- what a person always signs ---- */
+.apr-ag__signs{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(24px,4vw,64px);margin-top:var(--bdh-block);padding-top:clamp(28px,3.4vw,44px);border-top:1px solid var(--line)}
+.apr-ag__sh .apr-k{margin:0 0 10px}
+.apr .apr-ag__st{margin:0 0 12px;font-family:var(--f-h);font-weight:500;font-size:var(--t-h2);letter-spacing:-.02em;line-height:1.12;color:var(--ink);max-width:14ch}
+.apr-ag__sd{margin:0;font-size:var(--t-sm);line-height:1.6;color:var(--muted);max-width:44ch}
+.apr-ag__sl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 var(--bdh-gap)}
+.apr-ag__sl li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;padding:16px 0;border-top:1px solid var(--line)}
+.apr-ag__sl li:nth-child(-n+2){border-top:0;padding-top:0}
+.apr-ag__si{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--blue-wash);color:var(--blue-d)}
+.apr-ag__sl b{display:block;font-family:var(--f-h);font-weight:500;font-size:var(--t-body);color:var(--ink);margin-bottom:4px}
+.apr-ag__sl span{display:block;font-size:var(--t-sm);line-height:1.5;color:var(--muted)}
+
+@media (max-width:1100px){
+  .apr-ag__cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:1023px){
+  .apr-ag__signs{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:760px){
+  .apr-ag__cards{grid-template-columns:minmax(0,1fr)}
+  .apr-ag__sl{grid-template-columns:minmax(0,1fr)}
+  .apr-ag__sl li:nth-child(2){border-top:1px solid var(--line);padding-top:16px}
+}
+@media (max-width:600px){
+  .apr-ag__top,.apr-ag__scroll,.apr-ag__legend,.apr-ag__note{padding-inline:16px}
+  .apr-ag__filter{width:100%}
+  .apr-ag__filter .bdh-seg{flex-wrap:wrap}
+  .apr-ag__filter .bdh-seg>button{min-height:44px}   /* phones: keep the segmented control a 44px tap target */
+}
+@media (prefers-reduced-motion:reduce){.apr-ag__c{transition:none}}

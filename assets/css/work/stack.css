@@ -1,0 +1,18 @@
+/* Work · stack — five lanes of technologies we work with, then the frameworks the work was built to. */
+.wrk-stack__lanes{display:grid;gap:0;border-top:1px solid var(--line)}
+.wrk-lane{display:grid;grid-template-columns:minmax(0,15em) minmax(0,1fr);gap:12px clamp(20px,3vw,48px);align-items:start;padding:clamp(18px,2vw,26px) 0;border-bottom:1px solid var(--line)}
+.wrk-lane__h{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px}
+.wrk-lane__h b{font-family:var(--f-h);font-size:1.06rem;font-weight:500;letter-spacing:-.01em;color:var(--ink)}
+.wrk-lane__d{flex:1 1 100%;font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+.wrk-lane__s{min-width:0}
+
+.wrk-stack__std{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(20px,3vw,48px);align-items:start;
+  margin-top:clamp(28px,3.2vw,44px);padding:clamp(20px,2.4vw,30px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper)}
+.wrk-stack__stdh .bdh-ro{color:var(--blue-d);text-transform:uppercase;letter-spacing:.12em}
+.wrk-stack__stdn{margin-top:10px;font-size:var(--t-sm);line-height:1.65;color:var(--muted)}
+.wrk-stack__badges{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+
+@media (max-width:860px){
+  .wrk-lane{grid-template-columns:minmax(0,1fr);gap:12px}
+  .wrk-stack__std{grid-template-columns:minmax(0,1fr)}
+}

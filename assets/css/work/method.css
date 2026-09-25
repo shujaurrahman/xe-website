@@ -1,0 +1,29 @@
+/* Work · method — a proportional rail of the four stages, then a plate and a card for each. */
+.wrk-rail{display:flex;gap:6px;margin-bottom:clamp(26px,3vw,40px)}
+.wrk-rail__s{flex:var(--f) 1 0;display:flex;flex-direction:column;gap:6px;min-width:0;padding:12px 14px;border-radius:var(--r-sm);background:var(--paper-3)}
+.wrk-rail__s:last-child{background:var(--blue-wash)}
+.wrk-rail__s b{font-family:var(--f-h);font-size:.95rem;font-weight:500;letter-spacing:-.008em;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wrk-rail__s i{font-style:normal;font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.wrk-rail__s:last-child i{color:var(--blue-d)}
+
+.wrk-method__grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,2vw,26px)}
+.wrk-step{display:flex;flex-direction:column;min-width:0;border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);overflow:hidden}
+.wrk-step__img{border-radius:0}
+/* the set is held to one cool register; the orange-wall plate is pulled back further in work.css */
+.wrk-step__img img{filter:saturate(.56) contrast(1.05)}
+.wrk-step__n{position:absolute;left:12px;top:11px;z-index:2;display:inline-grid;place-items:center;min-width:26px;height:26px;padding:0 8px;border-radius:var(--r-pill);
+  background:var(--paper);color:var(--ink);font-weight:500;box-shadow:var(--sh-1)}
+.wrk-step__b{display:flex;flex-direction:column;gap:9px;padding:clamp(18px,1.9vw,24px);flex:1}
+.wrk-step__k{color:var(--blue-d);text-transform:uppercase;letter-spacing:.12em}
+.wrk-step__gl{margin-top:8px;padding-top:14px;border-top:1px solid var(--line-2);color:var(--faint);text-transform:uppercase;letter-spacing:.1em}
+.wrk-step__b .bdh-bullets{margin-top:2px}
+
+@media (max-width:1180px){.wrk-method__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:860px){
+  .wrk-rail{flex-wrap:wrap}
+  .wrk-rail__s{flex:1 1 calc(50% - 3px)}
+}
+@media (max-width:600px){
+  .wrk-method__grid{grid-template-columns:minmax(0,1fr)}
+  .wrk-rail__s{flex:1 1 100%}
+}

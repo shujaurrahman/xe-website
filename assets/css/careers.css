@@ -18,6 +18,12 @@
 .car-board__foot{display:flex;align-items:center;gap:8px;margin:16px 0 0;font-family:var(--f);font-size:var(--t-xs);color:var(--ink)}
 .car-board__foot .xt-ico{width:16px;height:16px}
 .car-board__note{margin:6px 0 0;font-size:var(--t-xs);color:var(--muted)}
+.car-hero__facts{list-style:none;margin:clamp(40px,5vw,72px) 0 0;padding:clamp(20px,2.4vw,28px) 0 0;border-top:1px solid var(--line-2);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--bdh-gap)}
+.car-fact{display:grid;grid-template-columns:32px minmax(0,1fr);column-gap:12px;row-gap:4px;align-content:start;min-width:0}
+.car-fact__ico{grid-row:1 / span 2;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;border:1px solid var(--line-2);background:var(--paper);color:var(--ink)}
+.car-fact__k{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.car-fact__v{font-family:var(--f-h);font-weight:500;font-size:var(--t-h4);line-height:1.25;color:var(--ink)}
+.car-fact__d{grid-column:2;font-size:var(--t-xs);line-height:1.55;color:var(--muted)}
 
 /* why */
 
@@ -39,7 +45,7 @@
 /* benefits */
 
 /* hiring */
-.car-hire__steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;position:relative}
+.car-hire__steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;position:relative}
 .car-hire__steps::before{content:"";position:absolute;left:0;right:0;top:21px;height:1px;background:var(--line-2)}
 .car-step{position:relative;display:flex;flex-direction:column;gap:10px;min-width:0}
 .car-step__top{display:flex;align-items:center;gap:10px;margin:0}
@@ -48,17 +54,34 @@
 .car-step__when{font-family:var(--f);font-size:var(--t-xs);color:var(--muted);background:var(--paper);padding-right:6px}
 .car .car-step__t{margin:8px 0 0;font-family:var(--f-h);font-weight:500;font-size:var(--t-h4);color:var(--ink)}
 .car-step__p{margin:0;font-size:var(--t-sm);line-height:1.55;color:var(--txt)}
-.car-step__look{margin:auto 0 0;padding-top:12px;border-top:1px dashed var(--line-2);font-size:var(--t-xs);color:var(--ink);display:flex;flex-direction:column;gap:4px}
-.car-step__look span{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.car-step__fmt{display:flex;align-items:center;gap:7px;margin:0;font-family:var(--f);font-size:var(--t-xs);color:var(--muted)}
+.car-step__fmt .xt-ico{flex:none;width:15px;height:15px;color:var(--ink)}
+.car-step__look,.car-step__who,.car-step__prep{margin:0;padding-top:12px;border-top:1px dashed var(--line-2);font-size:var(--t-xs);line-height:1.55;color:var(--ink);display:flex;flex-direction:column;gap:4px}
+.car-step__look{margin-top:4px}
+.car-step__prep{margin-top:auto}
+.car-step__look span,.car-step__who span,.car-step__prep span{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.car-step__who,.car-step__prep{color:var(--txt)}
+
+/* hiring — what we will not do */
+.car-hire__never{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(24px,4vw,64px);align-items:start;margin-top:var(--bdh-block);padding-top:clamp(28px,3.4vw,48px);border-top:1px solid var(--line-2)}
+.car-hire__k{margin:0 0 10px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--blue-d)}
+.car-hire__np{margin:0;font-size:var(--t-sm);line-height:1.6;color:var(--muted);max-width:40ch}
+.car-never{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--bdh-gap)}
+.car-never li{display:grid;grid-template-columns:22px minmax(0,1fr);column-gap:12px;row-gap:5px;padding:18px 20px;border:1px solid var(--line);border-radius:var(--r);background:var(--paper-2)}
+.car-never__x{grid-row:1 / span 2;position:relative;width:22px;height:22px;border-radius:50%;border:1px solid var(--line-3);margin-top:2px}
+.car-never__x::before,.car-never__x::after{content:"";position:absolute;left:50%;top:50%;width:9px;height:1.5px;background:var(--ink);transform:translate(-50%,-50%) rotate(45deg)}
+.car-never__x::after{transform:translate(-50%,-50%) rotate(-45deg)}
+.car-never b{font-family:var(--f-h);font-weight:500;font-size:var(--t-body);line-height:1.3;color:var(--ink)}
+.car-never li>span:last-child{font-size:var(--t-sm);line-height:1.55;color:var(--txt)}
 
 /* roles */
 .car-roles__tbc{display:flex;align-items:flex-start;gap:10px;margin:0 0 20px;font-size:var(--t-sm);color:var(--muted)}
 .car-roles__tbc .xt-ico{width:18px;height:18px;flex:none;margin-top:2px}
 .car-filter{display:grid;grid-template-columns:minmax(0,2.4fr) repeat(3,minmax(0,1fr)) auto;gap:12px;align-items:end;padding:14px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
 .car-filter label{display:block;margin:0 0 6px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.car-filter input,.car-filter select,.car-f input,.car-f textarea{width:100%;min-height:48px;padding:0 14px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--paper);color:var(--ink);font-family:var(--f-b);font-size:var(--t-body)}
+.car-filter input,.car-filter select{width:100%;min-height:48px;padding:0 14px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--paper);color:var(--ink);font-family:var(--f-b);font-size:var(--t-body)}
 .car-filter select{appearance:auto}
-.car-filter input:focus-visible,.car-filter select:focus-visible,.car-f input:focus-visible,.car-f textarea:focus-visible{outline:2px solid var(--blue);outline-offset:1px;border-color:var(--blue)}
+.car-filter input:focus-visible,.car-filter select:focus-visible{outline:2px solid var(--blue);outline-offset:1px;border-color:var(--blue)}
 .car-filter__q{position:relative}
 .car-filter__q label{position:absolute;left:14px;bottom:15px;margin:0;color:var(--muted)}
 .car-filter__q label .xt-ico{width:18px;height:18px}
@@ -97,24 +120,26 @@
 .car-empty{margin:0;padding:32px 0;color:var(--muted)}
 .car-empty[hidden]{display:none}
 
-/* apply forms */
+/* apply — the block that sends a candidate to /careers/apply */
 .car-apply{display:flex;flex-direction:column;gap:14px;padding:clamp(20px,2.2vw,28px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);align-self:start;min-width:0}
 .car-apply__h{margin:0;font-family:var(--f-h);font-weight:500;font-size:var(--t-h4);color:var(--ink)}
-.car-f{display:flex;flex-direction:column;gap:6px}
-.car-f>span{font-size:var(--t-sm);font-weight:600;color:var(--ink)}
-.car-f i{font-style:normal;font-weight:400;color:var(--muted);margin-left:6px}
-.car-f textarea{padding:12px 14px;min-height:140px;resize:vertical;line-height:1.5}
 .car-apply__go{align-self:flex-start}
-.car-apply__note{margin:0;font-size:var(--t-xs);color:var(--muted)}
-.car-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.car-apply__note{margin:0;font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+.car-apply__facts{list-style:none;margin:0;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:9px}
+.car-apply__facts li{display:flex;align-items:center;gap:10px;font-size:var(--t-xs);line-height:1.45;color:var(--txt)}
+.car-apply__facts .xt-ico{flex:none;width:17px;height:17px;color:var(--ink)}
+.car-apply__fine{margin:0;font-size:var(--t-xs);line-height:1.6;color:var(--faint)}
+.car-apply__fine .tl{font-size:var(--t-xs);min-height:0}
 
 /* general application */
 .car-gen__grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(32px,5vw,96px);align-items:start}
 .car-gen__copy{display:flex;flex-direction:column;gap:20px}
 .car-apply--gen{background:var(--paper-2)}
-.car-eeo{margin-top:12px;padding:22px 24px;border-left:2px solid var(--blue);background:var(--paper-2);border-radius:0 var(--r) var(--r) 0}
-.car .car-eeo__t{margin:0 0 8px;font-family:var(--f-h);font-weight:500;font-size:var(--t-h4);color:var(--ink)}
-.car-eeo p{margin:0;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.car-gen__list{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column}
+.car-gen__list li{display:grid;grid-template-columns:38px minmax(0,1fr);column-gap:8px;row-gap:4px;padding:16px 0;border-top:1px solid var(--line)}
+.car-gen__n{grid-row:1 / span 2;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;color:var(--blue);padding-top:3px;font-variant-numeric:tabular-nums}
+.car-gen__list b{font-family:var(--f-h);font-weight:500;font-size:var(--t-body);line-height:1.3;color:var(--ink)}
+.car-gen__list li>span:last-child{font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
 
 @media (max-width:1100px){
   .car-filter{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -212,3 +237,17 @@
 }
 .car-wk__w{padding-right:10px;background:var(--paper-2)}
 .car-role__link .tl{display:inline-flex;align-items:center;min-height:44px}
+
+/* ---- responsive for the blocks added in this round ---------------------- */
+@media (max-width:1100px){
+  .car-hero__facts{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:24px}
+  .car-hire__never{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:860px){
+  .car-never{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .car-hero__facts{grid-template-columns:minmax(0,1fr);row-gap:20px}
+  .car-apply__go{align-self:stretch;justify-content:center}
+  .car-gen__list li{grid-template-columns:32px minmax(0,1fr)}
+}

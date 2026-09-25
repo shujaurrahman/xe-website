@@ -27,12 +27,17 @@
           <div class="ind-exp__body">
             <h3 class="h3" id="ind-pane-<?= e($ind_s['id']) ?>-t"><?= e($ind_s['name']) ?></h3>
             <p class="ind-exp__line"><?= e($ind_s['line']) ?></p>
+            <dl class="ind-exp__at">
+              <div><dt>Number we move</dt><dd><?= e($ind_s['kpi']) ?></dd></div>
+              <div><dt>Named instruments</dt><dd><?= count($ind_s['rules']) ?></dd></div>
+              <div><dt>Starting points</dt><dd><?= count($ind_s['entry']) ?></dd></div>
+            </dl>
             <p class="ind-exp__sub bdh-ro">Discipline mix · typical programme</p>
             <ul class="ind-mix">
               <?php foreach ($ind_s['mix'] as $ind_slug => $ind_w): $ind_d = $ind_disc[$ind_slug]; ?>
               <li class="ind-mix__row" style="--w:<?= $ind_w ?>">
                 <a href="<?= xe_discipline_url($ind_d) ?>"><?= e($ind_d['name']) ?></a>
-                <span class="ind-mix__bar" aria-hidden="true"><i></i></span>
+                <span class="ind-meter" data-v="<?= $ind_w ?>" aria-hidden="true"><i></i><i></i><i></i></span>
                 <span class="ind-mix__lv bdh-ro"><?= $ind_lvl[$ind_w] ?></span>
               </li>
               <?php endforeach; ?>
@@ -40,7 +45,10 @@
             <div class="ind-exp__rules">
               <?php foreach (array_slice($ind_s['rules'], 0, 3) as $ind_r): ?><span class="bdh-tag"><?= e($ind_r[0]) ?></span><?php endforeach; ?>
             </div>
-            <a class="tl" href="#<?= e($ind_s['id']) ?>">Read the <?= e(ctype_alpha($ind_s['name'][1]) && ctype_lower($ind_s['name'][1]) ? lcfirst($ind_s['name']) : $ind_s['name']) ?> dossier <span class="i" aria-hidden="true">›</span></a>
+            <p class="ind-exp__links">
+              <a class="tl" href="#<?= e($ind_s['id']) ?>">Read the <?= e(ctype_alpha($ind_s['name'][1]) && ctype_lower($ind_s['name'][1]) ? lcfirst($ind_s['name']) : $ind_s['name']) ?> dossier <span class="i" aria-hidden="true">›</span></a>
+              <a class="tl" href="#console">Build a brief for it <span class="i" aria-hidden="true">›</span></a>
+            </p>
           </div>
         </article>
         <?php endforeach; ?>
