@@ -1,0 +1,98 @@
+/* ==========================================================================
+   Work — BASE LAYER (work.php). "The archive."
+   Loaded after assets/css/brand/hub.css (.bdh-*) and assets/css/tech/kit.css (.xt-*).
+   Only .wk-* primitives shared by several sections live here; each section styles itself in
+   assets/css/work/<id>.css. Tokens from core.css :root only; no new colours; no gradients
+   except core .aurora/.dither and mask fades; no !important.
+
+   CONVENTIONS
+   • Root: <section class="band [band--alt|band--ink] wk-<id>" id="<id>" aria-labelledby="<id>-t">
+   • Heads reuse .bdh-head / --row / --c. Cards reuse .bdh-card. Placeholder marks reuse .bdh-ill.
+   • .wk-k       mono key label · .wk-note small footnote
+   • .wk-editor  the pre-launch note addressed to whoever maintains data/work.php. Dashed, mono,
+                 never styled to look like marketing copy — it is scaffolding and must read as such.
+   • .wk-plate   the image placeholder a case study draws in code when its 'images' list is empty.
+                 Its glyph pattern is keyed off --wk-seed so no two records look identical.
+   • .wk-facet   one filter: a real <input type="checkbox"> plus its <label>. The input is visually
+                 hidden but focusable, so the chip shows a focus ring through :focus-visible + :has.
+   • Motion: loops only under .is-live; reduced motion shows the finished state.
+   ========================================================================== */
+
+.wk{
+  --wk-bleed:max(var(--gutter),calc((100vw - var(--wrap)) / 2));
+  --wk-plate-h:210px;
+}
+
+/* ---------- labels, notes -------------------------------------------------- */
+.wk-k{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;line-height:1.3;color:var(--faint)}
+.band--ink .wk-k{color:var(--on-ink-3)}
+.wk-note{font-size:var(--t-xs);line-height:1.6;color:var(--muted);max-width:74ch}
+.band--ink .wk-note{color:var(--on-ink-3)}
+.wk-note b{font-weight:500;color:var(--ink)}
+.band--ink .wk-note b{color:var(--on-ink-2)}
+
+/* ---------- the editor note (scaffolding, deliberately plain) -------------- */
+.wk-editor{display:flex;flex-direction:column;gap:12px;padding:clamp(18px,2vw,26px);border:1px dashed var(--line-3);border-radius:var(--r-lg);background:var(--paper-2)}
+.wk-editor__h{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.wk-editor__t{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.wk-editor p{font-size:var(--t-sm);line-height:1.65;color:var(--txt);max-width:62ch}
+.wk-editor code{font-size:var(--t-xs);padding:2px 6px;border-radius:var(--r-xs);background:var(--paper-4);color:var(--ink)}
+.wk-editor ol{counter-reset:wk-e;display:flex;flex-direction:column;gap:8px}
+.wk-editor ol>li{counter-increment:wk-e;position:relative;padding-left:26px;font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.wk-editor ol>li::before{content:counter(wk-e);position:absolute;left:0;top:1px;display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--paper-4);font-family:var(--f);font-size:var(--t-lbl);color:var(--muted);line-height:1}
+.band--ink .wk-editor{border-color:var(--on-ink-line);background:var(--on-ink-card)}
+.band--ink .wk-editor p,.band--ink .wk-editor ol>li{color:var(--on-ink-2)}
+.band--ink .wk-editor code{background:var(--on-ink-line);color:var(--on-ink)}
+.band--ink .wk-editor ol>li::before{background:var(--on-ink-line);color:var(--on-ink-2)}
+
+/* ---------- the code-drawn image plate ------------------------------------ */
+/* A record with no photograph gets a drawn plate rather than a stock photo, so nothing on this
+   page can be mistaken for the project it describes. The plate says what it is, in words.
+   The dot field is core's .dots utility (the element carries the class), so no gradient is
+   declared here; only its scale and its per-record offset are set. background-color, not the
+   background shorthand, or the shorthand would wipe core's background-image. */
+.wk-plate{position:relative;display:block;overflow:hidden;border-radius:var(--r-lg);background-color:var(--paper-3);
+  background-size:14px 14px;background-position:calc(var(--wk-seed,0) * 3px) calc(var(--wk-seed,0) * 2px);
+  border:1px solid var(--line);min-height:var(--wk-plate-h);isolation:isolate}
+.wk-plate__art{position:absolute;inset:0;z-index:1;width:100%;height:100%;color:var(--line-3)}
+.wk-plate__mark{position:absolute;left:14px;bottom:12px;z-index:2}
+.wk-plate__n{position:absolute;right:14px;top:12px;z-index:2;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.16em;color:var(--faint)}
+.band--ink .wk-plate{background-color:var(--on-ink-card);border-color:var(--on-ink-line)}
+.band--ink .wk-plate__art{color:var(--on-ink-line)}
+
+/* ---------- attribution line ---------------------------------------------- */
+.wk-attrib{display:flex;flex-wrap:wrap;align-items:center;gap:6px 0;font-family:var(--f);font-size:var(--t-lbl);
+  font-weight:500;letter-spacing:.12em;text-transform:uppercase;line-height:1.35;color:var(--ink)}
+.wk-attrib>*+*::before{content:"\00B7";margin-inline:8px;color:var(--ghost)}
+.wk-attrib em{font-style:normal;color:var(--faint)}
+.band--ink .wk-attrib{color:var(--on-ink)}
+.band--ink .wk-attrib em{color:var(--on-ink-3)}
+
+/* ---------- a filter chip built on a real checkbox ------------------------- */
+.wk-facet{position:relative;display:inline-flex}
+.wk-facet input{position:absolute;left:12px;top:50%;width:1px;height:1px;margin:0;opacity:0;pointer-events:none}
+.wk-facet label{display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:0 13px;border-radius:var(--r-pill);
+  border:1px solid var(--line);background:var(--paper);color:var(--muted);cursor:pointer;
+  font-size:var(--t-xs);font-weight:500;line-height:1.25;
+  transition:border-color var(--d1) var(--e-io),color var(--d1) var(--e-io),background var(--d1) var(--e-io)}
+.wk-facet label b{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.04em;color:var(--faint);font-variant-numeric:tabular-nums}
+.wk-facet label:hover{border-color:var(--line-3);color:var(--ink);background:var(--paper-2)}
+.wk-facet input:checked + label{border-color:var(--blue);background:var(--blue-wash);color:var(--blue-d)}
+.wk-facet input:checked + label b{color:var(--blue-d)}
+.wk-facet input:focus-visible + label{outline:2px solid var(--blue);outline-offset:3px}
+.wk-facet input:disabled + label{opacity:.45;cursor:not-allowed}
+@media (max-width:600px){.wk-facet label{min-height:40px;white-space:normal}}
+
+/* ---------- small shared bits --------------------------------------------- */
+.wk-tick{display:inline-grid;place-items:center;width:18px;height:18px;flex:none;border-radius:50%;background:var(--blue-wash);color:var(--blue-d);font-family:var(--f);font-size:var(--t-lbl);line-height:1}
+.band--ink .wk-tick{background:var(--on-ink-line);color:var(--on-ink)}
+.wk-rows{display:grid;border-top:1px solid var(--line)}
+.wk-rows>div{display:grid;grid-template-columns:minmax(0,14ch) minmax(0,1fr);align-items:baseline;gap:8px 18px;padding:13px 0;border-bottom:1px solid var(--line-2)}
+.wk-rows dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.4}
+.wk-rows dd{font-size:var(--t-sm);line-height:1.6;color:var(--ink)}
+.band--ink .wk-rows{border-color:var(--on-ink-line)}
+.band--ink .wk-rows>div{border-color:var(--on-ink-line)}
+.band--ink .wk-rows dd{color:var(--on-ink)}
+@media (max-width:520px){
+  .wk-rows>div{grid-template-columns:minmax(0,1fr);gap:4px}
+}

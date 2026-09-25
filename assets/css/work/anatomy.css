@@ -1,0 +1,31 @@
+/* Work · Anatomy — the eight fields as a table, with the publication rules beside it. */
+.wk-anatomy__grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:var(--bdh-gap-l);align-items:start}
+
+.wk-anatomy__table{display:flex;flex-direction:column;gap:14px;min-width:0}
+.wk-anatomy__t{width:100%;min-width:34rem;border-collapse:collapse;text-align:left}
+.wk-anatomy__t th,.wk-anatomy__t td{padding:14px 18px 14px 0;border-bottom:1px solid var(--line-2);vertical-align:top}
+.wk-anatomy__t thead th{padding-bottom:10px;border-bottom:1px solid var(--line)}
+.wk-anatomy__t tbody th{font-family:var(--f-h);font-size:1rem;font-weight:500;line-height:1.3;letter-spacing:-.008em;color:var(--ink);white-space:nowrap}
+.wk-anatomy__t tbody td{font-size:var(--t-sm);line-height:1.55;color:var(--txt)}
+.wk-anatomy__n{width:3.5rem;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;color:var(--blue);font-variant-numeric:tabular-nums}
+.wk-anatomy__who{white-space:nowrap;color:var(--muted)}
+.wk-anatomy__table code{font-size:var(--t-xs);padding:2px 6px;border-radius:var(--r-xs);background:var(--paper-3);color:var(--ink)}
+
+.wk-anatomy__side{display:flex;flex-direction:column;gap:var(--bdh-gap)}
+.wk-anatomy__rules{display:flex;flex-direction:column;gap:18px}
+.wk-anatomy__rules>li{display:grid;grid-template-columns:36px minmax(0,1fr);grid-template-rows:auto auto;column-gap:14px;row-gap:6px;padding-top:16px;border-top:1px solid var(--line)}
+.wk-anatomy__ri{grid-row:1 / span 2;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:var(--r-sm);background:var(--paper-3);color:var(--ink)}
+.wk-anatomy__rules .bdh-d{max-width:40ch}
+
+.wk-anatomy__absent{display:flex;flex-direction:column;gap:12px;padding:clamp(18px,2vw,24px);border-radius:var(--r-lg);background:var(--paper-3)}
+.wk-anatomy__no{display:flex;flex-direction:column;gap:8px}
+.wk-anatomy__no>li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;align-items:start;font-size:var(--t-sm);line-height:1.5;color:var(--txt)}
+.wk-anatomy__no i{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--paper);color:var(--faint);font-family:var(--f);font-size:var(--t-lbl);font-style:normal;line-height:1}
+
+@media (max-width:1023px){
+  .wk-anatomy__grid{grid-template-columns:minmax(0,1fr);gap:var(--bdh-block)}
+}
+@media (max-width:600px){
+  .wk-anatomy__t{min-width:30rem}
+  .wk-anatomy__t th,.wk-anatomy__t td{padding:12px 14px 12px 0}
+}

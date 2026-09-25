@@ -1,0 +1,29 @@
+/* Approach · Cadence — five days across, then the commitments and the things you never have to do. */
+.apr-cad__week{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--bdh-gap)}
+.apr-cad__day{display:flex;flex-direction:column;gap:10px;padding:clamp(18px,1.9vw,24px);
+  border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper)}
+.apr-cad__dh{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.apr-cad__dn{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+.apr-cad__day .bdh-d{max-width:30ch}
+.apr-cad__cost{display:flex;flex-direction:column;gap:5px;margin-top:auto;padding-top:14px;border-top:1px solid var(--line-2)}
+.apr-cad__cost>span:last-child{font-size:var(--t-sm);line-height:1.4;color:var(--ink)}
+
+.apr-cad__below{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:var(--bdh-gap-l);
+  align-items:start;margin-top:var(--bdh-block)}
+.apr-cad__commit,.apr-cad__never{display:flex;flex-direction:column;gap:14px}
+.apr-cad__cd>div{grid-template-columns:minmax(0,16ch) minmax(0,1fr)}
+.apr-cad__never ul{display:flex;flex-direction:column;gap:10px;padding:18px;border-radius:var(--r-lg);background:var(--paper-3)}
+.apr-cad__never .apr-never{font-size:var(--t-sm);color:var(--txt)}
+.apr-cad__say{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;line-height:1.45;letter-spacing:-.01em;color:var(--ink);max-width:36ch}
+
+@media (max-width:1100px){
+  .apr-cad__week{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:1023px){
+  .apr-cad__below{grid-template-columns:minmax(0,1fr);gap:var(--bdh-block)}
+}
+@media (max-width:640px){
+  .apr-cad__week{grid-template-columns:minmax(0,1fr)}
+  .apr-cad__day .bdh-d{max-width:none}
+  .apr-cad__cd>div{grid-template-columns:minmax(0,1fr)}
+}

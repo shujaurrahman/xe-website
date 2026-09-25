@@ -1,0 +1,108 @@
+/* Work · Index — the filter form and the record cards.
+   The grid uses align-items:start so a card that opens its record never stretches its neighbour, and
+   [hidden] cells are removed from flow explicitly (the li is a flex container, which would otherwise
+   beat the UA's [hidden]{display:none}). */
+
+/* ---------- the filter ---------------------------------------------------- */
+.wk-index__filter{display:flex;flex-direction:column;gap:20px;padding:clamp(20px,2.4vw,28px);
+  border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper);box-shadow:var(--sh-1)}
+.wk-index__sets{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+.wk-index__set{display:flex;flex-direction:column;gap:12px;border:0;min-width:0}
+.wk-index__set legend{padding:0;margin-bottom:2px}
+.wk-index__chips{display:flex;flex-wrap:wrap;gap:8px}
+
+.wk-index__bar{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;padding-top:18px;border-top:1px solid var(--line-2)}
+.wk-index__count{font-size:var(--t-sm);line-height:1.4;color:var(--muted)}
+.wk-index__count b{font-family:var(--f);font-weight:500;color:var(--ink);letter-spacing:-.02em}
+.wk-index__clear[hidden]{display:none}
+.wk-index__hint{margin-left:auto;max-width:34ch;text-align:right}
+
+.wk-index__empty{margin-top:24px;padding:22px;border:1px dashed var(--line-3);border-radius:var(--r-lg);
+  background:var(--paper);font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.wk-index__empty[hidden]{display:none}
+.wk-index__empty .tl{margin-left:4px}
+
+/* ---------- the grid ------------------------------------------------------ */
+.wk-index__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--bdh-gap);align-items:start;margin-top:var(--bdh-gap)}
+.wk-index__cell{display:flex;min-width:0}
+.wk-index__cell[hidden]{display:none}
+.wk-index__card,.wk-index__add{display:flex;flex-direction:column;gap:14px;width:100%;
+  padding:clamp(20px,2.2vw,28px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper)}
+.wk-index__add{border-style:dashed;border-color:var(--line-3);background:var(--paper-2)}
+
+.wk-index__top{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.wk-index__top .bdh-idx{margin-right:2px}
+
+.wk-index__shot,.wk-index__plate{margin-bottom:2px}
+.wk-index__plate{--wk-plate-h:clamp(160px,17vw,220px);aspect-ratio:16 / 9;min-height:0}
+
+.wk-index__t{max-width:34ch}
+.wk-index__p{max-width:48ch}
+.wk-index__tags{margin-top:2px}
+
+/* ---------- the record, in a native <details> ---------------------------- */
+.wk-index__rec{margin-top:auto;border-top:1px solid var(--line-2);padding-top:14px}
+.wk-index__sum{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;
+  cursor:pointer;list-style:none;font-size:var(--t-sm);font-weight:500;color:var(--ink);border-radius:var(--r-sm)}
+.wk-index__sum::-webkit-details-marker{display:none}
+.wk-index__sum:hover{color:var(--blue-d)}
+.wk-index__sum:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.wk-index__plus{position:relative;width:26px;height:26px;flex:none;border-radius:50%;background:var(--paper-3);transition:background var(--d2) var(--e),transform .35s var(--e)}
+.wk-index__plus::before,.wk-index__plus::after{content:"";position:absolute;left:50%;top:50%;width:9px;height:1.5px;margin:-.75px 0 0 -4.5px;background:var(--ink);transition:background var(--d2) var(--e)}
+.wk-index__plus::after{transform:rotate(90deg)}
+.wk-index__rec[open] .wk-index__plus{background:var(--ink);transform:rotate(45deg)}
+.wk-index__rec[open] .wk-index__plus::before,.wk-index__rec[open] .wk-index__plus::after{background:var(--on-ink)}
+
+.wk-index__body{display:flex;flex-direction:column;gap:20px;padding-top:16px}
+.wk-index__cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px var(--bdh-gap)}
+.wk-index__cols>div{display:flex;flex-direction:column;gap:10px;min-width:0}
+
+.wk-index__out{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:var(--r-lg);background:var(--paper-2);border:1px solid var(--line-2)}
+.wk-index__claim{font-size:var(--t-sm);line-height:1.6;color:var(--ink);max-width:56ch}
+.wk-index__fig{font-size:1.75rem;line-height:1;font-weight:500;color:var(--ink)}
+.wk-index__nofig{display:flex;flex-direction:column;align-items:flex-start;gap:8px;font-size:var(--t-xs);line-height:1.6;color:var(--muted);max-width:56ch}
+.wk-index__ev,.wk-index__meta{margin-top:2px}
+
+.wk-index__quote{padding:16px 18px;border-left:2px solid var(--blue);background:var(--paper-2);border-radius:0 var(--r-sm) var(--r-sm) 0}
+.wk-index__quote p{font-family:var(--f-h);font-size:1.0625rem;line-height:1.45;letter-spacing:-.01em;color:var(--ink)}
+.wk-index__quote footer{margin-top:8px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.wk-index__noq{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+
+.wk-index__lk{color:var(--blue-d);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+.wk-index__lk:hover{color:var(--ink)}
+
+/* ---------- the reserved slot -------------------------------------------- */
+/* Spans the full row so the grid never ends on a lone card with a hole beside it. */
+.wk-index__cell--add{grid-column:1 / -1}
+.wk-index__add{display:grid;grid-template-columns:44px minmax(0,20rem) minmax(0,1fr) auto;align-items:start;column-gap:var(--bdh-gap);row-gap:10px}
+.wk-index__add .wk-attrib{grid-column:2;align-self:center}
+.wk-index__add>h3{grid-column:2;grid-row:2}
+.wk-index__add>.bdh-d{grid-column:3;grid-row:1 / span 3;max-width:52ch}
+.wk-index__add>.bdh-tags{grid-column:2;grid-row:3}
+.wk-index__add>.tl{grid-column:4;grid-row:1 / span 3;align-self:center}
+.wk-index__add .bdh-d code{font-size:var(--t-xs);padding:2px 6px;border-radius:var(--r-xs);background:var(--paper-4);color:var(--ink)}
+.wk-index__addico{grid-column:1;grid-row:1 / span 3;display:inline-grid;place-items:center;width:44px;height:44px;border-radius:var(--r-sm);background:var(--paper-4);color:var(--ink)}
+
+.wk-index__foot{margin-top:var(--bdh-gap)}
+.wk-index__foot em{font-style:normal;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.wk-index__state{display:block;margin-top:6px;color:var(--ink)}
+
+@media (min-width:861px){
+  .wk-index__sets{grid-template-columns:minmax(0,1fr);gap:20px}
+}
+@media (max-width:1023px){
+  .wk-index__add{grid-template-columns:44px minmax(0,1fr)}
+  .wk-index__add .wk-attrib,.wk-index__add>h3,.wk-index__add>.bdh-tags,.wk-index__add>.bdh-d,.wk-index__add>.tl{grid-column:2;grid-row:auto}
+}
+@media (max-width:860px){
+  .wk-index__grid{grid-template-columns:minmax(0,1fr)}
+  .wk-index__hint{margin-left:0;text-align:left;max-width:none}
+}
+@media (max-width:520px){
+  .wk-index__add{grid-template-columns:minmax(0,1fr)}
+  .wk-index__add .wk-attrib,.wk-index__add>h3,.wk-index__add>.bdh-tags,.wk-index__add>.bdh-d,.wk-index__add>.tl,.wk-index__addico{grid-column:1}
+}
+@media (max-width:600px){
+  .wk-index__cols{grid-template-columns:minmax(0,1fr)}
+  .wk-index__fig{font-size:1.5rem}
+}

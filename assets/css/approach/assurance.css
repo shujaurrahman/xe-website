@@ -1,0 +1,29 @@
+/* Approach · Assurance — four mechanism cards, then the four standing limits. */
+.apr-as__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--bdh-gap)}
+.apr-as__card{display:flex;flex-direction:column;gap:12px;padding:clamp(22px,2.4vw,32px);
+  border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper)}
+.apr-as__top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.apr-as__sub{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-d);line-height:1.4}
+.apr-as__d{max-width:56ch}
+.apr-as__defs{margin-top:4px}
+.apr-as__defs>div{grid-template-columns:minmax(0,8ch) minmax(0,1fr)}
+.apr-as__why{display:flex;flex-direction:column;gap:7px;margin-top:auto;padding-top:14px}
+.apr-as__why>span:last-child{font-size:var(--t-sm);line-height:1.6;color:var(--ink);max-width:54ch}
+
+.apr-as__lines{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--bdh-gap);margin-top:var(--bdh-block)}
+.apr-as__lines>li{display:flex;flex-direction:column;gap:8px;padding-top:16px;border-top:1px solid var(--line)}
+.apr-as__ln{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;align-items:start;
+  font-family:var(--f-h);font-size:1rem;font-weight:500;line-height:1.3;letter-spacing:-.008em;color:var(--ink)}
+.apr-as__x{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--paper-3);color:var(--faint);font-family:var(--f);font-size:var(--t-xs);line-height:1}
+.apr-as__lines .bdh-d{max-width:34ch}
+
+@media (max-width:1023px){
+  .apr-as__lines{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .apr-as__grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:600px){
+  .apr-as__lines{grid-template-columns:minmax(0,1fr)}
+  .apr-as__d,.apr-as__why>span:last-child,.apr-as__lines .bdh-d{max-width:none}
+}

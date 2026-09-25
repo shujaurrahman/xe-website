@@ -1,0 +1,30 @@
+/* Work · Confidential — why most work cannot be published, what is public, what is shown under NDA. */
+.wk-confidential__why{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--bdh-gap)}
+.wk-confidential__why>li{display:flex;flex-direction:column;gap:8px;padding-top:16px;border-top:1px solid var(--line)}
+.wk-confidential__ico{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:var(--r-sm);background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.wk-confidential__why .bdh-d{max-width:34ch}
+
+.wk-confidential__split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--bdh-gap);margin-top:var(--bdh-block)}
+.wk-confidential__col{display:flex;flex-direction:column;gap:14px;padding:clamp(20px,2.2vw,30px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper)}
+.wk-confidential__col--nda{border-style:dashed;border-color:var(--blue-line);background:var(--blue-wash)}
+.wk-confidential__list{display:flex;flex-direction:column;gap:10px}
+.wk-confidential__list>li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;align-items:start;font-size:var(--t-sm);line-height:1.55;color:var(--ink)}
+
+.wk-confidential__steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap);margin-top:var(--bdh-block)}
+.wk-confidential__steps>li{display:flex;flex-direction:column;gap:7px;padding-top:16px;border-top:1px solid var(--line)}
+.wk-confidential__steps .bdh-d{max-width:38ch}
+
+.wk-confidential__cta{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;margin-top:var(--bdh-gap)}
+.wk-confidential__cta .wk-note{max-width:44ch}
+
+@media (max-width:1023px){
+  .wk-confidential__why{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .wk-confidential__split{grid-template-columns:minmax(0,1fr)}
+  .wk-confidential__steps{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:600px){
+  .wk-confidential__why{grid-template-columns:minmax(0,1fr)}
+  .wk-confidential__why .bdh-d,.wk-confidential__steps .bdh-d{max-width:none}
+}

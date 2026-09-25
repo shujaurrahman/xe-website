@@ -1,0 +1,81 @@
+/* ==========================================================================
+   Approach — BASE LAYER (approach.php). "The operating model."
+   Loaded after assets/css/brand/hub.css (.bdh-*) and assets/css/tech/kit.css (.xt-*).
+   Only .apr-* primitives shared by several sections live here; each section styles itself in
+   assets/css/approach/<id>.css. Tokens from core.css :root only; no new colours; no gradients
+   except core .aurora/.dither and mask fades; no !important.
+
+   CONVENTIONS
+   • Root: <section class="band [band--alt|band--ink] apr-<id>" id="<id>" aria-labelledby="<id>-t">
+   • Heads reuse .bdh-head / --row / --c. Cards reuse .bdh-card. Tags reuse .bdh-tag (+ --blue for
+     anything the client supplies) and .bdh-ill for anything still to be confirmed.
+   • .apr-k       mono key label · .apr-note small footnote
+   • .apr-who     a person in the room: <span class="apr-who is-ours|is-yours">Role</span>
+   • .apr-gate    a decision gate chip: <span class="apr-gate"><b>G3</b>Quality</span>
+   • .apr-never   a line an agent may not cross (the right half of the ai-native ledger)
+   • .apr-defs    a two-column definition strip (term | value), collapsing to one on phones
+   • Motion: loops only under .is-live; reduced motion shows the finished state. The stage stepper's
+     only motion is a cross-fade on the pane, which reduced motion removes.
+   ========================================================================== */
+
+.apr{
+  --apr-bleed:max(var(--gutter),calc((100vw - var(--wrap)) / 2));
+  --apr-rail:clamp(180px,17vw,248px);
+}
+
+/* ---------- labels, notes -------------------------------------------------- */
+.apr-k{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;line-height:1.3;color:var(--faint)}
+.band--ink .apr-k{color:var(--on-ink-3)}
+.apr-note{font-size:var(--t-xs);line-height:1.6;color:var(--muted);max-width:74ch}
+.band--ink .apr-note{color:var(--on-ink-3)}
+.apr-note b{font-weight:500;color:var(--ink)}
+.band--ink .apr-note b{color:var(--on-ink-2)}
+
+/* ---------- who is in the room -------------------------------------------- */
+/* Ours reads quiet; anything the client supplies is marked blue, because that is the line the
+   reader is scanning for: what will be asked of their own people. */
+.apr-who{display:inline-flex;align-items:center;gap:6px;min-height:26px;padding:0 10px;border-radius:var(--r-pill);
+  background:var(--paper-3);color:var(--txt);font-size:var(--t-xs);font-weight:500;line-height:1.3}
+.apr-who.is-yours{background:var(--blue-wash);color:var(--blue-d)}
+.apr-who::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--line-3);flex:none}
+.apr-who.is-yours::before{background:var(--blue)}
+.band--ink .apr-who{background:var(--on-ink-card);color:var(--on-ink-2);box-shadow:inset 0 0 0 1px var(--on-ink-line)}
+.band--ink .apr-who.is-yours{color:var(--on-ink);box-shadow:inset 0 0 0 1px var(--blue)}
+.band--ink .apr-who::before{background:var(--on-ink-line)}
+.apr-whos{display:flex;flex-wrap:wrap;gap:6px}
+@media (max-width:600px){.apr-who{min-height:28px;padding-block:4px;line-height:1.35}}
+
+/* ---------- a decision gate chip ------------------------------------------ */
+.apr-gate{display:inline-flex;align-items:center;gap:8px;min-height:30px;padding:0 12px 0 4px;border-radius:var(--r-pill);
+  border:1px solid var(--blue-line);background:var(--blue-wash);color:var(--blue-d);
+  font-size:var(--t-xs);font-weight:500;line-height:1.25}
+.apr-gate b{display:inline-grid;place-items:center;min-width:26px;height:22px;padding:0 6px;border-radius:var(--r-pill);
+  background:var(--blue);color:var(--on-ink);font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.04em}
+/* the chip's own fill is blue, so any icon inside it must drop the blue accent (brief §2, defect 3) */
+.apr-gate .xt-ico{--xt-accent:currentColor}
+.band--ink .apr-gate{border-color:var(--blue);background:var(--blue-wash-2);color:var(--on-ink)}
+
+/* ---------- a line an agent may not cross --------------------------------- */
+.apr-never{display:flex;align-items:baseline;gap:8px;font-size:var(--t-xs);line-height:1.5;color:var(--muted)}
+.apr-never::before{content:"\00D7";flex:none;font-family:var(--f);color:var(--faint)}
+.band--ink .apr-never{color:var(--on-ink-3)}
+
+/* ---------- a two-column definition strip --------------------------------- */
+.apr-defs{display:grid;border-top:1px solid var(--line)}
+.apr-defs>div{display:grid;grid-template-columns:minmax(0,13ch) minmax(0,1fr);align-items:baseline;gap:8px 18px;padding:13px 0;border-bottom:1px solid var(--line-2)}
+.apr-defs dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.4}
+.apr-defs dd{font-size:var(--t-sm);line-height:1.6;color:var(--ink)}
+.band--ink .apr-defs,.band--ink .apr-defs>div{border-color:var(--on-ink-line)}
+.band--ink .apr-defs dd{color:var(--on-ink)}
+@media (max-width:520px){.apr-defs>div{grid-template-columns:minmax(0,1fr);gap:4px}}
+
+/* ---------- small shared bits -------------------------------------------- */
+.apr-tick{display:inline-grid;place-items:center;width:18px;height:18px;flex:none;border-radius:50%;background:var(--blue-wash);color:var(--blue-d);font-family:var(--f);font-size:var(--t-lbl);line-height:1}
+.band--ink .apr-tick{background:var(--on-ink-line);color:var(--on-ink)}
+.apr-ico{display:inline-grid;place-items:center;width:38px;height:38px;flex:none;border-radius:var(--r-sm);background:var(--paper-3);color:var(--ink)}
+.band--ink .apr-ico{background:var(--on-ink-card);color:var(--on-ink)}
+.apr-lk{color:var(--blue-d);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+.apr-lk:hover{color:var(--ink)}
+.band--ink .apr-lk{color:var(--on-ink)}
+.apr-kbd{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:5px;border:1px solid var(--line-3);font-family:var(--f);font-size:var(--t-lbl);color:var(--muted);line-height:1}
+.band--ink .apr-kbd{border-color:var(--on-ink-line);color:var(--on-ink-3)}
