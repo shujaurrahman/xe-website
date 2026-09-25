@@ -1,5 +1,6 @@
 <?php /* DRAFT COPY — review before launch */ ?>
 <?php
+if (!empty($HX_S24_FRAG)) ob_start();
 /**
  * 24 — Technology & Intelligence: what we build and run.
  *
@@ -98,7 +99,7 @@ $s24_first = $s24_layers[0][3][0];
             <ul class="s24__nodes" aria-label="<?= e($s24_l[1]) ?> capabilities">
               <?php foreach ($s24_l[3] as $s24_slug): $s24_cap = $s24_ti[$s24_slug]; ?>
               <li>
-                <a class="s24__node<?= $s24_slug === $s24_first ? ' is-on' : '' ?>" href="#s24-d-<?= e($s24_slug) ?>" aria-controls="s24-d-<?= e($s24_slug) ?>"
+                <a class="s24__node<?= $s24_slug === $s24_first ? ' is-on' : '' ?>" href="<?= e($s24_link($s24_slug)) ?>" aria-controls="s24-dets"
                    data-s24-node="<?= e($s24_slug) ?>" data-std="<?= e(implode(' ', $s24_cap['standards'])) ?>">
                   <span class="s24__nic"><?= xt_icon($s24_cap['icon'], ['size' => 18]) ?></span>
                   <span class="s24__nn"><?= e($s24_cap['name']) ?></span>
@@ -113,8 +114,15 @@ $s24_first = $s24_layers[0][3][0];
       </div>
 
       <!-- the details: one per capability, in the diagram's order -->
-      <div class="s24__dets">
+<?php
+/* Weight: only the first capability's detail ships in the page. The other nine (≈200 KB of logo and
+   badge markup) come from index.php?s24=all, which renders just this block; 24-technology.js fetches it
+   when the section nears the viewport. Without JS, each node links to its capability page instead. */
+if (!empty($HX_S24_FRAG)) ob_end_clean();
+?>
+      <div class="s24__dets" id="s24-dets" data-s24-src="?s24=all">
         <?php foreach ($s24_layers as $s24_l): foreach ($s24_l[3] as $s24_slug):
+            if (empty($HX_S24_FRAG) && $s24_slug !== $s24_first) continue;
             $s24_cap  = $s24_ti[$s24_slug];
             $s24_href = $s24_link($s24_slug);
             $s24_by   = array_fill_keys(array_keys($s24_groups), []);
@@ -171,6 +179,7 @@ $s24_first = $s24_layers[0][3][0];
         </article>
         <?php endforeach; endforeach; ?>
       </div>
+<?php if (!empty($HX_S24_FRAG)) exit; ?>
     </div>
 
     <!-- the reverse view: every framework across the ten, with how many capabilities build to it -->

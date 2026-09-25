@@ -18,6 +18,7 @@
 
       <!-- 1 · AI Application Design — three models routed into one prompt bar -->
       <article class="s07__card s07__card--7">
+        <p class="bdh-sr">Illustration: three model columns, Gemini, OpenAI and Anthropic, each connected to a single prompt bar that routes a request to the best-suited model.</p>
         <div class="s07__mock s07__mock--tall s07-app" aria-hidden="true">
           <div class="s07-app__row">
             <span class="s07-app__col is-on">
@@ -52,6 +53,7 @@
 
       <!-- 2 · AI Content Studio — refine by chat, then render -->
       <article class="s07__card s07__card--5">
+        <p class="bdh-sr">Illustration: a content studio where a chat panel refines a vertical 9:16 video frame before it renders.</p>
         <div class="s07__mock s07__mock--tall s07-studio" aria-hidden="true">
           <div class="s07-studio__panel">
             <div class="s07-studio__hd"><span>Refine</span><span>9:16</span></div>
@@ -78,6 +80,7 @@
 
       <!-- 3 · Brand AI Tools — an example brand's asset library ("Your company", monogram Yc) -->
       <article class="s07__card s07__card--4">
+        <p class="bdh-sr">Illustration: an asset library for an example company, "Your company", with image tools such as Flux and Firefly producing on-brand variants.</p>
         <div class="s07__mock s07-tools" aria-hidden="true">
           <div class="s07-tools__row">
             <span class="s07-tools__tool">Flux</span>
@@ -121,6 +124,7 @@
 
       <!-- 4 · AI Strategy & Consulting — pilot › adopt › scale on one rule -->
       <article class="s07__card s07__card--8">
+        <p class="bdh-sr">Illustration: an adoption roadmap in three phases, pilot, adopt and scale, laid along one line.</p>
         <div class="s07__mock s07-road" aria-hidden="true">
           <div class="s07-road__hd"><span>Adoption roadmap</span><span>3 phases</span></div>
           <div class="s07-road__track">

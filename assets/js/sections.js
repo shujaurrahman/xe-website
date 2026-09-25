@@ -1,3 +1,38 @@
+/* ===== 00-story ===== */
+try {
+/* 00 — chapter rail. sections.js loads before hub.js, so wait for DOMContentLoaded before using BDH. */
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+  var rail = document.querySelector('[data-hx-rail]');
+  if (!rail || !window.BDH) return;
+  var links = [].slice.call(rail.querySelectorAll('[data-hx-ch]'));
+  var segs = [].slice.call(rail.querySelectorAll('[data-hx-seg]'));
+  var owner = new Map(), secs = [];
+  links.forEach(function (a, n) {
+    (a.getAttribute('data-hx-ids') || '').split(' ').forEach(function (id) {
+      var el = id && document.getElementById(id);
+      if (el) { owner.set(el, n); secs.push(el); }
+    });
+  });
+  if (!secs.length) return;
+  rail.hidden = false;
+  var hero = document.getElementById('hero');
+  function set(n, onHero) {
+    links.forEach(function (a, i) {
+      a.classList.toggle('is-on', i === n);
+      a.classList.toggle('is-past', i < n);
+      if (i === n) a.setAttribute('aria-current', 'step'); else a.removeAttribute('aria-current');
+    });
+    segs.forEach(function (s, i) { s.classList.toggle('is-on', i === n); s.classList.toggle('is-past', i < n); });
+    rail.classList.toggle('is-hero', !!onHero);
+  }
+  set(0, true);
+  window.BDH.spy(secs, function (el) {
+    set(owner.get(el) || 0, el === hero);
+  });
+});
+} catch (e) { console.error('[00-story]', e); }
+
 /* ===== 01-hero ===== */
 try {
 /* 01 — the floating work drifts with the pointer; everything fades in once. */
@@ -971,8 +1006,8 @@ try {
       });
     }
 
-    function select(slug) {
-      if (!slug || slug === current) return;
+    function select(slug, force) {
+      if (!slug || (slug === current && !force)) return;
       current = slug;
       nodes.forEach(function (n) {
         var on = n.getAttribute('data-s24-node') === slug;
@@ -1004,7 +1039,29 @@ try {
 
     var first = nodes.filter(function (n) { return n.classList.contains('is-on'); })[0] || nodes[0];
     var fromHash = location.hash.indexOf('#s24-d-') === 0 ? location.hash.slice(7) : null;
-    select(fromHash && root.querySelector('#s24-d-' + fromHash) ? fromHash : first.getAttribute('data-s24-node'));
+    select(first.getAttribute('data-s24-node'));
+
+    /* the other capability details load once, as the section nears the viewport (see index.php ?s24=) */
+    var loaded = false;
+    function loadRest() {
+      if (loaded) return; loaded = true;
+      var src = dets.getAttribute('data-s24-src');
+      if (!src || !window.fetch) return;
+      fetch(location.pathname + src, { credentials: 'same-origin' }).then(function (r) { return r.ok ? r.text() : ''; }).then(function (html) {
+        if (!html) return;
+        var box = document.createElement('div');
+        box.innerHTML = html;
+        $$('.s24__det', box).forEach(function (d) { if (!document.getElementById(d.id)) dets.appendChild(d); });
+        select(fromHash && document.getElementById('s24-d-' + fromHash) ? fromHash : current, true);
+        fromHash = null;
+        markBadges();
+      }).catch(function () { loaded = false; });
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); loadRest(); } }, { rootMargin: '900px 0px' });
+      io.observe(root);
+    } else loadRest();
+    if (fromHash) loadRest();
 
     /* ---------- frameworks index: rows become toggle buttons --------------- */
     var read = root.querySelector('[data-s24-read]');

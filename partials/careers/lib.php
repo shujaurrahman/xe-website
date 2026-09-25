@@ -20,11 +20,54 @@
 
 if (!function_exists('car_data')) {
 
+/** 'Remote (India)' → 'remote-india' — a stable key for a label written in the data file. */
+function car_key(string $label): string {
+    return trim(preg_replace('~[^a-z0-9]+~', '-', strtolower($label)), '-');
+}
+
+/**
+ * data/careers.php is the careers page's own file, and the careers page reads it directly in its
+ * own shape: roles as [id, title, dept, loc, type, level, summary, resp, req, nice], with the
+ * department, location and type written out as labels. This helper only serves careers/apply.php,
+ * so rather than change a file the careers page owns, it maps that shape onto the one below.
+ * A file written in the older shape (slug, discipline, locations[] …) is still read as-is.
+ */
+function car_from_labels(array $raw): array {
+    $site  = $GLOBALS['SITE']['disciplines'] ?? [];
+    $bydep = [];                                   // department label → discipline slug
+    foreach ($site as $d) $bydep[$d['name']] = $d['slug'];
+    $raw += ['locations' => [], 'types' => [], 'groups' => []];
+    foreach (($raw['roles'] ?? []) as $i => $r) {
+        if (!isset($r['id']) || isset($r['slug'])) continue;
+        $dep = (string) ($r['dept'] ?? '');
+        $grp = $bydep[$dep] ?? car_key($dep);      // a department that is not a discipline becomes its own group
+        if ($dep !== '' && !isset($bydep[$dep])) $raw['groups'][$grp] = $dep;
+        $loc = (string) ($r['loc'] ?? '');
+        if ($loc !== '') $raw['locations'][car_key($loc)] = $loc;
+        $typ = (string) ($r['type'] ?? '');
+        if ($typ !== '') $raw['types'][car_key($typ)] = $typ;
+        $raw['roles'][$i] = [
+            'slug'       => (string) $r['id'],
+            'title'      => $r['title'] ?? '',
+            'discipline' => $grp,
+            'locations'  => $loc !== '' ? [car_key($loc)] : [],
+            'mode'       => '',
+            'type'       => $typ !== '' ? car_key($typ) : '',
+            'experience' => (string) ($r['level'] ?? ''),
+            'does'       => (string) ($r['summary'] ?? ''),
+            'work'       => (array) ($r['resp'] ?? []),
+            'look'       => (array) ($r['req'] ?? []),
+            'nice'       => (array) ($r['nice'] ?? []),
+        ];
+    }
+    return $raw;
+}
+
 function car_data(): array {
     static $D = null;
     if ($D !== null) return $D;
 
-    $raw   = require __DIR__ . '/../../data/careers.php';
+    $raw   = car_from_labels(require __DIR__ . '/../../data/careers.php');
     $locs  = is_array($raw['locations'] ?? null) ? $raw['locations'] : [];
     $types = is_array($raw['types'] ?? null) ? $raw['types'] : [];
     $roles = [];

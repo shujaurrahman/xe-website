@@ -1,16 +1,16 @@
 <?php /* DRAFT COPY — review before launch */ ?>
-<section class="band band--rules s13" id="operation" aria-labelledby="s13-t">
+<section class="band band--alt band--rules s13" id="operation" aria-labelledby="s13-t">
   <div class="wrap">
     <div class="s13__grid">
 
-      <!-- PLACEHOLDER: stock imagery from the reference sites — replace with Xterra Edze's own
+      <!-- PLACEHOLDER: credited Unsplash placeholder photos (sections/CREDITS.md) — replace with Xterra Edze's own
            team photography before launch. -->
       <div class="s13__collage" data-rv data-s13-collage aria-hidden="true">
         <figure class="s13__ph s13__ph--a">
-          <img src="assets/imgs/520e7bcd_bCfrIbaPwXjncwhB7JzDkgBNJk.jpg" alt="" width="1024" height="683" loading="lazy" decoding="async">
+          <img src="assets/imgs/tech/hub/delivery-whiteboard.jpg" alt="" width="1400" height="934" loading="lazy" decoding="async">
         </figure>
         <figure class="s13__ph s13__ph--b">
-          <img src="assets/imgs/f020c82a_S2a2EXxvNOU3hdHzZO2bxI3AYc.jpg" alt="" width="512" height="416" loading="lazy" decoding="async">
+          <img src="assets/imgs/brand/hub/ai-trust/review.jpg" alt="" width="1200" height="675" loading="lazy" decoding="async">
         </figure>
       </div>
 
@@ -25,7 +25,7 @@
           <li><i class="chev" aria-hidden="true">›</i>Every model, dataset and system we build belongs to the client.</li>
           <li><i class="chev" aria-hidden="true">›</i>Judgement stays human. Repetition does not.</li>
         </ul>
-        <a class="tl s13__cta" href="#why">Read our approach <span class="i" aria-hidden="true">›</span></a>
+        <a class="tl s13__cta" href="<?= xe_url('approach.php') ?>">Read our approach <span class="i" aria-hidden="true">›</span></a>
       </div>
 
     </div>

@@ -27,9 +27,9 @@
     </div>
 
     <div class="s22__links" data-rv data-rv-d="90">
-      <a href="#delivered"><span>See the work</span><i aria-hidden="true">›</i></a>
+      <a href="<?= xe_url('work.php') ?>"><span>See the work</span><i aria-hidden="true">›</i></a>
       <a href="#disciplines"><span>Explore our services</span><i aria-hidden="true">›</i></a>
-      <a href="#process"><span>Read our approach</span><i aria-hidden="true">›</i></a>
+      <a href="<?= xe_url('approach.php') ?>"><span>Read our approach</span><i aria-hidden="true">›</i></a>
       <!-- PLACEHOLDER: no news or ideas page exists yet — link this when one does. Until then it is shown, not linked. -->
       <a class="s22__soon" aria-disabled="true"><span>Latest ideas &amp; news</span> <small class="s22__tag">Soon</small></a>
       <a href="#operation"><span>About Xterra Edze</span><i aria-hidden="true">›</i></a>

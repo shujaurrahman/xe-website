@@ -3,30 +3,30 @@
 /* 10 — global content production, laid out as two contact-sheet strips. Every tile
    keeps its native aspect ratio (fixed row height, width from the ratio), so nothing
    is cropped mid-word, and each carries a mono slate: index · format · ratio.
-   Videos ship with a poster frame and load only while the section is on screen. */
+   The strip is currently all stills (credited placeholder photos, see sections/CREDITS.md); the video branch below stays for real footage. */
 $s10_rows = [
   ['dir' => 'l', 'tiles' => [
-    ['img' => 'assets/imgs/80af393a_creative-video-poster.webp', 'w' => 504, 'h' => 900, 'fmt' => 'UGC · Reel', 'ar' => '9:16'],
-    ['vid' => 'assets/animation/1d5d8449_de-serum-ugc.mp4', 'poster' => 'assets/animation/1d5d8449_de-serum-ugc-poster.jpg', 'w' => 360, 'h' => 640, 'fmt' => 'UGC · Video', 'ar' => '9:16'],
-    ['img' => 'assets/imgs/112a8859_fedab9950685d079.jpg', 'w' => 332, 'h' => 662, 'fmt' => 'Film · Poster', 'ar' => '1:2'],
-    ['img' => 'assets/imgs/bd83f418_4pkRC1qbVbaQaDhl6hxwYbnR3M.png', 'w' => 1575, 'h' => 1800, 'fmt' => 'Product UI', 'ar' => '7:8', 'ui' => true],
-    ['img' => 'assets/imgs/0713d126_962143a38444fcca.jpg', 'w' => 1023, 'h' => 662, 'fmt' => 'Retail · Web', 'ar' => '3:2'],
-    ['img' => 'assets/imgs/ce74ecca_L8Dz2251src41HfKaTB8ynwCI.jpg', 'w' => 360, 'h' => 450, 'fmt' => 'Product · Still', 'ar' => '4:5'],
-    ['img' => 'assets/imgs/a8057f35_rKcI0supToKMKRlcKeai8HLis.jpg', 'w' => 2048, 'h' => 1280, 'fmt' => 'Brand · Web', 'ar' => '16:10'],
+    ['img' => 'assets/imgs/brand/hub/ai-os/social-b.jpg', 'w' => 900, 'h' => 596, 'fmt' => 'Social · Still', 'ar' => '3:2'],
+    ['img' => 'assets/imgs/brand/hub/capabilities/architecture.jpg', 'w' => 1200, 'h' => 800, 'fmt' => 'Brand · System', 'ar' => '3:2'],
+    ['img' => 'assets/imgs/brand/hub/global/crowd.jpg', 'w' => 800, 'h' => 1200, 'fmt' => 'Campaign · Poster', 'ar' => '2:3'],
+    ['img' => 'assets/imgs/brand/hub/touchpoints/app.jpg', 'w' => 1200, 'h' => 1011, 'fmt' => 'Product UI', 'ar' => '6:5', 'ui' => true],
+    ['img' => 'assets/imgs/brand/hub/ai-os/retail-shelf.jpg', 'w' => 900, 'h' => 600, 'fmt' => 'Retail · Shelf', 'ar' => '3:2'],
+    ['img' => 'assets/imgs/brand/hub/touchpoints/cup.jpg', 'w' => 1200, 'h' => 800, 'fmt' => 'Product · Still', 'ar' => '3:2'],
+    ['img' => 'assets/imgs/brand/hub/capabilities/growth.jpg', 'w' => 1200, 'h' => 802, 'fmt' => 'Brand · Web', 'ar' => '3:2'],
   ]],
   ['dir' => 'r', 'tiles' => [
-    ['img' => 'assets/imgs/eb2cc44e_JPAhMTAPSO3541ukhwlZ5mA68U.png', 'w' => 1575, 'h' => 1800, 'fmt' => 'Product UI', 'ar' => '7:8', 'ui' => true],
-    ['vid' => 'assets/animation/2152213c_I5EermuEJ3ajQbEhyzQGZjChJ7k.mp4', 'poster' => 'assets/animation/2152213c_I5EermuEJ3ajQbEhyzQGZjChJ7k-poster.jpg', 'w' => 1200, 'h' => 1080, 'fmt' => 'Product UI · Video', 'ar' => '10:9', 'ui' => true],
-    ['img' => 'assets/imgs/329577d8_6lgwc6zBcLzD1v0rv9ciG2YO6ZY.png', 'w' => 1575, 'h' => 1800, 'fmt' => 'Product UI', 'ar' => '7:8', 'ui' => true],
-    ['img' => 'assets/imgs/32873c56_0K4ULhcovO1vIB5S1Q26riqxkhE.png', 'w' => 1024, 'h' => 683, 'fmt' => 'Lifestyle · Still', 'ar' => '3:2'],
-    ['img' => 'assets/imgs/7550c3de_V4nZoa0B1ZgOTXlpCU65Drx7Ws.png', 'w' => 1575, 'h' => 1800, 'fmt' => 'Product UI', 'ar' => '7:8', 'ui' => true],
-    ['img' => 'assets/imgs/3a76af1b_07df48dc565f922c.jpg', 'w' => 1036, 'h' => 662, 'fmt' => 'B2B · Web', 'ar' => '3:2'],
-    ['img' => 'assets/imgs/bd8b7367_vQVIWBVwvM8wzpTvk0VJ1mKJto.webp', 'w' => 1600, 'h' => 1067, 'fmt' => 'Product · Still', 'ar' => '3:2'],
+    ['img' => 'assets/imgs/brand/hub/touchpoints/stationery.jpg', 'w' => 1200, 'h' => 800, 'fmt' => 'Print · Stationery', 'ar' => '3:2'],
+    ['img' => 'assets/imgs/brand/hub/industries/retail.jpg', 'w' => 800, 'h' => 1200, 'fmt' => 'Retail · Poster', 'ar' => '2:3'],
+    ['img' => 'assets/imgs/brand/hub/ai-os/gen-3.jpg', 'w' => 900, 'h' => 601, 'fmt' => 'Product · Still', 'ar' => '3:2', 'ui' => true],
+    ['img' => 'assets/imgs/brand/hub/touchpoints/tote.jpg', 'w' => 1200, 'h' => 800, 'fmt' => 'Merch · Still', 'ar' => '3:2'],
+    ['img' => 'assets/imgs/brand/hub/ai-os/gen-4.jpg', 'w' => 900, 'h' => 600, 'fmt' => 'Lifestyle · Still', 'ar' => '3:2'],
+    ['img' => 'assets/imgs/brand/hub/touchpoints/wayfinding.jpg', 'w' => 1600, 'h' => 1066, 'fmt' => 'Environment · Signage', 'ar' => '3:2'],
+    ['img' => 'assets/imgs/brand/hub/industries/technology.jpg', 'w' => 1200, 'h' => 900, 'fmt' => 'B2B · Web', 'ar' => '4:3', 'ui' => true],
   ]],
 ];
 $s10_i = 0;
 ?>
-<section class="band band--rules bdh s10" id="production" aria-labelledby="s10-t">
+<section class="band band--alt band--rules bdh s10" id="production" aria-labelledby="s10-t">
   <div class="wrap">
     <div class="bdh-head bdh-head--row s10__head" data-rv>
       <div>
@@ -47,11 +47,8 @@ $s10_i = 0;
     </div>
   </div>
 
-  <!-- PLACEHOLDER: reference imagery. Replace with Xterra Edze production stills before launch. -->
-  <!-- PLACEHOLDER: owner decision before launch — these reference frames show third-party names and marks
-       (e.g. "MILANO", "SUPERMOON", "galway", "GIGAFINANCE GROUP", "BLUEPRINT NO. 7"). Shown in full
-       colour and uncropped since the 2026-09 polish; replace or license them before launch. -->
-  <p class="bdh-sr">Two moving strips of campaign work in many formats: vertical social reels and UGC video, a film poster, product stills, product UI frames and web hero layouts.</p>
+  <!-- PLACEHOLDER: credited Unsplash placeholder photos (sections/CREDITS.md). Replace with Xterra Edze production stills before launch. -->
+  <p class="bdh-sr">Two moving strips of campaign work in many formats: social stills, a campaign poster, packaging and product stills, print, merchandise, signage and product screens.</p>
   <div class="s10__rows" aria-hidden="true">
 <?php foreach ($s10_rows as $s10_r): ?>
     <div class="s10__row mask-x" data-s10-row data-dir="<?= $s10_r['dir'] ?>">

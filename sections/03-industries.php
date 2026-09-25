@@ -6,15 +6,15 @@
         <p class="lbl lbl--blue"><span class="dot"></span>Industries</p>
         <h2 class="h2 s03__h" id="s03-t"><span class="g">Helping brands win in</span> <span class="s03__swap" aria-live="polite"><span class="s03__word" data-s03-word>Consumer Health</span></span></h2>
       </div>
-      <a class="tl s03__more" href="#delivered">Explore case studies <span class="i" aria-hidden="true">›</span></a>
+      <a class="tl s03__more" href="<?= xe_url('industries.php') ?>">Explore industries <span class="i" aria-hidden="true">›</span></a>
     </div>
 
-    <!-- PLACEHOLDER: imagery is from the reference sites — replace with Xterra Edze's own
+    <!-- PLACEHOLDER: imagery is credited Unsplash placeholder photography (sections/CREDITS.md) — replace with Xterra Edze's own
          case photography before launch. Outcome lines are illustrative, not measured. -->
     <div class="s03__rail" data-s03-rail role="tablist" aria-label="Industries we work in">
 
       <article class="s03__card is-on" data-s03-card data-word="Consumer Health">
-        <img class="s03__img" src="assets/imgs/bd8b7367_vQVIWBVwvM8wzpTvk0VJ1mKJto.webp" alt="" aria-hidden="true" width="1600" height="1067" loading="lazy" decoding="async">
+        <img class="s03__img" src="assets/imgs/brand/hub/industries/healthcare.jpg" alt="" aria-hidden="true" width="800" height="1200" loading="lazy" decoding="async">
         <span class="s03__scrim" aria-hidden="true"></span>
         <button class="s03__hit" type="button" role="tab" aria-selected="true" id="s03-t0" aria-controls="s03-p0">
           <span class="s03__spine">Consumer Health</span>
@@ -27,7 +27,7 @@
       </article>
 
       <article class="s03__card" data-s03-card data-word="Financial Services">
-        <img class="s03__img" src="assets/imgs/32873c56_0K4ULhcovO1vIB5S1Q26riqxkhE.png" alt="" aria-hidden="true" width="1024" height="683" loading="lazy" decoding="async">
+        <img class="s03__img" src="assets/imgs/brand/hub/industries/financial.jpg" alt="" aria-hidden="true" width="674" height="1200" loading="lazy" decoding="async">
         <span class="s03__scrim" aria-hidden="true"></span>
         <button class="s03__hit" type="button" role="tab" aria-selected="false" id="s03-t1" aria-controls="s03-p1" tabindex="-1">
           <span class="s03__spine">Financial Services</span>
@@ -40,7 +40,7 @@
       </article>
 
       <article class="s03__card" data-s03-card data-word="Retail &amp; Commerce">
-        <img class="s03__img" src="assets/imgs/0713d126_962143a38444fcca.jpg" alt="" aria-hidden="true" width="1023" height="662" loading="lazy" decoding="async">
+        <img class="s03__img" src="assets/imgs/brand/hub/industries/retail.jpg" alt="" aria-hidden="true" width="800" height="1200" loading="lazy" decoding="async">
         <span class="s03__scrim" aria-hidden="true"></span>
         <button class="s03__hit" type="button" role="tab" aria-selected="false" id="s03-t2" aria-controls="s03-p2" tabindex="-1">
           <span class="s03__spine">Retail &amp; Commerce</span>
@@ -53,7 +53,7 @@
       </article>
 
       <article class="s03__card" data-s03-card data-word="B2B Technology">
-        <img class="s03__img" src="assets/imgs/520e7bcd_bCfrIbaPwXjncwhB7JzDkgBNJk.jpg" alt="" aria-hidden="true" width="1024" height="683" loading="lazy" decoding="async">
+        <img class="s03__img" src="assets/imgs/brand/hub/industries/technology.jpg" alt="" aria-hidden="true" width="1200" height="900" loading="lazy" decoding="async">
         <span class="s03__scrim" aria-hidden="true"></span>
         <button class="s03__hit" type="button" role="tab" aria-selected="false" id="s03-t3" aria-controls="s03-p3" tabindex="-1">
           <span class="s03__spine">B2B Technology</span>
@@ -66,7 +66,7 @@
       </article>
 
       <article class="s03__card" data-s03-card data-word="Hospitality">
-        <img class="s03__img" src="assets/imgs/f020c82a_S2a2EXxvNOU3hdHzZO2bxI3AYc.jpg" alt="" aria-hidden="true" width="512" height="416" loading="lazy" decoding="async">
+        <img class="s03__img" src="assets/imgs/brand/hub/industries/hospitality.jpg" alt="" aria-hidden="true" width="1200" height="675" loading="lazy" decoding="async">
         <span class="s03__scrim" aria-hidden="true"></span>
         <button class="s03__hit" type="button" role="tab" aria-selected="false" id="s03-t4" aria-controls="s03-p4" tabindex="-1">
           <span class="s03__spine">Hospitality</span>
@@ -79,7 +79,7 @@
       </article>
 
       <article class="s03__card" data-s03-card data-word="Telecom &amp; Media">
-        <img class="s03__img" src="assets/imgs/728de98a_K4TNhPHkByOQflkOPRqhFrK4XJA.png" alt="" aria-hidden="true" width="1440" height="900" loading="lazy" decoding="async">
+        <img class="s03__img" src="assets/imgs/brand/hub/industries/public.jpg" alt="" aria-hidden="true" width="1200" height="675" loading="lazy" decoding="async">
         <span class="s03__scrim" aria-hidden="true"></span>
         <button class="s03__hit" type="button" role="tab" aria-selected="false" id="s03-t5" aria-controls="s03-p5" tabindex="-1">
           <span class="s03__spine">Telecom &amp; Media</span>

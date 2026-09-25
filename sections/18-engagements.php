@@ -2,7 +2,7 @@
 <section class="band band--alt band--rules s18" id="engagements" aria-labelledby="s18-t">
   <div class="wrap">
     <div class="s18__head" data-rv>
-      <p class="lbl lbl--blue"><span class="dot"></span>Working together</p>
+      <p class="lbl lbl--blue"><span class="dot"></span>Chapter 05 · Work with us</p>
       <h2 class="h2" id="s18-t"><span class="g">Engagement</span> models <sup class="s18__count">(3)</sup></h2>
       <p class="lead s18__sub">Three ways to work with one team. Scope is fixed before we start, and
         everything we build is transferred to you.</p>

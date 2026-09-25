@@ -1,63 +1,55 @@
 <?php /* DRAFT COPY — review before launch */
-/* Why build here — five reasons, each with the trade-off printed beside it. The trade-off column is
-   the point of the section: a careers page that only lists upsides tells a candidate nothing, and the
-   people we want read the second column first. Sticky head on the left, rows on the right.
-   Locals prefixed why_. */
-
-$why_rows = [
-    [
-        'k'  => 'One team, six practices',
-        'p'  => 'Brand, technology, campaign, AI, product and marketing technology sit in one company and usually on one engagement. A designer here works next to the engineer who will ship the thing, and an engineer sees the strategy that produced the brief.',
-        't'  => 'You will work with people whose craft you do not share, and you will have to explain yours in plain words. Specialists who only want to talk to other specialists are happier elsewhere.',
-        'ico' => 'layers',
-    ],
-    [
-        'k'  => 'The operation is rebuilt around AI, not sprinkled with it',
-        'p'  => 'Repetition is automated: production passes, variant generation, QA sweeps, research gathering, reporting. Judgement is not. You spend your hours on the decisions, and you are expected to have an opinion about them.',
-        't'  => 'You have to actually learn the tooling, and keep learning it as it changes under you. "I prefer to do it by hand" is a position you can hold, but you will need a reason beyond habit.',
-        'ico' => 'agent',
-    ],
-    [
-        'k'  => 'Work that ships, and then keeps running',
-        'p'  => 'Every model, dataset and system we build belongs to the client, and we are usually still on it after launch. You see your work in production, measured, argued about and improved rather than screenshotted and forgotten.',
-        't'  => 'You inherit what you build. That means live bugs, awkward migrations and the long middle of a project, not only the launch.',
-        'ico' => 'rocket',
-    ],
-    [
-        'k'  => 'Independent, so the client is the only stakeholder',
-        'p'  => 'No holding company, no media rebate to protect, no platform we are contractually fond of. Recommendations are made on evidence, and you will not be asked to defend a choice you do not believe in.',
-        't'  => 'Independence means we win work on the strength of the work. There is no house account to hide behind in a slow quarter.',
-        'ico' => 'compass',
-    ],
-    [
-        'k'  => 'Two studios, one standard',
-        'p'  => 'New Delhi and Ludhiana run as one team on the same tooling, the same review rituals and the same quality bar. Where you sit changes your commute, not the work you get.',
-        't'  => 'It also means real remote discipline: writing things down, recording decisions, and joining a call on time because someone in the other studio is waiting.',
-        'ico' => 'pin',
-    ],
+/* Why join, shown rather than claimed: what a new hire does in weeks 1–4, each week tied to the reason it
+   matters, and the artefact they leave behind. The last week's artefact is a decision-log entry, rendered
+   as a mock. PLACEHOLDER: confirm this onboarding plan with the hiring leads before launch. */
+$car_weeks = [
+  ['Week 1', 'Ship something small, for real', 'You pair with the lead on a live engagement and push one change to production or to a client review. No sandbox project.',
+   'Work that ships at scale', 'Merged change · reviewed by your lead', 'git-branch'],
+  ['Week 2', 'Set up your agents', 'You get your own AI workspace and build one agent for the repetitive part of your role: drafts, checks, variants or monitoring. It runs against a small eval set before anyone relies on it.',
+   'AI as your tooling, not your replacement', 'Agent + eval set · 20 cases, pass rate logged', 'agent'],
+  ['Week 3', 'Sit in the other five disciplines', 'You join one weekly review outside your discipline: an engineer in a brand critique, a designer in a campaign read-out, a strategist in a model evaluation.',
+   'Six disciplines in one room', 'Review notes · one question you raised', 'users'],
+  ['Week 4', 'Own a decision, in writing', 'You make a call on your workstream and write it up in the decision log: the options, the trade-off, what would change your mind. It carries your name.',
+   'Seniority without the politics', 'Decision-log entry · credited to you', 'doc'],
 ];
 ?>
-<section class="band car-why" id="why" aria-labelledby="why-t">
-  <div class="wrap bdh-grid">
-    <div class="bdh-c4 car-why__side">
-      <div class="bdh-sticky" data-rv>
-        <p class="lbl lbl--blue"><span class="dot"></span>Why build here</p>
-        <h2 class="h2" id="why-t"><span class="g">Five reasons to join,</span> and the cost of each.</h2>
-        <p class="p car-why__p">We would rather you arrive knowing what the job is really like than leave in the fourth month. Every heading below is a real reason to be here. The grey block under each one is what that reason asks of you in return.</p>
-        <a class="tl" href="#roles">See the open roles <span class="i" aria-hidden="true">›</span></a>
-      </div>
+<section class="band band--alt car-why" id="why" aria-labelledby="why-t">
+  <div class="wrap">
+    <div class="bdh-head bdh-head--row" data-rv>
+      <div><p class="lbl lbl--blue"><span class="dot"></span>Your first month</p>
+        <h2 class="h2" id="why-t"><span class="g">Four weeks in,</span> you will have shipped, built and decided.</h2></div>
+      <div><p class="lead">The reasons to join, shown as the plan we intend to run for every new hire. Each week leaves something behind that you can point to.</p></div>
     </div>
 
-    <ol class="bdh-c7 bdh-s6 car-why__rows" data-rv-s data-rv-step="80">
-      <?php foreach ($why_rows as $why_i => $why_r): ?>
-        <li class="car-why__row">
-          <span class="car-why__ico" aria-hidden="true"><?= xt_icon($why_r['ico']) ?></span>
-          <p class="bdh-idx car-why__n"><?= str_pad((string) ($why_i + 1), 2, '0', STR_PAD_LEFT) ?></p>
-          <h3 class="bdh-t bdh-t--l car-why__t"><?= e($why_r['k']) ?></h3>
-          <p class="car-why__d"><?= e($why_r['p']) ?></p>
-          <p class="car-why__t2"><span class="car-k car-k--warn">The trade-off</span><?= e($why_r['t']) ?></p>
-        </li>
+    <ol class="car-wk">
+      <?php foreach ($car_weeks as $car_n => $car_w): ?>
+      <li class="car-wk__i">
+        <p class="car-wk__k"><span class="car-wk__node" aria-hidden="true"><?= xt_icon($car_w[5]) ?></span><span class="car-wk__w"><?= e($car_w[0]) ?></span></p>
+        <h3 class="car-wk__t"><?= e($car_w[1]) ?></h3>
+        <p class="car-wk__p"><?= e($car_w[2]) ?></p>
+        <p class="car-wk__why"><span>Why it matters</span><?= e($car_w[3]) ?></p>
+        <p class="car-wk__out"><?= xt_icon('check') ?><span><?= e($car_w[4]) ?></span></p>
+      </li>
       <?php endforeach; ?>
     </ol>
+
+    <div class="car-log">
+      <div class="car-log__copy">
+        <p class="lbl"><span class="dot"></span>Week 4, in practice</p>
+        <p class="car-log__t">A sample decision-log entry.</p>
+        <p class="car-log__p">Every call that changes scope, quality or risk goes in the log with the reasoning and a name. Reviews read the log, not the loudest voice in the room.</p>
+      </div>
+      <div class="car-log__ui bdh-ui" aria-hidden="true">
+        <div class="car-log__bar"><span class="bdh-ro">DECISION LOG · Your platform</span><span class="bdh-tag bdh-tag--blue">D-0142</span></div>
+        <dl class="car-log__dl">
+          <div><dt>Decision</dt><dd>Ship onboarding copy variants through the agent, with a human approving each market.</dd></div>
+          <div><dt>Options</dt><dd>A · write by hand &nbsp; B · agent drafts, human approves &nbsp; C · agent publishes</dd></div>
+          <div><dt>Chose</dt><dd>B. C failed 3 of 20 eval cases on regulated claims.</dd></div>
+          <div><dt>Revisit if</dt><dd>Eval pass rate holds at 20/20 for two releases.</dd></div>
+        </dl>
+        <div class="car-log__foot"><span class="bdh-ro">Owner · New hire, week 4</span><span class="bdh-ok">Approved by lead</span></div>
+      </div>
+      <p class="bdh-sr">A sample decision-log entry: a new hire chooses to have an agent draft onboarding copy with a human approving each market, because letting the agent publish failed three of twenty evaluation cases on regulated claims, and records when the choice should be revisited.</p>
+    </div>
   </div>
 </section>

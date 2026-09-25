@@ -23,7 +23,7 @@
       </div>
 
       <div class="s19__act">
-        <a class="btn btn--white btn--lg s19__go" href="#book">Start a brief <span class="i" aria-hidden="true">›</span></a>
+        <a class="btn btn--white btn--lg s19__go" href="#book">Pick a time to talk <span class="i" aria-hidden="true">›</span></a>
         <!-- PLACEHOLDER: confirm the one-working-day response time before launch -->
         <p class="s19__meta">
           <span>Reply within one working day</span>

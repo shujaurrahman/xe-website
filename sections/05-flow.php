@@ -2,9 +2,9 @@
 <section class="band band--alt s05" id="flow" aria-labelledby="s05-t">
   <div class="wrap">
     <div class="head head--c s05__head" data-rv>
-      <p class="lbl lbl--blue"><span class="dot"></span>The intelligence layer</p>
+      <p class="lbl lbl--blue"><span class="dot"></span>The idea · The intelligence layer</p>
       <h2 class="h2" id="s05-t"><span class="g">Turn every signal</span> into an advantage</h2>
-      <p class="lead">Every signal into one layer — then brand, product and campaign run on it.</p>
+      <p class="lead">It starts with one idea: every signal a business gives off — customers, markets, content, code — flows into one layer, and brand, product and campaign all run on it.</p>
     </div>
 
     <div class="s05__diagram" data-s05 data-rv data-rv-d="80">

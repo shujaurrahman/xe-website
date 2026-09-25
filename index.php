@@ -20,45 +20,82 @@ $page = [
     'js'    => ['assets/js/brand/hub.js'],
 ];
 
-/* The running order follows the client's content document:
-   who we are → what we do → why it compounds → the work → how we work → engage. */
-$SECTIONS = [
-    '01-hero',
-    '02-showcase',
-    '08-disciplines',
-    '23-brand',
-    '24-technology',
-    '04-pillars',
-    '05-flow',
-    '06-equip',
-    '07-ai-design',
-    '03-industries',
-    '17-delivered',
-    '11-clients',
-    '10-production',
-    '12-process',
-    '13-operation',
-    '14-platforms',
-    '09-proof',
-    '16-why',
-    '15-testimonials',
-    '18-engagements',
-    '25-offer',
-    '19-cta-card',
-    '20-booking',
-    '21-faq',
-    '22-final-cta',
+/* The home page reads as one story in five chapters: the idea (the intelligence layer) →
+   what we do → how we work → the work → working with us. Each chapter opens with a
+   "Chapter 0N" eyebrow; the chapter rail below follows the reader through them.
+   Bands alternate paper / alt with at most one ink section per chapter, never two ink neighbours. */
+$HX_CHAPTERS = [
+    ['The idea',      ['01-hero', '05-flow', '04-pillars', '09-proof']],
+    ['What we do',    ['08-disciplines', '23-brand', '24-technology', '07-ai-design', '06-equip', '14-platforms']],
+    ['How we work',   ['12-process', '13-operation', '16-why', '15-testimonials']],
+    ['The work',      ['02-showcase', '17-delivered', '11-clients', '10-production', '03-industries']],
+    /* 11-clients, 15-testimonials, 18-engagements and 19-cta-card were taken off this page in the
+       four-agent polish and are back on it: the owner's instruction is that nothing that was on the
+       home page is removed. Each sits beside the neighbour it had before the chapters.
+       BEFORE LAUNCH, the reason they were removed still stands and must be fixed in the section files,
+       not by dropping them:
+         11-clients      — the logo wall is PLACEHOLDER marks that are NOT Xterra Edze clients; replace with real client logos.
+         15-testimonials — the quotes and portraits are PLACEHOLDER; replace with real, cleared testimonials. */
+    ['Work with us',  ['18-engagements', '25-offer', '19-cta-card', '20-booking', '21-faq', '22-final-cta']],
 ];
+/* Section file → its root id: the rail links to each chapter's opener and spies on every section. */
+$HX_IDS = ['01-hero' => 'hero', '05-flow' => 'flow', '04-pillars' => 'pillars', '09-proof' => 'proof',
+           '08-disciplines' => 'disciplines', '23-brand' => 'brand', '24-technology' => 'technology',
+           '07-ai-design' => 'ai-design', '06-equip' => 'equip', '14-platforms' => 'platforms',
+           '12-process' => 'process', '13-operation' => 'operation', '16-why' => 'why',
+           '02-showcase' => 'showcase', '17-delivered' => 'delivered', '10-production' => 'production',
+           '03-industries' => 'industries', '11-clients' => 'clients', '15-testimonials' => 'testimonials',
+           '18-engagements' => 'engagements', '25-offer' => 'offer', '19-cta-card' => 'cta', '20-booking' => 'book',
+           '21-faq' => 'faq', '22-final-cta' => 'cta-final'];
+$SECTIONS = array_merge(...array_column($HX_CHAPTERS, 1));
+
+/* s24's nine deferred capability details, fetched by 24-technology.js (keeps the page itself light). */
+if (isset($_GET['s24'])) {
+    header('Content-Type: text/html; charset=utf-8');
+    header('Cache-Control: public, max-age=3600');
+    header('X-Robots-Tag: noindex');
+    $HX_S24_FRAG = true;
+    include 'sections/24-technology.php';
+    exit;
+}
 
 include 'partials/head.php';
 include 'partials/nav.php';
 ?>
 
+<!-- Chapter rail: a fixed index at desktop widths, a slim progress strip on phones.
+     Hidden until sections.js (00-story) switches it on, so without JS nothing floats over the page. -->
+<nav class="hx-rail" aria-label="Home page chapters" data-hx-rail hidden>
+  <ol class="hx-rail__list">
+<?php foreach ($HX_CHAPTERS as $hx_n => [$hx_name, $hx_secs]): ?>
+    <li><a class="hx-rail__a" href="#<?= $HX_IDS[$hx_secs[0]] ?>" data-hx-ch="<?= $hx_n ?>" data-hx-ids="<?= implode(' ', array_map(fn ($hx_f) => $HX_IDS[$hx_f], $hx_secs)) ?>"><span class="hx-rail__n"><?= sprintf('%02d', $hx_n + 1) ?></span><span class="hx-rail__l"><?= e($hx_name) ?></span></a></li>
+<?php endforeach; ?>
+  </ol>
+  <span class="hx-rail__bar" aria-hidden="true"><?php foreach ($HX_CHAPTERS as $hx_n => $hx_c): ?><i data-hx-seg="<?= $hx_n ?>"></i><?php endforeach; ?></span>
+</nav>
+
+<?php
+/* Weight: strip the partials' source indentation from the page (≈15% of its bytes). <textarea> and <pre>
+   bodies are left untouched, since their whitespace is content. */
+ob_start(function (string $hx_html): string {
+    $hx_parts = preg_split('~(<(textarea|pre)\b.*?</\2>)~is', $hx_html, -1, PREG_SPLIT_DELIM_CAPTURE);
+    $hx_out = '';
+    foreach ($hx_parts as $hx_i => $hx_p) {
+        if ($hx_i % 3 === 2) continue;                     // the captured tag name
+        $hx_out .= ($hx_i % 3 === 1) ? $hx_p : preg_replace('~\n[ \t]*(?:\n[ \t]*)*~', "\n", $hx_p);
+    }
+    return $hx_out;
+});
+?>
 <main id="main">
-<?php foreach ($SECTIONS as $s): ?>
-<!-- ===== <?= $s ?> ===== -->
-<?php xe_section($s); ?>
+<?php foreach ($HX_CHAPTERS as $hx_n => [$hx_name, $hx_secs]): ?>
+<!-- ===== Chapter <?= sprintf('%02d', $hx_n + 1) ?> · <?= e($hx_name) ?> ===== -->
+<?php foreach ($hx_secs as $hx_s): ?>
+<!-- ===== <?= $hx_s ?> ===== -->
+<?php xe_section($hx_s); ?>
+<?php endforeach; ?>
 <?php endforeach; ?>
 </main>
+<?php ob_end_flush(); ?>
 
 <?php include 'partials/footer.php'; ?>

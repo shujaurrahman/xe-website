@@ -11,7 +11,7 @@
  *
  * Field, label, error and alert styling mirrors assets/css/contact.css deliberately: same field
  * heights, same focus ring, same error dot, same dark send block, under .apl-* names in
- * assets/css/careers/apply.css. assets/js/careers/apply.js is an enhancement only — the form is a
+ * assets/css/careers-apply.css. assets/js/careers-apply.js is an enhancement only — the form is a
  * plain POST with server-side validation and works with JavaScript off.
  *
  * Variables: $SITE, $APL (the handler's state), $APL_ROLE (the role applied for, or null).
@@ -46,8 +46,8 @@ $page = [
     'desc'  => $APL_ROLE
         ? 'Apply for ' . $APL_ROLE['title'] . ' at Xterra Edze. One form, read by a person in the practice you applied to.'
         : 'Apply to Xterra Edze. One form, read by a person in the practice you applied to, with a reply either way.',
-    'css'   => ['assets/css/brand/hub.css', 'assets/css/tech/kit.css', 'assets/css/careers/apply.css'],
-    'js'    => ['assets/js/brand/hub.js', 'assets/js/careers/apply.js'],
+    'css'   => ['assets/css/brand/hub.css', 'assets/css/tech/kit.css', 'assets/css/careers-apply.css'],
+    'js'    => ['assets/js/brand/hub.js', 'assets/js/careers-apply.js'],
 ];
 
 $hero = $APL['state'] === 'sent'
@@ -65,7 +65,7 @@ include __DIR__ . '/../partials/nav.php';
 ?>
 
 <!-- The shipped HTML is the finished state. The form is a plain multipart POST answered by
-     partials/careers/apply-handler.php; assets/js/careers/apply.js only adds a counter, inline
+     partials/careers/apply-handler.php; assets/js/careers-apply.js only adds a counter, inline
      checks, the file-name readout and focus handling. -->
 
 <main id="main" class="bdh apl">

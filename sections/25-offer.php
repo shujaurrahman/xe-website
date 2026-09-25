@@ -50,8 +50,8 @@ $s25_packs = count(svc_packages());
     <div class="bdh-head s25__head" data-rv>
       <p class="lbl lbl--blue"><span class="dot"></span>Build a brief</p>
       <h2 class="h2" id="s25-t"><span class="g">Choose the work.</span> Then choose the contract.</h2>
-      <p class="lead s25__lead">Every service we sell is listed on its discipline page, with the ways
-        of working it can be bought on. Pick what you need there and your brief arrives with us
+      <p class="lead s25__lead">Every service we sell is listed on its discipline page, with the contracts
+        it can be bought on. Pick what you need there and your brief arrives with us
         already filled in.</p>
     </div>
 
@@ -73,7 +73,7 @@ $s25_packs = count(svc_packages());
     <div class="s25__foot" data-rv data-rv-d="80">
       <p class="s25__sum">
         <?= (int) $s25_total ?> services across <?= count($s25_rows) ?> disciplines,
-        on <?= (int) $s25_packs ?> ways of working.
+        on <?= (int) $s25_packs ?> contract types.
       </p>
       <div class="s25__acts">
         <a class="btn btn--ink" href="<?= xe_url('services/') ?>">Browse every service <span class="i" aria-hidden="true">›</span></a>

@@ -1,77 +1,56 @@
-<?php /* DRAFT COPY — review before launch */
-/* Quality — the enforcement mechanics, not the thresholds. The thresholds themselves are on the Work
-   page (work.php#craft), and this section links there rather than restating them, so the two can never
-   drift. What matters here is where each check runs, who owns it and what happens when it fails, because
-   a check that can be waived under pressure is not a check. */
-$aprq_checks = [
-    ['Tests',          'Every push, in your pipeline',        'Our engineer',              'The build fails. The change does not merge.',            'Unit and contract tests, written with the change'],
-    ['Evals',          'Every push that touches an AI path',  'Your QA and eval engineer', 'The merge is blocked until the gate is met again.',      'The golden set, scored against fixed gates'],
-    ['Security scans', 'Every push, and nightly on the branch', 'Your security engineer',  'A critical or high finding blocks the release.',         'Static analysis, dependencies, containers, secrets'],
-    ['Accessibility',  'Automated on every push, by a person before release', 'Our accessibility reviewer', 'Release is held until the keyboard path works.', 'WCAG 2.2 level AA, keyboard and screen-reader pass'],
-    ['Performance',    'Every push, against a budget',        'Our tech lead',             'The budget breach fails the build.',                     'Field-representative devices, not a lab score'],
-    ['Content review', 'Before anything with a claim ships',  'Our discipline lead',       'The claim is cut or substantiated. No third option.',    'Every factual claim checked against its source'],
-];
-$aprq_waiver = [
-    ['Who can waive a check', 'Only the named owner of that check, in writing, with an expiry date.'],
-    ['What a waiver records', 'What was waived, why, what compensates for it, and when it is reviewed.'],
-    ['What cannot be waived', 'The keyboard path, a critical security finding, and a person\'s approval of a merge.'],
-    ['Where it is visible',   'In the decision log and in the weekly report, not in a private thread.'],
-];
-?>
-<section class="band band--alt apr-quality" id="quality" aria-labelledby="quality-t">
+<?php /* DRAFT COPY — review before launch */ ?>
+<section class="band band--alt apr-q" id="quality" aria-labelledby="quality-t">
   <div class="wrap">
     <div class="bdh-head bdh-head--row" data-rv>
-      <div>
-        <p class="lbl lbl--blue"><span class="dot"></span>Quality</p>
-        <h2 class="h2" id="quality-t"><span class="g">A standard is only real</span> if it can fail a build.</h2>
-      </div>
-      <div>
-        <p class="lead">Six checks run on the work, each with an owner and a consequence. They live in your
-          pipeline, not ours, so they keep running after we have gone. The thresholds themselves are
-          published on the work page.</p>
-        <a class="tl" href="<?= xe_url('work.php') ?>#craft">See the thresholds <span class="i" aria-hidden="true">›</span></a>
-      </div>
+      <div><p class="lbl lbl--blue"><span class="dot"></span>Quality bars</p>
+        <h2 class="h2" id="quality-t"><span class="g">Numbers, not adjectives.</span> The bars every release clears.</h2></div>
+      <div><p class="lead">Written into acceptance criteria and checked by evals on every change. These are frameworks we build to, not certifications we hold.</p></div>
     </div>
-
-    <div class="bdh-scroll-x apr-q__scroll" tabindex="0" role="region" aria-label="The six checks and what happens when one fails, scroll sideways on small screens" data-rv>
-      <table class="apr-q__t">
-        <caption class="bdh-sr">Each check that runs on the work: when it runs, who owns it, what it covers and what happens when it fails.</caption>
-        <thead>
-          <tr>
-            <th scope="col"><span class="apr-k">Check</span></th>
-            <th scope="col"><span class="apr-k">When it runs</span></th>
-            <th scope="col"><span class="apr-k">What it covers</span></th>
-            <th scope="col"><span class="apr-k">Who owns it</span></th>
-            <th scope="col"><span class="apr-k">On failure</span></th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($aprq_checks as $aprq_c): ?>
-            <tr>
-              <th scope="row"><?= e($aprq_c[0]) ?></th>
-              <td><?= e($aprq_c[1]) ?></td>
-              <td><?= e($aprq_c[4]) ?></td>
-              <td><span class="apr-who <?= strpos($aprq_c[2], 'Your') === 0 ? 'is-yours' : 'is-ours' ?>"><?= e($aprq_c[2]) ?></span></td>
-              <td class="apr-q__fail"><?= e($aprq_c[3]) ?></td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="apr-q__waiver" data-rv data-rv-d="80">
-      <div class="apr-q__wh">
-        <p class="apr-k">When a check has to be waived</p>
-        <h3 class="bdh-t bdh-t--l">Sometimes a date wins. It gets written down.</h3>
-        <p class="bdh-d">Pretending waivers never happen is how they end up undocumented. Ours have an
-          owner, a reason, a compensating control and an expiry, and they appear in the weekly report the
-          same week they are signed.</p>
-      </div>
-      <dl class="apr-defs apr-q__wd">
-        <?php foreach ($aprq_waiver as $aprq_w): ?>
-          <div><dt><?= e($aprq_w[0]) ?></dt><dd><?= e($aprq_w[1]) ?></dd></div>
-        <?php endforeach; ?>
-      </dl>
+    <div class="apr-q__grid">
+      <article class="apr-qc apr-qc--cwv">
+        <p class="apr-qc__k"><?= xt_icon('gauge') ?> Performance · Core Web Vitals</p>
+        <h3 class="apr-qc__t">“Good” at the 75th percentile of real visits</h3>
+        <ul class="apr-meter">
+          <li><span class="apr-meter__n">LCP</span><span class="apr-meter__bar"><i style="--v:.62"></i></span><b>≤ 2.5 s</b><small>Largest Contentful Paint · loading</small></li>
+          <li><span class="apr-meter__n">INP</span><span class="apr-meter__bar"><i style="--v:.4"></i></span><b>≤ 200 ms</b><small>Interaction to Next Paint · responsiveness</small></li>
+          <li><span class="apr-meter__n">CLS</span><span class="apr-meter__bar"><i style="--v:.4"></i></span><b>≤ 0.1</b><small>Cumulative Layout Shift · visual stability</small></li>
+        </ul>
+        <p class="apr-qc__b"><?= xt_badge('cwv', ['variant' => 'chip']) ?></p>
+      </article>
+      <article class="apr-qc">
+        <p class="apr-qc__k"><?= xt_icon('accessibility') ?> Accessibility</p>
+        <h3 class="apr-qc__t">WCAG 2.2 AA, tested by tools and by people</h3>
+        <ul class="apr-qc__l">
+          <li><b>4.5:1</b> text contrast, 3:1 for large text and UI</li>
+          <li><b>24 × 24</b> CSS px minimum targets (2.5.8)</li>
+          <li><b>Focus</b> never hidden behind sticky UI (2.4.11)</li>
+          <li><b>Keyboard</b> and screen-reader passes before release</li>
+        </ul>
+        <p class="apr-qc__b"><?= xt_badge('wcag22', ['variant' => 'chip']) ?></p>
+      </article>
+      <article class="apr-qc">
+        <p class="apr-qc__k"><?= xt_icon('lock') ?> Security and privacy by design</p>
+        <h3 class="apr-qc__t">Threat-modelled before it is built</h3>
+        <ul class="apr-qc__l">
+          <li><b>ASVS</b> controls chosen per risk, verified in review</li>
+          <li><b>LLM01</b> prompt injection tested on every AI surface</li>
+          <li><b>Data</b> minimised, purpose-bound, consent recorded (DPDP, GDPR)</li>
+          <li><b>Secrets</b> scanned on every commit</li>
+        </ul>
+        <p class="apr-qc__b"><?= xt_badge('owasp-asvs', ['variant' => 'chip']) ?><?= xt_badge('owasp-llm', ['variant' => 'chip']) ?><?= xt_badge('dpdp', ['variant' => 'chip']) ?></p>
+      </article>
+      <article class="apr-qc apr-qc--sci">
+        <p class="apr-qc__k"><?= xt_icon('leaf') ?> Carbon · Software Carbon Intensity</p>
+        <h3 class="apr-qc__t">Measured per unit of use, then reduced</h3>
+        <p class="apr-sci" aria-label="SCI equals open bracket E times I plus M close bracket per R"><span>SCI</span> = ((<b>E</b> × <b>I</b>) + <b>M</b>) per <b>R</b></p>
+        <dl class="apr-sci__k">
+          <div><dt>E</dt><dd>Energy used by the software, kWh</dd></div>
+          <div><dt>I</dt><dd>Carbon intensity of that energy, gCO₂e/kWh</dd></div>
+          <div><dt>M</dt><dd>Embodied emissions of the hardware share</dd></div>
+          <div><dt>R</dt><dd>The functional unit: a visit, a call, a user</dd></div>
+        </dl>
+        <p class="apr-qc__b"><?= xt_badge('sci', ['variant' => 'chip']) ?></p>
+      </article>
     </div>
   </div>
 </section>

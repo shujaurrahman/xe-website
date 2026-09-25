@@ -467,12 +467,14 @@ p,li,dd,blockquote,figcaption{text-wrap:pretty}
 .foot__col a.foot__oaddr:hover{color:var(--ink);text-decoration:underline;text-decoration-color:var(--line-3);text-underline-offset:3px}
 
 .foot__bar{
-  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px clamp(20px,3vw,40px);
+  display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px clamp(20px,3vw,40px);
   margin-top:clamp(40px,4.2vw,60px);padding-top:clamp(18px,1.8vw,24px);border-top:1px solid var(--line);
   font-size:var(--t-xs);
 }
-.foot__copy{color:var(--faint);white-space:nowrap}
-.foot__legal{display:flex;flex-wrap:wrap;justify-content:center;gap:6px clamp(16px,1.8vw,26px)}
+.foot__copy{color:var(--faint)}
+.foot__tm{display:block;margin-top:4px}
+/* the legal links take the first row at every width; copyright + trademark and the icons share the second */
+.foot__legal{grid-column:1 / -1;grid-row:1;display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px clamp(16px,1.8vw,26px)}
 .foot__legal a{color:var(--muted);transition:color var(--d1) var(--e-io)}
 .foot__legal a:hover{color:var(--ink)}
 .foot__end{display:flex;align-items:center;gap:8px}
@@ -489,20 +491,17 @@ p,li,dd,blockquote,figcaption{text-wrap:pretty}
 @media (max-width:1100px){
   .foot__top{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)}
   .foot__brand{grid-column:1 / -1}
-  .foot__bar{grid-template-columns:1fr auto}
-  .foot__legal{grid-column:1 / -1;grid-row:1;justify-content:flex-start}
 }
 @media (max-width:680px){
   .foot__top{grid-template-columns:1fr;gap:36px}
   /* stacked: legal links, then the copyright line, then the icons */
   .foot__bar{grid-template-columns:minmax(0,1fr);gap:16px}
-  .foot__copy{white-space:normal}
   .foot__end{justify-content:flex-start}
-  .foot__legal{gap:10px 20px}
+  .foot__legal{gap:0 20px}
+  .foot__legal a{display:inline-flex;align-items:center;min-height:44px}
   .foot__icon{width:44px;height:44px}
   /* every footer link is a 44px tap target on phones */
-  .foot__legal{gap:0 20px}
-  .foot__legal a,.foot__logo,.foot__mail,.foot__cta,.foot__col a{display:inline-flex;align-items:center;min-height:44px}
+  .foot__logo,.foot__mail,.foot__cta,.foot__col a{display:inline-flex;align-items:center;min-height:44px}
   .foot__col a.foot__oaddr{display:block;min-height:44px;padding:6px 0}
 }
 
