@@ -1,0 +1,40 @@
+/* Book · who — three stacked rows: our two seats, then the two sides against each other, then the
+   disciplines strip. Stacking rather than a two-column split keeps both halves the same height, which
+   a 6/6 column pair could not do here (our side carries twice the content). */
+
+.bk-who__row+.bk-who__row,.bk-who__disc{margin-top:clamp(30px,3.6vw,48px)}
+.bk-who__k{margin-bottom:14px}
+.bk-who__split{align-items:start;row-gap:clamp(26px,3vw,36px)}
+.bk-who .bk-seat{background:var(--paper-2)}
+
+.bk-who__list>li{max-width:52ch}
+.bk-who__notes .bk-note+.bk-note{margin-top:10px}
+.bk-who__notes .bk-note a{
+  color:var(--ink);font-weight:500;
+  text-decoration:underline;text-decoration-color:var(--line-3);text-underline-offset:3px;
+  transition:color var(--d1) var(--e-io),text-decoration-color var(--d1) var(--e-io);
+  word-break:break-word;
+}
+.bk-who__notes .bk-note a:hover{color:var(--blue-d);text-decoration-color:var(--blue-line)}
+
+/* ---------- the disciplines strip -------------------------------------- */
+.bk-who__disc{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto);align-items:center;
+  gap:16px clamp(24px,4vw,56px);
+  padding-top:24px;border-top:1px solid var(--line);
+}
+.bk-who__discp{font-size:var(--t-sm);line-height:1.65;color:var(--muted);max-width:52ch}
+.bk-who__chips{gap:6px;justify-content:flex-end}
+.bk-who__disct{display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-width:0}
+
+@media (max-width:860px){
+  .bk-who__disc{grid-template-columns:minmax(0,1fr)}
+  .bk-who__chips{justify-content:flex-start}
+}
+@media (max-width:600px){
+  .bk-who .bk-seats{gap:14px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .bk-who__notes .bk-note a{transition:none}
+}

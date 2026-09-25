@@ -1,0 +1,124 @@
+/* ==========================================================================
+   Book a call (/book) — PAGE LAYER. Shared .bk-* primitives only; each section's own styles live
+   in assets/css/book/<id>.css, loaded after this file. Sits on assets/css/brand/hub.css (.bdh-*)
+   and assets/css/tech/kit.css (.xt-*). Tokens from core.css :root only — no new colours, no
+   gradients beyond core .aurora/.dither and mask fades, no !important.
+
+   The page's own idiom is the CALL SHEET: mono keys against plain-language values, minute ranges
+   as the unit of measure, and every commitment carried next to the thing that proves it. Six
+   primitives are reused across the seven sections:
+     .bk-k      micro mono key (a label inside a line of text)
+     .bk-dl     key / value fact list, hairline separated
+     .bk-num    mono step index
+     .bk-note   dashed panel for an honest caveat — used wherever the page limits its own claim
+     .bk-ext    external link with an out-arrow; always carries its own screen-reader suffix
+     .bk-seats  the one- or two-up card row several sections share
+   ========================================================================== */
+
+.bk{
+  --bk-frame:var(--r-xl);            /* the radius every large frame on the page shares */
+  --bk-pad:clamp(20px,2.4vw,32px);   /* inner padding of a frame */
+}
+
+/* ---------- micro type -------------------------------------------------- */
+.bk-k{
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--faint);line-height:1.4;
+}
+.band--ink .bk-k{color:var(--on-ink-3)}
+.bk-num{
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.08em;
+  line-height:1;color:var(--blue);font-variant-numeric:tabular-nums;
+}
+.bk-mins{
+  display:inline-flex;align-items:center;justify-content:center;height:22px;padding:0 9px;
+  border-radius:var(--r-pill);background:var(--blue-wash);color:var(--blue-d);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.06em;
+  font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1;
+}
+
+/* ---------- key / value fact list --------------------------------------- */
+.bk-dl{display:grid;width:100%;border-top:1px solid var(--line)}
+.bk-dl>div{
+  display:grid;grid-template-columns:minmax(0,12ch) minmax(0,1fr);align-items:baseline;
+  gap:8px 16px;padding:11px 0;border-bottom:1px solid var(--line-2);
+}
+.bk-dl dt{
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);line-height:1.4;
+}
+.bk-dl dd{font-size:var(--t-sm);line-height:1.55;color:var(--ink)}
+.bk-dl dd small{display:block;margin-top:3px;font-size:var(--t-lbl);line-height:1.5;color:var(--muted)}
+@media (max-width:420px){
+  .bk-dl>div{grid-template-columns:minmax(0,1fr);row-gap:4px}
+}
+
+/* ---------- the honest-caveat panel ------------------------------------- */
+/* <p class="bk-note"><b>Nothing is held</b> until the confirmation email arrives.</p> */
+.bk-note{
+  display:block;padding:12px 14px;border:1px dashed var(--line-3);border-radius:var(--r-sm);
+  font-size:var(--t-xs);line-height:1.6;color:var(--txt);
+}
+.bk-note b{
+  display:block;margin-bottom:3px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+}
+/* --on-ink-3 is 48% white: too thin for 11px uppercase on ink, so the key steps up a stop */
+.band--ink .bk-note b{color:var(--on-ink-2)}
+.bk-note--blue{border-style:solid;border-color:var(--blue-line);background:var(--blue-wash)}
+.bk-note--blue b{color:var(--blue-d)}
+.band--ink .bk-note{border-color:var(--on-ink-line);color:var(--on-ink-2)}
+.band--ink .bk-note b{color:var(--on-ink-3)}
+
+/* ---------- external link (cal.com, always a new tab) -------------------- */
+/* The underline lives on .bk-ext__t, not on the link: .bk-ext is an inline-flex box, which blockifies
+   its children, and a text decoration imposed by an ancestor cannot be removed by a descendant — so a
+   decoration on the link itself is also drawn under the out-arrow. */
+.bk-ext{
+  display:inline-flex;align-items:baseline;gap:.45em;color:var(--ink);
+  font-size:var(--t-sm);font-weight:500;text-decoration:none;
+  transition:color var(--d1) var(--e-io);
+}
+.bk-ext__t{
+  text-decoration:underline;text-decoration-color:var(--line-3);text-underline-offset:4px;
+  transition:text-decoration-color var(--d1) var(--e-io);
+}
+/* inline-block so the link's underline stops before the out-arrow instead of running under it */
+.bk-ext i{display:inline-block;font-style:normal;color:var(--blue);transition:translate var(--d2) var(--e)}
+.bk-ext:hover{color:var(--blue-d)}
+.bk-ext:hover .bk-ext__t{text-decoration-color:var(--blue-line)}
+.bk-ext:hover i{translate:2px -2px}
+.bk-ext--sm{font-size:var(--t-xs)}
+/* on phones a standalone external link is a tap target, so it gets the 44px the brief asks for */
+@media (max-width:600px){
+  .bk-ext{align-items:center;min-height:44px}
+}
+.btn .bk-x{font-style:normal;margin-left:.15em}   /* the out-arrow inside a .btn, where .i is the chevron */
+
+/* ---------- the card row several sections share -------------------------- */
+.bk-seats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--bdh-gap)}
+.bk-seats--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.bk-seat{
+  display:flex;flex-direction:column;gap:9px;padding:var(--bk-pad);
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);
+}
+.bk-seat__ico{
+  display:grid;place-items:center;width:38px;height:38px;flex:none;
+  border-radius:var(--r-sm);background:var(--paper-3);color:var(--ink);
+}
+.bk-seat__ico .xt-ico{width:20px;height:20px}
+.bk-seat h3{font-family:var(--f-h);font-size:var(--t-h3);font-weight:500;line-height:1.3;letter-spacing:-.01em;color:var(--ink)}
+.bk-seat p{font-size:var(--t-sm);line-height:1.6;color:var(--muted);max-width:60ch}
+.bk-seat__foot{margin-top:auto;padding-top:12px;border-top:1px solid var(--line-2)}
+@media (max-width:860px){
+  .bk-seats,.bk-seats--3{grid-template-columns:minmax(0,1fr)}
+}
+
+/* ---------- section head tweak ------------------------------------------ */
+.bk .bdh-head .h2{max-width:22ch}
+
+/* ---------- reduced motion ---------------------------------------------- */
+@media (prefers-reduced-motion:reduce){
+  .bk-ext,.bk-ext i,.bk-ext__t{transition:none}
+  .bk-ext:hover i{translate:none}
+}

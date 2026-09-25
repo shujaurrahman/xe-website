@@ -1,0 +1,58 @@
+/* Book · prepare — a prep sheet: mono index, the item, and the honest tag saying how much it matters.
+   Rows are hairline separated inside one framed panel, which is the page's call-sheet idiom. */
+
+.bk-pr__grid{align-items:start;row-gap:clamp(24px,3vw,36px)}
+
+.bk-pr__sheet{
+  overflow:hidden;background:var(--paper);
+  border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-1);
+}
+.bk-pr__head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  min-height:44px;padding:10px 18px;border-bottom:1px solid var(--line-2);background:var(--paper-2);
+}
+.bk-pr__count{color:var(--muted);font-variant-numeric:tabular-nums}
+
+.bk-pr__row{
+  display:grid;grid-template-columns:3.5ch minmax(0,1fr) auto;align-items:start;
+  gap:6px 18px;padding:clamp(16px,1.9vw,22px) 18px;
+}
+.bk-pr__row+.bk-pr__row{border-top:1px solid var(--line-2)}
+.bk-pr__n{padding-top:5px}
+.bk-pr__body{display:flex;flex-direction:column;gap:6px;min-width:0}
+.bk-pr__d{max-width:60ch}
+
+.bk-pr__tag{
+  display:inline-flex;align-items:center;height:22px;padding:0 9px;flex:none;
+  border-radius:var(--r-pill);background:var(--paper-3);color:var(--muted);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;white-space:nowrap;line-height:1;
+}
+.bk-pr__tag--needed{background:var(--blue-wash-2);color:var(--blue-d)}
+.bk-pr__tag--optional{background:transparent;box-shadow:inset 0 0 0 1px var(--line-3);color:var(--faint)}
+
+/* ---------- the panel for the reader who has none of it ----------------- */
+.bk-pr__none{
+  display:flex;flex-direction:column;align-items:flex-start;gap:12px;
+  padding:var(--bk-pad);background:var(--paper);
+  border:1px solid var(--blue-line);border-radius:var(--r-lg);
+}
+.bk-pr__ico{
+  display:grid;place-items:center;width:40px;height:40px;flex:none;
+  border-radius:var(--r-sm);background:var(--blue-wash);color:var(--ink);
+}
+.bk-pr__ico .xt-ico{width:22px;height:22px}
+.bk-pr__none p{font-size:var(--t-sm);line-height:1.65;color:var(--muted)}
+.bk-pr__nonef{padding-top:12px;border-top:1px solid var(--line-2);width:100%}
+.bk-pr__acts{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:4px}
+
+@media (max-width:600px){
+  .bk-pr__row{grid-template-columns:3.5ch minmax(0,1fr);row-gap:10px;padding:16px 14px}
+  .bk-pr__tag{grid-column:2;grid-row:2}
+  .bk-pr__body{grid-column:2;grid-row:1}
+  .bk-pr__head{padding:10px 14px}
+  .bk-pr__count{letter-spacing:.06em}
+}
+@media (max-width:400px){
+  .bk-pr__head{flex-direction:column;align-items:flex-start;gap:2px}
+}

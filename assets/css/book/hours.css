@@ -1,0 +1,97 @@
+/* Book · hours — a 24-hour overlap chart. The scale and every row share one column template
+   (--bk-hr-cols), so an hour label always sits over the same point in the tracks below it. Bars are
+   positioned from minutes-of-day, which is what the partial computes, so no number is duplicated
+   between PHP and CSS. */
+
+.bk-hr__cols{align-items:start;row-gap:clamp(28px,3.4vw,40px)}
+
+.bk-hr__chart{
+  overflow:hidden;background:var(--paper);
+  border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-1);
+}
+.bk-hr__head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  min-height:44px;padding:10px 18px;border-bottom:1px solid var(--line-2);background:var(--paper-2);
+}
+.bk-hr__win{color:var(--ink);font-variant-numeric:tabular-nums}
+
+.bk-hr__plot{
+  --bk-hr-cols:minmax(0,15ch) minmax(0,1fr) minmax(0,8ch);
+  padding:clamp(16px,2vw,22px) 18px;
+}
+
+/* ---------- the scale --------------------------------------------------- */
+.bk-hr__scale{display:grid;grid-template-columns:var(--bk-hr-cols);gap:0 14px;margin-bottom:10px}
+.bk-hr__marks{position:relative;display:block;height:14px}
+.bk-hr__mark{
+  position:absolute;top:0;left:calc(var(--at,0) / 24 * 100%);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.06em;line-height:1;
+  color:var(--faint);font-variant-numeric:tabular-nums;
+}
+.bk-hr__mark:not(:first-child):not(:last-child){transform:translateX(-50%)}
+.bk-hr__mark:last-child{left:auto;right:0}
+
+/* ---------- the rows ---------------------------------------------------- */
+.bk-hr__row{
+  display:grid;grid-template-columns:var(--bk-hr-cols);align-items:center;gap:4px 14px;
+  padding:9px 0;border-top:1px solid var(--line-2);
+}
+.bk-hr__row:last-child{border-bottom:1px solid var(--line-2)}
+.bk-hr__city{display:flex;flex-direction:column;gap:2px;min-width:0}
+.bk-hr__cn{font-size:var(--t-xs);font-weight:500;line-height:1.35;color:var(--ink)}
+.bk-hr__co{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--faint);font-variant-numeric:tabular-nums}
+.bk-hr__row.is-home .bk-hr__cn{color:var(--blue-d)}
+
+.bk-hr__track{position:relative;height:18px;border-radius:var(--r-xs);background:var(--paper-3);overflow:hidden}
+/* Six-hour gridlines, so a bar can be read against the scale without counting. Four flex cells with
+   a hairline on the right edge of the first three: a repeating gradient would have been shorter and
+   is not allowed outside core .aurora/.dither. */
+.bk-hr__lines{position:absolute;inset:0;display:flex}
+.bk-hr__lines i{flex:1 1 0;min-width:0;border-right:1px solid var(--line)}
+.bk-hr__lines i:last-child{border-right:0}
+.bk-hr__bar{
+  position:absolute;top:3px;bottom:3px;
+  left:calc(var(--s,0) / 1440 * 100%);
+  width:calc((var(--e,0) - var(--s,0)) / 1440 * 100%);
+  border-radius:3px;background:var(--blue-wash-2);
+}
+.bk-hr__row.is-home .bk-hr__bar{background:var(--blue)}
+.bk-hr__span{
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.04em;line-height:1.4;
+  color:var(--txt);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;
+}
+.bk-hr__next{color:var(--blue-d)}
+
+.bk-hr__local{
+  padding:12px 18px;border-top:1px solid var(--line-2);background:var(--paper-2);
+  font-family:var(--f);font-size:var(--t-lbl);line-height:1.6;letter-spacing:.02em;color:var(--muted);
+}
+
+/* ---------- studios ----------------------------------------------------- */
+.bk-hr__k{margin-bottom:14px}
+.bk-hr__studios{display:grid;gap:14px;margin-bottom:var(--bdh-gap)}
+.bk-hr__studio{
+  display:flex;flex-direction:column;gap:4px;
+  padding:16px 18px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);
+}
+.bk-hr__units{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--blue-d)}
+.bk-hr__addr{font-style:normal;font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+.bk-hr__side .bk-note+.bk-note{margin-top:10px}
+
+/* ---------- widths ------------------------------------------------------ */
+@media (max-width:860px){
+  .bk-hr__head{flex-direction:column;align-items:flex-start;gap:2px}
+  .bk-hr__studios{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:600px){
+  .bk-hr__plot{padding:14px}
+  /* the label goes above its own track, and the scale takes the full width with it */
+  .bk-hr__scale{grid-template-columns:minmax(0,1fr)}
+  .bk-hr__scale>span:first-child,.bk-hr__scale>span:last-child{display:none}
+  .bk-hr__row{grid-template-columns:minmax(0,1fr) auto;row-gap:8px;padding:11px 0}
+  .bk-hr__city{grid-row:1;grid-column:1}
+  .bk-hr__span{grid-row:1;grid-column:2}
+  .bk-hr__track{grid-row:2;grid-column:1 / -1}
+  .bk-hr__studios{grid-template-columns:minmax(0,1fr)}
+  .bk-hr__local{padding:12px 14px}
+}

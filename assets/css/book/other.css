@@ -1,0 +1,28 @@
+/* Book · other — three routes on the shared .bk-seats primitive, then a closing strip back to the
+   calendar. Nothing new is invented here: the cards are the page-layer seat, the external link is
+   the page-layer .bk-ext, and the only local styling is the footer row and the closing strip. */
+
+.bk-ot__paths{margin-bottom:clamp(28px,3.4vw,44px)}
+.bk-ot__path p{max-width:42ch}
+.bk-ot__foot{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.bk-ot__note{font-family:var(--f);font-size:var(--t-lbl);line-height:1.6;letter-spacing:.02em;color:var(--faint)}
+.bk-ot__foot .bk-ext{max-width:100%;word-break:break-word}
+
+.bk-ot__back{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:20px clamp(24px,4vw,56px);
+  padding:clamp(22px,2.6vw,32px) clamp(22px,2.8vw,36px);
+  background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-lg);
+}
+.bk-ot__backt{display:flex;flex-direction:column;gap:8px;min-width:0;flex:1 1 34ch}
+.bk-ot__backp{font-size:var(--t-sm);line-height:1.65;color:var(--muted);max-width:56ch}
+.bk-ot__backa{display:flex;flex-direction:column;align-items:flex-start;gap:12px;flex:none}
+
+@media (max-width:600px){
+  /* stacked, so the text block must stop growing or flex stretches it into a void above the button */
+  .bk-ot__back{flex-direction:column;align-items:flex-start;padding:22px 20px}
+  .bk-ot__backt{flex:0 1 auto}
+  .bk-ot__backa{width:100%}
+  .bk-ot__backa .btn{width:100%}
+  .bk-ot__path p{max-width:none}
+}

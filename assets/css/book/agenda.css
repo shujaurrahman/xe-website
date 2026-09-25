@@ -1,0 +1,91 @@
+/* Book · agenda — the thirty minutes drawn to scale.
+   Ticks and segments share the same flex proportions AND the same gap, so a tick always sits on its
+   segment's left edge; the closing "30" is taken out of the flow so it cannot add a fifth gap and push
+   the others off. The coloured fill is a separate absolutely-positioned child, so .bdh-grow scales the
+   fill and never the label sitting on top of it. */
+
+.bk-ag__in{display:flex;flex-direction:column;gap:clamp(22px,2.6vw,32px)}
+
+/* ---------- the strip --------------------------------------------------- */
+.bk-ag__strip{display:flex;flex-direction:column;gap:8px}
+/* no right padding: the ticks share the bar's flex proportions AND its 4px gap, so any inset here
+   would slide every number off its own segment's left edge */
+.bk-ag__ticks{position:relative;display:flex;gap:4px}
+.bk-ag__tick{
+  flex:var(--w,1) 1 0;min-width:0;
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;line-height:1;
+  color:var(--faint);font-variant-numeric:tabular-nums;
+}
+.bk-ag__tick--end{position:absolute;right:0;top:0;flex:none;color:var(--ink)}
+
+.bk-ag__bar{display:flex;gap:4px}
+.bk-ag__seg{
+  position:relative;flex:var(--w,1) 1 0;min-width:0;overflow:hidden;
+  display:flex;align-items:center;
+  height:clamp(48px,5vw,62px);padding:0 12px;border-radius:var(--r-xs);background:var(--paper-4);
+}
+.bk-ag__fill{position:absolute;inset:0;border-radius:inherit;background:var(--paper-4)}
+.bk-ag__seg b{
+  position:relative;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.08em;
+  line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+/* the four tones: arrive, listen, answer, close */
+.bk-ag__seg:nth-child(2) .bk-ag__fill{background:var(--blue-wash-2)}
+.bk-ag__seg:nth-child(3) .bk-ag__fill{background:var(--blue)}
+.bk-ag__seg:nth-child(3) b{color:var(--on-ink)}
+
+/* ---------- the four cards --------------------------------------------- */
+.bk-ag__cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--bdh-gap)}
+.bk-ag__c{
+  display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+  padding:clamp(18px,1.9vw,24px);background:var(--paper);
+  border:1px solid var(--line);border-top:2px solid var(--line-3);border-radius:var(--r);
+}
+.bk-ag__c:nth-child(2){border-top-color:var(--blue-line)}
+.bk-ag__c:nth-child(3){border-top-color:var(--blue)}
+.bk-ag__c .bdh-d{max-width:none}
+
+/* ---------- what it is not --------------------------------------------- */
+.bk-ag__not{
+  display:grid;grid-template-columns:minmax(0,14ch) minmax(0,1fr);align-items:start;
+  gap:14px clamp(20px,3vw,44px);
+  padding:clamp(20px,2.4vw,28px);border:1px dashed var(--line-3);border-radius:var(--r-lg);
+  background:var(--paper);
+}
+.bk-ag__notk{padding-top:3px}
+.bk-ag__notl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px clamp(20px,3vw,40px)}
+.bk-ag__notl li{font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+.bk-ag__notl b{display:block;font-weight:600;color:var(--ink)}
+.bk-ag__notf{grid-column:2;font-size:var(--t-xs);line-height:1.6;color:var(--faint);padding-top:2px}
+.bk-ag__notf a{
+  color:var(--ink);font-weight:500;
+  text-decoration:underline;text-decoration-color:var(--line-3);text-underline-offset:3px;
+  transition:color var(--d1) var(--e-io),text-decoration-color var(--d1) var(--e-io);
+}
+.bk-ag__notf a:hover{color:var(--blue-d);text-decoration-color:var(--blue-line)}
+
+/* ---------- widths ------------------------------------------------------ */
+@media (max-width:1023px){
+  .bk-ag__cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:860px){
+  .bk-ag__not{grid-template-columns:minmax(0,1fr)}
+  .bk-ag__notl{grid-template-columns:minmax(0,1fr);gap:14px}
+  .bk-ag__notf{grid-column:1}
+}
+@media (max-width:720px){
+  /* 5 of 30 minutes is 40px wide here: the range belongs on the card, not inside the segment */
+  .bk-ag__seg{padding:0 6px}
+  .bk-ag__seg b{display:none}
+}
+@media (max-width:600px){
+  .bk-ag__cards{grid-template-columns:minmax(0,1fr)}
+  .bk-ag__seg{height:40px}
+}
+@media (max-width:400px){
+  .bk-ag__tick{letter-spacing:.04em}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .bk-ag__notf a{transition:none}
+}

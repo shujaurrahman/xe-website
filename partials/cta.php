@@ -1,4 +1,13 @@
-<?php /** The closing band, reused at the foot of every inner page. */ ?>
+<?php
+/**
+ * The closing band, reused at the foot of every inner page.
+ *
+ * The button used to read "Book a discovery call" and go to the contact form. Now that
+ * /book carries the real scheduler, it goes there instead — except on /book itself,
+ * where it would self-link, so that page gets the written-brief route as its primary.
+ */
+$cta_book = ($page['key'] ?? '') !== 'book';
+?>
 <section class="band band--ink s22" aria-labelledby="cta-t">
   <span class="s22__dots dots-ink" aria-hidden="true"></span>
   <span class="s22__glow" aria-hidden="true"></span>
@@ -21,12 +30,16 @@
         <h2 class="h2 s22__h" id="cta-t">Let’s build what happens next.</h2>
         <p class="lead s22__sub">Tell us what you’re building. We’ll answer straight.</p>
       </div>
-      <a class="btn btn--white btn--lg s22__go" href="<?= xe_url('contact.php') ?>">
-        Book a discovery call<span class="i" aria-hidden="true">›</span>
+      <a class="btn btn--white btn--lg s22__go" href="<?= xe_url($cta_book ? 'book.php' : 'contact.php') ?>">
+        <?= $cta_book ? 'Book a discovery call' : 'Send a written brief' ?><span class="i" aria-hidden="true">›</span>
       </a>
     </div>
 
     <div class="s22__links" data-rv data-rv-d="90">
+      <?php /* the route the button is not taking, so both are always one click away */ ?>
+      <?php if ($cta_book): ?>
+        <a href="<?= xe_url('contact.php') ?>"><span>Send a written brief</span><i aria-hidden="true">›</i></a>
+      <?php endif; ?>
       <a href="<?= xe_url('work.php') ?>"><span>See the work</span><i aria-hidden="true">›</i></a>
       <a href="<?= xe_url('services/') ?>"><span>Explore our services</span><i aria-hidden="true">›</i></a>
       <a href="<?= xe_url('approach.php') ?>"><span>Read our approach</span><i aria-hidden="true">›</i></a>

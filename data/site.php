@@ -145,6 +145,7 @@ return [
             ['Industries',      'industries.php'],
             ['Work',            'work.php'],
             ['Careers',         'careers.php'],
+            ['Book a call',     'book.php'],
             ['Contact',         'contact.php'],
             ['FAQ',             'index.php#faq'],
         ]],

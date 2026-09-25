@@ -1,0 +1,72 @@
+/* Book · after — the ink band. A four-node stepper whose connector is trimmed to leave each node's
+   edge with a 12px gap on both sides, so the line never runs through a circle; the last node draws
+   no connector at all, so nothing extends past the wrap. */
+
+.bk-af{overflow:hidden}
+.bk-af__dots{position:absolute;inset:0;opacity:.5;pointer-events:none}
+.bk-af__wrap{position:relative;z-index:1}
+.bk-af__lead{color:var(--on-ink-2)}
+
+/* ---------- the stepper ------------------------------------------------- */
+.bk-af__steps{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  column-gap:var(--bdh-gap);row-gap:clamp(28px,3.4vw,40px);
+  margin-bottom:clamp(36px,4.4vw,56px);
+}
+.bk-af__s{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0}
+.bk-af__s::after{
+  content:"";position:absolute;top:17px;height:1px;
+  left:calc(36px + 12px);right:calc(12px - var(--bdh-gap));
+  background:var(--on-ink-line);
+}
+.bk-af__s:last-child::after{content:none}
+.bk-af__node{
+  display:grid;place-items:center;width:36px;height:36px;flex:none;margin-bottom:4px;
+  border-radius:50%;background:var(--on-ink-card);box-shadow:inset 0 0 0 1px var(--on-ink-line);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.06em;
+  color:var(--on-ink-2);font-variant-numeric:tabular-nums;line-height:1;
+}
+.bk-af__s.is-now .bk-af__node{background:var(--blue);box-shadow:none;color:var(--on-ink)}
+/* blue at 11px on ink is about 3:1 — the blue node carries the accent instead */
+.band--ink .bk-af__when{color:var(--on-ink-2)}
+.bk-af__s .bdh-d{max-width:34ch}
+/* "Typically two working days" wraps where the others do not, so the key reserves two lines and every
+   title in the row still starts on the same baseline */
+@media (min-width:601px){
+  .bk-af__when{min-height:2.8em}
+}
+
+/* ---------- the three caveats ------------------------------------------ */
+.bk-af__notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap)}
+.bk-af__notes .bk-note{background:var(--on-ink-card)}
+.bk-af__notes a{
+  color:var(--on-ink);font-weight:500;
+  text-decoration:underline;text-decoration-color:var(--on-ink-line);text-underline-offset:3px;
+  transition:text-decoration-color var(--d1) var(--e-io);
+  word-break:break-word;
+}
+.bk-af__notes a:hover{text-decoration-color:var(--blue)}
+
+/* ---------- widths ------------------------------------------------------ */
+@media (max-width:1023px){
+  .bk-af__steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  /* two per row: the connector would have to jump a line break, so it is dropped rather than faked */
+  .bk-af__s::after{content:none}
+  .bk-af__notes{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:600px){
+  .bk-af__steps{grid-template-columns:minmax(0,1fr);row-gap:0}
+  /* one per row: the stepper becomes a rail down the left, drawn between the nodes only */
+  .bk-af__s{padding:0 0 26px 52px}
+  .bk-af__s:last-child{padding-bottom:0}
+  .bk-af__node{position:absolute;left:0;top:0;margin-bottom:0}
+  .bk-af__s::after{
+    content:"";top:48px;bottom:12px;left:17px;right:auto;width:1px;height:auto;
+  }
+  .bk-af__s:last-child::after{content:none}
+  .bk-af__s .bdh-d{max-width:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .bk-af__notes a{transition:none}
+}
