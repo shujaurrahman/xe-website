@@ -1,0 +1,55 @@
+/* Industries · scope — three organising axes beside the index of six categories. The index rows are
+   wide anchors: index, name + eyebrow, the one-line read, the leading disciplines, the jump. */
+.ind-scope__grid{display:flex;flex-direction:column;gap:clamp(44px,5vw,76px)}
+
+/* ---- the three axes a category is read against ---- */
+.ind-scope__axes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap)}
+@media (max-width:760px){.ind-scope__axes{grid-template-columns:minmax(0,1fr);gap:20px}}
+.ind-scope__axes>li{display:flex;flex-direction:column;gap:8px;padding-top:18px;border-top:1px solid var(--line)}
+.ind-scope__axi{display:grid;place-items:center;width:34px;height:34px;margin-bottom:2px;border-radius:9px;background:var(--paper-3);color:var(--ink)}
+.ind-scope__axes .bdh-d{max-width:44ch}
+
+/* ---- the index ---- */
+.ind-scope__list{display:flex;flex-direction:column}
+.ind-scope__list>li+li{border-top:1px solid var(--line-2)}
+.ind-scope__row{
+  display:grid;grid-template-columns:2.25rem minmax(0,13rem) minmax(0,1fr) 16.5rem 8.75rem;
+  column-gap:clamp(16px,1.8vw,28px);row-gap:10px;align-items:baseline;
+  padding:22px 4px;color:var(--ink);
+  transition:background var(--d2) var(--e-io),padding-left var(--d2) var(--e);
+}
+.ind-scope__row:hover,.ind-scope__row:focus-visible{background:var(--paper-2);padding-left:12px}
+.ind-scope__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;line-height:1.6;color:var(--blue);font-variant-numeric:tabular-nums}
+.ind-scope__main{display:flex;flex-direction:column;gap:5px;min-width:0}
+.ind-scope__name{font-family:var(--f-h);font-size:clamp(1.0625rem,1.35vw,1.3125rem);font-weight:500;line-height:1.2;letter-spacing:-.014em;color:var(--ink)}
+.ind-scope__kick{font-family:var(--f);font-size:var(--ind-mono-s);letter-spacing:.09em;text-transform:uppercase;color:var(--faint);line-height:1.4}
+.ind-scope__line{font-size:var(--t-sm);line-height:1.6;color:var(--muted);max-width:46ch}
+.ind-scope__led{display:flex;flex-wrap:wrap;align-items:center;gap:6px;justify-self:start}
+.ind-scope__led .ind-k{flex:none;margin-right:2px}
+.ind-scope__go{
+  display:inline-flex;align-items:center;gap:.5em;flex:none;justify-self:end;align-self:center;
+  font-family:var(--f);font-size:var(--ind-mono-s);font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);white-space:nowrap;
+  transition:color var(--d1) var(--e-io);
+}
+.ind-scope__go i{color:var(--blue);transition:transform var(--d2) var(--e)}
+.ind-scope__row:hover .ind-scope__go,.ind-scope__row:focus-visible .ind-scope__go{color:var(--ink)}
+.ind-scope__row:hover .ind-scope__go i{transform:translateX(4px)}
+
+@media (max-width:1180px){
+  .ind-scope__row{grid-template-columns:2.25rem minmax(0,14rem) minmax(0,1fr) 8.75rem;row-gap:12px}
+  .ind-scope__led{grid-column:3 / span 1}
+  .ind-scope__go{grid-column:4;grid-row:1}
+}
+@media (max-width:1023px){
+  .ind-scope__row{grid-template-columns:auto minmax(0,1fr) auto;row-gap:12px}
+  .ind-scope__line{grid-column:2 / -1}
+  .ind-scope__led{grid-column:2 / -1}
+  .ind-scope__go{grid-column:3;grid-row:1}
+}
+@media (max-width:600px){
+  .ind-scope__row{grid-template-columns:auto minmax(0,1fr);padding:20px 2px}
+  .ind-scope__go{grid-column:1 / -1;grid-row:auto;justify-self:start;min-height:24px}
+  .ind-scope__row:hover,.ind-scope__row:focus-visible{padding-left:2px}
+}
+
+

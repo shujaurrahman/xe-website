@@ -1,0 +1,24 @@
+/* Industries · stack — one marquee row across the full width, then the six categories as chip groups.
+   The marquee comes from the shared kit: it scrolls only while on screen and is static under reduced
+   motion, so nothing here needs a script. */
+.ind-stack__marq{margin-block:clamp(4px,1vw,12px) clamp(44px,5vw,72px)}
+
+.ind-stack__grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:var(--bdh-gap-l);row-gap:clamp(30px,3.4vw,44px);
+}
+@media (max-width:900px){.ind-stack__grid{grid-template-columns:minmax(0,1fr);row-gap:28px}}
+
+.ind-stack__cat{display:flex;flex-direction:column;gap:14px;min-width:0}
+.ind-stack__ch{display:flex;align-items:baseline;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.ind-stack__jump{
+  margin-left:auto;display:inline-flex;align-items:center;gap:.45em;flex:none;
+  font-family:var(--f);font-size:var(--ind-mono-s);font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);
+  transition:color var(--d1) var(--e-io);
+}
+.ind-stack__jump i{color:var(--blue);transition:transform var(--d2) var(--e)}
+.ind-stack__jump:hover,.ind-stack__jump:focus-visible{color:var(--ink)}
+.ind-stack__jump:hover i{transform:translateX(3px)}
+.ind-stack__chips{row-gap:6px}
+
+@media (prefers-reduced-motion:reduce){.ind-stack__jump,.ind-stack__jump i{transition:none}}

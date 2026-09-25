@@ -1,0 +1,29 @@
+/* Industries · transfer — two ledgers on ink, separated by a hairline. The left column is marked with a
+   blue rule at its head, the right with a dashed one, so the two lists are told apart without colour
+   alone doing the work: each also carries its own icon and heading. */
+.ind-tr__cols{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:clamp(32px,4.4vw,72px);row-gap:clamp(40px,4.6vw,56px);
+}
+@media (max-width:900px){.ind-tr__cols{grid-template-columns:minmax(0,1fr)}}
+
+.ind-tr__col{position:relative;min-width:0}
+.ind-tr__col--no::before{
+  content:"";position:absolute;top:0;bottom:0;left:calc(clamp(32px,4.4vw,72px) / -2);width:1px;background:var(--on-ink-line);
+}
+@media (max-width:900px){.ind-tr__col--no::before{display:none}}
+
+.ind-tr__ch{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:2px solid var(--blue)}
+.ind-tr__col--no .ind-tr__ch{border-bottom:1px dashed var(--on-ink-line)}
+.ind-tr__ci{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:9px;background:var(--blue);color:var(--on-ink)}
+.ind-tr__col--no .ind-tr__ci{background:var(--on-ink-card);box-shadow:inset 0 0 0 1px var(--on-ink-line);color:var(--on-ink-2)}
+.ind-tr__ct{font-family:var(--f-h);font-size:1.1875rem;font-weight:500;letter-spacing:-.01em;line-height:1.2;color:var(--on-ink)}
+.ind-tr__cn{margin-left:auto;font-family:var(--f);font-size:var(--ind-mono-s);letter-spacing:.09em;text-transform:uppercase;color:var(--on-ink-3);white-space:nowrap}
+
+.ind-tr__led>*{grid-template-columns:minmax(0,12rem) minmax(0,1fr)}
+.ind-tr__led>*:first-child{border-top:0;padding-top:20px}
+@media (max-width:1100px){
+  .ind-tr__led>*{grid-template-columns:minmax(0,1fr);row-gap:6px}
+}
+
+.ind-tr__note{margin-top:clamp(36px,4vw,56px);padding-top:20px;border-top:1px solid var(--on-ink-line);max-width:78ch}

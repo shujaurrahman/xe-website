@@ -1,0 +1,92 @@
+/* Industries · dossiers — six briefs stacked in one section. Each is a two-column record: a sticky left
+   column carrying the index, the name and the pressure, and a right column of four numbered blocks plus
+   a footer strip. Everything is in flow, so the section is complete with JavaScript off and prints. */
+.ind-dos__head .lead{max-width:56ch}
+.ind-dos__key{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 20px;width:100%}
+.ind-dos__key>li{display:flex;align-items:baseline;gap:8px;font-family:var(--f);font-size:var(--ind-mono-s);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);line-height:1.4}
+@media (max-width:500px){.ind-dos__key{grid-template-columns:minmax(0,1fr)}}
+
+.ind-dos__stack{display:flex;flex-direction:column}
+
+.ind-dos{
+  display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);
+  column-gap:var(--bdh-gap-l);row-gap:clamp(28px,3vw,40px);
+  padding-block:clamp(44px,5vw,72px) clamp(52px,6vw,88px);
+  scroll-margin-top:calc(var(--nav-h) + 32px);
+}
+.ind-dos__rule{grid-column:1 / -1;height:1px;margin-bottom:clamp(20px,2.4vw,32px);background:var(--line)}
+.ind-dos:first-child{padding-top:0}
+.ind-dos:first-child .ind-dos__rule{display:none}
+@media (max-width:1023px){
+  .ind-dos{grid-template-columns:minmax(0,1fr);row-gap:clamp(24px,3vw,36px)}
+}
+
+/* ---- the sticky side ---- */
+.ind-dos__sticky{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+.ind-dos__pos{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;color:var(--faint);font-variant-numeric:tabular-nums}
+.ind-dos__pos span{color:var(--blue)}
+.ind-dos__ico{display:grid;place-items:center;width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:var(--paper-2);color:var(--ink)}
+.ind-dos__t{font-family:var(--f-h);font-size:clamp(1.5rem,2.3vw,2rem);font-weight:500;line-height:1.08;letter-spacing:-.026em;color:var(--ink)}
+.ind-dos__kick{font-family:var(--f);font-size:var(--ind-mono-s);letter-spacing:.1em;text-transform:uppercase;color:var(--blue-d);
+  padding:5px 10px;border-radius:var(--r-pill);background:var(--blue-wash);line-height:1.3}
+.ind-dos__pressure{font-size:var(--t-body);line-height:1.68;color:var(--txt);max-width:44ch}
+.ind-dos__teams{display:flex;flex-direction:column;gap:8px;padding-top:14px;border-top:1px solid var(--line-2);width:100%}
+
+/* ---- the four blocks ---- */
+.ind-dos__body{display:flex;flex-direction:column;gap:clamp(30px,3.4vw,44px);min-width:0}
+.ind-dos__bk{display:flex;align-items:baseline;gap:10px;padding-bottom:12px;margin-bottom:18px;border-bottom:1px solid var(--line-2);color:var(--muted)}
+
+/* 01 what is different */
+.ind-dos__diff{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap)}
+.ind-dos__diff>li{display:flex;flex-direction:column;gap:8px;padding-top:14px;border-top:2px solid var(--ink)}
+.ind-dos__diff .bdh-d{max-width:40ch}
+@media (max-width:860px){.ind-dos__diff{grid-template-columns:minmax(0,1fr);gap:22px}}
+
+/* 02 what we do */
+.ind-dos__work{display:flex;flex-direction:column}
+.ind-dos__work>li{
+  display:grid;grid-template-columns:minmax(0,11rem) minmax(0,1fr) auto;
+  column-gap:clamp(14px,1.6vw,26px);row-gap:10px;align-items:start;
+  padding-block:18px;border-top:1px solid var(--line-2);
+}
+.ind-dos__work>li:last-child{border-bottom:1px solid var(--line-2)}
+.ind-dos__wd{display:flex;align-items:baseline;gap:8px;font-family:var(--f-h);font-size:1rem;font-weight:500;line-height:1.3;letter-spacing:-.006em;color:var(--ink)}
+.ind-dos__wt{font-size:var(--t-sm);line-height:1.62;color:var(--muted)}
+.ind-dos__wl{justify-self:end}
+@media (max-width:1100px){
+  .ind-dos__work>li{grid-template-columns:minmax(0,1fr);row-gap:8px}
+  .ind-dos__wl{justify-self:start;margin-top:2px}
+}
+
+/* 03 what binds the work */
+.ind-dos__rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--bdh-gap);row-gap:0}
+.ind-dos__rules>div{padding:14px 14px 14px 0;border-top:1px solid var(--line-2)}
+.ind-dos__rules dt{font-family:var(--f);font-size:var(--t-xs);font-weight:500;line-height:1.5;letter-spacing:.01em;color:var(--ink)}
+.ind-dos__rules dd{margin-top:5px;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
+@media (max-width:860px){.ind-dos__rules{grid-template-columns:minmax(0,1fr)}}
+.ind-dos__std{display:flex;flex-direction:column;gap:10px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line-2)}
+.ind-dos__badges{display:flex;flex-wrap:wrap;gap:6px}
+
+/* 04 how it is measured */
+.ind-dos__meas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--bdh-gap)}
+.ind-dos__meas>li{display:flex;flex-direction:column;gap:8px;padding:18px 18px 20px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper-2)}
+.ind-dos__mn{font-family:var(--f-h);font-size:1rem;font-weight:500;line-height:1.3;letter-spacing:-.006em;color:var(--ink)}
+.ind-dos__meas .bdh-d{max-width:none}
+.ind-dos__meas+.ind-note{margin-top:12px}
+@media (max-width:860px){.ind-dos__meas{grid-template-columns:minmax(0,1fr)}}
+
+/* footer strip */
+.ind-dos__foot{
+  display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);
+  column-gap:var(--bdh-gap);row-gap:24px;
+  padding:clamp(22px,2.4vw,30px);border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper-2);
+}
+.ind-dos__first{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.ind-dos__ft{font-family:var(--f-h);font-size:clamp(1.0625rem,1.4vw,1.25rem);font-weight:500;line-height:1.3;letter-spacing:-.012em;color:var(--ink);max-width:40ch}
+.ind-dos__fixed{display:flex;flex-direction:column;gap:10px}
+@media (max-width:860px){.ind-dos__foot{grid-template-columns:minmax(0,1fr)}}
+
+@media (max-width:600px){
+  .ind-dos__foot{padding:20px}
+  .ind-dos__meas>li{padding:16px}
+}
