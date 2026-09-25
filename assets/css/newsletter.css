@@ -1,0 +1,76 @@
+/* ==========================================================================
+   THE DISPATCH — BASE LAYER (newsletter.php)
+   Loaded after assets/css/brand/hub.css (.bdh-*) and assets/css/tech/kit.css (.xt-*), before
+   assets/css/newsletter/<id>.css. Only the .nlt-* primitives that more than one section uses live
+   here; everything else styles itself in its own section file.
+
+   The sign-up component is NOT styled from here. It carries its own stylesheet
+   (assets/css/newsletter/signup.css, .nls-*) so it can be dropped on any page in the site, and
+   nothing in this file may reach into it.
+
+   CONVENTIONS
+   • Root: <section class="band [band--alt|band--ink] nlt-<id>" id="<id>" aria-labelledby="<id>-t">
+   • Heads reuse .bdh-head / --row / --c. Cards reuse .bdh-card.
+   • .nlt-k    mono key label      .nlt-a  inline link      .nlt-num  tabular figure
+   • .nlt-sample  the dashed "sample" mark      .nlt-facts  a label → value ledger
+   • Motion: reveals, one on-screen subject cycle in the hero, and the issue reader. Nothing else loops.
+   Tokens from core.css :root only; no new colours; no gradients except mask fades; no !important.
+   ========================================================================== */
+
+.nlt{
+  --nlt-gap:clamp(22px,2.6vw,36px);
+  --nlt-block:clamp(30px,3.4vw,52px);
+  --nlt-pad:clamp(20px,2.2vw,30px);
+}
+.nlt :focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* ---------- small shared parts ------------------------------------------- */
+.nlt-k{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;line-height:1.3;color:var(--faint)}
+.band--ink .nlt-k{color:var(--on-ink-3)}
+.nlt-k--blue{color:var(--blue)}
+.band--ink .nlt-k--blue{color:var(--blue)}
+
+.nlt-a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--blue-line);text-underline-offset:3px;text-decoration-thickness:1px;
+  transition:color var(--d1) var(--e-io),text-decoration-color var(--d1) var(--e-io)}
+.nlt-a:hover{color:var(--blue-d);text-decoration-color:var(--blue)}
+.band--ink .nlt-a{color:var(--on-ink)}
+.band--ink .nlt-a:hover{color:var(--on-ink);text-decoration-color:var(--blue)}
+/* An inline link inside a sentence is exempt from the 44px rule (WCAG 2.2 SC 2.5.8 counts it as
+   inline text), but it still gets a 24px box on touch widths. A link that stands on its own line is
+   given the full 44px where it appears. */
+@media (max-width:900px){
+  .nlt-a{display:inline-block;min-height:24px}
+  /* the two standalone .tl links on this page; scoped to this page's own sections so the shared
+     closing call to action inside main.nlt is not touched */
+  .nlt-rdr .tl,.nlt-jou .tl{min-height:44px}
+}
+
+.nlt-num{font-family:var(--f);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+
+
+/* the mark that says "this is written as a proof of the format, not a record of a send" */
+.nlt-sample{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border:1px dashed var(--line-3);border-radius:var(--r-pill);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap;line-height:1}
+.band--ink .nlt-sample{border-color:var(--on-ink-line);color:var(--on-ink-3)}
+
+/* a label → value pair used by several sections */
+.nlt-facts{display:grid;gap:0;border-top:1px solid var(--line)}
+.nlt-facts>div{display:grid;grid-template-columns:minmax(0,13ch) minmax(0,1fr);align-items:baseline;gap:8px 18px;padding:12px 0;border-bottom:1px solid var(--line-2)}
+.nlt-facts dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.11em;text-transform:uppercase;color:var(--faint);line-height:1.4}
+.nlt-facts dd{font-size:var(--t-sm);line-height:1.55;color:var(--ink)}
+.band--ink .nlt-facts{border-color:var(--on-ink-line)}
+.band--ink .nlt-facts>div{border-color:var(--on-ink-line)}
+.band--ink .nlt-facts dt{color:var(--on-ink-3)}
+.band--ink .nlt-facts dd{color:var(--on-ink)}
+@media (max-width:520px){
+  .nlt-facts>div{grid-template-columns:minmax(0,1fr);row-gap:4px}
+}
+
+/* Shown only at the widths where a table beside it genuinely has to scroll. The tables use
+   .bdh-scroll-x WITHOUT .mask-x on purpose: a symmetric edge fade over a table that starts at the
+   left edge greys out the first letter of every row, which reads as truncated text. */
+.nlt-hint-x{display:none;margin-top:10px;font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--ghost);line-height:1.4}
+@media (max-width:660px){.nlt-hint-x{display:block}}
+
+/* the shared frame that makes a block look like part of an email rather than part of a web page */
+.nlt-paper{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-1)}

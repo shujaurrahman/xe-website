@@ -1,0 +1,40 @@
+/* Dispatch · subscribe — the two-track flow on the left, the sign-up component on the right. Ink band.
+   Nothing here styles the component: it is the same partials/newsletter/signup.php that sits in the
+   hero on paper and beside the journal on --paper-2, reading .band--ink from its own stylesheet. */
+.nlt-sub__grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);column-gap:clamp(32px,4.4vw,80px);row-gap:40px;align-items:start}
+
+.nlt-sub__cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--nlt-gap);padding-bottom:10px;margin-left:44px}
+.nlt-sub__ck{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink-3);line-height:1.3}
+.nlt-sub__ck--next{color:var(--blue)}
+
+.nlt-sub__steps{display:flex;flex-direction:column}
+.nlt-sub__step{padding:20px 0;border-top:1px solid var(--on-ink-line)}
+.nlt-sub__sh{display:grid;grid-template-columns:44px minmax(0,1fr);align-items:baseline;gap:0}
+.nlt-sub__sn{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;color:var(--blue);font-variant-numeric:tabular-nums}
+.nlt-sub__st{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.012em;line-height:1.25;color:var(--on-ink)}
+.nlt-sub__pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--nlt-gap);row-gap:12px;margin:12px 0 0 44px}
+.nlt-sub__now,.nlt-sub__next{font-size:var(--t-xs);line-height:1.65;color:var(--on-ink-2)}
+.nlt-sub__next{padding-left:16px;border-left:1px solid var(--on-ink-line)}
+.nlt-sub__tag{display:none}
+
+.nlt-sub__todo{display:flex;flex-direction:column;gap:0;margin-top:26px;padding-top:20px;border-top:1px solid var(--on-ink-line)}
+.nlt-sub__todo>li{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:baseline;gap:14px;padding:10px 0;border-bottom:1px dashed var(--on-ink-line);
+  font-size:var(--t-sm);line-height:1.5;color:var(--on-ink)}
+.nlt-sub__todo>li:last-child{border-bottom:0}
+.nlt-sub__tk{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--on-ink-3);white-space:nowrap}
+
+.nlt-sub__form{display:flex;flex-direction:column;gap:18px;min-width:0}
+.nlt-sub__alt{font-size:var(--t-xs);line-height:1.65;color:var(--on-ink-3);max-width:46ch}
+
+@media (max-width:1023px){
+  .nlt-sub__grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:680px){
+  .nlt-sub__cols{display:none}
+  .nlt-sub__sh{grid-template-columns:34px minmax(0,1fr)}
+  .nlt-sub__pair{grid-template-columns:minmax(0,1fr);margin-left:34px;row-gap:14px}
+  .nlt-sub__next{padding-left:0;border-left:0;padding-top:12px;border-top:1px dashed var(--on-ink-line)}
+  .nlt-sub__tag{display:block;margin-bottom:4px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink-3)}
+  .nlt-sub__tag--next{color:var(--blue)}
+  .nlt-sub__todo>li{grid-template-columns:minmax(0,1fr);row-gap:3px}
+}

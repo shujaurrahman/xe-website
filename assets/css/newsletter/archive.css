@@ -1,0 +1,38 @@
+/* Dispatch · archive — a shelf of rows rather than cards or a table, each opened by a typographic plate
+   standing in for a cover. Nothing here links anywhere, because none of these pages exists. */
+.nlt-arc__shelf{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.nlt-arc__i{display:grid;grid-template-columns:96px minmax(0,1fr) minmax(0,190px);column-gap:clamp(20px,2.6vw,40px);row-gap:16px;
+  align-items:start;padding:clamp(22px,2.4vw,32px) 0;border-bottom:1px solid var(--line)}
+
+.nlt-arc__plate{display:flex;flex-direction:column;justify-content:space-between;gap:20px;width:96px;aspect-ratio:3/4;padding:12px;
+  border:1px solid var(--line);border-radius:var(--r-sm);background:var(--paper-2)}
+.nlt-arc__pm{font-family:var(--f);font-size:var(--t-sm);font-weight:500;letter-spacing:.04em;color:var(--ink);line-height:1}
+.nlt-arc__pn{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.2}
+
+.nlt-arc__meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.nlt-arc__desk{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.nlt-arc__t{margin:12px 0 8px;font-family:var(--f-h);font-size:clamp(1.12rem,1.7vw,1.4rem);font-weight:500;letter-spacing:-.018em;line-height:1.22;color:var(--ink);max-width:30ch}
+.nlt-arc__d{font-size:var(--t-sm);line-height:1.65;color:var(--muted);max-width:60ch}
+.nlt-arc__tags{display:flex;flex-wrap:wrap;gap:4px 0;margin-top:14px;font-size:var(--t-xs);line-height:1.5;color:var(--faint)}
+/* the separator trails its own item, so a wrapped line never begins with a stray dot */
+.nlt-arc__tags>li:not(:last-child)::after{content:"\00B7";margin-inline:9px;color:var(--ghost)}
+
+.nlt-arc__no{padding-left:20px;border-left:1px solid var(--line-2);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.5}
+
+.nlt-arc__empty{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:clamp(28px,3vw,44px);border:1px dashed var(--line-3);border-radius:var(--r-lg)}
+.nlt-arc__zero{font-family:var(--f-h);font-size:clamp(2.4rem,5vw,4rem);font-weight:500;letter-spacing:-.04em;line-height:1;color:var(--ink)}
+.nlt-arc__ep{font-size:var(--t-sm);line-height:1.65;color:var(--muted);max-width:52ch}
+
+.nlt-arc__facts{margin-top:clamp(30px,3.4vw,46px)}
+
+@media (max-width:860px){
+  .nlt-arc__i{grid-template-columns:72px minmax(0,1fr)}
+  .nlt-arc__plate{width:72px}
+  .nlt-arc__no{grid-column:1 / -1;padding-left:0;border-left:0;padding-top:12px;border-top:1px dashed var(--line-3)}
+}
+@media (max-width:520px){
+  .nlt-arc__i{grid-template-columns:minmax(0,1fr)}
+  .nlt-arc__plate{width:64px;aspect-ratio:1/1}
+  .nlt-arc__t{max-width:none}
+}

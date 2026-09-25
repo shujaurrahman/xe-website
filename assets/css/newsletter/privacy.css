@@ -1,0 +1,44 @@
+/* Dispatch · privacy — a sticky rail carrying the heading and the two regulations, six promise rows,
+   and the table of what a confirmed sign-up would hold. */
+.nlt-priv__grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:clamp(32px,5vw,96px);row-gap:36px;align-items:start}
+.nlt-priv__stick{position:sticky;top:var(--bdh-sticky);display:flex;flex-direction:column;align-items:flex-start;gap:18px}
+.nlt-priv__h{max-width:16ch}
+.nlt-priv__lead{max-width:46ch}
+.nlt-priv__std{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.nlt-priv__note{font-size:var(--t-xs);line-height:1.65;color:var(--faint);max-width:44ch}
+
+/* ---- the promises ---- */
+.nlt-priv__l{display:flex;flex-direction:column}
+.nlt-priv__i{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:18px;padding:22px 0;border-top:1px solid var(--line)}
+.nlt-priv__i:first-child{border-top:0;padding-top:0}
+.nlt-priv__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;color:var(--blue);line-height:1.6;font-variant-numeric:tabular-nums}
+.nlt-priv__t{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.012em;line-height:1.3;color:var(--ink)}
+.nlt-priv__d{margin-top:8px;font-size:var(--t-sm);line-height:1.65;color:var(--txt);max-width:56ch}
+.nlt-priv__m{margin-top:12px;padding:10px 14px;border-radius:var(--r-sm);background:var(--paper);border:1px solid var(--line);
+  font-size:var(--t-xs);line-height:1.6;color:var(--muted);max-width:60ch}
+.nlt-priv__mk{display:block;margin-bottom:3px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+
+/* ---- what is held ---- */
+.nlt-priv__hold{margin-top:clamp(32px,3.6vw,48px);padding-top:clamp(24px,2.6vw,34px);border-top:1px solid var(--line)}
+.nlt-priv__ht{font-family:var(--f-h);font-size:1.125rem;font-weight:500;letter-spacing:-.012em;line-height:1.25;color:var(--ink)}
+.nlt-priv__hd{margin-top:8px;font-size:var(--t-sm);line-height:1.65;color:var(--muted);max-width:62ch}
+.nlt-priv__scroll{margin-top:20px}
+.nlt-priv__tbl{width:100%;min-width:560px;border-collapse:collapse}
+.nlt-priv__tbl th,.nlt-priv__tbl td{text-align:left;vertical-align:top;padding:12px 18px 12px 0;border-bottom:1px solid var(--line-2)}
+.nlt-priv__tbl thead th{padding-bottom:10px;border-bottom:1px solid var(--line);
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+.nlt-priv__tbl tbody th{font-family:var(--f-b);font-size:var(--t-sm);font-weight:600;letter-spacing:0;color:var(--ink);white-space:nowrap}
+.nlt-priv__tbl td{font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.nlt-priv__keep{font-family:var(--f);font-size:var(--t-xs);letter-spacing:.02em;color:var(--muted);white-space:nowrap}
+.nlt-priv__out{margin-top:18px;padding:14px 16px;border-left:2px solid var(--blue);background:var(--paper);border-radius:0 var(--r-sm) var(--r-sm) 0;
+  font-size:var(--t-sm);line-height:1.65;color:var(--txt);max-width:66ch}
+
+@media (max-width:1023px){
+  .nlt-priv__grid{grid-template-columns:minmax(0,1fr)}
+  .nlt-priv__stick{position:static}
+  .nlt-priv__h,.nlt-priv__lead,.nlt-priv__note{max-width:64ch}
+}
+@media (max-width:600px){
+  .nlt-priv__i{grid-template-columns:minmax(0,1fr);row-gap:6px}
+  .nlt-priv__std{gap:10px}
+}

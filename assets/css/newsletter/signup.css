@@ -1,0 +1,136 @@
+/* ==========================================================================
+   THE DISPATCH SIGN-UP — the reusable component (partials/newsletter/signup.php).
+   Self-contained: it depends on assets/css/core.css tokens and .btn only, never on
+   assets/css/brand/hub.css or on any page stylesheet, so it can be dropped on any page.
+   The component emits this file itself, once per request.
+
+   It reads its own surroundings rather than being restyled per page:
+     plain paper band  → a --paper-2 card, so it separates from white
+     .band--alt        → a --paper card, so it separates from --paper-2
+     .band--ink        → an --on-ink-card card with on-ink type and fields
+   Tokens from core.css :root only; no new colours; no gradients; no !important.
+   ========================================================================== */
+
+.nls{
+  --nls-bg:var(--paper-2);
+  --nls-line:var(--line);
+  --nls-field:var(--paper);
+  --nls-t:var(--ink);
+  --nls-d:var(--muted);
+  --nls-f:var(--faint);
+  max-width:100%;
+}
+.band--alt .nls{--nls-bg:var(--paper);--nls-field:var(--paper-2)}
+.band--ink .nls,.card--ink .nls,.nls--on-ink{
+  --nls-bg:var(--on-ink-card);
+  --nls-line:var(--on-ink-line);
+  --nls-field:transparent;   /* on ink the fields are outlined, so the card keeps the only fill */
+  --nls-t:var(--on-ink);
+  --nls-d:var(--on-ink-2);
+  --nls-f:var(--on-ink-3);
+}
+
+.nls :focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* ---------- the shell ---------------------------------------------------- */
+.nls--card,.nls--full{
+  background:var(--nls-bg);border:1px solid var(--nls-line);border-radius:var(--r-lg);
+  padding:clamp(22px,2.4vw,32px);
+}
+.nls--inline{background:none;border:0;padding:0}
+.nls__f{display:flex;flex-direction:column;gap:14px;min-width:0}
+.nls__f[hidden]{display:none}
+
+.nls__h{font-family:var(--f-h);font-size:1.1875rem;font-weight:500;line-height:1.25;letter-spacing:-.008em;color:var(--nls-t)}
+
+/* ---------- field + button ----------------------------------------------- */
+.nls__row{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.nls__field{display:flex;flex-direction:column;gap:7px;flex:1 1 260px;min-width:0}
+.nls__lbl{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--nls-f);line-height:1.2}
+.nls__in{
+  width:100%;min-height:46px;padding:0 14px;border-radius:var(--r-sm);
+  background:var(--nls-field);border:1px solid var(--nls-line);color:var(--nls-t);
+  font-family:var(--f-b);font-size:var(--t-sm);line-height:1.4;
+  transition:border-color var(--d1) var(--e-io),background var(--d1) var(--e-io);
+}
+.nls__in::placeholder{color:var(--nls-f)}
+.nls__in:hover{border-color:var(--line-3)}
+.band--ink .nls__in:hover{border-color:var(--blue-line)}
+.nls__in:focus{border-color:var(--blue)}
+.nls__in[aria-invalid="true"]{border-color:var(--blue-d)}
+.nls__go{flex:0 0 auto;min-height:46px}
+
+/* ---------- messages ------------------------------------------------------ */
+.nls__err{display:flex;align-items:flex-start;gap:8px;font-size:var(--t-xs);line-height:1.5;color:var(--blue-d);max-width:56ch}
+.nls__err[hidden]{display:none}
+.nls__err::before{content:"\203A";flex:none;font-family:var(--f);line-height:1.35;color:var(--blue)}
+.band--ink .nls__err{color:var(--on-ink)}
+.band--ink .nls__err::before{color:var(--blue)}
+
+.nls__note{font-size:var(--t-xs);line-height:1.6;color:var(--nls-d);max-width:62ch}
+.nls__note b{color:var(--nls-t);font-weight:600}
+.nls__legal{font-size:var(--t-xs);line-height:1.6;color:var(--nls-f);max-width:62ch}
+.nls__a{color:var(--nls-t);text-decoration:underline;text-decoration-color:var(--blue-line);text-underline-offset:3px;text-decoration-thickness:1px;
+  transition:color var(--d1) var(--e-io),text-decoration-color var(--d1) var(--e-io)}
+.nls__a:hover{color:var(--blue-d);text-decoration-color:var(--blue)}
+.band--ink .nls__a:hover{color:var(--on-ink)}
+@media (max-width:900px){
+  .nls__a{display:inline-block;min-height:24px}
+}
+
+/* ---------- optional interests ------------------------------------------- */
+.nls__topics{border:0;padding:0;margin-top:2px}
+.nls__leg{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:0 0 10px;
+  font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--nls-f)}
+.nls__leg span{padding:3px 8px;border-radius:var(--r-pill);box-shadow:inset 0 0 0 1px var(--nls-line);color:var(--nls-f);letter-spacing:.1em}
+.nls__tl{display:flex;flex-wrap:wrap;gap:8px}
+.nls__cb{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.nls__tlab{
+  display:inline-flex;align-items:center;gap:9px;min-height:44px;padding:0 14px 0 12px;border-radius:var(--r-pill);
+  border:1px solid var(--nls-line);background:var(--nls-field);color:var(--nls-d);
+  font-size:var(--t-xs);font-weight:500;line-height:1.3;cursor:pointer;
+  transition:border-color var(--d1) var(--e-io),color var(--d1) var(--e-io);
+}
+.nls__tlab:hover{color:var(--nls-t);border-color:var(--line-3)}
+.band--ink .nls__tlab:hover{border-color:var(--blue-line)}
+.nls__box{position:relative;flex:none;width:16px;height:16px;border-radius:var(--r-xs);border:1px solid var(--nls-line);transition:background var(--d1) var(--e-io),border-color var(--d1) var(--e-io)}
+.nls__box::after{content:"";position:absolute;left:4px;top:1px;width:5px;height:9px;border:solid var(--paper);border-width:0 1.5px 1.5px 0;transform:rotate(45deg) scale(.4);opacity:0;transition:opacity var(--d1) var(--e-io),transform var(--d1) var(--e-io)}
+.nls__cb:checked + .nls__tlab{color:var(--nls-t);border-color:var(--blue)}
+.nls__cb:checked + .nls__tlab .nls__box{background:var(--blue);border-color:var(--blue)}
+.nls__cb:checked + .nls__tlab .nls__box::after{opacity:1;transform:rotate(45deg) scale(1)}
+.nls__cb:focus-visible + .nls__tlab{outline:2px solid var(--blue);outline-offset:3px}
+.nls__tnote{margin-top:10px;font-size:var(--t-xs);line-height:1.55;color:var(--nls-f);max-width:60ch}
+
+/* ---------- the honeypot -------------------------------------------------- */
+.nls__hp{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ---------- the answer ---------------------------------------------------- */
+/* the answer sits ABOVE the form, so an error or a failure is the first thing read rather than
+   something under a full form the reader has to scroll past */
+.nls__live:empty{display:none}
+.nls__live:not(:empty){margin-bottom:16px}
+.nls__res{display:flex;flex-direction:column;gap:10px;padding:18px 20px;border-radius:var(--r);border:1px solid var(--nls-line);background:var(--nls-field)}
+.nls__res--ok{border-color:var(--blue-line)}
+.nls__rt{display:flex;align-items:baseline;gap:10px;font-family:var(--f-h);font-size:1.0625rem;font-weight:500;line-height:1.3;letter-spacing:-.008em;color:var(--nls-t)}
+.nls__ri{flex:none;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--blue);color:var(--paper);font-family:var(--f);font-size:var(--t-lbl);line-height:1;transform:translateY(2px)}
+.nls__res--bad .nls__ri{background:var(--ink);color:var(--paper)}
+.band--ink .nls__res--bad .nls__ri{background:var(--on-ink);color:var(--ink)}
+.nls__rp{font-size:var(--t-xs);line-height:1.65;color:var(--nls-d);max-width:62ch}
+.nls__rp b{color:var(--nls-t);font-weight:600}
+.nls__ref,.nls__rref{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;color:var(--nls-t)}
+.nls__ract{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:2px}
+.band--ink .nls__mailto{background:transparent;border-color:var(--on-ink-line);color:var(--on-ink)}
+.band--ink .nls__mailto:hover{border-color:var(--blue);color:var(--on-ink)}
+
+/* ---------- busy state, added by signup.js only --------------------------- */
+.nls.is-busy .nls__go{opacity:.55;pointer-events:none}
+
+@media (max-width:520px){
+  .nls__row{gap:12px}
+  .nls__field{flex:1 1 100%}
+  .nls__go{width:100%}
+  .nls__tlab{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .nls__in,.nls__tlab,.nls__box,.nls__box::after,.nls__a{transition:none}
+}

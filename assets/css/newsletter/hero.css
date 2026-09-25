@@ -1,0 +1,85 @@
+/* Dispatch · hero — text and the inline sign-up on the left, the front of an issue as a mail preview on
+   the right, a strip of target facts underneath. Paper throughout; the only ink is the type. */
+.nlt-hero{position:relative;overflow:hidden;isolation:isolate;padding-block:var(--bdh-hero-t) clamp(52px,5.6vw,88px);background:var(--paper)}
+.nlt-hero__field{position:absolute;inset:0;z-index:-1;opacity:.75;pointer-events:none;
+  -webkit-mask-image:radial-gradient(72% 70% at 82% 6%,#000 0%,transparent 70%);mask-image:radial-gradient(72% 70% at 82% 6%,#000 0%,transparent 70%)}
+
+.nlt-hero__in{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--bdh-gap-l);row-gap:clamp(36px,4vw,56px);align-items:center;
+  margin-bottom:clamp(44px,5vw,76px)}
+.nlt-hero__text{grid-column:1 / span 6;display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.nlt-hero__vis{grid-column:8 / -1;min-width:0}
+
+.nlt-hero__h{font-family:var(--f-h);font-weight:500;font-size:clamp(2.1rem,3.9vw,3.4rem);line-height:1.04;letter-spacing:-.033em;color:var(--ink);
+  max-width:15ch;margin:22px 0 clamp(20px,2.2vw,28px)}
+.nlt-hero__lead{max-width:50ch;margin-bottom:clamp(26px,2.8vw,34px)}
+.nlt-hero__form{width:100%;max-width:520px}
+.nlt-hero__state{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line-2);width:100%;max-width:520px;
+  font-size:var(--t-xs);line-height:1.6;color:var(--muted)}
+.nlt-hero__dot{flex:none;width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px var(--blue-wash)}
+@media (max-width:900px){.nlt-hero__state .nlt-a{display:inline-flex;align-items:center;min-height:44px}}
+
+/* ---- the issue front ---- */
+.nlt-hero__card{overflow:hidden}
+.nlt-hero__bar{display:flex;align-items:center;gap:12px;min-height:44px;padding:8px 14px;border-bottom:1px solid var(--line-2);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.nlt-hero__barl{margin-right:auto;white-space:nowrap}
+
+.nlt-hero__rows{padding:14px 18px 16px;border-bottom:1px solid var(--line-2)}
+.nlt-hero__rows>div{display:grid;grid-template-columns:minmax(0,64px) minmax(0,1fr);gap:6px 14px;padding:5px 0;align-items:baseline}
+.nlt-hero__rows dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.nlt-hero__rows dd{font-size:var(--t-xs);line-height:1.5;color:var(--txt);min-width:0;overflow-wrap:anywhere}
+.nlt-hero__addr{font-family:var(--f);color:var(--faint)}
+.nlt-hero__subj dd{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.012em;line-height:1.3;color:var(--ink)}
+.nlt-hero__subj .bdh-caret{color:var(--blue)}
+
+.nlt-hero__blocks{padding:6px 18px 10px}
+.nlt-hero__blocks>li{display:grid;grid-template-columns:auto 22px minmax(0,1fr) auto;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line-2)}
+.nlt-hero__blocks>li:last-child{border-bottom:0}
+.nlt-hero__bn{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--blue);font-variant-numeric:tabular-nums}
+.nlt-hero__bi{display:grid;place-items:center;color:var(--muted)}
+.nlt-hero__bt{font-size:var(--t-sm);line-height:1.35;color:var(--ink);min-width:0}
+.nlt-hero__bw{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--faint);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.nlt-hero__foot{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 18px;border-top:1px solid var(--line-2);background:var(--paper-2);
+  font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.nlt-hero__foot2{margin-left:auto}
+
+/* ---- the target strip ---- */
+.nlt-hero__facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border-block:1px solid var(--line)}
+.nlt-hero__facts>div{display:flex;flex-direction:column;gap:8px;padding:20px 22px 20px 0;background:var(--paper)}
+.nlt-hero__facts>div:not(:first-child){padding-left:22px}
+.nlt-hero__facts dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);line-height:1}
+.nlt-hero__facts dd{font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.012em;line-height:1.25;color:var(--ink)}
+.nlt-hero__facts .nlt-hero__ft{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);line-height:1.3}
+
+/* ---- entrance ----
+   The shipped state is the finished one: nothing here is hidden until hero.js puts .is-anim on the
+   section, which is the only rule that sets opacity:0. With JavaScript off, blocked or broken, the
+   hero is simply complete. */
+.nlt-hero.is-anim .nlt-hero__up{opacity:0;transform:translateY(16px);
+  transition:opacity .72s var(--e) calc(var(--i,0) * 80ms),transform .72s var(--e) calc(var(--i,0) * 80ms)}
+.nlt-hero.is-anim.is-in .nlt-hero__up{opacity:1;transform:none}
+
+@media (max-width:1023px){
+  .nlt-hero__in{column-gap:var(--bdh-gap)}
+  .nlt-hero__text{grid-column:1 / span 6}
+  .nlt-hero__vis{grid-column:7 / -1}
+}
+@media (max-width:860px){
+  .nlt-hero__text,.nlt-hero__vis{grid-column:1 / -1}
+  .nlt-hero__h{max-width:18ch}
+  .nlt-hero__facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nlt-hero__facts>div:nth-child(odd){padding-left:0}
+  .nlt-hero__facts>div:nth-child(even){padding-left:22px}
+}
+@media (max-width:520px){
+  .nlt-hero__rows>div{grid-template-columns:minmax(0,54px) minmax(0,1fr)}
+  .nlt-hero__blocks{padding-inline:14px}
+  .nlt-hero__blocks>li{grid-template-columns:auto 20px minmax(0,1fr);row-gap:2px}
+  .nlt-hero__bw{grid-column:3;justify-self:start}
+  .nlt-hero__facts{grid-template-columns:minmax(0,1fr)}
+  .nlt-hero__facts>div,.nlt-hero__facts>div:nth-child(even){padding:16px 0}
+}
+@media (prefers-reduced-motion:reduce){
+  .nlt-hero.is-anim .nlt-hero__up{opacity:1;transform:none;transition:none}
+}

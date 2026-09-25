@@ -1,0 +1,58 @@
+/* Dispatch · made — the seven-step rail and the AI line. Ink band.
+   The rail's connecting line is drawn per step, from the node to the edge of the column, so it never
+   runs underneath a node or past the first and last ones. */
+.nlt-made__rail{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));column-gap:clamp(14px,1.6vw,26px);row-gap:28px;margin-bottom:clamp(52px,6vw,96px)}
+.nlt-made__st{position:relative;display:flex;flex-direction:column;min-width:0;padding-top:30px}
+/* the line: from just past this node to the start of the next one */
+.nlt-made__st::before{content:"";position:absolute;left:18px;right:calc(var(--bdh-gap) * -1);top:7px;height:1px;background:var(--on-ink-line)}
+.nlt-made__st:last-child::before{display:none}
+.nlt-made__node{position:absolute;left:0;top:2px;width:11px;height:11px;border-radius:50%;background:var(--ink);box-shadow:inset 0 0 0 1.5px var(--blue)}
+.nlt-made__st:first-child .nlt-made__node{background:var(--blue);box-shadow:none}
+
+.nlt-made__n{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;color:var(--blue);line-height:1}
+.nlt-made__t{margin:10px 0 10px;font-family:var(--f-h);font-size:1.0625rem;font-weight:500;letter-spacing:-.012em;line-height:1.2;color:var(--on-ink)}
+.nlt-made__d{font-size:var(--t-xs);line-height:1.6;color:var(--on-ink-2);margin-bottom:12px}
+.nlt-made__r{margin-top:auto;padding-top:12px;border-top:1px dashed var(--on-ink-line);font-size:var(--t-xs);line-height:1.6;color:var(--on-ink-3)}
+.nlt-made__rk{display:block;margin-bottom:4px;font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink-3)}
+
+/* ---------- the AI line --------------------------------------------------- */
+.nlt-made__ai{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);column-gap:clamp(28px,4vw,72px);row-gap:32px;align-items:start;
+  padding-top:clamp(32px,3.4vw,48px);border-top:1px solid var(--on-ink-line)}
+.nlt-made__ait{margin:14px 0 14px;font-family:var(--f-h);font-size:clamp(1.18rem,1.9vw,1.6rem);font-weight:500;letter-spacing:-.02em;line-height:1.2;color:var(--on-ink);max-width:22ch}
+.nlt-made__aid{font-size:var(--t-sm);line-height:1.7;color:var(--on-ink-2);max-width:48ch}
+.nlt-made__badge{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:22px;padding-top:18px;border-top:1px solid var(--on-ink-line);
+  font-size:var(--t-xs);line-height:1.6;color:var(--on-ink-3);max-width:46ch}
+
+.nlt-made__cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--nlt-gap)}
+.nlt-made__col{padding:var(--nlt-pad);border:1px solid var(--on-ink-line);border-radius:var(--r-lg);background:var(--on-ink-card)}
+/* the mark sits beside the heading, never inside it */
+.nlt-made__chw{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--on-ink-line)}
+.nlt-made__ch{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink);line-height:1.2}
+.nlt-made__cm{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;flex:none;--xt-accent:currentColor}
+.nlt-made__cm--y{background:var(--blue);color:var(--paper)}
+.nlt-made__cm--n{background:var(--on-ink);color:var(--ink)}
+.nlt-made__cl>div{padding:14px 0;border-bottom:1px solid var(--on-ink-line)}
+.nlt-made__cl>div:last-child{border-bottom:0;padding-bottom:0}
+.nlt-made__cl dt{font-size:var(--t-sm);font-weight:600;line-height:1.35;color:var(--on-ink)}
+.nlt-made__cl dd{margin-top:5px;font-size:var(--t-xs);line-height:1.6;color:var(--on-ink-2)}
+
+@media (max-width:1023px){
+  .nlt-made__rail{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .nlt-made__st:nth-child(4n)::before{display:none}
+  .nlt-made__ai{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:760px){
+  .nlt-made__rail{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nlt-made__st:nth-child(4n)::before{display:block}
+  .nlt-made__st:nth-child(2n)::before{display:none}
+  .nlt-made__cols{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:520px){
+  .nlt-made__rail{grid-template-columns:minmax(0,1fr);row-gap:0}
+  .nlt-made__st{padding:0 0 24px 26px}
+  .nlt-made__st::before{left:5px;right:auto;top:16px;bottom:-8px;width:1px;height:auto;display:block}
+  .nlt-made__st:last-child::before{display:none}
+  .nlt-made__st:nth-child(2n)::before,.nlt-made__st:nth-child(4n)::before{display:block}
+  .nlt-made__st:last-child{padding-bottom:0}
+  .nlt-made__node{left:0;top:4px}
+}

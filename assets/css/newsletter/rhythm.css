@@ -1,0 +1,47 @@
+/* Dispatch · rhythm — the year rail, the scenario switch and the arithmetic under it. */
+.nlt-rhy__panel{padding:clamp(22px,2.6vw,36px);border:1px solid var(--line);border-radius:var(--r-xl);background:var(--paper-2)}
+
+.nlt-rhy__top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 24px;margin-bottom:clamp(22px,2.4vw,32px)}
+.nlt-rhy__ttl{display:flex;flex-direction:column;gap:8px;min-width:0}
+.nlt-rhy__cap{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:var(--t-xs);line-height:1.5;color:var(--faint)}
+.nlt-rhy__seg{background:var(--paper-4)}
+@media (max-width:900px){.nlt-rhy__seg>button{min-height:44px}}
+
+/* ---- the rail ---- */
+.nlt-rhy__rail{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px}
+.nlt-rhy__slot{position:relative;display:flex;flex-direction:column;gap:8px;min-width:0;padding:12px 10px 12px;border-radius:var(--r-sm);
+  background:var(--paper);border:1px solid var(--line)}
+.nlt-rhy__fill{display:block;height:4px;border-radius:2px;background:var(--line-3);transition:background var(--d2) var(--e)}
+.nlt-rhy__slot.is-on .nlt-rhy__fill{background:var(--blue)}
+.nlt-rhy__sn{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;color:var(--faint);font-variant-numeric:tabular-nums;line-height:1}
+.nlt-rhy__ss{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.06em;text-transform:uppercase;color:var(--ghost);line-height:1.2;overflow-wrap:anywhere}
+.nlt-rhy__slot.is-on .nlt-rhy__ss{color:var(--ink)}
+
+/* ---- the readout ---- */
+.nlt-rhy__out{display:grid;grid-template-columns:repeat(3,auto) minmax(0,1fr);column-gap:clamp(24px,3vw,52px);row-gap:20px;align-items:start;
+  margin-top:clamp(24px,2.6vw,34px);padding-top:clamp(20px,2.2vw,28px);border-top:1px solid var(--line)}
+.nlt-rhy__out dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);line-height:1}
+.nlt-rhy__out dd{display:flex;align-items:baseline;gap:8px;margin-top:10px;
+  font-family:var(--f-h);font-size:clamp(1.7rem,2.8vw,2.5rem);font-weight:500;letter-spacing:-.03em;line-height:1;color:var(--ink)}
+.nlt-rhy__out dd span:last-child{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.nlt-rhy__say dd{display:block;margin-top:10px;font-family:var(--f-b);font-size:var(--t-sm);font-weight:400;letter-spacing:0;line-height:1.6;color:var(--muted);max-width:46ch}
+
+.nlt-rhy__base{margin-top:20px;padding-top:16px;border-top:1px dashed var(--line-3);font-size:var(--t-xs);line-height:1.6;color:var(--faint);max-width:70ch}
+.nlt-rhy__facts{margin-top:clamp(30px,3.4vw,46px)}
+
+@media (max-width:1023px){
+  .nlt-rhy__rail{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .nlt-rhy__out{grid-template-columns:repeat(3,auto)}
+  .nlt-rhy__say{grid-column:1 / -1}
+}
+@media (max-width:600px){
+  .nlt-rhy__rail{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+  .nlt-rhy__slot{padding:10px 8px}
+  .nlt-rhy__ss{letter-spacing:.04em}
+  .nlt-rhy__out{grid-template-columns:minmax(0,1fr);row-gap:16px}
+  .nlt-rhy__seg{width:100%}
+  .nlt-rhy__seg>button{flex:1 1 0;min-width:0;min-height:44px;padding-inline:8px;white-space:normal;line-height:1.2}
+}
+@media (prefers-reduced-motion:reduce){
+  .nlt-rhy__fill{transition:none}
+}

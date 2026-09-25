@@ -1,0 +1,34 @@
+/* Dispatch · reader — four cards, each opened by a mono role code and closed by the line that tells you
+   not to subscribe. A hairline at the top of each card fills with blue on hover or keyboard focus. */
+.nlt-rdr__l{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--nlt-gap)}
+.nlt-rdr__i{min-width:0}
+.nlt-rdr__c{position:relative;display:flex;flex-direction:column;height:100%;padding:var(--nlt-pad);
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
+  transition:border-color var(--d2) var(--e),box-shadow var(--d2) var(--e)}
+.nlt-rdr__c:hover,.nlt-rdr__c:focus-within{border-color:var(--line-3);box-shadow:var(--sh-1)}
+.nlt-rdr__bar{position:absolute;left:0;right:0;top:0;height:2px;background:var(--blue);transform:scaleX(0);transform-origin:left center;
+  transition:transform .45s var(--e)}
+.nlt-rdr__c:hover .nlt-rdr__bar,.nlt-rdr__c:focus-within .nlt-rdr__bar{transform:none}
+
+.nlt-rdr__code{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.2em;color:var(--blue);line-height:1}
+.nlt-rdr__who{margin:14px 0 16px;font-family:var(--f-h);font-size:1.125rem;font-weight:500;line-height:1.25;letter-spacing:-.014em;color:var(--ink)}
+
+.nlt-rdr__d{display:flex;flex-direction:column;gap:6px;margin-top:auto}
+.nlt-rdr__d dt{font-family:var(--f);font-size:var(--t-lbl);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:1.3}
+.nlt-rdr__d dd{font-size:var(--t-sm);line-height:1.6;color:var(--txt)}
+.nlt-rdr__d dd + dt{margin-top:16px;padding-top:16px;border-top:1px solid var(--line-2);width:100%}
+.nlt-rdr__skip{color:var(--muted)}
+.nlt-rdr__d dd:last-child{color:var(--muted)}
+
+.nlt-rdr__foot{display:flex;flex-direction:column;gap:10px;align-items:flex-start;margin-top:clamp(32px,3.6vw,52px);padding-top:clamp(22px,2.4vw,32px);
+  border-top:1px solid var(--line);font-size:var(--t-sm);line-height:1.65;color:var(--muted);max-width:74ch}
+
+@media (max-width:1023px){
+  .nlt-rdr__l{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:600px){
+  .nlt-rdr__l{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  .nlt-rdr__c,.nlt-rdr__bar{transition:none}
+}

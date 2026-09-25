@@ -1,0 +1,32 @@
+/* Dispatch · faq — three groups side by side, native <details> inside each. No script: the browser
+   already knows how to open a disclosure and how to put the keyboard on it. */
+.nlt-faq__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(26px,3.2vw,56px)}
+.nlt-faq__g{min-width:0}
+/* the index sits beside the heading, never inside it: blue is not allowed in a heading */
+.nlt-faq__gh{display:flex;align-items:baseline;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.nlt-faq__gt{font-family:var(--f-h);font-size:1.125rem;font-weight:500;letter-spacing:-.012em;line-height:1.2;color:var(--ink)}
+.nlt-faq__gn{font-family:var(--f);font-size:var(--t-lbl);font-weight:500;letter-spacing:.1em;color:var(--blue)}
+
+.nlt-faq__i{border-bottom:1px solid var(--line-2)}
+.nlt-faq__i>summary{display:grid;grid-template-columns:minmax(0,1fr) 22px;align-items:start;gap:14px;
+  padding:16px 0;min-height:44px;cursor:pointer;list-style:none}
+.nlt-faq__i>summary::-webkit-details-marker{display:none}
+.nlt-faq__i>summary:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:var(--r-xs)}
+.nlt-faq__q{font-size:var(--t-sm);font-weight:500;line-height:1.45;color:var(--ink)}
+.nlt-faq__mk{position:relative;width:22px;height:22px;margin-top:1px;border-radius:50%;background:var(--paper-3);
+  transition:background var(--d2) var(--e),transform .3s var(--e)}
+.nlt-faq__mk::before,.nlt-faq__mk::after{content:"";position:absolute;left:50%;top:50%;width:9px;height:1.5px;margin:-.75px 0 0 -4.5px;background:var(--ink)}
+.nlt-faq__mk::after{transform:rotate(90deg)}
+.nlt-faq__i>summary:hover .nlt-faq__mk{background:var(--paper-4)}
+.nlt-faq__i[open]>summary .nlt-faq__mk{background:var(--ink);transform:rotate(45deg)}
+.nlt-faq__i[open]>summary .nlt-faq__mk::before,.nlt-faq__i[open]>summary .nlt-faq__mk::after{background:var(--on-ink)}
+.nlt-faq__a{padding:0 32px 18px 0}
+.nlt-faq__a p{font-size:var(--t-sm);line-height:1.7;color:var(--txt)}
+
+@media (max-width:860px){
+  .nlt-faq__grid{grid-template-columns:minmax(0,1fr);gap:clamp(24px,3vw,36px)}
+  .nlt-faq__a p{max-width:66ch}
+}
+@media (prefers-reduced-motion:reduce){
+  .nlt-faq__mk{transition:none}
+}
